@@ -67,6 +67,12 @@ public static class Museum2DBuilder
         var sensor=systems.AddComponent<SensorManager>(); var detection=systems.AddComponent<DetectionSystem>();
         var mission=systems.AddComponent<MissionController>(); var game=systems.AddComponent<GameStateController>();
         var hud=systems.AddComponent<GameHUD>(); var debug=systems.AddComponent<DebugPanel>();
+        var gameSettings=systems.AddComponent<GameSettings>();
+        var pauseMenu=systems.AddComponent<PauseMenu>();
+        var settingsMenu=systems.AddComponent<SettingsMenu>();
+        var releaseHud=systems.AddComponent<ReleaseHUD>();
+        var startScreen=systems.AddComponent<StartScreen>();
+        var resultScreen=systems.AddComponent<ResultScreen>();
         var player=new GameObject("Player"); player.transform.position=P(3,2)+Vector3.up;
         var cc=player.AddComponent<CharacterController>(); cc.height=1.8f;cc.radius=.28f;cc.skinWidth=.025f;cc.minMoveDistance=0;
         var pc=player.AddComponent<PlayerController>(); Character(player,agent);
@@ -93,6 +99,13 @@ public static class Museum2DBuilder
         mission.diamond=diamond.transform;mission.exit=exit.transform;mission.game=game;
         hud.game=game;hud.detection=detection;hud.mission=mission;hud.player=pc;hud.debugPanel=debug;
         debug.sensor=sensor;debug.game=game;debug.detection=detection;debug.player=pc;
+        gameSettings.sensor=sensor;
+        pauseMenu.game=game;pauseMenu.settings=gameSettings;pauseMenu.settingsMenu=settingsMenu;
+        settingsMenu.settings=gameSettings;
+        releaseHud.game=game;releaseHud.settings=gameSettings;releaseHud.pauseMenu=pauseMenu;
+        releaseHud.startScreen=startScreen;releaseHud.resultScreen=resultScreen;
+        startScreen.game=game;
+        resultScreen.game=game;resultScreen.detection=detection;
         TiltV2Setup.ApplyToScene();
         EditorSceneManager.SaveScene(scene,ScenePath);
         EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene(ScenePath,true)};
