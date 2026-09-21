@@ -1,0 +1,9 @@
+Unity 6000.3.24f1
+Export: Builds/iOS-TiltV2-20260920-222044
+C# compile errors: 0
+C# compile warnings: 0
+Xcode Release arm64: BUILD SUCCEEDED
+iPhone 14 Pro: installed
+Remote launch: succeeded
+Physical feel/drift/FPS: pending human device test
+Generated Unity native-code/deployment warnings remain; no Xcode build errors.

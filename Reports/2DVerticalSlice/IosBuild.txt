@@ -1,0 +1,9 @@
+Unity: 6000.3.24f1
+Export: Builds/iOS-2D-20260920-215803
+C# compiler errors: 0
+C# compiler warnings: 0
+Xcode: BUILD SUCCEEDED
+iPhone 14 Pro: install succeeded after transient connection reset
+Remote launch: succeeded (com.dontmove.prototype)
+Physical sensor feel/FPS: not measured
+Generated native Xcode warnings remain; this is a development build, not App Store delivery.

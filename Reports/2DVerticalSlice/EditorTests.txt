@@ -1,0 +1,14 @@
+Stable calibration + READY -> Playing PASS; no global FREEZE/GET READY states
+Actual Play Mode keyboard movement + camera follow PASS
+Outside/idle=0; Sneak 1.83, Walk 17.65, Run 35.00 gain/sec; proximity + delayed decay PASS
+Both independent Patrol/Stop/Turn patterns PASS
+Open vision + statue occlusion PASS
+Wall collision / diagonal slide PASS
+Full collision-resolved start -> east approach -> Diamond -> alternate north route -> Exit (35 cells) PASS
+Lying calibration, 10s neutral, micro tilt, held-tilt movement, max clamp PASS
+Exit rejects missing diamond PASS
+Actual CharacterController trigger collected diamond PASS
+Actual Exit trigger -> MISSION COMPLETE PASS
+Retry reloads new 2D scene, mission and detection PASS
+Detection 100 -> DETECTED PASS
+ALL 2D PLAY MODE CHECKS PASSED

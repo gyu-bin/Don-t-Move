@@ -1,0 +1,10 @@
+DM PLAY PASS DM_Character_MuseumGuard / Alert movement=6.62526
+DM PLAY PASS DM_Character_MuseumGuard / Idle movement=0.1938266
+DM PLAY PASS DM_Character_MuseumGuard / Turn movement=22.26062
+DM PLAY PASS DM_Character_MuseumGuard / Walk movement=123.419
+DM PLAY PASS DM_Character_AgentZero / Detected movement=80.56978
+DM PLAY PASS DM_Character_AgentZero / Freeze movement=0
+DM PLAY PASS DM_Character_AgentZero / Idle movement=0.1938266
+DM PLAY PASS DM_Character_AgentZero / Run movement=218.7838
+DM PLAY PASS DM_Character_AgentZero / Walk movement=123.419
+DM PRODUCTION PLAY: ALL 9 ANIMATIONS AND SKIN DEFORMATION PASSED

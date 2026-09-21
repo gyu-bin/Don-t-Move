@@ -1,0 +1,15 @@
+SMOKE: scene structure PASS
+SMOKE: requesting Editor Play Mode
+SMOKE: visibility, stillness, micro/clear motion, world speed, proximity, cover PASS
+SMOKE: tilt dead zone, angle mapping, progressive response, maximum clamp, diagonal speed, curve tuning PASS
+SMOKE: entered Editor Play Mode
+SMOKE: keyboard movement, patrol, camera PASS
+SMOKE: MOVE, GET READY, FREEZE PASS
+SMOKE: wall and cover vision PASS
+SMOKE: FREEZE movement detection PASS
+SMOKE: covered movement permission PASS
+SMOKE: diamond trigger PASS
+SMOKE: mission complete and grade PASS
+SMOKE: retry PASS
+SMOKE: DETECTED PASS
+SMOKE: ALL EDITOR PLAY CHECKS PASSED

@@ -1,0 +1,4 @@
+Four start postures: ~0.5s calibration, 10s neutral, 60s held tilt/return, yaw rejection, manual recenter PASS
+Direction signs, radial onset/clamp, unstable/missing-attitude timeout and explicit retry PASS
+Actual Animator states Idle/Sneak/Walk/Run, articulated placeholder foot motion, distance-driven playback, stop and four facings PASS
+Guard/Detection untouched; full 2D regression follows in EditorTests.txt

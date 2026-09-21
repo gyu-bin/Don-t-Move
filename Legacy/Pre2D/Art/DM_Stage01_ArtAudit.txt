@@ -1,0 +1,14 @@
+DON'T MOVE Stage 01 Art Audit
+Visible mesh renderers: 350
+Visible scene triangles (instanced count): 18602
+All scene colliders: 16
+Colliders under visual art root: 0
+Characters/DM_Character_AgentZero.prefab: 1202 triangles
+Characters/DM_Character_MuseumGuard.prefab: 1238 triangles
+Props/Museum/DM_Prop_Statue_A.prefab: 1262 triangles
+Props/Museum/DM_Prop_DisplayCase_A.prefab: 402 triangles
+DM_Texture_Marble_BaseColor.png: 256x256
+DM_Texture_Marble_Normal.png: 256x256
+DM_Texture_Painting_A.png: 256x256
+DM_Texture_Painting_B.png: 256x256
+DM_Texture_SoftRadial.png: 128x128

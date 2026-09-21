@@ -1,0 +1,10 @@
+Unity 6000.3.24f1: final export succeeded
+Export: Builds/iOS-Tilt-20260920-182122
+Xcode 27 / Release / arm64: BUILD SUCCEEDED
+Bundle: com.dontmove.prototype
+Signed app: Builds/TiltDerivedData/Build/Products/Release-iphoneos/DONTMOVE.app
+iPhone 14 Pro: installation succeeded after a transient connection reset
+Launch: blocked by device lock (FBSOpenApplicationErrorDomain error 7). User must unlock iPhone and open DONTMOVE.
+Physical tilt/feel/FPS: not measured
+C# compile errors/warnings: 0 in final Unity export log
+Native warnings remain in generated Unity/Xcode code: libc++ deployment compatibility, deprecated Apple API, empty symbols, unused variable, missing App Store icon and Run Script outputs. No native build errors.

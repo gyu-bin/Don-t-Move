@@ -1,0 +1,14 @@
+3s calibration + 10s neutral + micro/full tilt PASS at (0.00, 0.00, 0.00), micro speed=0.242
+3s calibration + 10s neutral + micro/full tilt PASS at (70.00, 10.00, 0.00), micro speed=0.242
+3s calibration + 10s neutral + micro/full tilt PASS at (60.00, 210.00, 200.00), micro speed=0.242
+3s calibration + 10s neutral + micro/full tilt PASS at (10.00, 135.00, 255.00), micro speed=0.242
+Sensitivity preserves radial neutral and MaxTilt endpoint PASS
+Continuous monotone response, 360-degree radial mapping, diagonal clamp PASS
+30fps braking PASS: 0.200s / 0.400m
+60fps braking PASS: 0.200s / 0.440m
+120fps braking PASS: 0.192s / 0.461m
+Stage 01 diagonal wall slide PASS: (-6.14, 1.05, -5.68)
+Stage 01 precision route, partition corner and statue circuit x3 PASS
+Micro hand movement is not amplified by previous fast velocity PASS
+Sudden FREEZE: current pose reference, retained braking, zero inertia penalty, actual motion detection PASS
+ALL TILT PLAY MODE CHECKS PASSED

@@ -1,0 +1,14 @@
+Unity 6000.3.24f1
+Scene: Assets/Scenes/DM_Museum_ProductionTest.unity
+DM_Character_AgentZero height=1.852m clips=5
+DM_Character_AgentZero / Detected duration=1.00 rotationChange=80.57
+DM_Character_AgentZero / Freeze duration=1.00 rotationChange=0.00
+DM_Character_AgentZero / Idle duration=1.00 rotationChange=0.19
+DM_Character_AgentZero / Run duration=1.00 rotationChange=218.78
+DM_Character_AgentZero / Walk duration=1.00 rotationChange=123.42
+DM_Character_MuseumGuard height=1.873m clips=4
+DM_Character_MuseumGuard / Alert duration=1.00 rotationChange=6.63
+DM_Character_MuseumGuard / Idle duration=1.00 rotationChange=0.19
+DM_Character_MuseumGuard / Turn duration=1.00 rotationChange=22.26
+DM_Character_MuseumGuard / Walk duration=1.00 rotationChange=123.42
+Scene triangles=166810

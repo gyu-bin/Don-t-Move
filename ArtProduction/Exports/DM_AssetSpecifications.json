@@ -1,0 +1,176 @@
+{
+  "models": [
+    {
+      "name": "DM_Character_AgentZero",
+      "triangles": 18000,
+      "bones": 16,
+      "materials": 1,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Character_MuseumGuard",
+      "triangles": 18000,
+      "bones": 16,
+      "materials": 1,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Environment_Museum_MarbleFloor_A",
+      "triangles": 600,
+      "materials": 2,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Environment_Museum_WallStraight_A",
+      "triangles": 6236,
+      "materials": 4,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Environment_Museum_WallCorner_A",
+      "triangles": 12000,
+      "materials": 4,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Environment_Museum_Pillar_A",
+      "triangles": 6498,
+      "materials": 3,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Environment_Museum_DoorFrame_A",
+      "triangles": 2256,
+      "materials": 3,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Prop_MuseumStatue_A",
+      "triangles": 18000,
+      "materials": 3,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Prop_DisplayCase_Diamond_A",
+      "triangles": 7440,
+      "materials": 9,
+      "format": "FBX"
+    },
+    {
+      "name": "DM_Museum_TestRoom",
+      "triangles": 130938,
+      "materials": 15,
+      "format": "FBX"
+    }
+  ],
+  "textures": [
+    {
+      "name": "DM_Texture_Marble_BaseColor",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "DM_Texture_Marble_Normal",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "DM_Texture_Marble_Roughness",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "DM_Texture_Statue_BaseColor",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "DM_Texture_Statue_Normal",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "DM_Texture_Statue_Roughness",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "DM_Texture_AgentZero_BaseColor",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "DM_Texture_AgentZero_MetallicSmoothness",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "DM_Texture_MuseumGuard_BaseColor",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "name": "DM_Texture_MuseumGuard_MetallicSmoothness",
+      "width": 256,
+      "height": 256
+    }
+  ],
+  "animations": [
+    {
+      "name": "DM_Animation_AgentZero_Detected",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_AgentZero@Detected.fbx"
+    },
+    {
+      "name": "DM_Animation_AgentZero_Freeze",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_AgentZero@Freeze.fbx"
+    },
+    {
+      "name": "DM_Animation_AgentZero_Idle",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_AgentZero@Idle.fbx"
+    },
+    {
+      "name": "DM_Animation_AgentZero_Run",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_AgentZero@Run.fbx"
+    },
+    {
+      "name": "DM_Animation_AgentZero_Walk",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_AgentZero@Walk.fbx"
+    },
+    {
+      "name": "DM_Animation_MuseumGuard_Alert",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_MuseumGuard@Alert.fbx"
+    },
+    {
+      "name": "DM_Animation_MuseumGuard_Idle",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_MuseumGuard@Idle.fbx"
+    },
+    {
+      "name": "DM_Animation_MuseumGuard_Turn",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_MuseumGuard@Turn.fbx"
+    },
+    {
+      "name": "DM_Animation_MuseumGuard_Walk",
+      "fps": 30,
+      "frames": 31,
+      "file": "DM_Character_MuseumGuard@Walk.fbx"
+    }
+  ],
+  "unity_scale": "1 unit = 1 metre",
+  "status": "ART_REVIEW_REQUIRED"
+}

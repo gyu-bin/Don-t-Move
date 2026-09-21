@@ -1,0 +1,847 @@
+{
+  "materials": [
+    {
+      "name": "DM_Material_Agent_Lapel",
+      "color": [
+        0.017999999225139618,
+        0.02500000037252903,
+        0.035999998450279236,
+        1.0
+      ],
+      "roughness": 0.47999998927116394,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Agent_Shirt",
+      "color": [
+        0.00800000037997961,
+        0.01600000075995922,
+        0.024000000208616257,
+        1.0
+      ],
+      "roughness": 0.699999988079071,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Agent_Wool",
+      "color": [
+        0.008999999612569809,
+        0.014000000432133675,
+        0.020999999716877937,
+        1.0
+      ],
+      "roughness": 0.7300000190734863,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Architecture_WarmGlass",
+      "color": [
+        1.0,
+        0.5,
+        0.14000000059604645,
+        1.0
+      ],
+      "roughness": 0.30000001192092896,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        0.5,
+        0.14000000059604645,
+        1.0
+      ],
+      "emissionStrength": 4.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_BlackLeather",
+      "color": [
+        0.00800000037997961,
+        0.012000000104308128,
+        0.017000000923871994,
+        1.0
+      ],
+      "roughness": 0.550000011920929,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Brass",
+      "color": [
+        0.550000011920929,
+        0.33000001311302185,
+        0.10999999940395355,
+        1.0
+      ],
+      "roughness": 0.23000000417232513,
+      "metallic": 0.8199999928474426,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_ChestnutHair",
+      "color": [
+        0.02199999988079071,
+        0.008999999612569809,
+        0.004000000189989805,
+        1.0
+      ],
+      "roughness": 0.7799999713897705,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Diamond_Facet0",
+      "color": [
+        0.017999999225139618,
+        0.2800000011920929,
+        0.7200000286102295,
+        1.0
+      ],
+      "roughness": 0.07999999821186066,
+      "metallic": 0.30000001192092896,
+      "alpha": 1.0,
+      "emission": [
+        0.017999999225139618,
+        0.2800000011920929,
+        0.7200000286102295,
+        1.0
+      ],
+      "emissionStrength": 2.200000047683716,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Diamond_Facet1",
+      "color": [
+        0.03999999910593033,
+        0.5799999833106995,
+        0.949999988079071,
+        1.0
+      ],
+      "roughness": 0.07999999821186066,
+      "metallic": 0.30000001192092896,
+      "alpha": 1.0,
+      "emission": [
+        0.03999999910593033,
+        0.5799999833106995,
+        0.949999988079071,
+        1.0
+      ],
+      "emissionStrength": 2.200000047683716,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Diamond_Facet2",
+      "color": [
+        0.11999999731779099,
+        0.800000011920929,
+        1.0,
+        1.0
+      ],
+      "roughness": 0.07999999821186066,
+      "metallic": 0.30000001192092896,
+      "alpha": 1.0,
+      "emission": [
+        0.11999999731779099,
+        0.800000011920929,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 2.200000047683716,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Diamond_Facet3",
+      "color": [
+        0.012000000104308128,
+        0.11999999731779099,
+        0.36000001430511475,
+        1.0
+      ],
+      "roughness": 0.07999999821186066,
+      "metallic": 0.30000001192092896,
+      "alpha": 1.0,
+      "emission": [
+        0.012000000104308128,
+        0.11999999731779099,
+        0.36000001430511475,
+        1.0
+      ],
+      "emissionStrength": 2.200000047683716,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Diamond_Facet4",
+      "color": [
+        0.3700000047683716,
+        0.8500000238418579,
+        0.9800000190734863,
+        1.0
+      ],
+      "roughness": 0.07999999821186066,
+      "metallic": 0.30000001192092896,
+      "alpha": 1.0,
+      "emission": [
+        0.3700000047683716,
+        0.8500000238418579,
+        0.9800000190734863,
+        1.0
+      ],
+      "emissionStrength": 2.200000047683716,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Display_Glass",
+      "color": [
+        0.5799999833106995,
+        0.8100000023841858,
+        0.8999999761581421,
+        1.0
+      ],
+      "roughness": 0.054999999701976776,
+      "metallic": 0.0,
+      "alpha": 0.12999999523162842,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Display_Obsidian",
+      "color": [
+        0.012000000104308128,
+        0.01899999938905239,
+        0.026000000536441803,
+        1.0
+      ],
+      "roughness": 0.2199999988079071,
+      "metallic": 0.20000000298023224,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Display_Velvet",
+      "color": [
+        0.013000000268220901,
+        0.03999999910593033,
+        0.061000000685453415,
+        1.0
+      ],
+      "roughness": 0.8999999761581421,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Eye",
+      "color": [
+        0.012000000104308128,
+        0.014999999664723873,
+        0.01899999938905239,
+        1.0
+      ],
+      "roughness": 0.23999999463558197,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Guard_Trousers",
+      "color": [
+        0.012000000104308128,
+        0.026000000536441803,
+        0.054999999701976776,
+        1.0
+      ],
+      "roughness": 0.7200000286102295,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Guard_Uniform",
+      "color": [
+        0.02800000086426735,
+        0.06800000369548798,
+        0.14499999582767487,
+        1.0
+      ],
+      "roughness": 0.8199999928474426,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Gunmetal",
+      "color": [
+        0.035999998450279236,
+        0.04800000041723251,
+        0.05999999865889549,
+        1.0
+      ],
+      "roughness": 0.3799999952316284,
+      "metallic": 0.6000000238418579,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Museum_CarvedLimestone",
+      "color": [
+        0.25,
+        0.2549999952316284,
+        0.23999999463558197,
+        1.0
+      ],
+      "roughness": 0.41999998688697815,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Museum_DeepPanels",
+      "color": [
+        0.012000000104308128,
+        0.020999999716877937,
+        0.03400000184774399,
+        1.0
+      ],
+      "roughness": 0.5799999833106995,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Museum_FloorMarble",
+      "color": [
+        0.3400000035762787,
+        0.3499999940395355,
+        0.36000001430511475,
+        1.0
+      ],
+      "roughness": 0.25999999046325684,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "DM_Texture_Marble_BaseColor.png",
+      "normalTexture": "DM_Texture_Marble_Normal.png",
+      "roughnessTexture": "DM_Texture_Marble_Roughness.png"
+    },
+    {
+      "name": "DM_Material_Museum_LacquerNavy",
+      "color": [
+        0.020999999716877937,
+        0.03200000151991844,
+        0.05000000074505806,
+        1.0
+      ],
+      "roughness": 0.3400000035762787,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_SmokedLens",
+      "color": [
+        0.0010000000474974513,
+        0.0020000000949949026,
+        0.003000000026077032,
+        1.0
+      ],
+      "roughness": 0.6200000047683716,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_Statue_Carrara",
+      "color": [
+        0.6399999856948853,
+        0.6000000238418579,
+        0.5,
+        1.0
+      ],
+      "roughness": 0.44999998807907104,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "DM_Texture_Statue_BaseColor.png",
+      "normalTexture": "DM_Texture_Statue_Normal.png",
+      "roughnessTexture": "DM_Texture_Statue_Roughness.png"
+    },
+    {
+      "name": "DM_Material_UniformSeams",
+      "color": [
+        0.03799999877810478,
+        0.07500000298023224,
+        0.14499999582767487,
+        1.0
+      ],
+      "roughness": 0.8199999928474426,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_WarmSkin",
+      "color": [
+        0.4699999988079071,
+        0.2849999964237213,
+        0.18000000715255737,
+        1.0
+      ],
+      "roughness": 0.5799999833106995,
+      "metallic": 0.0,
+      "alpha": 1.0,
+      "emission": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0,
+      "baseColorTexture": "",
+      "normalTexture": "",
+      "roughnessTexture": ""
+    },
+    {
+      "name": "DM_Material_AgentZero_Atlas",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "roughness": 0.6,
+      "metallic": 0,
+      "alpha": 1,
+      "emission": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissionStrength": 0,
+      "baseColorTexture": "DM_Texture_AgentZero_BaseColor.png",
+      "normalTexture": "",
+      "roughnessTexture": "",
+      "metallicSmoothnessTexture": "DM_Texture_AgentZero_MetallicSmoothness.png"
+    },
+    {
+      "name": "DM_Material_MuseumGuard_Atlas",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "roughness": 0.6,
+      "metallic": 0,
+      "alpha": 1,
+      "emission": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "emissionStrength": 0,
+      "baseColorTexture": "DM_Texture_MuseumGuard_BaseColor.png",
+      "normalTexture": "",
+      "roughnessTexture": "",
+      "metallicSmoothnessTexture": "DM_Texture_MuseumGuard_MetallicSmoothness.png"
+    }
+  ],
+  "lights": [
+    {
+      "name": "DM_Light_AgentPath",
+      "type": "SPOT",
+      "position": [
+        1.7999999523162842,
+        3.5,
+        2.700000047683716
+      ],
+      "direction": [
+        -0.1379401832818985,
+        -0.9196009635925293,
+        -0.3678404688835144
+      ],
+      "color": [
+        1.0,
+        0.7200000286102295,
+        0.4300000071525574
+      ],
+      "power": 340.0,
+      "spotAngle": 54.0000015026869
+    },
+    {
+      "name": "DM_Light_DiamondCyan",
+      "type": "POINT",
+      "position": [
+        -1.149999976158142,
+        1.2799999713897705,
+        -0.8500000238418579
+      ],
+      "direction": [
+        0.5992022156715393,
+        -0.666938066482544,
+        0.44288864731788635
+      ],
+      "color": [
+        0.07999999821186066,
+        0.6000000238418579,
+        1.0
+      ],
+      "power": 45.0,
+      "spotAngle": 0
+    },
+    {
+      "name": "DM_Light_DiamondExhibit",
+      "type": "SPOT",
+      "position": [
+        -1.2999999523162842,
+        3.700000047683716,
+        -0.25
+      ],
+      "direction": [
+        0.05058642476797104,
+        -0.9780067205429077,
+        -0.20234599709510803
+      ],
+      "color": [
+        1.0,
+        0.7200000286102295,
+        0.41999998688697815
+      ],
+      "power": 780.0,
+      "spotAngle": 45.00000125223908
+    },
+    {
+      "name": "DM_Light_GuardPath",
+      "type": "SPOT",
+      "position": [
+        -3.0,
+        3.4000000953674316,
+        1.399999976158142
+      ],
+      "direction": [
+        0.44517409801483154,
+        -0.8903481960296631,
+        -0.09539446979761124
+      ],
+      "color": [
+        1.0,
+        0.6800000071525574,
+        0.3799999952316284
+      ],
+      "power": 340.0,
+      "spotAngle": 54.0000015026869
+    },
+    {
+      "name": "DM_Light_MoonFill",
+      "type": "SUN",
+      "position": [
+        -3.0,
+        7.0,
+        4.0
+      ],
+      "direction": [
+        0.3487430512905121,
+        -0.8137333989143372,
+        -0.4649905860424042
+      ],
+      "color": [
+        0.23999999463558197,
+        0.3799999952316284,
+        0.7200000286102295
+      ],
+      "power": 0.23999999463558197,
+      "spotAngle": 0
+    },
+    {
+      "name": "DM_Light_StatueExhibit",
+      "type": "SPOT",
+      "position": [
+        1.7000000476837158,
+        3.5999999046325684,
+        -0.20000000298023224
+      ],
+      "direction": [
+        -0.06311941146850586,
+        -0.9467916488647461,
+        -0.3155971169471741
+      ],
+      "color": [
+        1.0,
+        0.7099999785423279,
+        0.4000000059604645
+      ],
+      "power": 820.0,
+      "spotAngle": 42.99999891985429
+    },
+    {
+      "name": "DM_Light_WallPractical",
+      "type": "POINT",
+      "position": [
+        2.5,
+        1.7999999523162842,
+        -2.4600000381469727
+      ],
+      "direction": [
+        -0.6341500282287598,
+        -0.45658811926841736,
+        0.6240040063858032
+      ],
+      "color": [
+        1.0,
+        0.49000000953674316,
+        0.1899999976158142
+      ],
+      "power": 70.0,
+      "spotAngle": 0
+    },
+    {
+      "name": "DM_Light_WallPractical.001",
+      "type": "POINT",
+      "position": [
+        -2.5,
+        1.7999999523162842,
+        -2.4600000381469727
+      ],
+      "direction": [
+        0.6341500282287598,
+        -0.45658811926841736,
+        0.6240040063858032
+      ],
+      "color": [
+        1.0,
+        0.49000000953674316,
+        0.1899999976158142
+      ],
+      "power": 70.0,
+      "spotAngle": 0
+    }
+  ],
+  "characters": [
+    {
+      "name": "DM_Character_AgentZero",
+      "position": [
+        1.350000023841858,
+        0.0,
+        1.5
+      ],
+      "yaw": 14.32394487827058
+    },
+    {
+      "name": "DM_Character_MuseumGuard",
+      "position": [
+        -1.600000023841858,
+        0.0,
+        1.100000023841858
+      ],
+      "yaw": -37.24225531746568
+    }
+  ],
+  "camera": {
+    "position": [
+      -8.5,
+      11.0,
+      11.0
+    ],
+    "direction": [
+      0.48685815930366516,
+      -0.5928216576576233,
+      -0.6415073275566101
+    ],
+    "orthographicSize": 5.150000095367432
+  }
+}
