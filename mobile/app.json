@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Don't Move",
+    "slug": "dont-move",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "scheme": "dontmove",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.dontmove.prototype"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0A1220",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "com.dontmove.prototype",
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-audio"
+    ]
+  }
+}

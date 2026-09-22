@@ -1,11 +1,31 @@
-/Library/
-/Temp/
-/Obj/
-/Build/
-/Builds/
-/Logs/
-/UserSettings/
-/.utmp/
+# Root ignores — Unity legacy + Expo mobile
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Node / Expo (also covered under mobile/.gitignore)
+node_modules/
+.expo/
+dist/
+web-build/
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+*.orig.*
+
+# Unity legacy caches (if opened from legacy-unity/)
+legacy-unity/Library/
+legacy-unity/Temp/
+legacy-unity/Obj/
+legacy-unity/Build/
+legacy-unity/Builds/
+legacy-unity/Logs/
+legacy-unity/UserSettings/
+legacy-unity/.utmp/
 *.csproj
 *.sln
 *.slnx
