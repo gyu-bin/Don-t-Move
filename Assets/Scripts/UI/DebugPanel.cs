@@ -24,6 +24,7 @@ namespace DontMove
             GUILayout.BeginArea(new Rect(7, 105, 235, 625), GUI.skin.box);
             scroll = GUILayout.BeginScrollView(scroll);
             GUILayout.Label("SENSOR / MOVEMENT DEBUG");
+            GUILayout.Label("F2: guard alert visual test (?50 → ?90 → !)");
             GUILayout.Label("Raw attitude: " + sensor.Pose.ToString("F3"));
             GUILayout.Label("Neutral rotation: " + sensor.NeutralPose.ToString("F3"));
             GUILayout.Label("Pitch / Roll: " + sensor.RelativePitch.ToString("F2") + " / " + sensor.RelativeRoll.ToString("F2"));
@@ -59,6 +60,21 @@ namespace DontMove
             GUILayout.Label("Guard visible: " + game.GuardVisibility);
             GUILayout.Label("Distance to guard: " + (game.GuardVisibility ? game.DistanceToVisibleGuard.ToString("F2") + " m" : "--"));
             GUILayout.Label("Detection gain/sec: " + detection.GainPerSecond.ToString("F1"));
+            GUILayout.Label("Global alert: " + game.GlobalAlert + "  elapsed " + game.GlobalAlertElapsed.ToString("F1") + "s");
+            GUILayout.Label("Max guard suspicion: " + (game.MaxGuardSuspicion * 100f).ToString("F0") + "%");
+            GUILayout.Label("Searching guards: " + game.SearchingGuardCount);
+            if (game.guards != null)
+            {
+                for (int i = 0; i < game.guards.Length; i++)
+                {
+                    var guard = game.guards[i];
+                    if (guard == null) continue;
+                    GUILayout.Label("Guard " + i + "  " + guard.DisplayState + "  ? " + (guard.DisplaySuspicion * 100f).ToString("F0") + "%");
+                    GUILayout.Label("  visible " + guard.CanSeePlayer + "  dist " + guard.DistanceToPlayer.ToString("F2") + "m  center " + guard.VisionCenterFactor.ToString("F2"));
+                    GUILayout.Label("  gain/sec " + guard.SuspicionGainPerSecond.ToString("F2") + "  target " + guard.CurrentTarget.ToString("F1"));
+                    GUILayout.Label("  LKP " + guard.LastKnownPosition.ToString("F1") + "  source " + (guard.AlertSource != null ? guard.AlertSource.name : "--"));
+                }
+            }
             GUILayout.Label("FPS: " + fps.ToString("F0"));
             sensor.sensitivity = Slider("Sensitivity", sensor.sensitivity, .25f, 3f);
             sensor.smoothing = Slider("Smoothing (seconds)", sensor.smoothing, .01f, .3f);

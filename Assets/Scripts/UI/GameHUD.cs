@@ -86,7 +86,7 @@ namespace DontMove
             GUI.Label(new Rect(x + 20, y + 52, w - 40, 26), "Time " + game.RunTime.ToString("F1") + "s", small);
 
             title.normal.textColor = stateColor;
-            if (game.GuardVisibility && game.CanMove)
+            if (game.GlobalAlert && game.CanMove)
             {
                 center.normal.textColor = new Color(1, .4f, .3f);
                 GUI.Label(new Rect(x + w - 56, y + 104, 40, 40), "!", center);
@@ -117,12 +117,16 @@ namespace DontMove
             }
 
             DrawBox(new Rect(x, y + h - 100, w, 100), new Color(.06f, .09f, .14f, .92f));
-            GUI.Label(new Rect(x + 20, y + h - 92, w - 40, 24), "DETECTION  " + Mathf.RoundToInt(detection.Detection) + "%", small);
-            DrawBox(new Rect(x + 20, y + h - 56, w - 40, 20), new Color(.2f, .23f, .27f));
-            DrawBox(new Rect(x + 20, y + h - 56, (w - 40) * detection.Detection / 100f, 20), new Color(.95f, .2f, .18f));
+            string alertText = game.GlobalAlert ? "GLOBAL ALERT  ACTIVE" : "GLOBAL ALERT  CLEAR";
+            GUI.Label(new Rect(x + 20, y + h - 92, w - 40, 24), alertText, small);
+            GUI.Label(new Rect(x + 20, y + h - 62, w - 40, 24),
+                "MAX SUSPICION  " + Mathf.RoundToInt(game.MaximumGuardSuspicion * 100f) + "%   SEARCH  " + game.SearchingGuardCount, small);
 
             if (GUI.Button(new Rect(x + 16, y + h - 150, 55, 36), "DBG"))
                 debugPanel.visible = !debugPanel.visible;
+
+            if (game.GlobalAlert && game.GlobalAlertElapsed < .22f)
+                DrawBox(new Rect(0, 0, Screen.width / scale, Screen.height / scale), new Color(1f, .05f, .02f, .08f));
 
             GUI.matrix = old;
         }

@@ -15,6 +15,11 @@ public static class PrototypeBuild
     {
         Build("Builds/iOS", BuildTarget.iOS);
     }
+    [MenuItem("Don't Move/Export Fresh iOS Xcode Project")]
+    public static void IosFresh()
+    {
+        Ios2D();
+    }
     public static void IosTilt()
     {
         // Unity 6000.3.24f1 crashes in Xcode's ScriptingBridge when inspecting an

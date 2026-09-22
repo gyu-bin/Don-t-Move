@@ -14,6 +14,7 @@ public static class Stealth2DVerification
     static bool oldEnabled;static EnterPlayModeOptions oldOptions;
     static GameStateController game; static float started; static int phase;
     static Keyboard keyboard;static PlaySmokeDriver driver;
+    [MenuItem("Don't Move/QA/Run Stage 01 Play Verification")]
     public static void Run()
     {
         EditorSceneManager.OpenScene("Assets/Scenes/MuseumStage01.unity");
@@ -96,9 +97,9 @@ public static class Stealth2DVerification
                 Require(!game.mission.HasDiamond&&game.detection.Detection==0,"Retry didn't reset run");
                 Log("Retry reloads new 2D scene, mission and detection PASS");
                 game.enabled=false;game.sensor.enabled=false;game.player.enabled=false;
-                var g=game.guards[0];Teleport(game.player,g.transform.position+g.transform.forward*1.5f);
-                game.detection.Tick(1,true,5,1,10);game.TickGame(.01f);
-                Require(game.State==GameState.Detected,"DETECTED transition failed");Log("Detection 100 -> DETECTED PASS");
+                var g=game.guards[0];Teleport(game.player,g.transform.position);
+                game.TickGame(.01f);
+                Require(game.State==GameState.Detected,"CAUGHT transition failed");Log("Guard contact radius -> CAUGHT PASS");
                 Log("ALL 2D PLAY MODE CHECKS PASSED");Done();
             }
         } catch(Exception e){Done(e);}
@@ -170,6 +171,7 @@ public static class Stealth2DVerification
         Teleport(game.player,new Vector3(6.5f,1,11.7f));a.vision.Evaluate();Require(a.vision.SeesPlayer,"Open vision failed");
         Teleport(game.player,new Vector3(6.5f,1,14.3f));a.vision.Evaluate();Require(!a.vision.SeesPlayer&&a.vision.IsFullyCovered,"Statue cover failed");
         Log("Open vision + statue occlusion PASS");
+        GuardAlertFlowCheck(game,a,b);
         Teleport(game.player,new Vector3(3.9f,1,2.6f));
         for(int i=0;i<100;i++)game.player.TickMovement(new Vector2(1,-1).normalized,.016f);
         Require(game.player.transform.position.z>-.65f,"Wall collision failed");Log("Wall collision / diagonal slide PASS");
@@ -193,5 +195,29 @@ public static class Stealth2DVerification
         Museum2DBuilder.Capture(camera,"Reports/2DVerticalSlice/Gameplay.png",540,1080);
         camera.transform.position=new Vector3(7,35,15);camera.orthographicSize=18;
         Museum2DBuilder.Capture(camera,"Reports/2DVerticalSlice/MapPlay.png",800,1200);
+    }
+    static void GuardAlertFlowCheck(GameStateController game,GuardController source,GuardController responder)
+    {
+        source.transform.position=new Vector3(6.5f,1,10.4f);source.transform.rotation=Quaternion.identity;
+        responder.transform.position=new Vector3(2.6f,1,18.2f);responder.transform.rotation=Quaternion.identity;
+        Teleport(game.player,new Vector3(6.5f,1,11.7f));
+        source.suspiciousMovementScale=40f;
+        for(int i=0;i<140&&source.AlertState!=GuardState.Alert;i++)source.TickAI(.1f,game);
+        Require(source.AlertState==GuardState.Alert,"Suspicion did not reach ALERT");
+        Require(game.GlobalAlert&&game.AlertSource==source,"Whistle did not broadcast global alert");
+        Require(responder.AlertState==GuardState.Alert&&responder.AlertSource==source,"Responder missed global snapshot");
+        Vector3 snapshot=game.GlobalLastKnownPosition;responder.TickAI(.1f,game);
+        Require(Vector3.Distance(responder.CurrentTarget,snapshot)<.01f,"Responder target is not whistle-time LKP");
+        source.TickAI(.6f,game);
+        Require(source.AlertState==GuardState.Chase&&!source.IsWhistling,"Whistle did not transition source to CHASE");
+        Teleport(game.player,new Vector3(3.9f,1,2.6f));source.TickAI(.9f,game);
+        Require(source.AlertState==GuardState.Search,"Lost sight did not enter SEARCH");
+        source.searchDuration=.2f;source.TickAI(5f,game);
+        Require(source.AlertState==GuardState.Return,"Search timeout did not enter RETURN");
+        responder.searchDuration=.2f;responder.ForceSearch(snapshot,game);
+        Require(responder.AlertState==GuardState.Search,"Responder did not enter SEARCH");
+        responder.TickAI(.25f,game);
+        Require(responder.AlertState==GuardState.Return,"Responder search did not return");
+        Log("PATROL -> SUSPICIOUS -> ALERT -> whistle/global snapshot -> CHASE -> SEARCH -> RETURN PASS");
     }
 }

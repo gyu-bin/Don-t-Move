@@ -171,9 +171,12 @@ public static class Museum2DBuilder
     {
         var go=new GameObject(name);go.transform.position=P(route[0].x,route[0].y)+Vector3.up;
         var c=go.AddComponent<GuardController>();c.vision=go.GetComponent<GuardVision>();
-        c.vision.player=player;c.vision.distance=5.5f;c.vision.angle=65;c.vision.obstructionMask=1<<8;c.vision.safeMaterial=safe;c.vision.dangerMaterial=danger;
+        c.vision.player=player;c.vision.distance=5.5f;c.vision.angle=65;c.vision.obstructionMask=1<<8;c.vision.safeMaterial=safe;c.vision.dangerMaterial=danger;c.vision.SetDanger(false);
         c.patrolPoints=new Transform[route.Length];for(int i=0;i<route.Length;i++){var point=new GameObject(name+" Route "+i);point.transform.position=P(route[i].x,route[i].y)+Vector3.up;c.patrolPoints[i]=point.transform;}
-        Character(go,guard);return c;
+        Character(go,guard);
+        var indicator=go.AddComponent<GuardAlertIndicator>();indicator.guard=c;
+        var animator=go.AddComponent<GuardSpriteAnimator>();animator.guard=c;
+        return c;
     }
     static Material Mat(string name,Color color)
     {

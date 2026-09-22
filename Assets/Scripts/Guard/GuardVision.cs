@@ -10,6 +10,9 @@ namespace DontMove
         public Transform player;
         public bool SeesPlayer { get; private set; }
         public bool IsFullyCovered { get; private set; }
+        public float CenterFactor { get; private set; }
+        public float PlayerDistance { get; private set; } = float.PositiveInfinity;
+        public float PlayerDot { get; private set; }
         public Material safeMaterial;
         public Material dangerMaterial;
         Mesh cone;
@@ -51,12 +54,20 @@ namespace DontMove
             MakeCone();
             SeesPlayer = false;
             IsFullyCovered = false;
+            CenterFactor = 0f;
+            PlayerDistance = float.PositiveInfinity;
+            PlayerDot = -1f;
             if (player == null) return;
             Vector3 origin = transform.position + Vector3.up * 0.1f;
             Vector3 destination = player.position + Vector3.up * 0.1f;
             Vector3 direction = destination - origin;
             float length = direction.magnitude;
-            if (length < 0.001f || length > distance || Vector3.Angle(transform.forward, direction) > angle * 0.5f) return;
+            PlayerDistance = length;
+            if (length < 0.001f) return;
+            PlayerDot = Vector3.Dot(transform.forward, direction / length);
+            float edgeDot = Mathf.Cos(angle * .5f * Mathf.Deg2Rad);
+            CenterFactor = Mathf.Clamp01(Mathf.InverseLerp(edgeDot, 1f, PlayerDot));
+            if (length > distance || PlayerDot < edgeDot) { CenterFactor = 0f; return; }
             if (Physics.Raycast(origin, direction / length, out RaycastHit hit, length, obstructionMask, QueryTriggerInteraction.Ignore))
             {
                 IsFullyCovered = hit.collider.GetComponent<CoverMarker>() != null;

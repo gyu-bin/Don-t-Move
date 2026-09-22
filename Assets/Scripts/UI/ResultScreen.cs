@@ -61,9 +61,8 @@ namespace DontMove
 
             float y = safe.y + 150;
             DrawStat(x, ref y, w, "Clear Time", game.RunTime.ToString("F1") + "s");
-            // MaximumDetection is the existing public max-suspicion meter.
-            DrawStat(x, ref y, w, "Max Suspicion", detection != null ? detection.MaximumDetection.ToString("F0") + "%" : "--");
-            // TODO: Times Spotted — no public spotted counter on GameStateController / Detection yet. Hide until API exists.
+            DrawStat(x, ref y, w, "Max Suspicion", game.MaximumGuardSuspicion.ToString("P0"));
+            DrawStat(x, ref y, w, "Whistles", game.AlertCount.ToString());
 
             float bw = w * .64f;
             float bx = x + (w - bw) * .5f;
