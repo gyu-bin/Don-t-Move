@@ -39,3 +39,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# generated sprite review previews (npm run sprites:validate)
+/art/characters/preview/

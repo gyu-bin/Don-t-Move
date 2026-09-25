@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@shopify/react-native-skia": [
+        "./skiaNodeShim.ts"
+      ]
+    }
+  }
+}
