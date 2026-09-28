@@ -1,5 +1,6 @@
 import type { AnimName, DirName } from '../rendering/sprites/spriteTypes';
-import { PLAYER_SPRITE_STRIDE } from '../game/core/locomotion';
+import { PLAYER_SPRITE_GEOMETRY, PLAYER_SPRITE_SCALE, PLAYER_SPRITE_STRIDE } from '../game/core/locomotion';
+import { RIGHT_WALK_TRIAL_ENABLED, RIGHT_WALK_TRIAL_STRIDE } from '../game/core/rightWalkTrial';
 
 /**
  * ASSET REGISTRY — the one file to edit when final art arrives.
@@ -55,6 +56,8 @@ export interface ClipDef {
 }
 
 export interface CharacterManifest {
+  /** Only set after unmodified Sprite Validator + visual approval. */
+  finalApproved?: boolean;
   /** World units per source pixel (character ≈ 46 world units tall). */
   scale: number;
   shadow?: boolean;
@@ -78,6 +81,7 @@ export const IMAGE_SOURCES = {
   legacyAgent: require('../../assets/characters/legacy/agent_directions.png'),
   legacyGuard: require('../../assets/characters/legacy/guard_directions.png'),
   playerWalk: require('../../assets/characters/player_walk.png'),
+  playerRightWalkTrial: require('../../art/characters/candidates/right-walk-fullbody-v1/player_walk_right.png'),
 } as const;
 export type ImageKey = keyof typeof IMAGE_SOURCES;
 
@@ -137,20 +141,19 @@ export const LEGACY_CHARACTERS = {
 // gaits, but each gait has a distance-based cycle length tuned on iPhone.
 // This keeps movement speed unchanged while avoiding the old 4.4 steps/sec walk.
 // ----------------------------------------------------------------------------
-const SHEET_ANCHOR: [number, number] = [0.5, 224 / 256];
-const PLAYER_SCALE = 46 / 172;
+const SHEET_ANCHOR: [number, number] = [PLAYER_SPRITE_GEOMETRY.anchorX / PLAYER_SPRITE_GEOMETRY.cell, PLAYER_SPRITE_GEOMETRY.anchorY / PLAYER_SPRITE_GEOMETRY.cell];
 const walkRow = (row: number, strideLength: number): ClipDef => ({
   image: 'playerWalk',
-  frames: { y: row * 256, frameW: 256, frameH: 256, count: 8, anchor: SHEET_ANCHOR },
+  frames: { y: row * PLAYER_SPRITE_GEOMETRY.cell, frameW: PLAYER_SPRITE_GEOMETRY.cell, frameH: PLAYER_SPRITE_GEOMETRY.cell, count: PLAYER_SPRITE_GEOMETRY.walkFrames, anchor: SHEET_ANCHOR },
   strideLength,
 });
 const walkHold = (row: number, frame: number): ClipDef => ({
   image: 'playerWalk',
-  frames: [{ x: frame * 256, y: row * 256, w: 256, h: 256, anchor: SHEET_ANCHOR }],
+  frames: [{ x: frame * PLAYER_SPRITE_GEOMETRY.cell, y: row * PLAYER_SPRITE_GEOMETRY.cell, w: PLAYER_SPRITE_GEOMETRY.cell, h: PLAYER_SPRITE_GEOMETRY.cell, anchor: SHEET_ANCHOR }],
 });
 
 export const PLAYER_WALK_SHEET: CharacterManifest = {
-  scale: PLAYER_SCALE,
+  scale: PLAYER_SPRITE_SCALE,
   shadow: true,
   clips: {
     sneak: { down: walkRow(0, PLAYER_SPRITE_STRIDE.sneak), up: walkRow(1, PLAYER_SPRITE_STRIDE.sneak), left: walkRow(2, PLAYER_SPRITE_STRIDE.sneak), right: walkRow(3, PLAYER_SPRITE_STRIDE.sneak) },
@@ -169,6 +172,18 @@ export const ASSET_MANIFEST: AssetManifest = {
   environment: { museum: MUSEUM_ATLAS },
   ui: { indicators: null },
 };
+
+/** Unapproved dev trial; the production manifest remains untouched. */
+export const PLAYTEST_MANIFEST: AssetManifest = RIGHT_WALK_TRIAL_ENABLED ? {
+  ...ASSET_MANIFEST,
+  characters: { player: {
+    ...PLAYER_WALK_SHEET,
+    clips: { ...PLAYER_WALK_SHEET.clips, walk: {
+      ...PLAYER_WALK_SHEET.clips.walk,
+      right: { ...walkRow(0, RIGHT_WALK_TRIAL_STRIDE), image: 'playerRightWalkTrial' },
+    } },
+  }, guard: LEGACY_CHARACTERS.guard },
+} : ASSET_MANIFEST;
 
 /** Development only: every character on the procedural fallback rig. */
 export const FALLBACK_MANIFEST: AssetManifest = {

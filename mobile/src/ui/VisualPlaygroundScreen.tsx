@@ -1,19 +1,23 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Canvas, Picture, Skia, TileMode, matchFont } from '@shopify/react-native-skia';
 import type { SkFont, SkPaint } from '@shopify/react-native-skia';
-import { useAnimatedReaction, useDerivedValue, useFrameCallback, useSharedValue } from 'react-native-reanimated';
+import Animated, {cancelAnimation,useAnimatedStyle,withTiming,useAnimatedReaction, useDerivedValue, useFrameCallback, useSharedValue } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import * as Haptics from 'expo-haptics';
 
-import { playableStages } from '../game/levels/stages/tiltTestMaps';
+import {campaignStages as playableStages} from '../game/levels/campaignStages';
+import {missionId,missionIndex,missionName} from '../game/levels/campaignCatalog';
+import {migrateCampaign,completeMission} from '../game/progress/campaignProgress';
 import type { StageDefinition } from '../game/levels/StageDefinition';
 import { compileStage, TILE, WALL_HEIGHT } from '../game/world/compileStage';
 import { createPlaygroundState, stepPlayground } from '../game/playground/playgroundState';
+import { guardStrideContract } from '../rendering/characters/guardAnimation';
 import { buildNavigation } from '../game/world/navigation';
 import { BODY } from '../game/guards/guardTuning';
-import { ASSET_MANIFEST } from '../assets/manifest';
+import { ASSET_MANIFEST, PLAYTEST_MANIFEST } from '../assets/manifest';
+import { finalCharacterIssues } from '../assets/characterReadiness';
 import { useGameAssets } from '../assets/useGameAssets';
 import { createCharacterVisual } from '../rendering/characters/characterVisual';
 import { createDebugArt } from '../rendering/debug/guardDebug';
@@ -29,12 +33,21 @@ import { StageHeader } from './hud/StageHeader';
 import { useTiltControl } from '../game/input/useTiltControl';
 import { recenterTilt, stepTilt } from '../game/input/tilt';
 import { stopPlayer } from '../game/input/tiltMovement';
-import { canSelectStage, clearStage, DEFAULT_PROGRESS, loadProgress, saveProgress } from '../game/progress/stageProgress';
+import { DEFAULT_PROGRESS, loadProgress, saveProgress } from '../game/progress/stageProgress';
 import type { StageProgress } from '../game/progress/stageProgress';
 import { useWhistleAudio } from '../game/audio/useWhistleAudio';
 import { usePickupAudio } from '../game/audio/usePickupAudio';
+import { VALUABLES } from '../game/levels/stagePresentation';
+import { BrandingScreen } from './branding/BrandingScreen';
+import * as SplashScreen from 'expo-splash-screen';
+import { markStartup } from './branding/startupMetrics';
+import { useMenu } from './menu/MenuContext';
+import { SettingsScreen } from './menu/MenuScreens';
+import { feedbackKey,valuableKey } from './menu/strings';
+import { CharacterMotionDebug } from './CharacterMotionDebug';
 
 const VIEW_TILES_WIDE = 9.4;
+const releaseAssetIssues = finalCharacterIssues(ASSET_MANIFEST);
 
 function debugFont(): SkFont | null {
   try {
@@ -58,36 +71,41 @@ function makeVignette(w: number, h: number): SkPaint {
   return p;
 }
 
-export function VisualPlaygroundScreen() {
-  const [progress, setProgress] = useState<StageProgress>(DEFAULT_PROGRESS);
-  const [loaded, setLoaded] = useState(false);
-  const [started, setStarted] = useState(false);
+export function VisualPlaygroundScreen({ initialProgress, onProgressChange }: { initialProgress?: StageProgress; onProgressChange?: (next:StageProgress)=>void } = {}) {
+  const [localProgress, setProgress] = useState<StageProgress>(initialProgress ?? DEFAULT_PROGRESS);
+  const progress=onProgressChange&&initialProgress?initialProgress:localProgress;
+  const {home,t}=useMenu();
+  const [loaded, setLoaded] = useState(!!initialProgress);
+  const [started, setStarted] = useState(!!initialProgress);
 
   useEffect(() => {
+    if (initialProgress) return;
     let mounted = true;
+    markStartup('storage-start');
     void loadProgress().then((value) => {
       if (!mounted) return;
+      markStartup('storage-ready');
       setProgress(value);
       setLoaded(true);
     });
     return () => { mounted = false; };
-  }, []);
+  }, [initialProgress]);
 
   const updateProgress = (next: StageProgress) => {
     setProgress(next);
-    void saveProgress(next).catch(() => { /* Keep the in-memory session playable if storage fails. */ });
+    if(onProgressChange)onProgressChange(next);
+    else void saveProgress(next).catch(() => { /* Keep the in-memory session playable if storage fails. */ });
   };
 
+  if (started && !__DEV__ && releaseAssetIssues.length) return <View style={styles.titleScreen} onLayout={()=>{void SplashScreen.hideAsync().catch(()=>{});}}>
+    <Text style={styles.modalTitle}>{t('assetError')}</Text>
+    <Text style={styles.modalBody}>{t('assetDetail')}</Text>
+    <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
+  </View>;
   if (!loaded) return <View style={styles.root} />;
   if (!started) {
     return (
-      <View style={styles.titleScreen}>
-        <Text style={styles.logo}>DON&apos;T MOVE</Text>
-        <Text style={styles.tagline}>TILT STEALTH HEIST</Text>
-        <Pressable style={styles.primaryButton} onPress={() => setStarted(true)} accessibilityRole="button">
-          <Text style={styles.primaryText}>START</Text>
-        </Pressable>
-      </View>
+      <BrandingScreen soundEnabled={progress.soundEnabled} onStart={() => setStarted(true)} />
     );
   }
 
@@ -95,37 +113,43 @@ export function VisualPlaygroundScreen() {
 }
 
 function GameRun({ progress, onProgress }: { progress: StageProgress; onProgress: (next: StageProgress) => void }) {
-  const [index, setIndex] = useState(progress.currentStage);
+  const [index, setIndex] = useState(()=>missionIndex(migrateCampaign(progress).lastMission));
+  const [pending,setPending]=useState<number|null>(null);
+  const transition=useSharedValue(0);
+  const transitionStyle=useAnimatedStyle(()=>({opacity:transition.value}));
+  const finishTransition=useCallback(()=>{transition.set(withTiming(0,{duration:180},finished=>{if(finished)scheduleOnRN(setPending,null);}));},[transition]);
+  useEffect(()=>()=>cancelAnimation(transition),[transition]);
   const tilt = useTiltControl();
   const definition = playableStages[index];
 
-  const stageCleared = (seconds: number) => onProgress(clearStage(progress, index, seconds));
-  const selectStage = (selected: number, devUnlock = false) => {
-    if (!canSelectStage(progress, selected, __DEV__ && devUnlock)) return;
-    onProgress({ ...progress, currentStage: selected });
-    setIndex(selected);
-  };
-  const setSoundEnabled = (enabled: boolean) => onProgress({ ...progress, soundEnabled: enabled });
+  const stageCleared = (seconds: number, alerts: number) => onProgress({...progress,campaign:completeMission(migrateCampaign(progress),index,seconds,alerts)});
   const nextStage = () => {
-    if (index < playableStages.length - 1) setIndex(index + 1);
-    else {
-      onProgress({ ...progress, currentStage: 0 });
-      setIndex(0);
-    }
+    if(pending!==null)return;
+    const next=index<playableStages.length-1?index+1:0;
+    onProgress({...progress,campaign:{...migrateCampaign(progress),lastMission:missionId(next)}});
+    setPending(next);
+    transition.set(withTiming(1,{duration:160},finished=>{if(finished)scheduleOnRN(setIndex,next);}));
   };
 
   return (
-    <StageGame
+    <View style={{flex:1}}><StageGame
       key={definition.id}
       definition={definition}
       tilt={tilt}
       soundEnabled={progress.soundEnabled}
-      onSoundEnabled={setSoundEnabled}
       onStageCleared={stageCleared}
       onNextStage={nextStage}
       progress={progress}
-      onSelectStage={selectStage}
+      transitioning={pending!==null}
+      onTransitionReady={pending===index?finishTransition:undefined}
     />
+    {pending!==null&&<Animated.View style={[StyleSheet.absoluteFill,{backgroundColor:'#0a1823',alignItems:'center',justifyContent:'center'},transitionStyle]}>
+      <View style={{width:'52%',height:'48%',borderWidth:2,borderColor:'#627e8b',backgroundColor:'#122838',alignItems:'center',justifyContent:'center',gap:14}}>
+        <View style={{position:'absolute',left:'50%',top:0,bottom:0,width:1,backgroundColor:'#6c939a'}}/>
+        <Text style={{color:'#e6ecdf',fontSize:20,backgroundColor:'#122838',padding:12}}>{missionId(pending)}</Text>
+        <Text style={{color:'#a0c6cc',fontSize:12,textAlign:'center',backgroundColor:'#122838',padding:10}}>{missionName(pending,progress.language)}</Text>
+      </View>
+    </Animated.View>}</View>
   );
 }
 
@@ -135,30 +159,32 @@ function StageGame({
   definition,
   tilt,
   soundEnabled,
-  onSoundEnabled,
   onStageCleared,
   onNextStage,
   progress,
-  onSelectStage,
+  transitioning=false,
+  onTransitionReady,
 }: {
   definition: StageDefinition;
   tilt: TiltControl;
   soundEnabled: boolean;
-  onSoundEnabled: (enabled: boolean) => void;
-  onStageCleared: (seconds: number) => void;
+  onStageCleared: (seconds: number, alerts: number) => void;
   onNextStage: () => void;
   progress: StageProgress;
-  onSelectStage: (stage: number, devUnlock?: boolean) => void;
+  transitioning?:boolean;
+  onTransitionReady?:()=>void;
 }) {
+  const {t,home}=useMenu();
   const { width, height } = useWindowDimensions();
+  const [replayIntro,setReplayIntro]=useState(false);
   const insets = useSafeAreaInsets();
   const stage = useMemo(() => compileStage(definition), [definition]);
   const navigation = useMemo(() => buildNavigation(stage, BODY.guardRadius), [stage]);
   const bounds = useMemo(
-    () => ({ x: 0, y: -WALL_HEIGHT, w: stage.width, h: stage.height + WALL_HEIGHT }),
+    () => ({ x: 0, y: -WALL_HEIGHT-90, w: stage.width, h: stage.height + WALL_HEIGHT+90 }),
     [stage],
   );
-  const assets = useGameAssets(ASSET_MANIFEST);
+  const assets = useGameAssets(PLAYTEST_MANIFEST);
   const zoom = width / (VIEW_TILES_WIDE * TILE);
   const viewW = width / zoom;
   const viewH = height / zoom;
@@ -172,18 +198,25 @@ function StageGame({
       cone: createConeArt(),
       icons: createIconArt(assets.indicators),
       fx: createLightFx(),
-      diamond: assets.museum?.diamond ?? null,
+      diamond: assets.museum?.[VALUABLES[definition.objective?.kind ?? 'diamond'].sprite] ?? null,
       diamondPos: stage.objective,
       exit: Skia.XYWHRect(stage.exit.x, stage.exit.y, stage.exit.w, stage.exit.h),
+      exitPosition: definition.exitPosition ? {x:definition.exitPosition.x*TILE,y:definition.exitPosition.y*TILE} : undefined,
+      guidanceInsets: {top:insets.top+100,bottom:insets.bottom+20,left:insets.left,right:insets.right},
       showObjective: true,
       debug: createDebugArt(debugFont()),
       vignette: makeVignette(width, height),
       screen: Skia.XYWHRect(0, 0, width, height),
       zoom,
     };
-  }, [assets, stage, width, height, zoom]);
+  }, [assets, stage, definition, width, height, zoom,insets]);
+  useEffect(()=>{
+    if(!resources||!onTransitionReady)return;
+    let second=0;const first=requestAnimationFrame(()=>{second=requestAnimationFrame(onTransitionReady);});
+    return ()=>{cancelAnimationFrame(first);cancelAnimationFrame(second);};
+  },[resources,onTransitionReady]);
 
-  const state = useSharedValue(createPlaygroundState(stage));
+  const state = useSharedValue(createPlaygroundState(stage,guardStrideContract(PLAYTEST_MANIFEST.characters.guard)));
   const accumulated = useSharedValue(0);
   const pausedValue = useSharedValue(false);
   const playerMode = useSharedValue(2);
@@ -191,13 +224,12 @@ function StageGame({
   const [caught, setCaught] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [motionDebug,setMotionDebug]=useState(false);
   const [settings, setSettings] = useState(false);
   const [pauseFeedback, setPauseFeedback] = useState('');
   const [banner, setBanner] = useState('');
   const [secured, setSecured] = useState(false);
   const [flash, setFlash] = useState<'cyan' | 'red' | null>(null);
-  const [stageSelect, setStageSelect] = useState(false);
-  const [devUnlock, setDevUnlock] = useState(false);
   const [result, setResult] = useState({ seconds: 0, alerts: 0 });
   const [pickupRevision, setPickupRevision] = useState(0);
   const [tiltStatus, setTiltStatus] = useState('HOLD COMFORTABLY');
@@ -230,11 +262,21 @@ function StageGame({
   useAnimatedReaction(() => state.value.events.whistleCount, (value, previous) => {
     if (value !== previous) scheduleOnRN(setWhistleRevision, value);
   });
+  const alertBanner=(message:string)=>{
+    if(bannerTimer.current)clearTimeout(bannerTimer.current);
+    setBanner(message);bannerTimer.current=setTimeout(()=>setBanner(''),1800);
+  };
+  useAnimatedReaction(() => state.value.events.theftRevision, (value,previous)=>{
+    if(value>0 && value!==previous)scheduleOnRN(alertBanner,'THEFT ALERT');
+  });
+  useAnimatedReaction(() => state.value.events.globalAlert, (value,previous)=>{
+    if(value && !previous)scheduleOnRN(alertBanner,'PLAYER SPOTTED');
+  });
   const treasureAcquired = () => {
     setSecured(true);
     setPickupRevision((revision) => revision + 1);
     showFlash('cyan');
-    setBanner('DIAMOND ACQUIRED');
+    setBanner('OBJECTIVE SECURED');
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
     if (bannerTimer.current) clearTimeout(bannerTimer.current);
     bannerTimer.current = setTimeout(() => {
@@ -262,7 +304,7 @@ function StageGame({
     clearReported.current = true;
     const snapshot = state.get();
     setResult({ seconds: snapshot.t, alerts: snapshot.events.whistleCount });
-    onStageCleared(snapshot.t);
+    onStageCleared(snapshot.t, snapshot.events.whistleCount);
   }, [completed, onStageCleared, state]);
 
   const stopAndPause = () => {
@@ -274,7 +316,6 @@ function StageGame({
   const resume = () => {
     pausedValue.set(false);
     setSettings(false);
-    setStageSelect(false);
     setPaused(false);
     setPauseFeedback('');
   };
@@ -290,7 +331,7 @@ function StageGame({
     void Haptics.selectionAsync().catch(() => {});
   };
   const retry = () => {
-    const fresh = createPlaygroundState(stage);
+    const fresh = createPlaygroundState(stage,guardStrideContract(PLAYTEST_MANIFEST.characters.guard));
     fresh.touchSeq = touch.value.seq;
     state.set(fresh);
     accumulated.set(0);
@@ -308,12 +349,11 @@ function StageGame({
   useFrameCallback((frame) => {
     const dt = Math.min(0.05, (frame.timeSincePreviousFrame ?? 16) / 1000);
     // Reanimated executes this callback on the UI frame, not during React render.
-    // eslint-disable-next-line react-hooks/purity
     const now = Date.now();
     if (tiltEnabled) {
       controller.modify((s) => { 'worklet'; stepTilt(s, active.value ? sample.value : null, now, dt, tuning.value); return s; });
     }
-    if (pausedValue.value || !resources) return;
+    if (pausedValue.value || transitioning || !resources) return;
     const tiltInput = tiltEnabled ? {
       x: controller.value.x,
       y: controller.value.y,
@@ -353,8 +393,9 @@ function StageGame({
   }, []);
   const picture = useDerivedValue(() => {
     if (!resources) return empty;
-    return renderPlaygroundFrame(state.value, resources, false);
-  }, [resources]);
+    return __DEV__ && motionDebug ? renderPlaygroundFrame(state.value, resources, true)
+      : renderPlaygroundFrame(state.value, resources, false);
+  }, [resources,motionDebug]);
 
   const calibrationVisible = tiltEnabled && !caught && !completed &&
     (tilt.error || ['HOLD COMFORTABLY', 'SENSOR PAUSED', 'READY'].includes(tiltStatus));
@@ -371,60 +412,50 @@ function StageGame({
         onResponderMove={(event) => onTouch(event.nativeEvent.locationX, event.nativeEvent.locationY)}
       />
 
-      <StageHeader number={definition.number} title={definition.title} top={insets.top} onPause={stopAndPause} onRecenter={recenter} />
+      <StageHeader number={definition.number} code={definition.id} title={missionName(definition.number-1,progress.language)} top={insets.top} onPause={stopAndPause} onRecenter={recenter} />
 
-      {secured && <View pointerEvents="none" style={[styles.secured, { top: insets.top + 55 }]}><Text style={styles.securedText}>◇ DIAMOND SECURED</Text></View>}
+      <View pointerEvents="none" style={[styles.secured, { top: insets.top + 55 }]}><Text style={styles.securedText}>{secured ? `◇ ${t(definition.objective?.kind==='diamond'?'diamond':'secured')}` : `${t('target')} · ${t(valuableKey[definition.objective?.kind ?? 'diamond'])}`}</Text></View>
 
-      {!!banner && <View style={[styles.banner, { top: insets.top + 80 }]}><Text style={styles.bannerText}>{banner}</Text></View>}
+      {!!banner && <View style={[styles.banner, { top: insets.top + 80 }]}><Text style={styles.bannerText}>{feedbackKey(banner)?t(feedbackKey(banner)):banner}</Text></View>}
 
       {calibrationVisible && <View style={[styles.modal, styles.modalFront]}>
-        <Text style={styles.modalTitle}>{tilt.error || tiltStatus}</Text>
-        <Text style={styles.modalBody}>편하게 든 자세에서 잠시 멈춰 주세요</Text>
-        {!!tilt.error && <Pressable onPress={tilt.restart} style={styles.button}><Text style={styles.buttonText}>RETRY SENSOR</Text></Pressable>}
+        <Text style={styles.modalTitle}>{tilt.error || (tiltStatus==='HOLD COMFORTABLY'?t('hold'):tiltStatus==='READY'?t('ready'):t('sensorPaused'))}</Text>
+        <Text style={styles.modalBody}>{t('calibration')}</Text>
+        {!!tilt.error && <Pressable onPress={tilt.restart} style={styles.button}><Text style={styles.buttonText}>{t('sensorRetry')}</Text></Pressable>}
       </View>}
 
-      {paused && <View style={[styles.modal, styles.modalFront]}>
-        <Text style={styles.modalTitle}>{stageSelect ? 'STAGE SELECT' : settings ? 'SETTINGS' : 'PAUSED'}</Text>
-        {!!pauseFeedback && !settings && !stageSelect && <Text style={styles.feedback}>{pauseFeedback}</Text>}
-        {stageSelect ? <>
-          <View style={styles.stageGrid}>{playableStages.map((entry, i) => {
-            const unlocked = canSelectStage(progress, i, __DEV__ && devUnlock);
-            return <Pressable key={entry.id} disabled={!unlocked} accessibilityLabel={`Stage ${entry.number}${unlocked ? '' : ' locked'}`} onPress={() => {
-              if (i === definition.number - 1) retry();
-              else onSelectStage(i, devUnlock);
-            }} style={[styles.stageCell, !unlocked && styles.locked]}>
-              <Text style={styles.buttonText}>{String(entry.number).padStart(2, '0')}{progress.clearedStages.includes(i) ? ' ✓' : unlocked ? '' : ' ·'}</Text>
-            </Pressable>;
-          })}</View>
-          {__DEV__ && <Pressable onPress={() => setDevUnlock(!devUnlock)} style={styles.button}><Text style={styles.buttonText}>DEV UNLOCK {devUnlock ? 'ON' : 'OFF'}</Text></Pressable>}
-          <Pressable onPress={() => setStageSelect(false)} style={styles.button}><Text style={styles.buttonText}>BACK</Text></Pressable>
-        </> : settings ? <>
-          <Pressable onPress={() => onSoundEnabled(!soundEnabled)} style={styles.button}><Text style={styles.buttonText}>SOUND {soundEnabled ? 'ON' : 'OFF'}</Text></Pressable>
-          <Pressable onPress={() => setStageSelect(true)} style={styles.button}><Text style={styles.buttonText}>STAGE SELECT</Text></Pressable>
-          <Pressable onPress={() => setSettings(false)} style={styles.button}><Text style={styles.buttonText}>BACK</Text></Pressable>
-        </> : <>
-          <Pressable accessibilityRole="button" onPress={resume} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>RESUME</Text></Pressable>
-          <Pressable accessibilityRole="button" onPress={recenter} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>RECENTER</Text></Pressable>
-          <Pressable accessibilityRole="button" onPress={retry} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>RESTART</Text></Pressable>
-          <Pressable accessibilityRole="button" onPress={() => { setPauseFeedback(''); setSettings(true); }} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>SETTINGS</Text></Pressable>
-        </>}
+      {paused && !settings && !replayIntro && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+        <Text style={styles.modalTitle}>{t('paused')}</Text>
+        {!!pauseFeedback && <Text style={styles.feedback}>{feedbackKey(pauseFeedback)?t(feedbackKey(pauseFeedback)):pauseFeedback}</Text>}
+          <Pressable accessibilityRole="button" onPress={resume} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('resume')}</Text></Pressable>
+          <Pressable accessibilityRole="button" onPress={recenter} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('recenter')}</Text></Pressable>
+          <Pressable accessibilityRole="button" onPress={retry} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('restart')}</Text></Pressable>
+          <Pressable accessibilityRole="button" onPress={() => { setPauseFeedback(''); setSettings(true); }} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('settings')}</Text></Pressable>
+          <Pressable accessibilityRole="button" onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
+          {__DEV__&&<Pressable accessibilityRole="button" onPress={()=>{setMotionDebug(true);resume();}} style={styles.button}><Text style={styles.buttonText}>CHARACTER MOTION DEBUG</Text></Pressable>}
       </View>}
 
-      {caught && <View style={[styles.modal, styles.modalFront]}>
-        <Text style={[styles.modalTitle, styles.caught]}>CAUGHT</Text>
-        <Pressable onPress={retry} style={styles.primaryButton}><Text style={styles.primaryText}>RETRY</Text></Pressable>
+      {paused && settings && <View accessibilityViewIsModal style={[StyleSheet.absoluteFill,{zIndex:101,elevation:101}]}><SettingsScreen onBack={()=>setSettings(false)} onIntro={()=>setReplayIntro(true)}/></View>}
+      {replayIntro && <View style={[StyleSheet.absoluteFill,{zIndex:102,elevation:102}]}><BrandingScreen soundEnabled={soundEnabled} musicEnabled={progress.musicEnabled} onStart={home} onFinished={home}/></View>}
+      {caught && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+        <Text style={[styles.modalTitle, styles.caught]}>{t('caught')}</Text>
+        {__DEV__&&<Pressable accessibilityRole="button" onPress={()=>setMotionDebug(true)} style={styles.button}><Text style={styles.buttonText}>CAPTURE DIAGNOSTICS</Text></Pressable>}
+        <Pressable onPress={retry} style={styles.primaryButton}><Text style={styles.primaryText}>{t('retry')}</Text></Pressable>
+        <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
       </View>}
 
-      {completed && <View style={[styles.modal, styles.modalFront]}>
-        <Text style={[styles.modalTitle, styles.complete]}>{definition.number === 10 ? 'CHAPTER COMPLETE' : 'MISSION COMPLETE'}</Text>
-        <Text style={styles.modalBody}>{definition.title}</Text>
-        <Text style={styles.modalBody}>CLEAR TIME {result.seconds.toFixed(1)}s</Text>
-        <Text style={styles.modalBody}>ALERTS {result.alerts}</Text>
-        <Text style={styles.modalBody}>BEST TIME {(progress.bestTimes[definition.number - 1] ?? result.seconds).toFixed(1)}s</Text>
-        <Pressable onPress={onNextStage} style={styles.primaryButton}><Text style={styles.primaryText}>{definition.number === 10 ? 'PLAY AGAIN' : 'NEXT STAGE'}</Text></Pressable>
-        <Pressable onPress={retry} style={styles.button}><Text style={styles.buttonText}>RETRY STAGE</Text></Pressable>
+      {completed && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+        <Text style={[styles.modalTitle, styles.complete]}>{definition.mission === 5 ? t('chapter') : t('mission')}</Text>
+        <Text style={styles.modalBody}>{missionName(definition.number-1,progress.language)}</Text>
+        <Text style={styles.modalBody}>{t('time')} {result.seconds.toFixed(1)}s</Text>
+        <Text style={styles.modalBody}>{t('alerts')} {result.alerts}</Text>
+        <Text style={styles.modalBody}>{t('best')} {(migrateCampaign(progress).records[definition.id]?.bestTime ?? result.seconds).toFixed(1)}s</Text>
+        <Pressable onPress={onNextStage} style={styles.primaryButton}><Text style={styles.primaryText}>{definition.number === 45 ? t('again') : t('next')}</Text></Pressable>
+        <Pressable onPress={retry} style={styles.button}><Text style={styles.buttonText}>{t('retry')}</Text></Pressable>
+        <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
       </View>}
       {flash && <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: flash === 'cyan' ? 'rgba(70,225,255,0.24)' : 'rgba(255,40,40,0.30)' }]} />}
+      {__DEV__&&motionDebug&&resources&&<CharacterMotionDebug state={state} resources={resources} blockers={movementBlockers} bottom={insets.bottom+4} onClose={()=>setMotionDebug(false)} onMode={tiltEnabled?undefined:(mode)=>playerMode.set(mode)}/>}
     </View>
   );
 }
@@ -439,9 +470,9 @@ const styles = StyleSheet.create({
   titleScreen: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 18, backgroundColor: '#05070b' },
   logo: { color: '#f5f6f8', fontSize: 37, fontWeight: '900', letterSpacing: 7 },
   tagline: { color: '#7f8a9b', fontSize: 11, fontWeight: '700', letterSpacing: 3, marginBottom: 30 },
-  primaryButton: { minWidth: 170, alignItems: 'center', paddingHorizontal: 24, paddingVertical: 13, borderRadius: 8, backgroundColor: '#dce4ee' },
-  primaryText: { color: '#0a0d12', fontSize: 13, fontWeight: '900', letterSpacing: 2 },
-  button: { minWidth: 170, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 11, borderRadius: 8, backgroundColor: 'rgba(255,255,255,0.09)', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.18)' },
+  primaryButton: { minWidth: 170, alignItems: 'center', paddingHorizontal: 24, paddingVertical: 13, borderRadius: 16, borderWidth:1, borderColor:'#3ED5FA', backgroundColor: '#03131B' },
+  primaryText: { color: '#54DDF7', fontSize: 13, fontWeight: '900', letterSpacing: 2 },
+  button: { minWidth: 170, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 11, borderRadius: 16, backgroundColor: '#04121DDD', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.18)' },
   buttonPressed: { backgroundColor: 'rgba(255,255,255,0.22)', transform: [{ scale: 0.98 }] },
   buttonText: { color: '#e6e9ef', fontSize: 11, fontWeight: '800', letterSpacing: 1.2 },
   modal: { position: 'absolute', top: '31%', alignSelf: 'center', minWidth: 250, alignItems: 'center', gap: 14, padding: 28, borderRadius: 16, backgroundColor: 'rgba(8,11,17,0.96)', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.15)' },

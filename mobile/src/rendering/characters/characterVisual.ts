@@ -42,11 +42,12 @@ export function drawCharacterVisual(
   action: number,
   actionT: number,
   integratedPhase = false,
+  animationOverride = -1,
 ): void {
   'worklet';
   const set = v.sprites;
   if (set !== null) {
-    const clip = resolveClip(set, animForPose(gait, action, actionT), facingToDir(facing));
+    const clip = resolveClip(set, animationOverride >= 0 ? animationOverride : animForPose(gait, action, actionT), facingToDir(facing));
     if (clip !== null) {
       if (set.shadow) fillOval(canvas, x - 11, y - 3.6, 22, 7.2, v.shadow);
       drawSpriteFrame(canvas, pickFrame(clip, phase, t, dist, integratedPhase), x, y, set.scale, clip.mirror, v.paint);

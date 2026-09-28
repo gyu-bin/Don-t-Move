@@ -1,4 +1,4 @@
-import { footCycle, GAIT_STANCE, GAIT_STRIDE } from '../../src/game/core/locomotion';
+import { footCycle, GAIT_STANCE, GAIT_STRIDE, PLAYER_SPRITE_GEOMETRY, PLAYER_SPRITE_STRIDE } from '../../src/game/core/locomotion';
 
 /**
  * DON'T MOVE — character sprite contract (single source of truth).
@@ -8,7 +8,7 @@ import { footCycle, GAIT_STANCE, GAIT_STRIDE } from '../../src/game/core/locomot
  */
 
 /** Every frame cell, every sheet. Transparent PNG, no padding between cells. */
-export const CELL = 256;
+export const CELL = PLAYER_SPRITE_GEOMETRY.cell;
 
 /** Row order is identical in every sheet. Columns are time (frame 01 → N). */
 export const ROWS = ['down', 'up', 'left', 'right'] as const;
@@ -18,7 +18,7 @@ export type RowName = (typeof ROWS)[number];
  * Feet anchor: the ground point between the feet, in cell pixels.
  * Runtime draws the frame so this pixel sits on the character's world position.
  */
-export const ANCHOR = { x: 128, y: 224 } as const;
+export const ANCHOR = { x: PLAYER_SPRITE_GEOMETRY.anchorX, y: PLAYER_SPRITE_GEOMETRY.anchorY } as const;
 
 /**
  * 3/4 view: in Down/Up locomotion rows the foot stepping toward/away from the
@@ -52,7 +52,7 @@ export interface CharacterSpec {
 
 export const CHARACTERS: Record<'player' | 'guard', CharacterSpec> = {
   // Agent Zero: slim, compact.
-  player: { id: 'player', height: 172, heightTolerance: 10, shoulderWidth: 70, worldHeight: 46 },
+  player: { id: 'player', height: PLAYER_SPRITE_GEOMETRY.height, heightTolerance: 10, shoulderWidth: 70, worldHeight: PLAYER_SPRITE_GEOMETRY.worldHeight },
   // Guard: slightly taller and noticeably broader / heavier.
   guard: { id: 'guard', height: 186, heightTolerance: 10, shoulderWidth: 84, worldHeight: 50 },
 };
@@ -106,7 +106,7 @@ export const SHEETS: SheetSpec[] = [
     file: 'player_walk.png',
     character: 'player',
     anim: 'walk',
-    frames: 8,
+    frames: PLAYER_SPRITE_GEOMETRY.walkFrames,
     kind: 'loop-locomotion',
     fps: 0,
     beats: WALK_BEATS,
@@ -237,7 +237,8 @@ export function plantingFor(sheet: SheetSpec): PlantingSpec | null {
   if (sheet.gait === undefined) return null;
   const ch = CHARACTERS[sheet.character];
   const pxPerUnit = ch.height / ch.worldHeight;
-  const strideWorld = GAIT_STRIDE[sheet.gait];
+  const playerGait = sheet.gait === 1 ? 'sneak' : sheet.gait === 2 ? 'walk' : 'run';
+  const strideWorld = sheet.character === 'player' ? PLAYER_SPRITE_STRIDE[playerGait] : GAIT_STRIDE[sheet.gait];
   const stance = GAIT_STANCE[sheet.gait];
   const cyclePx = strideWorld * pxPerUnit;
   return {

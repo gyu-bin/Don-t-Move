@@ -59,6 +59,7 @@ function clip(def: ClipDef, images: Images, locomotion: boolean, mirror: boolean
   }
   if (frames.length === 0) return null;
   return {
+    source: def.image,
     frames,
     mode: def.mode ?? (locomotion ? 'distance' : 'time'),
     fps: def.fps ?? 8,
@@ -83,7 +84,7 @@ export function buildCharacterSet(m: CharacterManifest, images: Images): Charact
     if (row[3] === null && right) row[3] = clip(right, images, locomotion, true);
     clips.push(row);
   }
-  return { clips, scale: m.scale, shadow: m.shadow ?? true };
+  return { clips, scale: m.scale, shadow: m.shadow ?? true, strict: m.finalApproved === true };
 }
 
 export function buildAtlas(m: AtlasManifest, images: Images): SpriteAtlas | null {

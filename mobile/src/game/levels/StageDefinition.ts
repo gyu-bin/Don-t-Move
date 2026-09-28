@@ -6,7 +6,8 @@
  * them to world units (pixels at zoom 1) once at load.
  */
 
-export type StageTheme = 'museum' | 'bank' | 'lab' | 'casino' | 'blacksite';
+export type StageTheme = 'museum' | 'gallery' | 'bank' | 'lab' | 'casino' | 'mansion' | 'warehouse' | 'security' | 'blacksite' | 'vault';
+export type ValuableKind = 'diamond' | 'painting' | 'vaultGem' | 'prototype' | 'jewel' | 'artifact' | 'case' | 'data' | 'classified' | 'masterDiamond';
 
 /**
  * Layout grid legend (one character per tile):
@@ -30,7 +31,7 @@ export type PropKind =
   | 'lamp'
   | 'cctv'
   | 'pillar'
-  | 'door';
+  | 'door' | 'counter' | 'table' | 'shelf' | 'partition' | 'equipment' | 'sofa' | 'objectiveCase';
 
 export interface PropDef {
   kind: PropKind;
@@ -39,6 +40,8 @@ export interface PropDef {
   y: number;
   /** Optional per-instance scale on top of the kit default. */
   scale?: number;
+  /** Explicit physical scale for authored large cover; omitted preserves legacy collision. */
+  collisionScale?: number;
   /** Horizontal mirror. */
   flip?: boolean;
 }
@@ -75,10 +78,11 @@ export interface PatrolPoint {
 export interface PatrolRoute {
   id: string;
   points: PatrolPoint[];
-  mode: 'loop' | 'pingpong' | 'waitAndLook';
+  mode: 'loop' | 'pingpong' | 'waitAndLook' | 'roaming';
 }
 
 export interface GuardDef {
+  role?: 'objective' | 'room' | 'corridor' | 'roaming' | 'exit';
   id: string;
   x: number;
   y: number;
@@ -96,6 +100,16 @@ export interface GuardDef {
 }
 
 export interface StageDefinition {
+  patrolPlan?: import('./semanticPatrol').PatrolPlan;
+  entryEdge?: 'top'|'bottom'|'left'|'right';
+  entryPosition?: {x:number;y:number};
+  exitEdge?: 'top'|'bottom'|'left'|'right';
+  exitPosition?: {x:number;y:number};
+  landmark?: {name:string;kind:PropKind;x:number;y:number};
+  chapter?:number;
+  mission?:number;
+  structurePlan?:string;
+  securityZones?:{name:string;x:number;y:number;radius:number;guardId?:string}[];
   id: string;
   number: number;
   title: string;
@@ -105,7 +119,7 @@ export interface StageDefinition {
   props: PropDef[];
   lights: LightDef[];
   playerSpawn: { x: number; y: number; facing: number };
-  objective?: { kind: 'diamond'; x: number; y: number };
+  objective?: { kind: ValuableKind; x: number; y: number };
   exit?: { x: number; y: number; w: number; h: number };
   /** Development acceptance target, independent of mission/diamond/exit rules. Tile units. */
   temporaryGoal?: { x: number; y: number; radius: number };
@@ -120,4 +134,5 @@ export interface StageDefinition {
   patrolRoutes: PatrolRoute[];
   /** Global ambient darkness 0..1 (higher = darker). */
   ambientDarkness?: number;
+  objectiveZone?: { guardId: string; spotlight: boolean };
 }

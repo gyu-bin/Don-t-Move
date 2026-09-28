@@ -2,6 +2,9 @@ import { clamp, damp, turnToward, wrapAngle } from '../core/math';
 import { gaitFromSpeed, gaitLerp, strideCycleLength } from '../core/locomotion';
 import { Awareness, GuardAction } from '../core/types';
 import type { CompiledGuard } from '../world/compileStage';
+import { findPath } from '../world/navigation';
+import type { Navigation } from '../world/navigation';
+import { travel } from './guardTravel';
 import { castRay } from '../world/visibility';
 import { GUARD_TUNING as T } from './guardTuning';
 import { buildVisionFan, createFanBuffers, pointVisible } from './guardVision';
@@ -21,6 +24,11 @@ import type { VisionFan } from './guardVision';
  * that same fan → update suspicion/state. The renderer then draws that fan.
  */
 export interface GuardState extends VisionFan {
+  semanticPatrol: boolean;
+  patrolProgress: number;
+  patrolProgressAt: number;
+  patrolBlockedUntil: number[];
+  patrolRecoveries: number;
   id: string;
   speed: number;
   gait: number;
@@ -32,6 +40,13 @@ export interface GuardState extends VisionFan {
   lookTurnRate: number;
   escapePatrol?: { pace?: number; waitDuration?: number; lookDirection?: number };
   pingpong: boolean;
+  roaming: boolean;
+  roamVisits: number;
+  roamPrevious: number;
+  localInvestigating: boolean;
+  localArrived: boolean;
+  localLookT: number;
+  localReturning: boolean;
   routeIdx: number;
   routeDir: number;
   wait: number;
@@ -94,6 +109,11 @@ export interface PlayerView {
 }
 
 export interface GuardEvents {
+  theftAlert: boolean;
+  theftGuard: string;
+  theftAge: number;
+  theftSound: boolean;
+  theftRevision: number;
   whistleCount: number;
   alertCount: number;
   globalAlert: boolean;
@@ -108,13 +128,17 @@ export interface GuardEvents {
 }
 
 export function createGuardEvents(): GuardEvents {
-  return { whistleCount: 0, alertCount: 0, globalAlert: false, globalX: 0, globalY: 0, globalT: 0,
+  return { theftAlert:false, theftGuard:'', theftAge:0, theftSound:false, theftRevision:0,
+    whistleCount: 0, alertCount: 0, globalAlert: false, globalX: 0, globalY: 0, globalT: 0,
     globalRevision: 0, sawPlayer: false, whistleGuard: '', caught: false, caughtBy: '' };
 }
 
 export function createGuardState(g: CompiledGuard, phase = 0): GuardState {
   const { fan, fanAng } = createFanBuffers();
   return {
+    semanticPatrol: !!g.semanticPatrol,
+    patrolProgress: Infinity, patrolProgressAt: -1,
+    patrolBlockedUntil: g.route.map(()=>0), patrolRecoveries: 0,
     id: g.id,
     x: g.x,
     y: g.y,
@@ -132,6 +156,8 @@ export function createGuardState(g: CompiledGuard, phase = 0): GuardState {
     lookTurnRate: T.turnRatePatrol,
     escapePatrol: g.escapePatrol,
     pingpong: g.routeMode !== 'loop',
+    roaming: g.routeMode === 'roaming', roamVisits: 0, roamPrevious: -1,
+    localInvestigating: false, localArrived: false, localLookT: 0, localReturning: false,
     routeIdx: g.route.length > 1 ? 1 : 0,
     routeDir: 1,
     wait: g.route[0]?.wait ?? 0,
@@ -214,7 +240,8 @@ export function suspicionGain(g: GuardState, playerGait: number, difficulty = 1)
   const distance = T.distanceFactorNear + (T.distanceFactorFar - T.distanceFactorNear) * dn;
   const cn = clamp(Math.abs(g.angleToPlayer) / g.visionHalfAngle, 0, 1);
   const cone = 1 + (T.coneFactorEdge - 1) * cn;
-  const visibility = g.samplesSeen / 3;
+  const visibleBodyRatio = g.samplesSeen / 3;
+  const visibility = T.visibilityFactorFloor + (1 - T.visibilityFactorFloor) * visibleBodyRatio;
   return T.baseGain * difficulty * movement * distance * cone * visibility;
 }
 
@@ -290,6 +317,121 @@ function angleToLkp(g: GuardState): number {
   return Math.atan2(g.lkpY - g.y, g.lkpX - g.x);
 }
 
+/** Deterministic near/far alternation, excluding current and previous stops. */
+export function chooseRoamingPoint(g: GuardState): number {
+  'worklet';
+  let chosen=-1, score=g.roamVisits%2===0?Infinity:-Infinity;
+  for(let i=0;i<g.route.length;i++){
+    if(i===g.routeIdx || (g.route.length>2 && i===g.roamPrevious))continue;
+    const distance=Math.hypot(g.route[i].x-g.x,g.route[i].y-g.y);
+    if((g.roamVisits%2===0 && distance<score)||(g.roamVisits%2!==0 && distance>score)){
+      chosen=i;score=distance;
+    }
+  }
+  return chosen<0?g.routeIdx:chosen;
+}
+
+/** Verify the exact authored anchor, not A*'s nearest reachable fallback. */
+function anchorPath(g:GuardState,n:Navigation,i:number):number[] {
+  'worklet';
+  const p=g.route[i],path=findPath(n,g.x,g.y,p.x,p.y);
+  return path.length>=2 && Math.hypot(path[path.length-2]-p.x,path[path.length-1]-p.y)<1 ? path : [];
+}
+
+export function nearestPatrolAnchor(g:GuardState,n:Navigation):number {
+  'worklet';
+  let best=Infinity,index=g.routeIdx;
+  for(let i=0;i<g.route.length;i++){
+    const path=anchorPath(g,n,i);if(!path.length)continue;
+    let distance=0,x=g.x,y=g.y;
+    for(let k=0;k<path.length;k+=2){distance+=Math.hypot(path[k]-x,path[k+1]-y);x=path[k];y=path[k+1];}
+    if(distance<best){best=distance;index=i;}
+  }
+  return index;
+}
+
+function nextAnchor(g:GuardState,n:Navigation,t:number):number {
+  'worklet';
+  let best=-1,score=-Infinity;
+  for(let offset=1;offset<g.route.length;offset++){
+    const i=(g.routeIdx+offset)%g.route.length;
+    if(g.patrolBlockedUntil[i]>t || (g.route.length>2&&i===g.roamPrevious))continue;
+    const distance=Math.hypot(g.route[i].x-g.x,g.route[i].y-g.y);
+    if(distance<24 || !anchorPath(g,n,i).length)continue;
+    // Fixed tours retain author order; roaming alternates short/long legs,
+    // but only inside this guard's explicit assigned anchor list.
+    const rank=g.roaming ? (g.roamVisits%2===0?-distance:distance) : -offset;
+    if(rank>score){best=i;score=rank;}
+  }
+  return best;
+}
+
+function semanticPatrolMove(g:GuardState,n:Navigation,dt:number,t:number,scale:number):void {
+  'worklet';
+  if(g.delay>0){g.delay-=dt;g.speed=0;g.patrolProgressAt=-1;return;}
+  if(g.wait>0){
+    g.wait=Math.max(0,g.wait-dt);g.speed=0;
+    faceToward(g,g.lookTarget,g.lookTurnRate,dt);g.patrolProgressAt=-1;return;
+  }
+  const pt=g.route[g.routeIdx];if(!pt){g.speed=0;return;}
+  g.targetX=pt.x;g.targetY=pt.y;
+  const arrived=travel(g,n,T.walkSpeed*g.pace*scale,dt,t);
+  if(arrived && Math.hypot(g.x-pt.x,g.y-pt.y)<=T.arrivalDistance+1){
+    g.wait=clamp(pt.wait,0.8,2.5);g.speed=0;
+    g.lookTarget=Number.isNaN(pt.look)?g.facing:pt.look;
+    g.lookTurnRate=Math.abs(wrapAngle(g.lookTarget-g.facing))/Math.max(0.8,pt.turnDuration??1.1);
+    const next=nextAnchor(g,n,t);
+    if(next>=0){g.roamPrevious=g.routeIdx;g.routeIdx=next;g.roamVisits++;}
+    g.path=[];g.repathAt=0;g.patrolProgressAt=-1;return;
+  }
+  // Remaining path length detects orbiting too: distance travelled alone cannot.
+  let remaining=0,x=g.x,y=g.y;
+  for(let k=g.pathIndex;k<g.path.length;k+=2){remaining+=Math.hypot(g.path[k]-x,g.path[k+1]-y);x=g.path[k];y=g.path[k+1];}
+  remaining+=Math.hypot(pt.x-x,pt.y-y);
+  if(g.patrolProgressAt<0 || remaining<g.patrolProgress-10){g.patrolProgress=remaining;g.patrolProgressAt=t;}
+  if(t-g.patrolProgressAt>=4){
+    g.patrolBlockedUntil[g.routeIdx]=t+20;
+    const next=nextAnchor(g,n,t);
+    if(next>=0){g.roamPrevious=g.routeIdx;g.routeIdx=next;g.patrolRecoveries++;}
+    g.path=[];g.repathAt=t;g.speed=0;g.patrolProgressAt=-1;
+  }
+}
+
+function roamingMove(g: GuardState,n: Navigation,dt:number,t:number,scale:number):void {
+  'worklet';
+  if(g.delay>0){g.delay-=dt;g.speed=0;return;}
+  if(g.wait>0){
+    g.wait-=dt;g.speed=0;
+    const look=g.lookTarget+Math.sin((3-g.wait)*2.1)*0.55;
+    faceToward(g,look,T.turnRateNotice,dt);return;
+  }
+  const pt=g.route[g.routeIdx];if(!pt){g.speed=0;return;}
+  g.targetX=pt.x;g.targetY=pt.y;
+  if(travel(g,n,T.walkSpeed*g.pace*scale,dt,t)){
+    g.wait=1+(g.roamVisits%3);
+    g.lookTarget=Number.isNaN(pt.look)?g.facing:pt.look;
+    const next=chooseRoamingPoint(g);
+    g.roamPrevious=g.routeIdx;g.routeIdx=next;g.roamVisits++;
+    g.path=[];
+  }
+}
+
+/** Personal LKP, never the hidden player's current coordinates. */
+function investigateSuspicion(g:GuardState,n:Navigation,dt:number,t:number):void {
+  'worklet';
+  if(!g.localInvestigating){g.path=[];g.repathAt=0;g.localInvestigating=true;g.localArrived=false;g.localLookT=0;}
+  g.localReturning=false;
+  g.targetX=g.lkpX;g.targetY=g.lkpY;
+  if(!g.localArrived){
+    if(travel(g,n,g.suspicion>=0.75?T.walkSpeed*0.85:T.walkSpeed*0.5,dt,t)){
+      g.localArrived=true;g.localLookT=0;g.searchBase=g.facing;
+    }
+  }else{
+    g.speed=0;g.localLookT+=dt;
+    faceToward(g,g.searchBase+Math.sin(g.localLookT*2.2)*0.7,T.turnRateNotice,dt);
+  }
+}
+
 export function stepGuard(
   g: GuardState,
   p: PlayerView,
@@ -300,6 +442,7 @@ export function stepGuard(
   patrolEnabled: boolean,
   /** DIFFICULTY_GAIN multiplier (Core Rules V1 §33–34). */
   difficulty = 1,
+  navigation?: Navigation,
 ): void {
   'worklet';
   // The group coordinator owns all post-whistle behavior. This primitive is
@@ -337,18 +480,31 @@ export function stepGuard(
         }
       }
     }
+  } else if(navigation && g.hasLkp && (g.suspicion>=0.5 || g.localInvestigating)) {
+    g.patrolProgressAt=-1;
+    investigateSuspicion(g,navigation,dt,t);
+  } else if(navigation && g.localReturning) {
+    const pt=g.route[g.routeIdx];g.targetX=pt?.x??g.homeX;g.targetY=pt?.y??g.homeY;
+    if(travel(g,navigation,T.walkSpeed*g.pace,dt,t)){
+      g.localReturning=false;g.path=[];g.wait=1;g.lookTarget=g.facing;
+    }
   } else if (g.suspicion >= T.stopThreshold && g.hasLkp) {
     stand(g, dt);
     faceToward(g, angleToLkp(g), T.turnRateNotice, dt);
   } else {
     const glancing = g.suspicion >= T.glanceThreshold && g.hasLkp;
-    if (patrolEnabled) patrolMove(g, dt, glancing ? T.glanceSpeedScale : 1);
+    if (patrolEnabled && navigation && g.semanticPatrol) semanticPatrolMove(g,navigation,dt,t,glancing?T.glanceSpeedScale:1);
+    else if (patrolEnabled && navigation && g.roaming) roamingMove(g,navigation,dt,t,glancing?T.glanceSpeedScale:1);
+    else if (patrolEnabled) patrolMove(g, dt, glancing ? T.glanceSpeedScale : 1);
     else stand(g, dt);
     let glanceTarget = 0;
     if (glancing) {
       glanceTarget = clamp(wrapAngle(angleToLkp(g) - g.baseFacing), -T.glanceMaxAngle, T.glanceMaxAngle);
     }
-    g.glance = turnToward(g.glance, glanceTarget, T.turnRateGlance, dt);
+    // Semantic tours turn in place. A moving guard never looks sideways while
+    // its feet continue on another heading; all consumers retain one facing.
+    if(g.semanticPatrol && g.speed>0)g.glance=0;
+    else g.glance = turnToward(g.glance, glanceTarget, T.turnRateGlance, dt);
     g.facing = wrapAngle(g.baseFacing + g.glance);
   }
 
@@ -358,6 +514,7 @@ export function stepGuard(
 
   // 4. Suspicion + memory. LKP only updates while actually seen.
   if (g.canSee) {
+    if(g.localArrived && Math.hypot(p.x-g.lkpX,p.y-g.lkpY)>T.arrivalDistance){g.localArrived=false;g.localLookT=0;}
     g.suspicion = Math.min(1, g.suspicion + suspicionGain(g, p.gait, difficulty) * dt);
     g.unseenT = 0;
     g.hasLkp = true;
@@ -365,9 +522,15 @@ export function stepGuard(
     g.lkpY = p.y;
   } else {
     g.unseenT += dt;
-    if (g.unseenT > T.memorySeconds && g.awareness !== Awareness.Alert) {
+    if (g.unseenT > T.memorySeconds && g.awareness !== Awareness.Alert &&
+      (!g.localInvestigating || (g.localArrived && g.localLookT>=1.5))) {
       g.suspicion = Math.max(0, g.suspicion - T.decayPerSecond * dt);
     }
+  }
+
+  if(g.localInvestigating && g.suspicion<=0){
+    if(g.semanticPatrol && navigation)g.routeIdx=nearestPatrolAnchor(g,navigation);
+    g.localInvestigating=false;g.localReturning=true;g.localArrived=false;g.path=[];g.repathAt=0;
   }
 
   // 5. State transitions.

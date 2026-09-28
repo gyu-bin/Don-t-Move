@@ -28,5 +28,32 @@ Heavier than the Player: smaller bounce, planted landings, deliberate arm swing.
 
 ## After delivery
 
+### V3 integration / acceptance (supersedes fixed stride targets above)
+
+Existing `candidates/animation-v1/guard_walk.png` is NOT approved: planting failures
+and wrong direction row order remain. Do not promote it, distort limbs or loosen
+the validator. Keep the LEGACY design reference. No final Walk was produced in V3.
+
+Author one continuous 8-frame cycle first: Contact / Down / Passing / Up /
+Opposite Contact / Down / Passing / Up. Keep anatomical L/R identity, common
+256×256 cells and anchor (128,224); never re-center frames independently. Use knee
+compression, pelvis weight transfer, opposing torso/shoulder rotation and arm swing,
+and small stabilized head movement. Heavier than Player, without cartoon bouncing.
+Validate stance progression, swing clearance, 4→5 and 8→1, then extend to all rows
+Down / Up / Left / Right. Existing templates are motion references, not approved art.
+
+Measure effective stance travel from the same foot across successive stance frames.
+For an 8-frame cycle, world cycle distance = fitted sprite-pixel travel/frame × 8 ×
+registry scale. Supply that value as `characters.guard.clips.walk.<direction>.strideLength`.
+`guardStrideContract` now feeds these per-direction values into displacement-integrated
+playback; changing speed or entering Theft Alert does not reset animation phase.
+The old 40/52-unit values are provisional fallbacks, not a measured artwork claim.
+Do not change movement speed to force an image to pass. Validate at patrol speed,
+theft 1.2× pace, stop/start and turns. Final artwork and iPhone review remain required.
+
+Required sheets remain Idle 4×4, Walk 8×4, Run 8×4, Whistle 6×4, Search 6×4.
+Only locomotion is distance-driven; stationary Idle/Search use their action clock,
+and Whistle follows the whistle event clock. Release approval gate stays enabled.
+
 Same commands as the Player brief, with `--sheet guard_<anim>.png`, then validate, preview,
 check in the Museum next to the Player, and wire in `ASSET_MANIFEST` (`characters.guard`) after approval.

@@ -9,7 +9,7 @@ import { facingToDir } from '../../core/locomotion';
 import { wrapAngle } from '../../core/math';
 import { Awareness, GuardAction } from '../../core/types';
 import type { StageDefinition } from '../../levels/StageDefinition';
-import { compileStage, TILE } from '../../world/compileStage';
+import { compileStage } from '../../world/compileStage';
 import { castRay } from '../../world/visibility';
 import { createGuardEvents, createGuardState, stepGuard } from '../guardBrain';
 import type { GuardState, PlayerView } from '../guardBrain';

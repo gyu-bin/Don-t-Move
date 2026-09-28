@@ -4,6 +4,7 @@ import type { SkCanvas, SkFont, SkPaint, SkPath } from '@shopify/react-native-sk
 import type { GuardEvents, GuardState } from '../../game/guards/guardBrain';
 import { fill, stroke } from '../paints';
 import { scratch } from '../skiaScratch';
+import { BODY } from '../../game/guards/guardTuning';
 
 /**
  * Development overlay proving that the drawn cone IS the detection cone.
@@ -67,6 +68,11 @@ export function drawGuardDebug(
 ): void {
   'worklet';
   // Geometric limits.
+  c.drawCircle(px,py,BODY.playerRadius,a.facing);
+  c.drawCircle(g.x,g.y,BODY.guardRadius,a.facing);
+  c.drawCircle(g.x,g.y,BODY.playerRadius+BODY.guardRadius+BODY.captureTolerance,a.lkp);
+  c.drawCircle(px,py,2,a.text);
+  c.drawCircle(g.x,g.y,2,a.text);
   const r = g.visionRange;
   const e0 = g.facing - g.visionHalfAngle;
   const e1 = g.facing + g.visionHalfAngle;

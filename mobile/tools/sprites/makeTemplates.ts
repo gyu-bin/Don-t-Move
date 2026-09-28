@@ -37,6 +37,13 @@ import { FACING, RIG_SOLE_OFFSET, guideReachScale, poseFor, rigScale } from './r
 const OUT = path.resolve(__dirname, '../../art/characters/templates');
 
 async function main() {
+  const selected = process.argv.indexOf('--only');
+  const only = selected >= 0 ? process.argv[selected + 1] : null;
+  const rowArg = process.argv.indexOf('--row');
+  const rowName = rowArg >= 0 ? process.argv[rowArg + 1] : null;
+  if (only && !SHEETS.some(s=>s.file===only)) throw new Error('unknown --only sheet');
+  if (rowName && !ROWS.some(r=>r===rowName)) throw new Error('unknown --row');
+  const rows = rowName ? ROWS.filter(r=>r===rowName) : ROWS;
   const ck = await initSkiaNode();
   // Game rig (fallback) as pose guide. Imported after CanvasKit is ready.
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -90,9 +97,10 @@ async function main() {
 
   const plantedLabels: { x: number; y: number; s: string }[] = [];
   for (const sheet of SHEETS) {
+    if (only && sheet.file !== only) continue;
     const ch = CHARACTERS[sheet.character];
     const W = sheet.frames * CELL;
-    const H = ROWS.length * CELL;
+    const H = rows.length * CELL;
     const surface = ck.MakeSurface(W, H)!;
     const ckCanvas = surface.getCanvas();
     ckCanvas.clear(ck.TRANSPARENT);
@@ -103,7 +111,7 @@ async function main() {
     const reachScale = guideReachScale(sheet);
     const top = ANCHOR.y - ch.height;
 
-    ROWS.forEach((row, r) => {
+    rows.forEach((row, r) => {
       for (let i = 0; i < sheet.frames; i++) {
         const x0 = i * CELL;
         const y0 = r * CELL;
@@ -175,7 +183,7 @@ async function main() {
     // RN-Skia web picture → CanvasKit picture.
     ckCanvas.drawPicture((pic as any).ref);
 
-    ROWS.forEach((row, r) => {
+    rows.forEach((row, r) => {
       for (let i = 0; i < sheet.frames; i++) {
         const x0 = i * CELL;
         const y0 = r * CELL;
@@ -194,15 +202,15 @@ async function main() {
     surface.flush();
     const img = surface.makeImageSnapshot();
     const bytes = img.encodeToBytes()!;
-    const out = path.join(OUT, sheet.file.replace('.png', '_guide.png'));
+    const out = path.join(OUT, sheet.file.replace('.png', `${rowName ? `_${rowName}` : ''}_guide.png`));
     fs.writeFileSync(out, bytes);
-    console.log(`  ${path.basename(out)}  ${W}×${H}  (${sheet.frames} frames × ${ROWS.length} rows)`);
+    console.log(`  ${path.basename(out)}  ${W}×${H}  (${sheet.frames} frames × ${rows.length} rows)`);
     img.delete();
     surface.delete();
   }
 
   // Indicator icon guide.
-  {
+  if (!only && !rowName) {
     const W = ICONS.length * ICON_CELL;
     const surface = ck.MakeSurface(W, ICON_CELL)!;
     const cv = surface.getCanvas();

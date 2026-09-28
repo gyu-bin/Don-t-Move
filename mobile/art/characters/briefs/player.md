@@ -13,10 +13,9 @@ The numbers are in `../SPEC.md`: §3 (look), §3-A (mechanics), §4-A (foot plan
 
 ## Order (one sheet at a time, approval between each)
 
-1. `player_idle.png`: 4×4. Breathing ±1.4 px, shoulders 1–2 px, 1–2 px weight shift, backpack lags one frame, feet fixed. Not frozen.
-2. `player_sneak.png`: 6×4. Crouch 11 px lower, lean 9°, hands forward (arm 32°, elbow 77°), small swing ±13°, foot lift 7 px, grounded foot 15 px back per frame.
-3. `player_run.png`: 8×4. Lean 13°, arm swing ±54° with elbows at 89°, bounce 7.6 px, foot lift 18 px, **flight on frames 4 and 8**, grounded foot 24.3 px back per frame.
-4. `player_walk.png` (final): 8×4. Arm swing ±32° with elbows at 20°, bounce 4.4 px, lift 11 px, grounded foot 18.7 px back per frame (+37 → +19 → 0 → −19 → −37). Replaces the temporary sheet and fixes W1–W7.
+1. RIGHT Walk only: use `templates/player_walk_right_guide.png` and the runtime-generated SPEC §4-A. Preserve the third candidate's design, not its defective poses. Author one common-root two-step cycle with anatomical L/R continuity, hip/knee/shoulder/opposite arm/backpack at the same gait phase. No independent-frame generation. Arm swing ±32°, elbows20°, bounce4.4px, swing lift11px. See `../FOOT_TRACKS.md` for measured annotation requirements.
+2. Only after RIGHT numeric + visual loop + iPhone approval: extend Walk directions.
+3. Then Idle → Sneak → Run. Use runtime-generated targets, never the old Player 40-unit Walk figures. No work on these sheets until RIGHT approval.
 
 ## Must hold in every frame
 

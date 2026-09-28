@@ -9,6 +9,7 @@ import { BODY } from '../../guards/guardTuning';
 import { createPlaygroundState, stepPlayground } from '../../playground/playgroundState';
 import { Awareness } from '../../core/types';
 import { buildVisionFan, createFanBuffers, pointVisible } from '../../guards/guardVision';
+import { STAGE_PALETTES, VALUABLES } from '../stagePresentation';
 
 function traverse(
   stage: ReturnType<typeof compileStage>,
@@ -125,8 +126,8 @@ for (const def of playableStages) {
         x = p.x * TILE;
         y = p.y * TILE;
       }
-      assert.equal(x, exitCenter.x);
-      assert.equal(y, exitCenter.y);
+      assert(Math.abs(x-exitCenter.x)<1e-7,'escape must end at Exit centre (floating-point arithmetic only)');
+      assert(Math.abs(y-exitCenter.y)<1e-7,'escape must end at Exit centre (floating-point arithmetic only)');
     }
   });
 
@@ -163,11 +164,31 @@ for (const def of playableStages) {
     traverse(stage, state, playerNav, exitCenter.x, exitCenter.y, true);
     assert(state.mission.complete);
   });
+
+  test(`${def.number}: patrol-time samples retain an unobserved waiting pocket`, () => {
+    const state=createPlaygroundState(stage);
+    // Isolate patrol coverage from detection of this diagnostic observer.
+    state.player.x=-1000; state.player.y=-1000; state.playerMode=0;
+    const bounds={x:0,y:0,w:stage.width,h:stage.height};
+    for(let frame=0;frame<60*60;frame++){
+      stepPlayground(state,1/60,TILE,376,800,bounds,stage.movementBlockers,stage.visionBlockers,guardNav);
+      if(frame%30!==0)continue;
+      assert(def.safeZones!.some(z=>state.guards.every(g=>!pointVisible(g,z.x*TILE,z.y*TILE,stage.visionBlockers))),`all waiting pockets observed at ${frame/60}s`);
+    }
+  });
 }
 
 test('Ten distinct Chapter geometries use the authored difficulty progression', () => {
   assert.equal(playableStages.length, 10);
-  assert.deepEqual(playableStages.map((stage) => stage.guards.length), [2, 2, 3, 3, 4, 4, 4, 5, 5, 6]);
+  assert.equal(new Set(playableStages.map(s=>s.theme)).size,10);
+  assert.equal(new Set(playableStages.map(s=>s.objective!.kind)).size,10);
+  for(const s of playableStages){
+    assert(VALUABLES[s.objective!.kind].sprite);
+    assert.equal(s.ambientDarkness,STAGE_PALETTES[s.theme].darkness);
+    assert(s.lights.some(l=>l.kind===STAGE_PALETTES[s.theme].light));
+    assert((s.testRoutes?.length??0)>=2 && (s.escapeRoutes?.length??0)>=1);
+  }
+  assert.deepEqual(playableStages.map((stage) => stage.guards.length), [2, 3, 3, 4, 4, 4, 5, 5, 5, 6]);
   assert.equal(new Set(playableStages.map((stage) => stage.layout.join('\n'))).size, 10);
   const sizes = playableStages.map((stage) => compileStage(stage).grid.filter((cell) => cell === Cell.Floor).length);
   assert(sizes[9] > Math.max(...sizes.slice(0, 9)));
@@ -176,8 +197,8 @@ test('Ten distinct Chapter geometries use the authored difficulty progression', 
   }
 });
 
-test('Stage 10 all six guards enter Global Alert after one whistle', () => {
-  const stage = compileStage(playableStages[9]);
+for (const definition of playableStages) test(`Stage ${definition.number}: all guards enter Global Alert after one whistle`, () => {
+  const stage = compileStage(definition);
   const state = createPlaygroundState(stage);
   const guard = state.guards[0];
   state.player.x = guard.x + Math.cos(guard.facing) * 30;

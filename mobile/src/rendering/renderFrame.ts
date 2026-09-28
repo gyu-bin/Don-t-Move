@@ -1,5 +1,6 @@
 import { Skia } from '@shopify/react-native-skia';
 import { tiltVisualGait } from '../game/input/tiltMovement';
+import { exitGuidance } from '../ui/hud/exitGuidance';
 import type { SkCanvas, SkPaint, SkPath, SkPicture, SkRect } from '@shopify/react-native-skia';
 
 import { Awareness, GuardAction } from '../game/core/types';
@@ -31,6 +32,8 @@ export interface RenderResources {
   diamond: SpriteFrame | null;
   diamondPos: { x: number; y: number };
   exit: SkRect;
+  exitPosition?: {x:number;y:number};
+  guidanceInsets?: {top:number;bottom:number;left:number;right:number};
   debug: DebugArt;
   vignette: SkPaint;
   screen: SkRect;
@@ -68,6 +71,11 @@ function drawEntity(c: SkCanvas, id: number, s: PlaygroundState, r: RenderResour
     const p = s.player;
     drawCharacterVisual(c, r.player, p.x, p.y, p.facing, tiltVisualGait(p.speed), p.spritePhase, p.dist, s.t, GuardAction.None, 0, true);
   } else if (id === 1) {
+    if(s.mission.treasure && r.showObjective!==false){
+      // Persistent raised lid on the empty case; no time-based locomotion changes.
+      const x=r.diamondPos.x,y=r.diamondPos.y;
+      c.drawLine(x-16,y-28,x+10,y-40,r.fx.sparkle);
+    }
     const gem = r.diamond;
     if (gem !== null && r.showObjective !== false && !s.mission.treasure) {
       const bob = Math.sin(s.t * 2.2) * 2;
@@ -75,7 +83,8 @@ function drawEntity(c: SkCanvas, id: number, s: PlaygroundState, r: RenderResour
     }
   } else {
     const g = s.guards[id - 2];
-    drawCharacterVisual(c, r.guard, g.x, g.y, g.facing, g.gait, g.phase, g.dist, s.t, g.action, g.actionT);
+    const a = s.guardPlayback[id - 2];
+    drawCharacterVisual(c, r.guard, g.x, g.y, g.facing, g.gait, a.phase, g.dist, a.time, g.action, g.actionT, true, a.animation);
   }
 }
 
@@ -107,8 +116,11 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
   c.drawPicture(r.stage.floor);
 
   if (s.mission.enabled) {
+    if(r.stage.exitActive){if(s.mission.treasure)c.drawPicture(r.stage.exitActive);}
+    else {
     c.drawRect(r.exit, s.mission.treasure ? r.fx.exitActive : r.fx.exitInactive);
     if (s.mission.treasure) c.drawRect(r.exit, r.fx.exitEdge);
+    }
   }
 
   // Vision cones: the exact polygon the guard's detection used this frame
@@ -225,5 +237,17 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
 
   c.restore();
   c.drawRect(r.screen, r.vignette);
+  const guide=exitGuidance(s.mission.enabled && s.mission.treasure && !s.mission.complete && !s.events.caught,
+    r.exitPosition ?? {x:r.exit.x+r.exit.width/2,y:r.exit.y+r.exit.height/2},s.cam,r.zoom,
+    {width:r.screen.width,height:r.screen.height,top:r.guidanceInsets?.top??100,bottom:r.guidanceInsets?.bottom??24,
+      left:r.guidanceInsets?.left,right:r.guidanceInsets?.right});
+  if(guide){
+    if(guide.edge){
+      c.save();c.translate(guide.x,guide.y);c.rotate(guide.angle*180/Math.PI,0,0);
+      c.drawLine(-8,0,7,0,r.fx.exitEdge);
+      c.drawLine(2,-5,7,0,r.fx.exitEdge);c.drawLine(2,5,7,0,r.fx.exitEdge);c.restore();
+    }else c.drawCircle(guide.x,guide.y,16,r.fx.exitEdge);
+    if(r.debug.font)c.drawText('EXIT',guide.x-10,guide.y+20,r.debug.sampleOk,r.debug.font);
+  }
   return rec.finishRecordingAsPicture();
 }

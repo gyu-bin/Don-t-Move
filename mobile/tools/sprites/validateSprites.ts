@@ -24,6 +24,8 @@
  * indicators_preview.png, preview.html (animated playback of every row).
  */
 import * as fs from 'fs';
+import { createHash } from 'crypto';
+import { validateRightFootTracks } from './footTracks';
 import * as path from 'path';
 import type { CanvasKit, Image } from 'canvaskit-wasm';
 
@@ -279,6 +281,16 @@ export async function validate(
           ? FEET_RANGE.action
           : FEET_RANGE.idle;
       const above = range.above + (spec.anim === 'run' ? FEET_RANGE.runExtraLift : 0);
+      // Front/back contacts project along y. A longer authored stride changes
+      // their expected floor positions, not the allowed drawing error.
+      const projected = spec.character === 'player' && locomotion && (row === 'down' || row === 'up')
+        ? Array.from({ length: spec.frames }, (_, i) => plantedFeet(spec, i)
+          .map(f => f.forwardPx * FRONT_BACK_FORESHORTEN * (row === 'down' ? 1 : -1))) : [];
+      const maxProjected = Math.max(0, ...projected.flat());
+      const below = projected.length
+        ? Math.max(range.below, Math.ceil(maxProjected) + FEET_RANGE.locomotionSide.below) : range.below;
+      const projectedClosest = projected.length
+        ? Math.min(...projected.filter(ps => ps.length).map(ps => Math.abs(Math.max(...ps)))) : 0;
       let closest = Infinity;
       stats[r].forEach((s, i) => {
         const where = `${spec.file} ${row} #${i + 1}`;
@@ -306,7 +318,7 @@ export async function validate(
         closest = Math.min(closest, Math.abs(feet));
         if (feet < -above)
           add('ERROR', where, `feet ${-feet}px above ground line (max ${above}) — floating frame?`);
-        if (feet > range.below) add('ERROR', where, `feet ${feet}px below ground line (max ${range.below})`);
+        if (feet > below) add('ERROR', where, `feet ${feet}px below ground line (max ${below})`);
         if (Math.abs(s.cx - ANCHOR.x) > T.centreTolerance) {
           add(
             'ERROR',
@@ -319,7 +331,7 @@ export async function validate(
       });
       if (heights.length === 0) return;
       const where = `${spec.file} ${row}`;
-      if (locomotion && closest > FEET_RANGE.mustTouch) {
+      if (locomotion && closest > FEET_RANGE.mustTouch + projectedClosest) {
         add(
           'ERROR',
           where,
@@ -354,6 +366,27 @@ export async function validate(
     const pl = plantingFor(spec);
     if (!pl) continue;
     ROWS.forEach((row, r) => {
+      if (spec.character === 'player' && spec.anim === 'walk' && row === 'right') {
+        const where = `${spec.file} ${row}`;
+        const trackFile = path.join(charsDir, spec.file.replace('.png', '.feet.json'));
+        try {
+          const tracks = JSON.parse(fs.readFileSync(trackFile, 'utf8'));
+          const hash = createHash('sha256').update(fs.readFileSync(path.join(charsDir, spec.file))).digest('hex');
+          if (tracks.version !== 1 || tracks.imageSha256 !== hash) {
+            add('ERROR', where, 'foot planting: annotation version/image SHA256 mismatch'); return;
+          }
+          const result = validateRightFootTracks(px, spec, r, tracks.rows?.right);
+          for (const error of result.errors) add('ERROR', where, `foot planting: ${error}`);
+          for (const t of result.transitions) {
+            add(t.pass ? 'OK' : 'WARN', where,
+              `${t.from}→${t.to} ${t.foot}${t.boundary ? ' boundary' : ''}: backward ${t.backwardPx.toFixed(2)}px, world residual ${t.residualWorld.toFixed(2)}`);
+          }
+          add('WARN', where, 'Anatomical identity/full-body continuity must be visually reviewed; landmarks are not independent proof of art quality.');
+        } catch (error) {
+          add('ERROR', where, `foot planting: missing/unreadable identity tracks (${String(error)})`);
+        }
+        return;
+      }
       const res = checkPlanting(px, spec, row, r, pl.perFramePx);
       if (res.expected === 0) return;
       const where = `${spec.file} ${row}`;

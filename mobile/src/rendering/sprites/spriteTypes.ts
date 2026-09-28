@@ -18,6 +18,8 @@ export interface SpriteFrame {
 }
 
 export interface SpriteClip {
+  /** Registry image key for development diagnostics; never changes playback. */
+  source?: string;
   frames: SpriteFrame[];
   /**
    * 'distance' clips (sneak/walk/run) play one full cycle per stride length,
@@ -41,7 +43,7 @@ export interface SpriteClip {
  * Idle/Walk/Run/Whistle/Search. Missing clips fall back (see resolveClip).
  */
 export const Anim = { Idle: 0, Sneak: 1, Walk: 2, Run: 3, Whistle: 4, Search: 5 } as const;
-export type Anim = (typeof Anim)[keyof typeof Anim];
+export type AnimationCode = (typeof Anim)[keyof typeof Anim];
 export const ANIM_COUNT = 6;
 export const ANIM_NAMES = ['idle', 'sneak', 'walk', 'run', 'whistle', 'search'] as const;
 export type AnimName = (typeof ANIM_NAMES)[number];
@@ -50,6 +52,7 @@ export const DIR_NAMES = ['down', 'up', 'right', 'left'] as const;
 export type DirName = (typeof DIR_NAMES)[number];
 
 export interface CharacterSpriteSet {
+  strict?: boolean;
   /** clips[anim][dir]; null = not provided (fallback rules apply). */
   clips: (SpriteClip | null)[][];
   /** World units per source pixel. */

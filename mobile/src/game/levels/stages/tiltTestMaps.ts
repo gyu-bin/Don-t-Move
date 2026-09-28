@@ -1,4 +1,6 @@
 import type { GuardDef, PatrolRoute, PropDef, StageDefinition } from '../StageDefinition';
+import { STAGE_PALETTES } from '../stagePresentation';
+import startupStages from './startupStages.json';
 
 type Room = [x: number, y: number, width: number, height: number];
 /** Authoring only: union floor rectangles, surround every exposed edge/corner with walls.
@@ -134,7 +136,7 @@ function chapterStage(base: StageDefinition, number: number, title: string,
   return stage;
 }
 
-export const playableStages: StageDefinition[] = [
+const chapterLayouts: StageDefinition[] = [
   chapterStage(foundations[0], 1, 'THE MUSEUM'),
   chapterStage(foundations[0], 2, 'COVER HALL', {
     layout: layout(25,23,[[2,2,20,18],[1,8,23,7]],[[9,8,2,4],[15,8,2,4],[10,13,1,1]]),
@@ -171,6 +173,78 @@ export const playableStages: StageDefinition[] = [
     layout: layout(43,37,[[1,27,16,6],[2,3,6,26],[2,2,33,6],[31,3,10,20],[11,10,19,13],[6,13,8,7],[12,20,7,10],[23,20,16,14],[16,28,23,7],[28,15,13,7]]),
   }),
 ];
+
+/** Distinct venue layouts. Existing authored paths remain explicit and testable. */
+const venues: StageDefinition[] = [
+  chapterLayouts[0],
+  chapterStage(foundations[0],2,'ART GALLERY',{
+    layout:layout(25,23,[[2,2,20,18],[1,8,23,7]],[[7,8,4,4],[15,8,4,4],[8,14,3,2]]),
+    props:[cover('painting',6,2.9),cover('painting',17,2.9),cover('displayCase',7,15.5),cover('bench',5.5,12.5)],
+    guards:[...foundations[0].guards,guard('g3',21,11,'side',Math.PI/2)],
+    patrolRoutes:[...foundations[0].patrolRoutes,route('side',[[21,9],[21,13]])],
+    testRoutes:[foundations[0].testRoutes![0],{name:'Risk Route',points:[point(4.5,18.5),point(12.5,18.5),point(12.5,6.5),point(20.5,6.5),point(20.5,3.5)]}],
+    testPurpose:'Long gallery spine with side exhibition rooms; wait outside the side patrol.',
+  }),
+  chapterStage(foundations[1],3,'BANK',{
+    layout:layout(23,25,[[1,18,8,5],[5,13,4,7],[5,11,11,4],[12,6,4,7],[8,3,8,4],[8,1,11,5],[1,11,6,4],[15,7,4,5],[2,4,4,10],[4,4,7,3]]),
+    props:foundations[1].props.map(p=>({...p,kind:p.kind==='statue'?'displayCase':p.kind})),
+    testRoutes:[{name:'Safe Route',points:[point(3.5,20.5),point(6.5,20.5),point(6.5,13),point(3.5,13),point(3.5,5.5),point(10,5.5),point(17,4.5),point(17,2.5)]},foundations[1].testRoutes![1]],
+    testPurpose:'S-shaped service route versus western counter bypass to vault.',
+  }),
+  chapterStage(foundations[2],4,'LAB',{
+    layout:layout(28,24,[[1,1,24,20],[24,8,3,7]],[[9,7,9,8]]),
+    props:foundations[2].props.map(p=>({...p,kind:p.kind==='statue'?'displayCase':p.kind})),
+    testPurpose:'Central sealed experiment chamber; clockwise/counterclockwise ring.',
+  }),
+  chapterStage(foundations[2],5,'CASINO',{
+    layout:layout(29,25,[[1,1,24,20],[24,7,3,10],[6,20,16,3]],[[10,8,2,2],[15,8,2,2],[10,13,2,2],[15,13,2,2]]),
+    props:[...foundations[2].props,cover('displayCase',12.5,11.5),cover('displayCase',17.5,11.5)],
+    carpets:[{x:10,y:3,w:7,h:2},{x:10,y:18,w:7,h:2}],
+    testPurpose:'Open gaming floor, four table islands and a risky central crossing.',
+    testRoutes:[foundations[2].testRoutes![0],{name:'Risk Route',points:[point(3.5,18.5),point(13.5,18.5),point(13.5,5),point(22.5,5),point(22.5,3.5)]}],
+  }),
+  chapterStage(foundations[3],6,'MANSION',{
+    guards:foundations[3].guards.filter(g=>g.id!=='g2'),
+    layout:layout(32,27,[[1,1,12,10],[10,5,13,16],[3,17,10,7],[20,11,11,14],[15,2,12,6],[6,9,7,10]],[[18,10,2,4]]),
+    props:foundations[3].props.map(p=>({...p,kind:p.kind==='crate'?'plant':p.kind})),
+    carpets:[{x:6,y:3,w:2,h:5},{x:23,y:13,w:3,h:8}],
+    testPurpose:'Room-to-room estate: library, connecting hall and east reception.',
+  }),
+  chapterStage(foundations[0],7,'WAREHOUSE',{
+    layout:layout(36,29,[[1,1,32,25],[32,8,3,12]],[[10,9,2,3],[18,9,2,3],[26,9,2,3],[10,18,2,3],[18,18,2,3],[26,18,2,3]]),
+    playerSpawn:{x:3.5,y:24,facing:-Math.PI/2},objective:{kind:'case',x:31,y:3.5},
+    exit:{x:2.7,y:24.6,w:1.6,h:0.8},carpets:[],
+    props:[cover('crate',8,9),cover('crate',16,9),cover('crate',24,9),cover('crate',8,18),cover('crate',16,18),cover('crate',24,18)],
+    guards:[guard('g1',12,5,'north'),guard('g2',7,13,'west',Math.PI/2),guard('g3',16,15,'middle'),guard('g4',30,13,'east',Math.PI/2),guard('g5',22,23,'south')],
+    patrolRoutes:[route('north',[[7,5],[24,5]]),route('west',[[7,10],[7,20]]),route('middle',[[13,15],[25,15]]),route('east',[[30,8],[30,21]]),route('south',[[13,23],[28,23]])],
+    safeZones:[{x:3.5,y:24,radius:1},{x:3.5,y:3.5,radius:1},{x:33,y:17,radius:0.7}],
+    testRoutes:[{name:'Safe Route',points:[point(3.5,24),point(3.5,3.5),point(31,3.5)]},{name:'Risk Route',points:[point(3.5,24),point(14,24),point(14,3.5),point(31,3.5)]}],
+    escapeRoutes:[{name:'Loading-bay escape',points:[point(31,3.5),point(31,24),point(3.5,24),point(3.5,25)]}],
+    lights:[[4,4],[14,4],[25,4],[4,24],[16,24],[30,24],[16,15]].map(([x,y])=>({x,y,radius:4,kind:'warm',intensity:0.8})),
+    testPurpose:'Long sightlines across staggered cargo aisles; perimeter escape.',
+  }),
+  {...chapterLayouts[7],
+    layout:layout(31,26,[[1,1,12,10],[10,5,13,16],[3,17,10,7],[20,11,10,13],[15,2,12,6],[6,9,7,10],[26,5,4,10]],[[18,10,1,4]]),
+    props:chapterLayouts[7].props.map(p=>({...p,kind:p.kind==='statue'?'displayCase':p.kind})),
+    testPurpose:'Security corridors with an eastern bypass loop; regroup after alert.',
+  },
+  {...chapterLayouts[8],props:chapterLayouts[8].props.map(p=>({...p,kind:p.kind==='statue'?'crate':p.kind}))},
+  {...chapterLayouts[9],props:chapterLayouts[9].props.map(p=>({...p,kind:p.kind==='statue'?'displayCase':p.kind}))},
+];
+const venueNames=['MUSEUM','ART GALLERY','BANK','LAB','CASINO','MANSION','WAREHOUSE','SECURITY HQ','BLACK SITE','HIGH SECURITY VAULT'];
+const themes = ['museum','gallery','bank','lab','casino','mansion','warehouse','security','blacksite','vault'] as const;
+const valuables = ['diamond','painting','vaultGem','prototype','jewel','artifact','case','data','classified','masterDiamond'] as const;
+export const prePolishStages: StageDefinition[] = venues.map((s,i)=>{
+  const palette=STAGE_PALETTES[themes[i]];
+  return {...s,title:venueNames[i],theme:themes[i],ambientDarkness:palette.darkness,
+    objective:{...s.objective!,kind:valuables[i]},
+    lights:s.lights.map(l=>({...l,kind:l.kind==='cyan'?'cyan':palette.light})),
+  };
+});
+
+// Same authored data, baked before shipping: do not run authoring A* searches
+// on the phone at module initialization. Equality is checked by startupStages.test.
+export const playableStages = startupStages as StageDefinition[];
 
 /** Backward-compatible tooling name; these are no longer temporary test maps. */
 export const tiltTestMaps = playableStages;

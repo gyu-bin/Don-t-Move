@@ -2,6 +2,7 @@ import { Skia, TileMode } from '@shopify/react-native-skia';
 import type { SkCanvas, SkPaint } from '@shopify/react-native-skia';
 
 import { hash2 } from '../../game/core/math';
+import { STAGE_PALETTES } from '../../game/levels/stagePresentation';
 import { Cell, TILE, WALL_HEIGHT } from '../../game/world/compileStage';
 import type { CompiledProp, CompiledStage } from '../../game/world/compileStage';
 import { fill, stroke } from '../paints';
@@ -56,7 +57,8 @@ function linear(x0: number, y0: number, x1: number, y1: number, colors: string[]
 
 /** Floor tiles + carpets. */
 export function drawFallbackFloor(c: SkCanvas, stage: CompiledStage): void {
-  const tilePaints = PAL.floor.map((col) => fill(col));
+  const theme = STAGE_PALETTES[stage.def.theme];
+  const tilePaints = theme.floor.map((col) => fill(col));
   const grout = stroke(PAL.floorGrout, 1.4);
   const bevel = stroke(PAL.floorBevel, 1);
   const crack = stroke(PAL.crack, 0.9);
@@ -90,7 +92,7 @@ export function drawFallbackFloor(c: SkCanvas, stage: CompiledStage): void {
   }
 
   // Carpets
-  const carpet = fill(PAL.carpet);
+  const carpet = fill(theme.carpet);
   const carpetEdge = stroke(PAL.carpetDark, 3);
   const trim = stroke(PAL.carpetTrim, 1, 0.55);
   for (const cp of stage.def.carpets ?? []) {
@@ -152,7 +154,7 @@ export function drawFallbackWallRow(c: SkCanvas, stage: CompiledStage, r: number
         fy,
         TILE,
         WALL_HEIGHT,
-        linear(0, fy, 0, fy + WALL_HEIGHT, [PAL.wallFaceTop, PAL.wallFaceBottom]),
+        linear(0, fy, 0, fy + WALL_HEIGHT, [STAGE_PALETTES[stage.def.theme].wall, PAL.wallFaceBottom]),
       );
       fillRect(c, x, fy, TILE, 3, lipShadow);
       c.drawLine(x + TILE / 2, fy + 4, x + TILE / 2, fy + WALL_HEIGHT - 6, seam);

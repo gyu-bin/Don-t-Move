@@ -1,4 +1,5 @@
-import { advancePlayerSpritePhase, gaitFromSpeed, strideCycleLength } from '../core/locomotion';
+import { advancePlayerSpritePhase, gaitFromSpeed, strideCycleLength, playerSpriteGait } from '../core/locomotion';
+import { rightWalkTrialStride } from '../core/rightWalkTrial';
 import { turnToward } from '../core/math';
 import { moveWithCollision } from '../world/collision';
 import { BODY } from '../guards/guardTuning';
@@ -12,11 +13,11 @@ export function stopPlayer(p: PlayerState): void {
 }
 export function movementName(speed: number): string {
   'worklet';
-  return speed <= 0.5 ? 'IDLE' : speed <= 38 ? 'SNEAK' : speed <= 72 ? 'WALK' : 'RUN';
+  return ['IDLE','SNEAK','WALK','RUN'][playerSpriteGait(speed)];
 }
 export function tiltVisualGait(speed: number): number {
   'worklet';
-  return speed <= 0.5 ? 0 : speed <= 38 ? 1 : speed <= 72 ? 2 : 3;
+  return playerSpriteGait(speed);
 }
 export function stepTiltPlayer(p: PlayerState, input: TiltMovement, dt: number, blockers: number[]): void {
   'worklet';
@@ -40,5 +41,5 @@ export function stepTiltPlayer(p: PlayerState, input: TiltMovement, dt: number, 
   if (p.speed > 0.5) p.facing = turnToward(p.facing, Math.atan2(p.vy, p.vx), 10, dt);
   p.phase = (p.phase+p.speed*dt/strideCycleLength(tiltVisualGait(p.speed)))%1;
   p.dist += p.speed*dt;
-  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed);
+  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing));
 }

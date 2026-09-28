@@ -1,8 +1,8 @@
 /**
  * Locomotion constants shared by simulation and every character renderer
  * (sprite sheets and the procedural fallback). Animation playback is driven by
- * distance travelled / stride length, so feet never slide regardless of the
- * renderer.
+ * distance travelled / stride length. Correct authored poses are also required;
+ * discrete sprite frame holds cannot guarantee zero continuous foot sliding.
  *
  * Gait is a continuous value: 0 = Idle, 1 = Sneak, 2 = Walk, 3 = Run.
  */
@@ -13,15 +13,29 @@ export const GAIT_SPEED = [0, 38, 72, 150];
 /** World units covered by one full animation cycle (two steps) at each gait. */
 export const GAIT_STRIDE = [8, 24, 40, 52];
 
-/** Temporary Agent Zero sheet cycle lengths, tuned independently of movement speed. */
+/** Player sprite authoring/playback contract. Walk cadence is locked to 2.4 steps/s at 72 u/s. */
 export const PLAYER_SPRITE_STRIDE = { sneak: 54, walk: 60, run: 80 } as const;
 
-/** Integrate each actual displacement so changing gait never reinterprets past distance. */
-export function advancePlayerSpritePhase(phase: number, distance: number, speed: number): number {
+/** Shared by the runtime manifest and offline sprite authoring/validation. */
+export const PLAYER_SPRITE_GEOMETRY = {
+  height: 172, worldHeight: 46, cell: 256, anchorX: 128, anchorY: 224, walkFrames: 8,
+} as const;
+export const PLAYER_SPRITE_SCALE = PLAYER_SPRITE_GEOMETRY.worldHeight / PLAYER_SPRITE_GEOMETRY.height;
+
+/** Displacement / dt has roundoff at gait boundaries; do not flicker sheets. */
+export function playerSpriteGait(speed:number):number {
   'worklet';
-  const stride = speed <= 38 ? PLAYER_SPRITE_STRIDE.sneak
-    : speed <= 72 ? PLAYER_SPRITE_STRIDE.walk : PLAYER_SPRITE_STRIDE.run;
-  return (phase + distance / stride) % 1;
+  const epsilon=1e-6;
+  return speed<=0.5+epsilon?0:speed<=38+epsilon?1:speed<=72+epsilon?2:3;
+}
+
+/** Integrate each actual displacement so changing gait never reinterprets past distance. */
+export function advancePlayerSpritePhase(phase: number, distance: number, speed: number, strideOverride?: number): number {
+  'worklet';
+  const gait=playerSpriteGait(speed);
+  const stride = gait <= 1 ? PLAYER_SPRITE_STRIDE.sneak
+    : gait === 2 ? PLAYER_SPRITE_STRIDE.walk : PLAYER_SPRITE_STRIDE.run;
+  return (phase + distance / (strideOverride ?? stride)) % 1;
 }
 
 /**
@@ -60,7 +74,7 @@ export function strideCycleLength(gait: number): number {
  * The single place to extend to 8 directions later.
  */
 export const Dir = { Down: 0, Up: 1, Right: 2, Left: 3 } as const;
-export type Dir = (typeof Dir)[keyof typeof Dir];
+export type DirectionCode = (typeof Dir)[keyof typeof Dir];
 
 export function facingToDir(facing: number): number {
   'worklet';

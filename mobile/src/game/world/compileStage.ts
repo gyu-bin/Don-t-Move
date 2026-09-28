@@ -1,6 +1,7 @@
 import type { LightDef, PropKind, StageDefinition } from '../levels/StageDefinition';
 import type { Rect } from '../core/types';
 import { PROP_KIT } from './propKit';
+import { patrolPlan } from '../levels/semanticPatrol';
 
 /** World units per tile. Characters are ~1.1 tiles tall on screen. */
 export const TILE = 40;
@@ -29,12 +30,13 @@ export interface CompiledLight {
 }
 
 export interface CompiledGuard {
+  semanticPatrol?: boolean;
   id: string;
   x: number;
   y: number;
   facing: number;
   route: { x: number; y: number; wait: number; look: number; turnDuration?: number }[];
-  routeMode: 'loop' | 'pingpong' | 'waitAndLook';
+  routeMode: 'loop' | 'pingpong' | 'waitAndLook' | 'roaming';
   escapePatrol?: { pace?: number; waitDuration?: number; lookDirection?: number };
   startDelay: number;
   pace: number;
@@ -110,8 +112,8 @@ export function compileStage(def: StageDefinition): CompiledStage {
     const spec = PROP_KIT[p.kind];
     const x = p.x * TILE;
     const y = p.y * TILE;
-    const fw = spec.footprint.w * TILE;
-    const fh = spec.footprint.h * TILE;
+    const fw = spec.footprint.w * TILE * (p.collisionScale ?? 1);
+    const fh = spec.footprint.h * TILE * (p.collisionScale ?? 1);
     if (fw > 0 && fh > 0) {
       const box = [x - fw / 2, y - fh, x + fw / 2, y];
       if (spec.blocksMovement) movementBlockers.push(...box);
@@ -121,21 +123,29 @@ export function compileStage(def: StageDefinition): CompiledStage {
   });
 
   const routes = new Map(def.patrolRoutes.map((r) => [r.id, r]));
+  const plan = patrolPlan(def);
   const guards: CompiledGuard[] = def.guards.map((g) => {
     const route = g.routeId ? routes.get(g.routeId) : undefined;
+    const assignment = plan?.assignments.find(a => a.guardId === g.id);
+    const anchors = assignment?.anchors.map(id => {
+      const anchor = plan?.anchors.find(a => a.id === id);
+      if (!anchor || !assignment.zones.includes(anchor.zone)) throw new Error(`Invalid patrol assignment: ${g.id}/${id}`);
+      return anchor;
+    });
     return {
+      semanticPatrol: !!assignment,
       id: g.id,
       x: g.x * TILE,
       y: g.y * TILE,
       facing: g.facing,
-      route: (route?.points ?? []).map((p) => ({
+      route: anchors ? anchors.map(p => ({x:p.x*TILE,y:p.y*TILE,wait:p.wait,look:p.look,turnDuration:1.1})) : (route?.points ?? []).map((p) => ({
         x: p.x * TILE,
         y: p.y * TILE,
         wait: p.waitDuration ?? p.wait ?? (route?.mode === 'waitAndLook' ? 2 : 0),
         look: p.lookDirection ?? p.look ?? Number.NaN,
         turnDuration: p.turnDuration ?? 0.7,
       })),
-      routeMode: route?.mode ?? 'loop',
+      routeMode: assignment ? (assignment.roaming ? 'roaming' : 'loop') : route?.mode ?? 'loop',
       escapePatrol: g.escapePatrol,
       startDelay: g.startDelay ?? 0,
       pace: g.pace ?? 1,

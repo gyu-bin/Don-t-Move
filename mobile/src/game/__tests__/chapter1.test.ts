@@ -54,19 +54,19 @@ test('Locked Exit cannot save a player from contact; Retry resets treasure, cloc
   assert(!retry.mission.treasure && !retry.mission.complete && !retry.events.caught);
 });
 
-test('Pickup applies authored escape patrol once without forcing alert or teleporting guards', () => {
+test('V3 pickup leaves patrol pressure unchanged until a guard sees the empty case', () => {
   const {stage,s,tick} = fixture(7);
   s.player.x = stage.objective.x; s.player.y = stage.objective.y;
   s.patrol = false;
   const positions = s.guards.map((g) => [g.x,g.y]);
+  const patrols=s.guards.map(g=>({pace:g.pace,route:g.route}));
   tick();
   assert(s.mission.treasure);
   assert(!s.events.globalAlert);
   assert.equal(s.events.whistleCount,0);
   assert.deepEqual(s.guards.map((g) => [g.x,g.y]),positions);
-  const changed = s.guards.find((g) => g.escapePatrol)!;
-  assert.equal(changed.pace,changed.escapePatrol!.pace);
-  assert.equal(changed.route[0].wait,changed.escapePatrol!.waitDuration);
+  assert.deepEqual(s.guards.map(g=>({pace:g.pace,route:g.route})),patrols);
+  assert(!s.events.theftAlert);
   tick();
   assert.equal(s.mission.treasureRevision,1);
 });
@@ -78,13 +78,37 @@ test('Progress migration, stage locks, best time and chapter completion survive 
   let progress = {...DEFAULT_PROGRESS};
   assert(canSelectStage(progress,0) && !canSelectStage(progress,1));
   assert(canSelectStage(progress,9,true) && !canSelectStage(progress,10,true));
-  for (let i=0;i<10;i++) progress=clearStage(progress,i,100-i);
+  for (let i=0;i<10;i++) {
+    assert(canSelectStage(progress,i));
+    if (i<9) assert(!canSelectStage(progress,i+1));
+    progress=clearStage(progress,i,100-i,3);
+  }
   progress=clearStage(progress,0,120);
   assert.equal(progress.bestTimes[0],100);
-  progress=clearStage(progress,0,80);
+  progress=clearStage(progress,0,80,0);
   assert.equal(progress.bestTimes[0],80);
+  assert.equal(progress.bestAlerts[0],0);
+  progress=clearStage(progress,0,110,5);
+  assert.equal(progress.bestAlerts[0],0);
+  assert.deepEqual(old.bestAlerts,{});
   assert(progress.heistComplete && progress.clearedStages.length === 10);
   assert.deepEqual(normalizeProgress(JSON.parse(JSON.stringify(progress))),progress);
+});
+
+for (let i=0;i<10;i++) test(`Venue ${i+1}: locked Exit, contact CAUGHT, alert escape and retry remain correct`,()=>{
+  const a=fixture(i);
+  a.s.player.x=a.stage.exit.x+a.stage.exit.w/2;
+  a.s.player.y=a.stage.exit.y+a.stage.exit.h/2;
+  a.tick(); assert(!a.s.mission.complete,'objective required');
+  a.s.mission.treasure=true;
+  a.s.events.globalAlert=true;
+  Object.assign(a.s.guards[0],{x:a.s.player.x,y:a.s.player.y,awareness:Awareness.Chase});
+  a.tick(); assert(a.s.mission.complete && !a.s.events.caught);
+  const b=fixture(i);
+  Object.assign(b.s.guards[0],{x:b.s.player.x,y:b.s.player.y});
+  b.tick(); assert(b.s.events.caught);
+  const retry=createPlaygroundState(b.stage);
+  assert(!retry.mission.treasure && !retry.events.caught && !retry.mission.complete);
 });
 
 for (const mode of ['loop','pingpong','waitAndLook'] as const) {

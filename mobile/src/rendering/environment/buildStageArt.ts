@@ -13,6 +13,8 @@ import {
 import { fill, stroke } from '../paints';
 import { fillOval, fillRect } from '../skiaScratch';
 import type { SpriteAtlas, SpriteFrame } from '../sprites/spriteTypes';
+import {drawVenueFloor,drawVenueProp,drawPortal} from './venueArt';
+import {MATERIALS} from '../../game/levels/chapterArt';
 
 /**
  * Bakes everything static in a stage into SkPictures once at load:
@@ -35,6 +37,7 @@ export interface StaticLayer {
 }
 
 export interface StageArt {
+  exitActive?:SkPicture;
   floor: SkPicture;
   layers: StaticLayer[];
   darkness: SkPicture;
@@ -111,6 +114,7 @@ function drawFrame(c: SkCanvas, f: SpriteFrame, x: number, y: number, width: num
 // ------------------------------------------------------------------ floor
 
 function drawFloor(c: SkCanvas, stage: CompiledStage, atlas: SpriteAtlas | null): void {
+  if(stage.def.chapter){drawVenueFloor(c,stage);return;}
   const tile = atlas?.floor;
   if (tile) {
     for (let r = 0; r < stage.rows; r++) {
@@ -181,6 +185,21 @@ function drawFloorShading(c: SkCanvas, stage: CompiledStage): void {
 // ------------------------------------------------------------------ walls / props
 
 function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: SpriteAtlas | null): boolean {
+  if(stage.def.chapter){
+    const m=MATERIALS[stage.def.theme];let any=false;
+    for(let x=0;x<stage.cols;x++){
+      if(stage.grid[r*stage.cols+x]!==Cell.Wall)continue;any=true;
+      const xx=x*TILE,yy=(r+1)*TILE-WALL_HEIGHT;
+      if(stage.grid[(r+1)*stage.cols+x]!==Cell.Wall){
+        fillRect(c,xx,yy,TILE,WALL_HEIGHT,linear(0,yy,0,yy+WALL_HEIGHT,[stage.def.theme==='gallery'?'#a3a4a0':m.inlay,m.seam]));
+        c.drawLine(xx,yy+WALL_HEIGHT-4,xx+TILE,yy+WALL_HEIGHT-4,stroke(m.trim,2,0.6));
+        c.drawLine(xx+2,yy+3,xx+2,yy+WALL_HEIGHT-5,stroke(m.trim,1,0.22));
+      }
+      fillRect(c,xx,r*TILE-WALL_HEIGHT,TILE,TILE,fill(m.seam));
+      c.drawLine(xx,r*TILE-WALL_HEIGHT,xx+TILE,r*TILE-WALL_HEIGHT,stroke(m.trim,1,0.5));
+    }
+    return any;
+  }
   const top = atlas?.wallTop;
   const face = atlas?.wallFace;
   if (!top || !face) return drawFallbackWallRow(c, stage, r);
@@ -210,8 +229,10 @@ function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: Sprite
   return any;
 }
 
-function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null): void {
-  const f = atlas?.[p.kind];
+function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:CompiledStage): void {
+  if(stage.def.chapter&&drawVenueProp(c,p,stage))return;
+  const proxy: Partial<Record<CompiledProp['kind'],string>>={counter:'displayCase',table:'bench',shelf:'crate',partition:'painting',equipment:'displayCase',sofa:'bench',objectiveCase:'displayCase'};
+  const f = atlas?.[p.kind] ?? atlas?.[proxy[p.kind] ?? ''];
   if (!f) {
     drawFallbackProp(c, p);
     return;
@@ -237,6 +258,7 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
     c.drawColor(Skia.Color(VOID_COLOR));
     drawFloor(c, stage, atlas);
     drawFloorShading(c, stage);
+    if(stage.def.entryEdge){drawPortal(c,stage,true);drawPortal(c,stage,false);}
   });
 
   const layers: StaticLayer[] = [];
@@ -251,12 +273,12 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
     const spec = PROP_KIT[p.kind];
     layers.push({
       sortY: spec.wallMounted ? p.y + 0.5 : p.sortY,
-      picture: record(pad, (c) => drawProp(c, p, atlas)),
+      picture: record(pad, (c) => drawProp(c, p, atlas,stage)),
     });
   }
   // EXIT sign on the wall top beyond the exit.
   const sign = atlas?.exitSign;
-  if (sign && stage.def.exit) {
+  if (sign && stage.def.exit && !stage.def.exitEdge) {
     const ex = stage.exit;
     layers.push({
       sortY: ex.y + ex.h + TILE + 0.5,
@@ -290,6 +312,15 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
   });
 
   const glow = record(pad, (c) => {
+    if(stage.def.objectiveZone?.spotlight){
+      const {x,y}=stage.objective;
+      const beam=Skia.PathBuilder.Make();
+      beam.moveTo(x-7,y-125);beam.lineTo(x+7,y-125);beam.lineTo(x+38,y+8);beam.lineTo(x-38,y+8);beam.close();
+      c.drawPath(beam.build(),linear(0,y-125,0,y+8,['rgba(255,239,195,0.02)','rgba(255,239,195,0.13)']));
+      c.save();c.translate(x,y);c.scale(1,0.45);
+      c.drawCircle(0,0,42,radial(0,0,42,['rgba(255,233,177,0.22)','rgba(255,233,177,0)'],[0,1],BlendMode.Screen));
+      c.restore();
+    }
     for (const l of stage.lights) {
       const [r, g, b, a0] = LIGHT_RGB[l.kind];
       const a = a0 * l.intensity;
@@ -309,5 +340,5 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
     }
   });
 
-  return { floor, layers, darkness, glow };
+  return { floor, layers, darkness, glow,exitActive:stage.def.exitEdge?record(pad,c=>drawPortal(c,stage,false,true)):undefined };
 }

@@ -19,6 +19,10 @@
 
 ### 가이드 템플릿
 
+이번 Runtime 동기화에서 재생성한 가이드는 `player_walk_right_guide.png`만이다.
+이전 Player 전체 방향/다른 동작 가이드는 예전 수치일 수 있으므로 현재 제작에 사용하지 않는다.
+RIGHT 승인 전 다른 방향/동작 제작은 보류한다.
+
 - `art/characters/templates/*_guide.png`는 최종 시트와 픽셀 크기와 격자가 같다. **밑그림 레이어로만 쓰고, 최종 PNG에는 가이드를 넣지 않는다.**
 - 템플릿 속 흐린 인물은 **FALLBACK rig의 움직임**(프레임별 팔, 다리, 상체 포즈와 타이밍)을 보여 준다. 외형 기준이 아니다.
 - 초록 ● L/R은 foot planting 목표 위치다 (§4-A).
@@ -57,10 +61,14 @@
 | Idle / Search | 4 px | 4 px |
 | Whistle | 5 px | 5 px |
 | Sneak / Walk — Left·Right 행 | 14 px | 6 px |
-| Sneak / Walk — Down·Up 행 | 14 px | 22 px (카메라 쪽으로 내딛는 발은 3/4 원근 때문에 아래에 그려진다) |
+| Sneak / Walk — Down·Up 행 | 14 px | Player: Runtime 접지 궤적의 최대 화면-y 투영 + 기존 6px 여유, 최소 기존 22px. Guard: 기존 22px |
 | Run | 22 px (체공 프레임) | 행 종류에 따라 위와 같음 |
 
 이동 애니메이션은 각 행에서 **적어도 한 프레임의 발이 바닥선에 닿아야 한다** (±6 px).
+
+Player Down/Up은 발이 원근 방향으로 전후 이동하므로 Runtime 접지 궤적에서
+바닥선에 가장 가까운 샘플 위치를 기준으로 기존 ±6px 여유를 적용한다.
+기준점 이동은 새 보폭의 투영값이며, RIGHT 접지 전환 허용오차 완화가 아니다.
 
 ---
 
@@ -162,71 +170,100 @@ FALLBACK rig(`src/rendering/fallback/proceduralCharacter.ts`)가 게임에서 �
 5. **Opposite Contact:** 반대 발이 앞에 착지한다. 이전 발은 −reach에서 떨어진다.
 
 규칙:
-- 지면에 닿은 발은 **매 프레임 정확히 "몸 이동량/프레임"만큼 뒤로** 이동한다 (아래 표의 px/frame). 수치는 게임 런타임의 보폭(`GAIT_STRIDE`)에서 계산하므로, 이 수치대로 그리면 게임에서 발이 미끄러지지 않는다.
+- 지면에 닿은 발의 목표 후방 이동량은 몸 이동량/프레임이다. Player는 실제 Sprite 재생의 PLAYER_SPRITE_STRIDE, Guard는 GAIT_STRIDE에서 계산한다. 키프레임 접지 목표이며, 8프레임 홀드 중 미세한 sliding이나 자연스러움까지 보장하지 않는다.
 - 들린 발(swing)은 앞으로 이동하며 지면에서 떨어진다.
 - Run은 두 발이 모두 공중에 뜨는 flight 프레임이 있다.
 - **Left/Right 행:** 표의 수치는 기준점 x=128에서의 가로 오프셋이다. Right 행은 +가 오른쪽, Left 행은 +가 왼쪽이다.
 - **Down/Up 행:** 3/4 원근으로 앞뒤 이동이 화면 세로로 줄어든다(×0.42). Down 행은 +가 화면 아래(카메라 쪽)이고, Up 행은 +가 화면 위다. 발바닥 좌우 위치는 ±12px 정도로, 카메라를 볼 때 캐릭터의 왼발은 화면 오른쪽에 온다.
 - 가이드 템플릿의 **초록 ● L/R** 표식이 각 프레임에서 착지한 발의 목표 위치다.
-- 검수 도구가 자동으로 확인한다. 착지한 발이 기대 이동량의 ±35%(Down/Up은 원근 보정해서 더 넓게) 안에서 뒤로 움직인 전환이 75% 미만이면 **ERROR**다.
+- 전환 허용오차 ±35%, 최소 통과율 75%는 유지한다. RIGHT Player Walk는 PNG에 결합된 L/R landmark로 같은 발만 추적하며, 4→5와 8→1은 각각 반드시 통과해야 한다. Swing 접촉, 잘못된 phase/beat, root 변경도 ERROR다. 다른 방향의 기존 접촉 추정은 예비 진단이지 동일 발 검증 완료가 아니다.
 
-#### player_sneak.png — body 15.0 px/frame, cycle 90 px (24 world units), stance 50%
-| Frame | Beat | Planted feet (px, + = forward) |
-|---|---|---|
-| 1 | Contact (L, low) | L +22, R -22 |
-| 2 | Down | L +7 |
-| 3 | Passing / Up (tiptoe) | L -7 |
-| 4 | Opposite Contact (R, low) | L -22, R +22 |
-| 5 | Down | R +7 |
-| 6 | Passing / Up (tiptoe) | R -7 |
+<!-- RUNTIME-PLANTING:BEGIN -->
 
-#### player_walk.png — body 18.7 px/frame, cycle 150 px (40 world units), stance 50%
-| Frame | Beat | Planted feet (px, + = forward) |
-|---|---|---|
-| 1 | Contact (L) | L +37, R -37 |
-| 2 | Down | L +19 |
-| 3 | Passing | L +0 |
-| 4 | Up | L -19 |
-| 5 | Opposite Contact (R) | L -37, R +37 |
-| 6 | Down | R +19 |
-| 7 | Passing | R +0 |
-| 8 | Up | R -19 |
+이 표는 `npm run sprites:contract`로 Runtime에서 생성한다. 수동으로 숫자를 수정하지 않는다.
+Player는 `PLAYER_SPRITE_STRIDE`, Guard는 기존 `GAIT_STRIDE`를 사용한다.
+Player Sprite scale = 0.26744186 world units/px.
+RIGHT Walk는 동일 발 landmark + PNG SHA256 결합 검수 대상이다. 제작 데이터 형식은 `FOOT_TRACKS.md` 참고.
 
-#### player_run.png — body 24.3 px/frame, cycle 194 px (52 world units), stance 34%
-| Frame | Beat | Planted feet (px, + = forward) |
-|---|---|---|
-| 1 | Contact (L) | L +33 |
-| 2 | Down / push | L +9 |
-| 3 | Passing (flight) | L -16 |
-| 4 | Up (reach) | — (both feet airborne) |
-| 5 | Opposite Contact (R) | R +33 |
-| 6 | Down / push | R +9 |
-| 7 | Passing (flight) | R -16 |
-| 8 | Up (reach) | — (both feet airborne) |
+#### player_sneak.png — Runtime-derived
 
-#### guard_walk.png — body 18.6 px/frame, cycle 149 px (40 world units), stance 50%
-| Frame | Beat | Planted feet (px, + = forward) |
-|---|---|---|
-| 1 | Contact (L) | L +37, R -37 |
-| 2 | Down | L +19 |
-| 3 | Passing | L +0 |
-| 4 | Up | L -19 |
-| 5 | Opposite Contact (R) | L -37, R +37 |
-| 6 | Down | R +19 |
-| 7 | Passing | R +0 |
-| 8 | Up | R -19 |
+Cycle 54 world units / 6 frames; 33.65 sprite px/frame; stance 50%.
+기준 속도 38 world units/s → 1.41 steps/s.
 
-#### guard_run.png — body 24.2 px/frame, cycle 193 px (52 world units), stance 34%
-| Frame | Beat | Planted feet (px, + = forward) |
+| Frame | Beat | Planted feet (sprite px, + = forward) |
 |---|---|---|
-| 1 | Contact (L) | L +33 |
-| 2 | Down / push | L +9 |
-| 3 | Passing (flight) | L -15 |
-| 4 | Up (reach) | — (both feet airborne) |
-| 5 | Opposite Contact (R) | R +33 |
-| 6 | Down / push | R +9 |
-| 7 | Passing (flight) | R -15 |
-| 8 | Up (reach) | — (both feet airborne) |
+| 1 | Contact (L, low) | L +50.48, R -50.48 |
+| 2 | Down | L +16.83 |
+| 3 | Passing / Up (tiptoe) | L -16.83 |
+| 4 | Opposite Contact (R, low) | L -50.48, R +50.48 |
+| 5 | Down | R +16.83 |
+| 6 | Passing / Up (tiptoe) | R -16.83 |
+
+#### player_walk.png — Runtime-derived
+
+Cycle 60 world units / 8 frames; 28.04 sprite px/frame; stance 50%.
+기준 속도 72 world units/s → 2.40 steps/s.
+
+| Frame | Beat | Planted feet (sprite px, + = forward) |
+|---|---|---|
+| 1 | Contact (L) | L +56.09, R -56.09 |
+| 2 | Down | L +28.04 |
+| 3 | Passing | L +0.00 |
+| 4 | Up | L -28.04 |
+| 5 | Opposite Contact (R) | L -56.09, R +56.09 |
+| 6 | Down | R +28.04 |
+| 7 | Passing | R +0.00 |
+| 8 | Up | R -28.04 |
+
+#### player_run.png — Runtime-derived
+
+Cycle 80 world units / 8 frames; 37.39 sprite px/frame; stance 34%.
+기준 속도 150 world units/s → 3.75 steps/s.
+
+| Frame | Beat | Planted feet (sprite px, + = forward) |
+|---|---|---|
+| 1 | Contact (L) | L +50.85 |
+| 2 | Down / push | L +13.46 |
+| 3 | Passing (flight) | L -23.93 |
+| 4 | Up (reach) | — |
+| 5 | Opposite Contact (R) | R +50.85 |
+| 6 | Down / push | R +13.46 |
+| 7 | Passing (flight) | R -23.93 |
+| 8 | Up (reach) | — |
+
+#### guard_walk.png — Runtime-derived
+
+Cycle 40 world units / 8 frames; 18.60 sprite px/frame; stance 50%.
+기준 속도 72 world units/s → 3.60 steps/s.
+
+| Frame | Beat | Planted feet (sprite px, + = forward) |
+|---|---|---|
+| 1 | Contact (L) | L +37.20, R -37.20 |
+| 2 | Down | L +18.60 |
+| 3 | Passing | L +0.00 |
+| 4 | Up | L -18.60 |
+| 5 | Opposite Contact (R) | L -37.20, R +37.20 |
+| 6 | Down | R +18.60 |
+| 7 | Passing | R +0.00 |
+| 8 | Up | R -18.60 |
+
+#### guard_run.png — Runtime-derived
+
+Cycle 52 world units / 8 frames; 24.18 sprite px/frame; stance 34%.
+기준 속도 150 world units/s → 5.77 steps/s.
+
+| Frame | Beat | Planted feet (sprite px, + = forward) |
+|---|---|---|
+| 1 | Contact (L) | L +32.88 |
+| 2 | Down / push | L +8.70 |
+| 3 | Passing (flight) | L -15.48 |
+| 4 | Up (reach) | — |
+| 5 | Opposite Contact (R) | R +32.88 |
+| 6 | Down / push | R +8.70 |
+| 7 | Passing (flight) | R -15.48 |
+| 8 | Up (reach) | — |
+
+<!-- RUNTIME-PLANTING:END -->
 
 ## 5. UI 아이콘 (`?` / `!`)
 

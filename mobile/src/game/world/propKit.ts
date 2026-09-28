@@ -24,6 +24,14 @@ export interface PropSpec {
 }
 
 export const PROP_KIT: Record<PropKind, PropSpec> = {
+  counter: { footprint:{w:1.4,h:0.55},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:1.6,shadow:0.75,mountHeight:0 },
+  table: { footprint:{w:1.2,h:0.7},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:1.4,shadow:0.7,mountHeight:0 },
+  shelf: { footprint:{w:1.3,h:0.7},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:1.5,shadow:0.7,mountHeight:0 },
+  partition: { footprint:{w:1.4,h:0.35},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:1.5,shadow:0.65,mountHeight:0 },
+  equipment: { footprint:{w:1,h:0.8},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:1.2,shadow:0.65,mountHeight:0 },
+  sofa: { footprint:{w:1.4,h:0.6},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:1.6,shadow:0.65,mountHeight:0 },
+  // Interaction display is decorative; its flanking structures provide real cover.
+  objectiveCase: { footprint:{w:0,h:0},blocksMovement:false,blocksVision:false,cover:false,wallMounted:false,drawWidth:1.1,shadow:0.55,mountHeight:0 },
   statue: {
     footprint: { w: 0.9, h: 0.7 },
     blocksMovement: true,

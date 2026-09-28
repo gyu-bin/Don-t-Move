@@ -29,6 +29,7 @@ export function animForPose(gait: number, action: number, actionT: number): numb
  */
 export function resolveClip(set: CharacterSpriteSet, anim: number, dir: number): SpriteClip | null {
   'worklet';
+  if (set.strict && !set.clips[anim][dir]) throw new Error(`Missing final animation ${anim}/${dir}`);
   let a = anim;
   for (let guard = 0; guard < 4; guard++) {
     const c = set.clips[a][dir];

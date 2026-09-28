@@ -4,30 +4,40 @@
     "slug": "dont-move",
     "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/branding/app-icon.png",
     "userInterfaceStyle": "dark",
     "scheme": "dontmove",
     "ios": {
+      "appleTeamId": "6YASPU77L7",
       "supportsTablet": false,
       "bundleIdentifier": "com.dontmove.prototype"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#0A1220",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#081824",
+        "foregroundImage": "./assets/branding/adaptive-foreground.png"
       },
       "package": "com.dontmove.prototype",
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/branding/app-icon.png"
     },
     "plugins": [
       "expo-audio",
-      ["expo-sensors", { "motionPermission": "Allow Don't Move to use device motion for tilt controls." }],
-      "./plugins/withSceneLifecycle"
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Allow Don't Move to use device motion for tilt controls."
+        }
+      ],
+      "./plugins/withSceneLifecycle",
+      ["expo-splash-screen", {
+        "backgroundColor": "#081824",
+        "image": "./assets/branding/splash-mark.png",
+        "imageWidth": 110,
+        "resizeMode": "contain"
+      }]
     ]
   }
 }

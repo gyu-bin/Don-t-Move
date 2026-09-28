@@ -1,0 +1,52 @@
+export type Language = 'en' | 'ko';
+const en = {
+ chapters:'CHAPTER SELECT', missions:'MISSION SELECT', missionLabel:'MISSION', legacy:'PREVIOUS VERSION RECORD',
+ home:'HOME', continue:'CONTINUE', start:'START GAME', stages:'STAGE SELECT', settings:'SETTINGS',
+ language:'Language', sfx:'Sound Effects', music:'Background Music', intro:'Play Intro',
+ clear:'CLEAR', locked:'LOCKED', play:'PLAY', mission:'MISSION COMPLETE', chapter:'CHAPTER COMPLETE',
+ caught:'CAUGHT', retry:'RETRY', next:'NEXT STAGE', back:'BACK', stage:'STAGE',
+ paused:'PAUSED', resume:'RESUME', recenter:'RECENTER', restart:'RESTART', again:'PLAY AGAIN',
+ time:'CLEAR TIME', best:'BEST TIME', alerts:'ALERTS', choose:'CHOOSE YOUR NEXT MISSION',
+ preparing:'PREPARING…', retryLoading:'RETRY LOADING', secured:'OBJECTIVE SECURED',
+ diamond:'DIAMOND SECURED', acquired:'OBJECTIVE ACQUIRED', diamondAcquired:'DIAMOND ACQUIRED',
+ escape:'ESCAPE TO THE EXIT', target:'TARGET', centerReset:'CENTER RESET',
+ hold:'HOLD COMFORTABLY', ready:'READY', sensorPaused:'SENSOR PAUSED', sensorRetry:'RETRY SENSOR',
+ calibration:'Hold still briefly in a comfortable position.', saveError:'Unable to save. Your session is still available; try again.',
+ skip:'Skip intro', tagline:'A STEALTH GAME\nIN YOUR HANDS', silence:'SILENCE IS A SKILL',
+ artError:'Artwork could not load.', assetError:'CHARACTER ASSETS INCOMPLETE', assetDetail:'Final Player / Guard animation sheets are not approved.',
+ theft:'THEFT ALERT', spotted:'PLAYER SPOTTED', touch:'TOUCH CONTROL ACTIVE',
+ valuableDiamond:'Diamond', painting:'Rare Painting', vaultGem:'Vault Gem', prototype:'Prototype', jewel:'High-value Jewel', artifact:'Artifact', contraband:'Contraband Case', data:'Data Device', classified:'Classified Prototype', master:'Master Diamond',
+ stage01:'MUSEUM', stage02:'ART GALLERY', stage03:'BANK', stage04:'LAB', stage05:'CASINO',
+ stage06:'MANSION', stage07:'WAREHOUSE', stage08:'SECURITY HQ', stage09:'BLACK SITE', stage10:'HIGH SECURITY VAULT',
+};
+export type TextKey = keyof typeof en;
+const ko: Record<TextKey,string> = {
+ chapters:'챕터 선택', missions:'미션 선택', missionLabel:'미션', legacy:'이전 버전 기록',
+ home:'홈', continue:'계속하기', start:'게임 시작', stages:'스테이지 선택', settings:'설정',
+ language:'언어', sfx:'효과음', music:'배경 음악', intro:'인트로 다시 보기',
+ clear:'완료', locked:'잠김', play:'플레이', mission:'미션 완료', chapter:'챕터 완료',
+ caught:'붙잡혔습니다', retry:'다시 도전', next:'다음 스테이지', back:'뒤로', stage:'스테이지',
+ paused:'일시 정지', resume:'계속하기', recenter:'중심 재설정', restart:'다시 시작', again:'다시 플레이',
+ time:'완료 시간', best:'최고 기록', alerts:'경보', choose:'다음 임무를 선택하세요',
+ preparing:'준비 중…', retryLoading:'다시 불러오기', secured:'목표물 확보',
+ diamond:'다이아몬드 확보', acquired:'목표물 획득', diamondAcquired:'다이아몬드 획득',
+ escape:'출구로 탈출하세요', target:'목표', centerReset:'중심이 재설정되었습니다',
+ hold:'편하게 들어 주세요', ready:'준비 완료', sensorPaused:'센서 일시 정지', sensorRetry:'센서 다시 연결',
+ calibration:'편하게 든 자세에서 잠시 멈춰 주세요.', saveError:'저장하지 못했습니다. 현재 진행은 유지됩니다. 다시 시도해 주세요.',
+ skip:'인트로 건너뛰기', tagline:'당신의 손안에서\n펼쳐지는 잠입', silence:'침묵도 실력이다',
+ artError:'이미지를 불러오지 못했습니다.', assetError:'캐릭터 에셋 미완성', assetDetail:'최종 Player / Guard 애니메이션이 아직 승인되지 않았습니다.',
+ theft:'도난 경보', spotted:'플레이어 발견', touch:'터치 조작 사용 중',
+ valuableDiamond:'다이아몬드', painting:'희귀 그림', vaultGem:'금고 보석', prototype:'시제품', jewel:'고가 보석', artifact:'유물', contraband:'밀수품 가방', data:'데이터 장치', classified:'기밀 시제품', master:'마스터 다이아몬드',
+ stage01:'박물관', stage02:'미술관', stage03:'은행', stage04:'연구소', stage05:'카지노',
+ stage06:'저택', stage07:'창고', stage08:'보안 본부', stage09:'비밀 시설', stage10:'최고 보안 금고',
+};
+export const translations = { en, ko };
+export const translate = (language:Language, key:TextKey) => translations[language][key];
+export const stageKey = (index:number):TextKey => `stage${String(index+1).padStart(2,'0')}` as TextKey;
+const feedbackKeys:Record<string,TextKey>={
+ 'OBJECTIVE SECURED':'secured',
+ 'DIAMOND ACQUIRED':'diamondAcquired','OBJECTIVE ACQUIRED':'acquired','ESCAPE TO THE EXIT':'escape',
+ 'THEFT ALERT':'theft','PLAYER SPOTTED':'spotted','CENTER RESET':'centerReset','TOUCH CONTROL ACTIVE':'touch',
+};
+export const feedbackKey=(message:string)=>feedbackKeys[message];
+export const valuableKey:Record<string,TextKey>={diamond:'valuableDiamond',painting:'painting',vaultGem:'vaultGem',prototype:'prototype',jewel:'jewel',artifact:'artifact',case:'contraband',data:'data',classified:'classified',masterDiamond:'master'};

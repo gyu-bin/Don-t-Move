@@ -33,3 +33,30 @@ legacy-unity/.utmp/
 *.apk
 *.aab
 *.ipa
+
+# New task reports and playtest captures stay in the local workspace archive.
+# Existing tracked reports are unaffected. Keep only the approved Museum design
+# lock and its current 01-01 implementation evidence as new repository records.
+/mobile/Reports/*
+!/mobile/Reports/MuseumDesignLockV1/
+!/mobile/Reports/MuseumDesignLockV1/**
+!/mobile/Reports/EntranceFloorPlanImplementation.md
+!/mobile/Reports/Entrance-FloorPlan-Implementation.png
+!/mobile/Reports/Entrance-Patrol-LOS-Debug.png
+!/mobile/Reports/Entrance-Routes-Debug.png
+!/mobile/Reports/Entrance-Simulator-Debug-Off.png
+
+# Character generation candidates and production records stay in the local
+# workspace archive. They are preserved on disk but are not production sources.
+/mobile/art/characters/candidates/*
+
+# Current development build imports this one trial sheet directly. It must remain
+# versioned until the runtime reference is removed or moved into assets/characters.
+!/mobile/art/characters/candidates/right-walk-fullbody-v1/
+/mobile/art/characters/candidates/right-walk-fullbody-v1/*
+!/mobile/art/characters/candidates/right-walk-fullbody-v1/player_walk_right.png
+
+# Branding production inputs not consumed by the app bundle.
+/mobile/assets/branding/icon-reference.png
+/mobile/assets/branding/icon-square-source.png
+/mobile/assets/branding/intro-guide.png

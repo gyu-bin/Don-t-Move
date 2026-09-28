@@ -8,6 +8,8 @@
  * Fixtures are temporary test data, never game assets.
  */
 import * as fs from 'fs';
+import { createHash } from 'crypto';
+import { syntheticTracks } from './footTrackFixture';
 import * as os from 'os';
 import * as path from 'path';
 import type { CanvasKit, Image } from 'canvaskit-wasm';
@@ -63,8 +65,36 @@ async function bakeFixtures(ck: CanvasKit, chars: string, ui: string) {
       }
     });
     cv.drawPicture((rec.finishRecordingAsPicture() as unknown as { ref: never }).ref);
+    // Explicit labelled test-only anatomy. No inferred labels, no production art.
+    let tracks;
+    if (sheet.file === 'player_walk.png') {
+      tracks = syntheticTracks(sheet);
+      const p = new ck.Paint();
+      p.setBlendMode(ck.BlendMode.Clear);
+      cv.drawRect(ck.XYWHRect(0, CELL * 3, W, CELL), p);
+      p.setBlendMode(ck.BlendMode.SrcOver);
+      p.setColor(ck.parseColorString('#252830'));
+      p.setStrokeWidth(10);
+      tracks.forEach((f, i) => {
+        cv.save(); cv.translate(i * CELL, 3 * CELL);
+        cv.drawCircle(128, 86, 32, p);
+        cv.drawRect(ck.XYWHRect(110, 112, 36, 56), p);
+        for (const id of ['L', 'R'] as const) {
+          const foot = f[id];
+          cv.drawLine(...f.hip, ...foot.knee, p);
+          cv.drawLine(...foot.knee, ...foot.ankle, p);
+          cv.drawLine(...foot.ankle, ...foot.sole, p);
+          cv.drawRect(ck.XYWHRect(foot.sole[0] - 5, foot.sole[1] - 3, 10, 4), p);
+        }
+        cv.restore();
+      });
+      p.delete();
+    }
     surface.flush();
     fs.writeFileSync(path.join(chars, sheet.file), surface.makeImageSnapshot().encodeToBytes()!);
+    if (tracks) fs.writeFileSync(path.join(chars, 'player_walk.feet.json'), JSON.stringify({
+      version: 1, imageSha256: createHash('sha256').update(fs.readFileSync(path.join(chars, sheet.file))).digest('hex'), rows: { right: tracks },
+    }));
     surface.delete();
   }
   const font = loadLabelFont(ck, 96);
@@ -135,6 +165,13 @@ async function main() {
   );
 
   const cases: { name: string; apply: (chars: string, ui: string) => void; expect: RegExp }[] = [
+    {
+      name: 'idle ground tolerance is not widened by runtime projection changes',
+      apply: (chars) => mutate(ck, path.join(chars, 'player_idle.png'), 4 * CELL, 4 * CELL, (c, img) => {
+        c.drawImage(img, 0, 7, null);
+      }),
+      expect: /player_idle\.png down #1: feet \d+px below ground line \(max 4\)/,
+    },
     {
       name: 'opaque background is rejected',
       apply: (chars) =>

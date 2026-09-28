@@ -1,4 +1,5 @@
 import { clamp, damp, turnToward } from '../core/math';
+import { rightWalkTrialStride } from '../core/rightWalkTrial';
 import { advancePlayerSpritePhase, GAIT_SPEED, gaitFromSpeed, strideCycleLength } from '../core/locomotion';
 import { Gait } from '../core/types';
 import { createGuardEvents, createGuardState } from '../guards/guardBrain';
@@ -12,6 +13,9 @@ import { stepTiltPlayer, stopPlayer } from '../input/tiltMovement';
 import type { TiltMovement } from '../input/tiltMovement';
 import { createMissionState, stepMission } from '../mission/mission';
 import type { MissionState } from '../mission/mission';
+import { createGuardPlayback, stepGuardPlayback } from '../../rendering/characters/guardAnimation';
+import type { GuardPlayback } from '../../rendering/characters/guardAnimation';
+import type { TheftContext } from '../guards/theftAlert';
 
 /**
  * Visual Playground simulation (UI thread, mutated in place, no React state).
@@ -43,9 +47,11 @@ export interface PlayerState {
 }
 
 export interface PlaygroundState {
+  theft: TheftContext;
   t: number;
   player: PlayerState;
   guards: GuardState[];
+  guardPlayback: GuardPlayback[];
   events: GuardEvents;
   cam: { x: number; y: number };
   /** -1 = scripted demo; 0..3 = manual control at that gait. */
@@ -72,9 +78,11 @@ const DEMO_PATH = [
   { x: 6.5, y: 10.3, gait: Gait.Walk, pause: 0 },
 ];
 
-export function createPlaygroundState(stage: CompiledStage): PlaygroundState {
+export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[][]): PlaygroundState {
   const sp = stage.playerSpawn;
   return {
+    theft: { empty:false,x:stage.objective.x,y:stage.objective.y,
+      posts:stage.guards.map(g=>g.route.map(p=>({x:p.x,y:p.y}))) },
     t: 0,
     player: {
       spritePhase: 0,
@@ -95,6 +103,7 @@ export function createPlaygroundState(stage: CompiledStage): PlaygroundState {
       ty: sp.y,
     },
     guards: stage.guards.map((g, i) => createGuardState(g, (i * 0.37) % 1)),
+    guardPlayback: stage.guards.map((g) => createGuardPlayback(createGuardState(g),guardStrides)),
     events: createGuardEvents(),
     cam: { x: sp.x, y: sp.y },
     playerMode: -1,
@@ -143,18 +152,19 @@ function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: numb
   // Soft acceleration, fast precise stop.
   const a = targetSpeed > p.speed ? 320 : 700;
   p.speed += clamp(targetSpeed - p.speed, -a * dt, a * dt);
+  const bx = p.x, by = p.y;
   if (dist > 0.5 && p.speed > 0) {
     p.facing = turnToward(p.facing, Math.atan2(dy, dx), 10, dt);
     const move = Math.min(dist, p.speed * dt);
-    const bx = p.x;
-    const by = p.y;
     moveWithCollision(p, (dx / dist) * move, (dy / dist) * move, PLAYER_RADIUS, blockers);
-    // Blocked: stop instead of running in place against the wall.
-    const moved = Math.abs(p.x - bx) + Math.abs(p.y - by);
-    if (moved < move * 0.1) p.speed = Math.min(p.speed, moved / Math.max(dt, 1e-3));
   }
+  // Same odometer contract as Tilt: a partial wall slide must not count the
+  // rejected movement, and a fully blocked body must not keep stepping.
+  p.vx = (p.x-bx)/Math.max(dt,1e-6);
+  p.vy = (p.y-by)/Math.max(dt,1e-6);
+  p.speed = Math.hypot(p.vx,p.vy);
   advanceGait(p, dt);
-  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed);
+  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing));
 }
 
 export function stepPlayground(
@@ -176,21 +186,11 @@ export function stepPlayground(
   if (tilt) stepTiltPlayer(s.player, tilt, dt, movementBlockers);
   else stepPlayer(s, dt, tile, movementBlockers);
   const p = s.player;
-  const hadTreasure = s.mission.treasure;
   // Crossing an active Exit completes the escape before this frame's contact pass.
   stepMission(s.mission, p.x, p.y, false);
-  if (!hadTreasure && s.mission.treasure) {
-    for (const g of s.guards) {
-      const pressure = g.escapePatrol;
-      if (!pressure) continue;
-      g.pace = pressure.pace ?? g.pace;
-      g.route = g.route.map((pt) => ({ ...pt,
-        wait: pressure.waitDuration ?? pt.wait,
-        look: pressure.lookDirection ?? pt.look,
-      }));
-    }
-  }
-  if (!s.mission.complete) stepGuards(s.guards, p, visionBlockers, navigation, dt, s.events, s.t, s.patrol);
+  s.theft.empty=s.mission.enabled && s.mission.treasure;
+  if (!s.mission.complete) stepGuards(s.guards, p, visionBlockers, navigation, dt, s.events, s.t, s.patrol,1,s.theft);
+  for (let i=0;i<s.guards.length;i++) stepGuardPlayback(s.guardPlayback[i],s.guards[i],dt);
 
   // Follow camera, clamped so nothing outside the map shows.
   const k = damp(5, dt);

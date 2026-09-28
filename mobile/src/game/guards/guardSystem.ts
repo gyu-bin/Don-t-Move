@@ -1,11 +1,14 @@
-import { clamp, damp, turnToward, wrapAngle } from '../core/math';
+import { damp, turnToward } from '../core/math';
 import { gaitFromSpeed, strideCycleLength } from '../core/locomotion';
 import { Awareness, GuardAction } from '../core/types';
-import { clearSegment, findPath } from '../world/navigation';
+import { clearSegment } from '../world/navigation';
+import { travel } from './guardTravel';
 import type { Navigation } from '../world/navigation';
-import { observeGuard, stepGuard } from './guardBrain';
+import { nearestPatrolAnchor, observeGuard, stepGuard } from './guardBrain';
 import type { GuardEvents, GuardState, PlayerView } from './guardBrain';
 import { BODY, GUARD_TUNING as T } from './guardTuning';
+import { stepTheft } from './theftAlert';
+import type { TheftContext } from './theftAlert';
 
 function enter(g: GuardState, state: number): void {
   'worklet';
@@ -69,46 +72,6 @@ function react(g: GuardState, ev: GuardEvents): void {
   }
 }
 
-/** Cached path; moving targets can trigger at most one plan per cooldown. */
-function travel(g: GuardState, n: Navigation, speed: number, dt: number, t: number): boolean {
-  'worklet';
-  const changed = Math.hypot(g.targetX - g.pathTargetX, g.targetY - g.pathTargetY) >= T.repathDistance;
-  const done = g.pathIndex >= g.path.length;
-  if (t >= g.repathAt && (g.path.length === 0 || changed || (done && Math.hypot(g.targetX - g.pathTargetX, g.targetY - g.pathTargetY) > T.arrivalDistance))) {
-    g.path = findPath(n, g.x, g.y, g.targetX, g.targetY);
-    g.pathIndex = 0;
-    g.pathTargetX = g.targetX; g.pathTargetY = g.targetY;
-    g.repathAt = t + T.repathSeconds;
-    g.pathPlans++;
-  }
-  while (g.pathIndex < g.path.length && Math.hypot(g.path[g.pathIndex] - g.x, g.path[g.pathIndex + 1] - g.y) <= T.arrivalDistance) {
-    g.pathIndex += 2;
-  }
-  if (g.pathIndex >= g.path.length) { g.speed = 0; return true; }
-  const tx = g.path[g.pathIndex];
-  const ty = g.path[g.pathIndex + 1];
-  const dx = tx - g.x;
-  const dy = ty - g.y;
-  const distance = Math.hypot(dx, dy);
-  const heading = Math.atan2(dy, dx);
-  g.facing = turnToward(g.facing, heading, T.turnRateAlert, dt);
-  g.baseFacing = g.facing; g.glance = 0;
-  // Turn before moving, so the rendered body and actual travel agree.
-  if (Math.abs(wrapAngle(heading - g.facing)) > 0.08) { g.speed = 0; return false; }
-  g.facing = heading; g.baseFacing = heading;
-  const velocity = g.speed + clamp(speed - g.speed, -T.decel * dt, T.accel * dt);
-  const move = Math.min(distance, velocity * dt);
-  const x = g.x + dx / distance * move;
-  const y = g.y + dy / distance * move;
-  if (!clearSegment(g.x, g.y, x, y, n.blockers, n.radius)) {
-    g.speed = 0;
-    g.path = [];
-    return false;
-  }
-  g.x = x; g.y = y;
-  g.speed = move / Math.max(dt, 1e-6);
-  return false;
-}
 
 function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, index: number): void {
   'worklet';
@@ -140,6 +103,7 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
       }
     }
   } else if (g.awareness === Awareness.Return) {
+    if(g.semanticPatrol && g.stateT<=dt){g.returnIndex=nearestPatrolAnchor(g,n);g.patrolProgressAt=-1;}
     const pt = g.returnIndex >= 0 ? g.route[g.returnIndex] : null;
     g.targetX = pt?.x ?? g.homeX; g.targetY = pt?.y ?? g.homeY;
     if (travel(g, n, T.walkSpeed, dt, t)) {
@@ -167,7 +131,7 @@ export function bodiesTouch(g: { x: number; y: number }, p: { x: number; y: numb
 
 /** Group barrier: perceive all → publish → decide/move all → perceive/publish → reconcile. */
 export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[], n: Navigation,
-  dt: number, ev: GuardEvents, t: number, patrol: boolean, difficulty = 1): void {
+  dt: number, ev: GuardEvents, t: number, patrol: boolean, difficulty = 1, theft?: TheftContext): void {
   'worklet';
   if (ev.caught) return;
   // Contact already present at the beginning of this step cannot be escaped by
@@ -179,8 +143,9 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
     }
   }
   const wasGlobal = ev.globalAlert;
-  if (!wasGlobal) {
-    for (let i = 0; i < guards.length; i++) stepGuard(guards[i], p, vision, dt, ev, t, patrol, difficulty);
+  const confirming = theft ? stepTheft(guards,p,vision,n,ev,theft,dt,t) : '';
+  if (!wasGlobal && !ev.globalAlert && !ev.theftAlert) {
+    for (let i = 0; i < guards.length; i++) if(guards[i].id!==confirming) stepGuard(guards[i], p, vision, dt, ev, t, patrol, difficulty, n);
   }
   if (ev.globalAlert) {
     for (let i = 0; i < guards.length; i++) observeGuard(guards[i], p, vision);
@@ -203,6 +168,7 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
       for (let i = 0; i < guards.length; i++) {
         const g = guards[i];
         g.suspicion = 0; g.hasLkp = false; g.whistled = false; g.unseenT = 0;
+        g.localInvestigating=false;g.localReturning=false;g.localArrived=false;
       }
     }
   }

@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useMenu } from '../menu/MenuContext';
 
 /**
  * Minimal top HUD from the reference: stage number, stage name, pause.
@@ -6,28 +7,31 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
  */
 export function StageHeader({
   number,
+  code,
   title,
   top,
   onPause,
   onRecenter,
 }: {
   number: number;
+  code?: string;
   title: string;
   top: number;
   onPause?: () => void;
   onRecenter?: () => void;
 }) {
+  const {t}=useMenu();
   return (
     <View style={[styles.wrap, { top: top + 6 }]} pointerEvents="box-none">
       <View>
-        <Text style={styles.stage}>STAGE {String(number).padStart(2, '0')}</Text>
+        <Text style={styles.stage}>{t(code?'missionLabel':'stage')} {code??String(number).padStart(2, '0')}</Text>
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.actions}>
-        <Pressable onPress={onRecenter} style={styles.recenter} hitSlop={8} accessibilityLabel="Recenter">
-          <Text style={styles.recenterText}>RECENTER</Text>
+        <Pressable onPress={onRecenter} style={styles.recenter} hitSlop={8} accessibilityLabel={t('recenter')}>
+          <Text style={styles.recenterText}>{t('recenter')}</Text>
         </Pressable>
-        <Pressable onPress={onPause} style={styles.pause} hitSlop={10} accessibilityLabel="Pause">
+        <Pressable onPress={onPause} style={styles.pause} hitSlop={10} accessibilityLabel={t('paused')}>
           <View style={styles.bar} />
           <View style={styles.bar} />
         </Pressable>

@@ -1,4 +1,5 @@
-import { CHARACTERS } from './spriteSpec';
+import { GAIT_STRIDE } from '../../src/game/core/locomotion';
+import { CHARACTERS, plantingFor } from './spriteSpec';
 import type { RowName, SheetSpec } from './spriteSpec';
 
 /**
@@ -47,5 +48,7 @@ export function rigScale(sheet: SheetSpec): number {
 /** Foot-sweep factor so the rig guide's planted feet land on the spec's px positions. */
 export function guideReachScale(sheet: SheetSpec): number {
   const ch = CHARACTERS[sheet.character];
-  return ch.height / ch.worldHeight / rigScale(sheet);
+  const planting = plantingFor(sheet);
+  const strideRatio = planting && sheet.gait ? planting.strideWorld / GAIT_STRIDE[sheet.gait] : 1;
+  return ch.height / ch.worldHeight / rigScale(sheet) * strideRatio;
 }

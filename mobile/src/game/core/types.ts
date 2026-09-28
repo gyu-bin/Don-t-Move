@@ -31,12 +31,12 @@ export const FACING = {
 
 /** Character locomotion states shared by Player and Guard rigs. */
 export const Gait = { Idle: 0, Sneak: 1, Walk: 2, Run: 3 } as const;
-export type Gait = (typeof Gait)[keyof typeof Gait];
+export type GaitCode = (typeof Gait)[keyof typeof Gait];
 
 /** Guard-only upper-body actions layered over the gait. */
 export const GuardAction = { None: 0, Whistle: 1, Search: 2 } as const;
-export type GuardAction = (typeof GuardAction)[keyof typeof GuardAction];
+export type GuardActionCode = (typeof GuardAction)[keyof typeof GuardAction];
 
 /** Guard awareness level; drives cone tint and head icon. */
 export const Awareness = { Patrol: 0, Suspicious: 1, Alert: 2, Search: 3, Chase: 4, Investigate: 5, Return: 6 } as const;
-export type Awareness = (typeof Awareness)[keyof typeof Awareness];
+export type AwarenessCode = (typeof Awareness)[keyof typeof Awareness];
