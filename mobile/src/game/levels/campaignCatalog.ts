@@ -1,13 +1,25 @@
 import type {StageTheme,ValuableKind} from './StageDefinition';
 import {CHAPTER_AREAS,CHAPTER_AREAS_KO} from './chapterArt';
 export const CHAPTER_COUNT=9;
-export const MISSIONS_PER_CHAPTER=5;
-export const MISSION_COUNT=CHAPTER_COUNT*MISSIONS_PER_CHAPTER;
-export const missionId=(index:number)=>`${String(Math.floor(index/5)+1).padStart(2,'0')}-${String(index%5+1).padStart(2,'0')}`;
-export const missionIndex=(id:string)=>{const m=/^(0[1-9])-0([1-5])$/.exec(id);return m?(Number(m[1])-1)*5+Number(m[2])-1:-1;};
+export const CHAPTER_MISSION_COUNTS=[10,5,5,5,5,5,5,5,5] as const;
+export const MISSION_COUNT=CHAPTER_MISSION_COUNTS.reduce((sum,count)=>sum+count,0);
+export const chapterStart=(chapter:number)=>CHAPTER_MISSION_COUNTS.slice(0,chapter).reduce((sum,count)=>sum+count,0);
+export const chapterMissionIndices=(chapter:number)=>Array.from({length:CHAPTER_MISSION_COUNTS[chapter]??0},(_,i)=>chapterStart(chapter)+i);
+export function missionLocation(index:number){
+ if(!Number.isInteger(index)||index<0||index>=MISSION_COUNT)return null;
+ let chapter=0,mission=index;
+ while(mission>=CHAPTER_MISSION_COUNTS[chapter])mission-=CHAPTER_MISSION_COUNTS[chapter++];
+ return {chapter,mission};
+}
+export function missionId(index:number){const location=missionLocation(index);return location?`${String(location.chapter+1).padStart(2,'0')}-${String(location.mission+1).padStart(2,'0')}`:'';}
+export function missionIndex(id:string){
+ const match=/^(0[1-9])-(\d{2})$/.exec(id);if(!match)return -1;
+ const chapter=Number(match[1])-1,mission=Number(match[2])-1;
+ return mission>=0&&mission<CHAPTER_MISSION_COUNTS[chapter]?chapterStart(chapter)+mission:-1;
+}
 export interface Chapter {theme:StageTheme;name:string;ko:string;objective:ValuableKind[];names:string[];namesKo:string[];}
 export const CHAPTERS:Chapter[]=[
- {theme:'museum',name:'MUSEUM',ko:'박물관',objective:['diamond','artifact'],names:['THE FIRST STEP','WATCH THE GUARD','DISTRACTION','EMPTY CASE','THE EXHIBITION'],namesKo:['첫걸음','경비를 관찰하라','주의 분산','빈 진열장','특별 전시']},
+ {theme:'museum',name:'MUSEUM',ko:'박물관',objective:['diamond','artifact'],names:CHAPTER_AREAS[0],namesKo:CHAPTER_AREAS_KO[0]},
  {theme:'gallery',name:'ART GALLERY',ko:'미술관',objective:['painting','jewel'],names:['AFTER HOURS','BEHIND THE FRAME','THE BLIND WALL','CLOSING TIME','PRIVATE COLLECTION'],namesKo:['폐관 후','액자 뒤에서','보이지 않는 벽','마감 시간','개인 소장품']},
  {theme:'bank',name:'BANK',ko:'은행',objective:['vaultGem','case'],names:['THE COUNTER','DEPOSIT LANE','OFFICE DETOUR','SILENT AUDIT','THE STRONGROOM'],namesKo:['창구','금고 통로','사무실 우회','조용한 감사','보관실']},
  {theme:'lab',name:'LAB',ko:'연구소',objective:['prototype'],names:['COLD ENTRY','INNER ORBIT','FALSE SIGNAL','CONTAINMENT','THE PROTOTYPE'],namesKo:['차가운 입구','내부 궤도','거짓 신호','격리 구역','시제품']},
@@ -17,4 +29,4 @@ export const CHAPTERS:Chapter[]=[
  {theme:'security',name:'SECURITY HQ',ko:'보안 본부',objective:['data'],names:['CONTROL DESK','SERVER LOOP','BLIND FEED','RESTRICTED WING','BLACK SITE ARCHIVE'],namesKo:['관제 책상','서버 순환로','사각 영상','제한 구역','비밀 시설 기록']},
  {theme:'vault',name:'HIGH SECURITY VAULT',ko:'최고 보안 금고',objective:['masterDiamond'],names:['OUTER SEAL','INNER CHAMBERS','DECOY CORRIDOR','LOCKDOWN ROUTE','THE MASTER DIAMOND'],namesKo:['외곽 봉인','내부 방','위장 통로','봉쇄 탈출로','마스터 다이아몬드']},
 ];
-export function missionName(index:number,language:'en'|'ko') {return (language==='ko'?CHAPTER_AREAS_KO:CHAPTER_AREAS)[Math.floor(index/5)][index%5];}
+export function missionName(index:number,language:'en'|'ko') {const location=missionLocation(index);return location?(language==='ko'?CHAPTER_AREAS_KO:CHAPTER_AREAS)[location.chapter][location.mission]:'';}

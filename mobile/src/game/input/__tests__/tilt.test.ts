@@ -1,5 +1,7 @@
 /// <reference types="node" />
 import assert from 'node:assert/strict';
+import { usesTiltInput } from '../inputPolicy';
+import { syncInputMode } from '../inputTransition';
 import { test } from 'node:test';
 import { createTiltState, DEFAULT_TILT, multiply, recenterTilt, relativeTilt, response, sensorLifecycleAction, stepTilt } from '../tilt';
 import type { AttitudeSample, Quaternion } from '../tilt';
@@ -180,4 +182,41 @@ test('Tilt excludes old touch/demo targets; calibration pauses guards and game c
   step(true);near(s.t,0);near(s.player.x,start.x);
   for(let i=0;i<60;i++) step(false);
   near(s.player.x,start.x);near(s.player.y,start.y);assert(!s.player.hasTarget);
+});
+
+
+test('Development sensor fallback is automatic while release iPhone remains Tilt', () => {
+  const phone = { available: true, isSimulator: false };
+  assert.equal(usesTiltInput('ios', true, phone), true);
+  assert.equal(usesTiltInput('ios', true, { ...phone, isSimulator: true }), false);
+  assert.equal(usesTiltInput('ios', true, null), false);
+  assert.equal(usesTiltInput('ios', true, { ...phone, available: false }), false);
+  assert.equal(usesTiltInput('ios', true, phone, true), false);
+  assert.equal(usesTiltInput('ios', false, null), true);
+  assert.equal(usesTiltInput('ios', false, { ...phone, available: false }), true);
+  assert.equal(usesTiltInput('ios', false, phone, true), true);
+  assert.equal(usesTiltInput('android', true, null), false);
+});
+
+
+test('Tilt-to-touch fallback stops velocity and consumes stale target before the first touch frame', () => {
+  const s = createPlaygroundState(stage);
+  const nav = buildNavigation(stage, 8);
+  s.guards = []; s.guardPlayback = [];
+  Object.assign(s.player, { speed: 150, vx: 150, vy: 0, hasTarget: true, tx: s.player.x + 100, ty: s.player.y + 50, visualGait: 3 });
+  const { x, y, spritePhase } = s.player;
+  s.touchSeq = 2;
+  syncInputMode(s, true, false, 7);
+  assert.equal(s.touchSeq, 7);
+  s.playerMode = 2;
+  stepPlayground(s, 1 / 60, TILE, 300, 600, { x: 0, y: 0, w: stage.width, h: stage.height }, stage.movementBlockers, stage.visionBlockers, nav);
+  assert.equal(s.player.x, x); assert.equal(s.player.y, y);
+  assert.equal(s.player.speed, 0); assert.equal(s.player.visualGait, 0);
+  assert.equal(s.player.spritePhase, spritePhase);
+  assert.equal(s.player.hasTarget, false);
+  // Subsequent frames must preserve fresh touch input rather than repeatedly reset it.
+  s.player.hasTarget = true; s.player.tx = x + 20;
+  syncInputMode(s, false, false, 8);
+  assert.equal(s.player.hasTarget, true); assert.equal(s.player.tx, x + 20);
+  assert.equal(s.touchSeq, 7);
 });

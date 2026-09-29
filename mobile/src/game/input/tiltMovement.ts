@@ -1,4 +1,4 @@
-import { advancePlayerSpritePhase, gaitFromSpeed, strideCycleLength, playerSpriteGait } from '../core/locomotion';
+import { advancePlayerSpritePhase, gaitFromSpeed, strideCycleLength, playerSpriteGait, stablePlayerSpriteGait } from '../core/locomotion';
 import { rightWalkTrialStride } from '../core/rightWalkTrial';
 import { turnToward } from '../core/math';
 import { moveWithCollision } from '../world/collision';
@@ -8,7 +8,7 @@ import type { PlayerState } from '../playground/playgroundState';
 export interface TiltMovement { x: number; y: number; paused: boolean; reset: number }
 export function stopPlayer(p: PlayerState): void {
   'worklet';
-  p.vx = p.vy = p.speed = p.gait = 0;
+  p.vx = p.vy = p.speed = p.gait = p.visualGait = 0;
   p.hasTarget = false;
 }
 export function movementName(speed: number): string {
@@ -38,8 +38,9 @@ export function stepTiltPlayer(p: PlayerState, input: TiltMovement, dt: number, 
   p.vx = (p.x-bx)/dt; p.vy = (p.y-by)/dt;
   p.speed = Math.hypot(p.vx, p.vy);
   p.gait = gaitFromSpeed(p.speed);
+  p.visualGait = stablePlayerSpriteGait(p.speed, p.visualGait);
   if (p.speed > 0.5) p.facing = turnToward(p.facing, Math.atan2(p.vy, p.vx), 10, dt);
   p.phase = (p.phase+p.speed*dt/strideCycleLength(tiltVisualGait(p.speed)))%1;
   p.dist += p.speed*dt;
-  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing));
+  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing, undefined, p.visualGait), p.visualGait);
 }

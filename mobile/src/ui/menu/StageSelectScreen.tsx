@@ -1,10 +1,11 @@
+import {useUIAudio} from '../../game/audio/useGameAudio';
 import {useState} from 'react';
 import {FlatList,Image,Pressable,ScrollView,StyleSheet,Text,View,useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useMenu} from './MenuContext';
 import {MenuHeading,menuStyles} from './MenuScreens';
 import {formatTime} from './stageCard';
-import {CHAPTERS,missionId,missionName} from '../../game/levels/campaignCatalog';
+import {CHAPTERS,chapterMissionIndices,missionId,missionName} from '../../game/levels/campaignCatalog';
 import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgress';
 
 // Reuse optimized venue artwork. Black Site is now a mission in Security HQ.
@@ -16,8 +17,8 @@ const thumbnails=[
  require('../../../assets/branding/stages/10.jpg'),
 ];
 const indices=CHAPTERS.map((_,i)=>i);
-const missions=[0,1,2,3,4];
 export default function StageSelectScreen({onBack,onSelect}:{onBack:()=>void;onSelect:(mission:number)=>void}) {
+ const playUI=useUIAudio();
  const {progress,t}=useMenu();const insets=useSafeAreaInsets();const {width}=useWindowDimensions();
  const [chapter,setChapter]=useState<number|null>(null);
  const campaign=migrateCampaign(progress);
@@ -30,11 +31,12 @@ export default function StageSelectScreen({onBack,onSelect}:{onBack:()=>void;onS
    initialNumToRender={6} maxToRenderPerBatch={3} windowSize={3}
    contentContainerStyle={[styles.list,{paddingBottom:insets.bottom+24}]} columnWrapperStyle={styles.row}
    renderItem={({item:index})=>{
-    const unlocked=missions.some(m=>canPlayMission(campaign,index*5+m,__DEV__));
+    const missions=chapterMissionIndices(index);
+    const unlocked=missions.some(m=>canPlayMission(campaign,m,__DEV__));
     const current=campaign.lastMission.startsWith(String(index+1).padStart(2,'0')+'-');
-    const clears=missions.filter(m=>campaign.records[missionId(index*5+m)]?.cleared).length;
+    const clears=missions.filter(m=>campaign.records[missionId(m)]?.cleared).length;
     return <Pressable accessibilityRole="button" accessibilityLabel={String(index+1).padStart(2,'0')+' '+chapterName(index)}
-     accessibilityState={{selected:current}} onPress={()=>setChapter(index)}
+     accessibilityState={{selected:current}} onPress={()=>{playUI('ui_select');setChapter(index);}}
      style={({pressed})=>[styles.card,{width:cardWidth},current&&styles.current,pressed&&{opacity:0.8}]}>
      <View style={{height:cardWidth*1.45}}>
       <Image source={thumbnails[index]} style={{width:'100%',height:'100%'}} resizeMode="cover" fadeDuration={0}/>
@@ -42,18 +44,18 @@ export default function StageSelectScreen({onBack,onSelect}:{onBack:()=>void;onS
       <Text style={styles.number}>{String(index+1).padStart(2,'0')}</Text>
      </View>
      <View style={styles.caption}><Text style={styles.name}>{chapterName(index)}</Text>
-      <Text style={styles.status}>{clears}/5 {t('clear')}</Text></View>
+      <Text style={styles.status}>{clears}/{missions.length} {t('clear')}</Text></View>
     </Pressable>;
    }}/>:<ScrollView contentContainerStyle={[styles.missions,{paddingBottom:insets.bottom+24}]}>
     <Image source={thumbnails[chapter]} style={styles.banner} resizeMode="cover"/>
-    {missions.map(m=>{
-     const index=chapter*5+m,id=missionId(index),record=campaign.records[id];
+    {chapterMissionIndices(chapter).map(index=>{
+     const id=missionId(index),record=campaign.records[id];
      const unlocked=canPlayMission(campaign,index,__DEV__),current=campaign.lastMission===id;
      const status=record?.cleared?'clear':unlocked?'play':'locked';
      return <Pressable key={id} accessibilityRole="button" disabled={!unlocked}
       accessibilityLabel={id+' '+missionName(index,progress.language)+', '+t(status)}
       accessibilityState={{disabled:!unlocked,selected:current}}
-      onPress={()=>onSelect(index)} style={({pressed})=>[styles.mission,current&&styles.current,!unlocked&&{opacity:0.55},pressed&&{backgroundColor:'#12313E'}]}>
+      onPress={()=>{playUI('ui_select');onSelect(index);}} style={({pressed})=>[styles.mission,current&&styles.current,!unlocked&&{opacity:0.55},pressed&&{backgroundColor:'#12313E'}]}>
       <View style={styles.missionTop}><Text style={styles.id}>{id}</Text><Text style={styles.status}>{record?.cleared?'✓ ':''}{t(status)}</Text></View>
       <Text style={styles.missionName}>{missionName(index,progress.language)}</Text>
       {record?.cleared&&<Text style={styles.time}>{record.legacy?t('legacy')+' · ':''}{t('best')} {formatTime(record.bestTime)} · {t('alerts')} {record.alerts??'—'}</Text>}

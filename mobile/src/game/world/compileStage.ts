@@ -31,6 +31,8 @@ export interface CompiledLight {
 
 export interface CompiledGuard {
   semanticPatrol?: boolean;
+  theftRole?: 'objective' | 'corridor' | 'exit' | 'zone' | 'roaming';
+  theftPosts?: { x: number; y: number }[];
   id: string;
   x: number;
   y: number;
@@ -65,17 +67,17 @@ export interface CompiledStage {
 }
 
 /** Merge horizontal wall runs, then stack identical runs vertically. */
-function mergeWalls(grid: Uint8Array, cols: number, rows: number): Rect[] {
+function mergeWalls(grid: Uint8Array, cols: number, rows: number, cell: number = Cell.Wall): Rect[] {
   const runs: Rect[] = [];
   for (let r = 0; r < rows; r++) {
     let c = 0;
     while (c < cols) {
-      if (grid[r * cols + c] !== Cell.Wall) {
+      if (grid[r * cols + c] !== cell) {
         c++;
         continue;
       }
       const start = c;
-      while (c < cols && grid[r * cols + c] === Cell.Wall) c++;
+      while (c < cols && grid[r * cols + c] === cell) c++;
       runs.push({ x: start, y: r, w: c - start, h: 1 });
     }
   }
@@ -108,6 +110,22 @@ export function compileStage(def: StageDefinition): CompiledStage {
     visionBlockers.push(w.x, w.y, w.x + w.w, w.y + w.h);
   }
 
+  // Museum floors can end at an authored entrance/exit aperture. Void and
+  // the outside rim need physical collision even where no visible wall exists.
+  // Keep other chapters' movement/vision contracts unchanged.
+  if (def.chapter === 1) {
+    for (const r of mergeWalls(grid, cols, rows, Cell.Void)) {
+      movementBlockers.push(r.x, r.y, r.x + r.w, r.y + r.h);
+    }
+    const width = cols * TILE, height = rows * TILE;
+    movementBlockers.push(
+      -TILE, -TILE, 0, height + TILE,
+      width, -TILE, width + TILE, height + TILE,
+      0, -TILE, width, 0,
+      0, height, width, height + TILE,
+    );
+  }
+
   const props: CompiledProp[] = def.props.map((p) => {
     const spec = PROP_KIT[p.kind];
     const x = p.x * TILE;
@@ -137,12 +155,16 @@ export function compileStage(def: StageDefinition): CompiledStage {
       id: g.id,
       x: g.x * TILE,
       y: g.y * TILE,
-      facing: g.facing,
+      facing: g.initialLookTarget ? Math.atan2(g.initialLookTarget.y-g.y,g.initialLookTarget.x-g.x) : g.initialFacing ?? g.facing,
+      ...(def.chapter === 1 ? {
+        theftRole: g.theftRole ?? (g.role === 'room' ? 'zone' : g.role ?? 'zone'),
+        theftPosts: (g.theftPosts ?? anchors ?? route?.points ?? [{x:g.x,y:g.y}]).map(p=>({x:p.x*TILE,y:p.y*TILE})),
+      } : {}),
       route: anchors ? anchors.map(p => ({x:p.x*TILE,y:p.y*TILE,wait:p.wait,look:p.look,turnDuration:1.1})) : (route?.points ?? []).map((p) => ({
         x: p.x * TILE,
         y: p.y * TILE,
         wait: p.waitDuration ?? p.wait ?? (route?.mode === 'waitAndLook' ? 2 : 0),
-        look: p.lookDirection ?? p.look ?? Number.NaN,
+        look: p.lookTarget ? Math.atan2(p.lookTarget.y-p.y,p.lookTarget.x-p.x) : p.lookDirection ?? p.look ?? Number.NaN,
         turnDuration: p.turnDuration ?? 0.7,
       })),
       routeMode: assignment ? (assignment.roaming ? 'roaming' : 'loop') : route?.mode ?? 'loop',

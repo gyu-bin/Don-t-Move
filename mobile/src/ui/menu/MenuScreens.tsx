@@ -1,3 +1,4 @@
+import { useUIAudio } from '../../game/audio/useGameAudio';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {migrateCampaign} from '../../game/progress/campaignProgress';
@@ -5,8 +6,9 @@ import { useMenu } from './MenuContext';
 import { HOME_COMPOSITION, homeComposition } from '../branding/homeLayout';
 
 export function MenuButton({label,detail,onPress,primary=false,disabled=false,compact=false}:{label:string;detail?:string;onPress:()=>void;primary?:boolean;disabled?:boolean;compact?:boolean}) {
+ const playUI=useUIAudio();
  return <Pressable accessibilityRole="button" accessibilityLabel={detail ? `${label}, ${detail}` : label}
-  accessibilityState={{disabled}} disabled={disabled} onPress={onPress}
+  accessibilityState={{disabled}} disabled={disabled} onPress={()=>{playUI('ui_select');onPress();}}
   style={({pressed})=>[menuStyles.button,compact&&menuStyles.compact,primary&&menuStyles.primary,pressed&&menuStyles.pressed,disabled&&{opacity:0.45}]}>
   <Text style={menuStyles.buttonText}>{label}</Text>
   {detail&&<Text style={menuStyles.detail}>{detail}</Text>}
@@ -28,14 +30,16 @@ export function HomeMenu({onPlay,onStages,onSettings,ready,error,onRetry}:{onPla
  </ScrollView>;
 }
 export function MenuHeading({title,onBack}:{title:string;onBack:()=>void}) {
+ const playUI=useUIAudio();
  const {t}=useMenu();
  return <View style={menuStyles.heading}>
-  <Pressable accessibilityRole="button" accessibilityLabel={t('back')} onPress={onBack} style={menuStyles.back}><Text style={menuStyles.backText}>‹</Text></Pressable>
+  <Pressable accessibilityRole="button" accessibilityLabel={t('back')} onPress={()=>{playUI('ui_back');onBack();}} style={menuStyles.back}><Text style={menuStyles.backText}>‹</Text></Pressable>
   <Text accessibilityRole="header" style={menuStyles.title}>{title}</Text>
  </View>;
 }
 export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>void}) {
  const {t,progress,preferences}=useMenu();
+ const playUI=useUIAudio();
  const insets=useSafeAreaInsets();
  return <View style={[menuStyles.screen,{paddingTop:insets.top}]}>
   <MenuHeading title={t('settings')} onBack={onBack}/>
@@ -52,7 +56,7 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
     <Switch accessibilityLabel={t('sfx')} value={progress.soundEnabled} onValueChange={soundEnabled=>preferences({soundEnabled})} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>
    <View style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('music')}</Text>
     <Switch accessibilityLabel={t('music')} value={progress.musicEnabled} onValueChange={musicEnabled=>preferences({musicEnabled})} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>
-   <Pressable accessibilityRole="button" onPress={onIntro} style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('intro')}</Text><Text style={menuStyles.backText}>›</Text></Pressable>
+   <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');onIntro();}} style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('intro')}</Text><Text style={menuStyles.backText}>›</Text></Pressable>
   </ScrollView>
  </View>;
 }

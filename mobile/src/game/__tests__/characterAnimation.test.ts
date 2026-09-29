@@ -28,8 +28,10 @@ test('Guard playback uses actual distance, preserves phase and aligns whistle to
   assert.equal(a.phase,0.25);
   stepGuardPlayback(a,{...pose,x:110,speed:150,awareness:Awareness.Chase},1/60);
   assert.equal(a.phase,0.25,'blocked guard must not step');
+  assert.equal(a.animation,Anim.Idle,'blocked guard must hold a still pose');
   stepGuardPlayback(a,{...pose,x:123,speed:150,awareness:Awareness.Chase},1/60);
   assert.equal(a.phase,0.5);
+  assert.equal(a.animation,Anim.Run);
   stepGuardPlayback(a,{...pose,x:123,action:GuardAction.Whistle,whistleT:0.32},1/60);
   assert.equal(a.time,0.32); assert.equal(a.phase,0.5);
 });

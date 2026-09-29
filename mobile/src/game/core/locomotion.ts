@@ -29,10 +29,23 @@ export function playerSpriteGait(speed:number):number {
   return speed<=0.5+epsilon?0:speed<=38+epsilon?1:speed<=72+epsilon?2:3;
 }
 
-/** Integrate each actual displacement so changing gait never reinterprets past distance. */
-export function advancePlayerSpritePhase(phase: number, distance: number, speed: number, strideOverride?: number): number {
+/** Visual clip selection only. Keep the movement and detection speed untouched. */
+export function stablePlayerSpriteGait(speed: number, previous: number): number {
   'worklet';
-  const gait=playerSpriteGait(speed);
+  if (speed <= 0.5) return 0;
+  let gait = previous;
+  if (gait < 1) gait = 1;
+  if (gait === 1 && speed > 41) gait = 2;
+  if (gait === 2 && speed > 76) gait = 3;
+  if (gait === 3 && speed < 68) gait = 2;
+  if (gait === 2 && speed < 35) gait = 1;
+  return gait;
+}
+
+/** Integrate each actual displacement so changing gait never reinterprets past distance. */
+export function advancePlayerSpritePhase(phase: number, distance: number, speed: number, strideOverride?: number, visualGait?: number): number {
+  'worklet';
+  const gait=visualGait ?? playerSpriteGait(speed);
   const stride = gait <= 1 ? PLAYER_SPRITE_STRIDE.sneak
     : gait === 2 ? PLAYER_SPRITE_STRIDE.walk : PLAYER_SPRITE_STRIDE.run;
   return (phase + distance / (strideOverride ?? stride)) % 1;

@@ -282,6 +282,18 @@
       {
         "id": "01-01-g1",
         "role": "room",
+        "theftRole": "corridor",
+        "theftPosts": [
+          {
+            "x": 6.8,
+            "y": 10.5
+          },
+          {
+            "x": 9.5,
+            "y": 5.5
+          }
+        ],
+        "initialFacing": 3.141592653589793,
         "x": 9.7,
         "y": 10.8,
         "routeId": "main-gallery",
@@ -294,10 +306,22 @@
       {
         "id": "01-01-g2",
         "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 13.5,
+            "y": 5.8
+          },
+          {
+            "x": 15.6,
+            "y": 8
+          }
+        ],
+        "initialFacing": -1.5707963267948966,
         "x": 15.6,
         "y": 8,
         "routeId": "exhibition",
-        "facing": 0,
+        "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 4,
         "visionRange": 3.5,
@@ -553,170 +577,123 @@
     "number": 2,
     "chapter": 1,
     "mission": 2,
-    "title": "Main Exhibition",
+    "title": "Main Gallery",
     "theme": "museum",
-    "structurePlan": "Painting Room / timed Central Crossing / Sculpture Room / Artifact Room / separate south Exit circulation",
+    "structurePlan": "Painting Gallery → octagonal Central Rotunda (southern recess / central crossing) → Sculpture Wing → Artifact Room → south staff exit",
     "layout": [
-      "###############",
-      "#....#...#....#",
-      "#....#...#....#",
-      "#....#........#",
+      "         ######",
+      "         #....#",
+      "         #....#",
+      "         #....#",
+      "     #####....#",
+      "######...###..#",
+      "#...#.....#...#",
+      "#...#.....#...#",
       "#.............#",
-      "#....#...#....#",
-      "###..###.##..##",
-      "#....#........#",
       "#.............#",
-      "#.............#",
-      "#....#.#...#..#",
-      "#....###...####",
-      "#....# #...#   ",
-      "###### #...#   ",
-      "       #####   "
+      "#...#.....##..#",
+      "######...###..#",
+      "     ##### #..#",
+      "           #..#",
+      "           #..#"
     ],
-    "ambientDarkness": 0.35,
     "entryEdge": "left",
-    "entryPosition": {
-      "x": 1.25,
-      "y": 9
-    },
     "exitEdge": "bottom",
+    "entryPosition": {
+      "x": 1.3,
+      "y": 8.5
+    },
     "exitPosition": {
-      "x": 9.5,
+      "x": 13.3,
       "y": 13.5
     },
     "playerSpawn": {
-      "x": 1.25,
-      "y": 9,
+      "x": 1.3,
+      "y": 8.5,
       "facing": 0
     },
     "objective": {
-      "kind": "artifact",
       "x": 12,
-      "y": 3.5
+      "y": 2.5,
+      "kind": "artifact"
     },
     "exit": {
-      "x": 8.9,
+      "x": 12.700000000000001,
       "y": 12.9,
       "w": 1.2,
       "h": 1.2
     },
+    "ambientDarkness": 0.3,
     "props": [
       {
-        "kind": "partition",
-        "x": 2.8,
-        "y": 8.5,
-        "scale": 1.4,
-        "collisionScale": 1.4
-      },
-      {
-        "kind": "statue",
-        "x": 2.8,
-        "y": 5.4,
-        "scale": 1.5,
-        "collisionScale": 1.5
+        "kind": "painting",
+        "x": 2.5,
+        "y": 6
       },
       {
         "kind": "pillar",
-        "x": 7,
-        "y": 2.8,
-        "scale": 1.4,
-        "collisionScale": 1.4
-      },
-      {
-        "kind": "displayCase",
-        "x": 8.2,
-        "y": 9.3,
-        "scale": 1.4,
-        "collisionScale": 1.4
-      },
-      {
-        "kind": "partition",
-        "x": 9.4,
-        "y": 7.25,
-        "scale": 1.4,
-        "collisionScale": 1.4
+        "x": 6,
+        "y": 7,
+        "scale": 1.1,
+        "collisionScale": 1.1
       },
       {
         "kind": "pillar",
-        "x": 10.5,
-        "y": 2.8,
-        "scale": 1.35,
-        "collisionScale": 1.35
+        "x": 9,
+        "y": 7,
+        "scale": 1.1,
+        "collisionScale": 1.1
       },
       {
         "kind": "statue",
-        "x": 12.5,
-        "y": 9.2,
-        "scale": 1.4,
-        "collisionScale": 1.4
+        "x": 11.8,
+        "y": 9.8,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "lamp",
+        "x": 12,
+        "y": 1
       },
       {
         "kind": "objectiveCase",
         "x": 12,
-        "y": 3.62
-      },
-      {
-        "kind": "painting",
-        "x": 2.8,
-        "y": 7,
-        "scale": 1.35
-      },
-      {
-        "kind": "painting",
-        "x": 4.3,
-        "y": 3,
-        "scale": 0.9
-      },
-      {
-        "kind": "lamp",
-        "x": 12,
-        "y": 2
-      },
-      {
-        "kind": "lamp",
-        "x": 2,
-        "y": 8.5
+        "y": 2.62
       }
     ],
     "landmark": {
-      "name": "Sculpture Room",
-      "kind": "statue",
-      "x": 2.8,
-      "y": 5.4
+      "name": "Central Rotunda",
+      "kind": "pillar",
+      "x": 6,
+      "y": 7
     },
     "lights": [
       {
         "x": 12,
-        "y": 3.5,
+        "y": 2.5,
         "radius": 2.6,
         "kind": "warm",
-        "intensity": 0.94
+        "intensity": 0.96
       },
       {
-        "x": 4.2,
-        "y": 5.5,
-        "radius": 2.1,
+        "x": 1.3,
+        "y": 8.5,
+        "radius": 2,
+        "kind": "warm",
+        "intensity": 0.4
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "radius": 2.6,
         "kind": "warm",
         "intensity": 0.62
       },
       {
-        "x": 2.7,
-        "y": 9.3,
-        "radius": 2,
-        "kind": "warm",
-        "intensity": 0.38
-      },
-      {
-        "x": 8.1,
-        "y": 8.2,
-        "radius": 2.2,
-        "kind": "warm",
-        "intensity": 0.46
-      },
-      {
-        "x": 9,
-        "y": 12.8,
-        "radius": 1.6,
+        "x": 13.3,
+        "y": 13.5,
+        "radius": 1.8,
         "kind": "warm",
         "intensity": 0.3
       }
@@ -724,147 +701,70 @@
     "guards": [
       {
         "id": "01-02-g1",
-        "role": "room",
-        "x": 6.3,
-        "y": 7.8,
         "routeId": "01-02-g1",
-        "facing": 0,
-        "pace": 0.825,
+        "x": 7,
+        "y": 6,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 9,
+            "y": 8
+          },
+          {
+            "x": 7,
+            "y": 6
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
+        "pace": 0.8250000000000001,
         "startDelay": 0,
         "visionRange": 3.68,
         "visionHalfAngle": 0.5235987755982988
       },
       {
         "id": "01-02-g2",
-        "role": "objective",
-        "x": 11.8,
-        "y": 5.5,
         "routeId": "01-02-g2",
-        "facing": -1.5707963267948966,
-        "pace": 0.825,
+        "x": 10.8,
+        "y": 2.3,
+        "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 10.8,
+            "y": 4
+          },
+          {
+            "x": 10.8,
+            "y": 2.3
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 0.8250000000000001,
         "startDelay": 4,
         "visionRange": 3.68,
         "visionHalfAngle": 0.5235987755982988
       }
     ],
-    "patrolPlan": {
-      "zones": [
-        {
-          "id": "A",
-          "name": "Cross aisle / observation floor"
-        },
-        {
-          "id": "B",
-          "name": "Artifact room"
-        }
-      ],
-      "anchors": [
-        {
-          "id": "aisle-west",
-          "zone": "A",
-          "subject": "Painting Room threshold",
-          "x": 6.3,
-          "y": 7.8,
-          "wait": 1.5,
-          "look": 3.141592653589793
-        },
-        {
-          "id": "aisle-east",
-          "zone": "A",
-          "subject": "Central sightline",
-          "x": 9.8,
-          "y": 7.8,
-          "wait": 1.4,
-          "look": 3.141592653589793
-        },
-        {
-          "id": "return-door",
-          "zone": "A",
-          "subject": "Exit corridor turn",
-          "x": 9.5,
-          "y": 10.8,
-          "wait": 1.8,
-          "look": 1.5707963267948966
-        },
-        {
-          "id": "artifact-door",
-          "zone": "B",
-          "subject": "Artifact room entrance",
-          "x": 11.8,
-          "y": 5.5,
-          "wait": 2.5,
-          "look": -1.5707963267948966
-        },
-        {
-          "id": "artifact-west",
-          "zone": "B",
-          "subject": "Artifact sightline",
-          "x": 10,
-          "y": 4.2,
-          "wait": 2,
-          "look": 0
-        },
-        {
-          "id": "artifact-north",
-          "zone": "B",
-          "subject": "North gallery wall",
-          "x": 12.2,
-          "y": 2.5,
-          "wait": 2,
-          "look": 3.141592653589793
-        }
-      ],
-      "assignments": [
-        {
-          "guardId": "01-02-g1",
-          "zones": [
-            "A"
-          ],
-          "anchors": [
-            "aisle-west",
-            "aisle-east",
-            "return-door"
-          ],
-          "roaming": false
-        },
-        {
-          "guardId": "01-02-g2",
-          "zones": [
-            "B"
-          ],
-          "anchors": [
-            "artifact-door",
-            "artifact-west",
-            "artifact-north"
-          ],
-          "roaming": false
-        }
-      ]
-    },
     "patrolRoutes": [
       {
         "id": "01-02-g1",
-        "mode": "waitAndLook",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 6.3,
-            "y": 7.8,
-            "waitDuration": 1.5,
-            "lookDirection": 3.141592653589793,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 9.8,
-            "y": 7.8,
-            "waitDuration": 1.4,
-            "lookDirection": 3.141592653589793,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 9.5,
-            "y": 10.8,
-            "waitDuration": 1.8,
+            "x": 7,
+            "y": 6,
+            "waitDuration": 4.5,
             "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 9,
+            "y": 8,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
             "turnDuration": 1.1
           }
         ]
@@ -874,41 +774,108 @@
         "mode": "pingpong",
         "points": [
           {
-            "x": 11.8,
-            "y": 5.5,
+            "x": 10.8,
+            "y": 2.3,
             "waitDuration": 4.5,
-            "lookDirection": -1.5707963267948966,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 10,
-            "y": 4.2,
-            "waitDuration": 2,
             "lookDirection": 0,
             "turnDuration": 1.1
           },
           {
-            "x": 12.2,
-            "y": 2.5,
+            "x": 10.8,
+            "y": 4,
             "waitDuration": 2,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 0,
             "turnDuration": 1.1
           }
         ]
       }
     ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "Rotunda entrance / central crossing / Sculpture threshold"
+        },
+        {
+          "id": "Z1",
+          "name": "Artifact entrance / case inspection"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "Rotunda entrance / central crossing / Sculpture threshold: observation return",
+          "x": 7,
+          "y": 6,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "Rotunda entrance / central crossing / Sculpture threshold: inspection threshold",
+          "x": 9,
+          "y": 8,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Artifact entrance / case inspection: observation return",
+          "x": 10.8,
+          "y": 2.3,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Artifact entrance / case inspection: inspection threshold",
+          "x": 10.8,
+          "y": 4,
+          "wait": 2,
+          "look": 0
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-02-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-02-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1"
+          ],
+          "roaming": false
+        }
+      ]
+    },
     "securityZones": [
       {
-        "name": "Central Crossing / Painting threshold",
-        "x": 8,
-        "y": 8.5,
+        "name": "Rotunda entrance / central crossing / Sculpture threshold",
+        "x": 7,
+        "y": 6,
         "radius": 3.5,
         "guardId": "01-02-g1"
       },
       {
-        "name": "Artifact / Sculpture rooms",
+        "name": "Artifact entrance / case inspection",
         "x": 10.8,
-        "y": 4.5,
+        "y": 2.3,
         "radius": 3.5,
         "guardId": "01-02-g2"
       }
@@ -919,150 +886,133 @@
     },
     "safeZones": [
       {
-        "x": 2.5,
-        "y": 9.5,
-        "radius": 0.5
-      },
-      {
-        "x": 3,
-        "y": 5,
-        "radius": 0.45
+        "x": 1.3,
+        "y": 8.5,
+        "radius": 0.2
       }
     ],
     "testRoutes": [
       {
-        "name": "safe: observation pockets linked by structural cover",
+        "name": "safe: structural observation route",
         "points": [
           {
-            "x": 1.25,
-            "y": 9
+            "x": 1.3,
+            "y": 8.5
           },
           {
-            "x": 2,
-            "y": 9.8
+            "x": 3,
+            "y": 8.5
           },
           {
-            "x": 4.2,
-            "y": 9.8
+            "x": 5.5,
+            "y": 8.5
           },
           {
-            "x": 4.2,
-            "y": 9
+            "x": 6.5,
+            "y": 10.5
           },
           {
-            "x": 4.2,
-            "y": 7
+            "x": 8.5,
+            "y": 10.5
           },
           {
-            "x": 4.2,
-            "y": 5
-          },
-          {
-            "x": 4.5,
-            "y": 4.5
-          },
-          {
-            "x": 6,
-            "y": 4.5
-          },
-          {
-            "x": 8,
-            "y": 4.5
-          },
-          {
-            "x": 10,
-            "y": 4.5
-          },
-          {
-            "x": 12,
-            "y": 3.5
-          }
-        ]
-      },
-      {
-        "name": "risk: short exposed sightline crossing",
-        "points": [
-          {
-            "x": 1.25,
-            "y": 9
-          },
-          {
-            "x": 4.3,
-            "y": 9
-          },
-          {
-            "x": 6.4,
-            "y": 9
-          },
-          {
-            "x": 6.4,
-            "y": 7.6
-          },
-          {
-            "x": 8,
-            "y": 7.6
-          },
-          {
-            "x": 10,
-            "y": 7.6
+            "x": 9.5,
+            "y": 8.5
           },
           {
             "x": 11.5,
-            "y": 7.6
+            "y": 8.5
           },
           {
             "x": 11.5,
             "y": 6.5
           },
           {
-            "x": 12,
-            "y": 5.5
+            "x": 12.5,
+            "y": 6.5
+          },
+          {
+            "x": 12.5,
+            "y": 4.5
           },
           {
             "x": 12,
-            "y": 3.5
+            "y": 2.5
+          }
+        ]
+      },
+      {
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 1.3,
+            "y": 8.5
+          },
+          {
+            "x": 3,
+            "y": 8.5
+          },
+          {
+            "x": 5.5,
+            "y": 8.5
+          },
+          {
+            "x": 9.5,
+            "y": 8.5
+          },
+          {
+            "x": 11.5,
+            "y": 8.5
+          },
+          {
+            "x": 11.5,
+            "y": 6.5
+          },
+          {
+            "x": 12.5,
+            "y": 6.5
+          },
+          {
+            "x": 12.5,
+            "y": 4.5
+          },
+          {
+            "x": 12,
+            "y": 2.5
           }
         ]
       }
     ],
     "escapeRoutes": [
       {
-        "name": "escape: separate post-objective circulation",
+        "name": "escape: rear staff circulation",
         "points": [
           {
             "x": 12,
+            "y": 2.5
+          },
+          {
+            "x": 13.3,
             "y": 3.5
           },
           {
-            "x": 12.5,
-            "y": 5.5
+            "x": 13.3,
+            "y": 4.5
           },
           {
-            "x": 12,
+            "x": 13.3,
             "y": 6.5
           },
           {
-            "x": 12,
-            "y": 7.5
+            "x": 13.3,
+            "y": 8.5
           },
           {
-            "x": 13.5,
-            "y": 7.5
+            "x": 13.3,
+            "y": 11
           },
           {
-            "x": 13.5,
-            "y": 9.6
-          },
-          {
-            "x": 10.5,
-            "y": 9.6
-          },
-          {
-            "x": 10.5,
-            "y": 10.5
-          },
-          {
-            "x": 9.5,
+            "x": 13.3,
             "y": 13.5
           }
         ]
@@ -1074,241 +1024,175 @@
     "number": 3,
     "chapter": 1,
     "mission": 3,
-    "title": "Sculpture Garden",
+    "title": "Archive",
     "theme": "museum",
-    "structurePlan": "Three sculpture pockets around a dog-leg investigation corridor",
+    "structurePlan": "Bent Staff Corridor → Archive Shelves (shelf-end cover / central aisle) → Storage → Restricted Archive → return through Storage inspection corner → east staff door",
     "layout": [
-      "##################",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#......#.........#",
-      "#......#...###...#",
-      "#......#.........#",
-      "#......#.........#",
-      "#......#.........#",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#......#####.....#",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#................#",
-      "##################"
+      "#####             ",
+      "#...#             ",
+      "#...#             ",
+      "#...#######       ",
+      "#...#.....#       ",
+      "#.........#####   ",
+      "#.........#...#   ",
+      "#####.....#...#   ",
+      "    #.....#...#   ",
+      "    #.....#...#   ",
+      "    ####..#..#####",
+      "       #.........#",
+      "       #.........#",
+      "       ###########"
     ],
+    "entryEdge": "top",
+    "exitEdge": "right",
+    "entryPosition": {
+      "x": 2.5,
+      "y": 1.5
+    },
+    "exitPosition": {
+      "x": 16.5,
+      "y": 11.5
+    },
+    "playerSpawn": {
+      "x": 2.5,
+      "y": 1.5,
+      "facing": 1.5707963267948966
+    },
+    "objective": {
+      "x": 12.5,
+      "y": 8,
+      "kind": "classified"
+    },
+    "exit": {
+      "x": 15.9,
+      "y": 10.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.3,
     "props": [
       {
-        "x": 2.1,
-        "y": 2.1,
-        "kind": "statue"
+        "kind": "shelf",
+        "x": 7,
+        "y": 8,
+        "scale": 1.2,
+        "collisionScale": 1.2
       },
       {
-        "x": 4.2,
-        "y": 2.1,
-        "kind": "statue"
+        "kind": "shelf",
+        "x": 8.3,
+        "y": 5.5
       },
       {
-        "x": 2.1,
-        "y": 4.2,
-        "kind": "pillar"
+        "kind": "crate",
+        "x": 8.5,
+        "y": 12.7
       },
       {
-        "x": 4.2,
-        "y": 4.2,
-        "kind": "bench"
+        "kind": "shelf",
+        "x": 14.5,
+        "y": 12.9
       },
       {
-        "x": 8.4,
-        "y": 4.2,
-        "kind": "plant"
+        "kind": "lamp",
+        "x": 2,
+        "y": 1
       },
       {
-        "x": 10.5,
-        "y": 4.2,
-        "kind": "painting"
-      },
-      {
-        "x": 12.6,
-        "y": 4.2,
-        "kind": "statue"
-      },
-      {
-        "x": 14.7,
-        "y": 4.2,
-        "kind": "statue"
-      },
-      {
-        "x": 2.1,
-        "y": 6.300000000000001,
-        "kind": "pillar"
-      },
-      {
-        "x": 4.2,
-        "y": 6.300000000000001,
-        "kind": "bench"
-      },
-      {
-        "x": 14.7,
-        "y": 6.300000000000001,
-        "kind": "plant"
-      },
-      {
-        "x": 2.1,
-        "y": 8.4,
-        "kind": "painting"
-      },
-      {
-        "x": 4.2,
-        "y": 8.4,
-        "kind": "statue"
-      },
-      {
-        "x": 12.6,
-        "y": 8.4,
-        "kind": "statue"
-      },
-      {
-        "x": 14.7,
-        "y": 8.4,
-        "kind": "pillar"
-      },
-      {
-        "x": 2.1,
-        "y": 10.5,
-        "kind": "bench"
-      },
-      {
-        "x": 6.300000000000001,
-        "y": 10.5,
-        "kind": "plant"
-      },
-      {
-        "x": 8.4,
-        "y": 10.5,
-        "kind": "painting"
-      },
-      {
-        "x": 2.1,
-        "y": 12.6,
-        "kind": "statue"
-      },
-      {
-        "x": 10.5,
-        "y": 12.6,
-        "kind": "statue"
-      },
-      {
-        "x": 2.1,
-        "y": 16.8,
-        "kind": "pillar"
-      },
-      {
-        "x": 4.2,
-        "y": 16.8,
-        "kind": "bench"
-      },
-      {
-        "x": 6.300000000000001,
-        "y": 16.8,
-        "kind": "plant"
-      },
-      {
-        "x": 8.4,
-        "y": 16.8,
-        "kind": "painting"
-      },
-      {
-        "x": 10.5,
-        "y": 16.8,
-        "kind": "statue"
-      },
-      {
-        "x": 12.6,
-        "y": 16.8,
-        "kind": "statue"
-      },
-      {
-        "x": 14.7,
-        "y": 16.8,
-        "kind": "pillar"
+        "kind": "lamp",
+        "x": 12.5,
+        "y": 6
       },
       {
         "kind": "objectiveCase",
-        "x": 3.25,
-        "y": 15.37
+        "x": 12.5,
+        "y": 8.12
       }
     ],
+    "landmark": {
+      "name": "Archive Shelves",
+      "kind": "shelf",
+      "x": 7,
+      "y": 8
+    },
     "lights": [
       {
-        "x": 3.25,
-        "y": 15.25,
-        "radius": 2.4,
+        "x": 12.5,
+        "y": 8,
+        "radius": 2.6,
         "kind": "warm",
-        "intensity": 0.9
+        "intensity": 0.96
       },
       {
-        "x": 8.25,
-        "y": 1.25,
-        "radius": 3.2,
+        "x": 2.5,
+        "y": 1.5,
+        "radius": 2,
         "kind": "warm",
-        "intensity": 0.5
+        "intensity": 0.4
       },
       {
-        "x": 16.25,
-        "y": 8.75,
-        "radius": 3.2,
+        "x": 7,
+        "y": 8,
+        "radius": 2.6,
         "kind": "warm",
-        "intensity": 0.5
+        "intensity": 0.62
       },
       {
-        "x": 15.25,
-        "y": 15.25,
-        "radius": 3.2,
+        "x": 16.5,
+        "y": 11.5,
+        "radius": 1.8,
         "kind": "warm",
-        "intensity": 0.5
-      },
-      {
-        "x": 4.2,
-        "y": 2.1,
-        "radius": 2.5,
-        "kind": "warm",
-        "intensity": 0.8
+        "intensity": 0.3
       }
     ],
     "guards": [
       {
-        "x": 16.75,
-        "y": 1.25,
         "id": "01-03-g1",
-        "role": "roaming",
         "routeId": "01-03-g1",
-        "facing": 1.892546881191539,
+        "x": 7,
+        "y": 4.7,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 9,
+            "y": 8.5
+          },
+          {
+            "x": 7,
+            "y": 4.7
+          }
+        ],
+        "initialFacing": 3.141592653589793,
+        "facing": 3.141592653589793,
         "pace": 0.8500000000000001,
         "startDelay": 0,
         "visionRange": 3.86,
         "visionHalfAngle": 0.5235987755982988
       },
       {
-        "x": 1.25,
-        "y": 2.25,
         "id": "01-03-g2",
-        "role": "corridor",
         "routeId": "01-03-g2",
-        "facing": 1.5707963267948966,
-        "pace": 0.8500000000000001,
-        "startDelay": 0.65,
-        "visionRange": 3.86,
-        "visionHalfAngle": 0.5235987755982988
-      },
-      {
-        "x": 2.25,
-        "y": 17.75,
-        "id": "01-03-g3",
+        "x": 11.6,
+        "y": 6.5,
         "role": "objective",
-        "routeId": "01-03-g3",
-        "facing": 1.9513027039072617,
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 11.6,
+            "y": 8.9
+          },
+          {
+            "x": 12,
+            "y": 11.5
+          },
+          {
+            "x": 11.6,
+            "y": 6.5
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
         "pace": 0.8500000000000001,
         "startDelay": 4,
         "visionRange": 3.86,
@@ -1318,209 +1202,268 @@
     "patrolRoutes": [
       {
         "id": "01-03-g1",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 16.75,
-            "y": 1.25,
-            "waitDuration": 1.5,
+            "x": 7,
+            "y": 4.7,
+            "waitDuration": 4.5,
+            "lookDirection": 3.141592653589793,
             "turnDuration": 1.1
           },
           {
-            "x": 15.25,
-            "y": 5.75,
-            "waitDuration": 1.4,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 16.75,
-            "y": 5.75,
-            "waitDuration": 1.4,
-            "turnDuration": 1.1
-          }
-        ],
-        "mode": "roaming"
-      },
-      {
-        "id": "01-03-g2",
-        "points": [
-          {
-            "x": 1.25,
-            "y": 2.25,
-            "waitDuration": 1.5,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 1.25,
-            "y": 5.25,
-            "waitDuration": 1.4,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 1.25,
-            "y": 3.75,
-            "waitDuration": 1.4,
-            "turnDuration": 1.1
-          }
-        ],
-        "mode": "waitAndLook"
-      },
-      {
-        "id": "01-03-g3",
-        "points": [
-          {
-            "x": 2.25,
-            "y": 17.75,
-            "waitDuration": 5,
-            "lookDirection": -1.1902899496825317,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 5.25,
-            "y": 17.25,
+            "x": 9,
+            "y": 8.5,
             "waitDuration": 2,
-            "lookDirection": -2.356194490192345,
+            "lookDirection": 3.141592653589793,
             "turnDuration": 1.1
-          },
-          {
-            "x": 4.25,
-            "y": 17.75,
-            "waitDuration": 2,
-            "lookDirection": -1.9513027039072617,
-            "turnDuration": 1.1
-          }
-        ],
-        "mode": "pingpong"
-      }
-    ],
-    "playerSpawn": {
-      "x": 8.25,
-      "y": 1.25,
-      "facing": 1.5707963267948966
-    },
-    "objective": {
-      "x": 3.25,
-      "y": 15.25,
-      "kind": "diamond"
-    },
-    "exit": {
-      "x": 15.65,
-      "y": 8.15,
-      "w": 1.2,
-      "h": 1.2
-    },
-    "ambientDarkness": 0.43,
-    "entryEdge": "top",
-    "exitEdge": "right",
-    "entryPosition": {
-      "x": 8.25,
-      "y": 1.25
-    },
-    "exitPosition": {
-      "x": 16.25,
-      "y": 8.75
-    },
-    "landmark": {
-      "name": "Sculpture Garden",
-      "kind": "statue",
-      "x": 4.2,
-      "y": 2.1
-    },
-    "testRoutes": [
-      {
-        "name": "safe: wall-side observation and cover approach",
-        "points": [
-          {
-            "x": 8.25,
-            "y": 1.25
-          },
-          {
-            "x": 10.75,
-            "y": 7.25
-          },
-          {
-            "x": 15.25,
-            "y": 15.25
-          },
-          {
-            "x": 3.25,
-            "y": 15.25
           }
         ]
       },
       {
-        "name": "risk: direct cross-room approach",
+        "id": "01-03-g2",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 8.25,
-            "y": 1.25
+            "x": 11.6,
+            "y": 6.5,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
           },
           {
-            "x": 6.75,
-            "y": 4.75
+            "x": 11.6,
+            "y": 8.9,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
           },
           {
-            "x": 3.25,
-            "y": 15.25
+            "x": 12,
+            "y": 11.5,
+            "waitDuration": 2,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          }
+        ]
+      }
+    ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "Staff access / Archive to Storage threshold"
+        },
+        {
+          "id": "Z1",
+          "name": "Restricted Archive / rear staff door"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "Staff access / Archive to Storage threshold: observation return",
+          "x": 7,
+          "y": 4.7,
+          "wait": 4.5,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "Staff access / Archive to Storage threshold: inspection threshold",
+          "x": 9,
+          "y": 8.5,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Restricted Archive / rear staff door: observation return",
+          "x": 11.6,
+          "y": 6.5,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Restricted Archive / rear staff door: inspection threshold",
+          "x": 11.6,
+          "y": 8.9,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "1-2",
+          "zone": "Z1",
+          "subject": "Restricted Archive / rear staff door: inspection threshold",
+          "x": 12,
+          "y": 11.5,
+          "wait": 2,
+          "look": 0
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-03-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-03-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1",
+            "1-2"
+          ],
+          "roaming": false
+        }
+      ]
+    },
+    "securityZones": [
+      {
+        "name": "Staff access / Archive to Storage threshold",
+        "x": 7,
+        "y": 4.7,
+        "radius": 3.5,
+        "guardId": "01-03-g1"
+      },
+      {
+        "name": "Restricted Archive / rear staff door",
+        "x": 11.6,
+        "y": 6.5,
+        "radius": 3.5,
+        "guardId": "01-03-g2"
+      }
+    ],
+    "objectiveZone": {
+      "guardId": "01-03-g2",
+      "spotlight": true
+    },
+    "safeZones": [
+      {
+        "x": 2.5,
+        "y": 1.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 2.5,
+            "y": 1.5
+          },
+          {
+            "x": 2.5,
+            "y": 5.8
+          },
+          {
+            "x": 5.5,
+            "y": 5.8
+          },
+          {
+            "x": 5.5,
+            "y": 9.3
+          },
+          {
+            "x": 9.5,
+            "y": 9.3
+          },
+          {
+            "x": 9.5,
+            "y": 11.5
+          },
+          {
+            "x": 11.5,
+            "y": 11.5
+          },
+          {
+            "x": 11.5,
+            "y": 9.5
+          },
+          {
+            "x": 12.5,
+            "y": 8
+          }
+        ]
+      },
+      {
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 2.5,
+            "y": 1.5
+          },
+          {
+            "x": 2.5,
+            "y": 5.8
+          },
+          {
+            "x": 5.5,
+            "y": 5.8
+          },
+          {
+            "x": 9.5,
+            "y": 6.5
+          },
+          {
+            "x": 9.5,
+            "y": 9.3
+          },
+          {
+            "x": 9.5,
+            "y": 11.5
+          },
+          {
+            "x": 11.5,
+            "y": 11.5
+          },
+          {
+            "x": 11.5,
+            "y": 9.5
+          },
+          {
+            "x": 12.5,
+            "y": 8
           }
         ]
       }
     ],
     "escapeRoutes": [
       {
-        "name": "escape: independent objective-to-exit leg",
+        "name": "escape: rear staff circulation",
         "points": [
           {
-            "x": 3.25,
-            "y": 15.25
+            "x": 12.5,
+            "y": 8
           },
           {
-            "x": 6.75,
-            "y": 12.75
+            "x": 11.5,
+            "y": 9.5
           },
           {
-            "x": 16.25,
-            "y": 8.75
+            "x": 11.5,
+            "y": 11.5
+          },
+          {
+            "x": 16.5,
+            "y": 11.5
           }
         ]
-      }
-    ],
-    "securityZones": [
-      {
-        "name": "roaming",
-        "x": 16.75,
-        "y": 1.25,
-        "radius": 5,
-        "guardId": "01-03-g1"
-      },
-      {
-        "name": "corridor",
-        "x": 1.25,
-        "y": 2.25,
-        "radius": 3.5,
-        "guardId": "01-03-g2"
-      },
-      {
-        "name": "objective",
-        "x": 2.25,
-        "y": 17.75,
-        "radius": 3.5,
-        "guardId": "01-03-g3"
-      }
-    ],
-    "objectiveZone": {
-      "guardId": "01-03-g3",
-      "spotlight": true
-    },
-    "safeZones": [
-      {
-        "x": 5.75,
-        "y": 1.25,
-        "radius": 0.25
-      },
-      {
-        "x": 6.25,
-        "y": 1.25,
-        "radius": 0.25
       }
     ]
   },
@@ -1529,262 +1472,195 @@
     "number": 4,
     "chapter": 1,
     "mission": 4,
-    "title": "Restricted Archive",
+    "title": "Security Wing",
     "theme": "museum",
-    "structurePlan": "Split exhibition wing with upper and lower escape bypasses",
+    "structurePlan": "Security Office / CCTV Room → Security Hub observation pocket → timed Junction → Security Gate inspection → Restricted Passage",
     "layout": [
-      "##################",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#................#",
-      "#....######......#",
-      "#....#...........#",
-      "#....#...........#",
-      "#....#....#......#",
-      "#....#....#......#",
-      "#....#....#......#",
-      "#....#...........#",
-      "#....#...........#",
-      "#................#",
-      "#................#",
-      "#......####......#",
-      "#......#  #......#",
-      "########  ########"
+      "           ##..#",
+      "           #...#",
+      "           #...#",
+      "       #####...#",
+      "       #.......#",
+      "       #.......#",
+      "     ###..##...#",
+      "     #....##...#",
+      "######....##...#",
+      "#....#....######",
+      "#.........#     ",
+      "#.........#     ",
+      "#....#....#     ",
+      "###########     "
     ],
+    "entryEdge": "left",
+    "exitEdge": "top",
+    "entryPosition": {
+      "x": 1.3,
+      "y": 10.5
+    },
+    "exitPosition": {
+      "x": 14,
+      "y": 1.5
+    },
+    "playerSpawn": {
+      "x": 1.3,
+      "y": 10.5,
+      "facing": 0
+    },
+    "objective": {
+      "x": 13.7,
+      "y": 7.3,
+      "kind": "data"
+    },
+    "exit": {
+      "x": 13.4,
+      "y": 0.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.3,
     "props": [
       {
-        "x": 2.1,
-        "y": 2.1,
-        "kind": "partition"
+        "kind": "counter",
+        "x": 7.2,
+        "y": 8.7,
+        "scale": 0.65,
+        "collisionScale": 0.65
       },
       {
-        "x": 14.7,
-        "y": 2.1,
-        "kind": "statue"
+        "kind": "equipment",
+        "x": 6.8,
+        "y": 12.5
       },
       {
-        "x": 6.300000000000001,
-        "y": 4.2,
-        "kind": "pillar"
+        "kind": "counter",
+        "x": 3,
+        "y": 12
       },
       {
-        "x": 8.4,
-        "y": 4.2,
-        "kind": "bench"
+        "kind": "cctv",
+        "x": 9,
+        "y": 4
       },
       {
-        "x": 10.5,
-        "y": 4.2,
-        "kind": "plant"
+        "kind": "lamp",
+        "x": 13.5,
+        "y": 4
       },
       {
-        "x": 12.6,
-        "y": 4.2,
-        "kind": "painting"
-      },
-      {
-        "x": 14.7,
-        "y": 4.2,
-        "kind": "partition"
-      },
-      {
-        "x": 4.2,
-        "y": 6.300000000000001,
-        "kind": "statue"
-      },
-      {
-        "x": 6.300000000000001,
-        "y": 6.300000000000001,
-        "kind": "pillar"
-      },
-      {
-        "x": 8.4,
-        "y": 6.300000000000001,
-        "kind": "bench"
-      },
-      {
-        "x": 10.5,
-        "y": 6.300000000000001,
-        "kind": "plant"
-      },
-      {
-        "x": 12.6,
-        "y": 6.300000000000001,
-        "kind": "painting"
-      },
-      {
-        "x": 14.7,
-        "y": 6.300000000000001,
-        "kind": "partition"
-      },
-      {
-        "x": 4.2,
-        "y": 8.4,
-        "kind": "statue"
-      },
-      {
-        "x": 12.6,
-        "y": 8.4,
-        "kind": "pillar"
-      },
-      {
-        "x": 14.7,
-        "y": 8.4,
-        "kind": "bench"
-      },
-      {
-        "x": 4.2,
-        "y": 10.5,
-        "kind": "plant"
-      },
-      {
-        "x": 6.300000000000001,
-        "y": 10.5,
-        "kind": "painting"
-      },
-      {
-        "x": 8.4,
-        "y": 10.5,
-        "kind": "partition"
-      },
-      {
-        "x": 12.6,
-        "y": 10.5,
-        "kind": "statue"
-      },
-      {
-        "x": 14.7,
-        "y": 10.5,
-        "kind": "pillar"
-      },
-      {
-        "x": 8.4,
-        "y": 12.6,
-        "kind": "bench"
-      },
-      {
-        "x": 12.6,
-        "y": 12.6,
-        "kind": "plant"
-      },
-      {
-        "x": 14.7,
-        "y": 12.6,
-        "kind": "painting"
-      },
-      {
-        "x": 8.4,
-        "y": 14.7,
-        "kind": "partition"
-      },
-      {
-        "x": 10.5,
-        "y": 14.7,
-        "kind": "statue"
-      },
-      {
-        "x": 12.6,
-        "y": 14.7,
-        "kind": "pillar"
-      },
-      {
-        "x": 14.7,
-        "y": 14.7,
-        "kind": "bench"
-      },
-      {
-        "x": 6.300000000000001,
-        "y": 16.8,
-        "kind": "plant"
-      },
-      {
-        "x": 12.6,
-        "y": 16.8,
-        "kind": "painting"
-      },
-      {
-        "x": 14.7,
-        "y": 16.8,
-        "kind": "partition"
+        "kind": "lamp",
+        "x": 2,
+        "y": 9
       },
       {
         "kind": "objectiveCase",
-        "x": 3.25,
-        "y": 3.37
+        "x": 13.7,
+        "y": 7.42
       }
     ],
+    "landmark": {
+      "name": "Security Control Room",
+      "kind": "equipment",
+      "x": 6.8,
+      "y": 12.5
+    },
     "lights": [
       {
-        "x": 3.25,
-        "y": 3.25,
-        "radius": 2.4,
+        "x": 13.7,
+        "y": 7.3,
+        "radius": 2.6,
         "kind": "warm",
-        "intensity": 0.9
+        "intensity": 0.96
       },
       {
-        "x": 1.25,
-        "y": 13.75,
-        "radius": 3.2,
+        "x": 1.3,
+        "y": 10.5,
+        "radius": 2,
         "kind": "warm",
-        "intensity": 0.5
+        "intensity": 0.4
       },
       {
-        "x": 12.75,
-        "y": 1.25,
-        "radius": 3.2,
-        "kind": "warm",
-        "intensity": 0.5
+        "x": 6.8,
+        "y": 12.5,
+        "radius": 2.6,
+        "kind": "cool",
+        "intensity": 0.62
       },
       {
-        "x": 3.25,
-        "y": 17.25,
-        "radius": 3.2,
+        "x": 14,
+        "y": 1.5,
+        "radius": 1.8,
         "kind": "warm",
-        "intensity": 0.5
-      },
-      {
-        "x": 8.4,
-        "y": 14.7,
-        "radius": 2.5,
-        "kind": "warm",
-        "intensity": 0.8
+        "intensity": 0.3
       }
     ],
     "guards": [
       {
-        "x": 16.75,
-        "y": 18.75,
         "id": "01-04-g1",
-        "role": "roaming",
         "routeId": "01-04-g1",
-        "facing": -2.723368324010564,
+        "x": 8.8,
+        "y": 11.8,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 9.1,
+            "y": 8.2
+          },
+          {
+            "x": 8.8,
+            "y": 11.8
+          }
+        ],
+        "initialFacing": -1.5707963267948966,
+        "facing": -1.5707963267948966,
         "pace": 0.875,
         "startDelay": 0,
         "visionRange": 4.04,
         "visionHalfAngle": 0.5235987755982988
       },
       {
-        "x": 16.75,
-        "y": 1.25,
         "id": "01-04-g2",
-        "role": "roaming",
         "routeId": "01-04-g2",
-        "facing": 1.7894652726688387,
+        "x": 10,
+        "y": 4.5,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 11.2,
+            "y": 5.3
+          },
+          {
+            "x": 10,
+            "y": 4.5
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
         "pace": 0.875,
-        "startDelay": 0.65,
+        "startDelay": 1.5,
         "visionRange": 4.04,
         "visionHalfAngle": 0.5235987755982988
       },
       {
-        "x": 1.25,
-        "y": 5.75,
         "id": "01-04-g3",
-        "role": "objective",
         "routeId": "01-04-g3",
-        "facing": 2.2455372690184494,
+        "x": 14.2,
+        "y": 4.8,
+        "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 12.8,
+            "y": 6.6
+          },
+          {
+            "x": 14.2,
+            "y": 4.8
+          }
+        ],
+        "initialFacing": -1.5707963267948966,
+        "facing": -1.5707963267948966,
         "pace": 0.875,
         "startDelay": 4,
         "visionRange": 4.04,
@@ -1794,179 +1670,191 @@
     "patrolRoutes": [
       {
         "id": "01-04-g1",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 16.75,
-            "y": 18.75,
-            "waitDuration": 1.5,
+            "x": 8.8,
+            "y": 11.8,
+            "waitDuration": 4.5,
+            "lookDirection": -1.5707963267948966,
             "turnDuration": 1.1
           },
           {
-            "x": 12.25,
-            "y": 16.75,
-            "waitDuration": 1.6,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 12.25,
-            "y": 18.25,
-            "waitDuration": 1.6,
+            "x": 9.1,
+            "y": 8.2,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
             "turnDuration": 1.1
           }
-        ],
-        "mode": "roaming"
+        ]
       },
       {
         "id": "01-04-g2",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 16.75,
-            "y": 1.25,
-            "waitDuration": 1.5,
+            "x": 10,
+            "y": 4.5,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
             "turnDuration": 1.1
           },
           {
-            "x": 15.75,
-            "y": 5.75,
-            "waitDuration": 1.6,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 16.75,
-            "y": 5.25,
-            "waitDuration": 1.6,
+            "x": 11.2,
+            "y": 5.3,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
             "turnDuration": 1.1
           }
-        ],
-        "mode": "roaming"
+        ]
       },
       {
         "id": "01-04-g3",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 1.25,
-            "y": 5.75,
-            "waitDuration": 5,
-            "lookDirection": -0.8960553845713439,
+            "x": 14.2,
+            "y": 4.8,
+            "waitDuration": 4.5,
+            "lookDirection": -1.5707963267948966,
             "turnDuration": 1.1
           },
           {
-            "x": 2.75,
-            "y": 2.75,
+            "x": 12.8,
+            "y": 6.6,
             "waitDuration": 2,
-            "lookDirection": 0.7853981633974483,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 4.25,
-            "y": 4.25,
-            "waitDuration": 2,
-            "lookDirection": -2.356194490192345,
+            "lookDirection": 1.5707963267948966,
             "turnDuration": 1.1
           }
-        ],
-        "mode": "pingpong"
-      }
-    ],
-    "playerSpawn": {
-      "x": 1.25,
-      "y": 13.75,
-      "facing": 0
-    },
-    "objective": {
-      "x": 3.25,
-      "y": 3.25,
-      "kind": "artifact"
-    },
-    "exit": {
-      "x": 12.15,
-      "y": 0.65,
-      "w": 1.2,
-      "h": 1.2
-    },
-    "ambientDarkness": 0.43,
-    "entryEdge": "left",
-    "exitEdge": "top",
-    "entryPosition": {
-      "x": 1.25,
-      "y": 13.75
-    },
-    "exitPosition": {
-      "x": 12.75,
-      "y": 1.25
-    },
-    "landmark": {
-      "name": "Archive Screen",
-      "kind": "partition",
-      "x": 8.4,
-      "y": 14.7
-    },
-    "testRoutes": [
-      {
-        "name": "safe: wall-side observation and cover approach",
-        "points": [
-          {
-            "x": 1.25,
-            "y": 13.75
-          },
-          {
-            "x": 3.25,
-            "y": 17.25
-          },
-          {
-            "x": 3.25,
-            "y": 3.25
-          }
-        ]
-      },
-      {
-        "name": "risk: direct cross-room approach",
-        "points": [
-          {
-            "x": 1.25,
-            "y": 13.75
-          },
-          {
-            "x": 3.25,
-            "y": 3.25
-          }
         ]
       }
     ],
-    "escapeRoutes": [
-      {
-        "name": "escape: independent objective-to-exit leg",
-        "points": [
-          {
-            "x": 3.25,
-            "y": 3.25
-          },
-          {
-            "x": 12.75,
-            "y": 1.25
-          }
-        ]
-      }
-    ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "CCTV Office / Hub doorway"
+        },
+        {
+          "id": "Z1",
+          "name": "Three-way controlled junction"
+        },
+        {
+          "id": "Z2",
+          "name": "Gate inspection / Restricted Passage"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "CCTV Office / Hub doorway: observation return",
+          "x": 8.8,
+          "y": 11.8,
+          "wait": 4.5,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "CCTV Office / Hub doorway: inspection threshold",
+          "x": 9.1,
+          "y": 8.2,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Three-way controlled junction: observation return",
+          "x": 10,
+          "y": 4.5,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Three-way controlled junction: inspection threshold",
+          "x": 11.2,
+          "y": 5.3,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "2-0",
+          "zone": "Z2",
+          "subject": "Gate inspection / Restricted Passage: observation return",
+          "x": 14.2,
+          "y": 4.8,
+          "wait": 4.5,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "2-1",
+          "zone": "Z2",
+          "subject": "Gate inspection / Restricted Passage: inspection threshold",
+          "x": 12.8,
+          "y": 6.6,
+          "wait": 2,
+          "look": 1.5707963267948966
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-04-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-04-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-04-g3",
+          "zones": [
+            "Z2"
+          ],
+          "anchors": [
+            "2-0",
+            "2-1"
+          ],
+          "roaming": false
+        }
+      ]
+    },
     "securityZones": [
       {
-        "name": "roaming",
-        "x": 16.75,
-        "y": 18.75,
-        "radius": 5,
+        "name": "CCTV Office / Hub doorway",
+        "x": 8.8,
+        "y": 11.8,
+        "radius": 3.5,
         "guardId": "01-04-g1"
       },
       {
-        "name": "roaming",
-        "x": 16.75,
-        "y": 1.25,
-        "radius": 5,
+        "name": "Three-way controlled junction",
+        "x": 10,
+        "y": 4.5,
+        "radius": 3.5,
         "guardId": "01-04-g2"
       },
       {
-        "name": "objective",
-        "x": 1.25,
-        "y": 5.75,
+        "name": "Gate inspection / Restricted Passage",
+        "x": 14.2,
+        "y": 4.8,
         "radius": 3.5,
         "guardId": "01-04-g3"
       }
@@ -1977,14 +1865,112 @@
     },
     "safeZones": [
       {
-        "x": 1.25,
-        "y": 11.25,
-        "radius": 0.25
+        "x": 1.3,
+        "y": 10.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 1.3,
+            "y": 10.5
+          },
+          {
+            "x": 3.5,
+            "y": 10.5
+          },
+          {
+            "x": 6.375,
+            "y": 10.5
+          },
+          {
+            "x": 6.375,
+            "y": 7.5
+          },
+          {
+            "x": 9.5,
+            "y": 7.5
+          },
+          {
+            "x": 9.5,
+            "y": 5
+          },
+          {
+            "x": 12.5,
+            "y": 5
+          },
+          {
+            "x": 13.5,
+            "y": 6
+          },
+          {
+            "x": 13.7,
+            "y": 7.3
+          }
+        ]
       },
       {
-        "x": 1.75,
-        "y": 11.25,
-        "radius": 0.25
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 1.3,
+            "y": 10.5
+          },
+          {
+            "x": 3.5,
+            "y": 10.5
+          },
+          {
+            "x": 6.5,
+            "y": 10.5
+          },
+          {
+            "x": 9.5,
+            "y": 7.5
+          },
+          {
+            "x": 9.5,
+            "y": 5
+          },
+          {
+            "x": 12.5,
+            "y": 5
+          },
+          {
+            "x": 13.5,
+            "y": 6
+          },
+          {
+            "x": 13.7,
+            "y": 7.3
+          }
+        ]
+      }
+    ],
+    "escapeRoutes": [
+      {
+        "name": "escape: rear staff circulation",
+        "points": [
+          {
+            "x": 13.7,
+            "y": 7.3
+          },
+          {
+            "x": 14,
+            "y": 5.5
+          },
+          {
+            "x": 14,
+            "y": 3
+          },
+          {
+            "x": 14,
+            "y": 1.5
+          }
+        ]
       }
     ]
   },
@@ -1995,286 +1981,196 @@
     "mission": 5,
     "title": "Diamond Hall",
     "theme": "museum",
-    "structurePlan": "Two offset galleries linked by three narrow observation windows",
+    "structurePlan": "Grand Exhibition → Final Security observation loop → Diamond Chamber → guarded chamber threshold → southern Service Corridor → east exit",
     "layout": [
-      "#####################",
-      "#...................#",
-      "#...................#",
-      "#...................#",
-      "#.....#...#####.....#",
-      "#.....#.............#",
-      "#.....#.............#",
-      "#.....#.............#",
-      "#.....#######.......#",
-      "#.....#.............#",
-      "#.....#.............#",
-      "#.....#......#......#",
-      "#.....#......#......#",
-      "#............#......#",
-      "#............#......#",
-      "#...................#",
-      "#...................#",
-      "#...................#",
-      "#####################"
+      "                 ",
+      "            #### ",
+      "           ##..##",
+      "      ######....#",
+      "      #....#....#",
+      "      #....#....#",
+      "#######.........#",
+      "#.....#.........#",
+      "#.....#....#....#",
+      "#.....#....######",
+      "#...............#",
+      "#...............#",
+      "#.....#....##...#",
+      "#.....###########",
+      "##..###          "
     ],
+    "entryEdge": "bottom",
+    "exitEdge": "right",
+    "entryPosition": {
+      "x": 3,
+      "y": 13.5
+    },
+    "exitPosition": {
+      "x": 15,
+      "y": 11.5
+    },
+    "playerSpawn": {
+      "x": 3,
+      "y": 13.5,
+      "facing": -1.5707963267948966
+    },
+    "objective": {
+      "x": 14,
+      "y": 5.5,
+      "kind": "diamond"
+    },
+    "exit": {
+      "x": 14.4,
+      "y": 10.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.35,
     "props": [
       {
-        "x": 18.900000000000002,
-        "y": 4.2,
-        "kind": "displayCase"
+        "kind": "statue",
+        "x": 2,
+        "y": 8.5,
+        "scale": 1.4,
+        "collisionScale": 1.4
       },
       {
-        "x": 2.1,
-        "y": 6.300000000000001,
-        "kind": "statue"
+        "kind": "pillar",
+        "x": 9.5,
+        "y": 10
       },
       {
-        "x": 4.2,
-        "y": 6.300000000000001,
-        "kind": "pillar"
+        "kind": "diamondPedestal",
+        "x": 14,
+        "y": 4
       },
       {
-        "x": 8.4,
-        "y": 6.300000000000001,
-        "kind": "bench"
+        "kind": "lamp",
+        "x": 13,
+        "y": 3
       },
       {
-        "x": 10.5,
-        "y": 6.300000000000001,
-        "kind": "plant"
-      },
-      {
-        "x": 12.6,
-        "y": 6.300000000000001,
-        "kind": "painting"
-      },
-      {
-        "x": 2.1,
-        "y": 8.4,
-        "kind": "displayCase"
-      },
-      {
-        "x": 16.8,
-        "y": 8.4,
-        "kind": "statue"
-      },
-      {
-        "x": 2.1,
-        "y": 10.5,
-        "kind": "pillar"
-      },
-      {
-        "x": 8.4,
-        "y": 10.5,
-        "kind": "bench"
-      },
-      {
-        "x": 10.5,
-        "y": 10.5,
-        "kind": "plant"
-      },
-      {
-        "x": 12.6,
-        "y": 10.5,
-        "kind": "painting"
-      },
-      {
-        "x": 14.7,
-        "y": 10.5,
-        "kind": "displayCase"
-      },
-      {
-        "x": 16.8,
-        "y": 10.5,
-        "kind": "statue"
-      },
-      {
-        "x": 2.1,
-        "y": 12.6,
-        "kind": "pillar"
-      },
-      {
-        "x": 8.4,
-        "y": 12.6,
-        "kind": "bench"
-      },
-      {
-        "x": 10.5,
-        "y": 12.6,
-        "kind": "plant"
-      },
-      {
-        "x": 12.6,
-        "y": 12.6,
-        "kind": "painting"
-      },
-      {
-        "x": 16.8,
-        "y": 12.6,
-        "kind": "displayCase"
-      },
-      {
-        "x": 18.900000000000002,
-        "y": 12.6,
-        "kind": "statue"
-      },
-      {
-        "x": 2.1,
-        "y": 14.7,
-        "kind": "pillar"
-      },
-      {
-        "x": 4.2,
-        "y": 14.7,
-        "kind": "bench"
-      },
-      {
-        "x": 10.5,
-        "y": 14.7,
-        "kind": "plant"
-      },
-      {
-        "x": 12.6,
-        "y": 14.7,
-        "kind": "painting"
-      },
-      {
-        "x": 16.8,
-        "y": 14.7,
-        "kind": "displayCase"
-      },
-      {
-        "x": 18.900000000000002,
-        "y": 14.7,
-        "kind": "statue"
-      },
-      {
-        "x": 2.1,
-        "y": 16.8,
-        "kind": "pillar"
-      },
-      {
-        "x": 4.2,
-        "y": 16.8,
-        "kind": "bench"
-      },
-      {
-        "x": 6.300000000000001,
-        "y": 16.8,
-        "kind": "plant"
-      },
-      {
-        "x": 8.4,
-        "y": 16.8,
-        "kind": "painting"
-      },
-      {
-        "x": 12.6,
-        "y": 16.8,
-        "kind": "displayCase"
-      },
-      {
-        "x": 14.7,
-        "y": 16.8,
-        "kind": "statue"
-      },
-      {
-        "x": 16.8,
-        "y": 16.8,
-        "kind": "pillar"
-      },
-      {
-        "x": 18.900000000000002,
-        "y": 16.8,
-        "kind": "bench"
+        "kind": "lamp",
+        "x": 4,
+        "y": 7
       },
       {
         "kind": "objectiveCase",
-        "x": 17.25,
-        "y": 3.37
+        "x": 14,
+        "y": 5.62
       }
     ],
+    "landmark": {
+      "name": "Diamond Chamber",
+      "kind": "diamondPedestal",
+      "x": 14,
+      "y": 4
+    },
     "lights": [
       {
-        "x": 17.25,
-        "y": 3.25,
-        "radius": 2.4,
+        "x": 14,
+        "y": 5.5,
+        "radius": 3,
         "kind": "warm",
-        "intensity": 0.9
+        "intensity": 1
       },
       {
-        "x": 10.75,
-        "y": 17.25,
-        "radius": 3.2,
-        "kind": "warm",
-        "intensity": 0.5
+        "x": 14,
+        "y": 5.5,
+        "radius": 1.65,
+        "kind": "cyan",
+        "intensity": 0.85
       },
       {
-        "x": 19.25,
-        "y": 9.25,
-        "radius": 3.2,
+        "x": 3,
+        "y": 13.5,
+        "radius": 2,
         "kind": "warm",
-        "intensity": 0.5
+        "intensity": 0.4
       },
       {
-        "x": 2.25,
-        "y": 3.25,
-        "radius": 3.2,
+        "x": 14,
+        "y": 4,
+        "radius": 2,
         "kind": "warm",
-        "intensity": 0.5
+        "intensity": 0.38
       },
       {
-        "x": 12.6,
-        "y": 16.8,
-        "radius": 2.5,
+        "x": 15,
+        "y": 11.5,
+        "radius": 1.8,
         "kind": "warm",
-        "intensity": 0.8
+        "intensity": 0.3
       }
     ],
     "guards": [
       {
-        "x": 1.25,
-        "y": 17.75,
         "id": "01-05-g1",
-        "role": "roaming",
         "routeId": "01-05-g1",
-        "facing": -0.11065722117389563,
+        "x": 3,
+        "y": 8,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 5,
+            "y": 8
+          },
+          {
+            "x": 3,
+            "y": 8
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
         "pace": 0.9,
         "startDelay": 0,
         "visionRange": 4.22,
         "visionHalfAngle": 0.5235987755982988
       },
       {
-        "x": 19.75,
-        "y": 17.75,
         "id": "01-05-g2",
-        "role": "roaming",
         "routeId": "01-05-g2",
-        "facing": -3.017237659043032,
+        "x": 9.5,
+        "y": 4.8,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 9.5,
+            "y": 8
+          },
+          {
+            "x": 9.5,
+            "y": 4.8
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
         "pace": 0.9,
-        "startDelay": 0.65,
+        "startDelay": 1.5,
         "visionRange": 4.22,
         "visionHalfAngle": 0.5235987755982988
       },
       {
-        "x": 1.25,
-        "y": 3.75,
         "id": "01-05-g3",
-        "role": "roaming",
         "routeId": "01-05-g3",
-        "facing": -0.41822432957922906,
-        "pace": 0.9,
-        "startDelay": 1.3,
-        "visionRange": 4.22,
-        "visionHalfAngle": 0.5235987755982988
-      },
-      {
-        "x": 14.75,
-        "y": 1.25,
-        "id": "01-05-g4",
+        "x": 12.8,
+        "y": 3.5,
         "role": "objective",
-        "routeId": "01-05-g4",
-        "facing": -2.4668517113662407,
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 13,
+            "y": 7.6
+          },
+          {
+            "x": 12.8,
+            "y": 3.5
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
         "pace": 0.9,
         "startDelay": 4,
         "visionRange": 4.22,
@@ -2284,236 +2180,3622 @@
     "patrolRoutes": [
       {
         "id": "01-05-g1",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 1.25,
-            "y": 17.75,
-            "waitDuration": 1.5,
+            "x": 3,
+            "y": 8,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
             "turnDuration": 1.1
           },
           {
-            "x": 5.75,
-            "y": 17.25,
-            "waitDuration": 1.8,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 4.75,
-            "y": 17.75,
-            "waitDuration": 1.8,
-            "turnDuration": 1.1
-          }
-        ],
-        "mode": "roaming"
-      },
-      {
-        "id": "01-05-g2",
-        "points": [
-          {
-            "x": 19.75,
-            "y": 17.75,
-            "waitDuration": 1.5,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 15.75,
-            "y": 17.25,
-            "waitDuration": 1.8,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 16.75,
-            "y": 17.75,
-            "waitDuration": 1.8,
-            "turnDuration": 1.1
-          }
-        ],
-        "mode": "roaming"
-      },
-      {
-        "id": "01-05-g3",
-        "points": [
-          {
-            "x": 1.25,
-            "y": 3.75,
-            "waitDuration": 1.5,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 5.75,
-            "y": 1.75,
-            "waitDuration": 1.8,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 5.75,
-            "y": 5.25,
-            "waitDuration": 1.8,
-            "turnDuration": 1.1
-          }
-        ],
-        "mode": "roaming"
-      },
-      {
-        "id": "01-05-g4",
-        "points": [
-          {
-            "x": 14.75,
-            "y": 1.25,
-            "waitDuration": 5,
-            "lookDirection": 0.6747409422235527,
-            "turnDuration": 1.1
-          },
-          {
-            "x": 11.75,
-            "y": 2.75,
+            "x": 5,
+            "y": 8,
             "waitDuration": 2,
-            "lookDirection": 0.09065988720074511,
+            "lookDirection": 1.5707963267948966,
             "turnDuration": 1.1
-          },
-          {
-            "x": 17.75,
-            "y": 2.75,
-            "waitDuration": 2,
-            "lookDirection": 2.356194490192345,
-            "turnDuration": 1.1
-          }
-        ],
-        "mode": "pingpong"
-      }
-    ],
-    "playerSpawn": {
-      "x": 10.75,
-      "y": 17.25,
-      "facing": -1.5707963267948966
-    },
-    "objective": {
-      "x": 17.25,
-      "y": 3.25,
-      "kind": "diamond"
-    },
-    "exit": {
-      "x": 18.65,
-      "y": 8.65,
-      "w": 1.2,
-      "h": 1.2
-    },
-    "ambientDarkness": 0.43,
-    "entryEdge": "bottom",
-    "exitEdge": "right",
-    "entryPosition": {
-      "x": 10.75,
-      "y": 17.25
-    },
-    "exitPosition": {
-      "x": 19.25,
-      "y": 9.25
-    },
-    "landmark": {
-      "name": "Diamond Exhibition",
-      "kind": "displayCase",
-      "x": 12.6,
-      "y": 16.8
-    },
-    "testRoutes": [
-      {
-        "name": "safe: wall-side observation and cover approach",
-        "points": [
-          {
-            "x": 10.75,
-            "y": 17.25
-          },
-          {
-            "x": 5.75,
-            "y": 13.25
-          },
-          {
-            "x": 2.25,
-            "y": 3.25
-          },
-          {
-            "x": 17.25,
-            "y": 3.25
           }
         ]
       },
       {
-        "name": "risk: direct cross-room approach",
+        "id": "01-05-g2",
+        "mode": "pingpong",
         "points": [
           {
-            "x": 10.75,
-            "y": 17.25
+            "x": 9.5,
+            "y": 4.8,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
           },
           {
-            "x": 12.75,
-            "y": 10.75
+            "x": 9.5,
+            "y": 8,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-05-g3",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 12.8,
+            "y": 3.5,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
           },
           {
-            "x": 17.25,
-            "y": 3.25
+            "x": 13,
+            "y": 7.6,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      }
+    ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "Grand Exhibition threshold"
+        },
+        {
+          "id": "Z1",
+          "name": "Final Security / chamber approach"
+        },
+        {
+          "id": "Z2",
+          "name": "Chamber entrance / Blue Diamond inspection"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "Grand Exhibition threshold: observation return",
+          "x": 3,
+          "y": 8,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "Grand Exhibition threshold: inspection threshold",
+          "x": 5,
+          "y": 8,
+          "wait": 2,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Final Security / chamber approach: observation return",
+          "x": 9.5,
+          "y": 4.8,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Final Security / chamber approach: inspection threshold",
+          "x": 9.5,
+          "y": 8,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "2-0",
+          "zone": "Z2",
+          "subject": "Chamber entrance / Blue Diamond inspection: observation return",
+          "x": 12.8,
+          "y": 3.5,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "2-1",
+          "zone": "Z2",
+          "subject": "Chamber entrance / Blue Diamond inspection: inspection threshold",
+          "x": 13,
+          "y": 7.6,
+          "wait": 2,
+          "look": -1.5707963267948966
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-05-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-05-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-05-g3",
+          "zones": [
+            "Z2"
+          ],
+          "anchors": [
+            "2-0",
+            "2-1"
+          ],
+          "roaming": false
+        }
+      ]
+    },
+    "securityZones": [
+      {
+        "name": "Grand Exhibition threshold",
+        "x": 3,
+        "y": 8,
+        "radius": 3.5,
+        "guardId": "01-05-g1"
+      },
+      {
+        "name": "Final Security / chamber approach",
+        "x": 9.5,
+        "y": 4.8,
+        "radius": 3.5,
+        "guardId": "01-05-g2"
+      },
+      {
+        "name": "Chamber entrance / Blue Diamond inspection",
+        "x": 12.8,
+        "y": 3.5,
+        "radius": 3.5,
+        "guardId": "01-05-g3"
+      }
+    ],
+    "objectiveZone": {
+      "guardId": "01-05-g3",
+      "spotlight": true
+    },
+    "safeZones": [
+      {
+        "x": 3,
+        "y": 13.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 3,
+            "y": 13.5
+          },
+          {
+            "x": 3,
+            "y": 10.5
+          },
+          {
+            "x": 7.5,
+            "y": 10.5
+          },
+          {
+            "x": 7.5,
+            "y": 6.5
+          },
+          {
+            "x": 9,
+            "y": 5.5
+          },
+          {
+            "x": 10,
+            "y": 6.5
+          },
+          {
+            "x": 12.5,
+            "y": 6.5
+          },
+          {
+            "x": 14,
+            "y": 5.5
+          }
+        ]
+      },
+      {
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 3,
+            "y": 13.5
+          },
+          {
+            "x": 3,
+            "y": 10.5
+          },
+          {
+            "x": 7.5,
+            "y": 10.5
+          },
+          {
+            "x": 10,
+            "y": 6.5
+          },
+          {
+            "x": 12.5,
+            "y": 6.5
+          },
+          {
+            "x": 14,
+            "y": 5.5
           }
         ]
       }
     ],
     "escapeRoutes": [
       {
-        "name": "escape: independent objective-to-exit leg",
+        "name": "escape: rear staff circulation",
         "points": [
           {
-            "x": 17.25,
-            "y": 3.25
+            "x": 14,
+            "y": 5.5
           },
           {
-            "x": 19.25,
-            "y": 9.25
+            "x": 14,
+            "y": 7.5
+          },
+          {
+            "x": 12.5,
+            "y": 7.5
+          },
+          {
+            "x": 10.5,
+            "y": 7.5
+          },
+          {
+            "x": 10.5,
+            "y": 11.5
+          },
+          {
+            "x": 13,
+            "y": 11.5
+          },
+          {
+            "x": 15,
+            "y": 11.5
+          }
+        ]
+      },
+      {
+        "name": "escape alternate: timed security crossing",
+        "points": [
+          {
+            "x": 14,
+            "y": 5.5
+          },
+          {
+            "x": 14,
+            "y": 6.5
+          },
+          {
+            "x": 10.5,
+            "y": 6.5
+          },
+          {
+            "x": 10.5,
+            "y": 11.5
+          },
+          {
+            "x": 15,
+            "y": 11.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "01-06",
+    "number": 6,
+    "chapter": 1,
+    "mission": 6,
+    "title": "Conservation Lab",
+    "theme": "museum",
+    "structurePlan": "West intake → restoration work bays → north specimen storage → east equipment aisle or central crossing → south service exit",
+    "layout": [
+      "      ###########  ",
+      "      #.........#  ",
+      "      #.........#  ",
+      "      #.........#  ",
+      "      ###..###..## ",
+      "      #.....#....# ",
+      "#######.....#....# ",
+      "#.....#.....#....# ",
+      "#................# ",
+      "#................# ",
+      "#................# ",
+      "#.....#.....#....# ",
+      "#######.....#....# ",
+      "      #.....#....# ",
+      "      ###..##....# ",
+      "      #..........# ",
+      "      #..........# ",
+      "      #..........# ",
+      "      ############ "
+    ],
+    "entryEdge": "left",
+    "exitEdge": "bottom",
+    "entryPosition": {
+      "x": 1.5,
+      "y": 9.5
+    },
+    "exitPosition": {
+      "x": 9.5,
+      "y": 17.5
+    },
+    "playerSpawn": {
+      "x": 1.5,
+      "y": 9.5,
+      "facing": 0
+    },
+    "objective": {
+      "x": 14.5,
+      "y": 2.5,
+      "kind": "artifact"
+    },
+    "exit": {
+      "x": 8.9,
+      "y": 16.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.35,
+    "props": [
+      {
+        "kind": "table",
+        "x": 9.5,
+        "y": 8,
+        "scale": 1.3,
+        "collisionScale": 1.3
+      },
+      {
+        "kind": "equipment",
+        "x": 8,
+        "y": 12.5
+      },
+      {
+        "kind": "displayCase",
+        "x": 13.5,
+        "y": 7
+      },
+      {
+        "kind": "table",
+        "x": 13,
+        "y": 17.6
+      },
+      {
+        "kind": "lamp",
+        "x": 8,
+        "y": 1
+      },
+      {
+        "kind": "objectiveCase",
+        "x": 14.5,
+        "y": 2.62
+      }
+    ],
+    "landmark": {
+      "name": "Restoration Workbench",
+      "kind": "table",
+      "x": 9.5,
+      "y": 8
+    },
+    "lights": [
+      {
+        "x": 14.5,
+        "y": 2.5,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.96
+      },
+      {
+        "x": 14.5,
+        "y": 2.5,
+        "radius": 1.65,
+        "kind": "cyan",
+        "intensity": 0.85
+      },
+      {
+        "x": 1.5,
+        "y": 9.5,
+        "radius": 2,
+        "kind": "warm",
+        "intensity": 0.4
+      },
+      {
+        "x": 9.5,
+        "y": 8,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.62
+      },
+      {
+        "x": 9.5,
+        "y": 17.5,
+        "radius": 1.8,
+        "kind": "warm",
+        "intensity": 0.3
+      }
+    ],
+    "guards": [
+      {
+        "id": "01-06-g1",
+        "routeId": "01-06-g1",
+        "x": 9.5,
+        "y": 6.5,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 10.5,
+            "y": 10.5
+          },
+          {
+            "x": 9.5,
+            "y": 6.5
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
+        "pace": 0.925,
+        "startDelay": 0,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-06-g2",
+        "routeId": "01-06-g2",
+        "x": 15.5,
+        "y": 12,
+        "role": "roaming",
+        "theftRole": "roaming",
+        "theftPosts": [
+          {
+            "x": 15.5,
+            "y": 16.5
+          },
+          {
+            "x": 15.5,
+            "y": 12
+          }
+        ],
+        "initialFacing": -1.5707963267948966,
+        "facing": -1.5707963267948966,
+        "pace": 0.925,
+        "startDelay": 1.5,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-06-g3",
+        "routeId": "01-06-g3",
+        "x": 12,
+        "y": 2.5,
+        "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 15,
+            "y": 3.3
+          },
+          {
+            "x": 12,
+            "y": 2.5
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 0.925,
+        "startDelay": 4,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      }
+    ],
+    "patrolRoutes": [
+      {
+        "id": "01-06-g1",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 9.5,
+            "y": 6.5,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 10.5,
+            "y": 10.5,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-06-g2",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 15.5,
+            "y": 12,
+            "waitDuration": 4.5,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 15.5,
+            "y": 16.5,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-06-g3",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 12,
+            "y": 2.5,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 15,
+            "y": 3.3,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
           }
         ]
       }
     ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "Intake door / restoration crossing"
+        },
+        {
+          "id": "Z1",
+          "name": "Equipment aisle / service junction"
+        },
+        {
+          "id": "Z2",
+          "name": "Specimen storage / case inspection"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "Intake door / restoration crossing: observation return",
+          "x": 9.5,
+          "y": 6.5,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "Intake door / restoration crossing: inspection threshold",
+          "x": 10.5,
+          "y": 10.5,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Equipment aisle / service junction: observation return",
+          "x": 15.5,
+          "y": 12,
+          "wait": 4.5,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Equipment aisle / service junction: inspection threshold",
+          "x": 15.5,
+          "y": 16.5,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "2-0",
+          "zone": "Z2",
+          "subject": "Specimen storage / case inspection: observation return",
+          "x": 12,
+          "y": 2.5,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "2-1",
+          "zone": "Z2",
+          "subject": "Specimen storage / case inspection: inspection threshold",
+          "x": 15,
+          "y": 3.3,
+          "wait": 2,
+          "look": 3.141592653589793
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-06-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-06-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1"
+          ],
+          "roaming": true
+        },
+        {
+          "guardId": "01-06-g3",
+          "zones": [
+            "Z2"
+          ],
+          "anchors": [
+            "2-0",
+            "2-1"
+          ],
+          "roaming": false
+        }
+      ]
+    },
     "securityZones": [
       {
-        "name": "roaming",
-        "x": 1.25,
-        "y": 17.75,
-        "radius": 5,
-        "guardId": "01-05-g1"
-      },
-      {
-        "name": "roaming",
-        "x": 19.75,
-        "y": 17.75,
-        "radius": 5,
-        "guardId": "01-05-g2"
-      },
-      {
-        "name": "roaming",
-        "x": 1.25,
-        "y": 3.75,
-        "radius": 5,
-        "guardId": "01-05-g3"
-      },
-      {
-        "name": "objective",
-        "x": 14.75,
-        "y": 1.25,
+        "name": "Intake door / restoration crossing",
+        "x": 9.5,
+        "y": 6.5,
         "radius": 3.5,
-        "guardId": "01-05-g4"
+        "guardId": "01-06-g1"
+      },
+      {
+        "name": "Equipment aisle / service junction",
+        "x": 15.5,
+        "y": 12,
+        "radius": 3.5,
+        "guardId": "01-06-g2"
+      },
+      {
+        "name": "Specimen storage / case inspection",
+        "x": 12,
+        "y": 2.5,
+        "radius": 3.5,
+        "guardId": "01-06-g3"
       }
     ],
     "objectiveZone": {
-      "guardId": "01-05-g4",
+      "guardId": "01-06-g3",
       "spotlight": true
     },
     "safeZones": [
       {
-        "x": 9.25,
-        "y": 14.75,
-        "radius": 0.25
+        "x": 1.5,
+        "y": 9.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 1.5,
+            "y": 9.5
+          },
+          {
+            "x": 4,
+            "y": 9.5
+          },
+          {
+            "x": 4,
+            "y": 10.5
+          },
+          {
+            "x": 8,
+            "y": 10.5
+          },
+          {
+            "x": 8,
+            "y": 6
+          },
+          {
+            "x": 10,
+            "y": 6
+          },
+          {
+            "x": 10,
+            "y": 2.5
+          },
+          {
+            "x": 14.5,
+            "y": 2.5
+          }
+        ]
       },
       {
-        "x": 9.75,
-        "y": 14.75,
-        "radius": 0.25
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 1.5,
+            "y": 9.5
+          },
+          {
+            "x": 8,
+            "y": 9.5
+          },
+          {
+            "x": 15,
+            "y": 9.5
+          },
+          {
+            "x": 15,
+            "y": 6
+          },
+          {
+            "x": 15,
+            "y": 2.5
+          },
+          {
+            "x": 14.5,
+            "y": 2.5
+          }
+        ]
+      }
+    ],
+    "escapeRoutes": [
+      {
+        "name": "escape: rear staff circulation",
+        "points": [
+          {
+            "x": 14.5,
+            "y": 2.5
+          },
+          {
+            "x": 15,
+            "y": 6
+          },
+          {
+            "x": 15,
+            "y": 12
+          },
+          {
+            "x": 15,
+            "y": 16.5
+          },
+          {
+            "x": 9.5,
+            "y": 16.5
+          },
+          {
+            "x": 9.5,
+            "y": 17.5
+          }
+        ]
+      },
+      {
+        "name": "escape alternate: timed security crossing",
+        "points": [
+          {
+            "x": 14.5,
+            "y": 2.5
+          },
+          {
+            "x": 10,
+            "y": 2.5
+          },
+          {
+            "x": 10,
+            "y": 6
+          },
+          {
+            "x": 11,
+            "y": 6
+          },
+          {
+            "x": 11,
+            "y": 11.5
+          },
+          {
+            "x": 10,
+            "y": 11.5
+          },
+          {
+            "x": 10,
+            "y": 16.5
+          },
+          {
+            "x": 9.5,
+            "y": 17.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "01-07",
+    "number": 7,
+    "chapter": 1,
+    "mission": 7,
+    "title": "Private Gallery",
+    "theme": "museum",
+    "structurePlan": "North private foyer → west portrait rooms or exposed VIP bridge → south objective salon → west side gallery → service exit",
+    "layout": [
+      "     ########    ",
+      "     #......#    ",
+      "     #......#    ",
+      "     #......#    ",
+      "  ####......#### ",
+      "###.....##.....# ",
+      "#.......##.....# ",
+      "#.......##.....# ",
+      "#.......##.....# ",
+      "###............# ",
+      "  #............# ",
+      "  #.....##.....# ",
+      "  #.....##.....# ",
+      "  #.....##.....# ",
+      "  #.....##.....# ",
+      "  #............# ",
+      "  #............# ",
+      "  #............# ",
+      "  ############## ",
+      "                 "
+    ],
+    "entryEdge": "top",
+    "exitEdge": "left",
+    "entryPosition": {
+      "x": 8.5,
+      "y": 1.5
+    },
+    "exitPosition": {
+      "x": 1.5,
+      "y": 7.5
+    },
+    "playerSpawn": {
+      "x": 8.5,
+      "y": 1.5,
+      "facing": 1.5707963267948966
+    },
+    "objective": {
+      "x": 12.5,
+      "y": 16.5,
+      "kind": "artifact"
+    },
+    "exit": {
+      "x": 0.9,
+      "y": 6.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.35,
+    "props": [
+      {
+        "kind": "statue",
+        "x": 6.5,
+        "y": 12.5
+      },
+      {
+        "kind": "painting",
+        "x": 4,
+        "y": 5
+      },
+      {
+        "kind": "sofa",
+        "x": 9,
+        "y": 17.7
+      },
+      {
+        "kind": "displayCase",
+        "x": 13.8,
+        "y": 9
+      },
+      {
+        "kind": "lamp",
+        "x": 11,
+        "y": 1
+      },
+      {
+        "kind": "objectiveCase",
+        "x": 12.5,
+        "y": 16.62
+      }
+    ],
+    "landmark": {
+      "name": "VIP Portrait Salon",
+      "kind": "statue",
+      "x": 6.5,
+      "y": 12.5
+    },
+    "lights": [
+      {
+        "x": 12.5,
+        "y": 16.5,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.96
+      },
+      {
+        "x": 12.5,
+        "y": 16.5,
+        "radius": 1.65,
+        "kind": "cyan",
+        "intensity": 0.85
+      },
+      {
+        "x": 8.5,
+        "y": 1.5,
+        "radius": 2,
+        "kind": "warm",
+        "intensity": 0.4
+      },
+      {
+        "x": 6.5,
+        "y": 12.5,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.62
+      },
+      {
+        "x": 1.5,
+        "y": 7.5,
+        "radius": 1.8,
+        "kind": "warm",
+        "intensity": 0.3
+      }
+    ],
+    "guards": [
+      {
+        "id": "01-07-g1",
+        "routeId": "01-07-g1",
+        "x": 6,
+        "y": 7,
+        "role": "corridor",
+        "theftRole": "corridor",
+        "theftPosts": [
+          {
+            "x": 6,
+            "y": 10
+          },
+          {
+            "x": 6,
+            "y": 14
+          },
+          {
+            "x": 6,
+            "y": 7
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
+        "pace": 0.9500000000000001,
+        "startDelay": 0,
+        "visionRange": 4.6,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-07-g2",
+        "routeId": "01-07-g2",
+        "x": 12.5,
+        "y": 12,
+        "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 11,
+            "y": 16
+          },
+          {
+            "x": 14,
+            "y": 16
+          },
+          {
+            "x": 12.5,
+            "y": 12
+          }
+        ],
+        "initialFacing": -1.5707963267948966,
+        "facing": -1.5707963267948966,
+        "pace": 0.9500000000000001,
+        "startDelay": 4,
+        "visionRange": 4.6,
+        "visionHalfAngle": 0.5235987755982988
+      }
+    ],
+    "patrolRoutes": [
+      {
+        "id": "01-07-g1",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 6,
+            "y": 7,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 6,
+            "y": 10,
+            "waitDuration": 2,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 6,
+            "y": 14,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-07-g2",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 12.5,
+            "y": 12,
+            "waitDuration": 4.5,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 11,
+            "y": 16,
+            "waitDuration": 2,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 14,
+            "y": 16,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      }
+    ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "Private door / VIP bridge / side gallery"
+        },
+        {
+          "id": "Z1",
+          "name": "Objective salon / private collection entrance"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "Private door / VIP bridge / side gallery: observation return",
+          "x": 6,
+          "y": 7,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "Private door / VIP bridge / side gallery: inspection threshold",
+          "x": 6,
+          "y": 10,
+          "wait": 2,
+          "look": 0
+        },
+        {
+          "id": "0-2",
+          "zone": "Z0",
+          "subject": "Private door / VIP bridge / side gallery: inspection threshold",
+          "x": 6,
+          "y": 14,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Objective salon / private collection entrance: observation return",
+          "x": 12.5,
+          "y": 12,
+          "wait": 4.5,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Objective salon / private collection entrance: inspection threshold",
+          "x": 11,
+          "y": 16,
+          "wait": 2,
+          "look": 0
+        },
+        {
+          "id": "1-2",
+          "zone": "Z1",
+          "subject": "Objective salon / private collection entrance: inspection threshold",
+          "x": 14,
+          "y": 16,
+          "wait": 2,
+          "look": 3.141592653589793
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-07-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1",
+            "0-2"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-07-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1",
+            "1-2"
+          ],
+          "roaming": false
+        }
+      ]
+    },
+    "securityZones": [
+      {
+        "name": "Private door / VIP bridge / side gallery",
+        "x": 6,
+        "y": 7,
+        "radius": 3.5,
+        "guardId": "01-07-g1"
+      },
+      {
+        "name": "Objective salon / private collection entrance",
+        "x": 12.5,
+        "y": 12,
+        "radius": 3.5,
+        "guardId": "01-07-g2"
+      }
+    ],
+    "objectiveZone": {
+      "guardId": "01-07-g2",
+      "spotlight": true
+    },
+    "safeZones": [
+      {
+        "x": 8.5,
+        "y": 1.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 8.5,
+            "y": 1.5
+          },
+          {
+            "x": 7,
+            "y": 3.5
+          },
+          {
+            "x": 7,
+            "y": 6.5
+          },
+          {
+            "x": 4.5,
+            "y": 6.5
+          },
+          {
+            "x": 4.5,
+            "y": 13.5
+          },
+          {
+            "x": 4.5,
+            "y": 16.5
+          },
+          {
+            "x": 12.5,
+            "y": 16.5
+          }
+        ]
+      },
+      {
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 8.5,
+            "y": 1.5
+          },
+          {
+            "x": 10.5,
+            "y": 3.5
+          },
+          {
+            "x": 10.5,
+            "y": 6.5
+          },
+          {
+            "x": 12.5,
+            "y": 6.5
+          },
+          {
+            "x": 12.5,
+            "y": 13.5
+          },
+          {
+            "x": 12.5,
+            "y": 16.5
+          }
+        ]
+      }
+    ],
+    "escapeRoutes": [
+      {
+        "name": "escape: rear staff circulation",
+        "points": [
+          {
+            "x": 12.5,
+            "y": 16.5
+          },
+          {
+            "x": 10.5,
+            "y": 16.5
+          },
+          {
+            "x": 7,
+            "y": 16.5
+          },
+          {
+            "x": 4.5,
+            "y": 16.5
+          },
+          {
+            "x": 4.5,
+            "y": 10
+          },
+          {
+            "x": 4.5,
+            "y": 7.5
+          },
+          {
+            "x": 1.5,
+            "y": 7.5
+          }
+        ]
+      },
+      {
+        "name": "escape alternate: timed security crossing",
+        "points": [
+          {
+            "x": 12.5,
+            "y": 16.5
+          },
+          {
+            "x": 12.5,
+            "y": 10
+          },
+          {
+            "x": 9,
+            "y": 10
+          },
+          {
+            "x": 4.5,
+            "y": 10
+          },
+          {
+            "x": 4.5,
+            "y": 7.5
+          },
+          {
+            "x": 1.5,
+            "y": 7.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "01-08",
+    "number": 8,
+    "chapter": 1,
+    "mission": 8,
+    "title": "Security Core",
+    "theme": "museum",
+    "structurePlan": "East checkpoint → multi-door junction → north restricted hall → central crossing or west maintenance bypass → south evacuation desk",
+    "layout": [
+      "       #######       ",
+      "       #.....#       ",
+      "       #.....#       ",
+      "       #.....#       ",
+      "       #.....#       ",
+      "      ###...###      ",
+      "#######.......#######",
+      "#.....#.......#.....#",
+      "#...................#",
+      "#...................#",
+      "#...................#",
+      "#.....#.......#.....#",
+      "###...#.......#######",
+      "  #...####...####    ",
+      "  #.............#    ",
+      "  #.............#    ",
+      "  ######........#    ",
+      "       #........#    ",
+      "       ##########    "
+    ],
+    "entryEdge": "right",
+    "exitEdge": "bottom",
+    "entryPosition": {
+      "x": 19,
+      "y": 9.5
+    },
+    "exitPosition": {
+      "x": 14,
+      "y": 17.5
+    },
+    "playerSpawn": {
+      "x": 19,
+      "y": 9.5,
+      "facing": 3.141592653589793
+    },
+    "objective": {
+      "x": 10.5,
+      "y": 2.5,
+      "kind": "artifact"
+    },
+    "exit": {
+      "x": 13.4,
+      "y": 16.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.35,
+    "props": [
+      {
+        "kind": "counter",
+        "x": 9,
+        "y": 11.5
+      },
+      {
+        "kind": "equipment",
+        "x": 12.5,
+        "y": 12.3
+      },
+      {
+        "kind": "cctv",
+        "x": 8,
+        "y": 1
+      },
+      {
+        "kind": "counter",
+        "x": 3,
+        "y": 8.5
+      },
+      {
+        "kind": "counter",
+        "x": 11,
+        "y": 17.5
+      },
+      {
+        "kind": "lamp",
+        "x": 16,
+        "y": 7
+      },
+      {
+        "kind": "objectiveCase",
+        "x": 10.5,
+        "y": 2.62
+      }
+    ],
+    "landmark": {
+      "name": "Central Security Desk",
+      "kind": "counter",
+      "x": 9,
+      "y": 11.5
+    },
+    "lights": [
+      {
+        "x": 10.5,
+        "y": 2.5,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.96
+      },
+      {
+        "x": 10.5,
+        "y": 2.5,
+        "radius": 1.65,
+        "kind": "cyan",
+        "intensity": 0.85
+      },
+      {
+        "x": 19,
+        "y": 9.5,
+        "radius": 2,
+        "kind": "warm",
+        "intensity": 0.4
+      },
+      {
+        "x": 9,
+        "y": 11.5,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.62
+      },
+      {
+        "x": 14,
+        "y": 17.5,
+        "radius": 1.8,
+        "kind": "warm",
+        "intensity": 0.3
+      }
+    ],
+    "guards": [
+      {
+        "id": "01-08-g1",
+        "routeId": "01-08-g1",
+        "x": 16,
+        "y": 8,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 18,
+            "y": 10.5
+          },
+          {
+            "x": 16,
+            "y": 8
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
+        "pace": 0.9750000000000001,
+        "startDelay": 0,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-08-g2",
+        "routeId": "01-08-g2",
+        "x": 8,
+        "y": 8,
+        "role": "corridor",
+        "theftRole": "corridor",
+        "theftPosts": [
+          {
+            "x": 11,
+            "y": 8
+          },
+          {
+            "x": 11,
+            "y": 11.5
+          },
+          {
+            "x": 8,
+            "y": 8
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 0.9750000000000001,
+        "startDelay": 1.5,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-08-g3",
+        "routeId": "01-08-g3",
+        "x": 9,
+        "y": 15,
+        "role": "exit",
+        "theftRole": "exit",
+        "theftPosts": [
+          {
+            "x": 14.5,
+            "y": 16
+          },
+          {
+            "x": 9,
+            "y": 15
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 0.9750000000000001,
+        "startDelay": 3,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-08-g4",
+        "routeId": "01-08-g4",
+        "x": 9,
+        "y": 2.5,
+        "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 11.7,
+            "y": 3.5
+          },
+          {
+            "x": 9,
+            "y": 2.5
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 0.9750000000000001,
+        "startDelay": 4,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      }
+    ],
+    "patrolRoutes": [
+      {
+        "id": "01-08-g1",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 16,
+            "y": 8,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 18,
+            "y": 10.5,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-08-g2",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 8,
+            "y": 8,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 11,
+            "y": 8,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 11,
+            "y": 11.5,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-08-g3",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 9,
+            "y": 15,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 14.5,
+            "y": 16,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-08-g4",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 9,
+            "y": 2.5,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 11.7,
+            "y": 3.5,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      }
+    ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "East access checkpoint"
+        },
+        {
+          "id": "Z1",
+          "name": "Junction / west maintenance door"
+        },
+        {
+          "id": "Z2",
+          "name": "Evacuation desk / service junction"
+        },
+        {
+          "id": "Z3",
+          "name": "Restricted hall / security archive case"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "East access checkpoint: observation return",
+          "x": 16,
+          "y": 8,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "East access checkpoint: inspection threshold",
+          "x": 18,
+          "y": 10.5,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Junction / west maintenance door: observation return",
+          "x": 8,
+          "y": 8,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Junction / west maintenance door: inspection threshold",
+          "x": 11,
+          "y": 8,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "1-2",
+          "zone": "Z1",
+          "subject": "Junction / west maintenance door: inspection threshold",
+          "x": 11,
+          "y": 11.5,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "2-0",
+          "zone": "Z2",
+          "subject": "Evacuation desk / service junction: observation return",
+          "x": 9,
+          "y": 15,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "2-1",
+          "zone": "Z2",
+          "subject": "Evacuation desk / service junction: inspection threshold",
+          "x": 14.5,
+          "y": 16,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "3-0",
+          "zone": "Z3",
+          "subject": "Restricted hall / security archive case: observation return",
+          "x": 9,
+          "y": 2.5,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "3-1",
+          "zone": "Z3",
+          "subject": "Restricted hall / security archive case: inspection threshold",
+          "x": 11.7,
+          "y": 3.5,
+          "wait": 2,
+          "look": 3.141592653589793
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-08-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-08-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1",
+            "1-2"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-08-g3",
+          "zones": [
+            "Z2"
+          ],
+          "anchors": [
+            "2-0",
+            "2-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-08-g4",
+          "zones": [
+            "Z3"
+          ],
+          "anchors": [
+            "3-0",
+            "3-1"
+          ],
+          "roaming": false
+        }
+      ]
+    },
+    "securityZones": [
+      {
+        "name": "East access checkpoint",
+        "x": 16,
+        "y": 8,
+        "radius": 3.5,
+        "guardId": "01-08-g1"
+      },
+      {
+        "name": "Junction / west maintenance door",
+        "x": 8,
+        "y": 8,
+        "radius": 3.5,
+        "guardId": "01-08-g2"
+      },
+      {
+        "name": "Evacuation desk / service junction",
+        "x": 9,
+        "y": 15,
+        "radius": 3.5,
+        "guardId": "01-08-g3"
+      },
+      {
+        "name": "Restricted hall / security archive case",
+        "x": 9,
+        "y": 2.5,
+        "radius": 3.5,
+        "guardId": "01-08-g4"
+      }
+    ],
+    "objectiveZone": {
+      "guardId": "01-08-g4",
+      "spotlight": true
+    },
+    "safeZones": [
+      {
+        "x": 19,
+        "y": 9.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 19,
+            "y": 9.5
+          },
+          {
+            "x": 16,
+            "y": 9.5
+          },
+          {
+            "x": 16,
+            "y": 10.5
+          },
+          {
+            "x": 12.5,
+            "y": 10.5
+          },
+          {
+            "x": 12.5,
+            "y": 7
+          },
+          {
+            "x": 10.5,
+            "y": 7
+          },
+          {
+            "x": 10.5,
+            "y": 4
+          },
+          {
+            "x": 10.5,
+            "y": 2.5
+          }
+        ]
+      },
+      {
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 19,
+            "y": 9.5
+          },
+          {
+            "x": 10.5,
+            "y": 9.5
+          },
+          {
+            "x": 10.5,
+            "y": 4
+          },
+          {
+            "x": 10.5,
+            "y": 2.5
+          }
+        ]
+      }
+    ],
+    "escapeRoutes": [
+      {
+        "name": "escape: rear staff circulation",
+        "points": [
+          {
+            "x": 10.5,
+            "y": 2.5
+          },
+          {
+            "x": 10.5,
+            "y": 7
+          },
+          {
+            "x": 8,
+            "y": 7
+          },
+          {
+            "x": 8,
+            "y": 9.5
+          },
+          {
+            "x": 4.5,
+            "y": 9.5
+          },
+          {
+            "x": 4.5,
+            "y": 15
+          },
+          {
+            "x": 10.5,
+            "y": 15
+          },
+          {
+            "x": 14,
+            "y": 15
+          },
+          {
+            "x": 14,
+            "y": 17.5
+          }
+        ]
+      },
+      {
+        "name": "escape alternate: timed security crossing",
+        "points": [
+          {
+            "x": 10.5,
+            "y": 2.5
+          },
+          {
+            "x": 10.5,
+            "y": 9.5
+          },
+          {
+            "x": 11.5,
+            "y": 9.5
+          },
+          {
+            "x": 11.5,
+            "y": 15
+          },
+          {
+            "x": 14,
+            "y": 15
+          },
+          {
+            "x": 14,
+            "y": 17.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "01-09",
+    "number": 9,
+    "chapter": 1,
+    "mission": 9,
+    "title": "Master Exhibition",
+    "theme": "museum",
+    "structurePlan": "North vestibule → west sculpture pockets → south collection loop → east master case → upper portrait connector → north final-heist door",
+    "layout": [
+      "########     ######## ",
+      "#......#     #......# ",
+      "#......#     #......# ",
+      "#......#     #......# ",
+      "#......#######......# ",
+      "#......##...........# ",
+      "###.................# ",
+      "#..................## ",
+      "#............###...## ",
+      "#......###...# #....# ",
+      "#......# #...# #....# ",
+      "#......###...###....# ",
+      "#......##.....##....# ",
+      "###...###.....##....# ",
+      "###...###.....##....# ",
+      "#.......#...........# ",
+      "#...................# ",
+      "#...................# ",
+      "#.............##....# ",
+      "#.......#.....##....# ",
+      "##################### ",
+      "                      "
+    ],
+    "entryEdge": "top",
+    "exitEdge": "top",
+    "entryPosition": {
+      "x": 3,
+      "y": 1.5
+    },
+    "exitPosition": {
+      "x": 17.5,
+      "y": 1.5
+    },
+    "playerSpawn": {
+      "x": 3,
+      "y": 1.5,
+      "facing": 1.5707963267948966
+    },
+    "objective": {
+      "x": 18,
+      "y": 18,
+      "kind": "artifact"
+    },
+    "exit": {
+      "x": 16.9,
+      "y": 0.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.35,
+    "props": [
+      {
+        "kind": "statue",
+        "x": 2.5,
+        "y": 10.5
+      },
+      {
+        "kind": "statue",
+        "x": 6.5,
+        "y": 18.8
+      },
+      {
+        "kind": "pillar",
+        "x": 12.7,
+        "y": 14
+      },
+      {
+        "kind": "displayCase",
+        "x": 16.8,
+        "y": 12.5
+      },
+      {
+        "kind": "painting",
+        "x": 15,
+        "y": 1
+      },
+      {
+        "kind": "lamp",
+        "x": 3,
+        "y": 1
+      },
+      {
+        "kind": "objectiveCase",
+        "x": 18,
+        "y": 18.12
+      }
+    ],
+    "landmark": {
+      "name": "Master Sculpture Suite",
+      "kind": "statue",
+      "x": 2.5,
+      "y": 10.5
+    },
+    "lights": [
+      {
+        "x": 18,
+        "y": 18,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.96
+      },
+      {
+        "x": 18,
+        "y": 18,
+        "radius": 1.65,
+        "kind": "cyan",
+        "intensity": 0.85
+      },
+      {
+        "x": 3,
+        "y": 1.5,
+        "radius": 2,
+        "kind": "warm",
+        "intensity": 0.4
+      },
+      {
+        "x": 2.5,
+        "y": 10.5,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.62
+      },
+      {
+        "x": 17.5,
+        "y": 1.5,
+        "radius": 1.8,
+        "kind": "warm",
+        "intensity": 0.3
+      }
+    ],
+    "guards": [
+      {
+        "id": "01-09-g1",
+        "routeId": "01-09-g1",
+        "x": 2.5,
+        "y": 8.5,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 5.5,
+            "y": 10
+          },
+          {
+            "x": 2.5,
+            "y": 8.5
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 1,
+        "startDelay": 0,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-09-g2",
+        "routeId": "01-09-g2",
+        "x": 3,
+        "y": 16.5,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 6,
+            "y": 17
+          },
+          {
+            "x": 3,
+            "y": 16.5
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 1,
+        "startDelay": 1.5,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-09-g3",
+        "routeId": "01-09-g3",
+        "x": 11.5,
+        "y": 10,
+        "role": "roaming",
+        "theftRole": "roaming",
+        "theftPosts": [
+          {
+            "x": 11.5,
+            "y": 14
+          },
+          {
+            "x": 11.5,
+            "y": 10
+          }
+        ],
+        "initialFacing": -1.5707963267948966,
+        "facing": -1.5707963267948966,
+        "pace": 1,
+        "startDelay": 3,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-09-g4",
+        "routeId": "01-09-g4",
+        "x": 15.5,
+        "y": 3,
+        "role": "exit",
+        "theftRole": "exit",
+        "theftPosts": [
+          {
+            "x": 18,
+            "y": 5
+          },
+          {
+            "x": 15.5,
+            "y": 3
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 1,
+        "startDelay": 4.5,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-09-g5",
+        "routeId": "01-09-g5",
+        "x": 17,
+        "y": 15,
+        "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 18.5,
+            "y": 19
+          },
+          {
+            "x": 17,
+            "y": 15
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
+        "pace": 1,
+        "startDelay": 4,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      }
+    ],
+    "patrolRoutes": [
+      {
+        "id": "01-09-g1",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 2.5,
+            "y": 8.5,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 5.5,
+            "y": 10,
+            "waitDuration": 2,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-09-g2",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 3,
+            "y": 16.5,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 6,
+            "y": 17,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-09-g3",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 11.5,
+            "y": 10,
+            "waitDuration": 4.5,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 11.5,
+            "y": 14,
+            "waitDuration": 2,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-09-g4",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 15.5,
+            "y": 3,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 18,
+            "y": 5,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-09-g5",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 17,
+            "y": 15,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 18.5,
+            "y": 19,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      }
+    ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "Vestibule / sculpture threshold"
+        },
+        {
+          "id": "Z1",
+          "name": "South collection intersection"
+        },
+        {
+          "id": "Z2",
+          "name": "Middle gallery / portrait connector"
+        },
+        {
+          "id": "Z3",
+          "name": "Final-heist door / north portrait room"
+        },
+        {
+          "id": "Z4",
+          "name": "Master case / east gallery approach"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "Vestibule / sculpture threshold: observation return",
+          "x": 2.5,
+          "y": 8.5,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "Vestibule / sculpture threshold: inspection threshold",
+          "x": 5.5,
+          "y": 10,
+          "wait": 2,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "South collection intersection: observation return",
+          "x": 3,
+          "y": 16.5,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "South collection intersection: inspection threshold",
+          "x": 6,
+          "y": 17,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "2-0",
+          "zone": "Z2",
+          "subject": "Middle gallery / portrait connector: observation return",
+          "x": 11.5,
+          "y": 10,
+          "wait": 4.5,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "2-1",
+          "zone": "Z2",
+          "subject": "Middle gallery / portrait connector: inspection threshold",
+          "x": 11.5,
+          "y": 14,
+          "wait": 2,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "3-0",
+          "zone": "Z3",
+          "subject": "Final-heist door / north portrait room: observation return",
+          "x": 15.5,
+          "y": 3,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "3-1",
+          "zone": "Z3",
+          "subject": "Final-heist door / north portrait room: inspection threshold",
+          "x": 18,
+          "y": 5,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "4-0",
+          "zone": "Z4",
+          "subject": "Master case / east gallery approach: observation return",
+          "x": 17,
+          "y": 15,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "4-1",
+          "zone": "Z4",
+          "subject": "Master case / east gallery approach: inspection threshold",
+          "x": 18.5,
+          "y": 19,
+          "wait": 2,
+          "look": -1.5707963267948966
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-09-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-09-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-09-g3",
+          "zones": [
+            "Z2"
+          ],
+          "anchors": [
+            "2-0",
+            "2-1"
+          ],
+          "roaming": true
+        },
+        {
+          "guardId": "01-09-g4",
+          "zones": [
+            "Z3"
+          ],
+          "anchors": [
+            "3-0",
+            "3-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-09-g5",
+          "zones": [
+            "Z4"
+          ],
+          "anchors": [
+            "4-0",
+            "4-1"
+          ],
+          "roaming": false
+        }
+      ]
+    },
+    "securityZones": [
+      {
+        "name": "Vestibule / sculpture threshold",
+        "x": 2.5,
+        "y": 8.5,
+        "radius": 3.5,
+        "guardId": "01-09-g1"
+      },
+      {
+        "name": "South collection intersection",
+        "x": 3,
+        "y": 16.5,
+        "radius": 3.5,
+        "guardId": "01-09-g2"
+      },
+      {
+        "name": "Middle gallery / portrait connector",
+        "x": 11.5,
+        "y": 10,
+        "radius": 3.5,
+        "guardId": "01-09-g3"
+      },
+      {
+        "name": "Final-heist door / north portrait room",
+        "x": 15.5,
+        "y": 3,
+        "radius": 3.5,
+        "guardId": "01-09-g4"
+      },
+      {
+        "name": "Master case / east gallery approach",
+        "x": 17,
+        "y": 15,
+        "radius": 3.5,
+        "guardId": "01-09-g5"
+      }
+    ],
+    "objectiveZone": {
+      "guardId": "01-09-g5",
+      "spotlight": true
+    },
+    "safeZones": [
+      {
+        "x": 3,
+        "y": 1.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 3,
+            "y": 1.5
+          },
+          {
+            "x": 3,
+            "y": 4.5
+          },
+          {
+            "x": 4.5,
+            "y": 4.5
+          },
+          {
+            "x": 4.5,
+            "y": 9
+          },
+          {
+            "x": 4.5,
+            "y": 15.5
+          },
+          {
+            "x": 2.5,
+            "y": 15.5
+          },
+          {
+            "x": 2.5,
+            "y": 17.5
+          },
+          {
+            "x": 10.5,
+            "y": 17.5
+          },
+          {
+            "x": 11.5,
+            "y": 17.5
+          },
+          {
+            "x": 11.5,
+            "y": 16.5
+          },
+          {
+            "x": 18,
+            "y": 16.5
+          },
+          {
+            "x": 18,
+            "y": 18
+          }
+        ]
+      },
+      {
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 3,
+            "y": 1.5
+          },
+          {
+            "x": 3,
+            "y": 4.5
+          },
+          {
+            "x": 4.5,
+            "y": 4.5
+          },
+          {
+            "x": 4.5,
+            "y": 7.5
+          },
+          {
+            "x": 12.5,
+            "y": 7.5
+          },
+          {
+            "x": 12.5,
+            "y": 12
+          },
+          {
+            "x": 10.5,
+            "y": 12
+          },
+          {
+            "x": 10.5,
+            "y": 16.5
+          },
+          {
+            "x": 18,
+            "y": 16.5
+          },
+          {
+            "x": 18,
+            "y": 18
+          }
+        ]
+      }
+    ],
+    "escapeRoutes": [
+      {
+        "name": "escape: rear staff circulation",
+        "points": [
+          {
+            "x": 18,
+            "y": 18
+          },
+          {
+            "x": 18.5,
+            "y": 16
+          },
+          {
+            "x": 18.5,
+            "y": 11
+          },
+          {
+            "x": 17.5,
+            "y": 11
+          },
+          {
+            "x": 17.5,
+            "y": 5
+          },
+          {
+            "x": 17.5,
+            "y": 1.5
+          }
+        ]
+      },
+      {
+        "name": "escape alternate: timed security crossing",
+        "points": [
+          {
+            "x": 18,
+            "y": 18
+          },
+          {
+            "x": 18,
+            "y": 16.5
+          },
+          {
+            "x": 11.5,
+            "y": 16.5
+          },
+          {
+            "x": 11.5,
+            "y": 6.5
+          },
+          {
+            "x": 17.5,
+            "y": 6.5
+          },
+          {
+            "x": 17.5,
+            "y": 1.5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "01-10",
+    "number": 10,
+    "chapter": 1,
+    "mission": 10,
+    "title": "Grand Heist",
+    "theme": "museum",
+    "structurePlan": "South entry → Grand Exhibition → western galleries or high-security shortcut → north Master Diamond Chamber → theft → west service circulation → service exit",
+    "layout": [
+      "          #############  ",
+      "          #...........#  ",
+      "          #...........#  ",
+      "  #########...........#  ",
+      "  #......##...........#  ",
+      "  #...................#  ",
+      "  #...................#  ",
+      "  #..........#..##...##  ",
+      "  #......#####..##...### ",
+      "  #......##.....##.....# ",
+      "  ##...####.....##.....# ",
+      "  ##...## #.....##.....# ",
+      "###.....# #.....##.....# ",
+      "#.......# ##...###.....# ",
+      "#.......####...###.....# ",
+      "#.......#.......##.....# ",
+      "###.............##.....# ",
+      "  #....................# ",
+      "  #....................# ",
+      "  #.....#..............# ",
+      "  #######.......######## ",
+      "        #.......#        ",
+      "        #.......#        ",
+      "        #########        "
+    ],
+    "entryEdge": "bottom",
+    "exitEdge": "left",
+    "entryPosition": {
+      "x": 11.5,
+      "y": 22.5
+    },
+    "exitPosition": {
+      "x": 1.5,
+      "y": 14.5
+    },
+    "playerSpawn": {
+      "x": 11.5,
+      "y": 22.5,
+      "facing": -1.5707963267948966
+    },
+    "objective": {
+      "x": 19.5,
+      "y": 3,
+      "kind": "masterDiamond"
+    },
+    "exit": {
+      "x": 0.9,
+      "y": 13.9,
+      "w": 1.2,
+      "h": 1.2
+    },
+    "ambientDarkness": 0.35,
+    "props": [
+      {
+        "kind": "statue",
+        "x": 10.5,
+        "y": 19.5,
+        "scale": 1.4,
+        "collisionScale": 1.4
+      },
+      {
+        "kind": "displayCase",
+        "x": 4,
+        "y": 16
+      },
+      {
+        "kind": "statue",
+        "x": 7.5,
+        "y": 5.5
+      },
+      {
+        "kind": "counter",
+        "x": 12,
+        "y": 11.5
+      },
+      {
+        "kind": "pillar",
+        "x": 17.5,
+        "y": 3.5
+      },
+      {
+        "kind": "equipment",
+        "x": 20.8,
+        "y": 16
+      },
+      {
+        "kind": "diamondPedestal",
+        "x": 20.5,
+        "y": 2
+      },
+      {
+        "kind": "lamp",
+        "x": 11,
+        "y": 1
+      },
+      {
+        "kind": "objectiveCase",
+        "x": 19.5,
+        "y": 3.12
+      }
+    ],
+    "landmark": {
+      "name": "Master Diamond Chamber",
+      "kind": "diamondPedestal",
+      "x": 20.5,
+      "y": 2
+    },
+    "lights": [
+      {
+        "x": 19.5,
+        "y": 3,
+        "radius": 3,
+        "kind": "warm",
+        "intensity": 1
+      },
+      {
+        "x": 19.5,
+        "y": 3,
+        "radius": 1.65,
+        "kind": "cyan",
+        "intensity": 0.85
+      },
+      {
+        "x": 11.5,
+        "y": 22.5,
+        "radius": 2,
+        "kind": "warm",
+        "intensity": 0.4
+      },
+      {
+        "x": 20.5,
+        "y": 2,
+        "radius": 2.6,
+        "kind": "warm",
+        "intensity": 0.62
+      },
+      {
+        "x": 1.5,
+        "y": 14.5,
+        "radius": 1.8,
+        "kind": "warm",
+        "intensity": 0.3
+      }
+    ],
+    "guards": [
+      {
+        "id": "01-10-g1",
+        "routeId": "01-10-g1",
+        "x": 14.5,
+        "y": 20.5,
+        "role": "room",
+        "theftRole": "zone",
+        "theftPosts": [
+          {
+            "x": 14.5,
+            "y": 17
+          },
+          {
+            "x": 14.5,
+            "y": 20.5
+          }
+        ],
+        "initialFacing": -1.5707963267948966,
+        "facing": -1.5707963267948966,
+        "pace": 1.0250000000000001,
+        "startDelay": 0,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-10-g2",
+        "routeId": "01-10-g2",
+        "x": 4.5,
+        "y": 13,
+        "role": "exit",
+        "theftRole": "exit",
+        "theftPosts": [
+          {
+            "x": 6.5,
+            "y": 18
+          },
+          {
+            "x": 4.5,
+            "y": 13
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
+        "pace": 1.0250000000000001,
+        "startDelay": 1.5,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-10-g3",
+        "routeId": "01-10-g3",
+        "x": 4.5,
+        "y": 5.5,
+        "role": "corridor",
+        "theftRole": "corridor",
+        "theftPosts": [
+          {
+            "x": 7.5,
+            "y": 8
+          },
+          {
+            "x": 4.5,
+            "y": 5.5
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 1.0250000000000001,
+        "startDelay": 3,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-10-g4",
+        "routeId": "01-10-g4",
+        "x": 13,
+        "y": 10,
+        "role": "corridor",
+        "theftRole": "corridor",
+        "theftPosts": [
+          {
+            "x": 14.8,
+            "y": 12
+          },
+          {
+            "x": 13,
+            "y": 10
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 1.0250000000000001,
+        "startDelay": 4.5,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-10-g5",
+        "routeId": "01-10-g5",
+        "x": 20,
+        "y": 11,
+        "role": "roaming",
+        "theftRole": "roaming",
+        "theftPosts": [
+          {
+            "x": 20,
+            "y": 18
+          },
+          {
+            "x": 20,
+            "y": 11
+          }
+        ],
+        "initialFacing": 1.5707963267948966,
+        "facing": 1.5707963267948966,
+        "pace": 1.0250000000000001,
+        "startDelay": 6,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      },
+      {
+        "id": "01-10-g6",
+        "routeId": "01-10-g6",
+        "x": 14,
+        "y": 3,
+        "role": "objective",
+        "theftRole": "objective",
+        "theftPosts": [
+          {
+            "x": 20.5,
+            "y": 4.5
+          },
+          {
+            "x": 14,
+            "y": 3
+          }
+        ],
+        "initialFacing": 0,
+        "facing": 0,
+        "pace": 1.0250000000000001,
+        "startDelay": 4,
+        "visionRange": 4.4,
+        "visionHalfAngle": 0.5235987755982988
+      }
+    ],
+    "patrolRoutes": [
+      {
+        "id": "01-10-g1",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 14.5,
+            "y": 20.5,
+            "waitDuration": 4.5,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 14.5,
+            "y": 17,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-10-g2",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 4.5,
+            "y": 13,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 6.5,
+            "y": 18,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-10-g3",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 4.5,
+            "y": 5.5,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 7.5,
+            "y": 8,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-10-g4",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 13,
+            "y": 10,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 14.8,
+            "y": 12,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-10-g5",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 20,
+            "y": 11,
+            "waitDuration": 4.5,
+            "lookDirection": 1.5707963267948966,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 20,
+            "y": 18,
+            "waitDuration": 2,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 1.1
+          }
+        ]
+      },
+      {
+        "id": "01-10-g6",
+        "mode": "pingpong",
+        "points": [
+          {
+            "x": 14,
+            "y": 3,
+            "waitDuration": 4.5,
+            "lookDirection": 0,
+            "turnDuration": 1.1
+          },
+          {
+            "x": 20.5,
+            "y": 4.5,
+            "waitDuration": 2,
+            "lookDirection": 3.141592653589793,
+            "turnDuration": 1.1
+          }
+        ]
+      }
+    ],
+    "patrolPlan": {
+      "zones": [
+        {
+          "id": "Z0",
+          "name": "Grand Exhibition arrival / south crossing"
+        },
+        {
+          "id": "Z1",
+          "name": "Service door / western escape intersection"
+        },
+        {
+          "id": "Z2",
+          "name": "Western exhibition / chamber threshold"
+        },
+        {
+          "id": "Z3",
+          "name": "High security shortcut"
+        },
+        {
+          "id": "Z4",
+          "name": "Eastern maintenance circuit"
+        },
+        {
+          "id": "Z5",
+          "name": "Master Diamond case / northern hall"
+        }
+      ],
+      "anchors": [
+        {
+          "id": "0-0",
+          "zone": "Z0",
+          "subject": "Grand Exhibition arrival / south crossing: observation return",
+          "x": 14.5,
+          "y": 20.5,
+          "wait": 4.5,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "0-1",
+          "zone": "Z0",
+          "subject": "Grand Exhibition arrival / south crossing: inspection threshold",
+          "x": 14.5,
+          "y": 17,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "1-0",
+          "zone": "Z1",
+          "subject": "Service door / western escape intersection: observation return",
+          "x": 4.5,
+          "y": 13,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "1-1",
+          "zone": "Z1",
+          "subject": "Service door / western escape intersection: inspection threshold",
+          "x": 6.5,
+          "y": 18,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "2-0",
+          "zone": "Z2",
+          "subject": "Western exhibition / chamber threshold: observation return",
+          "x": 4.5,
+          "y": 5.5,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "2-1",
+          "zone": "Z2",
+          "subject": "Western exhibition / chamber threshold: inspection threshold",
+          "x": 7.5,
+          "y": 8,
+          "wait": 2,
+          "look": 3.141592653589793
+        },
+        {
+          "id": "3-0",
+          "zone": "Z3",
+          "subject": "High security shortcut: observation return",
+          "x": 13,
+          "y": 10,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "3-1",
+          "zone": "Z3",
+          "subject": "High security shortcut: inspection threshold",
+          "x": 14.8,
+          "y": 12,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "4-0",
+          "zone": "Z4",
+          "subject": "Eastern maintenance circuit: observation return",
+          "x": 20,
+          "y": 11,
+          "wait": 4.5,
+          "look": 1.5707963267948966
+        },
+        {
+          "id": "4-1",
+          "zone": "Z4",
+          "subject": "Eastern maintenance circuit: inspection threshold",
+          "x": 20,
+          "y": 18,
+          "wait": 2,
+          "look": -1.5707963267948966
+        },
+        {
+          "id": "5-0",
+          "zone": "Z5",
+          "subject": "Master Diamond case / northern hall: observation return",
+          "x": 14,
+          "y": 3,
+          "wait": 4.5,
+          "look": 0
+        },
+        {
+          "id": "5-1",
+          "zone": "Z5",
+          "subject": "Master Diamond case / northern hall: inspection threshold",
+          "x": 20.5,
+          "y": 4.5,
+          "wait": 2,
+          "look": 3.141592653589793
+        }
+      ],
+      "assignments": [
+        {
+          "guardId": "01-10-g1",
+          "zones": [
+            "Z0"
+          ],
+          "anchors": [
+            "0-0",
+            "0-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-10-g2",
+          "zones": [
+            "Z1"
+          ],
+          "anchors": [
+            "1-0",
+            "1-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-10-g3",
+          "zones": [
+            "Z2"
+          ],
+          "anchors": [
+            "2-0",
+            "2-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-10-g4",
+          "zones": [
+            "Z3"
+          ],
+          "anchors": [
+            "3-0",
+            "3-1"
+          ],
+          "roaming": false
+        },
+        {
+          "guardId": "01-10-g5",
+          "zones": [
+            "Z4"
+          ],
+          "anchors": [
+            "4-0",
+            "4-1"
+          ],
+          "roaming": true
+        },
+        {
+          "guardId": "01-10-g6",
+          "zones": [
+            "Z5"
+          ],
+          "anchors": [
+            "5-0",
+            "5-1"
+          ],
+          "roaming": false
+        }
+      ]
+    },
+    "securityZones": [
+      {
+        "name": "Grand Exhibition arrival / south crossing",
+        "x": 14.5,
+        "y": 20.5,
+        "radius": 3.5,
+        "guardId": "01-10-g1"
+      },
+      {
+        "name": "Service door / western escape intersection",
+        "x": 4.5,
+        "y": 13,
+        "radius": 3.5,
+        "guardId": "01-10-g2"
+      },
+      {
+        "name": "Western exhibition / chamber threshold",
+        "x": 4.5,
+        "y": 5.5,
+        "radius": 3.5,
+        "guardId": "01-10-g3"
+      },
+      {
+        "name": "High security shortcut",
+        "x": 13,
+        "y": 10,
+        "radius": 3.5,
+        "guardId": "01-10-g4"
+      },
+      {
+        "name": "Eastern maintenance circuit",
+        "x": 20,
+        "y": 11,
+        "radius": 3.5,
+        "guardId": "01-10-g5"
+      },
+      {
+        "name": "Master Diamond case / northern hall",
+        "x": 14,
+        "y": 3,
+        "radius": 3.5,
+        "guardId": "01-10-g6"
+      }
+    ],
+    "objectiveZone": {
+      "guardId": "01-10-g6",
+      "spotlight": true
+    },
+    "safeZones": [
+      {
+        "x": 11.5,
+        "y": 22.5,
+        "radius": 0.2
+      }
+    ],
+    "testRoutes": [
+      {
+        "name": "safe: structural observation route",
+        "points": [
+          {
+            "x": 11.5,
+            "y": 22.5
+          },
+          {
+            "x": 11.5,
+            "y": 17.5
+          },
+          {
+            "x": 5.5,
+            "y": 17.5
+          },
+          {
+            "x": 5.5,
+            "y": 14
+          },
+          {
+            "x": 5.5,
+            "y": 7
+          },
+          {
+            "x": 8,
+            "y": 7
+          },
+          {
+            "x": 12,
+            "y": 7
+          },
+          {
+            "x": 12,
+            "y": 5
+          },
+          {
+            "x": 16,
+            "y": 5
+          },
+          {
+            "x": 19.5,
+            "y": 3
+          }
+        ]
+      },
+      {
+        "name": "risk: shorter timed crossing",
+        "points": [
+          {
+            "x": 11.5,
+            "y": 22.5
+          },
+          {
+            "x": 13.5,
+            "y": 19
+          },
+          {
+            "x": 13.5,
+            "y": 11
+          },
+          {
+            "x": 15,
+            "y": 11
+          },
+          {
+            "x": 15,
+            "y": 7
+          },
+          {
+            "x": 15,
+            "y": 5
+          },
+          {
+            "x": 19.5,
+            "y": 5
+          },
+          {
+            "x": 19.5,
+            "y": 3
+          }
+        ]
+      }
+    ],
+    "escapeRoutes": [
+      {
+        "name": "escape: rear staff circulation",
+        "points": [
+          {
+            "x": 19.5,
+            "y": 3
+          },
+          {
+            "x": 19.5,
+            "y": 5
+          },
+          {
+            "x": 16,
+            "y": 5
+          },
+          {
+            "x": 12,
+            "y": 5
+          },
+          {
+            "x": 12,
+            "y": 7
+          },
+          {
+            "x": 8,
+            "y": 7
+          },
+          {
+            "x": 5.5,
+            "y": 7
+          },
+          {
+            "x": 5.5,
+            "y": 11
+          },
+          {
+            "x": 5.5,
+            "y": 14.5
+          },
+          {
+            "x": 1.5,
+            "y": 14.5
+          }
+        ]
+      },
+      {
+        "name": "escape alternate: timed security crossing",
+        "points": [
+          {
+            "x": 19.5,
+            "y": 3
+          },
+          {
+            "x": 19.5,
+            "y": 11
+          },
+          {
+            "x": 19.5,
+            "y": 18.5
+          },
+          {
+            "x": 13.5,
+            "y": 18.5
+          },
+          {
+            "x": 13.5,
+            "y": 17.5
+          },
+          {
+            "x": 5.5,
+            "y": 17.5
+          },
+          {
+            "x": 5.5,
+            "y": 14.5
+          },
+          {
+            "x": 1.5,
+            "y": 14.5
+          }
+        ]
       }
     ]
   },

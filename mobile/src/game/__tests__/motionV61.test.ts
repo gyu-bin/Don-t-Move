@@ -8,9 +8,10 @@ import {buildNavigation} from '../world/navigation';
 import {compileStage,TILE} from '../world/compileStage';
 import {campaignStages} from '../levels/campaignStages';
 import {createPlaygroundState,stepPlayground} from '../playground/playgroundState';
-import {advancePlayerSpritePhase,playerSpriteGait} from '../core/locomotion';
+import {advancePlayerSpritePhase,playerSpriteGait,stablePlayerSpriteGait} from '../core/locomotion';
 import {rightWalkTrialStride} from '../core/rightWalkTrial';
 import {motionAudit} from '../../rendering/characters/motionAudit';
+import {locomotionBodyLift} from '../../rendering/characters/locomotionPolish';
 import {buildCharacterSet} from '../../assets/buildSprites';
 import type {CharacterManifest} from '../../assets/manifest';
 import {resolveClip} from '../../rendering/sprites/spriteAnimation';
@@ -32,7 +33,8 @@ test('V6.1 capture is body contact, not idle, visibility, full suspicion or glob
 
 test('Touch phase and velocity use collision-resolved distance during diagonal wall sliding',()=>{
  const stage=compileStage(campaignStages[0]),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
- s.guards=[];s.guardPlayback=[];s.playerMode=2;s.player.x=100;s.player.y=100;
+ // Synthetic open-plane locomotion fixture; Museum bounds are tested separately.
+ s.boundary=undefined;s.guards=[];s.guardPlayback=[];s.playerMode=2;s.player.x=100;s.player.y=100;
  s.player.tx=250;s.player.ty=220;s.player.hasTarget=true;
  const blockers=[130,0,150,500];let slid=false;
  for(let i=0;i<150;i++){
@@ -41,7 +43,7 @@ test('Touch phase and velocity use collision-resolved distance during diagonal w
   const d=Math.hypot(s.player.x-x,s.player.y-y);
   assert(Math.abs(s.player.dist-dist-d)<1e-8);
   assert(Math.abs(s.player.speed-d*60)<1e-8);
-  const expected=advancePlayerSpritePhase(spritePhase,d,s.player.speed,rightWalkTrialStride(s.player.speed,s.player.facing));
+  const expected=advancePlayerSpritePhase(spritePhase,d,s.player.speed,rightWalkTrialStride(s.player.speed,s.player.facing,undefined,s.player.visualGait),s.player.visualGait);
   assert(Math.abs(s.player.spritePhase-expected)<1e-8);
   if(Math.abs(s.player.vx)<0.01&&s.player.vy>0.1)slid=true;
  }assert(slid);
@@ -62,6 +64,30 @@ test('Roundoff at WALK speed cannot flicker to RUN or disable the RIGHT trial',(
  assert.equal(playerSpriteGait(38.0000000000001),1);
  assert.equal(playerSpriteGait(72.01),3);
  assert.equal(rightWalkTrialStride(72.0000000000001,0,true),rightWalkTrialStride(72,0,true));
+});
+
+test('Visual gait resists threshold jitter but stops on actual zero velocity',()=>{
+ let gait=1;
+ for(const speed of [39,40,38,41,40]) gait=stablePlayerSpriteGait(speed,gait);
+ assert.equal(gait,1);
+ gait=stablePlayerSpriteGait(42,gait);assert.equal(gait,2);
+ for(const speed of [37,36,38,35]) gait=stablePlayerSpriteGait(speed,gait);
+ assert.equal(gait,2);
+ gait=stablePlayerSpriteGait(34,gait);assert.equal(gait,1);
+ gait=stablePlayerSpriteGait(77,gait);assert.equal(gait,3);
+ gait=stablePlayerSpriteGait(69,gait);assert.equal(gait,3);
+ gait=stablePlayerSpriteGait(67,gait);assert.equal(gait,2);
+ assert.equal(stablePlayerSpriteGait(0,gait),0);
+});
+
+test('Whole-body lift is subtle and disappears at rest without moving the ground anchor',()=>{
+ for(const anim of [1,2,3]) {
+  assert.equal(locomotionBodyLift(0,anim,100),0);
+  assert.equal(locomotionBodyLift(0.25,anim,0),0);
+  assert(locomotionBodyLift(0.25,anim,100)>0);
+  assert(locomotionBodyLift(0.25,anim,100)<=0.75);
+ }
+ assert.equal(locomotionBodyLift(0.25,0,100),0);
 });
 
 test('Actual production registry exposes all 16 Player combinations and honest static Guard fallback',async()=>{
@@ -90,4 +116,26 @@ test('Actual production registry exposes all 16 Player combinations and honest s
    }
   }
  }finally{if(previous)require.extensions['.png']=previous;else delete require.extensions['.png'];}
+});
+
+test('Developer touch modes sustain actual-distance animation for ten seconds and stop against a wall',()=>{
+ const stage=compileStage(campaignStages[0]),nav=buildNavigation(stage,BODY.guardRadius);
+ for(const mode of [1,2,3]){
+  const s=createPlaygroundState(stage);s.boundary=undefined;s.guards=[];s.guardPlayback=[];s.playerMode=mode;
+  s.player.x=100;s.player.y=100;s.player.tx=5000;s.player.ty=100;s.player.hasTarget=true;
+  for(let frame=0;frame<600;frame++){
+   const {dist,spritePhase}=s.player;
+   stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:10000,h:10000},[],[],nav);
+   if(frame>60)assert.equal(s.player.visualGait,mode);
+   const d=s.player.dist-dist;
+   assert(Math.abs(s.player.spritePhase-advancePlayerSpritePhase(spritePhase,d,s.player.speed,
+    rightWalkTrialStride(s.player.speed,s.player.facing,undefined,s.player.visualGait),s.player.visualGait))<1e-8);
+  }
+  const wallX=s.player.x+20;
+  for(let frame=0;frame<120;frame++)stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:10000,h:10000},[wallX,0,wallX+20,1000],[],nav);
+  assert(s.player.speed<=0.5);assert.equal(s.player.visualGait,0);
+  const phase=s.player.spritePhase;
+  for(let frame=0;frame<60;frame++)stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:10000,h:10000},[wallX,0,wallX+20,1000],[],nav);
+  assert.equal(s.player.spritePhase,phase);
+ }
 });

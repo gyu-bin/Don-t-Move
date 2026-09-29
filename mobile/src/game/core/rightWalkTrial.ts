@@ -17,11 +17,11 @@ export function fitStanceStep(samples: number[]): number {
 }
 /** Least-squares effective stride, not a Foot Planting approval. */
 export const RIGHT_WALK_TRIAL_STRIDE = RIGHT_WALK_STANCE_SAMPLES.reduce((sum, row) => sum + fitStanceStep(row), 0) / 2 * 8 * PLAYER_SPRITE_SCALE;
-export function rightWalkTrialStride(speed: number, facing: number, enabled?: boolean): number | undefined {
+export function rightWalkTrialStride(speed: number, facing: number, enabled?: boolean, visualGait?: number): number | undefined {
   'worklet';
   // Worklets capture body references; a module constant in a default parameter
   // is not captured by the current compiler and becomes a missing UI global.
   const trialEnabled = enabled ?? RIGHT_WALK_TRIAL_ENABLED;
-  return trialEnabled && playerSpriteGait(speed) === 2 && facingToDir(facing) === 2
+  return trialEnabled && (visualGait ?? playerSpriteGait(speed)) === 2 && facingToDir(facing) === 2
     ? RIGHT_WALK_TRIAL_STRIDE : undefined;
 }

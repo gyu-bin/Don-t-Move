@@ -1,6 +1,6 @@
 import type {PropKind,StageTheme} from './StageDefinition';
 export const CHAPTER_AREAS=[
- ['Entrance Hall','Main Exhibition','Sculpture Garden','Restricted Archive','Diamond Hall'],
+ ['Entrance Hall','Main Gallery','Archive','Security Wing','Diamond Hall','Conservation Lab','Private Gallery','Security Core','Master Exhibition','Grand Heist'],
  ['Reception Salon','Portrait Hall','Sculpture Studio','Private Wing','Collector Gallery'],
  ['Public Lobby','Teller Hall','Deposit Offices','Security Antechamber','Strongroom'],
  ['Observation Lobby','Research Wing','Specimen Lab','Containment Sector','Prototype Chamber'],
@@ -11,7 +11,7 @@ export const CHAPTER_AREAS=[
  ['Outer Checkpoint','Vault Antechamber','Mechanism Hall','Security Ring','Master Diamond Chamber'],
 ];
 export const CHAPTER_AREAS_KO=[
- ['입구 홀','중앙 전시장','조각 정원','제한 보관실','다이아몬드 홀'],
+ ['입구 홀','중앙 갤러리','수장고','보안 구역','다이아몬드 홀','보존 연구실','비공개 갤러리','보안 중심부','마스터 전시실','그랜드 하이스트'],
  ['접견 전시실','초상화 홀','조각 작업실','비공개 전시동','소장품 갤러리'],
  ['은행 로비','창구 홀','대여 금고 사무실','보안 전실','금고실'],
  ['관찰 로비','연구 구역','표본 연구실','격리 구역','시제품 실험실'],
@@ -22,7 +22,7 @@ export const CHAPTER_AREAS_KO=[
  ['외곽 검문소','금고 전실','기계 장치 홀','보안 순환로','마스터 다이아몬드실'],
 ];
 export const LANDMARKS=[
- ['Grand Statue','Painting Colonnade','Sculpture Garden','Archive Screen','Diamond Exhibition'],
+ ['Grand Statue','Central Rotunda','Archive Shelves','Security Control Room','Diamond Chamber'],
  ['Signature Canvas','Portrait Triptych','Sculpture Plinth','Private Screens','Collector Wall'],
  ['Stone Teller Desk','Brass Counter','Deposit Safe','Security Gate','Vault Mechanism'],
  ['Observation Tank','Research Console','Specimen Cylinder','Containment Array','Prototype Reactor'],
@@ -33,7 +33,7 @@ export const LANDMARKS=[
  ['Heavy Door','Vault Wheel','Mechanism Rack','Security Pillar','Master Display'],
 ];
 export const LANDMARK_KINDS:PropKind[][]=[
- ['statue','painting','statue','partition','displayCase'],['painting','painting','statue','partition','painting'],
+ ['statue','pillar','shelf','equipment','diamondPedestal'],['painting','painting','statue','partition','painting'],
  ['counter','counter','displayCase','partition','equipment'],['equipment','table','equipment','partition','equipment'],
  ['counter','table','table','sofa','displayCase'],['equipment','shelf','table','sofa','displayCase'],
  ['crate','shelf','crate','counter','equipment'],['counter','equipment','shelf','partition','equipment'],

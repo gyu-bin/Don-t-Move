@@ -6,6 +6,7 @@ import type { CharacterArt } from '../fallback/proceduralCharacter';
 import { fill } from '../paints';
 import { fillOval } from '../skiaScratch';
 import { animForPose, drawSpriteFrame, pickFrame, resolveClip } from '../sprites/spriteAnimation';
+import { locomotionBodyLift } from './locomotionPolish';
 import type { CharacterSpriteSet } from '../sprites/spriteTypes';
 
 /**
@@ -43,14 +44,19 @@ export function drawCharacterVisual(
   actionT: number,
   integratedPhase = false,
   animationOverride = -1,
+  actualSpeed = 0,
 ): void {
   'worklet';
   const set = v.sprites;
   if (set !== null) {
-    const clip = resolveClip(set, animationOverride >= 0 ? animationOverride : animForPose(gait, action, actionT), facingToDir(facing));
+    const animation = animationOverride >= 0 ? animationOverride : animForPose(gait, action, actionT);
+    const clip = resolveClip(set, animation, facingToDir(facing));
     if (clip !== null) {
       if (set.shadow) fillOval(canvas, x - 11, y - 3.6, 22, 7.2, v.shadow);
+      const lift = locomotionBodyLift(phase, animation, actualSpeed);
+      if (lift > 0) { canvas.save(); canvas.translate(0, -lift); }
       drawSpriteFrame(canvas, pickFrame(clip, phase, t, dist, integratedPhase), x, y, set.scale, clip.mirror, v.paint);
+      if (lift > 0) canvas.restore();
       return;
     }
   }

@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 import { advancePlayerSpritePhase, GAIT_SPEED, PLAYER_SPRITE_SCALE } from '../core/locomotion';
 import { RIGHT_WALK_TRIAL_STRIDE, rightWalkTrialStride, fitStanceStep } from '../core/rightWalkTrial';
@@ -10,7 +11,7 @@ test('compiled UI worklet resolves default switch without module globals', () =>
   const require = createRequire(import.meta.url);
   const babel = require('@babel/core');
   for (const dev of [true, false]) {
-    const compiled = babel.transformFileSync(new URL('../core/rightWalkTrial.ts', import.meta.url).pathname, {
+    const compiled = babel.transformFileSync(fileURLToPath(new URL('../core/rightWalkTrial.ts', import.meta.url)), {
       configFile: false, babelrc: false,
       presets: ['@babel/preset-typescript'],
       plugins: ['react-native-worklets/plugin', '@babel/plugin-transform-modules-commonjs'],
@@ -28,6 +29,10 @@ test('trial stride fits artwork, does not alter speed', () => {
   assert.equal(GAIT_SPEED[2], 72);
   assert.ok(Math.abs(RIGHT_WALK_TRIAL_STRIDE - 25.4 * 8 * PLAYER_SPRITE_SCALE) < 1e-9);
   assert.equal(fitStanceStep([28, 3.5, -32.5, -44]), 25.2);
+});
+test('trial stride follows the rendered gait while hysteresis holds a clip', () => {
+  assert.equal(rightWalkTrialStride(37, 0, true, 2), RIGHT_WALK_TRIAL_STRIDE);
+  assert.equal(rightWalkTrialStride(39, 0, true, 1), undefined);
 });
 test('only enabled right WALK selects trial; rollback and other clips unchanged', () => {
   assert.equal(rightWalkTrialStride(72, 0, true), RIGHT_WALK_TRIAL_STRIDE);

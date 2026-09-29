@@ -66,6 +66,8 @@ export interface CarpetDef {
 export interface PatrolPoint {
   x: number;
   y: number;
+  /** Semantic subject to face while stopped, in tile coordinates. */
+  lookTarget?: { x: number; y: number };
   /** Seconds to stand still on arrival. */
   wait?: number;
   /** Facing (radians) while waiting; defaults to the arrival heading. */
@@ -87,6 +89,11 @@ export interface GuardDef {
   x: number;
   y: number;
   facing: number;
+  initialFacing?: number;
+  initialLookTarget?: { x: number; y: number };
+  theftRole?: 'objective' | 'corridor' | 'exit' | 'zone' | 'roaming';
+  /** Authored investigation destinations; never the hidden player's position. */
+  theftPosts?: { x: number; y: number }[];
   routeId?: string;
   /** Seconds before this guard starts patrolling — desynchronises guards. */
   startDelay?: number;

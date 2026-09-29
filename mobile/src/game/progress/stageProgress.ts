@@ -86,12 +86,14 @@ export function canSelectStage(progress: StageProgress, stage: number, devUnlock
     (devUnlock || stage <= progress.highestUnlocked || progress.clearedStages.includes(stage));
 }
 
-export async function loadProgress(): Promise<StageProgress> {
+export async function loadProgress(throwOnError = false): Promise<StageProgress> {
   try {
     const value = await AsyncStorage.getItem(STORAGE_KEY);
     const progress=value ? normalizeProgress(JSON.parse(value)) : { ...DEFAULT_PROGRESS };
     return {...progress,campaign:migrateCampaign(progress)};
-  } catch {
+  } catch (error) {
+    console.error('Settings/progress read failed', error);
+    if (throwOnError) throw error;
     return { ...DEFAULT_PROGRESS };
   }
 }

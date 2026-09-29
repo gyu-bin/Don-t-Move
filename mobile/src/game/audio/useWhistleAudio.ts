@@ -1,30 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { setAudioModeAsync, useAudioPlayer } from 'expo-audio';
-
-import { shouldPlayWhistle } from './whistleAudio';
-
-const WHISTLE = require('../../../assets/audio/whistle.wav');
-
-/** One replaceable sound source behind the Global Alert whistle event. */
+/** Silent event boundary until an approved final whistle cue is supplied.
+ * Keep the event/settings API so gameplay does not depend on audio availability.
+ * No native player or asset is allocated in this version.
+ */
 export function useWhistleAudio(revision: number, soundEnabled: boolean): void {
-  const player = useAudioPlayer(WHISTLE, { downloadFirst: true, updateInterval: 500 });
-  const previous = useRef(revision);
-
-  useEffect(() => {
-    void setAudioModeAsync({
-      playsInSilentMode: true,
-      interruptionMode: 'mixWithOthers',
-      allowsRecording: false,
-      shouldPlayInBackground: false,
-      shouldRouteThroughEarpiece: false,
-    }).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    const before = previous.current;
-    previous.current = revision;
-    if (!soundEnabled) { player.pause(); return; }
-    if (!shouldPlayWhistle(before, revision, soundEnabled)) return;
-    void player.seekTo(0).then(() => player.play()).catch(() => {});
-  }, [player, revision, soundEnabled]);
+  void revision;
+  void soundEnabled;
 }

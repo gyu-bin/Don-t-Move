@@ -1,5 +1,5 @@
 import type {StageDefinition,PropKind,PatrolPoint} from '../../src/game/levels/StageDefinition';
-import {CHAPTERS,missionId} from '../../src/game/levels/campaignCatalog';
+import {CHAPTERS,MISSION_COUNT,missionId} from '../../src/game/levels/campaignCatalog';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
 import {buildNavigation,clearSegment,findPath,nodeX,nodeY} from '../../src/game/world/navigation';
 import {BODY} from '../../src/game/guards/guardTuning';
@@ -8,13 +8,17 @@ import {STAGE_PALETTES} from '../../src/game/levels/stagePresentation';
 import {BLUEPRINTS} from './blueprints';
 import {missionEdges,inwardFacing} from '../../src/game/levels/missionContinuity';
 import {CHAPTER_AREAS,LANDMARKS,LANDMARK_KINDS} from '../../src/game/levels/chapterArt';
-import {museumMission02,museumProduction} from './museumProduction';
+import {museumMission02,museumMission03,museumMission04,museumMission05,museumMission06,museumMission07,museumMission08,museumMission09,museumMission10,museumProduction} from './museumProduction';
+const museumExpandedMissions=[museumMission06,museumMission07,museumMission08,museumMission09,museumMission10];
 type Point={x:number;y:number};
 const palette:PropKind[][]=[['statue','pillar','bench','plant','painting'],['partition','painting','statue','bench'],['counter','partition','displayCase','door'],['equipment','table','partition','pillar'],['table','counter','pillar','sofa'],['sofa','table','displayCase','painting'],['crate','shelf','crate','counter'],['equipment','counter','partition','cctv'],['pillar','displayCase','equipment','door']];
 const distance=(a:Point,b:Point)=>Math.hypot(a.x-b.x,a.y-b.y);
-export function buildMission(index:number):StageDefinition {
+function buildLegacyMission(index:number):StageDefinition {
  if(index===0)return museumProduction();
  if(index===1)return museumMission02();
+ if(index===2)return museumMission03();
+ if(index===3)return museumMission04();
+ if(index===4)return museumMission05();
  const blueprint=BLUEPRINTS[index],chapter=Math.floor(index/5),mission=index%5,c=CHAPTERS[chapter];
  let [w,h]=blueprint.size;
  let floor=Array.from({length:h},(_,y)=>Array.from({length:w},(_,x)=>x>0&&y>0&&x<w-1&&y<h-1));
@@ -25,7 +29,7 @@ export function buildMission(index:number):StageDefinition {
   floor=Array.from({length:w},(_,y)=>Array.from({length:h},(_,x)=>floor[h-1-x][y]));
   anchors=anchors.map(p=>({x:h-p.y,y:p.x}));[w,h]=[h,w];
  }
- const s:StageDefinition={id:missionId(index),number:index+1,chapter:chapter+1,mission:mission+1,title:CHAPTER_AREAS[chapter][mission],theme:c.theme,structurePlan:blueprint.plan,
+ const s:StageDefinition={id:missionId(index+5),number:index+1,chapter:chapter+1,mission:mission+1,title:CHAPTER_AREAS[chapter][mission],theme:c.theme,structurePlan:blueprint.plan,
   layout:floor.map((row,y)=>row.map((v,x)=>v?'.':[-1,0,1].some(dy=>[-1,0,1].some(dx=>floor[y+dy]?.[x+dx]))?'#':' ').join('')),
   props:[],lights:[],guards:[],patrolRoutes:[],playerSpawn:{...anchors[0],facing:0},objective:{...anchors[1],kind:c.objective[mission%c.objective.length]},exit:{...anchors[2],w:1.2,h:1.2},ambientDarkness:STAGE_PALETTES[c.theme].darkness,
  };
@@ -114,4 +118,11 @@ export function buildMission(index:number):StageDefinition {
  if(!s.safeZones.length)throw Error(`${s.id}: no safe waiting pocket`);
  return s;
 }
-export const buildCampaign=()=>BLUEPRINTS.map((_,i)=>buildMission(i));
+// Non-Museum authoring keeps its original blueprint indices and serialized numbers.
+// Campaign position is always resolved from the stable mission ID at runtime.
+export function buildMission(index:number):StageDefinition {
+ if(index<5)return buildLegacyMission(index);
+ if(index<10)return museumExpandedMissions[index-5]();
+ return buildLegacyMission(index-5);
+}
+export const buildCampaign=()=>Array.from({length:MISSION_COUNT},(_,i)=>buildMission(i));

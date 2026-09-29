@@ -108,9 +108,24 @@ export interface PlayerView {
   gait: number;
 }
 
+export type GamePhase = 'STEALTH' | 'THEFT_ALERT' | 'PLAYER_SPOTTED' | 'SEARCH' | 'RETURN';
+
 export interface GuardEvents {
+  phase: GamePhase;
+  theftWhistleRevision: number;
+  spottedWhistleRevision: number;
+  spottedEpisode: boolean;
+  spottedSource: string;
+  theftActivatedAt: number;
+  lockdownDuration: number;
+  lockdownRemaining: number;
+  lockdownActive: boolean;
+  /** Whether low-priority role dispatch preceded this pursuit episode. */
+  theftRolesAssigned: boolean;
   theftAlert: boolean;
   theftGuard: string;
+  /** Owns only the lower-priority confirmation animation, never player LKP. */
+  theftConfirmer: string;
   theftAge: number;
   theftSound: boolean;
   theftRevision: number;
@@ -128,7 +143,8 @@ export interface GuardEvents {
 }
 
 export function createGuardEvents(): GuardEvents {
-  return { theftAlert:false, theftGuard:'', theftAge:0, theftSound:false, theftRevision:0,
+  return { phase:'STEALTH', theftWhistleRevision:0, spottedWhistleRevision:0, spottedEpisode:false, spottedSource:'',
+    theftActivatedAt:-1, lockdownDuration:0, lockdownRemaining:0, lockdownActive:false, theftRolesAssigned:false, theftAlert:false, theftGuard:'', theftConfirmer:'', theftAge:0, theftSound:false, theftRevision:0,
     whistleCount: 0, alertCount: 0, globalAlert: false, globalX: 0, globalY: 0, globalT: 0,
     globalRevision: 0, sawPlayer: false, whistleGuard: '', caught: false, caughtBy: '' };
 }
@@ -467,7 +483,9 @@ export function stepGuard(
       if (g.action === GuardAction.Whistle) {
         const before = g.whistleT;
         g.whistleT += dt;
-        if (before < T.whistleSoundAt && g.whistleT >= T.whistleSoundAt) ev.whistleCount++;
+        if (before < T.whistleSoundAt && g.whistleT >= T.whistleSoundAt && !ev.spottedEpisode) {
+          ev.whistleCount++; ev.spottedWhistleRevision++; ev.spottedEpisode=true; ev.spottedSource=g.id;
+        }
         if (g.whistleT >= T.whistleDuration) {
           g.whistled = true;
           g.action = GuardAction.None;

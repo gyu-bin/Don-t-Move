@@ -1,3 +1,5 @@
+import { GAIT_SPEED } from '../core/locomotion';
+
 /**
  * Guard perception + reaction tuning. Distances are world units (1 tile = 40).
  * Suspicion is 0..1 (shown as 0..100 %).
@@ -55,10 +57,18 @@ export const GUARD_TUNING = {
 
   // --- movement
   walkSpeed: 52,
+  theftPaceScale: 1.25,
+  theftSearchWait: 0.65,
+  museumSearchSeconds: 9,
+  lockdownSearchSeconds: 12,
+  lockdownPaceScale: 1.3,
+  lockdownSearchWait: 0.35,
   accel: 200,
   decel: 500,
-  runSpeed: 116,
-  investigateSpeed: 88,
+  /** Direct visual pursuit: one final speed, never multiplied by theft/pace. */
+  runSpeed: GAIT_SPEED[3] * 1.12,
+  /** Unseen support/LKP approach: normal patrol × 1.30, below player Run. */
+  investigateSpeed: 52 * 1.3,
   searchSpeed: 42,
   searchRadius: 64,
   searchPause: 0.45,

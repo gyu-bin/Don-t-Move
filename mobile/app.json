@@ -33,10 +33,7 @@
       ],
       "./plugins/withSceneLifecycle",
       ["expo-splash-screen", {
-        "backgroundColor": "#081824",
-        "image": "./assets/branding/splash-mark.png",
-        "imageWidth": 110,
-        "resizeMode": "contain"
+        "backgroundColor": "#081824"
       }]
     ]
   }

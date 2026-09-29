@@ -7,7 +7,9 @@ import type { Navigation } from '../world/navigation';
 import { nearestPatrolAnchor, observeGuard, stepGuard } from './guardBrain';
 import type { GuardEvents, GuardState, PlayerView } from './guardBrain';
 import { BODY, GUARD_TUNING as T } from './guardTuning';
+import { hasPlayerAlert } from './guardPriority';
 import { stepTheft } from './theftAlert';
+import { updateGuardPhase } from './guardPhase';
 import type { TheftContext } from './theftAlert';
 
 function enter(g: GuardState, state: number): void {
@@ -16,6 +18,8 @@ function enter(g: GuardState, state: number): void {
   const samePursuit = (g.awareness === Awareness.Chase || g.awareness === Awareness.Investigate) &&
     (state === Awareness.Chase || state === Awareness.Investigate);
   g.awareness = state;
+  if(typeof __DEV__!=='undefined'&&__DEV__&&(state===Awareness.Chase||state===Awareness.Search))
+    console.log(state===Awareness.Chase?'[ALERT] CHASE':'[ALERT] SEARCH',g.id);
   g.stateT = 0;
   // Flickering visibility near a corner must not bypass the path-plan cooldown.
   if (!samePursuit) {
@@ -56,7 +60,7 @@ function shareSight(guards: GuardState[], p: PlayerView, ev: GuardEvents, t: num
   ev.sawPlayer = visible;
 }
 
-function react(g: GuardState, ev: GuardEvents): void {
+function react(g: GuardState, ev: GuardEvents, theft?: TheftContext, index = 0): void {
   'worklet';
   g.suspicion = 0;
   g.whistled = true;
@@ -69,11 +73,27 @@ function react(g: GuardState, ev: GuardEvents): void {
   }
   if (g.awareness === Awareness.Chase || g.awareness === Awareness.Investigate) {
     g.targetX = ev.globalX; g.targetY = ev.globalY;
+    // The witness pursues the player. Unseen Museum colleagues intercept at
+    // semantic posts, so an escape corridor is covered without telepathy.
+    // A guard with personal sight memory must first reach the last seen position,
+    // even when its assigned role would otherwise hold an exit or corridor.
+    const role=theft?.roles?.[index],posts=theft?.posts[index];
+    if(ev.theftRolesAssigned && !g.canSee && !g.hasLkp && role && posts?.length && role!=='objective'){
+      let selected=0;
+      if(role!=='exit'){
+        let best=Infinity;
+        for(let i=0;i<posts.length;i++){
+          const d=Math.hypot(posts[i].x-ev.globalX,posts[i].y-ev.globalY);
+          if(d<best){best=d;selected=i;}
+        }
+      }
+      g.targetX=posts[selected].x;g.targetY=posts[selected].y;
+    }
   }
 }
 
 
-function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, index: number): void {
+function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, index: number, theft?: TheftContext, ev?: GuardEvents): void {
   'worklet';
   g.stateT += dt;
   g.alertAge += dt;
@@ -81,7 +101,8 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
     const arrived = travel(g, n, g.awareness === Awareness.Chase ? T.runSpeed : T.investigateSpeed, dt, t);
     if (arrived && g.awareness === Awareness.Investigate) enter(g, Awareness.Search);
   } else if (g.awareness === Awareness.Search) {
-    if (g.stateT >= T.searchSeconds) {
+    const searchSeconds=theft?.roles ? (ev?.lockdownActive?T.lockdownSearchSeconds:T.museumSearchSeconds) : T.searchSeconds;
+    if (g.stateT >= searchSeconds) {
       enter(g, Awareness.Return);
     } else if (g.searchWait > 0) {
       g.speed = 0;
@@ -90,14 +111,20 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
       g.baseFacing = g.facing;
     } else {
       if (g.path.length === 0) {
-        // Different deterministic spokes per guard, projected onto reachable floor by A*.
-        const angle = (index * 1.7 + g.searchIndex * 2.4);
-        g.targetX = g.searchX + Math.cos(angle) * T.searchRadius;
-        g.targetY = g.searchY + Math.sin(angle) * T.searchRadius;
+        const posts=theft?.roles?.[index] ? theft.posts[index] : g.semanticPatrol ? g.route : undefined;
+        if(posts?.length){
+          const post=posts[g.searchIndex%posts.length];
+          g.targetX=post.x;g.targetY=post.y;
+        }else{
+          // Legacy stages retain their bounded local search spokes.
+          const angle = (index * 1.7 + g.searchIndex * 2.4);
+          g.targetX = g.searchX + Math.cos(angle) * T.searchRadius;
+          g.targetY = g.searchY + Math.sin(angle) * T.searchRadius;
+        }
       }
-      if (travel(g, n, T.searchSpeed, dt, t)) {
+      if (travel(g, n, T.searchSpeed*(theft?.roles?T.theftPaceScale:1), dt, t)) {
         g.searchIndex++;
-        g.searchWait = T.searchPause;
+        g.searchWait = ev?.lockdownActive?T.lockdownSearchWait:T.searchPause;
         g.searchBase = g.facing;
         g.path = [];
       }
@@ -142,9 +169,10 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
       return;
     }
   }
+  updateGuardPhase(ev,guards,t,theft?.missionId);
   const wasGlobal = ev.globalAlert;
   const confirming = theft ? stepTheft(guards,p,vision,n,ev,theft,dt,t) : '';
-  if (!wasGlobal && !ev.globalAlert && !ev.theftAlert) {
+  if (!wasGlobal && !ev.globalAlert && (!ev.theftAlert || hasPlayerAlert(guards,ev))) {
     for (let i = 0; i < guards.length; i++) if(guards[i].id!==confirming) stepGuard(guards[i], p, vision, dt, ev, t, patrol, difficulty, n);
   }
   if (ev.globalAlert) {
@@ -154,17 +182,18 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
       if (guards[i].id === ev.whistleGuard) { ev.globalX = guards[i].lkpX; ev.globalY = guards[i].lkpY; }
     }
     shareSight(guards, p, ev, t);
-    for (let i = 0; i < guards.length; i++) react(guards[i], ev);
+    for (let i = 0; i < guards.length; i++) react(guards[i], ev, theft, i);
     if (wasGlobal) {
-      for (let i = 0; i < guards.length; i++) moveAlertGuard(guards[i], n, dt, t, i);
+      for (let i = 0; i < guards.length; i++) moveAlertGuard(guards[i], n, dt, t, i, theft, ev);
     }
     for (let i = 0; i < guards.length; i++) observeGuard(guards[i], p, vision);
     shareSight(guards, p, ev, t);
-    for (let i = 0; i < guards.length; i++) react(guards[i], ev);
+    for (let i = 0; i < guards.length; i++) react(guards[i], ev, theft, i);
     let returned = !ev.sawPlayer;
     for (let i = 0; i < guards.length; i++) if (guards[i].awareness !== Awareness.Patrol) returned = false;
     if (returned) {
       ev.globalAlert = false;
+      ev.spottedEpisode=false;
       for (let i = 0; i < guards.length; i++) {
         const g = guards[i];
         g.suspicion = 0; g.hasLkp = false; g.whistled = false; g.unseenT = 0;
@@ -172,6 +201,7 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
       }
     }
   }
+  updateGuardPhase(ev,guards,t,theft?.missionId);
   for (let i = 0; i < guards.length; i++) {
     if (bodiesTouch(guards[i], p, n.blockers)) {
       ev.caught = true; ev.caughtBy = guards[i].id;

@@ -4,10 +4,10 @@ import { Canvas, Group, Image, LinearGradient, Mask, Path, Rect, loadData, Skia 
 import type { SkImage } from '@shopify/react-native-skia';
 import Animated, { cancelAnimation, Easing, useAnimatedStyle, useDerivedValue, useFrameCallback, useSharedValue, withTiming } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
-import * as SplashScreen from 'expo-splash-screen';
 import { BRAND, INTRO_MS, introFrame } from './introTimeline';
 import { useBrandAudio } from './useBrandAudio';
 import { markStartup } from './startupMetrics';
+import { withDeadline } from './initialization';
 import { useMenu } from '../menu/MenuContext';
 import { homeComposition } from './homeLayout';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -24,11 +24,11 @@ let cachedArt:Art|null=null;
 function preloadArt() {
  if (!artPromise) {
   markStartup('intro-images-start');
-  artPromise = Promise.all(Object.entries(SOURCES).map(async ([key, source]) => {
+  artPromise = withDeadline(Promise.all(Object.entries(SOURCES).map(async ([key, source]) => {
    const image = await loadData(source, data => Skia.Image.MakeImageFromEncoded(data));
    if (!image) throw new Error('Intro image decode failed: ' + key);
    return [key, image];
-  })).then(pairs => {
+  })), 8000, 'Intro artwork').then(pairs => {
    markStartup('intro-images-ready');
    cachedArt=Object.fromEntries(pairs) as Art;
    return cachedArt;
@@ -64,11 +64,10 @@ export function BrandingScreen({ children, skipInitial=false, soundEnabled, musi
  }, [time]);
  useEffect(() => {
   let alive = true;
-  const timeout = setTimeout(() => { if (alive) setArtError('Intro artwork download timed out.'); }, 8000);
   preloadArt().then(value => { if (alive) { setArt(value); setArtError(undefined); } })
-   .catch(error => { if (alive) setArtError(String(error)); }).finally(() => clearTimeout(timeout));
-  return () => { alive = false; clearTimeout(timeout); };
- }, [attempt]);
+   .catch(error => { console.error('Intro artwork failed',error); if (alive) { setArtError(String(error)); finish(); } });
+  return () => { alive = false; };
+ }, [attempt, finish]);
  useEffect(() => {
   mounted.current = true;
   const sub = AppState.addEventListener('change', state => {
@@ -78,13 +77,10 @@ export function BrandingScreen({ children, skipInitial=false, soundEnabled, musi
   return () => { mounted.current = false; sub.remove(); cancelAnimation(time); };
  }, [finish, time]);
  useEffect(() => {
-  if (!art) return;
-  // Let the image-backed Canvas commit before hiding the native cover and
-  // scheduling heavy gameplay modules. No artificial loading delay.
+  // Intro starts immediately; artwork never holds the native splash or Home.
   let second = 0;
   const first = requestAnimationFrame(() => {
    second = requestAnimationFrame(() => {
-    void SplashScreen.hideAsync().then(() => markStartup('native-splash-hidden'));
     markStartup('intro-start');
     sceneReady.current?.();
     if (!done.current) time.value = withTiming(INTRO_MS, { duration: INTRO_MS, easing: Easing.linear },
@@ -92,7 +88,7 @@ export function BrandingScreen({ children, skipInitial=false, soundEnabled, musi
    });
   });
   return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
- }, [art, finish, time]);
+ }, [finish, time]);
  useFrameCallback(info => {
   if (!art || !intro || !__DEV__) return;
   if (!firstFrame.value) firstFrame.value = info.timestamp;
@@ -128,12 +124,6 @@ export function BrandingScreen({ children, skipInitial=false, soundEnabled, musi
  useEffect(() => {
   if (!intro && ready) markStartup('start-interactive');
  }, [intro, ready]);
- if (artError) return <View style={styles.root} onLayout={() => { void SplashScreen.hideAsync(); }}>
-  <Text style={styles.error}>{t('artError')}</Text>
-  <Pressable style={styles.start} onPress={() => { setArtError(undefined); setAttempt(value => value + 1); }} accessibilityRole="button">
-   <Text style={styles.startText}>{t('retry')}</Text>
-  </Pressable>
- </View>;
  return <View style={styles.root}>
   {art ? <Canvas style={StyleSheet.absoluteFill}>
    <Group transform={[{ scaleX: width / 390 }, { scaleY: height / 844 }]}>
@@ -163,7 +153,7 @@ export function BrandingScreen({ children, skipInitial=false, soundEnabled, musi
     <Rect x={0} y={0} width={390} height={844} color={BRAND.navy} opacity={darkness} />
    </Group>
   </Canvas> : null}
-  <Animated.View pointerEvents="none" style={[styles.logo, logoStyle]}>
+  <Animated.View pointerEvents="none" style={[styles.logo, art ? logoStyle : {opacity:1}]}>
    <Text style={styles.title}>DON&apos;T{'\n'}MOVE</Text><View style={styles.accent} />
    <Text style={styles.tagline}>{t('tagline')}</Text>
   </Animated.View>
@@ -174,6 +164,9 @@ export function BrandingScreen({ children, skipInitial=false, soundEnabled, musi
     <Text style={styles.startText}>{loadingError ? t('retryLoading') : !ready ? t('preparing') : onReplayDone ? t('back') : t('start')}</Text>
    </Pressable>}</Animated.View>
   {intro&&<Pressable style={StyleSheet.absoluteFill} onPress={finish} accessibilityRole="button" accessibilityLabel={t('skip')}/>}
+  {artError && !intro && <Pressable style={styles.error} onPress={() => {setArtError(undefined);setAttempt(value=>value+1);}} accessibilityRole="button">
+   <Text style={{color:BRAND.ivory,textAlign:'center'}}>{t('artError')} {t('retry')}</Text>
+  </Pressable>}
   {loadingError && !intro ? <Text style={styles.error}>{loadingError}</Text> : null}
  </View>;
 }

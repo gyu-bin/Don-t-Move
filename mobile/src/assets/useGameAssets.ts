@@ -7,6 +7,7 @@ import type { GameAssets } from './buildSprites';
 import { IMAGE_SOURCES } from './manifest';
 import type { AssetManifest, ImageKey } from './manifest';
 import { markStartup } from '../ui/branding/startupMetrics';
+import { withDeadline } from '../ui/branding/initialization';
 
 const cache = new WeakMap<AssetManifest, Promise<GameAssets>>();
 const ready = new WeakMap<AssetManifest, GameAssets>();
@@ -14,13 +15,13 @@ export function preloadGameAssets(manifest: AssetManifest): Promise<GameAssets> 
   const existing = cache.get(manifest);
   if (existing) return existing;
   markStartup('sprite-preload-start');
-  const promise = Promise.all(referencedImages(manifest).map(async k => {
+  const promise = withDeadline(Promise.all(referencedImages(manifest).map(async k => {
     const start = performance.now();
     const img = await loadData<SkImage>(IMAGE_SOURCES[k], d => Skia.Image.MakeImageFromEncoded(d));
     if (!img) throw new Error(`Unable to decode game image: ${k}`);
     markStartup(`image-ready:${k}`, { duration: performance.now() - start });
     return [k, img] as const;
-  })).then(pairs => {
+  })), 10000, 'Stage images').then(pairs => {
     const images: Partial<Record<ImageKey, SkImage>> = Object.fromEntries(pairs);
     const assets = buildGameAssets(manifest, images);
     ready.set(manifest, assets);

@@ -5,7 +5,6 @@ import type {PlaygroundState} from '../game/playground/playgroundState';
 import type {RenderResources} from '../rendering/renderFrame';
 import {motionAudit} from '../rendering/characters/motionAudit';
 import {animForPose} from '../rendering/sprites/spriteAnimation';
-import {tiltVisualGait} from '../game/input/tiltMovement';
 import {BODY} from '../game/guards/guardTuning';
 import {bodiesTouch} from '../game/guards/guardSystem';
 
@@ -16,7 +15,7 @@ export function CharacterMotionDebug({state,resources,blockers,onMode,onClose,bo
   const sample=()=>{
    const s=state.get(),p=s.player;
    const format=(v:ReturnType<typeof motionAudit>)=>`${v.requested}/${v.direction} → ${v.source} ${v.resolved}\nf ${v.frame}/${v.count} phase ${v.phase.toFixed(3)} stride ${v.stride.toFixed(2)}`;
-   const player=motionAudit(resources.player.sprites,animForPose(tiltVisualGait(p.speed),0,0),p.facing,p.spritePhase,s.t,p.dist);
+   const player=motionAudit(resources.player.sprites,animForPose(p.visualGait,0,0),p.facing,p.spritePhase,s.t,p.dist);
    const lines=[`PLAYER (${p.x.toFixed(1)},${p.y.toFixed(1)}) speed ${p.speed.toFixed(1)} velocity (${p.vx.toFixed(1)},${p.vy.toFixed(1)})`,format(player),
     `CAPTURE r=${BODY.playerRadius}+${BODY.guardRadius}+${BODY.captureTolerance}=${BODY.playerRadius+BODY.guardRadius+BODY.captureTolerance} caughtBy=${s.events.caughtBy||'-'}`];
    s.guards.forEach((g,i)=>{

@@ -49,5 +49,5 @@ test('Ten distinct optimized thumbnails exist; no eager image preload in HOME',(
  assert(root.includes('missionIndex(campaign.lastMission)'));assert(root.includes('onProgressChange={updateProgress}'));
  const game=readFileSync('src/ui/VisualPlaygroundScreen.tsx','utf8');
  assert(game.match(/onPress={home}/g)!.length>=3);
- assert(game.includes('onFinished={home}'));
+ assert(game.includes('onFinished={menuHome}'), 'automatic intro completion navigates without a button SFX');
 });

@@ -5,6 +5,7 @@ import { DeviceMotion } from 'expo-sensors';
 import { useSharedValue } from 'react-native-reanimated';
 import { createTiltState, DEFAULT_TILT, sensorLifecycleAction } from './tilt';
 import type { AttitudeSample, TiltTuning } from './tilt';
+import { usesTiltInput } from './inputPolicy';
 
 type NativeSample = AttitudeSample;
 declare class AttitudeModule extends NativeModule<{
@@ -18,8 +19,8 @@ declare class AttitudeModule extends NativeModule<{
   stop(): Promise<void>;
 }
 const native = Platform.OS === 'ios' ? requireOptionalNativeModule<AttitudeModule>('DontMoveAttitude') : null;
-// A missing native module on iOS is NOT permission to silently enable touch on a phone.
-export const TILT_DEVICE = Platform.OS === 'ios' && !native?.isSimulator;
+// Release iPhone retains its sensor requirement; developer builds can play without Core Motion.
+export const TILT_DEVICE = usesTiltInput(Platform.OS, __DEV__, native);
 
 export function useTiltControl() {
   const sample = useSharedValue<AttitudeSample | null>(null);
@@ -29,8 +30,10 @@ export function useTiltControl() {
   const reset = useSharedValue(0);
   const [error, setError] = useState(TILT_DEVICE ? !native ? 'Development build required · rebuild iOS' : !native.available ? 'Device motion unavailable' : '' : '');
   const [restart, setRestart] = useState(0);
+  const [sensorFailed, setSensorFailed] = useState(false);
+  const enabled = usesTiltInput(Platform.OS, __DEV__, native, sensorFailed);
   useEffect(() => {
-    if (!TILT_DEVICE) return;
+    if (!enabled) return;
     if (!native?.available) return;
     let disposed = false;
     let generation = 0;
@@ -40,21 +43,21 @@ export function useTiltControl() {
       if (!disposed && AppState.currentState === 'active') sample.set(value);
     });
     const failure = module.addListener('onFailure', ({ message }) => {
-      running = false; active.set(false); sample.set(null); setError(message); void module.stop();
+      running = false; active.set(false); sample.set(null); setError(message); if (__DEV__) setSensorFailed(true); void module.stop();
     });
     const start = async () => {
       const session = ++generation;
       try {
         const permission = await DeviceMotion.requestPermissionsAsync();
         if (disposed || session !== generation) return;
-        if (!permission.granted) { setError('Motion permission denied · enable in Settings'); return; }
+        if (!permission.granted) { setError('Motion permission denied · enable in Settings'); if (__DEV__) setSensorFailed(true); return; }
         // Called only at first launch or explicit RETRY SENSOR. Never silently
         // recalibrate on foreground: a restarted native reference needs user consent.
         controller.set(createTiltState()); sample.set(null); reset.set(reset.get()+1);
         await module.start();
         if (disposed || session !== generation) { await module.stop(); return; }
         running = true; setError(''); active.set(AppState.currentState === 'active');
-      } catch (e) { if (!disposed) { active.set(false); setError(String(e)); } }
+      } catch (e) { if (!disposed) { active.set(false); setError(String(e)); if (__DEV__) setSensorFailed(true); } }
     };
     const lifecycle = AppState.addEventListener('change', (state) => {
       const action = sensorLifecycleAction(state, running, generation > 0);
@@ -76,7 +79,7 @@ export function useTiltControl() {
       disposed = true; generation++; active.set(false); sample.set(null);
       motion.remove(); failure.remove(); lifecycle.remove(); void module.stop();
     };
-  }, [active, controller, reset, restart, sample]);
-  return { enabled: TILT_DEVICE, available: native?.available ?? false, referenceFrame: native?.referenceFrame ?? 'none', sample, controller, tuning, active, reset,
-    error, restart: () => setRestart((n) => n+1) };
+  }, [active, controller, enabled, reset, restart, sample]);
+  return { enabled, available: native?.available ?? false, referenceFrame: native?.referenceFrame ?? 'none', sample, controller, tuning, active, reset,
+    error, restart: () => { setSensorFailed(false); setRestart((n) => n+1); } };
 }

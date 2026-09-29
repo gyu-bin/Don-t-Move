@@ -1,8 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import * as SplashScreen from 'expo-splash-screen';
-
-void SplashScreen.preventAutoHideAsync().catch(() => {});
 
 import { StartupScreen } from './src/ui/branding/StartupScreen';
 

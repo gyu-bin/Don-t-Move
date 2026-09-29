@@ -4,6 +4,7 @@ import { compileStage,TILE } from '../../world/compileStage';
 import { buildNavigation,clearSegment } from '../../world/navigation';
 import { createGuardState,createGuardEvents } from '../guardBrain';
 import { stepGuards } from '../guardSystem';
+import type { TheftContext } from '../theftAlert';
 import { BODY } from '../guardTuning';
 import { Awareness,GuardAction } from '../../core/types';
 import { playableStages } from '../../levels/stages/tiltTestMaps';
@@ -17,7 +18,7 @@ function fixture(wall=false){
   guards:[{id:'a',x:5,y:5,facing:0,routeId:'a'},{id:'b',x:5,y:8,facing:0,routeId:'b'}],
   patrolRoutes:[{id:'a',mode:'pingpong',points:[{x:5,y:5},{x:5,y:6}]},{id:'b',mode:'pingpong',points:[{x:5,y:8},{x:5,y:9}]}]};
  const stage=compileStage(def),nav=buildNavigation(stage,BODY.guardRadius),guards=stage.guards.map(g=>createGuardState(g)),ev=createGuardEvents();
- const c={empty:true,x:stage.objective.x,y:stage.objective.y,posts:guards.map(g=>g.route)};
+ const c:TheftContext={empty:true,x:stage.objective.x,y:stage.objective.y,posts:guards.map(g=>g.route)};
  let t=0;const hidden={x:-1000,y:-1000,gait:0};
  const tick=(p=hidden)=>{t+=1/60;stepGuards(guards,p,stage.visionBlockers,nav,1/60,ev,t,false,1,c);};
  return{stage,nav,guards,ev,c,tick};
@@ -44,11 +45,12 @@ test('visible empty case: stop/! -> whistle -> one theft alert; never publishes 
  assert.equal(f.ev.globalRevision,0);assert.equal(f.ev.globalX,0);assert.equal(f.ev.globalY,0);
  assert(f.guards.every(g=>!g.hasLkp));assert.equal(f.ev.whistleCount,1);
 });
-test('actual sight during theft promotes immediately to Chase without another whistle',()=>{
+test('actual sight during theft promotes immediately to Chase with one distinct spotted whistle',()=>{
  const f=fixture();for(let i=0;i<90;i++)f.tick();assert(f.ev.theftAlert);
  const g=f.guards[0],p={x:g.x+Math.cos(g.facing)*45,y:g.y+Math.sin(g.facing)*45,gait:0};
  f.tick(p);assert(f.ev.globalAlert);assert.equal(g.awareness,Awareness.Chase);
- assert.equal(f.ev.globalX,p.x);assert.equal(f.ev.globalY,p.y);assert.equal(f.ev.whistleCount,1);
+ assert.equal(f.ev.globalX,p.x);assert.equal(f.ev.globalY,p.y);assert.equal(f.ev.whistleCount,2);
+ assert.equal(f.ev.theftWhistleRevision,1);assert.equal(f.ev.spottedWhistleRevision,1);
  f.tick({x:-1000,y:-1000,gait:0});assert.equal(f.ev.globalX,p.x);assert.equal(f.ev.globalY,p.y);
 });
 test('Exit completes before any empty-case detection, including during active alert; retry resets theft',()=>{
@@ -95,4 +97,126 @@ test('ten deployed patrols keep non-objective guards outside the case zone over 
     `Stage ${def.number}: objective crowding`);
   }
  }
+});
+
+test('Museum whistle completion broadcasts every assigned post in the same frame',()=>{
+ const f=fixture();
+ f.c.posts=[[{x:360,y:200},{x:400,y:200}],[{x:120,y:360},{x:160,y:360}]];
+ for(let i=0;i<120&&!f.ev.theftAlert;i++)f.tick();
+ assert(f.ev.theftAlert);
+ for(let i=0;i<f.guards.length;i++){
+  const g=f.guards[i];assert.equal(g.awareness,Awareness.Investigate);
+  assert.equal(g.targetX,f.c.posts[i][0].x);assert.equal(g.targetY,f.c.posts[i][0].y);
+  assert(!g.hasLkp);assert(!g.localInvestigating);
+ }
+ const initial=f.guards.map(g=>({x:g.x,y:g.y}));
+ for(let i=0;i<120;i++)f.tick();
+ f.guards.forEach((g,i)=>assert(Math.hypot(g.x-initial[i].x,g.y-initial[i].y)>10));
+ assert.equal(f.ev.globalRevision,0);
+});
+
+test('Museum theft sighting keeps the unseen exit guard at its assigned interception post',()=>{
+ const f=fixture();
+ const c=f.c;
+ c.roles=['objective','exit'];
+ c.posts=[[{x:280,y:200},{x:320,y:200}],[{x:120,y:400},{x:160,y:400}]];
+ for(let i=0;i<120&&!f.ev.theftAlert;i++)f.tick();
+ const witness=f.guards[0],backup=f.guards[1];
+ // Witness looks east; backup looks away. Only the witness sees this player.
+ witness.facing=0;backup.facing=Math.PI;backup.baseFacing=Math.PI;
+ const p={x:witness.x+50,y:witness.y,gait:1};
+ f.tick(p);
+ assert(f.ev.globalAlert);assert(witness.canSee);assert(!backup.canSee);
+ assert.equal(witness.awareness,Awareness.Chase);
+ assert.equal(witness.targetX,p.x);assert.equal(f.ev.globalX,p.x);
+ assert.equal(backup.awareness,Awareness.Investigate);
+ assert.equal(backup.targetX,120);assert.equal(backup.targetY,400);
+ f.tick({x:-900,y:-800,gait:3});
+ assert.equal(f.ev.globalX,p.x);assert.equal(f.ev.globalY,p.y);
+ assert.equal(f.ev.whistleCount,2);
+ assert.equal(f.ev.spottedWhistleRevision,1);
+});
+
+
+test('Museum phase/lockdown configuration never uses hidden coordinates or causes a timeout failure',()=>{
+ for(let mission=1;mission<=10;mission++){
+  const f=fixture();f.c.missionId=`01-${String(mission).padStart(2,'0')}`;
+  f.c.roles=['objective','exit'];
+  assert.equal(f.ev.phase,'STEALTH');
+  f.c.empty=false;for(let i=0;i<60;i++)f.tick();
+  assert.equal(f.ev.theftWhistleRevision,0);assert.equal(f.ev.lockdownDuration,mission<7?0:mission===10?20:28);
+  assert(!f.ev.lockdownActive);
+  f.c.empty=true;for(let i=0;i<150;i++)f.tick();
+  assert.equal(f.ev.phase,'THEFT_ALERT');assert.equal(f.ev.theftWhistleRevision,1);
+  assert.equal(f.ev.spottedWhistleRevision,0);assert.equal(f.ev.globalRevision,0);
+  assert(!f.ev.caught);assert(!f.ev.lockdownActive);
+  for(let i=0;i<60*31;i++)f.tick({x:-777,y:-888,gait:3});
+  assert.equal(f.ev.lockdownActive,mission>=7);assert.equal(f.ev.lockdownRemaining,0);
+  assert(!f.ev.caught,'zero countdown is never a game over');
+  assert.equal(f.ev.globalX,0);assert.equal(f.ev.globalY,0);assert.equal(f.ev.globalRevision,0);
+  assert.equal(f.ev.theftWhistleRevision,1);
+ }
+});
+
+test('spotted episode publishes one whistle, retains frozen LKP through Search/Return, and can re-arm',()=>{
+ const f=fixture();f.c.roles=['objective','exit'];
+ for(let i=0;i<90;i++)f.tick();
+ const g=f.guards[0];const p={x:g.x+Math.cos(g.facing)*45,y:g.y+Math.sin(g.facing)*45,gait:0};
+ f.tick(p);assert.equal(f.ev.phase,'PLAYER_SPOTTED');assert.equal(f.ev.spottedWhistleRevision,1);
+ const lkp={x:f.ev.globalX,y:f.ev.globalY};
+ let search=false,returned=false;
+ for(let i=0;i<60*60;i++){
+  f.tick({x:-1000-i,y:-2000,gait:3});
+  search ||= String(f.ev.phase)==='SEARCH'; returned ||= String(f.ev.phase)==='RETURN';
+  assert.equal(f.ev.globalX,lkp.x);assert.equal(f.ev.globalY,lkp.y);
+  assert.equal(f.ev.spottedWhistleRevision,1);
+ }
+ assert(search);assert(returned);assert(!f.ev.globalAlert);assert(!f.ev.spottedEpisode);
+ const next={x:g.x+Math.cos(g.facing)*45,y:g.y+Math.sin(g.facing)*45,gait:0};
+ f.tick(next);assert.equal(f.ev.spottedWhistleRevision,2);assert.equal(f.ev.theftWhistleRevision,1);
+});
+
+test('all ten actual Museum missions: natural empty-case discovery, independent signals, no hidden LKP and correct lockdown',async()=>{
+ const {campaignStages}=await import('../../levels/campaignStages');
+ for(const def of campaignStages.filter(d=>d.chapter===1)){
+  const stage=compileStage(def),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
+  let t=0;const dt=1/60,hidden={x:-10000,y:-20000,gait:0};
+  const tick=()=>{t+=dt;stepGuards(s.guards,hidden,stage.visionBlockers,nav,dt,s.events,t,true,1,s.theft);};
+  for(let i=0;i<120;i++)tick();
+  assert.equal(s.events.theftWhistleRevision,0,def.id);assert.equal(s.events.phase,'STEALTH');
+  s.theft.empty=true;
+  for(let i=0;i<60*120&&!s.events.theftAlert;i++)tick();
+  assert(s.events.theftAlert,`${def.id}: natural patrol never sees empty case`);
+  assert.equal(s.events.theftWhistleRevision,1);assert.equal(s.events.spottedWhistleRevision,0);
+  assert.equal(s.events.phase,'THEFT_ALERT');assert.equal(s.events.globalRevision,0);
+  const activatedAt=s.events.theftActivatedAt;
+  for(let i=0;i<60*31;i++)tick();
+  assert.equal(s.events.theftActivatedAt,activatedAt);
+  assert.equal(s.events.lockdownActive,Number(def.id.slice(-2))>=7,def.id);
+  assert(!s.events.caught);assert.equal(s.events.globalRevision,0);
+  assert(s.guards.every(g=>!g.hasLkp));
+  assert.equal(s.events.theftWhistleRevision,1);assert.equal(s.events.spottedWhistleRevision,0);
+ }
+});
+
+
+test('exit-role witness follows last sight to Search while uninformed colleague intercepts',()=>{
+ const f=fixture();f.c.roles=['exit','corridor'];
+ f.c.posts=[[{x:120,y:400},{x:160,y:400}],[{x:280,y:360},{x:200,y:360}]];
+ for(let i=0;i<120&&!f.ev.theftAlert;i++)f.tick();
+ const witness=f.guards[0],backup=f.guards[1];
+ witness.facing=0;witness.baseFacing=0;backup.facing=Math.PI;backup.baseFacing=Math.PI;
+ const p={x:witness.x+50,y:witness.y,gait:1};f.tick(p);
+ assert(witness.canSee);assert(witness.hasLkp);assert(!backup.hasLkp);
+ f.tick();
+ assert.equal(witness.awareness,Awareness.Investigate);
+ assert.equal(witness.targetX,p.x);assert.equal(witness.targetY,p.y);
+ assert.notEqual(backup.targetX,p.x);
+ let reachedSearch=false;
+ for(let i=0;i<600&&!reachedSearch;i++){
+  f.tick();reachedSearch=Number(witness.awareness)===Awareness.Search;
+  if(witness.awareness===Awareness.Investigate){assert.equal(witness.targetX,p.x);assert.equal(witness.targetY,p.y);}
+ }
+ assert(reachedSearch);assert(Math.hypot(witness.x-p.x,witness.y-p.y)<4);
+ assert.equal(f.ev.globalX,p.x);assert.equal(f.ev.globalY,p.y);
 });

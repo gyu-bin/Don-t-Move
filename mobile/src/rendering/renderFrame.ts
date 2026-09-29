@@ -1,5 +1,5 @@
+import { guardIndicator } from './effects/guardIndicator';
 import { Skia } from '@shopify/react-native-skia';
-import { tiltVisualGait } from '../game/input/tiltMovement';
 import { exitGuidance } from '../ui/hud/exitGuidance';
 import type { SkCanvas, SkPaint, SkPath, SkPicture, SkRect } from '@shopify/react-native-skia';
 
@@ -69,7 +69,7 @@ function drawEntity(c: SkCanvas, id: number, s: PlaygroundState, r: RenderResour
   'worklet';
   if (id === 0) {
     const p = s.player;
-    drawCharacterVisual(c, r.player, p.x, p.y, p.facing, tiltVisualGait(p.speed), p.spritePhase, p.dist, s.t, GuardAction.None, 0, true);
+    drawCharacterVisual(c, r.player, p.x, p.y, p.facing, p.visualGait, p.spritePhase, p.dist, s.t, GuardAction.None, 0, true, -1, p.speed);
   } else if (id === 1) {
     if(s.mission.treasure && r.showObjective!==false){
       // Persistent raised lid on the empty case; no time-based locomotion changes.
@@ -84,7 +84,7 @@ function drawEntity(c: SkCanvas, id: number, s: PlaygroundState, r: RenderResour
   } else {
     const g = s.guards[id - 2];
     const a = s.guardPlayback[id - 2];
-    drawCharacterVisual(c, r.guard, g.x, g.y, g.facing, g.gait, a.phase, g.dist, a.time, g.action, g.actionT, true, a.animation);
+    drawCharacterVisual(c, r.guard, g.x, g.y, g.facing, g.gait, a.phase, g.dist, a.time, g.action, g.actionT, true, a.animation, a.motionSpeed);
   }
 }
 
@@ -223,9 +223,11 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
   for (let i = 0; i < ng; i++) {
     const g = guards[i];
     const iy = g.y - 66;
-    if (!s.events.globalAlert && g.awareness === Awareness.Suspicious) drawSuspicion(c, r.icons, g.x, iy, g.suspicion, s.t);
-    else if (g.awareness === Awareness.Alert || g.awareness === Awareness.Chase) drawAlert(c, r.icons, g.x, iy, g.alertAge, s.t);
-    else if (g.awareness === Awareness.Search) drawSearch(c, r.icons, g.x, iy + 4, s.t);
+    const indicator=guardIndicator(g,s.events,!!s.theft.roles);
+    if(indicator==='suspicion')drawSuspicion(c,r.icons,g.x,iy,g.suspicion,s.t);
+    else if(indicator==='alert')drawAlert(c,r.icons,g.x,iy,
+      g.awareness===Awareness.Investigate?s.events.theftAge:g.alertAge,s.t);
+    else if(indicator==='search')drawSearch(c,r.icons,g.x,iy+4,s.t);
     if (g.action === GuardAction.Whistle && g.actionT > 0.32)
       drawWhistleLines(c, r.icons, g.x + 10, g.y - 44, s.t);
   }

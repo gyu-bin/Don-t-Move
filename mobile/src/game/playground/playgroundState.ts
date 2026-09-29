@@ -1,6 +1,6 @@
 import { clamp, damp, turnToward } from '../core/math';
 import { rightWalkTrialStride } from '../core/rightWalkTrial';
-import { advancePlayerSpritePhase, GAIT_SPEED, gaitFromSpeed, strideCycleLength } from '../core/locomotion';
+import { advancePlayerSpritePhase, GAIT_SPEED, gaitFromSpeed, stablePlayerSpriteGait, strideCycleLength } from '../core/locomotion';
 import { Gait } from '../core/types';
 import { createGuardEvents, createGuardState } from '../guards/guardBrain';
 import type { GuardEvents, GuardState } from '../guards/guardBrain';
@@ -16,6 +16,8 @@ import type { MissionState } from '../mission/mission';
 import { createGuardPlayback, stepGuardPlayback } from '../../rendering/characters/guardAnimation';
 import type { GuardPlayback } from '../../rendering/characters/guardAnimation';
 import type { TheftContext } from '../guards/theftAlert';
+import { createPlayableBoundary, enforcePlayableStage, isPlayableBody } from '../world/museumBoundary';
+import type { PlayableBoundary } from '../world/museumBoundary';
 
 /**
  * Visual Playground simulation (UI thread, mutated in place, no React state).
@@ -36,6 +38,7 @@ export interface PlayerState {
   vy: number;
   inputReset: number;
   gait: number;
+  visualGait: number;
   phase: number;
   /** Distance walked (world units) — drives sprite clips with their own stride. */
   dist: number;
@@ -48,6 +51,7 @@ export interface PlayerState {
 
 export interface PlaygroundState {
   theft: TheftContext;
+  boundary?: PlayableBoundary;
   t: number;
   player: PlayerState;
   guards: GuardState[];
@@ -81,8 +85,10 @@ const DEMO_PATH = [
 export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[][]): PlaygroundState {
   const sp = stage.playerSpawn;
   return {
-    theft: { empty:false,x:stage.objective.x,y:stage.objective.y,
-      posts:stage.guards.map(g=>g.route.map(p=>({x:p.x,y:p.y}))) },
+    boundary: stage.def.chapter===1 ? createPlayableBoundary(stage) : undefined,
+    theft: { empty:false,x:stage.objective.x,y:stage.objective.y,missionId:stage.def.id,
+      posts:stage.guards.map(g=>g.theftPosts ?? g.route.map(p=>({x:p.x,y:p.y}))),
+      ...(stage.def.chapter===1 ? {roles:stage.guards.map(g=>g.theftRole ?? 'zone')} : {}) },
     t: 0,
     player: {
       spritePhase: 0,
@@ -94,6 +100,7 @@ export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[
       vy: 0,
       inputReset: 0,
       gait: 0,
+      visualGait: 0,
       phase: 0,
       dist: 0,
       wp: 1,
@@ -154,7 +161,6 @@ function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: numb
   p.speed += clamp(targetSpeed - p.speed, -a * dt, a * dt);
   const bx = p.x, by = p.y;
   if (dist > 0.5 && p.speed > 0) {
-    p.facing = turnToward(p.facing, Math.atan2(dy, dx), 10, dt);
     const move = Math.min(dist, p.speed * dt);
     moveWithCollision(p, (dx / dist) * move, (dy / dist) * move, PLAYER_RADIUS, blockers);
   }
@@ -163,8 +169,10 @@ function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: numb
   p.vx = (p.x-bx)/Math.max(dt,1e-6);
   p.vy = (p.y-by)/Math.max(dt,1e-6);
   p.speed = Math.hypot(p.vx,p.vy);
+  if (p.speed > 0.5) p.facing = turnToward(p.facing, Math.atan2(p.vy, p.vx), 10, dt);
   advanceGait(p, dt);
-  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing));
+  p.visualGait = stablePlayerSpriteGait(p.speed, p.visualGait);
+  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing, undefined, p.visualGait), p.visualGait);
 }
 
 export function stepPlayground(
@@ -183,9 +191,22 @@ export function stepPlayground(
   if (s.events.caught || s.mission.complete) return;
   if (tilt?.paused) { stopPlayer(s.player); return; }
   s.t += dt;
+  const p = s.player;
+  const bx=p.x, by=p.y, oldGait=p.gait, oldPhase=p.phase, oldDist=p.dist,
+    oldSprite=p.spritePhase, oldVisual=p.visualGait, oldFacing=p.facing;
   if (tilt) stepTiltPlayer(s.player, tilt, dt, movementBlockers);
   else stepPlayer(s, dt, tile, movementBlockers);
-  const p = s.player;
+  if (s.boundary && enforcePlayableStage(p,bx,by,PLAYER_RADIUS,s.boundary)) {
+    p.gait=oldGait;p.phase=oldPhase;p.dist=oldDist;p.spritePhase=oldSprite;p.visualGait=oldVisual;p.facing=oldFacing;
+    if (!isPlayableBody(bx,by,PLAYER_RADIUS,s.boundary)) stopPlayer(p);
+    else {
+      p.vx=(p.x-bx)/Math.max(dt,1e-6);p.vy=(p.y-by)/Math.max(dt,1e-6);p.speed=Math.hypot(p.vx,p.vy);
+      if(p.speed>0.5)p.facing=turnToward(p.facing,Math.atan2(p.vy,p.vx),10,dt);
+      advanceGait(p,dt);
+      p.visualGait=stablePlayerSpriteGait(p.speed,p.visualGait);
+      p.spritePhase=advancePlayerSpritePhase(p.spritePhase,p.speed*dt,p.speed,rightWalkTrialStride(p.speed,p.facing,undefined,p.visualGait),p.visualGait);
+    }
+  }
   // Crossing an active Exit completes the escape before this frame's contact pass.
   stepMission(s.mission, p.x, p.y, false);
   s.theft.empty=s.mission.enabled && s.mission.treasure;
