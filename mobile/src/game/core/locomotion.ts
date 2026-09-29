@@ -1,3 +1,5 @@
+import { PLAYER_LOCO_STRIDE_TABLE } from './locomotionAtlas';
+
 /**
  * Locomotion constants shared by simulation and every character renderer
  * (sprite sheets and the procedural fallback). Animation playback is driven by
@@ -13,7 +15,7 @@ export const GAIT_SPEED = [0, 38, 72, 150];
 /** World units covered by one full animation cycle (two steps) at each gait. */
 export const GAIT_STRIDE = [8, 24, 40, 52];
 
-/** Player sprite authoring/playback contract. Walk cadence is locked to 2.4 steps/s at 72 u/s. */
+/** LEGACY 256-cell sheet contract (tools/sprites). Runtime playback now uses `playerLocoStride`. */
 export const PLAYER_SPRITE_STRIDE = { sneak: 54, walk: 60, run: 80 } as const;
 
 /** Shared by the runtime manifest and offline sprite authoring/validation. */
@@ -140,4 +142,15 @@ export function plantedReach(gait: number): number {
 export function bodyBob(p: number): number {
   'worklet';
   return 0.5 * Math.cos(4 * Math.PI * (p - 0.125));
+}
+
+/**
+ * World units per animation cycle for the Production Locomotion Atlas clip the
+ * renderer is showing (gait × row). The stance foot in that clip moves back by
+ * exactly this travel, so advancing the phase with it keeps the foot planted.
+ */
+export function playerLocoStride(visualGait: number, facing: number): number {
+  'worklet';
+  const g = visualGait <= 1 ? 0 : visualGait === 2 ? 1 : 2;
+  return PLAYER_LOCO_STRIDE_TABLE[g * 4 + facingToDir(facing)];
 }

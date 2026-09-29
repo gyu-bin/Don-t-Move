@@ -6,7 +6,8 @@ import { test } from 'node:test';
 import { createMissionState, stepMission } from '../mission/mission';
 import { clearStage, DEFAULT_PROGRESS, normalizeProgress } from '../progress/stageProgress';
 import { shouldPlayWhistle } from '../audio/whistleAudio';
-import { GAIT_SPEED, PLAYER_SPRITE_STRIDE } from '../core/locomotion';
+import { GAIT_SPEED } from '../core/locomotion';
+import { locoStride } from '../core/locomotionAtlas';
 
 test('Treasure is required before Exit and an already-caught mission stays terminal', () => {
   const mission = createMissionState({ x: 100, y: 100 }, { x: 0, y: 0, w: 40, h: 40 });
@@ -39,20 +40,21 @@ test('Whistle audio fires once per revision and Sound OFF mutes it', () => {
 });
 
 test('Player sprite cadence is distance-based and naturally ordered', () => {
-  const stepsPerSecond = [
-    (GAIT_SPEED[1] / PLAYER_SPRITE_STRIDE.sneak) * 2,
-    (GAIT_SPEED[2] / PLAYER_SPRITE_STRIDE.walk) * 2,
-    (GAIT_SPEED[3] / PLAYER_SPRITE_STRIDE.run) * 2,
-  ];
+  // Cadence follows from planted feet: stride = the foot sweep the atlas actually draws.
+  const stepsPerSecond = (['sneak', 'walk', 'run'] as const).map((g, i) => (GAIT_SPEED[i + 1] / locoStride('player', g, 'right')) * 2);
   assert(stepsPerSecond[0] < stepsPerSecond[1] && stepsPerSecond[1] < stepsPerSecond[2]);
-  assert(Math.abs(stepsPerSecond[0] - 1.4) < 0.05);
-  assert(stepsPerSecond[1] >= 2.3 && stepsPerSecond[1] <= 2.6);
-  assert(stepsPerSecond[2] >= 3.5 && stepsPerSecond[2] <= 4);
+  assert(stepsPerSecond[0] >= 3 && stepsPerSecond[0] <= 4.2);
+  assert(stepsPerSecond[1] >= 4 && stepsPerSecond[1] <= 5);
+  assert(stepsPerSecond[2] >= 5.5 && stepsPerSecond[2] <= 6.5);
+  // Guard patrol steps are heavier (slower) than the Player walk; chase is urgent.
+  assert((52 / locoStride('guard', 'walk', 'right')) * 2 < stepsPerSecond[1]);
+  assert((168 / locoStride('guard', 'run', 'right')) * 2 > 5.5);
 });
 
-test('Release gameplay uses the locked LEGACY guard asset, never the procedural look', () => {
+test('Release gameplay uses the Production Locomotion Atlas, never the procedural look', () => {
   const source = readFileSync(new URL('../../assets/manifest.ts', import.meta.url), 'utf8');
-  assert(source.includes('characters: { player: PLAYER_WALK_SHEET, guard: LEGACY_CHARACTERS.guard }'));
+  assert(source.includes('characters: { player: LOCOMOTION_CHARACTERS.player, guard: LOCOMOTION_CHARACTERS.guard }'));
+  assert(source.includes('export const PLAYTEST_MANIFEST: AssetManifest = ASSET_MANIFEST;'));
 });
 
 test('Ordinary gameplay source exposes no test selector, telemetry, or debug controls', () => {

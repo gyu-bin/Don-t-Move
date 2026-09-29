@@ -1,8 +1,8 @@
 import type { AssetManifest } from './manifest';
 
 const REQUIRED = {
-  player: {idle:4,sneak:6,walk:8,run:8},
-  guard: {idle:4,walk:8,run:8,whistle:6,search:6},
+  player: {idle:6,sneak:8,walk:8,run:8},
+  guard: {idle:6,walk:8,run:8,whistle:6,search:6},
 } as const;
 /** Separate release gate, not a replacement or relaxation of the sprite validator. */
 export function finalCharacterIssues(manifest: AssetManifest): string[] {

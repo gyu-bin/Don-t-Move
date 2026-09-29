@@ -1,8 +1,75 @@
 # DON'T MOVE — bundled audio provenance
 
-## Current BGM — Audio Redirection V2 (2026-09-29)
+## Current BGM — user supplied three-state set (2026-09-29)
 
-The four yd music recordings below are **UNUSED / REPLACED**; historical provenance is retained. Current bundled BGM uses SRG774's Dark Sci-Fi Audio Pack. Existing UI and whistle recordings remain unchanged.
+The current runtime uses exactly the three files supplied in this task. They were loudness-normalized to 44.1 kHz stereo MP3 for mobile playback; no pitch or arrangement changes were made. The source files did not include license documentation, so commercial distribution approval remains pending until the user confirms the rights.
+
+| Runtime file | Supplied file | Metadata observed | Rights status |
+|---|---|---|---|
+| `bgm/lobby.mp3` | `로비.mp3` | Matthew Pablo metadata, 92.76 s | User supplied; license not provided |
+| `bgm/stealth.mp3` | `stealth.mp3` | “Covert Affair”, Kevin MacLeod metadata, 194.19 s | User supplied; license not provided |
+| `bgm/chase.mp3` | `chase.mp3` | No author/license metadata, 112.74 s | User supplied; license not provided |
+
+`bgm/theft-alert.m4a` remains only as historical unused content and is not loaded by the runtime registry. Current state mapping is Lobby → `lobby.mp3`, Stealth → `stealth.mp3`, and Theft Alert / Player Spotted / Search / Return → `chase.mp3`. UI and whistle assets are unchanged.
+
+## Historical — previous licensed shortlist V4 (not bundled)
+
+Status: **REPLACED 2026-09-29** — retained only as provenance for the previous shortlist; none of these files are loaded by the current runtime.
+
+Chosen from the user's own 11-track listening shortlist (`~/Downloads/DontMove_BGM_candidates/`). The agent cannot hear audio: the choice uses author descriptions plus section-by-section signal analysis (start/middle/late, tempo, percussive ratio, spectrum, loop structure); see `../../Reports/AudioV4/selection.md`.
+
+| Slot/file | Work | Author | Source | License | Attribution |
+|---|---|---|---|---|---|
+| `bgm/lobby.m4a` | Deliciously Sour | Matthew Pablo | https://opengameart.org/content/deliciously-sour (file `Deliciously Sour_0.mp3`) | CC BY 3.0 — https://creativecommons.org/licenses/by/3.0/ | **Required** |
+| `bgm/stealth.m4a` | Investigation | Umplix | https://opengameart.org/content/investigation-0 (file `_investigation.wav`, author's seamless-loop version) | CC0 1.0 | Not required (credited anyway) |
+| `bgm/theft-alert.m4a` | Man with a Plan | ATMANAN | https://opengameart.org/content/man-with-a-plan (file `manwithaplan.mp3`) | CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/ | **Required** |
+| `bgm/chase.m4a` | Electrobrass | Emma_MA | https://opengameart.org/content/electrobrass (file `electrobrass.wav`) | CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/ | **Required** |
+
+These were previously documented as commercially usable with attribution. They are retained here only as historical provenance and are no longer the current in-app credit. No endorsement is implied. Author notes: Matthew Pablo says the track "doesn't loop"; ATMANAN asks to see projects that use it (courtesy, not a license term).
+
+Edits (script `../../Reports/AudioV4/master.py`, numbers `../../Reports/AudioV4/mastering.json`):
+
+- **Lobby / Deliciously Sour:** starts at first beat 0.329 s (leading silence removed); loop 74.18 s = 136 beats at 110 BPM measured, ending before the composed finale; 80 ms equal-power seam. +4.3 dB.
+- **Stealth / Investigation:** author's seamless loop kept whole (56.09 s), no trim needed (sound from 0 s); 4 ms wrap fade. +3.8 dB. The composition contains deliberate stop-time rests (≈12 % of 50 ms windows near-silent) — musical, not dropouts.
+- **Theft / Man with a Plan:** starts 0.07 s; loop 96.02 s = 208 beats (52 bars) at 130 BPM measured, before the ending; 80 ms seam. +1.8 dB.
+- **Chase / Electrobrass:** measured period is exactly 80 beats = 36.000 s at 133.2 BPM; the file is 36.037 s with a 60 ms silent head. Loop = last 36.000 s of the file, rotated so playback starts on the first attack (22 ms of that silence moved to the loop end); 4 ms wrap fade. −4.9 dB.
+- All four: −16 LUFS integrated (±0.3), peak-only limiter at −1.5 dBTP where needed (≤0.08 % of samples), AAC true peak −1.0 to −3.6 dBTP, no clipping. 44.1 kHz stereo AAC-LC 160 kbps. No pitch/tempo change, no re-arrangement, no generated material.
+
+Required credit (as displayed in Settings):
+
+> "Deliciously Sour" by Matthew Pablo (matthewpablo.com) — CC BY 3.0 · "Man with a Plan" by ATMANAN — CC BY 4.0 · "Electrobrass" by Emma_MA — CC BY 4.0 · "Investigation" by Umplix — CC0 · Source: opengameart.org · Licenses: creativecommons.org/licenses/by/3.0/ , creativecommons.org/licenses/by/4.0/ · Edited: trimmed, looped, level-matched.
+
+## REPLACED / UNUSED — Audio Redirection V3 (Kevin MacLeod set), kept for provenance
+
+Status: **REPLACED 2026-09-29** — user listening removed all four from the shortlist. Files no longer bundled; in-app credit removed. Selection is based on composer metadata (feel/instrumentation/tempo) and measured signal analysis; nobody has approved these by ear yet.
+
+All four tracks: composer **Kevin MacLeod**, source **incompetech.com**, license **Creative Commons Attribution 4.0** ([deed](https://creativecommons.org/licenses/by/4.0/)). Commercial game use, copying and editing permitted. **Attribution required** — shown in-app in Settings (`src/game/audio/audioCredits.ts`), wording from the composer's own credit generator at https://incompetech.com/music/royalty-free/licenses/ . Downloaded 2026-09-29 from `https://incompetech.com/music/royalty-free/mp3-royaltyfree/<title>.mp3`.
+
+| Slot/file | Work | ISRC | Composer tags (feel / instruments / BPM) | Source page |
+|---|---|---|---|---|
+| `bgm/lobby.m4a` | Spy Glass | USUAN1500058 | Grooving, Mysterious / piano, bass, drums, vibraphone, saxes, trumpet, flute / 110 | https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1500058 |
+| `bgm/stealth.m4a` | Investigations | USUAN1100646 | Humorous, Mysterious / pizzicato strings, English horn, bassoon, marimba, glockenspiel, cowbells / 94 | https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100646 |
+| `bgm/theft-alert.m4a` | Hidden Agenda | USUAN1200102 | Humorous, Suspenseful / cellos, violas, bassoon, xylophone, glockenspiel, oboe, percussion / 132 | https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200102 |
+| `bgm/chase.m4a` | Run Amok | USUAN1400024 | Action, Bouncy, Bright, Humorous / strings, tuba, trumpet, trombones, marimba, clarinet, bassoon, oboe, percussion / 148 | https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400024 |
+
+Required credit (as displayed):
+
+> "Spy Glass", "Investigations", "Hidden Agenda", "Run Amok" — Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 — http://creativecommons.org/licenses/by/4.0/ . Edited: trimmed, looped, level-matched.
+
+Edits (script `../../Reports/AudioV3/master.py`, exact numbers `../../Reports/AudioV3/mastering.json`):
+
+- Leading silence removed: loop starts at the first beat (Spy Glass 0.422 s, Investigations 0.093 s, Hidden Agenda 0.511 s, Run Amok 0.886 s). Final endings/fade-outs cut.
+- Loop: beat-grid–aligned loop end chosen by chroma/MFCC similarity to the loop start (≥0.96), 80 ms equal-power circular seam. Loop lengths 122.9 / 80.8 / 80.0 / 78.2 s.
+- Loudness: all four normalized to **−16 LUFS integrated** (previous set −20 LUFS, judged too quiet). Peak-only limiter at −1.5 dBTP where needed (≤0.12 % of samples affected). Measured AAC true peak −1.0 to −1.5 dBTP; no clipping.
+- No pitch shift, time stretch, re-arrangement or synthetic material. 44.1 kHz stereo AAC-LC 160 kbps (.m4a).
+
+Selection rationale and rejected candidates: `../../Reports/AudioV3/candidates.md`.
+
+## REPLACED / UNUSED — Audio Redirection V2 (SRG774), kept for provenance
+
+Replaced 2026-09-29 after user listening: "너무 음산함, 약간 캐주얼하게". Measured spectral centroid 390–630 Hz (very dark timbre) supports that judgment. Files no longer bundled.
+
+The SRG774 set below (V2) and the yd set further below (V1) are both **UNUSED / REPLACED**. Same slot file names were reused, so the paths in these historical tables now hold the V3 tracks above.
 
 | Slot/file | Work | Author | Source and license |
 |---|---|---|---|
@@ -15,9 +82,9 @@ Original archive: https://opengameart.org/sites/default/files/ogg.zip . Commerci
 
 Edits: leading low-level intro removed (Sector1.59s/Airy0.49s/Pulse1.19s/Urgent0.89s);0.20s circular tail/head overlap to soften loop seam; EBU loudness matched to approximately −20 LUFS, true-peak ceiling target−5dBTP; AAC encoding yields measured maxima−8.70/−7.37/−4.92/−4.88dBTP, safely below clipping. Sector/Airy use linear gain; Pulse/Urgent require dynamic loudness normalization. No pitch shift, time stretch or synthetic instrumentation.44.1kHz stereo AAC160kbps. Exact file hashes and measured levels: `../../Reports/AudioV2/mastering.json`.
 
-User accepted the new Lobby/Chase preview direction in this task. Long-session listening and physical-device mix acceptance remain pending. Candidate comparisons (at least3 per slot): `../../Reports/AudioV2/candidates.md`.
+User first accepted the Lobby/Chase preview direction, then rejected the set on longer listening (too gloomy). Long-session listening and physical-device mix acceptance remain pending. Candidate comparisons (at least3 per slot): `../../Reports/AudioV2/candidates.md`.
 
-## Historical initial integration — old BGM unused, UI/whistles still current
+## Historical initial integration — old yd BGM REPLACED/UNUSED; UI and whistle files below are still CURRENT
 
 Downloaded and source/license checked: **2026-09-29**. All eight bundled slots use **CC0 1.0 Universal**: commercial game distribution, copying and modification permitted; attribution not required. [License deed](https://creativecommons.org/publicdomain/zero/1.0/) · [Legal text](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
 

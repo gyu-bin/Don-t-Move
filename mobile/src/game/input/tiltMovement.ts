@@ -1,5 +1,4 @@
-import { advancePlayerSpritePhase, gaitFromSpeed, strideCycleLength, playerSpriteGait, stablePlayerSpriteGait } from '../core/locomotion';
-import { rightWalkTrialStride } from '../core/rightWalkTrial';
+import { advancePlayerSpritePhase, gaitFromSpeed, strideCycleLength, playerLocoStride, playerSpriteGait, stablePlayerSpriteGait } from '../core/locomotion';
 import { turnToward } from '../core/math';
 import { moveWithCollision } from '../world/collision';
 import { BODY } from '../guards/guardTuning';
@@ -42,5 +41,5 @@ export function stepTiltPlayer(p: PlayerState, input: TiltMovement, dt: number, 
   if (p.speed > 0.5) p.facing = turnToward(p.facing, Math.atan2(p.vy, p.vx), 10, dt);
   p.phase = (p.phase+p.speed*dt/strideCycleLength(tiltVisualGait(p.speed)))%1;
   p.dist += p.speed*dt;
-  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing, undefined, p.visualGait), p.visualGait);
+  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, playerLocoStride(p.visualGait, p.facing), p.visualGait);
 }

@@ -1,6 +1,6 @@
 /** Named event boundary: gameplay supplies facts; this reducer owns sound decisions. */
 export type AudioPhase = 'INTRO' | 'LOBBY' | 'STEALTH' | 'THEFT_ALERT' | 'PLAYER_SPOTTED' | 'SEARCH' | 'RETURN';
-export type MusicEvent = 'bgm_lobby' | 'bgm_stealth' | 'bgm_theft_alert' | 'bgm_chase';
+export type MusicEvent = 'bgm_lobby' | 'bgm_stealth' | 'bgm_chase';
 export type WhistleEvent = 'whistle_theft' | 'whistle_spotted';
 export type UiSoundEvent = 'ui_select' | 'ui_back';
 export type AudioEvent = MusicEvent | WhistleEvent | UiSoundEvent;
@@ -36,23 +36,22 @@ export function reduceAudio(previous: AudioState | null, input: GameAudioInput):
   let music: MusicEvent = sameSession ? previous.music : 'bgm_stealth';
   if (input.phase === 'LOBBY' || input.phase === 'INTRO') music = 'bgm_lobby';
   else if (input.phase === 'STEALTH') music = 'bgm_stealth';
-  else if (input.phase === 'THEFT_ALERT') music = 'bgm_theft_alert';
-  else if (input.phase === 'PLAYER_SPOTTED') music = 'bgm_chase';
+  else if (input.phase === 'THEFT_ALERT' || input.phase === 'PLAYER_SPOTTED'
+    || input.phase === 'SEARCH' || input.phase === 'RETURN') music = 'bgm_chase';
   // SEARCH and RETURN retain the last alert tension, including while muted/paused.
   const state = { sessionKey: input.sessionKey, theftRevision: input.theftRevision,
     spottedRevision: input.spottedRevision, music };
   return { state, whistles, music: audible && input.bgmEnabled && input.phase !== 'INTRO' ? music : null };
 }
-export const MUSIC_EVENTS: readonly MusicEvent[] = ['bgm_lobby', 'bgm_stealth', 'bgm_theft_alert', 'bgm_chase'];
+export const MUSIC_EVENTS: readonly MusicEvent[] = ['bgm_lobby', 'bgm_stealth', 'bgm_chase'];
 export type MusicMix = Record<MusicEvent, number>;
-export function silenceMix(): MusicMix { return { bgm_lobby: 0, bgm_stealth: 0, bgm_theft_alert: 0, bgm_chase: 0 }; }
-export const TRACK_BASE_GAIN: MusicMix = { bgm_lobby: 0.50, bgm_stealth: 0.52, bgm_theft_alert: 0.57, bgm_chase: 0.63 };
+export function silenceMix(): MusicMix { return { bgm_lobby: 0, bgm_stealth: 0, bgm_chase: 0 }; }
+export const TRACK_BASE_GAIN: MusicMix = { bgm_lobby: 0.50, bgm_stealth: 0.52, bgm_chase: 0.63 };
 export const WHISTLE_GAIN = 0.8;
 export const UI_GAIN = 0.45;
 /** Fade normalized track weights; apply one master factor only at native output. */
 export function fadeMix(current: MusicMix, target: MusicEvent | null, dt: number): MusicMix {
-  const lobbyTransition = target === 'bgm_lobby' || current.bgm_lobby > 1e-9;
-  const duration = lobbyTransition ? 1 : target === 'bgm_stealth' ? 1.2 : 0.8;
+  const duration = 0.9;
   const distance = Math.max(...MUSIC_EVENTS.map(key =>
     Math.abs((key === target ? 1 : 0) - current[key] / TRACK_BASE_GAIN[key])));
   const alpha = distance < 1e-9 ? 1 : Math.min(1, Math.max(0, dt) / duration / distance);

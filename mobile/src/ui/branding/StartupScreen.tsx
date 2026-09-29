@@ -2,7 +2,9 @@ import { GameAudioContext, useAppAudio } from '../../game/audio/useGameAudio';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
 import { AppState, StyleSheet, Text, View } from 'react-native';
-import { BrandingScreen } from './BrandingScreen';
+import { BrandingScreen, preloadOpeningArt } from './BrandingScreen';
+import { SPLASH_MS } from './introTimeline';
+import { SplashScreen } from './SplashScreen';
 import { markStartup } from './startupMetrics';
 import { withDeadline } from './initialization';
 import { DEFAULT_PROGRESS, loadProgress, saveProgress } from '../../game/progress/stageProgress';
@@ -10,6 +12,7 @@ import type { StageProgress } from '../../game/progress/stageProgress';
 import { MenuContext } from '../menu/MenuContext';
 import { HomeMenu, SettingsScreen } from '../menu/MenuScreens';
 import { translate } from '../menu/strings';
+import { MonetizationProvider } from '../../game/monetization/MonetizationContext';
 
 import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgress';
 import {missionId,missionIndex} from '../../game/levels/campaignCatalog';
@@ -18,6 +21,10 @@ type GameProps = { initialProgress?: StageProgress; onProgressChange?: (progress
 export function StartupScreen() {
  const audio=useAppAudio();
  const [homeVisible,setHomeVisible]=useState(false);
+ const [splashDone,setSplashDone]=useState(false);
+ const [splashGone,setSplashGone]=useState(false);
+ const hideSplash=useCallback(()=>setSplashGone(true),[]);
+ const [lobbyAudioReady,setLobbyAudioReady]=useState(false);
  const [progress, setProgress] = useState<StageProgress>();
  const [Game, setGame] = useState<ComponentType<GameProps>>();
  const [started, setStarted] = useState(false);
@@ -35,7 +42,8 @@ export function StartupScreen() {
   if(storageWritable.current) void saveProgress(next).catch(()=>setSaveError(true));
   else setSaveError(true);
  },[]);
- const home=useCallback(()=>{setStarted(false);setRoute('home');setSkipIntro(true);setHomeVisible(true);},[]);
+ const startLobbyAudio=useCallback(()=>setLobbyAudioReady(true),[]);
+ const home=useCallback(()=>{setStarted(false);setRoute('home');setSkipIntro(true);setLobbyAudioReady(false);setHomeVisible(true);},[]);
  const [error, setError] = useState<string>();
  const mounted = useRef(true), generation = useRef(0);
  useEffect(() => {
@@ -46,7 +54,15 @@ export function StartupScreen() {
   });
   return () => { mounted.current = false; sub.remove(); };
  }, []);
- // Only settings/progress are needed by Home. Stage modules load on Play.
+ useEffect(() => {
+  markStartup('splash-start');
+  let alive=true,minimum=false,art=false;
+  const reveal=()=>{if(alive&&minimum&&art){markStartup('splash-end');setSplashDone(true);}};
+  void preloadOpeningArt().catch(()=>{}).finally(()=>{art=true;reveal();});
+  const timer=setTimeout(()=>{minimum=true;reveal();},SPLASH_MS);
+  const grace=setTimeout(()=>{art=true;reveal();},SPLASH_MS+1500);
+  return ()=>{alive=false;clearTimeout(timer);clearTimeout(grace);};
+ },[]);
  const storageAttempt=useRef(0);
  const restoreProgress=useCallback(()=>{
   const attempt=++storageAttempt.current;
@@ -68,7 +84,7 @@ export function StartupScreen() {
   const campaign=migrateCampaign(current);
   if(!canPlayMission(campaign,index,__DEV__))return;
   updateProgress({...current,campaign:{...campaign,lastMission:missionId(index)},hasStarted:true});
-  setGame(()=>screen);setSkipIntro(true);setStarted(true);setError(undefined);
+  setGame(()=>screen);setSkipIntro(true);setLobbyAudioReady(false);setStarted(true);setError(undefined);
  };
  const play=async(index:number)=>{
   if(!progress||pendingGame.current)return;
@@ -95,29 +111,33 @@ export function StartupScreen() {
  const campaign=migrateCampaign(progress??DEFAULT_PROGRESS);
  const lastIndex=missionIndex(campaign.lastMission);
  const continueIndex=canPlayMission(campaign,lastIndex,__DEV__)?lastIndex:campaign.highestUnlocked;
- const replay=()=>{setHomeVisible(false);setRoute('home');setSkipIntro(false);setIntroVersion(version=>version+1);};
+ const replay=()=>{setHomeVisible(false);setLobbyAudioReady(false);setRoute('home');setSkipIntro(false);setIntroVersion(version=>version+1);};
  const retryPrepare=()=>{void play(pendingMission.current??continueIndex);};
  useEffect(()=>{
-  if(!started)audio.update({sessionKey:'menu',phase:homeVisible?'LOBBY':'INTRO',theftRevision:0,spottedRevision:0,
+  if(!started)audio.update({sessionKey:'menu',phase:(homeVisible||lobbyAudioReady)?'LOBBY':'INTRO',theftRevision:0,spottedRevision:0,
    sfxEnabled:progress?.soundEnabled??false,bgmEnabled:progress?.musicEnabled??false,active:true,paused:false});
- },[started,homeVisible,progress?.soundEnabled,progress?.musicEnabled,audio]);
- return <GameAudioContext.Provider value={audio}><MenuContext.Provider value={{progress:progress??DEFAULT_PROGRESS,home,
+ },[started,homeVisible,lobbyAudioReady,progress?.soundEnabled,progress?.musicEnabled,audio]);
+ return <GameAudioContext.Provider value={audio}><MonetizationProvider><MenuContext.Provider value={{progress:progress??DEFAULT_PROGRESS,home,
   preferences:patch=>updateProgress({...progressRef.current,...patch})}}>
   {started&&Game&&progress?<Game initialProgress={progress} onProgressChange={updateProgress}/>:
    <View style={{flex:1}}>
-    <View style={{flex:1}} accessibilityElementsHidden={route!=='home'} importantForAccessibility={route==='home'?'auto':'no-hide-descendants'} pointerEvents={route==='home'?'auto':'none'}>
-    <BrandingScreen key={introVersion} skipInitial={skipIntro} onFinished={()=>setHomeVisible(true)} soundEnabled={progress?.soundEnabled??false}
-     musicEnabled={progress?.musicEnabled??false} ready={!!progress&&!preparing}
-     loadingError={error} onRetry={retryPrepare} onStart={()=>play(continueIndex)}>
-     <HomeMenu ready={!!progress&&!preparing} error={error} onRetry={retryPrepare}
-      onPlay={()=>play(continueIndex)} onStages={()=>setRoute('stages')} onSettings={()=>setRoute('settings')}/>
-    </BrandingScreen>
-    </View>
-    {route!=='home'&&<View style={StyleSheet.absoluteFill}>
-     {route==='settings'?<SettingsScreen onBack={()=>setRoute('home')} onIntro={replay}/>:
-       <StageSelectScreen onBack={()=>setRoute('home')} onSelect={play}/>}
-    </View>}
+    {splashDone && <>
+     <View style={{flex:1}} accessibilityElementsHidden={route!=='home'} importantForAccessibility={route==='home'?'auto':'no-hide-descendants'} pointerEvents={route==='home'?'auto':'none'}>
+      <BrandingScreen key={introVersion} skipInitial={skipIntro} onFinished={()=>setHomeVisible(true)}
+       onLobbyAudioStart={startLobbyAudio} soundEnabled={progress?.soundEnabled??false}
+       musicEnabled={progress?.musicEnabled??false} ready={!!progress&&!preparing}
+       loadingError={error} onRetry={retryPrepare} onStart={()=>play(continueIndex)}>
+       <HomeMenu ready={!!progress&&!preparing} error={error} onRetry={retryPrepare}
+        onPlay={()=>play(continueIndex)} onStages={()=>setRoute('stages')} onSettings={()=>setRoute('settings')}/>
+      </BrandingScreen>
+     </View>
+     {route!=='home'&&<View style={StyleSheet.absoluteFill}>
+      {route==='settings'?<SettingsScreen onBack={()=>setRoute('home')} onIntro={replay}/>:
+        <StageSelectScreen onBack={()=>setRoute('home')} onSelect={play}/>}
+     </View>}
+    </>}
+    {!splashGone && <SplashScreen leaving={splashDone} onGone={hideSplash}/>}
    </View>}
   {saveError&&<Text onPress={retrySave} style={{position:'absolute',bottom:30,left:20,right:20,color:'#FFF4D6',backgroundColor:'#102331',padding:12}}>{translate(progress?.language??'en','saveError')}</Text>}
- </MenuContext.Provider></GameAudioContext.Provider>;
+ </MenuContext.Provider></MonetizationProvider></GameAudioContext.Provider>;
 }

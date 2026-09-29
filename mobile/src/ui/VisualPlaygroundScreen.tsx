@@ -48,6 +48,7 @@ import { useMenu } from './menu/MenuContext';
 import { SettingsScreen } from './menu/MenuScreens';
 import { feedbackKey,valuableKey } from './menu/strings';
 import { CharacterMotionDebug } from './CharacterMotionDebug';
+import { useMonetization } from '../game/monetization/MonetizationContext';
 
 type GamePhase = GuardEvents['phase'];
 
@@ -118,11 +119,13 @@ export function VisualPlaygroundScreen({ initialProgress, onProgressChange }: { 
 }
 
 function GameRun({ progress, onProgress }: { progress: StageProgress; onProgress: (next: StageProgress) => void }) {
+  const monetization=useMonetization();
   const [index,setIndex]=useState(()=>missionIndex(migrateCampaign(progress).lastMission));
   const [pending,setPending]=useState<number|null>(null);
   const {width,height}=useWindowDimensions();
   const transition=useSharedValue(0);
   const startedTransition=useRef(false);
+  const nextLock=useRef(false);
   const tilt=useTiltControl();
   const definition=playableStages[index];
   const direction=transitionVector(definition.exitEdge);
@@ -141,16 +144,25 @@ function GameRun({ progress, onProgress }: { progress: StageProgress; onProgress
   useEffect(()=>()=>cancelAnimation(transition),[transition]);
   const stageCleared=(seconds:number,alerts:number)=>{
     onProgress({...progress,campaign:completeMission(migrateCampaign(progress),index,seconds,alerts)});
+    monetization.recordMissionClear();
     const next=(index+1)%playableStages.length;
     // Shared images are already decoded; compile static art/navigation while
     // the result screen is visible. Keep the outgoing scene until next is ready.
     void preloadGameAssets(PLAYTEST_MANIFEST).then(assets=>prepareMission(playableStages[next],assets)).catch(()=>{});
   };
   const nextStage=()=>{
-    if(pending!==null)return;
-    const next=(index+1)%playableStages.length;
-    onProgress({...progress,campaign:{...migrateCampaign(progress),lastMission:missionId(next)}});
-    startedTransition.current=false;transition.set(0);setPending(next);
+    if(pending!==null||nextLock.current)return;
+    nextLock.current=true;
+    void (async()=>{
+      try {
+        await monetization.presentInterstitialIfNeeded();
+      } finally {
+        const next=(index+1)%playableStages.length;
+        onProgress({...progress,campaign:{...migrateCampaign(progress),lastMission:missionId(next)}});
+        startedTransition.current=false;transition.set(0);setPending(next);
+        nextLock.current=false;
+      }
+    })();
   };
   const visible=pending===null?[index]:[index,pending];
   return <View style={{flex:1,overflow:'hidden',backgroundColor:'#05070b'}}>
@@ -202,6 +214,7 @@ function StageGame({
 }) {
   const {t,home:menuHome}=useMenu();
   const playUI=useUIAudio();
+  const monetization=useMonetization();
   const home=()=>{playUI('ui_back');menuHome();};
   const { width, height } = useWindowDimensions();
   const [replayIntro,setReplayIntro]=useState(false);
@@ -288,8 +301,8 @@ function StageGame({
 
   useGameAudio({sessionKey:`${definition.id}:${audioSession}`,phase:replayIntro?'INTRO':phaseInfo.phase,
     theftRevision:phaseInfo.theft,spottedRevision:phaseInfo.spotted,
-    sfxEnabled:soundEnabled,bgmEnabled:progress.musicEnabled,paused:false,
-    sfxSuspended:paused||caught||completed||transitioning||replayIntro,active:true},!transitioning);
+    sfxEnabled:soundEnabled,bgmEnabled:progress.musicEnabled,paused:monetization.adPresenting,
+    sfxSuspended:paused||caught||completed||transitioning||replayIntro||monetization.adPresenting,active:true},!transitioning);
   usePickupAudio(pickupRevision, soundEnabled);
 
   const showFlash = (color: 'cyan' | 'red') => {
@@ -523,7 +536,7 @@ function StageGame({
         <Text style={styles.modalBody}>{t('alerts')} {result.alerts}</Text>
         <Text style={styles.modalBody}>{t('best')} {(migrateCampaign(progress).records[definition.id]?.bestTime ?? result.seconds).toFixed(1)}s</Text>
         <Text style={styles.nextMissionName}>{missionName((missionIndex(definition.id)+1)%MISSION_COUNT,progress.language)}</Text>
-        <Pressable onPress={()=>{playUI('ui_select');onNextStage();}} style={styles.primaryButton}><Text style={styles.primaryText}>{missionIndex(definition.id) === MISSION_COUNT-1 ? t('again') : t('next')}</Text></Pressable>
+        <Pressable disabled={monetization.adPresenting} onPress={()=>{if(monetization.adPresenting)return;playUI('ui_select');onNextStage();}} style={styles.primaryButton}><Text style={styles.primaryText}>{missionIndex(definition.id) === MISSION_COUNT-1 ? t('again') : t('next')}</Text></Pressable>
         <Pressable onPress={()=>{playUI('ui_select');retry();}} style={styles.button}><Text style={styles.buttonText}>{t('retry')}</Text></Pressable>
         <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
       </View>}

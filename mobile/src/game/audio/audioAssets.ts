@@ -5,14 +5,13 @@ import type { AudioEvent } from './audioState';
  * No generated/legacy temporary whistle is substituted for the final assets.
  */
 export const AUDIO_SOURCES: Record<AudioEvent, AudioSource | null> = {
-  bgm_lobby: require('../../../assets/audio/bgm/lobby.m4a'),
+  bgm_lobby: require('../../../assets/audio/bgm/lobby.mp3'),
   ui_select: require('../../../assets/audio/sfx/ui-select.wav'),
   ui_back: require('../../../assets/audio/sfx/ui-back.wav'),
   whistle_theft: require('../../../assets/audio/sfx/whistle-theft.wav'),
   whistle_spotted: require('../../../assets/audio/sfx/whistle-spotted.wav'),
-  bgm_stealth: require('../../../assets/audio/bgm/stealth.m4a'),
-  bgm_theft_alert: require('../../../assets/audio/bgm/theft-alert.m4a'),
-  bgm_chase: require('../../../assets/audio/bgm/chase.m4a'),
+  bgm_stealth: require('../../../assets/audio/bgm/stealth.mp3'),
+  bgm_chase: require('../../../assets/audio/bgm/chase.mp3'),
 };
 export const AUDIO_ASSET_STATUS = {
   whistle: 'BUNDLED_CC0_AUDITION_PENDING',

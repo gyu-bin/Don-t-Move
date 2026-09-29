@@ -37,7 +37,7 @@ test('theft investigation retains theft tension; silent objective changes no aud
   const stealth = reduceAudio(null, base);
   assert.equal(reduceAudio(stealth.state, base).music, 'bgm_stealth');
   const theft = reduceAudio(stealth.state, { ...base, phase: 'THEFT_ALERT' });
-  assert.equal(reduceAudio(theft.state, { ...base, phase: 'SEARCH' }).music, 'bgm_theft_alert');
+  assert.equal(reduceAudio(theft.state, { ...base, phase: 'SEARCH' }).music, 'bgm_chase');
 });
 test('retry/mount snapshot never replays history and resets music memory', () => {
   const chase = reduceAudio(null, { ...base, phase: 'PLAYER_SPOTTED', spottedRevision: 4 });
@@ -54,7 +54,7 @@ test('pause/background/mission-end suppress sounds and consume pending revisions
     assert.deepEqual(reduceAudio(result.state, { ...base, spottedRevision: 1 }).whistles, []);
   }
 });
-test('crossfade is gradual, bounded, and returns to stealth more slowly', () => {
+test('crossfade is gradual, bounded, and returns cleanly to stealth', () => {
   let mix = { ...silenceMix(), bgm_stealth: TRACK_BASE_GAIN.bgm_stealth };
   const first = fadeMix(mix, 'bgm_chase', 0.05);
   assert.ok(first.bgm_stealth > 0 && first.bgm_chase > 0);
@@ -102,7 +102,7 @@ test('diagnostics expose missing sources and persisted OFF without pretending pl
   const enabled = { ...theftInput, sfxEnabled: true, bgmEnabled: true };
   const resumed = reduceAudio(theft.state, enabled);
   assert.deepEqual(resumed.whistles, []);
-  assert.equal(resumed.music, 'bgm_theft_alert');
+  assert.equal(resumed.music, 'bgm_chase');
 });
 test('stable BGM phase and SEARCH/RETURN do not emit repeated music transition requests', async () => {
   const { audioTransitionLog } = await import('../audioDiagnostics');
@@ -117,24 +117,24 @@ test('stable BGM phase and SEARCH/RETURN do not emit repeated music transition r
   }
 });
 
-test('crossfade reaches exact endpoints in 0.8 seconds escalation and 1.2 seconds return', () => {
+test('three-state crossfade reaches exact endpoints in 0.9 seconds', () => {
   let mix = { ...silenceMix(), bgm_stealth: TRACK_BASE_GAIN.bgm_stealth };
-  for (let i = 0; i < 16; i++) mix = fadeMix(mix, 'bgm_chase', 0.05);
+  for (let i = 0; i < 18; i++) mix = fadeMix(mix, 'bgm_chase', 0.05);
   assert.ok(Math.abs(mix.bgm_chase - TRACK_BASE_GAIN.bgm_chase) < 1e-9);
   assert.ok(mix.bgm_stealth < 1e-9);
-  for (let i = 0; i < 24; i++) mix = fadeMix(mix, 'bgm_stealth', 0.05);
+  for (let i = 0; i < 18; i++) mix = fadeMix(mix, 'bgm_stealth', 0.05);
   assert.ok(Math.abs(mix.bgm_stealth - TRACK_BASE_GAIN.bgm_stealth) < 1e-9);
   assert.ok(mix.bgm_chase < 1e-9);
 });
 test('interrupted three-track blend preserves aggregate gain and converges', () => {
   let mix = { ...silenceMix(), bgm_stealth: TRACK_BASE_GAIN.bgm_stealth };
-  for (let i = 0; i < 5; i++) mix = fadeMix(mix, 'bgm_theft_alert', 0.05);
+  for (let i = 0; i < 5; i++) mix = fadeMix(mix, 'bgm_chase', 0.05);
   for (let i = 0; i < 16; i++) {
     mix = fadeMix(mix, 'bgm_chase', 0.05);
     assert.ok(Object.values(mix).reduce((a, b) => a + b, 0) <= TRACK_BASE_GAIN.bgm_chase + 0.000001);
   }
   assert.ok(Math.abs(mix.bgm_chase - TRACK_BASE_GAIN.bgm_chase) < 1e-9);
-  assert.ok(mix.bgm_stealth + mix.bgm_theft_alert < 1e-9);
+  assert.ok(mix.bgm_stealth < 1e-9);
   assert.deepEqual(fadeMix(mix, 'bgm_stealth', -1), mix);
 });
 
@@ -157,7 +157,7 @@ test('native manager queues the first loading whistle, cancels suspended work, a
   let timerCount = 0;
   let now = 0;
   let mixerTick: (()=>void) | undefined;
-  const registry = { bgm_stealth: 1, bgm_theft_alert: 2, bgm_chase: 3, whistle_theft: 4, whistle_spotted: 5, bgm_lobby: 6, ui_select: 7, ui_back: 8 };
+  const registry = { bgm_stealth: 1, bgm_chase: 2, whistle_theft: 3, whistle_spotted: 4, bgm_lobby: 5, ui_select: 6, ui_back: 7 };
   const native = {
     createAudioPlayer: (_source: number, options: { downloadFirst: boolean }) => {
       assert.equal(options.downloadFirst, true);
@@ -204,74 +204,74 @@ test('native manager queues the first loading whistle, cancels suspended work, a
   manager.update({...coldMenu, phase:'LOBBY', bgmEnabled:true, sfxEnabled:true});
   assert.equal(timerCount, 1, 'Home owns persistent request before asset readiness');
   now+=50; mixerTick?.();
-  assert.equal(voices[5].playCount, 0, 'not-yet-loaded lobby cannot pretend to play');
-  voices[5].isLoaded=true;
+  assert.equal(voices[4].playCount, 0, 'not-yet-loaded lobby cannot pretend to play');
+  voices[4].isLoaded=true;
   for(let i=0;i<20;i++){now+=50;mixerTick?.();}
-  assert.equal(voices[5].playCount, 1, 'late preload plays without another Home/update event');
-  assert.ok(Math.abs(voices[5].volume-TRACK_BASE_GAIN.bgm_lobby)<1e-9);
+  assert.equal(voices[4].playCount, 1, 'late preload plays without another Home/update event');
+  assert.ok(Math.abs(voices[4].volume-TRACK_BASE_GAIN.bgm_lobby)<1e-9);
   manager.update({...coldMenu, phase:'LOBBY', bgmEnabled:false});
-  assert.equal(voices[5].playing,false,'saved BGM OFF is never overridden');
+  assert.equal(voices[4].playing,false,'saved BGM OFF is never overridden');
   manager.update(base);
   const theft = { ...base, phase: 'THEFT_ALERT' as const, theftRevision: 1 };
   manager.update(theft);
-  assert.equal(voices[3].playCount, 0);
+  assert.equal(voices[2].playCount, 0);
   const load = (id: number) => {
     voices[id].isLoaded = true;
     listeners.get(id)!({ isLoaded: true, playing: false, currentTime: 0, error: null });
   };
-  load(3);
+  load(2);
   releaseSeek!();
   await Promise.resolve();
-  assert.equal(voices[3].playCount, 1, 'first event survives asynchronous preload');
+  assert.equal(voices[2].playCount, 1, 'first event survives asynchronous preload');
   manager.update({ ...theft, phase: 'PLAYER_SPOTTED', spottedRevision: 1 });
   manager.update({ ...theft, phase: 'PLAYER_SPOTTED', spottedRevision: 1, active: false });
-  load(4);
-  assert.equal(voices[4].playCount, 0, 'pending load cannot play after background');
+  load(3);
+  assert.equal(voices[3].playCount, 0, 'pending load cannot play after background');
   manager.update({ ...theft, phase: 'PLAYER_SPOTTED', spottedRevision: 1 });
-  assert.equal(voices[4].playCount, 0, 'foreground does not replay consumed event');
+  assert.equal(voices[3].playCount, 0, 'foreground does not replay consumed event');
   manager.update({ ...theft, phase: 'PLAYER_SPOTTED', spottedRevision: 2 });
   manager.update({ ...base, sessionKey: 'retry' });
   releaseSeek!();
   await Promise.resolve();
-  assert.equal(voices[4].playCount, 0, 'pending seek cannot play after session switch');
-  for(const id of [0,1,2,5,6,7])load(id);
+  assert.equal(voices[3].playCount, 0, 'pending seek cannot play after session switch');
+  for(const id of [0,1,2,3,4,5,6])load(id);
   const advance=(seconds:number)=>{for(let i=0;i<seconds*20;i++){now+=50;mixerTick?.();}};
   const menu={...base,sessionKey:'menu',phase:'LOBBY' as const};
   manager.update(menu); advance(1);
-  assert.equal(voices[5].volume,TRACK_BASE_GAIN.bgm_lobby);
-  const lobbyPlays=voices[5].playCount;
+  assert.equal(voices[4].volume,TRACK_BASE_GAIN.bgm_lobby);
+  const lobbyPlays=voices[4].playCount;
   for(let i=0;i<6;i++){manager.update(menu);advance(0.1);}
-  assert.equal(voices[5].playCount,lobbyPlays,'menu navigation never restarts lobby');
+  assert.equal(voices[4].playCount,lobbyPlays,'menu navigation never restarts lobby');
   manager.update(base);
-  assert.equal(voices[5].playing,true,'session switch preserves outgoing music for crossfade');
+  assert.equal(voices[4].playing,true,'session switch preserves outgoing music for crossfade');
   advance(1);assert.ok(Math.abs(voices[0].volume-TRACK_BASE_GAIN.bgm_stealth)<1e-9);
-  assert.equal(voices[5].playing,false);
+  assert.equal(voices[4].playing,false);
   manager.update({...base,masterBgmVolume:0.5});advance(0.1);
   assert.ok(Math.abs(voices[0].volume-TRACK_BASE_GAIN.bgm_stealth*0.5)<1e-9,'one master factor');
   manager.update({...base,bgmEnabled:false});
   assert.equal(voices[0].playing,false);
   manager.update(menu);advance(1);
-  assert.equal(voices[5].volume,TRACK_BASE_GAIN.bgm_lobby);
-  manager.update({...menu,active:false});assert.equal(voices[5].playing,false);
-  manager.update(menu);advance(1);assert.equal(voices[5].volume,TRACK_BASE_GAIN.bgm_lobby);
-  load(6); load(7);
+  assert.equal(voices[4].volume,TRACK_BASE_GAIN.bgm_lobby);
+  manager.update({...menu,active:false});assert.equal(voices[4].playing,false);
+  manager.update(menu);advance(1);assert.equal(voices[4].volume,TRACK_BASE_GAIN.bgm_lobby);
+  load(5); load(6);
   manager.playUI('ui_select'); releaseSeek!(); await Promise.resolve();
-  assert.equal(voices[6].playCount, 1);
-  assert.equal(voices[6].volume, 0.45);
+  assert.equal(voices[5].playCount, 1);
+  assert.equal(voices[5].volume, 0.45);
   manager.update({...base,sfxSuspended:true});
   manager.playUI('ui_select');
   manager.update({...base,phase:'INTRO',sfxSuspended:true,active:true});
   releaseSeek!();await Promise.resolve();
-  assert.equal(voices[6].playCount,2,'Play Intro click survives asynchronous seek when replay suppresses music');
-  assert.ok([0,1,2,5].every(id=>!voices[id].playing),'replayed intro keeps all music silent');
+  assert.equal(voices[5].playCount,2,'Play Intro click survives asynchronous seek when replay suppresses music');
+  assert.ok([0,1,4].every(id=>!voices[id].playing),'replayed intro keeps all music silent');
   manager.update({ ...base, sfxEnabled:false });
   manager.playUI('ui_back');
-  assert.equal(voices[7].playCount, 0, 'SFX OFF suppresses Back');
+  assert.equal(voices[6].playCount, 0, 'SFX OFF suppresses Back');
   manager.update(base); manager.playUI('ui_back');
   manager.update({ ...base, active:false }); releaseSeek!(); await Promise.resolve();
-  assert.equal(voices[7].playCount, 0, 'background cancels pending UI seek');
+  assert.equal(voices[6].playCount, 0, 'background cancels pending UI seek');
   manager.dispose();
-  assert.equal(removedSubscriptions, 8);
+  assert.equal(removedSubscriptions, 7);
   assert.equal(timerCount, 0);
   assert.ok(voices.every(voice => voice.removed && !voice.playing));
 });
@@ -290,11 +290,11 @@ test('intro is silent; Home/Chapter/Mission Select/Settings preserve one lobby d
   assert.equal(reduceAudio(off.state,{...menu,phase:'LOBBY'}).music,'bgm_lobby');
   assert.equal(reduceAudio(off.state,{...menu,phase:'LOBBY',active:false}).music,null);
 });
-test('lobby/gameplay crossfades finish in one second and direct next mission never selects lobby', () => {
+test('lobby/gameplay crossfades finish in 0.9 seconds and direct next mission never selects lobby', () => {
   let mix={...silenceMix(),bgm_lobby:TRACK_BASE_GAIN.bgm_lobby};
-  for(let i=0;i<20;i++)mix=fadeMix(mix,'bgm_stealth',0.05);
+  for(let i=0;i<18;i++)mix=fadeMix(mix,'bgm_stealth',0.05);
   assert.ok(Math.abs(mix.bgm_stealth-TRACK_BASE_GAIN.bgm_stealth)<1e-9);assert.ok(mix.bgm_lobby<1e-9);
-  for(let i=0;i<20;i++)mix=fadeMix(mix,'bgm_lobby',0.05);
+  for(let i=0;i<18;i++)mix=fadeMix(mix,'bgm_lobby',0.05);
   assert.ok(Math.abs(mix.bgm_lobby-TRACK_BASE_GAIN.bgm_lobby)<1e-9);assert.ok(mix.bgm_stealth<1e-9);
   const chase=reduceAudio(null,{...base,phase:'PLAYER_SPOTTED'});
   const next=reduceAudio(chase.state,{...base,sessionKey:'01-02:0'});

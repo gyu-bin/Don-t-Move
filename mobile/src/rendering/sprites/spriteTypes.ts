@@ -59,6 +59,8 @@ export interface CharacterSpriteSet {
   scale: number;
   /** Draw the soft contact shadow under the sprite. */
   shadow: boolean;
+  /** Bob/lean baked into the frames → no runtime body lift. */
+  bakedMotion?: boolean;
 }
 
 /** A named-frame atlas (environment kits, UI indicators). */

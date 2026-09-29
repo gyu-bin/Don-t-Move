@@ -1,5 +1,17 @@
 # Character asset TODO
 
+## Production Locomotion Atlas V1 (2026-09-29) — current runtime asset
+
+Direct frame generation cannot guarantee frame-consistent planted feet, so the
+atlas is baked from a 2D cutout rig (`tools/locomotion`, `npm run locomotion:bake`):
+`assets/characters/{player_idle,player_sneak,player_walk,player_run,guard_idle,guard_walk,guard_run}.png`,
+128×128 cells, rows DOWN/LEFT/RIGHT/UP, pivot (64,112), contract in
+`src/game/core/locomotionAtlas.ts`, QA in `tools/locomotion/atlas.test.ts`
+(`npm run locomotion:validate`, `npm run locomotion:previews`). The 256-cell
+contract below (SPEC.md, tools/sprites) is superseded for these states.
+Open: on-device visual approval (`finalApproved` stays unset), Guard Whistle/Search
+(fall back to Idle), previous `player_walk.png` kept at `deprecated/player_walk_256_v0.png`.
+
 ## Supplied Character Master Sheet integration assessment
 
 **MASTER SHEET NOT PRODUCTION READY.** The supplied1536×1024 opaque overview

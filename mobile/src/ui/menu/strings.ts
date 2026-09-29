@@ -3,6 +3,9 @@ const en = {
  chapters:'CHAPTER SELECT', missions:'MISSION SELECT', missionLabel:'MISSION', legacy:'PREVIOUS VERSION RECORD',
  home:'HOME', continue:'CONTINUE', start:'START GAME', stages:'STAGE SELECT', settings:'SETTINGS',
  language:'Language', sfx:'Sound Effects', music:'Background Music', intro:'Play Intro',
+ adsSection:'Ads', removeAds:'Remove Ads', removeAdsDetail:'Play without interstitial ads.',
+ removeAdsOwned:'Purchased ✓', restorePurchases:'Restore Purchases', purchasing:'Purchasing…',
+ restoring:'Restoring…',
  clear:'CLEAR', locked:'LOCKED', play:'PLAY', mission:'MISSION COMPLETE', chapter:'CHAPTER COMPLETE',
  caught:'CAUGHT', retry:'RETRY', next:'NEXT STAGE', back:'BACK', stage:'STAGE',
  paused:'PAUSED', resume:'RESUME', recenter:'RECENTER', restart:'RESTART', again:'PLAY AGAIN',
@@ -19,12 +22,22 @@ const en = {
  valuableDiamond:'Diamond', painting:'Rare Painting', vaultGem:'Vault Gem', prototype:'Prototype', jewel:'High-value Jewel', artifact:'Artifact', contraband:'Contraband Case', data:'Data Device', classified:'Classified Prototype', master:'Master Diamond',
  stage01:'MUSEUM', stage02:'ART GALLERY', stage03:'BANK', stage04:'LAB', stage05:'CASINO',
  stage06:'MANSION', stage07:'WAREHOUSE', stage08:'SECURITY HQ', stage09:'BLACK SITE', stage10:'HIGH SECURITY VAULT',
+ currentMission:'CURRENT MISSION', guards:'GUARDS', goals:'OBJECTIVE', clearedCount:'CLEARED', bestShort:'BEST',
+ lockedHint:'Complete the previous mission', devUnlocked:'DEV', heist:'A GREATER HEIST AWAITS', chapterLabel:'CHAPTER',
+ chapterIntro01:'Among sleeping relics,\nthe first quiet step begins.', chapterIntro02:'Where art still breathes,\nthe quietest infiltration begins.',
+ chapterIntro03:'Beyond the steel door,\nbe quieter than the ledgers.', chapterIntro04:'Under cold light,\nevery movement is recorded.',
+ chapterIntro05:'While everyone watches the tables,\nyou watch the guards.', chapterIntro06:'On a night of creaking stairs,\nthe heirloom waits deepest inside.',
+ chapterIntro07:'The shadows of stacked cargo\nare your only cover.', chapterIntro08:'Where every screen is watching,\nfind the blind spot.',
+ chapterIntro09:'The final seal.\nThe greatest heist awaits.',
 };
 export type TextKey = keyof typeof en;
 const ko: Record<TextKey,string> = {
  chapters:'챕터 선택', missions:'미션 선택', missionLabel:'미션', legacy:'이전 버전 기록',
  home:'홈', continue:'계속하기', start:'게임 시작', stages:'스테이지 선택', settings:'설정',
  language:'언어', sfx:'효과음', music:'배경 음악', intro:'인트로 다시 보기',
+ adsSection:'광고', removeAds:'광고 제거', removeAdsDetail:'전면 광고 없이 플레이합니다.',
+ removeAdsOwned:'구매 완료 ✓', restorePurchases:'구매 복원', purchasing:'구매 중…',
+ restoring:'복원 중…',
  clear:'완료', locked:'잠김', play:'플레이', mission:'미션 완료', chapter:'챕터 완료',
  caught:'붙잡혔습니다', retry:'다시 도전', next:'다음 스테이지', back:'뒤로', stage:'스테이지',
  paused:'일시 정지', resume:'계속하기', recenter:'중심 재설정', restart:'다시 시작', again:'다시 플레이',
@@ -41,6 +54,13 @@ const ko: Record<TextKey,string> = {
  valuableDiamond:'다이아몬드', painting:'희귀 그림', vaultGem:'금고 보석', prototype:'시제품', jewel:'고가 보석', artifact:'유물', contraband:'밀수품 가방', data:'데이터 장치', classified:'기밀 시제품', master:'마스터 다이아몬드',
  stage01:'박물관', stage02:'미술관', stage03:'은행', stage04:'연구소', stage05:'카지노',
  stage06:'저택', stage07:'창고', stage08:'보안 본부', stage09:'비밀 시설', stage10:'최고 보안 금고',
+ currentMission:'현재 미션', guards:'경비', goals:'목표', clearedCount:'완료', bestShort:'BEST',
+ lockedHint:'이전 미션을 완료하세요', devUnlocked:'DEV', heist:'A GREATER HEIST AWAITS', chapterLabel:'CHAPTER',
+ chapterIntro01:'잠든 유물 사이로,\n첫 번째 발걸음을 내딛는다.', chapterIntro02:'예술이 숨 쉬는 곳,\n가장 조용한 침투가 시작된다.',
+ chapterIntro03:'두꺼운 금고문 너머,\n장부보다 조용해야 한다.', chapterIntro04:'차가운 빛 아래,\n모든 움직임이 기록된다.',
+ chapterIntro05:'모두가 테이블을 볼 때,\n당신은 경비를 본다.', chapterIntro06:'계단이 삐걱이는 밤,\n가보는 가장 깊은 곳에 있다.',
+ chapterIntro07:'쌓인 화물의 그림자가\n유일한 은신처다.', chapterIntro08:'모든 화면이 지켜보는 곳,\n사각지대를 찾아라.',
+ chapterIntro09:'마지막 봉인.\n가장 위대한 한탕이 기다린다.',
 };
 export const translations = { en, ko };
 export const translate = (language:Language, key:TextKey) => translations[language][key];
@@ -52,3 +72,4 @@ const feedbackKeys:Record<string,TextKey>={
 };
 export const feedbackKey=(message:string)=>feedbackKeys[message];
 export const valuableKey:Record<string,TextKey>={diamond:'valuableDiamond',painting:'painting',vaultGem:'vaultGem',prototype:'prototype',jewel:'jewel',artifact:'artifact',case:'contraband',data:'data',classified:'classified',masterDiamond:'master'};
+export const chapterIntroKey=(chapter:number):TextKey=>`chapterIntro${String(chapter+1).padStart(2,'0')}` as TextKey;

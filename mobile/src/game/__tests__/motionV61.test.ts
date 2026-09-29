@@ -8,8 +8,9 @@ import {buildNavigation} from '../world/navigation';
 import {compileStage,TILE} from '../world/compileStage';
 import {campaignStages} from '../levels/campaignStages';
 import {createPlaygroundState,stepPlayground} from '../playground/playgroundState';
-import {advancePlayerSpritePhase,playerSpriteGait,stablePlayerSpriteGait} from '../core/locomotion';
-import {rightWalkTrialStride} from '../core/rightWalkTrial';
+import {advancePlayerSpritePhase,playerLocoStride,playerSpriteGait,stablePlayerSpriteGait} from '../core/locomotion';
+import {LOCO_ROWS,locoStride} from '../core/locomotionAtlas';
+import {DIR_NAMES} from '../../rendering/sprites/spriteTypes';
 import {motionAudit} from '../../rendering/characters/motionAudit';
 import {locomotionBodyLift} from '../../rendering/characters/locomotionPolish';
 import {buildCharacterSet} from '../../assets/buildSprites';
@@ -43,7 +44,7 @@ test('Touch phase and velocity use collision-resolved distance during diagonal w
   const d=Math.hypot(s.player.x-x,s.player.y-y);
   assert(Math.abs(s.player.dist-dist-d)<1e-8);
   assert(Math.abs(s.player.speed-d*60)<1e-8);
-  const expected=advancePlayerSpritePhase(spritePhase,d,s.player.speed,rightWalkTrialStride(s.player.speed,s.player.facing,undefined,s.player.visualGait),s.player.visualGait);
+  const expected=advancePlayerSpritePhase(spritePhase,d,s.player.speed,playerLocoStride(s.player.visualGait,s.player.facing),s.player.visualGait);
   assert(Math.abs(s.player.spritePhase-expected)<1e-8);
   if(Math.abs(s.player.vx)<0.01&&s.player.vy>0.1)slid=true;
  }assert(slid);
@@ -59,11 +60,15 @@ test('Motion diagnostics reports actual fallback/frame rather than requested gua
  }
 });
 
-test('Roundoff at WALK speed cannot flicker to RUN or disable the RIGHT trial',()=>{
+test('Roundoff at WALK speed cannot flicker to RUN or change the planted stride',()=>{
  assert.equal(playerSpriteGait(72.0000000000001),2);
  assert.equal(playerSpriteGait(38.0000000000001),1);
  assert.equal(playerSpriteGait(72.01),3);
- assert.equal(rightWalkTrialStride(72.0000000000001,0,true),rightWalkTrialStride(72,0,true));
+ assert.equal(playerLocoStride(playerSpriteGait(72.0000000000001),0),playerLocoStride(playerSpriteGait(72),0));
+ assert.equal(playerLocoStride(2,0),locoStride('player','walk','right'));
+ assert.equal(playerLocoStride(2,Math.PI/2),locoStride('player','walk','down'));
+ assert.equal(playerLocoStride(3,Math.PI),locoStride('player','run','left'));
+ assert.equal(playerLocoStride(1,-Math.PI/2),locoStride('player','sneak','up'));
 });
 
 test('Visual gait resists threshold jitter but stops on actual zero velocity',()=>{
@@ -90,7 +95,7 @@ test('Whole-body lift is subtle and disappears at rest without moving the ground
  assert.equal(locomotionBodyLift(0.25,0,100),0);
 });
 
-test('Actual production registry exposes all 16 Player combinations and honest static Guard fallback',async()=>{
+test('Production Locomotion Atlas registry: every Player/Guard state × direction, row order DOWN/LEFT/RIGHT/UP',async()=>{
  const previous=require.extensions['.png'];
  require.extensions['.png']=(module)=>{module.exports=0;};
  try{
@@ -98,21 +103,22 @@ test('Actual production registry exposes all 16 Player combinations and honest s
   const image={} as never;
   assert(ASSET_MANIFEST.characters.player);
   assert(ASSET_MANIFEST.characters.guard);
-  const player=buildCharacterSet(ASSET_MANIFEST.characters.player,{playerWalk:image});
-  const guard=buildCharacterSet(ASSET_MANIFEST.characters.guard,{legacyGuard:image});
+  const player=buildCharacterSet(ASSET_MANIFEST.characters.player,{playerIdle:image,playerSneak:image,playerWalk:image,playerRun:image});
+  const guard=buildCharacterSet(ASSET_MANIFEST.characters.guard,{guardIdle:image,guardWalk:image,guardRun:image});
+  assert(player.bakedMotion&&guard.bakedMotion,'bob is baked, no runtime lift');
   for(let dir=0;dir<4;dir++){
-   for(let anim=0;anim<4;anim++){
+   const row=LOCO_ROWS.indexOf(DIR_NAMES[dir])*128;
+   ['playerIdle','playerSneak','playerWalk','playerRun'].forEach((source,anim)=>{
     const clip=resolveClip(player,anim,dir);
-    assert(clip);
-    assert.equal(clip.source,'playerWalk');
-    assert.equal(clip.frames.length,anim===0?1:8);
-    assert.equal(clip.frames[0].sx,anim===0?768:0);
-    assert.equal(clip.frames[0].sy,[0,256,768,512][dir]);
-   }
-   for(const anim of [0,2,3,4,5]){
+    assert(clip);assert.equal(clip.source,source);assert.equal(clip.mirror,false);
+    assert.equal(clip.frames.length,anim===0?6:8);
+    assert.equal(clip.frames[0].sy,row);assert.equal(clip.frames[1].sx,128);
+    assert.equal(clip.frames[0].ax,64);assert.equal(clip.frames[0].ay,112);
+    if(anim>0)assert.equal(clip.strideLength,locoStride('player',(['sneak','walk','run'] as const)[anim-1],DIR_NAMES[dir]));
+   });
+   for(const [anim,source,frames] of [[0,'guardIdle',6],[2,'guardWalk',8],[3,'guardRun',8],[4,'guardIdle',6],[5,'guardIdle',6]] as const){
     const clip=resolveClip(guard,anim,dir);
-    assert(clip);
-    assert.equal(clip.source,'legacyGuard');assert.equal(clip.frames.length,1);
+    assert(clip);assert.equal(clip.source,source);assert.equal(clip.frames.length,frames);assert.equal(clip.frames[0].sy,row);
    }
   }
  }finally{if(previous)require.extensions['.png']=previous;else delete require.extensions['.png'];}
@@ -129,7 +135,7 @@ test('Developer touch modes sustain actual-distance animation for ten seconds an
    if(frame>60)assert.equal(s.player.visualGait,mode);
    const d=s.player.dist-dist;
    assert(Math.abs(s.player.spritePhase-advancePlayerSpritePhase(spritePhase,d,s.player.speed,
-    rightWalkTrialStride(s.player.speed,s.player.facing,undefined,s.player.visualGait),s.player.visualGait))<1e-8);
+    playerLocoStride(s.player.visualGait,s.player.facing),s.player.visualGait))<1e-8);
   }
   const wallX=s.player.x+20;
   for(let frame=0;frame<120;frame++)stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:10000,h:10000},[wallX,0,wallX+20,1000],[],nav);

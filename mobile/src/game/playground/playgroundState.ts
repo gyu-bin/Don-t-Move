@@ -1,6 +1,5 @@
 import { clamp, damp, turnToward } from '../core/math';
-import { rightWalkTrialStride } from '../core/rightWalkTrial';
-import { advancePlayerSpritePhase, GAIT_SPEED, gaitFromSpeed, stablePlayerSpriteGait, strideCycleLength } from '../core/locomotion';
+import { advancePlayerSpritePhase, GAIT_SPEED, gaitFromSpeed, playerLocoStride, stablePlayerSpriteGait, strideCycleLength } from '../core/locomotion';
 import { Gait } from '../core/types';
 import { createGuardEvents, createGuardState } from '../guards/guardBrain';
 import type { GuardEvents, GuardState } from '../guards/guardBrain';
@@ -172,7 +171,7 @@ function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: numb
   if (p.speed > 0.5) p.facing = turnToward(p.facing, Math.atan2(p.vy, p.vx), 10, dt);
   advanceGait(p, dt);
   p.visualGait = stablePlayerSpriteGait(p.speed, p.visualGait);
-  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, rightWalkTrialStride(p.speed, p.facing, undefined, p.visualGait), p.visualGait);
+  p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, playerLocoStride(p.visualGait, p.facing), p.visualGait);
 }
 
 export function stepPlayground(
@@ -204,7 +203,7 @@ export function stepPlayground(
       if(p.speed>0.5)p.facing=turnToward(p.facing,Math.atan2(p.vy,p.vx),10,dt);
       advanceGait(p,dt);
       p.visualGait=stablePlayerSpriteGait(p.speed,p.visualGait);
-      p.spritePhase=advancePlayerSpritePhase(p.spritePhase,p.speed*dt,p.speed,rightWalkTrialStride(p.speed,p.facing,undefined,p.visualGait),p.visualGait);
+      p.spritePhase=advancePlayerSpritePhase(p.spritePhase,p.speed*dt,p.speed,playerLocoStride(p.visualGait,p.facing),p.visualGait);
     }
   }
   // Crossing an active Exit completes the escape before this frame's contact pass.

@@ -8,7 +8,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <StartupScreen />
-      <StatusBar hidden />
+      <StatusBar style="light" hidden={false} />
     </SafeAreaProvider>
   );
 }

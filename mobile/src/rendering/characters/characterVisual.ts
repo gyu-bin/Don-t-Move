@@ -53,7 +53,8 @@ export function drawCharacterVisual(
     const clip = resolveClip(set, animation, facingToDir(facing));
     if (clip !== null) {
       if (set.shadow) fillOval(canvas, x - 11, y - 3.6, 22, 7.2, v.shadow);
-      const lift = locomotionBodyLift(phase, animation, actualSpeed);
+      // Production atlases bake bob/lean; the runtime lift is only for the legacy sheets.
+      const lift = set.bakedMotion ? 0 : locomotionBodyLift(phase, animation, actualSpeed);
       if (lift > 0) { canvas.save(); canvas.translate(0, -lift); }
       drawSpriteFrame(canvas, pickFrame(clip, phase, t, dist, integratedPhase), x, y, set.scale, clip.mirror, v.paint);
       if (lift > 0) canvas.restore();

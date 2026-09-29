@@ -1,6 +1,6 @@
 import type { AnimName, DirName } from '../rendering/sprites/spriteTypes';
-import { PLAYER_SPRITE_GEOMETRY, PLAYER_SPRITE_SCALE, PLAYER_SPRITE_STRIDE } from '../game/core/locomotion';
-import { RIGHT_WALK_TRIAL_ENABLED, RIGHT_WALK_TRIAL_STRIDE } from '../game/core/rightWalkTrial';
+import { LOCO_CELL, LOCO_CHARACTERS, LOCO_PIVOT, LOCO_ROWS, locoScale, locoStride } from '../game/core/locomotionAtlas';
+import type { LocoState, LocoWho } from '../game/core/locomotionAtlas';
 
 /**
  * ASSET REGISTRY — the one file to edit when final art arrives.
@@ -12,17 +12,11 @@ import { RIGHT_WALK_TRIAL_ENABLED, RIGHT_WALK_TRIAL_STRIDE } from '../game/core/
  *   environment.museum.frames[name]         missing → procedural fallback per element
  *   ui.indicators.frames[name]              missing → Skia-drawn glyph
  *
- * CHARACTER DESIGN SOURCES (art/characters/SPEC.md → "Design sources"):
- *   Player look  = the current ASSETS Agent Zero (player_walk.png art)
- *   Player moves = FALLBACK rig body mechanics + locomotion.ts foot planting
- *   Guard look   = LEGACY guard (characters/legacy/guard_directions.png)
- *   Guard moves  = locomotion.ts body mechanics + foot planting
- * The procedural FALLBACK rig is a motion reference and dev fallback, never a look.
- *
- * Character sheets follow art/characters/SPEC.md: one PNG per animation
- * (assets/characters/<who>_<anim>.png), 256×256 cells, rows Down/Up/Left/Right,
- * feet anchor (128, 224). Each row maps to a direction clip via StripDef
- * (y = row × 256). A missing `left` clip is derived by mirroring `right`.
+ * CHARACTERS: Production Locomotion Atlas (tools/locomotion, baked from the
+ * 2D cutout rig; contract in src/game/core/locomotionAtlas.ts). One PNG per
+ * state, 128×128 cells, rows DOWN / LEFT / RIGHT / UP, pivot (64, 112).
+ * Locomotion clips carry the measured world stride of their row, so playback
+ * driven by actual distance keeps the stance foot planted.
  */
 
 /** Frame rect in source pixels. anchor is normalized (0..1) within the frame; default = bottom-centre. */
@@ -61,6 +55,8 @@ export interface CharacterManifest {
   /** World units per source pixel (character ≈ 46 world units tall). */
   scale: number;
   shadow?: boolean;
+  /** Body bob/lean are baked into the frames: no extra runtime lift. */
+  bakedMotion?: boolean;
   clips: Partial<Record<AnimName, Partial<Record<DirName, ClipDef>>>>;
 }
 
@@ -80,8 +76,13 @@ export const IMAGE_SOURCES = {
   museumAtlas: require('../../assets/museum/museum_atlas.png'),
   legacyAgent: require('../../assets/characters/legacy/agent_directions.png'),
   legacyGuard: require('../../assets/characters/legacy/guard_directions.png'),
+  playerIdle: require('../../assets/characters/player_idle.png'),
+  playerSneak: require('../../assets/characters/player_sneak.png'),
   playerWalk: require('../../assets/characters/player_walk.png'),
-  playerRightWalkTrial: require('../../art/characters/candidates/right-walk-fullbody-v1/player_walk_right.png'),
+  playerRun: require('../../assets/characters/player_run.png'),
+  guardIdle: require('../../assets/characters/guard_idle.png'),
+  guardWalk: require('../../assets/characters/guard_walk.png'),
+  guardRun: require('../../assets/characters/guard_run.png'),
 } as const;
 export type ImageKey = keyof typeof IMAGE_SOURCES;
 
@@ -133,57 +134,44 @@ export const LEGACY_CHARACTERS = {
 };
 
 // ----------------------------------------------------------------------------
-// Agent Zero WALK sheet (assets/characters/player_walk.png) — temporary Stage 01
-// production asset and the Player's DESIGN source (look/palette/silhouette).
-// Its motion is not final (walks in place; ASSET_TODO.md W7).
-// 256×256 cells, rows Down/Up/Left/Right, 8 frames, feet anchor (128, 224).
-// Left row = mirrored Right row. V1 reuses the same poses for all three moving
-// gaits, but each gait has a distance-based cycle length tuned on iPhone.
-// This keeps movement speed unchanged while avoiding the old 4.4 steps/sec walk.
+// Production Locomotion Atlas — Player idle/sneak/walk/run, Guard idle/walk/run.
+// Guard Whistle/Search are not in this set yet: they fall back to Idle (resolveClip),
+// and the release gate (characterReadiness) keeps reporting them as missing.
 // ----------------------------------------------------------------------------
-const SHEET_ANCHOR: [number, number] = [PLAYER_SPRITE_GEOMETRY.anchorX / PLAYER_SPRITE_GEOMETRY.cell, PLAYER_SPRITE_GEOMETRY.anchorY / PLAYER_SPRITE_GEOMETRY.cell];
-const walkRow = (row: number, strideLength: number): ClipDef => ({
-  image: 'playerWalk',
-  frames: { y: row * PLAYER_SPRITE_GEOMETRY.cell, frameW: PLAYER_SPRITE_GEOMETRY.cell, frameH: PLAYER_SPRITE_GEOMETRY.cell, count: PLAYER_SPRITE_GEOMETRY.walkFrames, anchor: SHEET_ANCHOR },
-  strideLength,
-});
-const walkHold = (row: number, frame: number): ClipDef => ({
-  image: 'playerWalk',
-  frames: [{ x: frame * PLAYER_SPRITE_GEOMETRY.cell, y: row * PLAYER_SPRITE_GEOMETRY.cell, w: PLAYER_SPRITE_GEOMETRY.cell, h: PLAYER_SPRITE_GEOMETRY.cell, anchor: SHEET_ANCHOR }],
-});
-
-export const PLAYER_WALK_SHEET: CharacterManifest = {
-  scale: PLAYER_SPRITE_SCALE,
-  shadow: true,
-  clips: {
-    sneak: { down: walkRow(0, PLAYER_SPRITE_STRIDE.sneak), up: walkRow(1, PLAYER_SPRITE_STRIDE.sneak), left: walkRow(2, PLAYER_SPRITE_STRIDE.sneak), right: walkRow(3, PLAYER_SPRITE_STRIDE.sneak) },
-    walk: { down: walkRow(0, PLAYER_SPRITE_STRIDE.walk), up: walkRow(1, PLAYER_SPRITE_STRIDE.walk), left: walkRow(2, PLAYER_SPRITE_STRIDE.walk), right: walkRow(3, PLAYER_SPRITE_STRIDE.walk) },
-    run: { down: walkRow(0, PLAYER_SPRITE_STRIDE.run), up: walkRow(1, PLAYER_SPRITE_STRIDE.run), left: walkRow(2, PLAYER_SPRITE_STRIDE.run), right: walkRow(3, PLAYER_SPRITE_STRIDE.run) },
-    idle: { down: walkHold(0, 3), up: walkHold(1, 3), left: walkHold(2, 3), right: walkHold(3, 3) },
-  },
+const LOCO_IMAGES: Record<LocoWho, Partial<Record<LocoState, ImageKey>>> = {
+  player: { idle: 'playerIdle', sneak: 'playerSneak', walk: 'playerWalk', run: 'playerRun' },
+  guard: { idle: 'guardIdle', walk: 'guardWalk', run: 'guardRun' },
 };
+const LOCO_ANCHOR: [number, number] = [LOCO_PIVOT.x / LOCO_CELL, LOCO_PIVOT.y / LOCO_CELL];
+
+function locoCharacter(who: LocoWho): CharacterManifest {
+  const c = LOCO_CHARACTERS[who];
+  const clips: CharacterManifest['clips'] = {};
+  for (const [state, image] of Object.entries(LOCO_IMAGES[who]) as [LocoState, ImageKey][]) {
+    const count = state === 'idle' ? c.idle.frames : c.gaits[state]!.frames;
+    clips[state] = Object.fromEntries(LOCO_ROWS.map((dir, row) => [dir, {
+      image,
+      frames: { y: row * LOCO_CELL, frameW: LOCO_CELL, frameH: LOCO_CELL, count, anchor: LOCO_ANCHOR },
+      ...(state === 'idle' ? { mode: 'time', fps: c.idle.fps, loop: true } : { mode: 'distance', strideLength: locoStride(who, state, dir) }),
+    } satisfies ClipDef]));
+  }
+  return { scale: locoScale(who), shadow: true, bakedMotion: true, clips };
+}
+
+export const LOCOMOTION_CHARACTERS = { player: locoCharacter('player'), guard: locoCharacter('guard') };
 
 /**
- * Active manifest. Player: temporary WALK sheet. Guard: locked LEGACY design.
- * The procedural rig remains a development fallback only.
+ * Active manifest. Not `finalApproved` until the user signs off visually on device;
+ * the procedural rig remains a development fallback only.
  */
 export const ASSET_MANIFEST: AssetManifest = {
-  characters: { player: PLAYER_WALK_SHEET, guard: LEGACY_CHARACTERS.guard },
+  characters: { player: LOCOMOTION_CHARACTERS.player, guard: LOCOMOTION_CHARACTERS.guard },
   environment: { museum: MUSEUM_ATLAS },
   ui: { indicators: null },
 };
 
-/** Unapproved dev trial; the production manifest remains untouched. */
-export const PLAYTEST_MANIFEST: AssetManifest = RIGHT_WALK_TRIAL_ENABLED ? {
-  ...ASSET_MANIFEST,
-  characters: { player: {
-    ...PLAYER_WALK_SHEET,
-    clips: { ...PLAYER_WALK_SHEET.clips, walk: {
-      ...PLAYER_WALK_SHEET.clips.walk,
-      right: { ...walkRow(0, RIGHT_WALK_TRIAL_STRIDE), image: 'playerRightWalkTrial' },
-    } },
-  }, guard: LEGACY_CHARACTERS.guard },
-} : ASSET_MANIFEST;
+/** Gameplay manifest (dev and release are identical now that the right-walk trial is retired). */
+export const PLAYTEST_MANIFEST: AssetManifest = ASSET_MANIFEST;
 
 /** Development only: every character on the procedural fallback rig. */
 export const FALLBACK_MANIFEST: AssetManifest = {

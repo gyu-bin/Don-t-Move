@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { exitGuidance } from '../../ui/hud/exitGuidance';
-import { homeComposition } from '../../ui/branding/homeLayout';
+import { openingLayout } from '../../ui/branding/openingLayout';
 import { campaignStages } from '../levels/campaignStages';
 import { MUSEUM_PATROL } from '../levels/semanticPatrol';
 import { compileStage } from '../world/compileStage';
@@ -28,14 +28,12 @@ test('exit guidance: locked/completed absent, acquired visible, four edges and c
   assert(diagonal.angle<0&&diagonal.angle>-Math.PI/2);
 });
 
-test('HOME enlarged character, equal physical axes, vertical menu separation across safe areas/aspect ratios',()=>{
-  for(const [width,height] of [[320,568],[375,667],[375,812],[390,844],[393,852],[430,932],[844,390]]){
-    const insets={top:height<500?0:59,bottom:34,left:height<500?44:0,right:height<500?44:0};
-    const c=homeComposition(width,height,insets);
-    assert(c.menuTop-c.playerBounds.y-c.playerBounds.height>=23.9);
-    assert(c.menuLeft+c.menuWidth<=width-insets.right);
-    assert(Math.abs(c.playerSize*width/390-c.playerHeight*height/844)<0.001);
-    assert(216/166>=1.25&&216/166<=1.35);
+test('Lobby scene and centred menu stay inside safe areas on every portrait iPhone ratio',()=>{
+  for(const [width,height,top,bottom] of [[320,568,20,0],[375,667,20,0],[375,812,47,34],[390,844,47,34],[393,852,59,34],[402,874,62,34],[430,932,59,34],[440,956,62,34]]){
+    const c=openingLayout(width,height,{top,bottom,left:0,right:0});
+    assert(c.menu.y+c.menu.h<=height-bottom-12);
+    assert(Math.abs(c.menu.x+c.menu.w/2-width/2)<1e-6);
+    assert(c.logoTop>=top);
   }
 });
 
