@@ -2,15 +2,28 @@
   "expo": {
     "name": "Don't Move",
     "slug": "dont-move",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/branding/app-icon.png",
     "userInterfaceStyle": "dark",
     "scheme": "dontmove",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/57cbe370-8574-49be-bc97-ebd973d819e1",
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD",
+      "enabled": true
+    },
     "ios": {
       "appleTeamId": "6YASPU77L7",
       "supportsTablet": false,
-      "bundleIdentifier": "com.dontmove.prototype"
+      "bundleIdentifier": "com.dontmove.prototype",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +31,14 @@
         "foregroundImage": "./assets/branding/adaptive-foreground.png"
       },
       "package": "com.dontmove.prototype",
-      "predictiveBackGestureEnabled": false
+      "versionCode": 1,
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ]
     },
     "web": {
       "favicon": "./assets/branding/app-icon.png"
@@ -40,9 +60,17 @@
         }
       ],
       "./plugins/withSceneLifecycle",
-      ["expo-splash-screen", {
-        "backgroundColor": "#081824"
-      }]
-    ]
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#081824"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "57cbe370-8574-49be-bc97-ebd973d819e1"
+      }
+    }
   }
 }
