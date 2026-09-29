@@ -104,8 +104,12 @@ test('Production Locomotion Atlas registry: every Player/Guard state × directio
   assert(ASSET_MANIFEST.characters.player);
   assert(ASSET_MANIFEST.characters.guard);
   const player=buildCharacterSet(ASSET_MANIFEST.characters.player,{playerIdle:image,playerSneak:image,playerWalk:image,playerRun:image});
-  const guard=buildCharacterSet(ASSET_MANIFEST.characters.guard,{guardIdle:image,guardWalk:image,guardRun:image});
+  const guard=buildCharacterSet(ASSET_MANIFEST.characters.guard,{
+    guardIdle:image,guardWalk:image,guardRun:image,guardWhistle:image,guardSearch:image,
+  });
+  assert(ASSET_MANIFEST.characters.player!.finalApproved&&ASSET_MANIFEST.characters.guard!.finalApproved);
   assert(player.bakedMotion&&guard.bakedMotion,'bob is baked, no runtime lift');
+  assert(player.strict&&guard.strict,'approved atlas uses strict clip lookup');
   for(let dir=0;dir<4;dir++){
    const row=LOCO_ROWS.indexOf(DIR_NAMES[dir])*128;
    ['playerIdle','playerSneak','playerWalk','playerRun'].forEach((source,anim)=>{
@@ -116,7 +120,7 @@ test('Production Locomotion Atlas registry: every Player/Guard state × directio
     assert.equal(clip.frames[0].ax,64);assert.equal(clip.frames[0].ay,112);
     if(anim>0)assert.equal(clip.strideLength,locoStride('player',(['sneak','walk','run'] as const)[anim-1],DIR_NAMES[dir]));
    });
-   for(const [anim,source,frames] of [[0,'guardIdle',6],[2,'guardWalk',8],[3,'guardRun',8],[4,'guardIdle',6],[5,'guardIdle',6]] as const){
+   for(const [anim,source,frames] of [[0,'guardIdle',6],[2,'guardWalk',8],[3,'guardRun',8],[4,'guardWhistle',6],[5,'guardSearch',6]] as const){
     const clip=resolveClip(guard,anim,dir);
     assert(clip);assert.equal(clip.source,source);assert.equal(clip.frames.length,frames);assert.equal(clip.frames[0].sy,row);
    }

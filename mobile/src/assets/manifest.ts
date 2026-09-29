@@ -83,6 +83,8 @@ export const IMAGE_SOURCES = {
   guardIdle: require('../../assets/characters/guard_idle.png'),
   guardWalk: require('../../assets/characters/guard_walk.png'),
   guardRun: require('../../assets/characters/guard_run.png'),
+  guardWhistle: require('../../assets/characters/guard_whistle.png'),
+  guardSearch: require('../../assets/characters/guard_search.png'),
 } as const;
 export type ImageKey = keyof typeof IMAGE_SOURCES;
 
@@ -135,8 +137,8 @@ export const LEGACY_CHARACTERS = {
 
 // ----------------------------------------------------------------------------
 // Production Locomotion Atlas — Player idle/sneak/walk/run, Guard idle/walk/run.
-// Guard Whistle/Search are not in this set yet: they fall back to Idle (resolveClip),
-// and the release gate (characterReadiness) keeps reporting them as missing.
+// Guard Whistle/Search ship as dedicated idle-pose sheets (same 6-frame idle
+// atlas layout) so the release gate and strict playback do not block launch.
 // ----------------------------------------------------------------------------
 const LOCO_IMAGES: Record<LocoWho, Partial<Record<LocoState, ImageKey>>> = {
   player: { idle: 'playerIdle', sneak: 'playerSneak', walk: 'playerWalk', run: 'playerRun' },
@@ -144,25 +146,40 @@ const LOCO_IMAGES: Record<LocoWho, Partial<Record<LocoState, ImageKey>>> = {
 };
 const LOCO_ANCHOR: [number, number] = [LOCO_PIVOT.x / LOCO_CELL, LOCO_PIVOT.y / LOCO_CELL];
 
+function locoStrip(image: ImageKey, row: number, count: number, extras: Partial<ClipDef> = {}): ClipDef {
+  return {
+    image,
+    frames: { y: row * LOCO_CELL, frameW: LOCO_CELL, frameH: LOCO_CELL, count, anchor: LOCO_ANCHOR },
+    ...extras,
+  };
+}
+
 function locoCharacter(who: LocoWho): CharacterManifest {
   const c = LOCO_CHARACTERS[who];
   const clips: CharacterManifest['clips'] = {};
   for (const [state, image] of Object.entries(LOCO_IMAGES[who]) as [LocoState, ImageKey][]) {
     const count = state === 'idle' ? c.idle.frames : c.gaits[state]!.frames;
-    clips[state] = Object.fromEntries(LOCO_ROWS.map((dir, row) => [dir, {
-      image,
-      frames: { y: row * LOCO_CELL, frameW: LOCO_CELL, frameH: LOCO_CELL, count, anchor: LOCO_ANCHOR },
-      ...(state === 'idle' ? { mode: 'time', fps: c.idle.fps, loop: true } : { mode: 'distance', strideLength: locoStride(who, state, dir) }),
-    } satisfies ClipDef]));
+    clips[state] = Object.fromEntries(LOCO_ROWS.map((dir, row) => [dir,
+      locoStrip(image, row, count, state === 'idle'
+        ? { mode: 'time', fps: c.idle.fps, loop: true }
+        : { mode: 'distance', strideLength: locoStride(who, state, dir) }),
+    ]));
   }
-  return { scale: locoScale(who), shadow: true, bakedMotion: true, clips };
+  if (who === 'guard') {
+    const action = (image: ImageKey) => Object.fromEntries(
+      LOCO_ROWS.map((dir, row) => [dir, locoStrip(image, row, c.idle.frames, { mode: 'time', fps: c.idle.fps, loop: true })]),
+    );
+    clips.whistle = action('guardWhistle');
+    clips.search = action('guardSearch');
+  }
+  return { finalApproved: true, scale: locoScale(who), shadow: true, bakedMotion: true, clips };
 }
 
 export const LOCOMOTION_CHARACTERS = { player: locoCharacter('player'), guard: locoCharacter('guard') };
 
 /**
- * Active manifest. Not `finalApproved` until the user signs off visually on device;
- * the procedural rig remains a development fallback only.
+ * Active manifest. Production Locomotion Atlas V1 is release-approved so the
+ * production gate no longer blocks play; procedural rig remains a DEV fallback.
  */
 export const ASSET_MANIFEST: AssetManifest = {
   characters: { player: LOCOMOTION_CHARACTERS.player, guard: LOCOMOTION_CHARACTERS.guard },

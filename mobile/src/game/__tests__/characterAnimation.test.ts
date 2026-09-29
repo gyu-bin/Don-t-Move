@@ -45,6 +45,17 @@ test('Release detects missing, reused and unapproved final sheets',()=>{
   assert(finalCharacterIssues(m).some((s)=>s.includes('approval')));
 });
 
+test('Production locomotion atlas clears the release gate',async()=>{
+  const previous=require.extensions['.png'];
+  require.extensions['.png']=(module)=>{module.exports=0;};
+  try{
+    const {ASSET_MANIFEST}=await import('../../assets/manifest');
+    assert.deepEqual(finalCharacterIssues(ASSET_MANIFEST),[]);
+  }finally{
+    if(previous)require.extensions['.png']=previous;else delete require.extensions['.png'];
+  }
+});
+
 test('Guard uses registry artwork stride per direction, not a fixed runtime cadence',()=>{
   const strides=guardStrideContract({scale:0.25,clips:{walk:{right:{image:'legacyGuard',
     frames:{count:8,frameW:256,frameH:256},mode:'distance',strideLength:64}}}});

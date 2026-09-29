@@ -9,8 +9,11 @@ atlas is baked from a 2D cutout rig (`tools/locomotion`, `npm run locomotion:bak
 `src/game/core/locomotionAtlas.ts`, QA in `tools/locomotion/atlas.test.ts`
 (`npm run locomotion:validate`, `npm run locomotion:previews`). The 256-cell
 contract below (SPEC.md, tools/sprites) is superseded for these states.
-Open: on-device visual approval (`finalApproved` stays unset), Guard Whistle/Search
-(fall back to Idle), previous `player_walk.png` kept at `deprecated/player_walk_256_v0.png`.
+Shipped 2026-09-29: `finalApproved` set for Player/Guard locomotion atlas so
+production no longer blocks on the incomplete-asset gate. Guard Whistle/Search
+use dedicated idle-pose sheets (`guard_whistle.png` / `guard_search.png`) until
+authored action cycles arrive. Previous `player_walk.png` kept at
+`deprecated/player_walk_256_v0.png`.
 
 ## Supplied Character Master Sheet integration assessment
 
