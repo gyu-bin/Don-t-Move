@@ -46,7 +46,8 @@ export function reduceAudio(previous: AudioState | null, input: GameAudioInput):
 export const MUSIC_EVENTS: readonly MusicEvent[] = ['bgm_lobby', 'bgm_stealth', 'bgm_chase'];
 export type MusicMix = Record<MusicEvent, number>;
 export function silenceMix(): MusicMix { return { bgm_lobby: 0, bgm_stealth: 0, bgm_chase: 0 }; }
-export const TRACK_BASE_GAIN: MusicMix = { bgm_lobby: 0.50, bgm_stealth: 0.52, bgm_chase: 0.63 };
+// Stealth raised 0.52 → 0.61 (+1.4 dB) after play feedback; stays under Chase and ≥ 5 LU under both whistles.
+export const TRACK_BASE_GAIN: MusicMix = { bgm_lobby: 0.50, bgm_stealth: 0.61, bgm_chase: 0.63 };
 export const WHISTLE_GAIN = 0.8;
 export const UI_GAIN = 0.45;
 /** Fade normalized track weights; apply one master factor only at native output. */

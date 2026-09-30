@@ -4,16 +4,28 @@ import type { Navigation } from '../world/navigation';
 import type { GuardState } from './guardBrain';
 import { GUARD_TUNING as T } from './guardTuning';
 
-/** Cached path; moving targets can trigger at most one plan per cooldown. */
-export function travel(g: GuardState, n: Navigation, speed: number, dt: number, t: number): boolean {
+/**
+ * Waypoint travel (Patrol / Investigate / Search / Return): cached path, at most one plan per
+ * cooldown, exact stop on the final waypoint, turn in place before a sharp new heading.
+ *
+ * `pursuit` is the Direct Chase fallback when the straight line to the player is blocked:
+ * the target is a live body, so a stale endpoint replans at once instead of holding
+ * speed 0 until the cooldown ends, corners are taken while moving, and speed is carried
+ * through waypoints instead of being re-derived from the (shorter) final step.
+ */
+export function travel(g: GuardState, n: Navigation, speed: number, dt: number, t: number, pursuit = false): boolean {
   'worklet';
   const changed = Math.hypot(g.targetX - g.pathTargetX, g.targetY - g.pathTargetY) >= T.repathDistance;
   const done = g.pathIndex >= g.path.length;
+  const stale = done && Math.hypot(g.targetX - g.pathTargetX, g.targetY - g.pathTargetY) > T.arrivalDistance;
   // A pending replan is not arrival at the new destination.
-  if(t<g.repathAt && (g.path.length===0 || (done && Math.hypot(g.targetX-g.pathTargetX,g.targetY-g.pathTargetY)>T.arrivalDistance))){
+  if(t<g.repathAt && (g.path.length===0 || stale)){
+    // Pursuit keeps closing on the live body while the plan cooldown runs (no A* spam,
+    // no standing still at a stale endpoint); waypoint travel waits for its new plan.
+    if(pursuit && stepToward(g, n, speed, dt)) return false;
     g.speed=0;return false;
   }
-  if (t >= g.repathAt && (g.path.length === 0 || changed || (done && Math.hypot(g.targetX - g.pathTargetX, g.targetY - g.pathTargetY) > T.arrivalDistance))) {
+  if (t >= g.repathAt && (g.path.length === 0 || changed || stale)) {
     g.path = findPath(n, g.x, g.y, g.targetX, g.targetY);
     g.pathIndex = 0;
     g.pathTargetX = g.targetX; g.pathTargetY = g.targetY;
@@ -33,8 +45,9 @@ export function travel(g: GuardState, n: Navigation, speed: number, dt: number, 
   g.facing = turnToward(g.facing, heading, T.turnRateAlert, dt);
   g.baseFacing = g.facing; g.glance = 0;
   // Turn before moving, so the rendered body and actual travel agree.
-  if (Math.abs(wrapAngle(heading - g.facing)) > 0.08) { g.speed = 0; return false; }
-  g.facing = heading; g.baseFacing = heading;
+  // A pursuing guard only stops to turn around (> 90°); smaller corners are taken running.
+  if (Math.abs(wrapAngle(heading - g.facing)) > (pursuit ? PURSUIT_TURN_IN_PLACE : 0.08)) { g.speed = 0; return false; }
+  if (!pursuit) { g.facing = heading; g.baseFacing = heading; }
   const velocity = g.speed + clamp(speed - g.speed, -T.decel * dt, T.accel * dt);
   const move = Math.min(distance, velocity * dt);
   const x = g.x + dx / distance * move;
@@ -45,6 +58,53 @@ export function travel(g: GuardState, n: Navigation, speed: number, dt: number, 
     return false;
   }
   g.x = x; g.y = y;
-  g.speed = move / Math.max(dt, 1e-6);
+  g.speed = pursuit ? velocity : move / Math.max(dt, 1e-6);
+  return false;
+}
+
+/** One running step straight at the live target when that step alone is clear. */
+function stepToward(g: GuardState, n: Navigation, speed: number, dt: number): boolean {
+  'worklet';
+  const dx = g.targetX - g.x, dy = g.targetY - g.y, distance = Math.hypot(dx, dy);
+  if (distance < 1e-6) return false;
+  const heading = Math.atan2(dy, dx);
+  if (Math.abs(wrapAngle(heading - g.facing)) > PURSUIT_TURN_IN_PLACE) return false;
+  const velocity = g.speed + clamp(speed - g.speed, -T.decel * dt, T.accel * dt);
+  const move = Math.min(distance, velocity * dt);
+  const x = g.x + dx / distance * move, y = g.y + dy / distance * move;
+  if (!clearSegment(g.x, g.y, x, y, n.blockers, n.radius)) return false;
+  g.x = x; g.y = y; g.speed = velocity;
+  return true;
+}
+
+/** Heading change a pursuing guard must turn in place for (a reversal), rad. */
+const PURSUIT_TURN_IN_PLACE = Math.PI / 2;
+
+/**
+ * Direct Chase movement controller. The target is the player's live body, not a
+ * navigation destination: there is no arrival radius, no deceleration zone and no path
+ * endpoint. While the straight line to the player is clear for the guard's body the guard
+ * runs straight at the player and stops only at body contact (`contactDistance`, which
+ * must not exceed the capture distance, so capture always happens). Around walls it
+ * falls back to path travel in pursuit mode. Always returns false (a chase never arrives).
+ */
+export function pursue(g: GuardState, n: Navigation, speed: number, dt: number, t: number, contactDistance: number): boolean {
+  'worklet';
+  const dx = g.targetX - g.x;
+  const dy = g.targetY - g.y;
+  const distance = Math.hypot(dx, dy);
+  if (distance < 1e-6 || !clearSegment(g.x, g.y, g.targetX, g.targetY, n.blockers, n.radius)) {
+    travel(g, n, speed, dt, t, true);
+    return false;
+  }
+  const heading = Math.atan2(dy, dx);
+  g.facing = turnToward(g.facing, heading, T.turnRateAlert, dt);
+  g.baseFacing = g.facing; g.glance = 0;
+  if (Math.abs(wrapAngle(heading - g.facing)) > PURSUIT_TURN_IN_PLACE) { g.speed = 0; return false; }
+  const velocity = g.speed + clamp(speed - g.speed, -T.decel * dt, T.accel * dt);
+  const move = Math.min(velocity * dt, Math.max(0, distance - contactDistance));
+  g.x += dx / distance * move;
+  g.y += dy / distance * move;
+  g.speed = velocity;
   return false;
 }

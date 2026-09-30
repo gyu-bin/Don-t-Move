@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { fadeMix, reduceAudio, silenceMix, TRACK_BASE_GAIN, type GameAudioInput } from '../audioState';
+import { fadeMix, reduceAudio, silenceMix, TRACK_BASE_GAIN, WHISTLE_GAIN, type GameAudioInput } from '../audioState';
 const base: GameAudioInput = { sessionKey: '01-01:0', phase: 'STEALTH', theftRevision: 0,
   spottedRevision: 0, sfxEnabled: true, bgmEnabled: true, paused: false, active: true };
 test('separate theft and spotted events emit once each', () => {
@@ -316,4 +316,16 @@ test('cold-launch diagnostics distinguish silent Intro from audible Home intent'
   const current=reduceAudio(prior,home).state;
   assert.ok(audioTransitionLog(intro,home,prior,current,()=>true).includes('[AUDIO] BGM LOBBY REQUESTED'));
   assert.deepEqual(audioTransitionLog(home,home,current,current,()=>true),[]);
+});
+
+test('mix priority: Whistle > Chase ≥ Stealth; Stealth raised without touching Chase or Lobby', () => {
+  assert.equal(TRACK_BASE_GAIN.bgm_chase, 0.63);
+  assert.equal(TRACK_BASE_GAIN.bgm_lobby, 0.50);
+  assert.equal(TRACK_BASE_GAIN.bgm_stealth, 0.61);
+  // stealth.mp3 −16.3 LUFS, chase.mp3 −16.0 LUFS, whistle-spotted.wav −13.6 LUFS (ffmpeg ebur128).
+  const lufs = (file: number, gain: number) => file + 20 * Math.log10(gain);
+  const stealth = lufs(-16.3, TRACK_BASE_GAIN.bgm_stealth), chase = lufs(-16.0, TRACK_BASE_GAIN.bgm_chase);
+  const whistle = lufs(-13.6, WHISTLE_GAIN);
+  assert.ok(stealth <= chase, `stealth ${stealth.toFixed(1)} above chase ${chase.toFixed(1)}`);
+  assert.ok(whistle - Math.max(stealth, chase) >= 4, 'the quieter whistle stays ≥ 4 LU above the music');
 });

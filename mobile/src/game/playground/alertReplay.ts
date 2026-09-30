@@ -3,7 +3,8 @@ import type { PlaygroundState } from './playgroundState';
 /** Development acceptance replay on the real museum, using only normal move targets.
  * No guard state, visibility, capture or LKP overrides. Fixed 60 Hz, same as tests.
  * Approach the east guard, wait for his whistle, run around the west wall stub,
- * then wait out the search in the lower gallery.
+ * then wait out the search in the lower gallery. Since Direct Chase no longer brakes near
+ * the player, this close-range start now ends in capture (see globalAlert.test.ts).
  */
 const ROUTE = [[382, 418], [185, 418], [185, 250], [110, 250], [110, 382], [260, 400], [260, 600]];
 

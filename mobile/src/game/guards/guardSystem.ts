@@ -2,7 +2,7 @@ import { damp, turnToward } from '../core/math';
 import { gaitFromSpeed, strideCycleLength } from '../core/locomotion';
 import { Awareness, GuardAction } from '../core/types';
 import { clearSegment } from '../world/navigation';
-import { travel } from './guardTravel';
+import { pursue, travel } from './guardTravel';
 import type { Navigation } from '../world/navigation';
 import { nearestPatrolAnchor, observeGuard, stepGuard } from './guardBrain';
 import type { GuardEvents, GuardState, PlayerView } from './guardBrain';
@@ -98,8 +98,10 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
   g.stateT += dt;
   g.alertAge += dt;
   if (g.awareness === Awareness.Chase || g.awareness === Awareness.Investigate) {
-    const arrived = travel(g, n, g.awareness === Awareness.Chase ? T.runSpeed : T.investigateSpeed, dt, t);
-    if (arrived && g.awareness === Awareness.Investigate) enter(g, Awareness.Search);
+    // Direct Chase and LKP/support travel use separate controllers: only waypoint
+    // travel has arrival; a chase runs through to body contact (see pursue()).
+    if (g.awareness === Awareness.Chase) pursue(g, n, T.runSpeed, dt, t, CONTACT_DISTANCE);
+    else if (travel(g, n, T.investigateSpeed, dt, t)) enter(g, Awareness.Search);
   } else if (g.awareness === Awareness.Search) {
     const searchSeconds=theft?.roles ? (ev?.lockdownActive?T.lockdownSearchSeconds:T.museumSearchSeconds) : T.searchSeconds;
     if (g.stateT >= searchSeconds) {
@@ -150,9 +152,13 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
   g.actionT += ((g.action === GuardAction.None ? 0 : 1) - g.actionT) * damp(12, dt);
 }
 
+/** Where a pursuing guard stops: bodies touching, strictly inside the capture distance. */
+export const CONTACT_DISTANCE = BODY.playerRadius + BODY.guardRadius;
+export const CAPTURE_DISTANCE = BODY.playerRadius + BODY.guardRadius + BODY.captureTolerance;
+
 export function bodiesTouch(g: { x: number; y: number }, p: { x: number; y: number }, blockers: number[]): boolean {
   'worklet';
-  return Math.hypot(g.x - p.x, g.y - p.y) <= BODY.playerRadius + BODY.guardRadius + BODY.captureTolerance &&
+  return Math.hypot(g.x - p.x, g.y - p.y) <= CAPTURE_DISTANCE &&
     clearSegment(g.x, g.y, p.x, p.y, blockers);
 }
 

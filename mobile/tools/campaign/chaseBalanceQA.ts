@@ -49,6 +49,22 @@ export function straightChase(){
  for(let f=0;f<600;f++){stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:stage.width,h:stage.height},stage.movementBlockers,stage.visionBlockers,nav);if(f===299||f===599)gaps.push(Math.hypot(s.player.x-g.x,s.player.y-g.y));}
  return{gaps,caught:s.events.caught};
 }
+/** Straight-corridor Run vs Direct Chase from `start` world units; samples every 0.5 s until capture. */
+export function chaseTrace(start=280,seconds=30){
+ const{stage,nav,s}=corridor(),g=s.guards[0];
+ g.x=s.player.x-start;s.playerMode=3;s.player.tx=4800;s.player.ty=s.player.y;s.player.hasTarget=true;
+ s.events.globalAlert=true;s.events.globalRevision=1;g.awareness=Awareness.Chase;
+ const gaps=[Math.hypot(s.player.x-g.x,s.player.y-g.y)];let minGuardSpeedNear=Infinity,caughtAt=-1,playerSpeed=0;
+ for(let f=0;f<seconds*60;f++){
+  stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:stage.width,h:stage.height},stage.movementBlockers,stage.visionBlockers,nav);
+  const gap=Math.hypot(s.player.x-g.x,s.player.y-g.y);
+  if(s.events.caught){caughtAt=s.t;break;}
+  if(f>90&&gap<80)minGuardSpeedNear=Math.min(minGuardSpeedNear,g.speed);
+  if(f>90)playerSpeed=Math.max(playerSpeed,s.player.speed);
+  if(f%30===29)gaps.push(gap);
+ }
+ return{gaps,caught:s.events.caught,caughtAt,minGuardSpeedNear,playerSpeed,endX:s.player.x};
+}
 if(process.argv[1]?.endsWith('chaseBalanceQA.ts'))console.log(JSON.stringify({speeds:measureSpeeds(),straight:straightChase()},null,2));
 
 /** Continuous player movement around one opaque corner; all AI decisions remain live. */
@@ -68,4 +84,21 @@ export function cornerEscape(){
   if(searched)break;
  }
  return{caught:s.events.caught,firstBreak,searched,hiddenSamples,wrongHiddenUpdates,time:s.t,gap:Math.hypot(s.player.x-g.x,s.player.y-g.y)};
+}
+
+/** cornerEscape, continued: after Search the alert must wind down through Return to Patrol. */
+export function cornerEscapeFull(){
+ const{stage,s}=corridor(),g=s.guards[0];
+ const wall=[0,200,720,240];stage.movementBlockers.push(...wall);stage.visionBlockers.push(...wall);
+ const cornerNav=buildNavigation(stage,BODY.guardRadius);
+ s.player.x=760;s.player.y=160;g.x=400;g.y=160;s.events.globalAlert=true;s.events.globalRevision=1;g.awareness=Awareness.Chase;
+ const points=[[760,160],[760,280],[300,280]];let leg=0;const states=new Set<number>();
+ for(let f=0;f<60*60&&!s.events.caught;f++){
+  s.playerMode=3;s.player.tx=points[leg][0];s.player.ty=points[leg][1];s.player.hasTarget=true;
+  stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:stage.width,h:stage.height},stage.movementBlockers,stage.visionBlockers,cornerNav);
+  if(Math.hypot(s.player.x-s.player.tx,s.player.y-s.player.ty)<2&&leg<points.length-1)leg++;
+  states.add(g.awareness);
+  if(states.has(Awareness.Return)&&!s.events.globalAlert)break;
+ }
+ return{caught:s.events.caught,states,alertEnded:!s.events.globalAlert,finalState:g.awareness};
 }

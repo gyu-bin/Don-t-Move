@@ -10,7 +10,12 @@ export function museumMission06(){return mission(6,'Conservation Lab',
  risk:[[1.5,9.5],[8,9.5],[15,9.5],[15,6],[15,2.5],[14.5,2.5]],
  escape:[[14.5,2.5],[15,6],[15,12],[15,16.5],[9.5,16.5],[9.5,17.5]],alternateEscape:[[14.5,2.5],[10,2.5],[10,6],[11,6],[11,11.5],[10,11.5],[10,16.5],[9.5,17.5]]},
  [{kind:'table',x:9.5,y:8,scale:1.3,collisionScale:1.3},{kind:'equipment',x:8,y:12.5},{kind:'displayCase',x:13.5,y:7},
- {kind:'table',x:13,y:17.6},{kind:'lamp',x:8,y:1}],
+ {kind:'table',x:13,y:17.6},{kind:'lamp',x:8,y:1},
+ // Density V1: intake racks, specimen storage, aisle equipment, south service screens.
+ {kind:'shelf',x:1.7,y:8},{kind:'equipment',x:4.6,y:7.9},
+ {kind:'equipment',x:9,y:1.9},{kind:'shelf',x:7.7,y:3.75},
+ {kind:'equipment',x:13.6,y:12.4},
+ {kind:'partition',x:12.2,y:15.4},{kind:'equipment',x:7.55,y:15.9}],
  {name:'Restoration Workbench',kind:'table',x:9.5,y:8},[
  {subject:'Intake door / restoration crossing',points:[[9.5,6.5],[10.5,10.5]],look:[S,W],role:'room'},
  {subject:'Equipment aisle / service junction',points:[[15.5,12],[15.5,16.5]],look:[N,W],role:'roaming',roaming:true},
@@ -26,7 +31,12 @@ export function museumMission07(){return mission(7,'Private Gallery',
  risk:[[8.5,1.5],[10.5,3.5],[10.5,6.5],[12.5,6.5],[12.5,13.5],[12.5,16.5]],
  escape:[[12.5,16.5],[10.5,16.5],[7,16.5],[4.5,16.5],[4.5,10],[4.5,7.5],[1.5,7.5]],alternateEscape:[[12.5,16.5],[12.5,10],[9,10],[4.5,10],[4.5,7.5],[1.5,7.5]]},
  [{kind:'statue',x:6.5,y:12.5},{kind:'painting',x:4,y:5},{kind:'sofa',x:9,y:17.7},
- {kind:'displayCase',x:13.8,y:9},{kind:'lamp',x:11,y:1}],
+ {kind:'displayCase',x:13.8,y:9},{kind:'lamp',x:11,y:1},
+ // Density V1: compact, expensive pieces that split sightlines inside each private room.
+ {kind:'displayCase',x:8.8,y:3.9},                       // foyer split between the two branches
+ {kind:'pillar',x:7.5,y:8.4},{kind:'pillar',x:7.5,y:13.9},// west portrait room niches
+ {kind:'statue',x:10.8,y:13.4},{kind:'partition',x:14.25,y:5.6},
+ {kind:'statue',x:8.5,y:15.9,scale:1.2,collisionScale:1.2}],// private sculpture in the salon
  {name:'VIP Portrait Salon',kind:'statue',x:6.5,y:12.5},[
  {subject:'Private door / VIP bridge / side gallery',points:[[6,7],[6,10],[6,14]],look:[S,E,N],role:'corridor',range:4.6},
  {subject:'Objective salon / private collection entrance',points:[[12.5,12],[11,16],[14,16]],look:[N,E,W],role:'objective',range:4.6},
@@ -41,7 +51,12 @@ export function museumMission08(){return mission(8,'Security Core',
  risk:[[19,9.5],[10.5,9.5],[10.5,4],[10.5,2.5]],
  escape:[[10.5,2.5],[10.5,7],[8,7],[8,9.5],[4.5,9.5],[4.5,15],[10.5,15],[14,15],[14,17.5]],alternateEscape:[[10.5,2.5],[10.5,9.5],[11.5,9.5],[11.5,15],[14,15],[14,17.5]]},
  [{kind:'counter',x:9,y:11.5},{kind:'equipment',x:12.5,y:12.3},{kind:'cctv',x:8,y:1},
- {kind:'counter',x:3,y:8.5},{kind:'counter',x:11,y:17.5},{kind:'lamp',x:16,y:7}],
+ {kind:'counter',x:3,y:8.5},{kind:'counter',x:11,y:17.5},{kind:'lamp',x:16,y:7},
+ // Density V1: checkpoint desk + monitors, west monitor island, archive racks, evacuation gear.
+ {kind:'counter',x:17.6,y:11.95},{kind:'equipment',x:18.6,y:7.85},
+ {kind:'equipment',x:1.55,y:11},
+ {kind:'displayCase',x:12.3,y:1.95},{kind:'shelf',x:8.7,y:1.75},
+ {kind:'equipment',x:8.7,y:17.85}],
  {name:'Central Security Desk',kind:'counter',x:9,y:11.5},[
  {subject:'East access checkpoint',points:[[16,8],[18,10.5]],look:[S,W],role:'room'},
  {subject:'Junction / west maintenance door',points:[[8,8],[11,8],[11,11.5]],look:[E,W,N],role:'corridor'},
@@ -58,7 +73,13 @@ export function museumMission09(){return mission(9,'Master Exhibition',
  risk:[[3,1.5],[3,4.5],[4.5,4.5],[4.5,7.5],[12.5,7.5],[12.5,12],[10.5,12],[10.5,16.5],[18,16.5],[18,18]],
  escape:[[18,18],[18.5,16],[18.5,11],[17.5,11],[17.5,5],[17.5,1.5]],alternateEscape:[[18,18],[18,16.5],[11.5,16.5],[11.5,6.5],[17.5,6.5],[17.5,1.5]]},
  [{kind:'statue',x:2.5,y:10.5},{kind:'statue',x:6.5,y:18.8},{kind:'pillar',x:12.7,y:14},
- {kind:'displayCase',x:16.8,y:12.5},{kind:'painting',x:15,y:1},{kind:'lamp',x:3,y:1}],
+ {kind:'displayCase',x:16.8,y:12.5},{kind:'painting',x:15,y:1},{kind:'lamp',x:3,y:1},
+ // Density V1: every pocket becomes a display zone; the south hall gets a centerpiece island.
+ {kind:'displayCase',x:5.4,y:1.95},{kind:'pillar',x:1.6,y:4.3},          // vestibule
+ {kind:'statue',x:6.5,y:12.95},{kind:'displayCase',x:1.9,y:12.8},        // sculpture pockets
+ {kind:'displayCase',x:2.5,y:19.8},{kind:'displayCase',x:7,y:15.9},     // south-west collection
+ {kind:'statue',x:11.2,y:19.6,scale:1.5,collisionScale:1.5},{kind:'pillar',x:9.45,y:12.85}, // master centerpiece + pillar
+ {kind:'displayCase',x:19.3,y:3.3},{kind:'pillar',x:14.6,y:5.6}],       // north portrait room
  {name:'Master Sculpture Suite',kind:'statue',x:2.5,y:10.5},[
  {subject:'Vestibule / sculpture threshold',points:[[2.5,8.5],[5.5,10]],look:[E,S],role:'room'},
  {subject:'South collection intersection',points:[[3,16.5],[6,17]],look:[E,W],role:'room'},
@@ -78,7 +99,12 @@ export function museumMission10(){return mission(10,'Grand Heist',
  escape:[[19.5,3],[19.5,5],[16,5],[12,5],[12,7],[8,7],[5.5,7],[5.5,11],[5.5,14.5],[1.5,14.5]],alternateEscape:[[19.5,3],[19.5,11],[19.5,18.5],[13.5,18.5],[13.5,17.5],[5.5,17.5],[5.5,14.5],[1.5,14.5]]},
  [{kind:'statue',x:10.5,y:19.5,scale:1.4,collisionScale:1.4},{kind:'displayCase',x:4,y:16},
  {kind:'statue',x:7.5,y:5.5},{kind:'counter',x:12,y:11.5},{kind:'pillar',x:17.5,y:3.5},
- {kind:'equipment',x:20.8,y:16},{kind:'diamondPedestal',x:20.5,y:2},{kind:'lamp',x:11,y:1}],
+ {kind:'equipment',x:20.8,y:16},{kind:'diamondPedestal',x:20.5,y:2},{kind:'lamp',x:11,y:1},
+ // Density V1: Grand Exhibition pillars/island, chamber pillar line, escape-side service cover.
+ {kind:'pillar',x:9.6,y:15.85},{kind:'pillar',x:9.6,y:21.9},{kind:'displayCase',x:15.35,y:22.95},
+ {kind:'statue',x:7.5,y:12.75},{kind:'partition',x:3.8,y:12.4},{kind:'displayCase',x:3.9,y:9.9},
+ {kind:'displayCase',x:11.65,y:2.2},{kind:'statue',x:15.6,y:2},{kind:'pillar',x:13,y:4.2},
+ {kind:'pillar',x:22.55,y:11.4},{kind:'shelf',x:22.3,y:13.9}],
  {name:'Master Diamond Chamber',kind:'diamondPedestal',x:20.5,y:2},[
  {subject:'Grand Exhibition arrival / south crossing',points:[[14.5,20.5],[14.5,17]],look:[N,N],role:'room'},
  {subject:'Service door / western escape intersection',points:[[4.5,13],[6.5,18]],look:[S,N],role:'exit'},

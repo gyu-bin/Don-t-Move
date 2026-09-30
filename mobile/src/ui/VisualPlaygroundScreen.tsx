@@ -287,7 +287,7 @@ function StageGame({
   const [flash, setFlash] = useState<'cyan' | 'red' | null>(null);
   const [result, setResult] = useState({ seconds: 0, alerts: 0 });
   const [pickupRevision, setPickupRevision] = useState(0);
-  const [tiltStatus, setTiltStatus] = useState('HOLD COMFORTABLY');
+  const [tiltStatus, setTiltStatus] = useState(() => (tilt.enabled ? tilt.controller.value.status : 'PLAY'));
   const [audioSession,setAudioSession]=useState(0);
   const [phaseInfo,setPhaseInfo]=useState({phase:'STEALTH' as GamePhase,theft:0,spotted:0,remaining:0,lockdown:false});
   const [resultVisible,setResultVisible]=useState(false);

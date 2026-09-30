@@ -17,6 +17,7 @@ export function loadLabelFont(ck: CanvasKit, size: number) {
     '/System/Library/Fonts/Supplemental/Arial Bold.ttf',
     '/System/Library/Fonts/Supplemental/Arial.ttf',
     '/Library/Fonts/Arial.ttf',
+    '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', // Linux QA hosts
   ];
   for (const p of candidates) {
     if (!fs.existsSync(p)) continue;

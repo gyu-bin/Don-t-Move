@@ -2055,6 +2055,26 @@
         "y": 7
       },
       {
+        "kind": "displayCase",
+        "x": 5,
+        "y": 12.9
+      },
+      {
+        "kind": "partition",
+        "x": 8.8,
+        "y": 11.6
+      },
+      {
+        "kind": "statue",
+        "x": 15.3,
+        "y": 3.8
+      },
+      {
+        "kind": "displayCase",
+        "x": 13.65,
+        "y": 12.9
+      },
+      {
         "kind": "objectiveCase",
         "x": 14,
         "y": 5.62
@@ -2592,6 +2612,41 @@
         "kind": "lamp",
         "x": 8,
         "y": 1
+      },
+      {
+        "kind": "shelf",
+        "x": 1.7,
+        "y": 8
+      },
+      {
+        "kind": "equipment",
+        "x": 4.6,
+        "y": 7.9
+      },
+      {
+        "kind": "equipment",
+        "x": 9,
+        "y": 1.9
+      },
+      {
+        "kind": "shelf",
+        "x": 7.7,
+        "y": 3.75
+      },
+      {
+        "kind": "equipment",
+        "x": 13.6,
+        "y": 12.4
+      },
+      {
+        "kind": "partition",
+        "x": 12.2,
+        "y": 15.4
+      },
+      {
+        "kind": "equipment",
+        "x": 7.55,
+        "y": 15.9
       },
       {
         "kind": "objectiveCase",
@@ -3140,6 +3195,38 @@
         "y": 1
       },
       {
+        "kind": "displayCase",
+        "x": 8.8,
+        "y": 3.9
+      },
+      {
+        "kind": "pillar",
+        "x": 7.5,
+        "y": 8.4
+      },
+      {
+        "kind": "pillar",
+        "x": 7.5,
+        "y": 13.9
+      },
+      {
+        "kind": "statue",
+        "x": 10.8,
+        "y": 13.4
+      },
+      {
+        "kind": "partition",
+        "x": 14.25,
+        "y": 5.6
+      },
+      {
+        "kind": "statue",
+        "x": 8.5,
+        "y": 15.9,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
         "kind": "objectiveCase",
         "x": 12.5,
         "y": 16.62
@@ -3638,6 +3725,36 @@
         "kind": "lamp",
         "x": 16,
         "y": 7
+      },
+      {
+        "kind": "counter",
+        "x": 17.6,
+        "y": 11.95
+      },
+      {
+        "kind": "equipment",
+        "x": 18.6,
+        "y": 7.85
+      },
+      {
+        "kind": "equipment",
+        "x": 1.55,
+        "y": 11
+      },
+      {
+        "kind": "displayCase",
+        "x": 12.3,
+        "y": 1.95
+      },
+      {
+        "kind": "shelf",
+        "x": 8.7,
+        "y": 1.75
+      },
+      {
+        "kind": "equipment",
+        "x": 8.7,
+        "y": 17.85
       },
       {
         "kind": "objectiveCase",
@@ -4292,6 +4409,58 @@
         "kind": "lamp",
         "x": 3,
         "y": 1
+      },
+      {
+        "kind": "displayCase",
+        "x": 5.4,
+        "y": 1.95
+      },
+      {
+        "kind": "pillar",
+        "x": 1.6,
+        "y": 4.3
+      },
+      {
+        "kind": "statue",
+        "x": 6.5,
+        "y": 12.95
+      },
+      {
+        "kind": "displayCase",
+        "x": 1.9,
+        "y": 12.8
+      },
+      {
+        "kind": "displayCase",
+        "x": 2.5,
+        "y": 19.8
+      },
+      {
+        "kind": "displayCase",
+        "x": 7,
+        "y": 15.9
+      },
+      {
+        "kind": "statue",
+        "x": 11.2,
+        "y": 19.6,
+        "scale": 1.5,
+        "collisionScale": 1.5
+      },
+      {
+        "kind": "pillar",
+        "x": 9.45,
+        "y": 12.85
+      },
+      {
+        "kind": "displayCase",
+        "x": 19.3,
+        "y": 3.3
+      },
+      {
+        "kind": "pillar",
+        "x": 14.6,
+        "y": 5.6
       },
       {
         "kind": "objectiveCase",
@@ -5051,6 +5220,61 @@
         "kind": "lamp",
         "x": 11,
         "y": 1
+      },
+      {
+        "kind": "pillar",
+        "x": 9.6,
+        "y": 15.85
+      },
+      {
+        "kind": "pillar",
+        "x": 9.6,
+        "y": 21.9
+      },
+      {
+        "kind": "displayCase",
+        "x": 15.35,
+        "y": 22.95
+      },
+      {
+        "kind": "statue",
+        "x": 7.5,
+        "y": 12.75
+      },
+      {
+        "kind": "partition",
+        "x": 3.8,
+        "y": 12.4
+      },
+      {
+        "kind": "displayCase",
+        "x": 3.9,
+        "y": 9.9
+      },
+      {
+        "kind": "displayCase",
+        "x": 11.65,
+        "y": 2.2
+      },
+      {
+        "kind": "statue",
+        "x": 15.6,
+        "y": 2
+      },
+      {
+        "kind": "pillar",
+        "x": 13,
+        "y": 4.2
+      },
+      {
+        "kind": "pillar",
+        "x": 22.55,
+        "y": 11.4
+      },
+      {
+        "kind": "shelf",
+        "x": 22.3,
+        "y": 13.9
       },
       {
         "kind": "objectiveCase",

@@ -241,39 +241,32 @@ test('guard array order does not delay initial group reaction', () => {
   assert(f.guards.every((g) => g.awareness === (g.canSee ? A.Chase : A.Investigate)));
 });
 
-test('museum acceptance replay: normal input completes whistle → chase → occlusion → search → return', () => {
+test('museum acceptance replay: close-range whistle → direct chase runs through to body contact', () => {
+  // The single-room playground has no full-height cover near the whistling guard, and the
+  // whistle starts ~30 units away: a Direct Chaser (168 vs 150) must close in and CATCH.
+  // Before the pursuit fix this replay "escaped" only because the guard stalled at its stale
+  // path endpoint. Occlusion → Search → Return is covered by chaseBalance cornerEscapeFull.
   const stage = compileStage(visualPlayground);
   const navigation = buildNavigation(stage, BODY.guardRadius);
   const s = createPlaygroundState(stage);
-  const history = s.guards.map(() => new Set<number>());
   s.replayLeg = 0;
-  let hadAlert = false;
-  let hadWhistle = false;
-  let hiddenSteps = 0;
-  for (let i = 0; i < 60 * 30; i++) {
+  let hadWhistle = false, chaseAt = -1, minChaseSpeed = Infinity;
+  for (let i = 0; i < 60 * 30 && !s.events.caught; i++) {
     s.replayLeg = driveAlertReplay(s, s.replayLeg);
-    const oldX = s.events.globalX; const oldY = s.events.globalY;
     const previous = s.guards.map((g) => ({ x: g.x, y: g.y }));
     stepPlayground(s, DT, 40, 376, 810, { x: 0, y: 0, w: stage.width, h: stage.height }, stage.movementBlockers, stage.visionBlockers, navigation);
     s.guards.forEach((g, j) => {
-      history[j].add(g.awareness);
       if (g.action === 1) hadWhistle = true;
       assert(clearSegment(previous[j].x, previous[j].y, g.x, g.y, navigation.blockers, BODY.guardRadius));
+      if (g.awareness === A.Chase) { if (chaseAt < 0) chaseAt = s.t; if (s.t - chaseAt > 1.2 && g.canSee) minChaseSpeed = Math.min(minChaseSpeed, g.speed); }
     });
-    if (s.events.globalAlert) {
-      if (hadAlert && !s.guards.some((g) => g.canSee)) {
-        hiddenSteps++;
-        assert.deepEqual([s.events.globalX, s.events.globalY], [oldX, oldY]);
-      }
-      hadAlert = true;
-    }
-    assert(!s.events.caught, 'replay should escape, not bypass capture');
-    if (hadAlert && !s.events.globalAlert) break;
   }
-  assert(hadWhistle && hadAlert && !s.events.globalAlert);
-  assert(hiddenSteps > 60);
-  for (const states of history) for (const state of [A.Patrol, A.Chase, A.Investigate, A.Search, A.Return]) assert(states.has(state));
-  assert.equal(s.events.whistleCount, 1);
+  assert(hadWhistle && chaseAt >= 0, 'whistle then chase');
+  assert(s.events.caught, 'close-range direct chase ends in capture');
+  assert(s.t - chaseAt < 4, `capture took ${(s.t - chaseAt).toFixed(2)} s after the chase began`);
+  const catcher = s.guards.find((g) => g.id === s.events.caughtBy)!;
+  assert(Math.hypot(catcher.x - s.player.x, catcher.y - s.player.y) <= BODY.playerRadius + BODY.guardRadius + BODY.captureTolerance);
+  assert(minChaseSpeed === Infinity || minChaseSpeed >= 150, `chaser braked to ${minChaseSpeed}`);
 });
 
 console.log(`\n${passed} passed, ${failed} failed`);

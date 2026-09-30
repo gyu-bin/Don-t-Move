@@ -45,6 +45,9 @@ class InterstitialController {
   private unsubs: (() => void)[] = [];
   private initialized = false;
   private unavailable = false;
+  private waiters: Array<() => void> = [];
+  private retryTimer: ReturnType<typeof setTimeout> | null = null;
+  private retries = 0;
 
   async initialize(): Promise<void> {
     if (this.initialized) return;
@@ -57,20 +60,29 @@ class InterstitialController {
     }
     try {
       adsLog('consent gathering');
-      await mobileAds.AdsConsent.gatherConsent();
-      adsLog('initialized');
+      await Promise.race([
+        mobileAds.AdsConsent.gatherConsent(),
+        new Promise((resolve) => setTimeout(resolve, 8000)),
+      ]);
+    } catch (error) {
+      adsLog('consent skipped', error);
+    }
+    try {
       await mobileAds.MobileAds().initialize();
-      this.initialized = true;
+      adsLog('initialized');
       if (!isProductionAdUnits()) adsLog('TEST INTERSTITIAL mode');
     } catch (error) {
-      adsLog('initialized failed', error);
-      this.initialized = true;
+      console.warn('[ADS] initialize failed', error);
     }
+    this.initialized = true;
   }
 
   setRemoveAdsOwned(owned: boolean): void {
     this.disabled = owned;
-    if (owned) this.dispose();
+    if (owned) {
+      this.clearRetry();
+      this.dispose();
+    }
   }
 
   preload(): void {
@@ -93,35 +105,44 @@ class InterstitialController {
         ad.addAdEventListener(mobileAds.AdEventType.LOADED, () => {
           this.loaded = true;
           this.loading = false;
+          this.retries = 0;
           adsLog('interstitial loaded');
+          this.settleWaiters();
         }),
       );
       this.unsubs.push(
         ad.addAdEventListener(mobileAds.AdEventType.ERROR, (error: unknown) => {
           this.loaded = false;
           this.loading = false;
-          adsLog('interstitial failed', error);
+          console.warn('[ADS] interstitial failed', error);
           this.dispose();
+          this.scheduleRetry();
         }),
       );
       ad.load();
     } catch (error) {
       this.loading = false;
       this.loaded = false;
-      adsLog('interstitial failed', error);
+      console.warn('[ADS] interstitial failed', error);
+      this.settleWaiters();
+      this.scheduleRetry();
     }
   }
 
-  /** Present if ready; otherwise skip immediately so navigation continues. */
+  /** Present a loaded interstitial. If a request is already in flight, wait briefly for it. */
   async showIfReady(): Promise<ShowResult> {
     if (this.unavailable || this.disabled) {
       if (this.disabled) adsLog('remove ads owned');
       return 'skipped';
     }
     const mobileAds = loadSdk();
-    if (!mobileAds || !this.ad || !this.loaded) {
-      adsLog('interstitial failed', 'not ready');
+    if (!mobileAds) return 'skipped';
+    if (!this.loaded) {
       this.preload();
+      if (this.loading) await this.waitForLoad(2500);
+    }
+    if (!this.ad || !this.loaded) {
+      adsLog('interstitial failed', 'not ready');
       return 'skipped';
     }
     const ad = this.ad;
@@ -144,6 +165,42 @@ class InterstitialController {
     });
   }
 
+  private waitForLoad(ms: number): Promise<void> {
+    if (this.loaded || !this.loading) return Promise.resolve();
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        resolve();
+      };
+      const timer = setTimeout(finish, ms);
+      this.waiters.push(finish);
+    });
+  }
+
+  private settleWaiters(): void {
+    const waiters = this.waiters;
+    this.waiters = [];
+    for (const finish of waiters) finish();
+  }
+
+  private scheduleRetry(): void {
+    if (this.disabled || this.unavailable || this.retryTimer || this.retries >= 5) return;
+    this.retries += 1;
+    this.retryTimer = setTimeout(() => {
+      this.retryTimer = null;
+      this.preload();
+    }, 5000);
+  }
+
+  private clearRetry(): void {
+    if (!this.retryTimer) return;
+    clearTimeout(this.retryTimer);
+    this.retryTimer = null;
+  }
+
   private disposeListenersOnly(): void {
     for (const unsub of this.unsubs) {
       try {
@@ -160,6 +217,7 @@ class InterstitialController {
     this.ad = null;
     this.loaded = false;
     this.loading = false;
+    this.settleWaiters();
   }
 }
 

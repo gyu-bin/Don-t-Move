@@ -31,12 +31,14 @@ export function playthrough(def:StageDefinition,routeIndex:number,mode:number,de
  return {clear:state.mission.complete,caught:state.events.caught,alert:state.events.globalAlert,alertCount:state.events.alertCount,theft:state.events.theftAlert,maxSuspicion,guardSuspicion,time:state.t,leg,geometryOnly,collisionFailures,distanceTiles:distance/TILE,pickupAt,escapeSeconds:pickupAt===null?null:state.t-pickupAt};
 }
 
-/** Bounded deterministic witnesses: normal input only, never teleports or AI overrides. */
+/** Bounded deterministic witnesses: normal input only, never teleports or AI overrides.
+ * Direct Chase no longer brakes near the player, so a fixed-route bot that is spotted at
+ * close range is caught (as intended). A witness therefore has to be a stealth timing
+ * window: every authored escape route and each whole-second departure up to 40 s. */
+export const WITNESS_DELAYS=Array.from({length:41},(_,i)=>i);
 export function findWitness(def:StageDefinition,routeIndex:number,silent=false){
  let attempts=0,best:ReturnType<typeof playthrough>|null=null;
- for(const escapeIndex of (silent?def.escapeRoutes!.map((_,i)=>i):[0]))// Include the 13s patrol window: faster direct pursuit closes the old
- // 01-08 alternate-route witnesses, while this departure still escapes through cover.
- for(const mode of [2,3,1])for(const delay of [0,2,3,5,9,11,13,14,20,28]){
+ for(const mode of [2,3,1])for(const delay of WITNESS_DELAYS)for(const escapeIndex of def.escapeRoutes!.map((_,i)=>i)){
   const result=playthrough(def,routeIndex,mode,delay,false,escapeIndex);attempts++;
   if(!best||result.leg>best.leg)best=result;
   if(result.clear&&(!silent||(!result.theft&&result.alertCount===0)))return {found:true,attempts,mode,escapeIndex,departureDelaySeconds:delay,...result};

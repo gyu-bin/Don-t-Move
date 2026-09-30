@@ -108,7 +108,12 @@ export function museumMission05(){return mission(5,'Diamond Hall',
  'Grand Exhibition → Final Security observation loop → Diamond Chamber → guarded chamber threshold → southern Service Corridor → east exit',
  architecture(17,15,[[1,7,5,7],[5,10,2,2],[7,4,4,9],[10,6,2,2],[12,2,4,7],[10,10,3,2],[13,10,3,3],[2,14,2,1]],[[12,2],[15,2]]),MUSEUM_05_PATHS,
  [{kind:'statue',x:2,y:8.5,scale:1.4,collisionScale:1.4},{kind:'pillar',x:9.5,y:10},
-  {kind:'diamondPedestal',x:14,y:4},{kind:'lamp',x:13,y:3},{kind:'lamp',x:4,y:7}],
+  {kind:'diamondPedestal',x:14,y:4},{kind:'lamp',x:13,y:3},{kind:'lamp',x:4,y:7},
+  // Density V1: Restricted Collection islands; each room gets real cover off the routes.
+  {kind:'displayCase',x:5,y:12.9},            // Grand Exhibition lower island
+  {kind:'partition',x:8.8,y:11.6},            // Final Security south divider (escape-side cover)
+  {kind:'statue',x:15.3,y:3.8},               // Chamber flank beside the Blue Diamond
+  {kind:'displayCase',x:13.65,y:12.9}],        // Service corridor exhibit before the exit
  {name:'Diamond Chamber',kind:'diamondPedestal',x:14,y:4},[
   {subject:'Grand Exhibition threshold',points:[[3,8],[5,8]],look:[Math.PI/2,Math.PI/2]},
   {subject:'Final Security / chamber approach',points:[[9.5,4.8],[9.5,8]],look:[Math.PI/2,Math.PI]},

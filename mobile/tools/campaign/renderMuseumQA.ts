@@ -31,18 +31,24 @@ async function main() {
   const {renderPlaygroundFrame} = require('../../src/rendering/renderFrame');
   const {fill} = require('../../src/rendering/paints');
   const decode = (file: string) => Skia.Image.MakeImageFromEncoded(Skia.Data.fromBytes(fs.readFileSync(file)));
+  const c = 'assets/characters/';
   const assets = buildGameAssets(ASSET_MANIFEST, {
     museumAtlas: decode('assets/museum/museum_atlas.png'),
-    legacyGuard: decode('assets/characters/legacy/guard_directions.png'),
-    playerWalk: decode('assets/characters/player_walk.png'),
+    playerIdle: decode(c + 'player_idle.png'), playerSneak: decode(c + 'player_sneak.png'), playerWalk: decode(c + 'player_walk.png'), playerRun: decode(c + 'player_run.png'),
+    guardIdle: decode(c + 'guard_idle.png'), guardWalk: decode(c + 'guard_walk.png'), guardRun: decode(c + 'guard_run.png'),
+    guardWhistle: decode(c + 'guard_whistle.png'), guardSearch: decode(c + 'guard_search.png'),
   });
-  const definitions: StageDefinition[] = campaignStages.filter((d: StageDefinition) => /^01-(0[1-9]|10)$/.test(d.id));
+  // CAMPAIGN_JSON renders another baked campaign (e.g. the pre-density version) for comparison.
+  const source: StageDefinition[] = process.env.CAMPAIGN_JSON ? JSON.parse(fs.readFileSync(process.env.CAMPAIGN_JSON, 'utf8')) : campaignStages;
+  const {museumDensity} = require('./museumDensity');
+  const {PROP_KIT} = require('../../src/game/world/propKit');
+  const definitions: StageDefinition[] = source.filter((d: StageDefinition) => /^01-(0[1-9]|10)$/.test(d.id));
   if (definitions.length !== 10) throw Error('Expected all ten Museum missions.');
   const compiled = definitions.map(d => compileStage(d));
   const mapW = Math.max(...compiled.map(s => s.width));
   const mapH = Math.max(...compiled.map(s => s.height));
   const cellW = mapW + 48, cellH = mapH + 174;
-  const outDir = path.resolve('Reports/MuseumChapterV2');
+  const outDir = path.resolve(process.env.OUT_DIR ?? 'Reports/MuseumChapterV2');
   fs.mkdirSync(outDir, {recursive:true});
   const font = loadLabelFont(ck, 17), titleFont = loadLabelFont(ck, 24), smallFont = loadLabelFont(ck, 14);
   if (!font || !titleFont || !smallFont) throw Error('QA label font unavailable.');
@@ -54,7 +60,7 @@ async function main() {
   bc.drawText('MUSEUM 01-01 TO 01-10 | SAME SCALE OVERVIEW',24,36,textPaint,titleFont);
   bc.drawText('Offline actual Skia renderer + QA overlays. NOT Simulator/device captures. Start positions; no playability claim.',24,64,textPaint,font);
   bc.drawText('E Entry   O Objective   X Exit   G Guard   C Major cover   L Landmark',24,90,textPaint,font);
-  bc.drawText('Green: authored main/safe path   Orange: alternate/risk path   Cyan: escape route   Purple: navigation-resolved patrol   Gold: major cover locators',24,116,textPaint,font);
+  bc.drawText('Green: main/safe path   Orange: risk path   Cyan: escape route   Purple: patrol   Gold box: major structure   Red fill: LOS blocker',24,116,textPaint,font);
   for (let index=0; index<definitions.length;index++) {
     const d=definitions[index], stage=compiled[index];
     const state=createPlaygroundState(stage);state.cam={x:0,y:-40};
@@ -101,11 +107,16 @@ async function main() {
         marker('O',stage.objective.x,stage.objective.y,colors.objective);
         marker('X',stage.exit.x+stage.exit.w/2,stage.exit.y+stage.exit.h/2,colors.exit);
         stage.guards.forEach((g:{x:number;y:number},i:number)=>marker(`G${i+1}`,g.x,g.y,colors.guard));
-        const major=d.props.filter(p=>['statue','statuePedestal','displayCase','pillar','shelf','equipment','partition','counter'].includes(p.kind));
-        major.forEach((p,i)=>{const pen=paint('#ffe8b099');pen.setStyle(ck.PaintStyle.Stroke);pen.setStrokeWidth(1);c.drawCircle(p.x*40,p.y*40,16,pen);pen.delete();if(i<3)marker('C',p.x*40,p.y*40,colors.cover);});
+        for(const p of d.props){
+          const k=PROP_KIT[p.kind];if(!k.blocksMovement||p.kind==='objectiveCase')continue;
+          const sc=p.collisionScale??1,w=k.footprint.w*sc*40,h=k.footprint.h*sc*40,r=ck.XYWHRect(p.x*40-w/2,p.y*40-h,w,h);
+          if(k.blocksVision){const f=paint('#ff4d4d55');c.drawRect(r,f);f.delete();}
+          const pen=paint('#ffd36e');pen.setStyle(ck.PaintStyle.Stroke);pen.setStrokeWidth(2);c.drawRect(r,pen);pen.delete();
+        }
         if(d.landmark)marker('L',d.landmark.x*40,d.landmark.y*40,colors.landmark);
       }
-      c.restore();c.drawText(`Landmark: ${d.landmark?.name??'none'} | ${d.guards.length} guards | ${stage.width/40} x ${stage.height/40} tiles`,24,cellH-37,textPaint,smallFont);
+      const m=museumDensity(d);
+      c.restore();c.drawText(`Landmark: ${d.landmark?.name??'none'} | ${d.guards.length} guards | ${stage.width/40} x ${stage.height/40} tiles | major ${m.majorStructures} | LOS ${m.losBlockers} | ${m.structuresPer100Tiles}/100 tiles`,24,cellH-37,textPaint,smallFont);
       c.drawText('Offline capture. 1 world unit = 1 pixel. Existing sprites and lighting.',24,cellH-15,textPaint,smallFont);
       const snapshot=surface.makeImageSnapshot();
       fs.writeFileSync(path.join(outDir,`${d.id}-${overlay?'Routes-Guards':'Debug-OFF'}.png`),snapshot.encodeToBytes()!);

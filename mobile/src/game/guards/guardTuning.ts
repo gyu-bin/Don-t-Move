@@ -57,18 +57,23 @@ export const GUARD_TUNING = {
 
   // --- movement
   walkSpeed: 52,
-  theftPaceScale: 1.25,
+  /** Theft Alert (player position unknown): each guard's own patrol pace × this. */
+  theftPaceScale: 1.35,
   theftSearchWait: 0.65,
   museumSearchSeconds: 9,
   lockdownSearchSeconds: 12,
-  lockdownPaceScale: 1.3,
+  /** 01-10 lockdown escalation; stays above the theft pace. */
+  lockdownPaceScale: 1.45,
   lockdownSearchWait: 0.35,
   accel: 200,
   decel: 500,
   /** Direct visual pursuit: one final speed, never multiplied by theft/pace. */
   runSpeed: GAIT_SPEED[3] * 1.12,
-  /** Unseen support/LKP approach: normal patrol × 1.30, below player Run. */
-  investigateSpeed: 52 * 1.3,
+  /**
+   * Unseen support / LKP approach during a global alert: one final speed (patrol × 1.55),
+   * above the theft sweep, well below player Run. Never multiplied by pace or theft scale.
+   */
+  investigateSpeed: 52 * 1.55,
   searchSpeed: 42,
   searchRadius: 64,
   searchPause: 0.45,

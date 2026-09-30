@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
-import {measureSpeeds,straightChase,cornerEscape,corridor} from '../../../../tools/campaign/chaseBalanceQA';
-import {stepGuards} from '../guardSystem';
+import {measureSpeeds,straightChase,cornerEscape,cornerEscapeFull,corridor,chaseTrace} from '../../../../tools/campaign/chaseBalanceQA';
+import {CAPTURE_DISTANCE,CONTACT_DISTANCE,stepGuards} from '../guardSystem';
 import {Awareness} from '../../core/types';
 
 test('final displacement: direct witness outruns max Run; support and theft do not stack',()=>{
@@ -9,8 +9,9 @@ test('final displacement: direct witness outruns max Run; support and theft do n
  assert(Math.abs(s.run-150)<1e-6);assert(Math.abs(s.tiltRun-s.run)<1e-6);
  assert(s.direct/s.run>=1.10&&s.direct/s.run<=1.15);
  assert(s.support<s.run&&s.theft<s.support);
- assert(Math.abs(s.theft/s.normal-1.25)<1e-6);
- assert(Math.abs(s.lockdown/s.normal-1.30)<1e-6);
+ assert(Math.abs(s.theft/s.normal-1.35)<1e-6);
+ assert(Math.abs(s.lockdown/s.normal-1.45)<1e-6);
+ assert(s.support/s.normal>=1.5,'support is clearly faster than pre-alert patrol');
 });
 test('continuous straight Run loses distance at both five and ten seconds',()=>{
  const r=straightChase();assert(r.gaps[1]<r.gaps[0]);assert(r.gaps[2]<r.gaps[1]);
@@ -38,4 +39,28 @@ test('01-10 actual corridor: fleeing player loses gap under ordinary sight, then
  assert(a.visible&&b.visible);assert(a.movingAway>0&&b.movingAway>0);
  assert(Math.abs(a.playerSpeed-150)<1e-6&&Math.abs(b.guardSpeed-168)<1e-6);
  assert(b.gap<a.gap);assert(r.firstBreak!==null);assert(!r.caught);
+});
+
+test('direct chase never brakes near the player: gap closes steadily down to contact, then CAUGHT',()=>{
+ assert(CONTACT_DISTANCE<CAPTURE_DISTANCE,'pursuit stop distance sits inside the capture distance');
+ const r=chaseTrace(280);
+ assert(r.caught,'straight Run without breaking LOS is eventually caught');
+ assert(r.caughtAt<17,`caught at ${r.caughtAt}`); // 280 start, player accelerates first: gap peaks ≈297, then −18/s
+ // After reaching full speed, every 0.5 s the gap shrinks by ≈ (168-150)·0.5 = 9, including the last metres.
+ for(let i=3;i<r.gaps.length;i++)assert(r.gaps[i-1]-r.gaps[i]>8,`gap stalled at ${r.gaps[i-1].toFixed(1)} → ${r.gaps[i].toFixed(1)}`);
+ assert(r.minGuardSpeedNear>=167,`guard slowed to ${r.minGuardSpeedNear} within 80 of the player`);
+});
+
+test('fair escape: breaking LOS at a corner goes Chase → LKP → Search → Return → Patrol, uncaught',()=>{
+ const r=cornerEscapeFull();
+ assert(!r.caught);assert(r.alertEnded);
+ for(const state of [Awareness.Chase,Awareness.Investigate,Awareness.Search,Awareness.Return])assert(r.states.has(state),`missing state ${state}`);
+});
+
+test('01-10 Grand Heist: in-sight gap shrinks, a corner breaks LOS, then LKP → Search → Return uncaught',async()=>{
+ const{heistLosBreak}=await import('../../../../tools/campaign/heistChaseQA');
+ const r=heistLosBreak();
+ assert(!r.caught);assert(r.firstBreak!==null);assert(r.alertEnded);
+ assert(r.gaps[2]<r.gaps[1]&&r.gaps[3]<r.gaps[2],'closing while the chaser can see the player');
+ for(const s of ['Chase','Investigate','Search','Return'])assert(r.states.includes(s),`missing ${s}`);
 });

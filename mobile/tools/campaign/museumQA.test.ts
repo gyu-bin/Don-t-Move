@@ -67,3 +67,13 @@ test('Five-mission benchmark ends in Diamond Hall while the ten-mission finale s
  assert.equal(finale.objective?.kind,'masterDiamond');
  assert.equal(museum.length,10);
 });
+
+test('Museum density QA: later missions are not emptier than the opening ones',async()=>{
+ const {museumDensity}=await import('./museumDensity');
+ const m=museum.map(museumDensity),early=m.slice(0,4),late=m.slice(4);
+ const earlyMean=early.reduce((a,d)=>a+d.structuresPer100Tiles,0)/early.length;
+ for(const d of late){
+  assert(d.structuresPer100Tiles>=earlyMean,`${d.id}: ${d.structuresPer100Tiles} major structures/100 tiles < early mean ${earlyMean.toFixed(2)}`);
+  assert(d.losBlockers>=8,`${d.id}: only ${d.losBlockers} LOS blockers`);
+ }
+});
