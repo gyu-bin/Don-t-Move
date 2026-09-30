@@ -8,6 +8,7 @@ export function motionAudit(set:CharacterSpriteSet|null,animation:number,facing:
  const dir=facingToDir(facing),clip=set?resolveClip(set,animation,dir):null;
  if(!clip)return {requested:ANIM_NAMES[animation],direction:DIR_NAMES[dir],source:'procedural fallback',frame:0,count:0,phase,stride:0,resolved:'fallback'};
  const frame=pickFrame(clip,phase,time,dist,true);
+ if(!frame)return {requested:ANIM_NAMES[animation],direction:DIR_NAMES[dir],source:clip.source??'empty clip',frame:0,count:0,phase,stride:0,resolved:'fallback'};
  const resolved=set!.clips.findIndex(row=>row[dir]===clip);
  return {requested:ANIM_NAMES[animation],direction:DIR_NAMES[dir],source:clip.source??'unknown',
   frame:clip.frames.indexOf(frame)+1,count:clip.frames.length,phase,stride:clip.strideLength,resolved:ANIM_NAMES[resolved]};

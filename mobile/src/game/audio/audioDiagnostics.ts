@@ -24,6 +24,7 @@ export function audioTransitionLog(previous: GameAudioInput | null, input: GameA
         ? 'SUPPRESSED_PLAYER_ALERT' : status('whistle_theft', input.sfxEnabled)}`);
     }
     if (input.spottedRevision > previous.spottedRevision) {
+      if (priorState.music === 'bgm_chase' && state.music === 'bgm_chase') lines.push('[AUDIO] chase already active');
       lines.push(`[AUDIO] WHISTLE_SPOTTED ${status('whistle_spotted', input.sfxEnabled)}`);
     }
   }

@@ -52,7 +52,7 @@
     "typecheck:tools": "tsc -p tools/sprites --noEmit",
     "sprites:extract": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/extractSheet.ts",
     "test:locomotion": "tsx src/game/core/__tests__/footPlanting.test.ts",
-    "test": "npm run test:locomotion && npm run test:guards && npm run test:rules && npm run test:global && npm run test:tilt && npm run test:maps && npm run test:playable && npm run test:sprite-contract && npm run test:branding && npm run test:campaign && npm run test:theft-support && npm run test:monetization",
+    "test": "npm run test:locomotion && npm run test:guards && npm run test:rules && npm run test:global && npm run test:tilt && npm run test:maps && npm run test:playable && npm run test:sprite-contract && npm run test:branding && npm run test:campaign && npm run test:theft-support && npm run test:monetization && npm run test:crash-hotfix",
     "test:campaign": "node --import tsx --test tools/campaign/validateCampaign.test.ts tools/campaign/museumQA.test.ts",
     "test:branding": "node --import tsx --test src/ui/branding/*.test.ts",
     "test:maps": "node --import tsx --test src/game/levels/__tests__/tiltTestMaps.test.ts",
@@ -64,7 +64,8 @@
     "test:playable": "node --import tsx --test src/game/__tests__/playableV1.test.ts src/game/__tests__/chapter1.test.ts src/game/__tests__/characterAnimation.test.ts src/game/__tests__/rightWalkTrial.test.ts src/game/__tests__/polishV52.test.ts src/game/__tests__/motionV61.test.ts",
     "lint": "expo lint",
     "test:theft-support": "node --import tsx --test src/game/audio/__tests__/audioState.test.ts src/game/world/museumBoundary.test.ts",
-    "test:monetization": "node --import tsx --test src/game/monetization/__tests__/adState.test.ts"
+    "test:monetization": "node --import tsx --test src/game/monetization/__tests__/adState.test.ts",
+    "test:crash-hotfix": "node --test src/game/guards/__tests__/workletChase.test.cjs && node --import tsx --test src/game/guards/__tests__/theftSpottedCrash.test.ts src/game/guards/__tests__/animationBounds.test.ts"
   },
   "private": true
 }

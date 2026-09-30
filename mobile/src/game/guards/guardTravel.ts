@@ -4,6 +4,44 @@ import type { Navigation } from '../world/navigation';
 import type { GuardState } from './guardBrain';
 import { GUARD_TUNING as T } from './guardTuning';
 
+// Worklet closures capture values at module initialization: dependencies must precede callers.
+/** Heading change a pursuing guard must turn in place for (a reversal), rad. */
+const PURSUIT_TURN_IN_PLACE = Math.PI / 2;
+
+/** Invalid transient inputs must not propagate NaN coordinates into the renderer. */
+function prepareTravel(g: GuardState, speed: number, dt: number): boolean {
+  'worklet';
+  if (!Number.isFinite(g.x) || !Number.isFinite(g.y) || !Number.isFinite(speed) ||
+    !Number.isFinite(dt) || dt <= 0 || speed < 0) { g.speed = 0; return false; }
+  if (!Number.isFinite(g.targetX) || !Number.isFinite(g.targetY)) {
+    if (g.hasLkp && Number.isFinite(g.lkpX) && Number.isFinite(g.lkpY)) {
+      g.targetX = g.lkpX; g.targetY = g.lkpY; g.path = []; g.pathIndex = 0;
+    } else { g.speed = 0; return false; }
+  }
+  if (!Number.isFinite(g.speed)) g.speed = 0;
+  if (!Array.isArray(g.path) || g.path.length % 2 !== 0 || !Number.isInteger(g.pathIndex) ||
+    g.pathIndex < 0 || g.pathIndex % 2 !== 0 || (g.pathIndex < g.path.length &&
+      (!Number.isFinite(g.path[g.pathIndex]) || !Number.isFinite(g.path[g.pathIndex + 1])))) {
+    g.path = []; g.pathIndex = 0;
+  }
+  return true;
+}
+
+/** One running step straight at the live target when that step alone is clear. */
+function stepToward(g: GuardState, n: Navigation, speed: number, dt: number): boolean {
+  'worklet';
+  const dx = g.targetX - g.x, dy = g.targetY - g.y, distance = Math.hypot(dx, dy);
+  if (distance < 1e-6) return false;
+  const heading = Math.atan2(dy, dx);
+  if (Math.abs(wrapAngle(heading - g.facing)) > PURSUIT_TURN_IN_PLACE) return false;
+  const velocity = g.speed + clamp(speed - g.speed, -T.decel * dt, T.accel * dt);
+  const move = Math.min(distance, velocity * dt);
+  const x = g.x + dx / distance * move, y = g.y + dy / distance * move;
+  if (!clearSegment(g.x, g.y, x, y, n.blockers, n.radius)) return false;
+  g.x = x; g.y = y; g.speed = velocity;
+  return true;
+}
+
 /**
  * Waypoint travel (Patrol / Investigate / Search / Return): cached path, at most one plan per
  * cooldown, exact stop on the final waypoint, turn in place before a sharp new heading.
@@ -15,6 +53,7 @@ import { GUARD_TUNING as T } from './guardTuning';
  */
 export function travel(g: GuardState, n: Navigation, speed: number, dt: number, t: number, pursuit = false): boolean {
   'worklet';
+  if (!prepareTravel(g, speed, dt)) return false;
   const changed = Math.hypot(g.targetX - g.pathTargetX, g.targetY - g.pathTargetY) >= T.repathDistance;
   const done = g.pathIndex >= g.path.length;
   const stale = done && Math.hypot(g.targetX - g.pathTargetX, g.targetY - g.pathTargetY) > T.arrivalDistance;
@@ -62,24 +101,6 @@ export function travel(g: GuardState, n: Navigation, speed: number, dt: number, 
   return false;
 }
 
-/** One running step straight at the live target when that step alone is clear. */
-function stepToward(g: GuardState, n: Navigation, speed: number, dt: number): boolean {
-  'worklet';
-  const dx = g.targetX - g.x, dy = g.targetY - g.y, distance = Math.hypot(dx, dy);
-  if (distance < 1e-6) return false;
-  const heading = Math.atan2(dy, dx);
-  if (Math.abs(wrapAngle(heading - g.facing)) > PURSUIT_TURN_IN_PLACE) return false;
-  const velocity = g.speed + clamp(speed - g.speed, -T.decel * dt, T.accel * dt);
-  const move = Math.min(distance, velocity * dt);
-  const x = g.x + dx / distance * move, y = g.y + dy / distance * move;
-  if (!clearSegment(g.x, g.y, x, y, n.blockers, n.radius)) return false;
-  g.x = x; g.y = y; g.speed = velocity;
-  return true;
-}
-
-/** Heading change a pursuing guard must turn in place for (a reversal), rad. */
-const PURSUIT_TURN_IN_PLACE = Math.PI / 2;
-
 /**
  * Direct Chase movement controller. The target is the player's live body, not a
  * navigation destination: there is no arrival radius, no deceleration zone and no path
@@ -90,6 +111,8 @@ const PURSUIT_TURN_IN_PLACE = Math.PI / 2;
  */
 export function pursue(g: GuardState, n: Navigation, speed: number, dt: number, t: number, contactDistance: number): boolean {
   'worklet';
+  if (!Number.isFinite(contactDistance) || contactDistance < 0) { g.speed = 0; return false; }
+  if (!prepareTravel(g, speed, dt)) return false;
   const dx = g.targetX - g.x;
   const dy = g.targetY - g.y;
   const distance = Math.hypot(dx, dy);

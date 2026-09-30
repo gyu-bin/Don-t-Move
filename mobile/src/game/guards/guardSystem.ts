@@ -12,6 +12,11 @@ import { stepTheft } from './theftAlert';
 import { updateGuardPhase } from './guardPhase';
 import type { TheftContext } from './theftAlert';
 
+// Worklet closures capture values at declaration time. Initialize these before
+// moveAlertGuard captures the contact radius for the UI runtime.
+export const CONTACT_DISTANCE = BODY.playerRadius + BODY.guardRadius;
+export const CAPTURE_DISTANCE = BODY.playerRadius + BODY.guardRadius + BODY.captureTolerance;
+
 function enter(g: GuardState, state: number): void {
   'worklet';
   if (g.awareness === state) return;
@@ -28,6 +33,8 @@ function enter(g: GuardState, state: number): void {
     g.repathAt = 0;
   }
   g.action = state === Awareness.Search ? GuardAction.Search : GuardAction.None;
+  if (state === Awareness.Chase && typeof __DEV__ !== 'undefined' && __DEV__)
+    console.log('[AI] pursue start guard='+g.id);
   if (state === Awareness.Search) {
     g.searchX = g.x; g.searchY = g.y;
     g.searchIndex = 0; g.searchWait = T.searchPause;
@@ -151,10 +158,6 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
   g.dist += g.speed * dt;
   g.actionT += ((g.action === GuardAction.None ? 0 : 1) - g.actionT) * damp(12, dt);
 }
-
-/** Where a pursuing guard stops: bodies touching, strictly inside the capture distance. */
-export const CONTACT_DISTANCE = BODY.playerRadius + BODY.guardRadius;
-export const CAPTURE_DISTANCE = BODY.playerRadius + BODY.guardRadius + BODY.captureTolerance;
 
 export function bodiesTouch(g: { x: number; y: number }, p: { x: number; y: number }, blockers: number[]): boolean {
   'worklet';

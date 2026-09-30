@@ -29,20 +29,24 @@ export function animForPose(gait: number, action: number, actionT: number): numb
  */
 export function resolveClip(set: CharacterSpriteSet, anim: number, dir: number): SpriteClip | null {
   'worklet';
-  if (set.strict && !set.clips[anim][dir]) throw new Error(`Missing final animation ${anim}/${dir}`);
+  if (!Number.isInteger(dir) || dir < 0 || dir > 3) dir = 0;
+  if (!Number.isInteger(anim) || anim < 0 || anim > Anim.Search) anim = Anim.Idle;
+  if (set.strict && !set.clips[anim]?.[dir]?.frames.length && typeof __DEV__ !== 'undefined' && __DEV__)
+    console.warn('[ANIM] missing clip; using fallback', anim, dir);
   let a = anim;
   for (let guard = 0; guard < 4; guard++) {
-    const c = set.clips[a][dir];
-    if (c !== null) return c;
+    const c = set.clips[a]?.[dir];
+    if (c && c.frames.length > 0) return c;
     if (a === Anim.Idle) return null;
     a = a === Anim.Sneak || a === Anim.Run ? Anim.Walk : Anim.Idle;
   }
   return null;
 }
 
-export function pickFrame(clip: SpriteClip, phase: number, t: number, dist: number, integratedPhase = false): SpriteFrame {
+export function pickFrame(clip: SpriteClip, phase: number, t: number, dist: number, integratedPhase = false): SpriteFrame | null {
   'worklet';
   const n = clip.frames.length;
+  if (n === 0) return null;
   if (n === 1) return clip.frames[0];
   let i: number;
   if (clip.mode === 'distance') {
@@ -52,13 +56,13 @@ export function pickFrame(clip: SpriteClip, phase: number, t: number, dist: numb
     i = Math.floor(t * clip.fps);
     if (!clip.loop && i >= n) i = n - 1;
   }
-  return clip.frames[((i % n) + n) % n];
+  return clip.frames[Number.isFinite(i) ? ((i % n) + n) % n : 0];
 }
 
 /** Draws a frame with its anchor at (x, y). */
 export function drawSpriteFrame(
   canvas: SkCanvas,
-  f: SpriteFrame,
+  f: SpriteFrame | null,
   x: number,
   y: number,
   scale: number,
@@ -66,6 +70,7 @@ export function drawSpriteFrame(
   paint: SkPaint,
 ): void {
   'worklet';
+  if (!f || !Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(scale)) return;
   const s = scratch();
   const src = s.rect;
   src.x = f.sx;

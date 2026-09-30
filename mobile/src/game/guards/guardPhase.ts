@@ -22,4 +22,6 @@ export function updateGuardPhase(ev:GuardEvents, guards:GuardState[], t:number, 
     else ev.phase='RETURN';
   }else ev.phase=hasPlayerAlert(guards,ev)?'PLAYER_SPOTTED':ev.theftAlert?'THEFT_ALERT':'STEALTH';
   if(previous!==ev.phase&&typeof __DEV__!=='undefined'&&__DEV__)console.log('[ALERT]',ev.phase);
+  if(previous!==ev.phase&&ev.phase==='PLAYER_SPOTTED'&&typeof __DEV__!=='undefined'&&__DEV__)
+    console.log('[ALERT] PLAYER_SPOTTED guard='+guards.filter(g=>g.canSee).map(g=>g.id).join(','));
 }
