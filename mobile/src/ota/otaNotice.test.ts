@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { nextSeenUpdateId, shouldShowOtaToast } from './otaNotice';
+import { nextSeenUpdateId, shouldReloadPending, shouldShowOtaToast } from './otaNotice';
 
 test('toast only on a newly applied downloaded update', () => {
   assert.equal(shouldShowOtaToast({
@@ -16,6 +16,14 @@ test('toast only on a newly applied downloaded update', () => {
   assert.equal(shouldShowOtaToast({
     dev: true, enabled: true, embedded: false, updateId: 'new', seenId: null,
   }), false);
+});
+
+test('a downloaded update that is not running reloads immediately', () => {
+  assert.equal(shouldReloadPending(true, 'old', 'new'), false);
+  assert.equal(shouldReloadPending(false, 'old', null), false);
+  assert.equal(shouldReloadPending(false, 'old', 'old'), false);
+  assert.equal(shouldReloadPending(false, 'old', 'new'), true);
+  assert.equal(shouldReloadPending(false, null, 'new'), true);
 });
 
 test('seen id tracks the running bundle', () => {

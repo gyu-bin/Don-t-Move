@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { loadProgress } from './src/game/progress/stageProgress';
-import { applyOtaUpdateIfAvailable, consumeFreshOtaNotice } from './src/ota/applyUpdate';
+import { consumeFreshOtaNotice } from './src/ota/applyUpdate';
+import { OtaRefresh } from './src/ota/OtaRefresh';
 import { OtaToast } from './src/ota/OtaToast';
 import { StartupScreen } from './src/ui/branding/StartupScreen';
 import { translate } from './src/ui/menu/strings';
@@ -15,21 +16,17 @@ export default function App() {
   const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
+    let alive = true;
     let hide: ReturnType<typeof setTimeout> | undefined;
-    void (async () => {
-      const fresh = await consumeFreshOtaNotice();
-      if (cancelled) return;
-      if (fresh) {
-        const progress = await loadProgress();
-        if (cancelled) return;
-        setNotice(translate(progress.language, 'updateApplied'));
-        hide = setTimeout(() => setNotice(null), TOAST_MS);
-      }
-      await applyOtaUpdateIfAvailable();
-    })();
+    void consumeFreshOtaNotice().then(async (fresh) => {
+      if (!alive || !fresh) return;
+      const progress = await loadProgress();
+      if (!alive) return;
+      setNotice(translate(progress.language, 'updateApplied'));
+      hide = setTimeout(() => setNotice(null), TOAST_MS);
+    });
     return () => {
-      cancelled = true;
+      alive = false;
       if (hide) clearTimeout(hide);
     };
   }, []);
@@ -37,6 +34,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <StartupScreen />
+      <OtaRefresh />
       {notice ? <OtaToast message={notice} /> : null}
       <StatusBar style="light" hidden={false} />
     </SafeAreaProvider>

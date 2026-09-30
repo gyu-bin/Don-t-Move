@@ -15,3 +15,13 @@ export function nextSeenUpdateId(embedded: boolean, updateId: string | null): st
   if (updateId) return updateId;
   return embedded ? 'embedded' : null;
 }
+
+/** A downloaded bundle that is not the one on screen must restart the app now. */
+export function shouldReloadPending(
+  startupRunning: boolean,
+  runningId: string | null | undefined,
+  downloadedId: string | null | undefined,
+): boolean {
+  if (startupRunning || !downloadedId) return false;
+  return downloadedId !== (runningId ?? null);
+}
