@@ -50,7 +50,16 @@ export interface ClipDef {
 }
 
 export interface CharacterManifest {
-  /** Only set after unmodified Sprite Validator + visual approval. */
+  /**
+   * Runtime readiness: the atlas is registered and passes the automatic locomotion
+   * validators (tools/locomotion/validate.ts, atlas.test.ts, sprite contract tests).
+   * Lets release builds play. It is NOT a production/visual approval.
+   */
+  runtimeReady?: boolean;
+  /**
+   * Production Locomotion Lock: set only after Simulator / device visual review and
+   * user approval. Never set by automated checks.
+   */
   finalApproved?: boolean;
   /** World units per source pixel (character ≈ 46 world units tall). */
   scale: number;
@@ -172,14 +181,25 @@ function locoCharacter(who: LocoWho): CharacterManifest {
     clips.whistle = action('guardWhistle');
     clips.search = action('guardSearch');
   }
-  return { finalApproved: true, scale: locoScale(who), shadow: true, bakedMotion: true, clips };
+  return { runtimeReady: true, finalApproved: false, scale: locoScale(who), shadow: true, bakedMotion: true, clips };
 }
 
 export const LOCOMOTION_CHARACTERS = { player: locoCharacter('player'), guard: locoCharacter('guard') };
 
+/** Open items before the Production Locomotion Lock (Simulator / device / user review). */
+export const LOCOMOTION_VISUAL_REVIEW = [
+  'iPhone 17 Simulator or device playback',
+  'Player Walk cadence (14f, 28.13 world per cycle)',
+  'Player Run upper body / backpack secondary motion',
+  'Guard Patrol weight shift',
+  'Guard Chase urgency at 168',
+  'Actual gameplay scale and 60 FPS on device',
+] as const;
+
 /**
- * Active manifest. Production Locomotion Atlas V1 is release-approved so the
- * production gate no longer blocks play; procedural rig remains a DEV fallback.
+ * Active manifest. Locomotion V2 is runtime-ready (automatic validation passes), so the
+ * release gate does not block play. Production visual approval is still pending
+ * (see LOCOMOTION_VISUAL_REVIEW); the procedural rig remains a DEV fallback.
  */
 export const ASSET_MANIFEST: AssetManifest = {
   characters: { player: LOCOMOTION_CHARACTERS.player, guard: LOCOMOTION_CHARACTERS.guard },

@@ -1,3 +1,4 @@
+// DEPRECATED (V1 procedural look). Kept as a motion/debug reference only; runtime uses the V2 cutout atlases (tools/locomotion/v2).
 /**
  * 2D cutout rig for the Production Locomotion Atlas.
  *
@@ -8,8 +9,8 @@
  * Parts are flat cut-out shapes (outline + fill), composed per view with
  * depth ordering, then lit once (soft top light + subtle cyan rim).
  */
-import { footCycle } from '../../src/game/core/locomotion';
-import { LOCO_CHARACTERS, LOCO_PIVOT, type LocoDir, type LocoState, type LocoWho } from '../../src/game/core/locomotionAtlas';
+import { footCycle } from '../../../src/game/core/locomotion';
+import { LOCO_CHARACTERS, LOCO_PIVOT, type LocoDir, type LocoState, type LocoWho } from '../../../src/game/core/locomotionAtlas';
 
 export type V3 = { x: number; y: number; z: number };
 const v3 = (x: number, y: number, z: number): V3 => ({ x, y, z });

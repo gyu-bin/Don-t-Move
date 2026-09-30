@@ -1,6 +1,6 @@
 {
- "version": 2,
- "generator": "tools/locomotion (V2 cutout rig from Character Design Sheet masters)",
+ "version": 1,
+ "generator": "tools/locomotion/bake.ts (2D cutout rig)",
  "cell": 128,
  "pivot": {
   "x": 64,
@@ -14,9 +14,9 @@
  ],
  "characters": {
   "player": {
-   "heightPx": 88.3,
-   "worldHeight": 46.0,
-   "scale": 0.5209513023782559,
+   "heightPx": 87.5,
+   "worldHeight": 46,
+   "scale": 0.5257142857142857,
    "depth": 0.8,
    "atlases": {
     "idle": {
@@ -36,53 +36,53 @@
      "rows": 4,
      "mode": "distance",
      "stance": 0.62,
-     "reachPx": 9.0,
+     "reachPx": 12,
      "strideWorld": {
-      "down": 12.0995,
-      "left": 15.1244,
-      "right": 15.1244,
-      "up": 12.0995
+      "down": 16.2802,
+      "left": 20.3502,
+      "right": 20.3502,
+      "up": 16.2802
      }
     },
     "walk": {
      "file": "player_walk.png",
-     "width": 1792,
+     "width": 1024,
      "height": 512,
-     "columns": 14,
+     "columns": 8,
      "rows": 4,
      "mode": "distance",
      "stance": 0.5,
-     "reachPx": 13.5,
+     "reachPx": 15,
      "strideWorld": {
-      "down": 22.5051,
-      "left": 28.1314,
-      "right": 28.1314,
-      "up": 22.5051
+      "down": 25.2343,
+      "left": 31.5429,
+      "right": 31.5429,
+      "up": 25.2343
      }
     },
     "run": {
      "file": "player_run.png",
-     "width": 1536,
+     "width": 1024,
      "height": 512,
-     "columns": 12,
+     "columns": 8,
      "rows": 4,
      "mode": "distance",
-     "stance": 0.32,
-     "reachPx": 13.0,
+     "stance": 0.34,
+     "reachPx": 16,
      "strideWorld": {
-      "down": 33.8618,
-      "left": 42.3273,
-      "right": 42.3273,
-      "up": 33.8618
+      "down": 39.5832,
+      "left": 49.479,
+      "right": 49.479,
+      "up": 39.5832
      }
     }
    }
   },
   "guard": {
-   "heightPx": 100.5,
-   "worldHeight": 52.36,
-   "scale": 0.5209950248756219,
-   "depth": 0.8,
+   "heightPx": 91,
+   "worldHeight": 49,
+   "scale": 0.5384615384615384,
+   "depth": 0.75,
    "atlases": {
     "idle": {
      "file": "guard_idle.png",
@@ -95,34 +95,34 @@
     },
     "walk": {
      "file": "guard_walk.png",
-     "width": 1536,
+     "width": 1024,
      "height": 512,
-     "columns": 12,
+     "columns": 8,
      "rows": 4,
      "mode": "distance",
      "stance": 0.55,
-     "reachPx": 13.0,
+     "reachPx": 16,
      "strideWorld": {
-      "down": 19.7031,
-      "left": 24.6289,
-      "right": 24.6289,
-      "up": 19.7031
+      "down": 23.4965,
+      "left": 31.3287,
+      "right": 31.3287,
+      "up": 23.4965
      }
     },
     "run": {
      "file": "guard_run.png",
-     "width": 1536,
+     "width": 1024,
      "height": 512,
-     "columns": 12,
+     "columns": 8,
      "rows": 4,
      "mode": "distance",
-     "stance": 0.32,
-     "reachPx": 14.0,
+     "stance": 0.34,
+     "reachPx": 17,
      "strideWorld": {
-      "down": 36.4697,
-      "left": 45.5871,
-      "right": 45.5871,
-      "up": 36.4697
+      "down": 40.3846,
+      "left": 53.8462,
+      "right": 53.8462,
+      "up": 40.3846
      }
     }
    }

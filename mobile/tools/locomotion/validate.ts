@@ -18,7 +18,7 @@ export async function validateAtlases(dir: string) {
   const feet = JSON.parse(fs.readFileSync(path.join(dir, 'locomotion-feet.json'), 'utf8')) as Record<string, Record<string, Sole[][]>>;
   const report: Record<string, unknown> = {};
   const errors: string[] = [];
-  const idleHeights: Record<LocoWho, number[]> = { player: [], guard: [] };
+  const idleHeights: Record<LocoWho, Record<string, number[]>> = { player: {}, guard: {} };
   for (const [who, state] of ATLASES) {
     const file = path.join(dir, `${who}_${state}.png`);
     const img = ck.MakeImageFromEncoded(fs.readFileSync(file))!;
@@ -44,7 +44,7 @@ export async function validateAtlases(dir: string) {
         if (top < 1 || left < 1 || right > LOCO_CELL - 2 || bottom > LOCO_CELL - 2) errors.push(`${who}_${state} ${row}#${k + 1}: touches cell edge (clipping)`);
         cells.push({ row, frame: k + 1, top, bottom, left, right, groundGap: LOCO_PIVOT.y - bottom });
         heights.push(LOCO_PIVOT.y - top); widths.push(right - left); bottoms.push(bottom); centres.push(sumX / cnt);
-        if (state === 'idle') idleHeights[who].push(LOCO_PIVOT.y + 0.5 - top);
+        if (state === 'idle') (idleHeights[who][row] ??= []).push(LOCO_PIVOT.y + 0.5 - top);
       }
       // Foot planting: consecutive frames where the same foot stays planted must move it
       // back by exactly the body's travel per frame (rig), confirmed on the pixels.
@@ -92,9 +92,16 @@ export async function validateAtlases(dir: string) {
       planting: state === 'idle' ? null : { rigResidualPx: +plantResidualRig.toFixed(4), pixelResidualPx: +plantResidualPx.toFixed(2), pixelSamples: pxSamples },
     };
   }
+  // Scale consistency: the idle height inside each direction row must be stable (breathing
+  // only). The design sheet itself draws DOWN/UP a little shorter than the side views (3/4
+  // tilt), so the cross-view spread is reported separately and not treated as a scale jump.
   const idle = Object.fromEntries((['player', 'guard'] as LocoWho[]).map(w => {
-    const h = idleHeights[w], mean = h.reduce((a, b) => a + b, 0) / h.length;
-    return [w, { meanHeightPx: +mean.toFixed(2), spec: LOCO_CHARACTERS[w].heightPx, maxDeviationPx: +Math.max(...h.map(v => Math.abs(v - mean))).toFixed(2) }];
+    const rows = Object.values(idleHeights[w]);
+    const all = rows.flat(), mean = all.reduce((a, b) => a + b, 0) / all.length;
+    const within = Math.max(...rows.map(r => Math.max(...r) - Math.min(...r)));
+    const rowMeans = rows.map(r => r.reduce((a, b) => a + b, 0) / r.length);
+    return [w, { meanHeightPx: +mean.toFixed(2), spec: LOCO_CHARACTERS[w].heightPx, maxDeviationPx: +within.toFixed(2),
+      crossViewSpreadPx: +(Math.max(...rowMeans) - Math.min(...rowMeans)).toFixed(2) }];
   }));
   return { report, idle, errors };
 }

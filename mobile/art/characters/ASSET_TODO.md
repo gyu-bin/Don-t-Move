@@ -1,5 +1,21 @@
 # Character asset TODO
 
+## Production Locomotion V2 (2026-09-30) — current runtime asset
+
+Gate status: `runtimeReady = true` (atlases registered, `locomotion:validate` / `test:sprite-contract`
+pass → release builds play), `finalApproved = false` → `visualReviewPending = true`.
+Production Locomotion Lock needs Simulator/device review + user approval; see
+`LOCOMOTION_VISUAL_REVIEW` in `src/assets/manifest.ts`. Only a human sets `finalApproved`.
+
+Final look = the user's Character Design Sheet (`masters/character_design_sheet_v2.png`).
+The eight turnaround figures are keyed to RGBA masters (`masters/*_master.png`) and animated
+with a 2D cutout rig (`tools/locomotion/v2`, see its README): painted body rigid, arms/legs
+on a skinned mesh driven by IK with planted stance feet. Atlases in `assets/characters/`
+(idle 6, sneak 8, walk 12, run 12; 128×128; rows DOWN/LEFT/RIGHT/UP; pivot 64,112).
+Guard Whistle/Search are idle stand-ins. V1 procedural atlases are kept in
+`deprecated/locomotion-v1-procedural/` and `tools/locomotion/v1-procedural/` for reference only.
+Open: Simulator/device visual review.
+
 ## Production Locomotion Atlas V1 (2026-09-29) — current runtime asset
 
 Direct frame generation cannot guarantee frame-consistent planted feet, so the

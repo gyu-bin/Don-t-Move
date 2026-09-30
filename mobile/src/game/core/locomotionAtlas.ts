@@ -38,22 +38,26 @@ export interface LocoCharacter {
   gaits: Partial<Record<Exclude<LocoState, 'idle'>, LocoGait>>;
 }
 
+// V2 (2026-09-30): baked by tools/locomotion/v2 from the Character Design Sheet masters.
+// heightPx is measured on the baked idle frames (pivot → top); both characters share one
+// px→world scale so the Guard keeps its design-sheet size relative to the Player.
+// Reach/stance are the rig's actual stance-foot sweep — the runtime stride derives from them.
 export const LOCO_CHARACTERS: Record<LocoWho, LocoCharacter> = {
   player: {
-    heightPx: 87.5, worldHeight: 46, depth: 0.8,
+    heightPx: 88.3, worldHeight: 46, depth: 0.8,
     idle: { frames: 6, fps: 5 },
     gaits: {
-      sneak: { frames: 8, reach: 12, stance: 0.62 },
-      walk: { frames: 8, reach: 15, stance: 0.5 },
-      run: { frames: 8, reach: 16, stance: 0.34 },
+      sneak: { frames: 8, reach: 9, stance: 0.62 },
+      walk: { frames: 14, reach: 13.5, stance: 0.5 },
+      run: { frames: 12, reach: 13, stance: 0.32 },
     },
   },
   guard: {
-    heightPx: 91, worldHeight: 49, depth: 0.75,
+    heightPx: 100.5, worldHeight: 52.36, depth: 0.8,
     idle: { frames: 6, fps: 4 },
     gaits: {
-      walk: { frames: 8, reach: 16, stance: 0.55 },
-      run: { frames: 8, reach: 17, stance: 0.34 },
+      walk: { frames: 12, reach: 13, stance: 0.55 },
+      run: { frames: 12, reach: 14, stance: 0.32 },
     },
   },
 };

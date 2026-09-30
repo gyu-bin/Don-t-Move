@@ -84,7 +84,7 @@ export function buildCharacterSet(m: CharacterManifest, images: Images): Charact
     if (row[3] === null && right) row[3] = clip(right, images, locomotion, true);
     clips.push(row);
   }
-  return { clips, scale: m.scale, shadow: m.shadow ?? true, strict: m.finalApproved === true, bakedMotion: m.bakedMotion === true };
+  return { clips, scale: m.scale, shadow: m.shadow ?? true, strict: m.runtimeReady === true || m.finalApproved === true, bakedMotion: m.bakedMotion === true };
 }
 
 export function buildAtlas(m: AtlasManifest, images: Images): SpriteAtlas | null {

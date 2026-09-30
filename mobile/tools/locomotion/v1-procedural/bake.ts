@@ -1,3 +1,4 @@
+// DEPRECATED (V1 procedural look). Kept as a motion/debug reference only; runtime uses the V2 cutout atlases (tools/locomotion/v2).
 /**
  * Bakes the Production Locomotion Atlas from the cutout rig.
  *   node --import tsx tools/locomotion/bake.ts [outDir]
@@ -7,8 +8,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import type { CanvasKit, Image as CKImage } from 'canvaskit-wasm';
-import { initSkiaNode } from '../sprites/skiaNode';
-import { LOCO_CELL, LOCO_CHARACTERS, LOCO_PIVOT, LOCO_ROWS, locoScale, locoStride, type LocoDir, type LocoState, type LocoWho } from '../../src/game/core/locomotionAtlas';
+import { initSkiaNode } from '../../sprites/skiaNode';
+import { LOCO_CELL, LOCO_CHARACTERS, LOCO_PIVOT, LOCO_ROWS, locoScale, locoStride, type LocoDir, type LocoState, type LocoWho } from '../../../src/game/core/locomotionAtlas';
 import { idlePose, locomotionPose, project, type Pose } from './rig';
 import { drawCharacter, Painter } from './draw';
 

@@ -43,9 +43,10 @@ test('Player sprite cadence is distance-based and naturally ordered', () => {
   // Cadence follows from planted feet: stride = the foot sweep the atlas actually draws.
   const stepsPerSecond = (['sneak', 'walk', 'run'] as const).map((g, i) => (GAIT_SPEED[i + 1] / locoStride('player', g, 'right')) * 2);
   assert(stepsPerSecond[0] < stepsPerSecond[1] && stepsPerSecond[1] < stepsPerSecond[2]);
-  assert(stepsPerSecond[0] >= 3 && stepsPerSecond[0] <= 4.2);
-  assert(stepsPerSecond[1] >= 4 && stepsPerSecond[1] <= 5);
-  assert(stepsPerSecond[2] >= 5.5 && stepsPerSecond[2] <= 6.5);
+  // Chibi legs (V2 design sheet): planted feet need quick steps at the unchanged gameplay speeds.
+  assert(stepsPerSecond[0] >= 4 && stepsPerSecond[0] <= 5.5);
+  assert(stepsPerSecond[1] >= 5 && stepsPerSecond[1] <= 6.2);
+  assert(stepsPerSecond[2] >= 6.3 && stepsPerSecond[2] <= 7.5);
   // Guard patrol steps are heavier (slower) than the Player walk; chase is urgent.
   assert((52 / locoStride('guard', 'walk', 'right')) * 2 < stepsPerSecond[1]);
   assert((168 / locoStride('guard', 'run', 'right')) * 2 > 5.5);

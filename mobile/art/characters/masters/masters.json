@@ -1,0 +1,50 @@
+{
+ "player_down": {
+  "w": 104,
+  "h": 181,
+  "sheetX": 374,
+  "sheetY": 161
+ },
+ "player_left": {
+  "w": 107,
+  "h": 179,
+  "sheetX": 516,
+  "sheetY": 163
+ },
+ "player_right": {
+  "w": 105,
+  "h": 177,
+  "sheetX": 648,
+  "sheetY": 164
+ },
+ "player_up": {
+  "w": 116,
+  "h": 175,
+  "sheetX": 788,
+  "sheetY": 163
+ },
+ "guard_down": {
+  "w": 115,
+  "h": 201,
+  "sheetX": 370,
+  "sheetY": 522
+ },
+ "guard_left": {
+  "w": 100,
+  "h": 209,
+  "sheetX": 517,
+  "sheetY": 524
+ },
+ "guard_right": {
+  "w": 106,
+  "h": 209,
+  "sheetX": 657,
+  "sheetY": 524
+ },
+ "guard_up": {
+  "w": 114,
+  "h": 209,
+  "sheetX": 793,
+  "sheetY": 524
+ }
+}

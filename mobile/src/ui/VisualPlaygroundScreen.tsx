@@ -17,7 +17,7 @@ import { guardStrideContract } from '../rendering/characters/guardAnimation';
 import { buildNavigation } from '../game/world/navigation';
 import { BODY } from '../game/guards/guardTuning';
 import { ASSET_MANIFEST, PLAYTEST_MANIFEST } from '../assets/manifest';
-import { finalCharacterIssues } from '../assets/characterReadiness';
+import { characterReleaseStatus } from '../assets/characterReadiness';
 import { preloadGameAssets, useGameAssets } from '../assets/useGameAssets';
 import { createCharacterVisual } from '../rendering/characters/characterVisual';
 import { createDebugArt } from '../rendering/debug/guardDebug';
@@ -53,7 +53,8 @@ import { useMonetization } from '../game/monetization/MonetizationContext';
 type GamePhase = GuardEvents['phase'];
 
 const VIEW_TILES_WIDE = 9.4;
-const releaseAssetIssues = finalCharacterIssues(ASSET_MANIFEST);
+// Runtime gate only. Production visual approval (visualReviewPending) never blocks play.
+const releaseAssetIssues = characterReleaseStatus(ASSET_MANIFEST).issues;
 
 function debugFont(): SkFont | null {
   try {

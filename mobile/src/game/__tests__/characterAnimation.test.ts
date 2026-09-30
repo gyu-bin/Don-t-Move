@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import { Awareness, GuardAction } from '../core/types';
 import { Anim } from '../../rendering/sprites/spriteTypes';
 import { createGuardPlayback, guardAnimation, stepGuardPlayback,guardStrideContract } from '../../rendering/characters/guardAnimation';
-import { finalCharacterIssues } from '../../assets/characterReadiness';
+import { characterReleaseStatus, runtimeCharacterIssues } from '../../assets/characterReadiness';
 import type { AssetManifest } from '../../assets/manifest';
 
 const pose={x:100,y:100,speed:0,awareness:Awareness.Patrol as number,action:GuardAction.None as number,whistleT:0};
@@ -35,22 +35,29 @@ test('Guard playback uses actual distance, preserves phase and aligns whistle to
   stepGuardPlayback(a,{...pose,x:123,action:GuardAction.Whistle,whistleT:0.32},1/60);
   assert.equal(a.time,0.32); assert.equal(a.phase,0.5);
 });
-test('Release detects missing, reused and unapproved final sheets',()=>{
+test('Release detects missing, reused and unvalidated sheets',()=>{
   const m:AssetManifest={characters:{player:null,guard:null},environment:{museum:null},ui:{indicators:null}};
-  assert(finalCharacterIssues(m).some((s)=>s.includes('guard/run')));
-  assert(finalCharacterIssues(m).some((s)=>s.includes('player/sneak')));
+  assert(runtimeCharacterIssues(m).some((s)=>s.includes('guard/run')));
+  assert(runtimeCharacterIssues(m).some((s)=>s.includes('player/sneak')));
   m.characters.player={scale:1,clips:{idle:{down:{image:'playerWalk',frames:{count:4,frameW:256,frameH:256}}},
     walk:{down:{image:'playerWalk',frames:{count:8,frameW:256,frameH:256}}}}};
-  assert(finalCharacterIssues(m).some((s)=>s.includes('reused')));
-  assert(finalCharacterIssues(m).some((s)=>s.includes('approval')));
+  assert(runtimeCharacterIssues(m).some((s)=>s.includes('reused')));
+  assert(runtimeCharacterIssues(m).some((s)=>s.includes('runtime atlas validation')));
 });
 
-test('Production locomotion atlas clears the release gate',async()=>{
+test('Locomotion V2 is runtime-ready while production visual review stays pending',async()=>{
   const previous=require.extensions['.png'];
   require.extensions['.png']=(module)=>{module.exports=0;};
   try{
     const {ASSET_MANIFEST}=await import('../../assets/manifest');
-    assert.deepEqual(finalCharacterIssues(ASSET_MANIFEST),[]);
+    assert.deepEqual(runtimeCharacterIssues(ASSET_MANIFEST),[]);
+    assert.deepEqual(characterReleaseStatus(ASSET_MANIFEST),{runtimeReady:true,visualReviewPending:true,issues:[]});
+    // Approval is a separate, human-granted flag; runtime readiness never implies it.
+    const approved={...ASSET_MANIFEST,characters:{
+      player:{...ASSET_MANIFEST.characters.player!,finalApproved:true},guard:{...ASSET_MANIFEST.characters.guard!,finalApproved:true}}};
+    assert.equal(characterReleaseStatus(approved).visualReviewPending,false);
+    const unvalidated={...ASSET_MANIFEST,characters:{...ASSET_MANIFEST.characters,guard:{...ASSET_MANIFEST.characters.guard!,runtimeReady:false,finalApproved:true}}};
+    assert.equal(characterReleaseStatus(unvalidated).runtimeReady,false,'approval alone cannot bypass validation');
   }finally{
     if(previous)require.extensions['.png']=previous;else delete require.extensions['.png'];
   }

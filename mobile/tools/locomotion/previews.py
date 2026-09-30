@@ -37,7 +37,7 @@ for (who, state), v in SPEED.items():
     a, frames = cells(who, state)
     scale = man['characters'][who]['scale']
     n = a['columns']
-    for dirn in ('right', 'down'):
+    for dirn in ('left', 'down'):
         r = ROWS.index(dirn); stride = a['strideWorld'][dirn]
         soles = feet[f'{who}_{state}'][dirn]
         # ---- A: in-place loop at the gameplay cadence ----
@@ -49,7 +49,7 @@ for (who, state), v in SPEED.items():
             bg.alpha_composite(big); loop.append(bg.convert('P', palette=Image.ADAPTIVE))
         loop[0].save(os.path.join(out, f'{who}_{state}_{dirn}_inplace.gif'), save_all=True, append_images=loop[1:], duration=max(20, dwell), loop=0, disposal=2)
         # ---- B: moving at real speed, planted-foot ticks ----
-        horiz = dirn == 'right'
+        horiz = dirn in ('left','right'); sgn = -1 if dirn == 'left' else 1
         W, H = (760, 190) if horiz else (190, 620)
         travel = (W - 180) if horiz else (H - 200)
         T = travel * scale / v
@@ -58,7 +58,7 @@ for (who, state), v in SPEED.items():
             t = i / FPS; dist = v * t
             phase = (dist / stride) % 1; k = int(phase * n) % n
             pos = dist / scale
-            ox, oy = (90 + pos, 150) if horiz else (95, 90 + pos)
+            ox, oy = ((90 + pos) if sgn > 0 else (W - 90 - pos), 150) if horiz else (95, 90 + pos)
             bg = floor(W, H, horiz)
             d = ImageDraw.Draw(bg)
             for f in (0, 1):
@@ -88,7 +88,7 @@ for (who, state), v in SPEED.items():
             for f in (0, 1):
                 s = soles[k][f]
                 if not s['planted']: continue
-                screen = (dist / scale + s['x'] - PX) if horiz else (dist / scale + s['y'] - PY)
+                screen = (sgn * dist / scale + s['x'] - PX) if horiz else (dist / scale + s['y'] - PY)
                 cyc = int(dist / stride + (0.5 if f else 0))
                 anchors.setdefault((f, cyc), {}).setdefault(k, []).append(screen * scale)
         spreads, drifts = [], []

@@ -1,10 +1,11 @@
+// DEPRECATED (V1 procedural look). Kept as a motion/debug reference only; runtime uses the V2 cutout atlases (tools/locomotion/v2).
 /**
  * Cut-out part drawing for the locomotion rig (CanvasKit). Everything is drawn
  * in final cell pixels; the caller supersamples.
  */
 import type { CanvasKit, Canvas, Paint, Path } from 'canvaskit-wasm';
-import type { LocoDir, LocoWho } from '../../src/game/core/locomotionAtlas';
-import { LOCO_CHARACTERS } from '../../src/game/core/locomotionAtlas';
+import type { LocoDir, LocoWho } from '../../../src/game/core/locomotionAtlas';
+import { LOCO_CHARACTERS } from '../../../src/game/core/locomotionAtlas';
 import { BODIES, project, type P2, type Pose, type V3 } from './rig';
 
 type RGB = [number, number, number];

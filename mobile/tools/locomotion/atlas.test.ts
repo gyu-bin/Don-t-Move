@@ -13,7 +13,7 @@ test('Production Locomotion Atlas: exact grid, clean alpha, no clipping, consist
     assert(r.planting.pixelSamples > 0 && r.planting.pixelResidualPx <= 1.5, `${name}: baked pixels follow the planted foot`);
     assert(r.groundContact.minGap <= 1, `${name}: a foot touches the ground line`);
   }
-  for (const who of ['player', 'guard'] as LocoWho[]) assert(idle[who].maxDeviationPx <= 1.5, `${who}: idle height stable`);
+  for (const who of ["player", "guard"] as LocoWho[]) assert(idle[who].maxDeviationPx <= 2, `${who}: idle height stable within each direction (breathing only)`);
 });
 
 test('locomotion-manifest.json matches the runtime stride contract', () => {

@@ -45,7 +45,7 @@
     "sprites:validate": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/validateSprites.ts",
     "sprites:selftest": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/validatorSelfTest.ts",
     "test:sprite-contract": "node --import tsx --test tools/sprites/footTracks.test.ts tools/locomotion/atlas.test.ts",
-    "locomotion:bake": "node --import tsx tools/locomotion/bake.ts assets/characters",
+    "locomotion:bake": "echo See tools/locomotion/v2/README.md (Python cutout rig)",
     "locomotion:validate": "node --import tsx tools/locomotion/validate.ts assets/characters",
     "locomotion:previews": "python3 tools/locomotion/previews.py assets/characters Reports/Locomotion/previews",
     "sprites:contract": "node --import tsx tools/sprites/syncContract.ts",
