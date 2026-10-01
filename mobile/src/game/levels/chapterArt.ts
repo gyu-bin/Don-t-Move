@@ -1,8 +1,8 @@
 import type {PropKind,StageTheme} from './StageDefinition';
 export const CHAPTER_AREAS=[
- ['Entrance Hall','Main Gallery','Archive','Security Wing','Diamond Hall','Conservation Lab','Private Gallery','Security Core','Master Exhibition','Grand Heist'],
- ['Reception Salon','Portrait Hall','Sculpture Studio','Private Wing','Collector Gallery'],
- ['Public Lobby','Teller Hall','Deposit Offices','Security Antechamber','Strongroom'],
+ ['Entrance Hall','Main Gallery','Archive','Security Wing','Restricted Collection','Conservation Lab','Private Gallery','Security Core','Master Exhibition','Grand Heist'],
+ ['Front Exhibition','Portrait Hall','Sculpture Studio','Modern Wing',"Collector's Room",'Glass Gallery',"Curator's Floor",'Grand Atrium','Private Collection','Masterpiece'],
+ ['Public Lobby','Teller Hall','Staff Offices','Records Room','Deposit Boxes','Security Checkpoint','Cash Processing','Inner Security','Vault Antechamber','Main Vault'],
  ['Observation Lobby','Research Wing','Specimen Lab','Containment Sector','Prototype Chamber'],
  ['Hotel Reception','Gaming Floor','Service Lounge','VIP Salon','Royal Jewel Room'],
  ['Garden Vestibule','Drawing Room','Library Wing','Family Apartments','Heirloom Gallery'],
@@ -11,9 +11,9 @@ export const CHAPTER_AREAS=[
  ['Outer Checkpoint','Vault Antechamber','Mechanism Hall','Security Ring','Master Diamond Chamber'],
 ];
 export const CHAPTER_AREAS_KO=[
- ['입구 홀','중앙 갤러리','수장고','보안 구역','다이아몬드 홀','보존 연구실','비공개 갤러리','보안 중심부','마스터 전시실','그랜드 하이스트'],
- ['접견 전시실','초상화 홀','조각 작업실','비공개 전시동','소장품 갤러리'],
- ['은행 로비','창구 홀','대여 금고 사무실','보안 전실','금고실'],
+ ['입구 홀','중앙 갤러리','수장고','보안 구역','제한 컬렉션','보존 연구실','비공개 갤러리','보안 중심부','마스터 전시실','그랜드 하이스트'],
+ ['정면 전시실','초상화 홀','조각 스튜디오','현대 전시동','컬렉터의 방','유리 갤러리','큐레이터 층','그랜드 아트리움','비공개 컬렉션','마스터피스'],
+ ['은행 로비','창구 홀','직원 사무실','기록실','대여 금고','보안 검문소','현금 처리실','내부 보안','금고 전실','중앙 금고'],
  ['관찰 로비','연구 구역','표본 연구실','격리 구역','시제품 실험실'],
  ['호텔 접견실','게임 플로어','서비스 라운지','VIP 살롱','왕실 보석실'],
  ['정원 현관','응접실','서재동','가족 거주실','가보 전시실'],
@@ -41,7 +41,7 @@ export const LANDMARK_KINDS:PropKind[][]=[
 ];
 export const MATERIALS:Record<StageTheme,{floor:string;seam:string;trim:string;inlay:string}>={
  museum:{floor:'#454a4c',seam:'#262d31',trim:'#b8a987',inlay:'#616669'},
- gallery:{floor:'#44484c',seam:'#31363a',trim:'#d0c9b8',inlay:'#727475'},
+ gallery:{floor:'#92948a',seam:'#787c72',trim:'#d0c9b8',inlay:'#a5a798'},
  bank:{floor:'#343e40',seam:'#202b30',trim:'#ad9563',inlay:'#5b686a'},
  lab:{floor:'#29424b',seam:'#1b313b',trim:'#83bfc7',inlay:'#4a6d76'},
  casino:{floor:'#382433',seam:'#4d3340',trim:'#be9860',inlay:'#604350'},

@@ -20,8 +20,8 @@ test('only the licensed gameplay registry may load bundled audio', () => {
   visit(root);
   const registry = readFileSync(new URL('game/audio/audioAssets.ts', root), 'utf8');
   const required = [...registry.matchAll(/require\(['"]([^'"]+)['"]\)/g)].map(match=>match[1]);
-  assert.equal(required.length, 7, 'Exactly three music and four effect sources are registered');
-  const files = ['bgm/lobby.mp3', 'sfx/ui-select.wav', 'sfx/ui-back.wav', 'sfx/whistle-theft.wav', 'sfx/whistle-spotted.wav',
+  assert.equal(required.length, 8, 'Exactly three music and five effect sources are registered');
+  const files = ['sfx/objective-pickup.wav', 'bgm/lobby.mp3', 'sfx/ui-select.wav', 'sfx/ui-back.wav', 'sfx/whistle-theft.wav', 'sfx/whistle-spotted.wav',
     'bgm/stealth.mp3', 'bgm/chase.mp3'];
   const licenses = readFileSync(new URL('../assets/audio/LICENSES.md', root), 'utf8');
   for (const file of files) {

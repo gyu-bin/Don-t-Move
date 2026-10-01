@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/architecture/bank_wall.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 216,
+    "w": 480,
+    "h": 279
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-26cf53b9-5134-47a0-89f2-47f21c459e41.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 78,
+      "y": 108,
+      "w": 1381,
+      "h": 807
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 127553,
+    "transparentFraction": 0.5059661865234375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 216,
+      "w": 480,
+      "h": 279
+    }
+  }
+}

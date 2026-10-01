@@ -11,6 +11,7 @@ import { hasPlayerAlert } from './guardPriority';
 import { stepTheft } from './theftAlert';
 import { updateGuardPhase } from './guardPhase';
 import type { TheftContext } from './theftAlert';
+import { directChaseSpeed } from './guardChaseSpeed';
 
 // Worklet closures capture values at declaration time. Initialize these before
 // moveAlertGuard captures the contact radius for the UI runtime.
@@ -64,7 +65,7 @@ function shareSight(guards: GuardState[], p: PlayerView, ev: GuardEvents, t: num
     if (!ev.sawPlayer || ev.globalX !== p.x || ev.globalY !== p.y) ev.globalRevision++;
     ev.globalX = p.x; ev.globalY = p.y; ev.globalT = t;
   }
-  ev.sawPlayer = visible;
+  ev.sawPlayer = visible || !!ev.cameraSeesPlayer;
 }
 
 function react(g: GuardState, ev: GuardEvents, theft?: TheftContext, index = 0): void {
@@ -107,10 +108,10 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
   if (g.awareness === Awareness.Chase || g.awareness === Awareness.Investigate) {
     // Direct Chase and LKP/support travel use separate controllers: only waypoint
     // travel has arrival; a chase runs through to body contact (see pursue()).
-    if (g.awareness === Awareness.Chase) pursue(g, n, T.runSpeed, dt, t, CONTACT_DISTANCE);
+    if (g.awareness === Awareness.Chase) pursue(g, n, directChaseSpeed(theft?.missionId), dt, t, CONTACT_DISTANCE);
     else if (travel(g, n, T.investigateSpeed, dt, t)) enter(g, Awareness.Search);
   } else if (g.awareness === Awareness.Search) {
-    const searchSeconds=theft?.roles ? (ev?.lockdownActive?T.lockdownSearchSeconds:T.museumSearchSeconds) : T.searchSeconds;
+    const searchSeconds=theft?.roles && theft.missionId!=='02-10' ? (ev?.lockdownActive?T.lockdownSearchSeconds:T.museumSearchSeconds) : T.searchSeconds;
     if (g.stateT >= searchSeconds) {
       enter(g, Awareness.Return);
     } else if (g.searchWait > 0) {

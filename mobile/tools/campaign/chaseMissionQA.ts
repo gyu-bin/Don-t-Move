@@ -1,3 +1,5 @@
+import historicalHeist from './fixtures/v3GrandHeist.json';
+import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import {campaignStages} from '../../src/game/levels/campaignStages';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
@@ -47,8 +49,10 @@ if(process.argv[1]?.endsWith('chaseMissionQA.ts')){
 }
 
 /** Explicit seeded pursuit fixture in unchanged 01-10 geometry, not a spawn-to-exit witness. */
+// Fixed V3 corridor is an immutable chase-speed/LOS regression fixture.
+// Current V5 mission flows are verified separately by v5MuseumGalleryReplay.
 export function museumCorridorPursuit(){
- const stage=compileStage(campaignStages.find(d=>d.id==='01-10')!),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
+ const stage=compileStage(historicalHeist as StageDefinition),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
  const g=s.guards[0];s.guards=[g];s.guardPlayback=[s.guardPlayback[0]];
  Object.assign(g,{x:580,y:60,facing:Math.PI/2,baseFacing:Math.PI/2,speed:0,awareness:Awareness.Chase,path:[],pathIndex:0,repathAt:0});
  Object.assign(s.player,{x:580,y:180,vx:0,vy:0,speed:0,facing:Math.PI/2});

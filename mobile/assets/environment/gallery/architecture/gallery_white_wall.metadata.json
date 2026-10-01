@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/architecture/gallery_white_wall.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 154,
+    "w": 478,
+    "h": 341
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_white_wall.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 151,
+      "y": 66,
+      "w": 1234,
+      "h": 881
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 151934,
+    "transparentFraction": 0.41278076171875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 154,
+      "w": 478,
+      "h": 341
+    }
+  }
+}

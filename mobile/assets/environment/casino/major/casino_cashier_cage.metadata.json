@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/major/casino_cashier_cage.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 118,
+    "w": 480,
+    "h": 378
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_cashier_cage.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 144,
+      "y": 10,
+      "w": 1270,
+      "h": 1000
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 113013,
+    "transparentFraction": 0.55462646484375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 118,
+      "w": 480,
+      "h": 378
+    }
+  }
+}

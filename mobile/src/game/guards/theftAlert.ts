@@ -11,6 +11,9 @@ import type { Navigation } from '../world/navigation';
 
 export type TheftRole = 'objective' | 'corridor' | 'exit' | 'zone' | 'roaming';
 
+/** Security Core has a brief reaction window; other missions retain their timing. */
+export const SECURITY_CORE_REACTION_SECONDS = 0.85;
+
 export interface TheftContext {
   missionId?: string;
   empty: boolean;
@@ -20,6 +23,19 @@ export interface TheftContext {
   posts: { x:number; y:number }[][];
   /** Museum authored responsibilities; absent retains legacy pursuit behavior. */
   roles?: TheftRole[];
+  /** Distinct semantic sector circuits per guard. Cycles continue while theft remains active. */
+  sectors?:{id:string;anchors:{x:number;y:number}[]}[][];
+}
+
+export function theftSearchPosts(c:TheftContext,index:number,fallback:{x:number;y:number}[]):{x:number;y:number}[] {
+  'worklet';
+  const sectors=c.sectors?.[index];
+  if(sectors?.length){
+    const posts:{x:number;y:number}[]=[];
+    for(const sector of sectors)for(const anchor of sector.anchors)posts.push(anchor);
+    if(posts.length)return posts;
+  }
+  return c.posts[index]?.length?c.posts[index]:fallback;
 }
 
 function recordTheft(ev:GuardEvents, source:string, t:number):void {
@@ -93,11 +109,14 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
     ev.theftAge+=dt;
     for(let i=0;i<guards.length;i++){
       const g=guards[i];
-      const assigned=c.posts[i]?.length ? c.posts[i] : g.route;
-      let posts=ev.lockdownActive && c.roles?.[i]!=='exit' ? assigned.concat(g.route) : assigned;
+      const assigned=theftSearchPosts(c,i,g.route);
+      // Security Core keeps its four responsibilities even after lockdown;
+      // its own-zone guard must not become a second exit interceptor.
+      const expandLockdownPosts=ev.lockdownActive && c.missionId!=='01-08' && !c.sectors?.[i]?.length;
+      let posts=expandLockdownPosts && c.roles?.[i]!=='exit' ? assigned.concat(g.route) : assigned;
       // One additional zone guard checks the authored exit approach after lockdown.
       // Other guards keep their own expanded routes; no player coordinate is involved.
-      if(ev.lockdownActive && c.roles){
+      if(expandLockdownPosts && c.roles){
         const pressureIndex=c.roles.findIndex(role=>role==='zone'||role==='roaming');
         const exitIndex=c.roles.indexOf('exit');
         const exitPosts=exitIndex>=0?c.posts[exitIndex]:undefined;
@@ -106,7 +125,13 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
       // Observe before moving: an actual sighting alone promotes to global pursuit.
       if(g.canSee)continue;
       g.stateT+=dt;g.suspicion=0;g.hasLkp=false;
-      if(g.searchWait>0){
+      const reacting=c.missionId==='01-08' && ev.theftActivatedAt>=0 &&
+        t-ev.theftActivatedAt<SECURITY_CORE_REACTION_SECONDS;
+      if(reacting){
+        // Retain the authored assignment while colleagues process the whistle.
+        // Visibility is still checked above/below: actual sight overrides this hold.
+        g.speed=0;g.awareness=Awareness.Investigate;g.action=GuardAction.None;
+      }else if(g.searchWait>0){
         g.searchWait-=dt;g.speed=0;g.awareness=Awareness.Search;g.action=GuardAction.Search;
         g.facing=turnToward(g.facing,g.searchBase+Math.sin(g.stateT*2)*0.8,T.turnRateNotice,dt);
         g.baseFacing=g.facing;
@@ -114,8 +139,8 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
         const post=posts[g.searchIndex%posts.length];
         g.awareness=Awareness.Investigate;g.action=GuardAction.None;
         g.targetX=post.x;g.targetY=post.y;
-        if(travel(g,n,T.walkSpeed*g.pace*(c.roles ? (ev.lockdownActive?T.lockdownPaceScale:T.theftPaceScale) : 1.2),dt,t)){
-          g.searchIndex++;g.searchWait=c.roles?(ev.lockdownActive?T.lockdownSearchWait:T.theftSearchWait):1;g.searchBase=g.facing;g.path=[];
+        if(travel(g,n,T.walkSpeed*g.pace*(c.roles && c.missionId!=='02-10' ? (ev.lockdownActive?T.lockdownPaceScale:T.theftPaceScale) : 1.2),dt,t)){
+          g.searchIndex++;g.searchWait=c.roles && c.missionId!=='02-10'?(ev.lockdownActive?T.lockdownSearchWait:T.theftSearchWait):1;g.searchBase=g.facing;g.path=[];
         }
       }else g.speed=0;
       g.gait+=(gaitFromSpeed(g.speed)-g.gait)*damp(14,dt);

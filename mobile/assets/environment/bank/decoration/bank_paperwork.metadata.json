@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/decoration/bank_paperwork.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 8,
+    "w": 222,
+    "h": 240
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-0633534a-5c3f-4eb2-8b5d-2147a8dabb0e.png",
+    "resolution": {
+      "width": 1439,
+      "height": 1093
+    },
+    "bounds": {
+      "x": 298,
+      "y": 84,
+      "w": 846,
+      "h": 912
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 43897,
+    "transparentFraction": 0.323822021484375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 8,
+      "w": 222,
+      "h": 240
+    }
+  }
+}

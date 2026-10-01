@@ -1,7 +1,7 @@
 import type {StageTheme,ValuableKind} from './StageDefinition';
 import {CHAPTER_AREAS,CHAPTER_AREAS_KO} from './chapterArt';
 export const CHAPTER_COUNT=9;
-export const CHAPTER_MISSION_COUNTS=[10,5,5,5,5,5,5,5,5] as const;
+export const CHAPTER_MISSION_COUNTS=[10,10,10,5,5,5,5,5,5] as const;
 export const MISSION_COUNT=CHAPTER_MISSION_COUNTS.reduce((sum,count)=>sum+count,0);
 export const chapterStart=(chapter:number)=>CHAPTER_MISSION_COUNTS.slice(0,chapter).reduce((sum,count)=>sum+count,0);
 export const chapterMissionIndices=(chapter:number)=>Array.from({length:CHAPTER_MISSION_COUNTS[chapter]??0},(_,i)=>chapterStart(chapter)+i);
@@ -20,8 +20,8 @@ export function missionIndex(id:string){
 export interface Chapter {theme:StageTheme;name:string;ko:string;objective:ValuableKind[];names:string[];namesKo:string[];}
 export const CHAPTERS:Chapter[]=[
  {theme:'museum',name:'MUSEUM',ko:'박물관',objective:['diamond','artifact'],names:CHAPTER_AREAS[0],namesKo:CHAPTER_AREAS_KO[0]},
- {theme:'gallery',name:'ART GALLERY',ko:'미술관',objective:['painting','jewel'],names:['AFTER HOURS','BEHIND THE FRAME','THE BLIND WALL','CLOSING TIME','PRIVATE COLLECTION'],namesKo:['폐관 후','액자 뒤에서','보이지 않는 벽','마감 시간','개인 소장품']},
- {theme:'bank',name:'BANK',ko:'은행',objective:['vaultGem','case'],names:['THE COUNTER','DEPOSIT LANE','OFFICE DETOUR','SILENT AUDIT','THE STRONGROOM'],namesKo:['창구','금고 통로','사무실 우회','조용한 감사','보관실']},
+ {theme:'gallery',name:'ART GALLERY',ko:'미술관',objective:['painting','jewel'],names:CHAPTER_AREAS[1],namesKo:CHAPTER_AREAS_KO[1]},
+ {theme:'bank',name:'BANK',ko:'은행',objective:['vaultGem','case'],names:CHAPTER_AREAS[2],namesKo:CHAPTER_AREAS_KO[2]},
  {theme:'lab',name:'LAB',ko:'연구소',objective:['prototype'],names:['COLD ENTRY','INNER ORBIT','FALSE SIGNAL','CONTAINMENT','THE PROTOTYPE'],namesKo:['차가운 입구','내부 궤도','거짓 신호','격리 구역','시제품']},
  {theme:'casino',name:'CASINO',ko:'카지노',objective:['jewel'],names:['SMALL STAKES','TABLE HOP','HOUSE DISTRACTION','VIP PRESSURE','THE ROYAL JEWEL'],namesKo:['작은 판돈','테이블 사이','시선 돌리기','VIP 구역','왕실의 보석']},
  {theme:'mansion',name:'MANSION',ko:'저택',objective:['artifact'],names:['SIDE ENTRANCE','THE LONG HALL','UPSTAIRS ECHO','NIGHT WATCH','THE HEIRLOOM'],namesKo:['옆문','긴 복도','위층의 메아리','야간 경비','가보']},

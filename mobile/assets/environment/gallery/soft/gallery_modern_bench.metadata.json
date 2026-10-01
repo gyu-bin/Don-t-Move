@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/soft/gallery_modern_bench.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 244,
+    "w": 360,
+    "h": 128
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_modern_bench.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 22,
+      "y": 255,
+      "w": 1493,
+      "h": 530
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 33714,
+    "transparentFraction": 0.7688869900173612,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 244,
+      "w": 360,
+      "h": 128
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/major/casino_blackjack_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 230,
+    "w": 480,
+    "h": 266
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_blackjack_table.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 33,
+      "y": 111,
+      "w": 1468,
+      "h": 813
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 101253,
+    "transparentFraction": 0.6077117919921875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 230,
+      "w": 480,
+      "h": 266
+    }
+  }
+}

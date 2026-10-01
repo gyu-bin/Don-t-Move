@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { loadProgress } from './src/game/progress/stageProgress';
@@ -13,7 +14,9 @@ const TOAST_MS = 2800;
 
 /** Playable five-stage V1. Native tilt is used on iPhone; Simulator keeps touch fallback. */
 export default function App() {
+  const [boot, setBoot] = useState(0);
   const [notice, setNotice] = useState<string | null>(null);
+  const restartFromSplash = useCallback(() => setBoot((value) => value + 1), []);
 
   useEffect(() => {
     let alive = true;
@@ -33,8 +36,10 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <StartupScreen />
-      <OtaRefresh />
+      <View key={boot} style={{ flex: 1 }}>
+        <StartupScreen />
+      </View>
+      <OtaRefresh onSplashRestart={restartFromSplash} />
       {notice ? <OtaToast message={notice} /> : null}
       <StatusBar style="light" hidden={false} />
     </SafeAreaProvider>

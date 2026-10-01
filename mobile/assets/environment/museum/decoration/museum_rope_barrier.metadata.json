@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/museum/decoration/museum_rope_barrier.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 136,
+    "w": 240,
+    "h": 112
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/museum_rope_barrier.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 42,
+      "y": 155,
+      "w": 1454,
+      "h": 678
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 7106,
+    "transparentFraction": 0.8854522705078125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 136,
+      "w": 240,
+      "h": 112
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_observation_console.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 229,
+    "w": 480,
+    "h": 267
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_observation_console.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 66,
+      "y": 112,
+      "w": 1405,
+      "h": 781
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 94433,
+    "transparentFraction": 0.6185760498046875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 229,
+      "w": 480,
+      "h": 267
+    }
+  }
+}

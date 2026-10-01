@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_security_checkpoint.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 234,
+    "w": 480,
+    "h": 262
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-2a8bdf59-05ed-4be5-bc92-9896c129cbfb.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 46,
+      "y": 71,
+      "w": 1444,
+      "h": 788
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 80767,
+    "transparentFraction": 0.6855430603027344,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 234,
+      "w": 480,
+      "h": 262
+    }
+  }
+}

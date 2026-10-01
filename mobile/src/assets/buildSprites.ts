@@ -1,3 +1,4 @@
+import type {EnvironmentAssetSpec} from './environmentKit';
 import type { SkImage } from '@shopify/react-native-skia';
 
 import { ANIM_COUNT, ANIM_NAMES, DIR_NAMES } from '../rendering/sprites/spriteTypes';
@@ -105,14 +106,31 @@ export function referencedImages(m: AssetManifest): ImageKey[] {
   }
   if (m.environment.museum) keys.add(m.environment.museum.image);
   if (m.ui.indicators) keys.add(m.ui.indicators.image);
+  for(const asset of m.environment.production ?? []) keys.add(asset.id);
   return [...keys];
 }
 
+/** Individual PNG frames use reviewed object bounds and a ground-contact pivot. */
+export function buildEnvironmentFrames(specs:EnvironmentAssetSpec[],images:Images):SpriteAtlas {
+ const out:SpriteAtlas={};
+ for(const spec of specs){
+  const image=images[spec.id];if(!image)continue;
+  const b=spec.objectBounds??{x:0,y:0,w:image.width(),h:image.height()};
+  if(b.w<=0||b.h<=0||b.x<0||b.y<0||b.x+b.w>image.width()||b.y+b.h>image.height())throw Error(`Invalid environment frame bounds: ${spec.id}`);
+  out[spec.id]=frame(image,{x:b.x,y:b.y,w:b.w,h:b.h,anchor:[spec.pivot.x,spec.pivot.y]});
+ }
+ return out;
+}
 export function buildGameAssets(m: AssetManifest, images: Images): GameAssets {
+  // Production preload must be complete; a missing registered PNG must never
+  // silently turn an approved object into a procedural placeholder.
+  for(const spec of m.environment.production??[]){
+    if(!images[spec.id])throw Error(`Missing production environment image: ${spec.id}`);
+  }
   return {
     player: m.characters.player ? buildCharacterSet(m.characters.player, images) : null,
     guard: m.characters.guard ? buildCharacterSet(m.characters.guard, images) : null,
-    museum: m.environment.museum ? buildAtlas(m.environment.museum, images) : null,
+    museum: m.environment.museum || m.environment.production?.length ? {...(m.environment.museum ? buildAtlas(m.environment.museum,images) : {}),...buildEnvironmentFrames(m.environment.production??[],images)} : null,
     indicators: m.ui.indicators ? buildAtlas(m.ui.indicators, images) : null,
   };
 }

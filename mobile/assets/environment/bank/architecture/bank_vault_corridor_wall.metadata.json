@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/architecture/bank_vault_corridor_wall.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 223,
+    "w": 480,
+    "h": 273
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-111cf12a-472e-4910-b0b7-57fdb6fc8200.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 63,
+      "y": 89,
+      "w": 1410,
+      "h": 801
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 121208,
+    "transparentFraction": 0.5313911437988281,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 223,
+      "w": 480,
+      "h": 273
+    }
+  }
+}

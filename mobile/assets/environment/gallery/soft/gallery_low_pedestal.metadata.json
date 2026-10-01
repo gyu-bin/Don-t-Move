@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/soft/gallery_low_pedestal.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 38,
+    "w": 360,
+    "h": 334
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_low_pedestal.png",
+    "resolution": {
+      "width": 1305,
+      "height": 1206
+    },
+    "bounds": {
+      "x": 88,
+      "y": 82,
+      "w": 1129,
+      "h": 1049
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 112613,
+    "transparentFraction": 0.2278713650173611,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 38,
+      "w": 360,
+      "h": 334
+    }
+  }
+}

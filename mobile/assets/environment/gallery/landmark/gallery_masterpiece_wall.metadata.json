@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/landmark/gallery_masterpiece_wall.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 25,
+    "y": 386,
+    "w": 718,
+    "h": 357
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_masterpiece_wall.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 60,
+      "y": 154,
+      "w": 1418,
+      "h": 705
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 249734,
+    "transparentFraction": 0.5731658935546875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 25,
+      "y": 386,
+      "w": 718,
+      "h": 357
+    }
+  }
+}

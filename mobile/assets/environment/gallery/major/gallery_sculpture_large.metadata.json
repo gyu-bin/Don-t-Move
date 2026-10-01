@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/major/gallery_sculpture_large.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 100,
+    "y": 17,
+    "w": 312,
+    "h": 478
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_sculpture_large.png",
+    "resolution": {
+      "width": 1236,
+      "height": 1272
+    },
+    "bounds": {
+      "x": 233,
+      "y": 47,
+      "w": 770,
+      "h": 1183
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 106465,
+    "transparentFraction": 0.5834503173828125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 100,
+      "y": 17,
+      "w": 312,
+      "h": 478
+    }
+  }
+}

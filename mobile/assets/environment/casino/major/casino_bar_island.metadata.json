@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/major/casino_bar_island.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 122,
+    "w": 480,
+    "h": 374
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_bar_island.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 121,
+      "y": 13,
+      "w": 1283,
+      "h": 1001
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 118714,
+    "transparentFraction": 0.5403404235839844,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 122,
+      "w": 480,
+      "h": 374
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/decoration/casino_carpet_pattern.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 122,
+    "w": 240,
+    "h": 126
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_carpet_pattern.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 53,
+      "y": 134,
+      "w": 1428,
+      "h": 752
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 28553,
+    "transparentFraction": 0.560272216796875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 122,
+      "w": 240,
+      "h": 126
+    }
+  }
+}

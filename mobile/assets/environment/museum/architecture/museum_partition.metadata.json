@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/museum/architecture/museum_partition.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 206,
+    "w": 478,
+    "h": 289
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/museum_partition.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 181,
+      "y": 151,
+      "w": 1190,
+      "h": 720
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 110344,
+    "transparentFraction": 0.5733451843261719,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 206,
+      "w": 478,
+      "h": 289
+    }
+  }
+}

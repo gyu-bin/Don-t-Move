@@ -24,6 +24,7 @@ import { createDebugArt } from '../rendering/debug/guardDebug';
 import { createIconArt } from '../rendering/effects/alertIcons';
 import { createLightFx } from '../rendering/effects/lightFx';
 import { createConeArt } from '../rendering/effects/visionCone';
+import {createCctvArt} from '../rendering/effects/cctvArt';
 import { GUARD_PALETTE, PLAYER_PALETTE } from '../rendering/fallback/characterPalettes';
 import { createCharacterArt } from '../rendering/fallback/proceduralCharacter';
 import { renderPlaygroundFrame } from '../rendering/renderFrame';
@@ -39,7 +40,6 @@ import { useGameAudio, useUIAudio } from '../game/audio/useGameAudio';
 import type { GuardEvents } from '../game/guards/guardBrain';
 import { prepareMission } from './preparedMission';
 import { MISSION_FINISH_HOLD_MS, MISSION_SLIDE_MS, missionSlide, transitionVector } from './missionTransition';
-import { usePickupAudio } from '../game/audio/usePickupAudio';
 import { VALUABLES } from '../game/levels/stagePresentation';
 import { BrandingScreen } from './branding/BrandingScreen';
 import * as SplashScreen from 'expo-splash-screen';
@@ -48,6 +48,7 @@ import { useMenu } from './menu/MenuContext';
 import { SettingsScreen } from './menu/MenuScreens';
 import { feedbackKey,valuableKey } from './menu/strings';
 import { CharacterMotionDebug } from './CharacterMotionDebug';
+import { NativeQAObserver,useNativeQACadence } from './debug/NativeQAObserver';
 import { useMonetization } from '../game/monetization/MonetizationContext';
 
 type GamePhase = GuardEvents['phase'];
@@ -239,6 +240,7 @@ function StageGame({
       player: createCharacterVisual(assets.player, createCharacterArt(PLAYER_PALETTE, false)),
       guard: createCharacterVisual(assets.guard, createCharacterArt(GUARD_PALETTE, true)),
       cone: createConeArt(),
+      cctv: createCctvArt(assets.museum?.cctv ?? null),
       icons: createIconArt(assets.indicators),
       fx: createLightFx(),
       diamond: assets.museum?.[VALUABLES[definition.objective?.kind ?? 'diamond'].sprite] ?? null,
@@ -279,6 +281,7 @@ function StageGame({
   const [caught, setCaught] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [paused, setPaused] = useState(false);
+  const qaCadence=useNativeQACadence(paused||caught||completed,transitioning);
   const [motionDebug,setMotionDebug]=useState(false);
   const [settings, setSettings] = useState(false);
   const [pauseFeedback, setPauseFeedback] = useState('');
@@ -301,10 +304,9 @@ function StageGame({
   const previousTiltEnabled = useSharedValue(tiltEnabled);
 
   useGameAudio({sessionKey:`${definition.id}:${audioSession}`,phase:replayIntro?'INTRO':phaseInfo.phase,
-    theftRevision:phaseInfo.theft,spottedRevision:phaseInfo.spotted,
+    objectiveRevision:pickupRevision,theftRevision:phaseInfo.theft,spottedRevision:phaseInfo.spotted,
     sfxEnabled:soundEnabled,bgmEnabled:progress.musicEnabled,paused:monetization.adPresenting,
     sfxSuspended:paused||caught||completed||transitioning||replayIntro||monetization.adPresenting,active:true},!transitioning);
-  usePickupAudio(pickupRevision, soundEnabled);
 
   const showFlash = (color: 'cyan' | 'red') => {
     if (flashTimer.current) clearTimeout(flashTimer.current);
@@ -340,6 +342,9 @@ function StageGame({
   });
   useAnimatedReaction(() => state.value.events.spottedWhistleRevision, (value,previous)=>{
     if(value>0 && value!==previous)scheduleOnRN(alertBanner,'PLAYER SPOTTED');
+  });
+  useAnimatedReaction(() => state.value.events.cameraAlertRevision ?? 0, (value,previous)=>{
+    if(value>0 && value!==previous)scheduleOnRN(alertBanner,'CAMERA ALERT');
   });
   const treasureAcquired = () => {
     setSecured(true);
@@ -510,6 +515,7 @@ function StageGame({
       </View>}
 
       {paused && !settings && !replayIntro && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+        {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
         <Text style={styles.modalTitle}>{t('paused')}</Text>
         {!!pauseFeedback && <Text style={styles.feedback}>{feedbackKey(pauseFeedback)?t(feedbackKey(pauseFeedback)):pauseFeedback}</Text>}
           <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');resume();}} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('resume')}</Text></Pressable>
@@ -523,6 +529,7 @@ function StageGame({
       {paused && settings && <View accessibilityViewIsModal style={[StyleSheet.absoluteFill,{zIndex:101,elevation:101}]}><SettingsScreen onBack={()=>setSettings(false)} onIntro={()=>setReplayIntro(true)}/></View>}
       {replayIntro && <View style={[StyleSheet.absoluteFill,{zIndex:102,elevation:102}]}><BrandingScreen soundEnabled={soundEnabled} musicEnabled={progress.musicEnabled} onStart={home} onFinished={menuHome}/></View>}
       {caught && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+        {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
         <Text style={[styles.modalTitle, styles.caught]}>{t('caught')}</Text>
         {__DEV__&&<Pressable accessibilityRole="button" onPress={()=>setMotionDebug(true)} style={styles.button}><Text style={styles.buttonText}>CAPTURE DIAGNOSTICS</Text></Pressable>}
         <Pressable onPress={()=>{playUI('ui_select');retry();}} style={styles.primaryButton}><Text style={styles.primaryText}>{t('retry')}</Text></Pressable>
@@ -531,6 +538,7 @@ function StageGame({
 
       {completed&&!transitioning&&<Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill,{backgroundColor:'#000'},finishDimStyle]}/>}
       {resultVisible && !transitioning && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+        {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
         <Text style={[styles.modalTitle, styles.complete]}>{definition.mission === CHAPTER_MISSION_COUNTS[(definition.chapter ?? 1)-1] ? t('chapter') : t('mission')}</Text>
         <Text style={styles.modalBody}>{missionName(missionIndex(definition.id),progress.language)}</Text>
         <Text style={styles.modalBody}>{t('time')} {result.seconds.toFixed(1)}s</Text>
@@ -544,10 +552,11 @@ function StageGame({
       {flash && <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: flash === 'cyan' ? 'rgba(70,225,255,0.24)' : 'rgba(255,40,40,0.30)' }]} />}
       {__DEV__ && !tiltEnabled && !paused && !caught && !completed && !motionDebug && <View style={[styles.touchControls, { bottom: insets.bottom + 8 }]}>
         <Text style={styles.feedback}>TOUCH · TAP TO MOVE</Text>
-        {tilt.available && !!tilt.error && <Pressable accessibilityRole="button" onPress={tilt.restart} style={styles.touchMode}><Text style={styles.buttonText}>{t('sensorRetry')}</Text></Pressable>}
+        {tilt.canRetry && !!tilt.error && <Pressable accessibilityRole="button" onPress={tilt.restart} style={styles.touchMode}><Text style={styles.buttonText}>{t('sensorRetry')}</Text></Pressable>}
         <View style={{ flexDirection: 'row', gap: 6 }}>{['IDLE', 'SNEAK', 'WALK', 'RUN'].map((label, mode) => <Pressable key={label} accessibilityRole="button" accessibilityState={{ selected: touchMode === mode }} onPress={() => selectTouchMode(mode)} style={[styles.touchMode, touchMode === mode && { borderColor: '#54DDF7' }]}><Text style={styles.buttonText}>{label}</Text></Pressable>)}</View>
       </View>}
       {__DEV__&&motionDebug&&resources&&<CharacterMotionDebug state={state} resources={resources} blockers={movementBlockers} bottom={insets.bottom+4} onClose={()=>setMotionDebug(false)} onMode={tiltEnabled?undefined:selectTouchMode}/>}
+      {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
     </View>
   );
 }

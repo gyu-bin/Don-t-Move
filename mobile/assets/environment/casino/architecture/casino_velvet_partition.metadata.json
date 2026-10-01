@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/architecture/casino_velvet_partition.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 160,
+    "w": 480,
+    "h": 336
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_velvet_partition.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 93,
+      "y": 6,
+      "w": 1376,
+      "h": 964
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 93876,
+    "transparentFraction": 0.6302337646484375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 160,
+      "w": 480,
+      "h": 336
+    }
+  }
+}

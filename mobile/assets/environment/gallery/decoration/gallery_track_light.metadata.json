@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/decoration/gallery_track_light.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 124,
+    "w": 240,
+    "h": 124
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_track_light.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 43,
+      "y": 115,
+      "w": 1450,
+      "h": 751
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 14115,
+    "transparentFraction": 0.77923583984375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 124,
+      "w": 240,
+      "h": 124
+    }
+  }
+}

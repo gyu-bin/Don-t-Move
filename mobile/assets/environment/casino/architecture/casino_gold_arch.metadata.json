@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/architecture/casino_gold_arch.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 127,
+    "w": 480,
+    "h": 369
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_gold_arch.png",
+    "resolution": {
+      "width": 1451,
+      "height": 1084
+    },
+    "bounds": {
+      "x": 55,
+      "y": 22,
+      "w": 1339,
+      "h": 1029
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 62292,
+    "transparentFraction": 0.7538833618164062,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 127,
+      "w": 480,
+      "h": 369
+    }
+  }
+}

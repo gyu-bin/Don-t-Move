@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/soft/casino_cocktail_table.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 35,
+    "y": 13,
+    "w": 314,
+    "h": 358
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_cocktail_table.png",
+    "resolution": {
+      "width": 1312,
+      "height": 1199
+    },
+    "bounds": {
+      "x": 229,
+      "y": 113,
+      "w": 852,
+      "h": 971
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 71719,
+    "transparentFraction": 0.4961751302083333,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 35,
+      "y": 13,
+      "w": 314,
+      "h": 358
+    }
+  }
+}

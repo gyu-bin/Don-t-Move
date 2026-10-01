@@ -4,6 +4,7 @@ import { compileStage,TILE } from '../../world/compileStage';
 import { buildNavigation,clearSegment } from '../../world/navigation';
 import { createGuardState,createGuardEvents } from '../guardBrain';
 import { stepGuards } from '../guardSystem';
+import { stepTheft, SECURITY_CORE_REACTION_SECONDS } from '../theftAlert';
 import type { TheftContext } from '../theftAlert';
 import { BODY } from '../guardTuning';
 import { Awareness,GuardAction } from '../../core/types';
@@ -219,4 +220,59 @@ test('exit-role witness follows last sight to Search while uninformed colleague 
  }
  assert(reachedSearch);assert(Math.hypot(witness.x-p.x,witness.y-p.y)<4);
  assert.equal(f.ev.globalX,p.x);assert.equal(f.ev.globalY,p.y);
+});
+
+
+test('Security Core holds semantic assignments for 0.85s without publishing a hidden player',()=>{
+ const f=fixture();f.c.missionId='01-08';f.c.roles=['objective','corridor'];
+ f.c.posts=[[{x:360,y:200}],[{x:360,y:320}]];
+ for(let i=0;i<120&&!f.ev.theftAlert;i++)f.tick();
+ assert(f.ev.theftAlert);
+ const initial=f.guards.map(g=>({x:g.x,y:g.y}));
+ for(let frame=1;frame<SECURITY_CORE_REACTION_SECONDS*60;frame++){
+  const t=f.ev.theftActivatedAt+frame/60;
+  stepTheft(f.guards,{x:-1000-frame,y:-2000,gait:3},f.stage.visionBlockers,f.nav,f.ev,f.c,1/60,t);
+  f.guards.forEach((g,i)=>{
+   assert.deepEqual({x:g.x,y:g.y},initial[i]);assert.equal(g.speed,0);
+   assert.equal(g.targetX,f.c.posts[i][0].x);assert.equal(g.targetY,f.c.posts[i][0].y);
+   assert(!g.hasLkp);
+  });
+  assert(!f.ev.globalAlert);assert.equal(f.ev.globalRevision,0);
+ }
+ for(let frame=0;frame<60;frame++)stepTheft(f.guards,{x:-1000,y:-2000,gait:3},
+  f.stage.visionBlockers,f.nav,f.ev,f.c,1/60,f.ev.theftActivatedAt+SECURITY_CORE_REACTION_SECONDS+frame/60);
+ assert(f.guards.some((g,i)=>Math.hypot(g.x-initial[i].x,g.y-initial[i].y)>10));
+});
+
+test('Security Core sighting interrupts reaction hold in the very same frame',()=>{
+ const f=fixture();f.c.missionId='01-08';f.c.roles=['objective','exit'];
+ for(let i=0;i<120&&!f.ev.theftAlert;i++)f.tick();
+ const g=f.guards[0];g.facing=0;g.baseFacing=0;
+ const p={x:g.x+50,y:g.y,gait:0};
+ f.tick(p);
+ assert(f.ev.globalAlert);assert.equal(g.awareness,Awareness.Chase);
+ assert.equal(g.targetX,p.x);assert.equal(g.targetY,p.y);
+ assert.equal(f.ev.spottedWhistleRevision,1);
+});
+
+test('Grand Heist does not inherit Security Core reaction timing',()=>{
+ const f=fixture();f.c.missionId='01-10';f.c.roles=['objective','corridor'];
+ f.c.posts=[[{x:360,y:200}],[{x:360,y:320}]];
+ for(let i=0;i<120&&!f.ev.theftAlert;i++)f.tick();
+ const g=f.guards[0];g.facing=0;g.baseFacing=0;
+ const x=g.x;
+ stepTheft(f.guards,{x:-1000,y:-2000,gait:0},f.stage.visionBlockers,f.nav,f.ev,f.c,1/60,f.ev.theftActivatedAt+1/60);
+ assert(g.x>x);assert(g.speed>0);
+});
+
+
+test('Security Core own-zone search retains authored posts after lockdown',()=>{
+ const f=fixture();f.c.missionId='01-08';f.c.roles=['zone','exit'];
+ f.c.posts=[[{x:360,y:200},{x:360,y:240}],[{x:120,y:400},{x:160,y:400}]];
+ f.ev.theftAlert=true;f.ev.theftActivatedAt=0;f.ev.lockdownActive=true;
+ for(let frame=0;frame<600;frame++){
+  stepTheft(f.guards,{x:-1000-frame,y:-2000,gait:3},f.stage.visionBlockers,f.nav,f.ev,f.c,1/60,30+frame/60);
+  f.guards.forEach((g,i)=>assert(f.c.posts[i].some(p=>p.x===g.targetX&&p.y===g.targetY)));
+  assert(!f.ev.globalAlert);assert.equal(f.ev.globalRevision,0);
+ }
 });

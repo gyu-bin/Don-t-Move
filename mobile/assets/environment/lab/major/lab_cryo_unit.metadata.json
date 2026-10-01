@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_cryo_unit.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 140,
+    "y": 17,
+    "w": 232,
+    "h": 478
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_cryo_unit.png",
+    "resolution": {
+      "width": 1180,
+      "height": 1333
+    },
+    "bounds": {
+      "x": 308,
+      "y": 48,
+      "w": 577,
+      "h": 1191
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 94179,
+    "transparentFraction": 0.6354446411132812,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 140,
+      "y": 17,
+      "w": 232,
+      "h": 478
+    }
+  }
+}

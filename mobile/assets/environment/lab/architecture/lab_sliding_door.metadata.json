@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/architecture/lab_sliding_door.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 98,
+    "w": 478,
+    "h": 397
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_sliding_door.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 204,
+      "y": 33,
+      "w": 1136,
+      "h": 944
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 139320,
+    "transparentFraction": 0.461181640625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 98,
+      "w": 478,
+      "h": 397
+    }
+  }
+}

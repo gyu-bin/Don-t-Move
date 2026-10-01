@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/decoration/casino_drink_tray.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 29,
+    "w": 240,
+    "h": 219
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_drink_tray.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 315,
+      "y": 74,
+      "w": 900,
+      "h": 821
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 33355,
+    "transparentFraction": 0.452911376953125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 29,
+      "w": 240,
+      "h": 219
+    }
+  }
+}

@@ -6,6 +6,7 @@ import type { AudioEvent } from './audioState';
  */
 export const AUDIO_SOURCES: Record<AudioEvent, AudioSource | null> = {
   bgm_lobby: require('../../../assets/audio/bgm/lobby.mp3'),
+  objective_pickup: require('../../../assets/audio/sfx/objective-pickup.wav'),
   ui_select: require('../../../assets/audio/sfx/ui-select.wav'),
   ui_back: require('../../../assets/audio/sfx/ui-back.wav'),
   whistle_theft: require('../../../assets/audio/sfx/whistle-theft.wav'),

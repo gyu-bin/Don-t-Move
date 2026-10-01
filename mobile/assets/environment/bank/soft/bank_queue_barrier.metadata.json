@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_queue_barrier.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 216,
+    "w": 360,
+    "h": 156
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-0a5edd6b-ca6d-4092-85a8-f9c48fd4a12e.png",
+    "resolution": {
+      "width": 1832,
+      "height": 858
+    },
+    "bounds": {
+      "x": 67,
+      "y": 56,
+      "w": 1706,
+      "h": 738
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 9999,
+    "transparentFraction": 0.9242350260416666,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 216,
+      "w": 360,
+      "h": 156
+    }
+  }
+}

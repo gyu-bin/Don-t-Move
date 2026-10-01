@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/decoration/lab_monitor.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 8,
+    "w": 222,
+    "h": 240
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_monitor.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 356,
+      "y": 44,
+      "w": 862,
+      "h": 931
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 33035,
+    "transparentFraction": 0.488555908203125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 8,
+      "w": 222,
+      "h": 240
+    }
+  }
+}

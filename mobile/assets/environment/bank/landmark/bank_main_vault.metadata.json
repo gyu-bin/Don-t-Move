@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/landmark/bank_main_vault.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 25,
+    "y": 149,
+    "w": 718,
+    "h": 594
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-5618bb10-5368-47fe-bf1d-01934ee4bedd.png",
+    "resolution": {
+      "width": 1337,
+      "height": 1176
+    },
+    "bounds": {
+      "x": 38,
+      "y": 69,
+      "w": 1260,
+      "h": 1042
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 393969,
+    "transparentFraction": 0.3250291612413194,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 25,
+      "y": 149,
+      "w": 718,
+      "h": 594
+    }
+  }
+}

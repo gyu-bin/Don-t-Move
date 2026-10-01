@@ -6,6 +6,8 @@ import { useSharedValue } from 'react-native-reanimated';
 import { createTiltState, DEFAULT_TILT, sensorLifecycleAction } from './tilt';
 import type { AttitudeSample, TiltTuning } from './tilt';
 import { usesTiltInput } from './inputPolicy';
+import { createAndroidTiltSession } from './androidTiltSession';
+import { ANDROID_REFERENCE_FRAME } from './androidMotion';
 
 type NativeSample = AttitudeSample;
 declare class AttitudeModule extends NativeModule<{
@@ -20,7 +22,7 @@ declare class AttitudeModule extends NativeModule<{
 }
 const native = Platform.OS === 'ios' ? requireOptionalNativeModule<AttitudeModule>('DontMoveAttitude') : null;
 // Release iPhone retains its sensor requirement; developer builds can play without Core Motion.
-export const TILT_DEVICE = usesTiltInput(Platform.OS, __DEV__, native);
+export const TILT_DEVICE = Platform.OS === 'android' || usesTiltInput(Platform.OS, __DEV__, native);
 
 export function useTiltControl() {
   const sample = useSharedValue<AttitudeSample | null>(null);
@@ -28,12 +30,46 @@ export function useTiltControl() {
   const tuning = useSharedValue<TiltTuning>({ ...DEFAULT_TILT });
   const active = useSharedValue(false);
   const reset = useSharedValue(0);
-  const [error, setError] = useState(TILT_DEVICE ? !native ? 'Development build required · rebuild iOS' : !native.available ? 'Device motion unavailable' : '' : '');
+  const [error, setError] = useState(Platform.OS === 'ios' && TILT_DEVICE ? !native ? 'Development build required · rebuild iOS' : !native.available ? 'Device motion unavailable' : '' : '');
   const [restart, setRestart] = useState(0);
   const [sensorFailed, setSensorFailed] = useState(false);
-  const enabled = usesTiltInput(Platform.OS, __DEV__, native, sensorFailed);
+  const [androidAvailable, setAndroidAvailable] = useState<boolean | null>(null);
+  const enabled = usesTiltInput(Platform.OS, __DEV__, native, sensorFailed, androidAvailable !== false);
   useEffect(() => {
-    if (!enabled) return;
+    if (Platform.OS !== 'android') return;
+    let disposed = false;
+    // Only initial mount / explicit Retry starts a new calibration. Foreground
+    // subscriptions retain the earth-referenced quaternion and fixed neutral.
+    controller.set(createTiltState()); sample.set(null); active.set(false);
+    reset.set(reset.get() + 1);
+    const session = createAndroidTiltSession({
+      motion: DeviceMotion,
+      onSample: value => { if (!disposed) sample.set(value); },
+      onActive: value => {
+        if (disposed) return;
+        active.set(value);
+        if (value) { setAndroidAvailable(true); setError(''); }
+        else { sample.set(null); reset.set(reset.get() + 1); }
+      },
+      onAvailable: value => { if (!disposed) setAndroidAvailable(value); },
+      onError: message => { if (!disposed) setError(message); },
+    });
+    const lifecycle = AppState.addEventListener('change', state => session.setAppState(state));
+    session.setAppState(AppState.currentState);
+    return () => {
+      disposed = true; lifecycle.remove(); session.dispose();
+      active.set(false); sample.set(null);
+    };
+  }, [active, controller, reset, restart, sample]);
+  useEffect(() => {
+    if (!__DEV__) return;
+    if (Platform.OS === 'android' && androidAvailable === null) {
+      console.info('[INPUT] INITIALIZING — ANDROID'); return;
+    }
+    console.info(enabled ? `[INPUT] TILT — ${Platform.OS.toUpperCase()}` : '[INPUT] TOUCH FALLBACK');
+  }, [androidAvailable, enabled]);
+  useEffect(() => {
+    if (Platform.OS !== 'ios' || !enabled) return;
     if (!native?.available) return;
     let disposed = false;
     let generation = 0;
@@ -80,6 +116,11 @@ export function useTiltControl() {
       motion.remove(); failure.remove(); lifecycle.remove(); void module.stop();
     };
   }, [active, controller, enabled, reset, restart, sample]);
-  return { enabled, available: native?.available ?? false, referenceFrame: native?.referenceFrame ?? 'none', sample, controller, tuning, active, reset,
-    error, restart: () => { setSensorFailed(false); setRestart((n) => n+1); } };
+  return { enabled, available: Platform.OS === 'android' ? androidAvailable === true : native?.available ?? false,
+    canRetry: Platform.OS === 'android' || !!native?.available,
+    referenceFrame: Platform.OS === 'android' ? ANDROID_REFERENCE_FRAME : native?.referenceFrame ?? 'none', sample, controller, tuning, active, reset,
+    error, restart: () => {
+      if (Platform.OS === 'android') { setAndroidAvailable(null); setError(''); }
+      setSensorFailed(false); setRestart((n) => n+1);
+    } };
 }

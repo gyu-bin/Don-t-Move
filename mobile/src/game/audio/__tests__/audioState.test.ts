@@ -157,7 +157,7 @@ test('native manager queues the first loading whistle, cancels suspended work, a
   let timerCount = 0;
   let now = 0;
   let mixerTick: (()=>void) | undefined;
-  const registry = { bgm_stealth: 1, bgm_chase: 2, whistle_theft: 3, whistle_spotted: 4, bgm_lobby: 5, ui_select: 6, ui_back: 7 };
+  const registry = { bgm_stealth: 1, bgm_chase: 2, whistle_theft: 3, whistle_spotted: 4, bgm_lobby: 5, ui_select: 6, ui_back: 7, objective_pickup: 8 };
   const native = {
     createAudioPlayer: (_source: number, options: { downloadFirst: boolean }) => {
       assert.equal(options.downloadFirst, true);
@@ -270,8 +270,27 @@ test('native manager queues the first loading whistle, cancels suspended work, a
   manager.update(base); manager.playUI('ui_back');
   manager.update({ ...base, active:false }); releaseSeek!(); await Promise.resolve();
   assert.equal(voices[6].playCount, 0, 'background cancels pending UI seek');
-  manager.dispose();
-  assert.equal(removedSubscriptions, 7);
+  // Real pickup path uses its own voice; whistle replacement must not duplicate it.
+  manager.update(base);
+  manager.update({ ...base, objectiveRevision: 1 });
+  assert.equal(voices[7].playCount, 0, 'pickup waits for preload');
+  load(7); releaseSeek!(); await Promise.resolve();
+  assert.equal(voices[7].playCount, 1);
+  assert.equal(voices[7].volume, 0.60);
+  manager.update({ ...base, objectiveRevision: 1 });
+  assert.equal(voices[7].playCount, 1, 'same pickup never replays');
+  manager.update({ ...base, objectiveRevision: 2 });
+  manager.update({ ...base, objectiveRevision: 2, active: false });
+  releaseSeek!(); await Promise.resolve();
+  assert.equal(voices[7].playCount, 1, 'background cancels pending pickup seek');
+  manager.update({ ...base, objectiveRevision: 3 });
+  manager.update({ ...base, sessionKey: 'pickup-retry' });
+  releaseSeek!(); await Promise.resolve();
+  assert.equal(voices[7].playCount, 1, 'retry cancels pending pickup');
+  manager.update({ ...base, sessionKey: 'pickup-retry', objectiveRevision: 1 });
+  manager.dispose(); releaseSeek!(); await Promise.resolve();
+  assert.equal(voices[7].playCount, 1, 'dispose cancels pending pickup');
+  assert.equal(removedSubscriptions, 8);
   assert.equal(timerCount, 0);
   assert.ok(voices.every(voice => voice.removed && !voice.playing));
 });
@@ -328,4 +347,32 @@ test('mix priority: Whistle > Chase ≥ Stealth; Stealth raised without touching
   const whistle = lufs(-13.6, WHISTLE_GAIN);
   assert.ok(stealth <= chase, `stealth ${stealth.toFixed(1)} above chase ${chase.toFixed(1)}`);
   assert.ok(whistle - Math.max(stealth, chase) >= 4, 'the quieter whistle stays ≥ 4 LU above the music');
+});
+
+
+test('objective pickup emits once and retains stealth until theft or spotted', () => {
+  const initial = reduceAudio(null, base).state;
+  const acquired = { ...base, objectiveRevision: 1 };
+  const pickup = reduceAudio(initial, acquired);
+  assert.equal(pickup.pickup, true);
+  assert.equal(pickup.music, 'bgm_stealth');
+  assert.deepEqual(pickup.whistles, []);
+  assert.equal(reduceAudio(pickup.state, acquired).pickup, false);
+  const theft = reduceAudio(pickup.state, { ...acquired, phase: 'THEFT_ALERT', theftRevision: 1 });
+  assert.equal(theft.pickup, false);
+  assert.equal(theft.music, 'bgm_chase');
+  const spotted = reduceAudio(theft.state, { ...acquired, phase: 'PLAYER_SPOTTED', theftRevision: 1, spottedRevision: 1 });
+  assert.equal(spotted.music, theft.music);
+  assert.equal(spotted.pickup, false);
+});
+
+test('pickup mount/retry/mute/pause/background never replay historical acquisition', () => {
+  assert.equal(reduceAudio(null, { ...base, objectiveRevision: 1 }).pickup, false);
+  const initial = reduceAudio(null, base).state;
+  for (const disabled of [{ sfxEnabled: false }, { paused: true }, { active: false }, { sfxSuspended: true }]) {
+    const consumed = reduceAudio(initial, { ...base, objectiveRevision: 1, ...disabled });
+    assert.equal(consumed.pickup, false);
+    assert.equal(reduceAudio(consumed.state, { ...base, objectiveRevision: 1 }).pickup, false);
+  }
+  assert.equal(reduceAudio(initial, { ...base, sessionKey: 'retry', objectiveRevision: 1 }).pickup, false);
 });

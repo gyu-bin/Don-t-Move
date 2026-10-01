@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/museum/soft/museum_display_low.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 203,
+    "w": 360,
+    "h": 169
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/museum_display_low.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 31,
+      "y": 172,
+      "w": 1476,
+      "h": 691
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 56681,
+    "transparentFraction": 0.6083577473958334,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 203,
+      "w": 360,
+      "h": 169
+    }
+  }
+}

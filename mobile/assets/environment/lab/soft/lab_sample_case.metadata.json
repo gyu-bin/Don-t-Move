@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/soft/lab_sample_case.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 171,
+    "w": 360,
+    "h": 200
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_sample_case.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 123,
+      "y": 140,
+      "w": 1284,
+      "h": 716
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 65644,
+    "transparentFraction": 0.549072265625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 171,
+      "w": 360,
+      "h": 200
+    }
+  }
+}

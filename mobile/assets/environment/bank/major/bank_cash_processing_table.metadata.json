@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_cash_processing_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 265,
+    "w": 480,
+    "h": 231
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-e173ad22-031f-4a8a-b731-a88ced904271.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 43,
+      "y": 135,
+      "w": 1454,
+      "h": 699
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 79540,
+    "transparentFraction": 0.6853408813476562,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 265,
+      "w": 480,
+      "h": 231
+    }
+  }
+}

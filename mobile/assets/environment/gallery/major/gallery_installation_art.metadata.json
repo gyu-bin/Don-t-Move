@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/major/gallery_installation_art.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 184,
+    "w": 478,
+    "h": 311
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_installation_art.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 191,
+      "y": 34,
+      "w": 1249,
+      "h": 811
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 88606,
+    "transparentFraction": 0.6552314758300781,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 184,
+      "w": 478,
+      "h": 311
+    }
+  }
+}

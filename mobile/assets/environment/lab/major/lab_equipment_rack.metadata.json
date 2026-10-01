@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_equipment_rack.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 133,
+    "y": 16,
+    "w": 246,
+    "h": 480
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_equipment_rack.png",
+    "resolution": {
+      "width": 1145,
+      "height": 1374
+    },
+    "bounds": {
+      "x": 237,
+      "y": 38,
+      "w": 659,
+      "h": 1284
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 99699,
+    "transparentFraction": 0.6169662475585938,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 133,
+      "y": 16,
+      "w": 246,
+      "h": 480
+    }
+  }
+}

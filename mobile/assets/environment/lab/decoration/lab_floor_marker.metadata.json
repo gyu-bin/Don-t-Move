@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/decoration/lab_floor_marker.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 109,
+    "w": 240,
+    "h": 139
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_floor_marker.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 97,
+      "y": 112,
+      "w": 1362,
+      "h": 790
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 11697,
+    "transparentFraction": 0.81573486328125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 109,
+      "w": 240,
+      "h": 139
+    }
+  }
+}

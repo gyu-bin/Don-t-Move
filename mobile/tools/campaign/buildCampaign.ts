@@ -1,11 +1,22 @@
+import {applyV5MuseumGallery} from './v5MuseumGallery';
+import {BANK_PRODUCTION} from './bankProductionDesign';
+import {applyV3MuseumGallery} from './v3MuseumGallery';
+import {applySecurityData} from './bankSecurityOverlay';
 import type {StageDefinition,PropKind,PatrolPoint} from '../../src/game/levels/StageDefinition';
-import {CHAPTERS,MISSION_COUNT,missionId} from '../../src/game/levels/campaignCatalog';
+import {CHAPTERS,MISSION_COUNT} from '../../src/game/levels/campaignCatalog';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
 import {buildNavigation,clearSegment,findPath,nodeX,nodeY} from '../../src/game/world/navigation';
 import {BODY} from '../../src/game/guards/guardTuning';
 import {PROP_KIT} from '../../src/game/world/propKit';
 import {STAGE_PALETTES} from '../../src/game/levels/stagePresentation';
 import {BLUEPRINTS} from './blueprints';
+import {applyMuseumFinalDesign} from './museumFinalDesign';
+import {applyMuseumDressing} from './museumDressing';
+import {applyMuseumCentralCover} from './museumCentralCover';
+import {applyMuseumSecurityCleanup} from './museumSecurityCleanup';
+import {applyMuseumTargetedAudit} from './museumTargetedAudit';
+import {galleryEnvironmentMission} from './galleryEnvironmentDesign';
+import {enrichGallery} from './galleryEnrichment';
 import {missionEdges,inwardFacing} from '../../src/game/levels/missionContinuity';
 import {CHAPTER_AREAS,LANDMARKS,LANDMARK_KINDS} from '../../src/game/levels/chapterArt';
 import {museumMission02,museumMission03,museumMission04,museumMission05,museumMission06,museumMission07,museumMission08,museumMission09,museumMission10,museumProduction} from './museumProduction';
@@ -29,7 +40,7 @@ function buildLegacyMission(index:number):StageDefinition {
   floor=Array.from({length:w},(_,y)=>Array.from({length:h},(_,x)=>floor[h-1-x][y]));
   anchors=anchors.map(p=>({x:h-p.y,y:p.x}));[w,h]=[h,w];
  }
- const s:StageDefinition={id:missionId(index+5),number:index+1,chapter:chapter+1,mission:mission+1,title:CHAPTER_AREAS[chapter][mission],theme:c.theme,structurePlan:blueprint.plan,
+ const s:StageDefinition={id:`${String(chapter+1).padStart(2,'0')}-${String(mission+1).padStart(2,'0')}`,number:index+1,chapter:chapter+1,mission:mission+1,title:CHAPTER_AREAS[chapter][mission],theme:c.theme,structurePlan:blueprint.plan,
   layout:floor.map((row,y)=>row.map((v,x)=>v?'.':[-1,0,1].some(dy=>[-1,0,1].some(dx=>floor[y+dy]?.[x+dx]))?'#':' ').join('')),
   props:[],lights:[],guards:[],patrolRoutes:[],playerSpawn:{...anchors[0],facing:0},objective:{...anchors[1],kind:c.objective[mission%c.objective.length]},exit:{...anchors[2],w:1.2,h:1.2},ambientDarkness:STAGE_PALETTES[c.theme].darkness,
  };
@@ -120,9 +131,16 @@ function buildLegacyMission(index:number):StageDefinition {
 }
 // Non-Museum authoring keeps its original blueprint indices and serialized numbers.
 // Campaign position is always resolved from the stable mission ID at runtime.
+function buildAuthoredMission(index:number):StageDefinition {
+ if(index<5)return applyMuseumTargetedAudit(applyMuseumCentralCover(applyMuseumDressing(applyMuseumFinalDesign(buildLegacyMission(index)))));
+ if(index<10)return applyMuseumSecurityCleanup(applyMuseumCentralCover(applyMuseumDressing(applyMuseumFinalDesign(museumExpandedMissions[index-5]()))));
+ if(index<20)return enrichGallery(galleryEnvironmentMission(index-9));
+ if(index<30)return BANK_PRODUCTION[index-20];
+ return buildLegacyMission(index-15);
+}
 export function buildMission(index:number):StageDefinition {
- if(index<5)return buildLegacyMission(index);
- if(index<10)return museumExpandedMissions[index-5]();
- return buildLegacyMission(index-5);
+ const def=buildAuthoredMission(index);
+ const secured=index<30?applySecurityData(def):def;
+ return index<20?applyV5MuseumGallery(applyV3MuseumGallery(secured)):secured;
 }
 export const buildCampaign=()=>Array.from({length:MISSION_COUNT},(_,i)=>buildMission(i));

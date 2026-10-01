@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/decoration/gallery_abstract_frame.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 133,
+    "w": 240,
+    "h": 115
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_abstract_frame.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 54,
+      "y": 166,
+      "w": 1428,
+      "h": 685
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 27043,
+    "transparentFraction": 0.5828094482421875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 133,
+      "w": 240,
+      "h": 115
+    }
+  }
+}

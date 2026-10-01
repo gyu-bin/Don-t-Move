@@ -1,3 +1,5 @@
+import {createSecurityCamera,stepSecurityCameras} from '../security/cctv';
+import type {SecurityCameraState} from '../security/cctv';
 import { clamp, damp, turnToward } from '../core/math';
 import { advancePlayerSpritePhase, GAIT_SPEED, gaitFromSpeed, playerLocoStride, stablePlayerSpriteGait, strideCycleLength } from '../core/locomotion';
 import { Gait } from '../core/types';
@@ -50,6 +52,7 @@ export interface PlayerState {
 
 export interface PlaygroundState {
   theft: TheftContext;
+  securityCameras:SecurityCameraState[];
   boundary?: PlayableBoundary;
   t: number;
   player: PlayerState;
@@ -85,9 +88,11 @@ export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[
   const sp = stage.playerSpawn;
   return {
     boundary: stage.def.chapter===1 ? createPlayableBoundary(stage) : undefined,
+    securityCameras:(stage.cameras??[]).map(createSecurityCamera),
     theft: { empty:false,x:stage.objective.x,y:stage.objective.y,missionId:stage.def.id,
       posts:stage.guards.map(g=>g.theftPosts ?? g.route.map(p=>({x:p.x,y:p.y}))),
-      ...(stage.def.chapter===1 ? {roles:stage.guards.map(g=>g.theftRole ?? 'zone')} : {}) },
+      sectors:stage.guards.map(g=>g.theftSearchSectors??[]),
+      ...(stage.def.chapter===1 || stage.def.id==='02-10' || stage.guards.some(g=>g.theftSearchSectors?.length||g.theftPosts?.length) ? {roles:stage.guards.map(g=>g.theftRole ?? 'zone')} : {}) },
     t: 0,
     player: {
       spritePhase: 0,
@@ -209,6 +214,7 @@ export function stepPlayground(
   // Crossing an active Exit completes the escape before this frame's contact pass.
   stepMission(s.mission, p.x, p.y, false);
   s.theft.empty=s.mission.enabled && s.mission.treasure;
+  if (!s.mission.complete) stepSecurityCameras(s.securityCameras,p,visionBlockers,s.events,dt,s.t);
   if (!s.mission.complete) stepGuards(s.guards, p, visionBlockers, navigation, dt, s.events, s.t, s.patrol,1,s.theft);
   for (let i=0;i<s.guards.length;i++) stepGuardPlayback(s.guardPlayback[i],s.guards[i],dt);
 

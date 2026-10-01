@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_office_desk.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 153,
+    "w": 360,
+    "h": 219
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-1f0aa852-735b-44c3-8225-b786ce10d416.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 68,
+      "y": 44,
+      "w": 1423,
+      "h": 867
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 58115,
+    "transparentFraction": 0.5994737413194444,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 153,
+      "w": 360,
+      "h": 219
+    }
+  }
+}

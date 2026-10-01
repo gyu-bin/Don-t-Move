@@ -1,30 +1,23 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 
-import { loadProgress } from '../game/progress/stageProgress';
-import { translate } from '../ui/menu/strings';
 import { downloadAndReload, reloadOntoUpdate, updatesModule } from './applyUpdate';
 import { shouldReloadPending } from './otaNotice';
 
 type UpdatesModule = NonNullable<ReturnType<typeof updatesModule>>;
 
 /**
- * Production launches with the bundle already on disk, then downloads in the background.
- * When that download is a different bundle, cover the screen and reload immediately.
+ * When a newer bundle is on disk, restart the app from the splash.
+ * The native reload boots index again. If that reload never tears the runtime down,
+ * `onSplashRestart` remounts the tree so the splash still plays.
  */
-export function OtaRefresh() {
+export function OtaRefresh({ onSplashRestart }: { onSplashRestart: () => void }) {
   const [Updates] = useState(updatesModule);
-  const [covering, setCovering] = useState(false);
-  const showCover = useCallback(() => setCovering(true), []);
-  return (
-    <>
-      {Updates ? <OtaRefreshRunner Updates={Updates} onWillReload={showCover} /> : null}
-      {covering ? <OtaReloadCover /> : null}
-    </>
-  );
+  if (!Updates) return null;
+  return <OtaRefreshRunner Updates={Updates} onSplashRestart={onSplashRestart} />;
 }
 
-function OtaRefreshRunner({ Updates, onWillReload }: { Updates: UpdatesModule; onWillReload: () => void }) {
+function OtaRefreshRunner({ Updates, onSplashRestart }: { Updates: UpdatesModule; onSplashRestart: () => void }) {
   const state = Updates.useUpdates();
   const checked = useRef(false);
 
@@ -32,55 +25,20 @@ function OtaRefreshRunner({ Updates, onWillReload }: { Updates: UpdatesModule; o
     if (state.isStartupProcedureRunning || state.isChecking || state.isDownloading) return;
     const downloadedId = state.downloadedUpdate?.type === 'new' ? state.downloadedUpdate.updateId : null;
     if (state.isUpdatePending && shouldReloadPending(false, state.currentlyRunning.updateId, downloadedId)) {
-      onWillReload();
-      void reloadOntoUpdate(Updates);
+      void reloadOntoUpdate(Updates, downloadedId, onSplashRestart);
       return;
     }
     if (checked.current) return;
     checked.current = true;
-    void downloadAndReload(Updates, onWillReload);
-  }, [Updates, onWillReload, state.currentlyRunning.updateId, state.downloadedUpdate, state.isChecking, state.isDownloading, state.isStartupProcedureRunning, state.isUpdatePending]);
+    void downloadAndReload(Updates, onSplashRestart);
+  }, [Updates, onSplashRestart, state.currentlyRunning.updateId, state.downloadedUpdate, state.isChecking, state.isDownloading, state.isStartupProcedureRunning, state.isUpdatePending]);
 
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
-      if (next === 'active') void downloadAndReload(Updates, onWillReload);
+      if (next === 'active') void downloadAndReload(Updates, onSplashRestart);
     });
     return () => sub.remove();
-  }, [Updates, onWillReload]);
+  }, [Updates, onSplashRestart]);
 
   return null;
 }
-
-function OtaReloadCover() {
-  const [label, setLabel] = useState(translate('en', 'updating'));
-  useEffect(() => {
-    void loadProgress().then((progress) => setLabel(translate(progress.language, 'updating'))).catch(() => {});
-  }, []);
-  return (
-    <View style={styles.cover}>
-      <ActivityIndicator color="#3ED5FA" size="large" />
-      <Text style={styles.label}>{label}</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  cover: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 100,
-    elevation: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 16,
-    backgroundColor: '#081824',
-  },
-  label: {
-    color: '#D9E5E8',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-});

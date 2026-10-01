@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/major/casino_security_station.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 53,
+    "y": 17,
+    "w": 406,
+    "h": 478
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_security_station.png",
+    "resolution": {
+      "width": 1209,
+      "height": 1301
+    },
+    "bounds": {
+      "x": 91,
+      "y": 30,
+      "w": 1032,
+      "h": 1215
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 147690,
+    "transparentFraction": 0.4276313781738281,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 53,
+      "y": 17,
+      "w": 406,
+      "h": 478
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/soft/lab_workstation.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 100,
+    "w": 359,
+    "h": 272
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_workstation.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 174,
+      "y": 55,
+      "w": 1228,
+      "h": 928
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 58658,
+    "transparentFraction": 0.58465576171875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 100,
+      "w": 359,
+      "h": 272
+    }
+  }
+}

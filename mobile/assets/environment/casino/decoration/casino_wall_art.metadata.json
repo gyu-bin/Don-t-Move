@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/decoration/casino_wall_art.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 8,
+    "w": 224,
+    "h": 240
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_wall_art.png",
+    "resolution": {
+      "width": 1219,
+      "height": 1290
+    },
+    "bounds": {
+      "x": 132,
+      "y": 121,
+      "w": 963,
+      "h": 1028
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 53718,
+    "transparentFraction": 0.1725921630859375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 8,
+      "w": 224,
+      "h": 240
+    }
+  }
+}

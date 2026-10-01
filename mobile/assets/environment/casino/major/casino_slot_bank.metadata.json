@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/major/casino_slot_bank.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 109,
+    "w": 478,
+    "h": 386
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_slot_bank.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 180,
+      "y": 23,
+      "w": 1184,
+      "h": 956
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 150038,
+    "transparentFraction": 0.4161109924316406,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 109,
+      "w": 478,
+      "h": 386
+    }
+  }
+}

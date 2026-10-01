@@ -1,3 +1,5 @@
+import {ENVIRONMENT_IMAGE_SOURCES, ENVIRONMENT_ASSETS} from './environmentKit';
+import type {EnvironmentAssetSpec} from './environmentKit';
 import type { AnimName, DirName } from '../rendering/sprites/spriteTypes';
 import { LOCO_CELL, LOCO_CHARACTERS, LOCO_PIVOT, LOCO_ROWS, locoScale, locoStride } from '../game/core/locomotionAtlas';
 import type { LocoState, LocoWho } from '../game/core/locomotionAtlas';
@@ -76,12 +78,13 @@ export interface AtlasManifest {
 
 export interface AssetManifest {
   characters: { player: CharacterManifest | null; guard: CharacterManifest | null };
-  environment: { museum: AtlasManifest | null };
+  environment: { museum: AtlasManifest | null; production?:EnvironmentAssetSpec[] };
   ui: { indicators: AtlasManifest | null };
 }
 
 /** All bitmap sources. Metro needs static `require` calls, so they live here. */
 export const IMAGE_SOURCES = {
+  ...ENVIRONMENT_IMAGE_SOURCES,
   museumAtlas: require('../../assets/museum/museum_atlas.png'),
   legacyAgent: require('../../assets/characters/legacy/agent_directions.png'),
   legacyGuard: require('../../assets/characters/legacy/guard_directions.png'),
@@ -203,7 +206,7 @@ export const LOCOMOTION_VISUAL_REVIEW = [
  */
 export const ASSET_MANIFEST: AssetManifest = {
   characters: { player: LOCOMOTION_CHARACTERS.player, guard: LOCOMOTION_CHARACTERS.guard },
-  environment: { museum: MUSEUM_ATLAS },
+  environment: { museum: MUSEUM_ATLAS, production:ENVIRONMENT_ASSETS },
   ui: { indicators: null },
 };
 

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/landmark/lab_prototype_machine.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 36,
+    "y": 25,
+    "w": 696,
+    "h": 718
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_prototype_machine.png",
+    "resolution": {
+      "width": 1362,
+      "height": 1155
+    },
+    "bounds": {
+      "x": 150,
+      "y": 10,
+      "w": 1064,
+      "h": 1099
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 330443,
+    "transparentFraction": 0.4295756022135417,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 36,
+      "y": 25,
+      "w": 696,
+      "h": 718
+    }
+  }
+}

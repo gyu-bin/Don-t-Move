@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/decoration/lab_specimen_container.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 59,
+    "y": 9,
+    "w": 138,
+    "h": 238
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_specimen_container.png",
+    "resolution": {
+      "width": 1269,
+      "height": 1239
+    },
+    "bounds": {
+      "x": 390,
+      "y": 184,
+      "w": 483,
+      "h": 839
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 28107,
+    "transparentFraction": 0.5631256103515625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 59,
+      "y": 9,
+      "w": 138,
+      "h": 238
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/soft/casino_chip_cart.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 35,
+    "y": 12,
+    "w": 314,
+    "h": 360
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_chip_cart.png",
+    "resolution": {
+      "width": 1312,
+      "height": 1199
+    },
+    "bounds": {
+      "x": 204,
+      "y": 51,
+      "w": 983,
+      "h": 1125
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 67359,
+    "transparentFraction": 0.52740478515625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 35,
+      "y": 12,
+      "w": 314,
+      "h": 360
+    }
+  }
+}

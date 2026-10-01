@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/landmark/casino_vip_room.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 25,
+    "y": 226,
+    "w": 718,
+    "h": 517
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_vip_room.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 150,
+      "y": 28,
+      "w": 1274,
+      "h": 918
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 166759,
+    "transparentFraction": 0.6983676486545138,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 25,
+      "y": 226,
+      "w": 718,
+      "h": 517
+    }
+  }
+}

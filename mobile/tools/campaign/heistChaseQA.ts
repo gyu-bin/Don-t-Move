@@ -1,3 +1,4 @@
+import historicalHeist from './fixtures/v3GrandHeist.json';
 /**
  * 01-10 Grand Heist chase QA on the real simulation (continuous normal input, live AI):
  * objective → theft alert → faster sweep → spotted → Direct Chase → capture, and a
@@ -63,7 +64,8 @@ if(process.argv[1]?.endsWith('heistChaseQA.ts'))console.log(JSON.stringify(proce
 /** Seeded 01-10 pursuit (same fixture as chaseMissionQA.museumCorridorPursuit), continued past
  * the corner: the chaser must drop to the LKP and Search while the player keeps moving out of sight. */
 export function heistLosBreak(hide:number[][]=[[580,400],[590,610],[630,690],[820,700]]){ // corner, then south into the east maintenance circuit
- const def=campaignStages.find(d=>d.id==='01-10')!,stage=compileStage(def),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
+ // Coordinates in this fixed corridor regression belong to the V3 fixture.
+ const def=historicalHeist as StageDefinition,stage=compileStage(def),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
  const g=s.guards[0];s.guards=[g];s.guardPlayback=[s.guardPlayback[0]];
  Object.assign(g,{x:580,y:60,facing:Math.PI/2,baseFacing:Math.PI/2,speed:0,awareness:Awareness.Chase,path:[],pathIndex:0,repathAt:0});
  Object.assign(s.player,{x:580,y:180,vx:0,vy:0,speed:0,facing:Math.PI/2});

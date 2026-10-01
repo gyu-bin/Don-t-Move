@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/decoration/casino_chip_stack.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 23,
+    "y": 8,
+    "w": 210,
+    "h": 240
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_chip_stack.png",
+    "resolution": {
+      "width": 1374,
+      "height": 1145
+    },
+    "bounds": {
+      "x": 314,
+      "y": 126,
+      "w": 789,
+      "h": 900
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 35537,
+    "transparentFraction": 0.416107177734375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 23,
+      "y": 8,
+      "w": 210,
+      "h": 240
+    }
+  }
+}

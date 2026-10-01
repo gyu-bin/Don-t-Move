@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/museum/architecture/museum_column.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 139,
+    "y": 17,
+    "w": 234,
+    "h": 478
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/museum_column.png",
+    "resolution": {
+      "width": 1230,
+      "height": 1278
+    },
+    "bounds": {
+      "x": 339,
+      "y": 22,
+      "w": 550,
+      "h": 1125
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 87865,
+    "transparentFraction": 0.6583175659179688,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 139,
+      "y": 17,
+      "w": 234,
+      "h": 478
+    }
+  }
+}

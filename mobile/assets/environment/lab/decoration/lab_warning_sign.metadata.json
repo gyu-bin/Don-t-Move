@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/decoration/lab_warning_sign.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 40,
+    "w": 240,
+    "h": 208
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_warning_sign.png",
+    "resolution": {
+      "width": 1340,
+      "height": 1174
+    },
+    "bounds": {
+      "x": 175,
+      "y": 153,
+      "w": 1001,
+      "h": 870
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 43937,
+    "transparentFraction": 0.3222503662109375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 40,
+      "w": 240,
+      "h": 208
+    }
+  }
+}

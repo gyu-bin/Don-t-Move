@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/architecture/gallery_movable_art_wall.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 106,
+    "w": 478,
+    "h": 389
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_movable_art_wall.png",
+    "resolution": {
+      "width": 1312,
+      "height": 1199
+    },
+    "bounds": {
+      "x": 130,
+      "y": 195,
+      "w": 1067,
+      "h": 868
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 159311,
+    "transparentFraction": 0.38165283203125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 106,
+      "w": 478,
+      "h": 389
+    }
+  }
+}

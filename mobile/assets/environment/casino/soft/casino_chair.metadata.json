@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/soft/casino_chair.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 87,
+    "y": 12,
+    "w": 210,
+    "h": 360
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_chair.png",
+    "resolution": {
+      "width": 1145,
+      "height": 1374
+    },
+    "bounds": {
+      "x": 230,
+      "y": 66,
+      "w": 702,
+      "h": 1202
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 41593,
+    "transparentFraction": 0.7047932942708334,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 87,
+      "y": 12,
+      "w": 210,
+      "h": 360
+    }
+  }
+}

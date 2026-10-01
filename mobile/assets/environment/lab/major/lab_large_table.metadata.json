@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_large_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 221,
+    "w": 480,
+    "h": 275
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_large_table.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 44,
+      "y": 114,
+      "w": 1450,
+      "h": 832
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 81196,
+    "transparentFraction": 0.6798820495605469,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 221,
+      "w": 480,
+      "h": 275
+    }
+  }
+}

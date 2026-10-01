@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/landmark/lab_central_experiment.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 25,
+    "y": 72,
+    "w": 718,
+    "h": 671
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_central_experiment.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 250,
+      "y": 16,
+      "w": 1036,
+      "h": 968
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 364564,
+    "transparentFraction": 0.3740200466579861,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 25,
+      "y": 72,
+      "w": 718,
+      "h": 671
+    }
+  }
+}

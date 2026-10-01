@@ -5,8 +5,8 @@ import { nextSeenUpdateId, OTA_SEEN_UPDATE_KEY, shouldShowOtaToast } from './ota
 
 export const OTA_RELOAD_SCREEN = {
   backgroundColor: '#081824',
-  fade: true,
-  spinner: { enabled: true, color: '#3ED5FA', size: 'large' as const },
+  fade: false,
+  spinner: { enabled: false },
 };
 
 function hasExpoUpdatesNative(): boolean {
@@ -53,17 +53,34 @@ type UpdatesModule = NonNullable<ReturnType<typeof updatesModule>>;
 
 let reloadStarted = false;
 let checkInFlight = false;
+let restartedFor: string | null = null;
 
-/** Restart onto the downloaded bundle. The screen stays covered until the runtime swaps. */
-export async function reloadOntoUpdate(Updates: UpdatesModule): Promise<void> {
-  if (reloadStarted) return;
+/**
+ * Restart the whole app onto the downloaded bundle so launch runs again from the splash.
+ * If the native reload does not tear the runtime down, remount the tree and play the splash anyway.
+ */
+export async function reloadOntoUpdate(
+  Updates: UpdatesModule,
+  downloadedId: string | null,
+  onSplashRestart: () => void,
+): Promise<void> {
+  if (reloadStarted || (downloadedId != null && restartedFor === downloadedId)) return;
   reloadStarted = true;
+  restartedFor = downloadedId;
   try {
     await Updates.reloadAsync({ reloadScreenOptions: OTA_RELOAD_SCREEN });
   } catch (error) {
-    reloadStarted = false;
     console.warn('[OTA] reload failed', error);
+    try {
+      const { reloadAppAsync } = require('expo') as typeof import('expo');
+      await reloadAppAsync();
+    } catch (fallback) {
+      console.warn('[OTA] app reload failed', fallback);
+    }
   }
+  // reloadAsync resolves before the runtime actually dies. If we are still here, it did not restart.
+  await new Promise((resolve) => setTimeout(resolve, 1200));
+  onSplashRestart();
 }
 
 /**
@@ -71,7 +88,7 @@ export async function reloadOntoUpdate(Updates: UpdatesModule): Promise<void> {
  * Retries while the native startup check is still holding the updates lock.
  * A failed attempt never cancels a later one: the screen refresh is the point.
  */
-export async function downloadAndReload(Updates: UpdatesModule, onWillReload: () => void): Promise<void> {
+export async function downloadAndReload(Updates: UpdatesModule, onSplashRestart: () => void): Promise<void> {
   if (checkInFlight || reloadStarted) return;
   checkInFlight = true;
   try {
@@ -79,10 +96,10 @@ export async function downloadAndReload(Updates: UpdatesModule, onWillReload: ()
       try {
         const check = await Updates.checkForUpdateAsync();
         if (!check.isAvailable) return;
-        onWillReload();
         const fetched = await Updates.fetchUpdateAsync();
         if (!fetched.isNew) return;
-        await reloadOntoUpdate(Updates);
+        const manifest = fetched.manifest as { id?: string } | undefined;
+        await reloadOntoUpdate(Updates, manifest?.id ?? null, onSplashRestart);
         return;
       } catch (error) {
         console.warn('[OTA] update attempt failed', error);

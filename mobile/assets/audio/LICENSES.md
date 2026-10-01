@@ -163,3 +163,14 @@ This table is metadata/measurement screening; **it is not a claim of human liste
 | Back | rollover1.wav —Kenney | CC0 |0.2273s; very low RMS, would require more gain and noise scrutiny. |
 
 Searching / EmptyCity / Insistent originals and UI candidate files were downloaded for inspection. Only the three selected derivatives are bundled. Final preference for the music and select/back distinction remains a listening gate.
+
+## Objective pickup — 2026-09-30 (CURRENT)
+
+- Runtime: `sfx/objective-pickup.wav`, event `objective_pickup`, gain **0.60**. Existing UI **0.45**, whistle **0.80**, Stealth **0.61**, Chase **0.63** unchanged.
+- Work: **Xylophone crystal chimes**, author **lori.mortimer**. Source/license verified: https://freesound.org/people/lori.mortimer/sounds/707618/ . Source states CC0 and permits copying, modification and commercial use without permission. CC0 deed: https://creativecommons.org/publicdomain/zero/1.0/ . Attribution optional; credited here.
+- Provenance: actual crystal glasses tapped with a wooden chopstick, recorded on Zoom H5, author-applied convolution reverb. Existing authored recording, no generated beep.
+- Public download: https://cdn.freesound.org/previews/707/707618_9190375-hq.mp3 . This is the compressed HQ preview, **not** the login-gated original WAV. PCM conversion does not restore lost source fidelity.
+- Edits: source 11.435–11.985 seconds; 0.55-second isolated glass attack/tail, mono 44.1kHz 16-bit PCM WAV; 3ms attack/90ms release fade; peak −5dBFS. No synthesis, pitch shift or fanfare layering.
+- Reproduction script and hashes: `../../Reports/ObjectivePickup/process.py` and `processing.json`.
+- Selection is based on author provenance and transient/duration analysis. **Human artistic/mix audition and device playback remain pending**, not claimed approved.
+- Acquisition emits once per revision in the current mission. Pickup does not change BGM; Stealth persists until Theft Alert or Player Spotted. Paused/muted/background events are consumed, never replayed on resume.

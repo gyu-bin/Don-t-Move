@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_small_safe.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 34,
+    "y": 13,
+    "w": 316,
+    "h": 358
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-ade3741a-c65b-4125-b2c2-773f38678b59.png",
+    "resolution": {
+      "width": 1327,
+      "height": 1186
+    },
+    "bounds": {
+      "x": 233,
+      "y": 95,
+      "w": 861,
+      "h": 975
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 107076,
+    "transparentFraction": 0.2657674153645833,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 34,
+      "y": 13,
+      "w": 316,
+      "h": 358
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/decoration/bank_floor_marker.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 107,
+    "w": 240,
+    "h": 141
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-7634010d-b6ca-4f77-b76a-9168a3db2d1e.png",
+    "resolution": {
+      "width": 1199,
+      "height": 1312
+    },
+    "bounds": {
+      "x": 138,
+      "y": 404,
+      "w": 920,
+      "h": 540
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 32606,
+    "transparentFraction": 0.4972381591796875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 107,
+      "w": 240,
+      "h": 141
+    }
+  }
+}

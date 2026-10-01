@@ -20,6 +20,12 @@ export type ValuableKind = 'diamond' | 'painting' | 'vaultGem' | 'prototype' | '
 export type LayoutRow = string;
 
 export type PropKind =
+  'labWall' | 'labGlassWall' | 'labSlidingDoor' | 'labGlassCorridor' | 'labSterilePartition' | 'labExperimentMachine' | 'labLargeTable' | 'labCryoUnit' | 'labEquipmentRack' | 'labSampleStorage' | 'labObservationConsole' | 'labWorkstation' | 'labCart' | 'labSampleCase' | 'labSmallMachine' | 'labStool' | 'labMonitor' | 'labWarningSign' | 'labSpecimenContainer' | 'labCable' | 'labWallScreen' | 'labFloorMarker' | 'labPrototypeMachine' | 'labCryoChamber' | 'labCentralExperiment' | 'labObservationRoom' | 'casinoWall' | 'casinoVelvetPartition' | 'casinoGoldArch' | 'casinoVipDoor' | 'casinoBarCounter' | 'casinoSlotBank' | 'casinoRouletteTable' | 'casinoBlackjackTable' | 'casinoCashierCage' | 'casinoBarIsland' | 'casinoSecurityStation' | 'casinoSlotMachine' | 'casinoChair' | 'casinoCocktailTable' | 'casinoDivider' | 'casinoChipCart' | 'casinoChandelier' | 'casinoWallArt' | 'casinoDrinkTray' | 'casinoNeonSignGeneric' | 'casinoCarpetPattern' | 'casinoChipStack' | 'casinoRouletteCenterpiece' | 'casinoHighRollerTable' | 'casinoCashierVault' | 'casinoVipRoom'
+  | 'bankWall' | 'bankStaffDoor' | 'bankSecurityGate' | 'bankVaultCorridorWall'
+  | 'bankTellerCounter' | 'bankSecurityCheckpoint' | 'bankDepositBoxWall' | 'bankCashProcessingTable' | 'bankVaultDoor'
+  | 'bankOfficeDesk' | 'bankFilingCabinet' | 'bankCashCart' | 'bankQueueBarrier' | 'bankSmallSafe'
+  | 'bankMonitor' | 'bankClock' | 'bankPaperwork' | 'bankFloorMarker' | 'bankPlant' | 'bankMainVault'
+  | 'galleryGlassPanel' | 'galleryGlassPanelVertical'
   | 'statue'
   | 'statuePedestal'
   | 'displayCase'
@@ -34,6 +40,8 @@ export type PropKind =
   | 'door' | 'counter' | 'table' | 'shelf' | 'partition' | 'equipment' | 'sofa' | 'objectiveCase';
 
 export interface PropDef {
+  /** Production artwork selection only; physical kind and its role remain independent. */
+  visualAssetId?: import('../../assets/environmentKit').EnvironmentAssetId;
   kind: PropKind;
   /** Base (floor contact) center, tile units. Wall-mounted props use the wall face base. */
   x: number;
@@ -54,6 +62,22 @@ export interface LightDef {
   kind: 'warm' | 'cool' | 'cyan' | 'green' | 'red';
   /** 0..1 */
   intensity: number;
+}
+
+export interface DressingItem {
+  /** Approved environment sprite; physical contract still comes from kind. */
+  visualAssetId?: import('../../assets/environmentKit').EnvironmentAssetId;
+  kind: import('../world/dressingKit').DressingKind;
+  /** Floor-contact bottom-centre anchor, tile units; wall details use mountHeight. */
+  x:number;y:number;scale?:number;flip?:boolean;
+}
+export interface DressingCluster {
+  id:string;
+  zoneId:string;
+  /** Authored exhibit/utility purpose, not a random decoration bucket. */
+  identity:string;
+  items:DressingItem[];
+  light?:LightDef;
 }
 
 export interface CarpetDef {
@@ -83,7 +107,16 @@ export interface PatrolRoute {
   mode: 'loop' | 'pingpong' | 'waitAndLook' | 'roaming';
 }
 
+/** Fixed security device; angles are radians, positions/range are tiles. */
+export interface SecurityCameraDef {
+  id:string;x:number;y:number;centerFacing:number;
+  /** HALF excursion from center; visionAngle below is FULL cone width. */
+  sweepAngle:number;sweepSpeed:number;pauseAtEnds:number;range:number;visionAngle:number;
+  suspicionRate?:number;
+}
+export interface TheftSearchSector {id:string;anchors:{x:number;y:number}[];}
 export interface GuardDef {
+  theftSearchSectors?:TheftSearchSector[];
   role?: 'objective' | 'room' | 'corridor' | 'roaming' | 'exit';
   id: string;
   x: number;
@@ -107,6 +140,7 @@ export interface GuardDef {
 }
 
 export interface StageDefinition {
+  cameras?:SecurityCameraDef[];
   patrolPlan?: import('./semanticPatrol').PatrolPlan;
   entryEdge?: 'top'|'bottom'|'left'|'right';
   entryPosition?: {x:number;y:number};
@@ -124,6 +158,8 @@ export interface StageDefinition {
   layout: LayoutRow[];
   carpets?: CarpetDef[];
   props: PropDef[];
+  /** Authored low exhibits and decor, separate from existing gameplay structures. */
+  dressing?:DressingCluster[];
   lights: LightDef[];
   playerSpawn: { x: number; y: number; facing: number };
   objective?: { kind: ValuableKind; x: number; y: number };

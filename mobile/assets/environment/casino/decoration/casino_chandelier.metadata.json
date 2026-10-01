@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/decoration/casino_chandelier.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 9,
+    "y": 8,
+    "w": 238,
+    "h": 240
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_chandelier.png",
+    "resolution": {
+      "width": 1376,
+      "height": 1143
+    },
+    "bounds": {
+      "x": 167,
+      "y": 13,
+      "w": 1043,
+      "h": 1046
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 20721,
+    "transparentFraction": 0.581390380859375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 9,
+      "y": 8,
+      "w": 238,
+      "h": 240
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/architecture/casino_vip_door.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 17,
+    "w": 472,
+    "h": 478
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_vip_door.png",
+    "resolution": {
+      "width": 1278,
+      "height": 1230
+    },
+    "bounds": {
+      "x": 109,
+      "y": 76,
+      "w": 1060,
+      "h": 1077
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 209982,
+    "transparentFraction": 0.1855926513671875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 17,
+      "w": 472,
+      "h": 478
+    }
+  }
+}

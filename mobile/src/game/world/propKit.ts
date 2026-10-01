@@ -9,6 +9,10 @@ import type { PropKind } from '../levels/StageDefinition';
 export interface PropSpec {
   /** Collision/occlusion box size (tiles), centered on base x, extending up from base y. */
   footprint: { w: number; h: number };
+  /** Optional solid parts relative to the bottom-centre anchor, in tiles. Open gates use posts, never a phantom full box. */
+  collisionParts?: {x:number;y:number;w:number;h:number}[];
+  /** Flat art is baked under characters, never depth-sorted above their feet. */
+  floorDetail?: boolean;
   blocksMovement: boolean;
   blocksVision: boolean;
   /** Player can hide behind it (used by Search/Cover logic later). */
@@ -24,6 +28,85 @@ export interface PropSpec {
 }
 
 export const PROP_KIT: Record<PropKind, PropSpec> = {
+  // Additive Lab/Casino kit contracts. Prior chapter rules remain identical.
+  labWall:{"footprint":{"w":3,"h":0.35},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3.1,"shadow":0.45,"mountHeight":0},
+  labGlassWall:{"footprint":{"w":3,"h":0.25},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":3.1,"shadow":0.45,"mountHeight":0},
+  labSlidingDoor:{"footprint":{"w":1.7,"h":0.3},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":1.8,"shadow":0.45,"mountHeight":0},
+  labGlassCorridor:{"footprint":{"w":3.1,"h":0.25},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":3.2,"shadow":0.45,"mountHeight":0},
+  labSterilePartition:{"footprint":{"w":2.2,"h":0.35},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2.3,"shadow":0.45,"mountHeight":0},
+  labExperimentMachine:{"footprint":{"w":2,"h":0.9},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2.1,"shadow":0.45,"mountHeight":0},
+  labLargeTable:{"footprint":{"w":2.7,"h":1.1},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":2.8,"shadow":0.45,"mountHeight":0},
+  labCryoUnit:{"footprint":{"w":1.3,"h":1.1},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":1.4,"shadow":0.45,"mountHeight":0},
+  labEquipmentRack:{"footprint":{"w":1.7,"h":0.65},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":1.8,"shadow":0.45,"mountHeight":0},
+  labSampleStorage:{"footprint":{"w":1.9,"h":0.65},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2,"shadow":0.45,"mountHeight":0},
+  labObservationConsole:{"footprint":{"w":2.7,"h":0.9},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2.8,"shadow":0.45,"mountHeight":0},
+  labWorkstation:{"footprint":{"w":1.8,"h":0.85},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":1.9,"shadow":0.45,"mountHeight":0},
+  labCart:{"footprint":{"w":0.8,"h":0.65},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.9,"shadow":0.45,"mountHeight":0},
+  labSampleCase:{"footprint":{"w":0.75,"h":0.55},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.85,"shadow":0.45,"mountHeight":0},
+  labSmallMachine:{"footprint":{"w":0.8,"h":0.65},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.9,"shadow":0.45,"mountHeight":0},
+  labStool:{"footprint":{"w":0.5,"h":0.5},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.65,"shadow":0.45,"mountHeight":0},
+  labMonitor:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":true,"drawWidth":0.8,"shadow":0,"mountHeight":10},
+  labWarningSign:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":true,"drawWidth":0.65,"shadow":0,"mountHeight":16},
+  labSpecimenContainer:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.5,"shadow":0,"mountHeight":0},
+  labCable:{"footprint":{"w":0,"h":0},"floorDetail":true,"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":1.4,"shadow":0,"mountHeight":0},
+  labWallScreen:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":true,"drawWidth":1.4,"shadow":0,"mountHeight":16},
+  labFloorMarker:{"footprint":{"w":0,"h":0},"floorDetail":true,"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":1.4,"shadow":0,"mountHeight":0},
+  labPrototypeMachine:{"footprint":{"w":3.1,"h":1.5},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3.2,"shadow":0.45,"mountHeight":0},
+  labCryoChamber:{"footprint":{"w":2.1,"h":1.5},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2.2,"shadow":0.45,"mountHeight":0},
+  labCentralExperiment:{"footprint":{"w":3.3,"h":1.8},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3.4,"shadow":0.45,"mountHeight":0},
+  labObservationRoom:{"footprint":{"w":4,"h":0.5},"collisionParts":[{"x":-2.0,"y":-0.5,"w":0.35,"h":0.5},{"x":1.65,"y":-0.5,"w":0.35,"h":0.5}],"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":4,"shadow":0.45,"mountHeight":0},
+  casinoWall:{"footprint":{"w":3,"h":0.35},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3.1,"shadow":0.45,"mountHeight":0},
+  casinoVelvetPartition:{"footprint":{"w":2.2,"h":0.35},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2.3,"shadow":0.45,"mountHeight":0},
+  casinoGoldArch:{"footprint":{"w":3.2,"h":0.5},"collisionParts":[{"x":-1.6,"y":-0.5,"w":0.35,"h":0.5},{"x":1.25,"y":-0.5,"w":0.35,"h":0.5}],"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":3.2,"shadow":0.45,"mountHeight":0},
+  casinoVipDoor:{"footprint":{"w":1.8,"h":0.35},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":1.9,"shadow":0.45,"mountHeight":0},
+  casinoBarCounter:{"footprint":{"w":2.9,"h":0.85},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3,"shadow":0.45,"mountHeight":0},
+  casinoSlotBank:{"footprint":{"w":3,"h":0.9},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3.1,"shadow":0.45,"mountHeight":0},
+  casinoRouletteTable:{"footprint":{"w":2.3,"h":1.5},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":2.4,"shadow":0.45,"mountHeight":0},
+  casinoBlackjackTable:{"footprint":{"w":2.3,"h":1.4},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":2.4,"shadow":0.45,"mountHeight":0},
+  casinoCashierCage:{"footprint":{"w":2.4,"h":0.8},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2.5,"shadow":0.45,"mountHeight":0},
+  casinoBarIsland:{"footprint":{"w":3.1,"h":1.3},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3.2,"shadow":0.45,"mountHeight":0},
+  casinoSecurityStation:{"footprint":{"w":2,"h":0.85},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":2.1,"shadow":0.45,"mountHeight":0},
+  casinoSlotMachine:{"footprint":{"w":0.75,"h":0.65},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":0.85,"shadow":0.45,"mountHeight":0},
+  casinoChair:{"footprint":{"w":0.5,"h":0.5},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.65,"shadow":0.45,"mountHeight":0},
+  casinoCocktailTable:{"footprint":{"w":0.8,"h":0.8},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.9,"shadow":0.45,"mountHeight":0},
+  casinoDivider:{"footprint":{"w":1.8,"h":0.25},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":1.9,"shadow":0.45,"mountHeight":0},
+  casinoChipCart:{"footprint":{"w":0.8,"h":0.65},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.9,"shadow":0.45,"mountHeight":0},
+  casinoChandelier:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":true,"drawWidth":1.4,"shadow":0,"mountHeight":28},
+  casinoWallArt:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":true,"drawWidth":1.2,"shadow":0,"mountHeight":16},
+  casinoDrinkTray:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.65,"shadow":0,"mountHeight":0},
+  casinoNeonSignGeneric:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":true,"drawWidth":1.2,"shadow":0,"mountHeight":16},
+  casinoCarpetPattern:{"footprint":{"w":0,"h":0},"floorDetail":true,"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":3,"shadow":0,"mountHeight":0},
+  casinoChipStack:{"footprint":{"w":0,"h":0},"blocksMovement":false,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":0.5,"shadow":0,"mountHeight":0},
+  casinoRouletteCenterpiece:{"footprint":{"w":3.3,"h":2.1},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":3.4,"shadow":0.45,"mountHeight":0},
+  casinoHighRollerTable:{"footprint":{"w":3.2,"h":1.9},"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":3.3,"shadow":0.45,"mountHeight":0},
+  casinoCashierVault:{"footprint":{"w":3.3,"h":0.85},"blocksMovement":true,"blocksVision":true,"cover":true,"wallMounted":false,"drawWidth":3.4,"shadow":0.45,"mountHeight":0},
+  casinoVipRoom:{"footprint":{"w":4,"h":0.5},"collisionParts":[{"x":-2.0,"y":-0.5,"w":0.35,"h":0.5},{"x":1.65,"y":-0.5,"w":0.35,"h":0.5}],"blocksMovement":true,"blocksVision":false,"cover":false,"wallMounted":false,"drawWidth":4,"shadow":0.45,"mountHeight":0},
+  // Bank pilot physical contracts. Existing chapter kinds are intentionally unchanged.
+  bankWall:{footprint:{w:3,h:.35},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:3.1,shadow:.4,mountHeight:0},
+  bankStaffDoor:{footprint:{w:1.3,h:.25},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:1.4,shadow:.3,mountHeight:0},
+  bankSecurityGate:{footprint:{w:2.4,h:.5},collisionParts:[{x:-1.2,y:-.5,w:.3,h:.5},{x:.9,y:-.5,w:.3,h:.5}],blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:2.4,shadow:.25,mountHeight:0},
+  bankVaultCorridorWall:{footprint:{w:3,h:.4},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:3.1,shadow:.45,mountHeight:0},
+  bankTellerCounter:{footprint:{w:3,h:.85},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:3.1,shadow:.65,mountHeight:0},
+  bankSecurityCheckpoint:{footprint:{w:3.2,h:.85},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:3.3,shadow:.6,mountHeight:0},
+  bankDepositBoxWall:{footprint:{w:2.3,h:.55},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:2.4,shadow:.5,mountHeight:0},
+  bankCashProcessingTable:{footprint:{w:2,h:1},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:2.1,shadow:.55,mountHeight:0},
+  bankVaultDoor:{footprint:{w:2.5,h:.35},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:2.6,shadow:.5,mountHeight:0},
+  bankOfficeDesk:{footprint:{w:1.7,h:.9},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:1.8,shadow:.55,mountHeight:0},
+  bankFilingCabinet:{footprint:{w:.8,h:.65},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:.9,shadow:.35,mountHeight:0},
+  bankCashCart:{footprint:{w:.9,h:.65},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:1,shadow:.35,mountHeight:0},
+  bankQueueBarrier:{footprint:{w:2,h:.18},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:2,shadow:.2,mountHeight:0},
+  bankSmallSafe:{footprint:{w:.8,h:.65},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:.9,shadow:.35,mountHeight:0},
+  bankMonitor:{footprint:{w:0,h:0},blocksMovement:false,blocksVision:false,cover:false,wallMounted:true,drawWidth:.65,shadow:0,mountHeight:12},
+  bankClock:{footprint:{w:0,h:0},blocksMovement:false,blocksVision:false,cover:false,wallMounted:true,drawWidth:.6,shadow:0,mountHeight:22},
+  bankPaperwork:{footprint:{w:0,h:0},blocksMovement:false,blocksVision:false,cover:false,wallMounted:false,drawWidth:.65,shadow:0,mountHeight:0},
+  bankFloorMarker:{footprint:{w:0,h:0},floorDetail:true,blocksMovement:false,blocksVision:false,cover:false,wallMounted:false,drawWidth:1.4,shadow:0,mountHeight:0},
+  bankPlant:{footprint:{w:.5,h:.45},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:.9,shadow:.3,mountHeight:0},
+  bankMainVault:{footprint:{w:3.4,h:.6},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:3.6,shadow:.7,mountHeight:0},
+
+  // Technical Gallery glazing module. Physical barrier, transparent to guard LOS.
+  // Dedicated production glass artwork remains CHAPTER 02 FULL KIT REQUIRED.
+  galleryGlassPanel:{footprint:{w:1.4,h:.18},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:1.4,shadow:0,mountHeight:0},
+  galleryGlassPanelVertical:{footprint:{w:.18,h:1.4},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:.18,shadow:0,mountHeight:0},
   counter: { footprint:{w:1.4,h:0.55},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:1.6,shadow:0.75,mountHeight:0 },
   table: { footprint:{w:1.2,h:0.7},blocksMovement:true,blocksVision:false,cover:false,wallMounted:false,drawWidth:1.4,shadow:0.7,mountHeight:0 },
   shelf: { footprint:{w:1.3,h:0.7},blocksMovement:true,blocksVision:true,cover:true,wallMounted:false,drawWidth:1.5,shadow:0.7,mountHeight:0 },

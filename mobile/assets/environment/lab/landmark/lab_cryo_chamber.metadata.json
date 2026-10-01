@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/landmark/lab_cryo_chamber.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 183,
+    "y": 25,
+    "w": 402,
+    "h": 718
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_cryo_chamber.png",
+    "resolution": {
+      "width": 1199,
+      "height": 1312
+    },
+    "bounds": {
+      "x": 253,
+      "y": 18,
+      "w": 698,
+      "h": 1249
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 215789,
+    "transparentFraction": 0.6262461344401041,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 183,
+      "y": 25,
+      "w": 402,
+      "h": 718
+    }
+  }
+}

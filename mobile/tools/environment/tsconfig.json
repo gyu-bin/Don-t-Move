@@ -1,0 +1,4 @@
+{
+  "extends":"../sprites/tsconfig.json",
+  "include":["./**/*.ts","../../src/**/*.ts","../sprites/skiaNode.ts","../sprites/skiaNodeShim.ts"]
+}

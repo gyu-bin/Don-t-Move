@@ -1,0 +1,68 @@
+{
+  "museum_column": {
+    "prompt": "Independent single runtime PNG sprite for DON'T MOVE. Match existing Museum painted game art: elevated orthographic 3/4 top-down, zero yaw, front horizontal edges exactly horizontal, vertical sides vertical, clear visible top surfaces, NOT isometric diagonals and NOT straight side-view. Muted ivory/navy/brass palette, stylized painted bevels, restrained dark outlines, neutral soft lighting, very subtle contact shadow. Whole object isolated centered with transparent padding. Genuine transparent background. No floor/room/board/text/label/UI/grid/checkerboard/characters. Readable at40-70worldpixel width beside30pixelplayer. Subject: Classic luxurious marble museum column: fluted ivory cylindrical shaft, broad clearly visible circular top, carved simple capital, square stepped base, modest brass accent. Broadtopdown cylindricaltop makes view evident; not supertall thin classicalpillar. Wholecolumn,1tile diameterfootprint,FullCover.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-f8cabd26-4ba8-43a7-a2a2-6540e5f72ea4.png"
+  },
+  "museum_partition": {
+    "prompt": "Correct this sprite: genuinely transparent background EVERYWHERE outside object, remove ALL beige halo/light/floor. Elevated orthographic camera60degrees lookingdown, zero yaw front horizontal edges and visible broad top, no diagonal isometric. Preserve navy brass museum partition panel style. Single isolated production game sprite.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-20b7321a-7f90-4bf9-9a3b-d9aa1b6d7be4.png"
+  },
+  "museum_security_desk": {
+    "prompt": "Independent single runtime PNG sprite for DON'T MOVE. Match existing Museum painted game art: elevated orthographic 3/4 top-down, zero yaw, front horizontal edges exactly horizontal, vertical sides vertical, clear visible top surfaces, NOT isometric diagonals and NOT straight side-view. Muted ivory/navy/brass palette, stylized painted bevels, restrained dark outlines, neutral soft lighting, very subtle contact shadow. Whole object isolated centered with transparent padding. Genuine transparent background. No floor/room/board/text/label/UI/grid/checkerboard/characters. Readable at40-70worldpixel width beside30pixelplayer. Subject: Premium museum security desk with darkwood front and brassrim, clearly visible desktop with2 compactmonitors, small controlpanel andtelephone, no officechair. Broad1.4tileby.55tilefootprint, navy screens withsmall mutedcyan indicators, deskfront short andtop surface dominant. No illegible text/logos, nooverbrightneon.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-bbe9b5dc-2114-42a6-895f-182fe499e4b5.png"
+  },
+  "museum_display_low": {
+    "prompt": "ONE isolated production PNG game sprite, genuine transparent background. Stylized painted premium mobile game art, same family as DON'T MOVE Museum ivory marble/brass/darkwood. Elevated orthographic topdown3/4 view, camera looking downward60degrees, zero yaw front edges horizontal, top surfaces dominate, NOT diagonally isometric. Soft neutral diffuse light ONLY; no glow background, no halo, no strong baked spotlight. Restrained painted edges. Entire object withtransparentpadding. No room/floor backdrop/board/text/grid/checkerboard/UI/characters. Single requested object. Subject:A LOW wide museum display cabinet: darkwood shallow rectangular base andbrass trim, clearglass shallow horizontal lid, tinycreamartifact inside. Width1.4tiledepth.65tile andlowheight, tabletopdominant. Clearly low route divider notfullcover tallglasscase.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-02a18d46-50c3-4e5e-b8b3-f57f16fb9b88.png",
+    "refinement": "Zero-yaw elevated gameplay projection"
+  },
+  "museum_rope_barrier": {
+    "prompt": "ONE isolated production PNG game sprite, genuine transparent background. Stylized painted premium mobile game art, same family as DON'T MOVE Museum ivory marble/brass/darkwood. Elevated orthographic topdown3/4 view, camera looking downward60degrees, zero yaw front edges horizontal, top surfaces dominate, NOT diagonally isometric. Soft neutral diffuse light ONLY; no glow background, no halo, no strong baked spotlight. Restrained painted edges. Entire object withtransparentpadding. No room/floor backdrop/board/text/grid/checkerboard/UI/characters. Single requested object. Subject:One museumropebarrier segment: twobrass posts withsmallroundbases connectedby darkburgundy velvetrope curvingdown. Widehorizontalfrontalignedrow, tops/baseellipsesvisibleelevatedview. Clearairbetweenposts, singleunifiedsegment1.5tilewide.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-5c422d96-17fe-4a8b-9d6b-e3779d1f3b23.png"
+  },
+  "museum_diamond_case": {
+    "prompt": "ONE isolated production PNG game sprite, genuine transparent background. Stylized painted premium mobile game art, same family as DON'T MOVE Museum ivory marble/brass/darkwood. Elevated orthographic topdown3/4 view, camera looking downward60degrees, zero yaw front edges horizontal, top surfaces dominate, NOT diagonally isometric. Soft neutral diffuse light ONLY; no glow background, no halo, no strong baked spotlight. Restrained painted edges. Entire object withtransparentpadding. No room/floor backdrop/board/text/grid/checkerboard/UI/characters. Single requested object. Subject:EMPTY museum objective display case andsquarepedestal: premiumdarknavy/darkwood withbrassrim, upright transparentglassbox above smallcenter raisedstand. NO diamond or gemstone inthisimage; dynamiccyanexistinggemwillbeoverlayedbygame. Makeglassseethroughactualalpha, whiteglass highlightsrestrained, noambientcyanhalo. Wholecase centered1.2tilefootprint, moderateviewfromabove so topglassplaneandbasevisible.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-72ecdf74-4744-43bd-a0e7-b667d1287930.png"
+  },
+  "gallery_white_wall": {
+    "prompt": "Make this a HIGH fullheight freestanding gallery wall, NOT low slab/plinth. Taller uprightcream frontface approximately80% ashighaswallwidth afterprojection. Camera elevatedorthographicdown45degrees ZERO YAW frontedgeshorizontal. Top planevisiblebutfrontfacetall enoughreadfullcover. Minimalgraybase, noornateclassictrim. Truealpha isolatedgameobject.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-4c343a0e-85f7-4170-8df5-27ff506e7c2f.png"
+  },
+  "gallery_sculpture_large": {
+    "prompt": "ONE isolated abstract contemporary museum sculpture game sprite on simple square cream plinth. Interlocking curved charcoal metal sculptural shape with open negative space, strong silhouette, NOT classical human statue. Elevated orthographic top-down3/4 camera60degrees downward ZEROyaw plinth frontedges horizontal. Painted premium mobile game art soft neutral diffuse light. GENUINE TRANSPARENT background nohalo/floor/room/grid/text/characters. Entireobject padding.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-6def4324-a5c4-424f-ae54-a623179a09e2.png",
+    "refinement": "Horizontal-front plinth gameplay projection"
+  },
+  "gallery_installation_art": {
+    "prompt": "ONE isolated production game sprite. SAME painted stylized premium mobile game family. Elevated orthographic topdown3/4 camera60degrees downward zero yaw; front edges horizontal, broad top visible. Matte cream plaster clean charcoal metal modern warm wood, neutral soft diffuse lighting, no strongbakedlight. TRUE TRANSPARENT background nohalo/no floor/no room/no checkerboard/no text/no UI/no characters. Full objectwithpadding. Modern installation: three angular folded metal ribbons assembled into a wide sculptural island on low cream rectangular platform. Striking spatial abstract silhouette.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-928e1d13-4b79-42d3-a63f-4a35cea5a0a0.png"
+  },
+  "gallery_central_plinth": {
+    "prompt": "ONE isolated production game sprite. SAME painted stylized premium mobile game family. Elevated orthographic topdown3/4 camera60degrees downward zero yaw; front edges horizontal, broad top visible. Matte cream plaster clean charcoal metal modern warm wood, neutral soft diffuse lighting, no strongbakedlight. TRUE TRANSPARENT background nohalo/no floor/no room/no checkerboard/no text/no UI/no characters. Full objectwithpadding. Large low contemporary gallery cream rectangular plinth, modest height, wide top, thin dark metal recessedbase, no sculpture on top.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-2e4ce7c2-2188-4a43-be10-2a20b8859570.png"
+  },
+  "gallery_low_pedestal": {
+    "prompt": "Reorient this same minimal white plinth game sprite to face camera squarely, ZERO YAW. Front lower edges exactly horizontal, NOT diamond-shaped isometric! Orthographic camera elevated lookingdown60degrees. Top plane rectangle/trapezoid with horizontal front/back edges; broad visibletop, short modestfrontface. Maintaincream paint/charcoalbase and game-art. Single object true TRANSPARENT background nohalo/floor, nootherobjects/text. Wholeobjectpadding.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-2d0989c8-b299-4ea2-9063-c5a3f424a1c7.png"
+  },
+  "gallery_modern_bench": {
+    "prompt": "Reorient same bench to zero yaw: front/back edges STRICTLY HORIZONTAL. Camera high overhead looking downward60degrees, broadtop is flat horizontal trapezoid; only shortfront edge and shortened legs visible. NOT diagonal isometric. Preservepale wood andblackmetal. Genuine alpha background isolatedgameobject.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-c8317356-8e06-4ec2-8d95-66801cf7b523.png"
+  },
+  "gallery_abstract_frame": {
+    "prompt": "Reorient painting to face camera EXACTLY directly, yaw0 all longedgesHORIZONTAL not diagonal. Viewhighdownward60degrees: upright painting compressesverticaldimension toshorterwidepainting. Sameabstractcream/rust/navy brushwork thin frame. Genuinealphabackgroundnohalo isolatedgameobject.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-9498d59f-72b3-49db-9b35-6e2baa6fa376.png"
+  },
+  "gallery_track_light": {
+    "prompt": "Reorient same track light to VIEW FROM ABOVE60degreesDOWNWARD notlookingup. Horizontalrail longedgeshorizontal. Showtopsof blackcylindersnotlowanglelensunderside;smallwarmvisiblelenspermitted. Truealpha nofloor/nohalo isolatedgameobject.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-6e0dde31-b5c8-4c64-849a-88e864b6a591.png"
+  },
+  "gallery_masterpiece_wall": {
+    "prompt": "Rotate/reproject whole art wall to ZERO YAW. All front horizontaledges strictlyHORIZONTAL; no diagonal isometric. Elevatedorthographic topdowncamera45degrees down, topplanevisible and frontfacereadable. Keepminimalcreamwall largeabstractpainting thincharcoalframe. Noarchitecturalclassicalpilasters, simplemodern gallery wall. Genuinealpha background wholeisolatedobject nohalo/floor.",
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-03db3de8-1a44-466d-bc47-3bfa23317677.png"
+  },
+  "gallery_movable_art_wall": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-b22ec119-a5a3-40a7-a23f-d02ba1041d86.png",
+    "method": "Independent generated game sprite refined against genuine current Museum atlas; reference guide not cropped"
+  }
+}

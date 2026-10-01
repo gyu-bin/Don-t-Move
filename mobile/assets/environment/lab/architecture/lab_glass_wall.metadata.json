@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/architecture/lab_glass_wall.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 220,
+    "w": 478,
+    "h": 275
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_glass_wall.png",
+    "resolution": {
+      "width": 1254,
+      "height": 1254
+    },
+    "bounds": {
+      "x": 35,
+      "y": 534,
+      "w": 1188,
+      "h": 684
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 38799,
+    "transparentFraction": 0.839263916015625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 220,
+      "w": 478,
+      "h": 275
+    }
+  }
+}

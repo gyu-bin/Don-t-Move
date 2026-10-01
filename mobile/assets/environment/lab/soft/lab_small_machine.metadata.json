@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/soft/lab_small_machine.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 13,
+    "y": 42,
+    "w": 358,
+    "h": 329
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_small_machine.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 227,
+      "y": 11,
+      "w": 1088,
+      "h": 1000
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 89727,
+    "transparentFraction": 0.3860202365451389,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 13,
+      "y": 42,
+      "w": 358,
+      "h": 329
+    }
+  }
+}

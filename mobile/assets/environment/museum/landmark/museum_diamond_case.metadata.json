@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/museum/landmark/museum_diamond_case.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 140,
+    "y": 25,
+    "w": 488,
+    "h": 718
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/museum_diamond_case.png",
+    "resolution": {
+      "width": 1223,
+      "height": 1286
+    },
+    "bounds": {
+      "x": 224,
+      "y": 38,
+      "w": 777,
+      "h": 1145
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 303101,
+    "transparentFraction": 0.4740634494357639,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 140,
+      "y": 25,
+      "w": 488,
+      "h": 718
+    }
+  }
+}

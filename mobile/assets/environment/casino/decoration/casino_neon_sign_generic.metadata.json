@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/decoration/casino_neon_sign_generic.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 164,
+    "w": 240,
+    "h": 84
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_neon_sign_generic.png",
+    "resolution": {
+      "width": 1619,
+      "height": 971
+    },
+    "bounds": {
+      "x": 118,
+      "y": 242,
+      "w": 1376,
+      "h": 482
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 19738,
+    "transparentFraction": 0.694915771484375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 164,
+      "w": 240,
+      "h": 84
+    }
+  }
+}

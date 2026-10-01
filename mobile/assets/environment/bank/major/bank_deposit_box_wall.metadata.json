@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_deposit_box_wall.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 162,
+    "w": 480,
+    "h": 334
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-a8a14ce4-90ce-4bdf-a258-52666aa64410.png",
+    "resolution": {
+      "width": 1448,
+      "height": 1086
+    },
+    "bounds": {
+      "x": 47,
+      "y": 59,
+      "w": 1358,
+      "h": 944
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 151357,
+    "transparentFraction": 0.4168968200683594,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 162,
+      "w": 480,
+      "h": 334
+    }
+  }
+}

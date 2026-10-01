@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_teller_counter.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 379,
+    "w": 480,
+    "h": 117
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-81a81997-bcd8-42cf-8178-d20338fa7d0f.png",
+    "resolution": {
+      "width": 1774,
+      "height": 887
+    },
+    "bounds": {
+      "x": 48,
+      "y": 239,
+      "w": 1680,
+      "h": 409
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 48590,
+    "transparentFraction": 0.8078079223632812,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 379,
+      "w": 480,
+      "h": 117
+    }
+  }
+}

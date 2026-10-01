@@ -1,0 +1,4053 @@
+{
+  "schemaVersion": 1,
+  "units": {
+    "footprint": "tiles",
+    "tileWorldUnits": 40
+  },
+  "pilotCounts": {
+    "museum": 10,
+    "gallery": 10,
+    "bank": 20,
+    "lab": 26,
+    "casino": 26
+  },
+  "assets": [
+    {
+      "id": "museum_column",
+      "chapter": "museum",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/museum/architecture/museum_column.png",
+      "image": "assets/environment/museum/architecture/museum_column.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 139,
+        "y": 17,
+        "w": 234,
+        "h": 478
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.8
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 1.8384615384615384,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/museum_column.png"
+      },
+      "physicalKind": "pillar",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_partition",
+      "chapter": "museum",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/museum/architecture/museum_partition.png",
+      "image": "assets/environment/museum/architecture/museum_partition.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 206,
+        "w": 478,
+        "h": 289
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.4,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.5,
+      "drawHeight": 0.9069037656903766,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/museum_partition.png"
+      },
+      "physicalKind": "partition",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_display_case_large",
+      "chapter": "museum",
+      "category": "MAJOR",
+      "path": "assets/environment/museum/major/museum_display_case_large.png",
+      "image": "assets/environment/museum/major/museum_display_case_large.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 47,
+        "y": 17,
+        "w": 421,
+        "h": 480
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.2,
+        "h": 0.9
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.25,
+      "drawHeight": 1.4251781472684086,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "EXISTING_GAME_ATLAS_REUSE",
+        "path": "assets/museum/museum_atlas.png",
+        "rect": {
+          "x": 378,
+          "y": 375,
+          "w": 202,
+          "h": 230
+        }
+      },
+      "physicalKind": "displayCase",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_statue_large",
+      "chapter": "museum",
+      "category": "MAJOR",
+      "path": "assets/environment/museum/major/museum_statue_large.png",
+      "image": "assets/environment/museum/major/museum_statue_large.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 123,
+        "y": 17,
+        "w": 268,
+        "h": 480
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.9,
+        "h": 0.7
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 0.95,
+      "drawHeight": 1.7014925373134329,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "EXISTING_GAME_ATLAS_REUSE",
+        "path": "assets/museum/museum_atlas.png",
+        "rect": {
+          "x": 96,
+          "y": 352,
+          "w": 145,
+          "h": 259
+        }
+      },
+      "physicalKind": "statue",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_security_desk",
+      "chapter": "museum",
+      "category": "MAJOR",
+      "path": "assets/environment/museum/major/museum_security_desk.png",
+      "image": "assets/environment/museum/major/museum_security_desk.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 318,
+        "w": 480,
+        "h": 178
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.4,
+        "h": 0.55
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.6,
+      "drawHeight": 0.5933333333333334,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/museum_security_desk.png"
+      },
+      "physicalKind": "counter",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_display_low",
+      "chapter": "museum",
+      "category": "SOFT",
+      "path": "assets/environment/museum/soft/museum_display_low.png",
+      "image": "assets/environment/museum/soft/museum_display_low.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 203,
+        "w": 360,
+        "h": 169
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.2,
+        "h": 0.7
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 0.6572222222222222,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/museum_display_low.png"
+      },
+      "physicalKind": "table",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_pedestal",
+      "chapter": "museum",
+      "category": "SOFT",
+      "path": "assets/environment/museum/soft/museum_pedestal.png",
+      "image": "assets/environment/museum/soft/museum_pedestal.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 47,
+        "y": 11,
+        "w": 292,
+        "h": 362
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.6
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.8,
+      "drawHeight": 0.9917808219178083,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "EXISTING_GAME_ATLAS_REUSE",
+        "path": "assets/museum/museum_atlas.png",
+        "rect": {
+          "x": 1027,
+          "y": 99,
+          "w": 148,
+          "h": 182
+        }
+      },
+      "physicalKind": "statuePedestal",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_painting",
+      "chapter": "museum",
+      "category": "DECORATION",
+      "path": "assets/environment/museum/decoration/museum_painting.png",
+      "image": "assets/environment/museum/decoration/museum_painting.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 7,
+        "y": 59,
+        "w": 241,
+        "h": 190
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.3,
+      "drawHeight": 1.0248962655601659,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "EXISTING_GAME_ATLAS_REUSE",
+        "path": "assets/museum/museum_atlas.png",
+        "rect": {
+          "x": 60,
+          "y": 693,
+          "w": 225,
+          "h": 178
+        }
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_rope_barrier",
+      "chapter": "museum",
+      "category": "DECORATION",
+      "path": "assets/environment/museum/decoration/museum_rope_barrier.png",
+      "image": "assets/environment/museum/decoration/museum_rope_barrier.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 136,
+        "w": 240,
+        "h": 112
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.95,
+        "h": 0.18
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.95,
+      "drawHeight": 0.4433333333333333,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/museum_rope_barrier.png"
+      },
+      "physicalKind": "rope_barrier",
+      "attachmentOverride": {
+        "collision": false,
+        "footprint": {
+          "w": 0,
+          "h": 0
+        },
+        "losBehavior": "PASS",
+        "reason": "Visual-only attachment contained inside an existing case footprint. It does not instantiate a dressing item or collider."
+      },
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "museum_diamond_case",
+      "chapter": "museum",
+      "category": "LANDMARK",
+      "path": "assets/environment/museum/landmark/museum_diamond_case.png",
+      "image": "assets/environment/museum/landmark/museum_diamond_case.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "objectBounds": {
+        "x": 140,
+        "y": 25,
+        "w": 488,
+        "h": 718
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.1,
+      "drawHeight": 1.6184426229508198,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/museum_diamond_case.png"
+      },
+      "physicalKind": "objectiveCase",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_white_wall",
+      "chapter": "gallery",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/gallery/architecture/gallery_white_wall.png",
+      "image": "assets/environment/gallery/architecture/gallery_white_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 154,
+        "w": 478,
+        "h": 341
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.4,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.5,
+      "drawHeight": 1.0700836820083681,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_white_wall.png"
+      },
+      "physicalKind": "partition",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_movable_art_wall",
+      "chapter": "gallery",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/gallery/architecture/gallery_movable_art_wall.png",
+      "image": "assets/environment/gallery/architecture/gallery_movable_art_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 106,
+        "w": 478,
+        "h": 389
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.4,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.5,
+      "drawHeight": 1.2207112970711298,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_movable_art_wall.png"
+      },
+      "physicalKind": "partition",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_sculpture_large",
+      "chapter": "gallery",
+      "category": "MAJOR",
+      "path": "assets/environment/gallery/major/gallery_sculpture_large.png",
+      "image": "assets/environment/gallery/major/gallery_sculpture_large.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 100,
+        "y": 17,
+        "w": 312,
+        "h": 478
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.9,
+        "h": 0.7
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 0.95,
+      "drawHeight": 1.4554487179487179,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_sculpture_large.png"
+      },
+      "physicalKind": "statue",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_installation_art",
+      "chapter": "gallery",
+      "category": "MAJOR",
+      "path": "assets/environment/gallery/major/gallery_installation_art.png",
+      "image": "assets/environment/gallery/major/gallery_installation_art.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 184,
+        "w": 478,
+        "h": 311
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1,
+        "h": 0.8
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 1.2,
+      "drawHeight": 0.7807531380753138,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_installation_art.png"
+      },
+      "physicalKind": "equipment",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_central_plinth",
+      "chapter": "gallery",
+      "category": "MAJOR",
+      "path": "assets/environment/gallery/major/gallery_central_plinth.png",
+      "image": "assets/environment/gallery/major/gallery_central_plinth.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 299,
+        "w": 480,
+        "h": 197
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.2,
+        "h": 0.7
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 0.5745833333333332,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_central_plinth.png"
+      },
+      "physicalKind": "table",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_low_pedestal",
+      "chapter": "gallery",
+      "category": "SOFT",
+      "path": "assets/environment/gallery/soft/gallery_low_pedestal.png",
+      "image": "assets/environment/gallery/soft/gallery_low_pedestal.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 38,
+        "w": 360,
+        "h": 334
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.6
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.8,
+      "drawHeight": 0.7422222222222222,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_low_pedestal.png"
+      },
+      "physicalKind": "statuePedestal",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_modern_bench",
+      "chapter": "gallery",
+      "category": "SOFT",
+      "path": "assets/environment/gallery/soft/gallery_modern_bench.png",
+      "image": "assets/environment/gallery/soft/gallery_modern_bench.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 244,
+        "w": 360,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.5,
+        "h": 0.5
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.55,
+      "drawHeight": 0.5511111111111111,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_modern_bench.png"
+      },
+      "physicalKind": "bench",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_abstract_frame",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_abstract_frame.png",
+      "image": "assets/environment/gallery/decoration/gallery_abstract_frame.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 133,
+        "w": 240,
+        "h": 115
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.3,
+      "drawHeight": 0.6229166666666667,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_abstract_frame.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_track_light",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_track_light.png",
+      "image": "assets/environment/gallery/decoration/gallery_track_light.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 124,
+        "w": 240,
+        "h": 124
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.55,
+      "drawHeight": 0.2841666666666667,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_track_light.png"
+      },
+      "physicalKind": "lamp",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_masterpiece_wall",
+      "chapter": "gallery",
+      "category": "LANDMARK",
+      "path": "assets/environment/gallery/landmark/gallery_masterpiece_wall.png",
+      "image": "assets/environment/gallery/landmark/gallery_masterpiece_wall.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "objectBounds": {
+        "x": 25,
+        "y": 386,
+        "w": 718,
+        "h": 357
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.4,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.5,
+      "drawHeight": 0.7458217270194986,
+      "status": "NEEDS_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/gallery_masterpiece_wall.png"
+      },
+      "physicalKind": "partition",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "bank_wall",
+      "chapter": "bank",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/bank/architecture/bank_wall.png",
+      "image": "assets/environment/bank/architecture/bank_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.1,
+      "drawHeight": 1.801875,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_wall.png"
+      },
+      "physicalKind": "bankWall",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 216,
+        "w": 480,
+        "h": 279
+      }
+    },
+    {
+      "id": "bank_staff_door",
+      "chapter": "bank",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/bank/architecture/bank_staff_door.png",
+      "image": "assets/environment/bank/architecture/bank_staff_door.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.3,
+        "h": 0.25
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 2.41726618705036,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_staff_door.png"
+      },
+      "physicalKind": "bankStaffDoor",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 117,
+        "y": 16,
+        "w": 278,
+        "h": 480
+      }
+    },
+    {
+      "id": "bank_security_gate",
+      "chapter": "bank",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/bank/architecture/bank_security_gate.png",
+      "image": "assets/environment/bank/architecture/bank_security_gate.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.4,
+        "h": 0.5
+      },
+      "collisionParts": [
+        {
+          "x": -1.2,
+          "y": -0.5,
+          "w": 0.3,
+          "h": 0.5
+        },
+        {
+          "x": 0.9,
+          "y": -0.5,
+          "w": 0.3,
+          "h": 0.5
+        }
+      ],
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 2.4,
+      "drawHeight": 2.174058577405858,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_security_gate.png"
+      },
+      "physicalKind": "bankSecurityGate",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 62,
+        "w": 478,
+        "h": 433
+      }
+    },
+    {
+      "id": "bank_vault_corridor_wall",
+      "chapter": "bank",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/bank/architecture/bank_vault_corridor_wall.png",
+      "image": "assets/environment/bank/architecture/bank_vault_corridor_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3,
+        "h": 0.4
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.1,
+      "drawHeight": 1.763125,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_vault_corridor_wall.png"
+      },
+      "physicalKind": "bankVaultCorridorWall",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 223,
+        "w": 480,
+        "h": 273
+      }
+    },
+    {
+      "id": "bank_teller_counter",
+      "chapter": "bank",
+      "category": "MAJOR",
+      "path": "assets/environment/bank/major/bank_teller_counter.png",
+      "image": "assets/environment/bank/major/bank_teller_counter.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3,
+        "h": 0.85
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 3.1,
+      "drawHeight": 0.755625,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_teller_counter.png"
+      },
+      "physicalKind": "bankTellerCounter",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 379,
+        "w": 480,
+        "h": 117
+      }
+    },
+    {
+      "id": "bank_security_checkpoint",
+      "chapter": "bank",
+      "category": "MAJOR",
+      "path": "assets/environment/bank/major/bank_security_checkpoint.png",
+      "image": "assets/environment/bank/major/bank_security_checkpoint.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.2,
+        "h": 0.85
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.3,
+      "drawHeight": 1.8012499999999998,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_security_checkpoint.png"
+      },
+      "physicalKind": "bankSecurityCheckpoint",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 234,
+        "w": 480,
+        "h": 262
+      }
+    },
+    {
+      "id": "bank_deposit_box_wall",
+      "chapter": "bank",
+      "category": "MAJOR",
+      "path": "assets/environment/bank/major/bank_deposit_box_wall.png",
+      "image": "assets/environment/bank/major/bank_deposit_box_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.3,
+        "h": 0.55
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 2.4,
+      "drawHeight": 1.6700000000000002,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_deposit_box_wall.png"
+      },
+      "physicalKind": "bankDepositBoxWall",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 162,
+        "w": 480,
+        "h": 334
+      }
+    },
+    {
+      "id": "bank_cash_processing_table",
+      "chapter": "bank",
+      "category": "MAJOR",
+      "path": "assets/environment/bank/major/bank_cash_processing_table.png",
+      "image": "assets/environment/bank/major/bank_cash_processing_table.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2,
+        "h": 1
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 2.1,
+      "drawHeight": 1.010625,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_cash_processing_table.png"
+      },
+      "physicalKind": "bankCashProcessingTable",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 265,
+        "w": 480,
+        "h": 231
+      }
+    },
+    {
+      "id": "bank_vault_door",
+      "chapter": "bank",
+      "category": "MAJOR",
+      "path": "assets/environment/bank/major/bank_vault_door.png",
+      "image": "assets/environment/bank/major/bank_vault_door.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.5,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 2.6,
+      "drawHeight": 2.192050209205021,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_vault_door.png"
+      },
+      "physicalKind": "bankVaultDoor",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 92,
+        "w": 478,
+        "h": 403
+      }
+    },
+    {
+      "id": "bank_office_desk",
+      "chapter": "bank",
+      "category": "SOFT",
+      "path": "assets/environment/bank/soft/bank_office_desk.png",
+      "image": "assets/environment/bank/soft/bank_office_desk.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.7,
+        "h": 0.9
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.8,
+      "drawHeight": 1.095,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_office_desk.png"
+      },
+      "physicalKind": "bankOfficeDesk",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 153,
+        "w": 360,
+        "h": 219
+      }
+    },
+    {
+      "id": "bank_filing_cabinet",
+      "chapter": "bank",
+      "category": "SOFT",
+      "path": "assets/environment/bank/soft/bank_filing_cabinet.png",
+      "image": "assets/environment/bank/soft/bank_filing_cabinet.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 1.132867132867133,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_filing_cabinet.png"
+      },
+      "physicalKind": "bankFilingCabinet",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 49,
+        "y": 12,
+        "w": 286,
+        "h": 360
+      }
+    },
+    {
+      "id": "bank_cash_cart",
+      "chapter": "bank",
+      "category": "SOFT",
+      "path": "assets/environment/bank/soft/bank_cash_cart.png",
+      "image": "assets/environment/bank/soft/bank_cash_cart.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.9,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1,
+      "drawHeight": 0.7583333333333333,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_cash_cart.png"
+      },
+      "physicalKind": "bankCashCart",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 99,
+        "w": 360,
+        "h": 273
+      }
+    },
+    {
+      "id": "bank_queue_barrier",
+      "chapter": "bank",
+      "category": "SOFT",
+      "path": "assets/environment/bank/soft/bank_queue_barrier.png",
+      "image": "assets/environment/bank/soft/bank_queue_barrier.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2,
+        "h": 0.18
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 2,
+      "drawHeight": 0.8666666666666667,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_queue_barrier.png"
+      },
+      "physicalKind": "bankQueueBarrier",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 216,
+        "w": 360,
+        "h": 156
+      }
+    },
+    {
+      "id": "bank_small_safe",
+      "chapter": "bank",
+      "category": "SOFT",
+      "path": "assets/environment/bank/soft/bank_small_safe.png",
+      "image": "assets/environment/bank/soft/bank_small_safe.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 1.0196202531645568,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_small_safe.png"
+      },
+      "physicalKind": "bankSmallSafe",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 34,
+        "y": 13,
+        "w": 316,
+        "h": 358
+      }
+    },
+    {
+      "id": "bank_monitor",
+      "chapter": "bank",
+      "category": "DECORATION",
+      "path": "assets/environment/bank/decoration/bank_monitor.png",
+      "image": "assets/environment/bank/decoration/bank_monitor.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.65,
+      "drawHeight": 0.3629166666666667,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_monitor.png"
+      },
+      "physicalKind": "bankMonitor",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 114,
+        "w": 240,
+        "h": 134
+      }
+    },
+    {
+      "id": "bank_clock",
+      "chapter": "bank",
+      "category": "DECORATION",
+      "path": "assets/environment/bank/decoration/bank_clock.png",
+      "image": "assets/environment/bank/decoration/bank_clock.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.6,
+      "drawHeight": 0.5974789915966386,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_clock.png"
+      },
+      "physicalKind": "bankClock",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 9,
+        "y": 10,
+        "w": 238,
+        "h": 237
+      }
+    },
+    {
+      "id": "bank_paperwork",
+      "chapter": "bank",
+      "category": "DECORATION",
+      "path": "assets/environment/bank/decoration/bank_paperwork.png",
+      "image": "assets/environment/bank/decoration/bank_paperwork.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.65,
+      "drawHeight": 0.7027027027027027,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_paperwork.png"
+      },
+      "physicalKind": "bankPaperwork",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 8,
+        "w": 222,
+        "h": 240
+      }
+    },
+    {
+      "id": "bank_floor_marker",
+      "chapter": "bank",
+      "category": "DECORATION",
+      "path": "assets/environment/bank/decoration/bank_floor_marker.png",
+      "image": "assets/environment/bank/decoration/bank_floor_marker.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 0.8224999999999999,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_floor_marker.png"
+      },
+      "physicalKind": "bankFloorMarker",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 107,
+        "w": 240,
+        "h": 141
+      }
+    },
+    {
+      "id": "bank_plant",
+      "chapter": "bank",
+      "category": "DECORATION",
+      "path": "assets/environment/bank/decoration/bank_plant.png",
+      "image": "assets/environment/bank/decoration/bank_plant.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.5,
+        "h": 0.45
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 1.132867132867133,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_plant.png"
+      },
+      "physicalKind": "bankPlant",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 49,
+        "y": 12,
+        "w": 286,
+        "h": 360
+      }
+    },
+    {
+      "id": "bank_main_vault",
+      "chapter": "bank",
+      "category": "LANDMARK",
+      "path": "assets/environment/bank/landmark/bank_main_vault.png",
+      "image": "assets/environment/bank/landmark/bank_main_vault.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.4,
+        "h": 0.6
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.6,
+      "drawHeight": 2.978272980501393,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/bank/_source/bank_main_vault.png"
+      },
+      "physicalKind": "bankMainVault",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 25,
+        "y": 149,
+        "w": 718,
+        "h": 594
+      }
+    },
+    {
+      "id": "lab_wall",
+      "chapter": "lab",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/lab/architecture/lab_wall.png",
+      "image": "assets/environment/lab/architecture/lab_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.1,
+      "drawHeight": 1.8029288702928872,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_wall.png"
+      },
+      "physicalKind": "labWall",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 217,
+        "w": 478,
+        "h": 278
+      }
+    },
+    {
+      "id": "lab_glass_wall",
+      "chapter": "lab",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/lab/architecture/lab_glass_wall.png",
+      "image": "assets/environment/lab/architecture/lab_glass_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3,
+        "h": 0.25
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 3.1,
+      "drawHeight": 1.7834728033472804,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_glass_wall.png"
+      },
+      "physicalKind": "labGlassWall",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 220,
+        "w": 478,
+        "h": 275
+      }
+    },
+    {
+      "id": "lab_sliding_door",
+      "chapter": "lab",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/lab/architecture/lab_sliding_door.png",
+      "image": "assets/environment/lab/architecture/lab_sliding_door.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.7,
+        "h": 0.3
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.8,
+      "drawHeight": 1.494979079497908,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_sliding_door.png"
+      },
+      "physicalKind": "labSlidingDoor",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 98,
+        "w": 478,
+        "h": 397
+      }
+    },
+    {
+      "id": "lab_glass_corridor",
+      "chapter": "lab",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/lab/architecture/lab_glass_corridor.png",
+      "image": "assets/environment/lab/architecture/lab_glass_corridor.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.1,
+        "h": 0.25
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 3.2,
+      "drawHeight": 1.7606694560669456,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_glass_corridor.png"
+      },
+      "physicalKind": "labGlassCorridor",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 232,
+        "w": 478,
+        "h": 263
+      }
+    },
+    {
+      "id": "lab_sterile_partition",
+      "chapter": "lab",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/lab/architecture/lab_sterile_partition.png",
+      "image": "assets/environment/lab/architecture/lab_sterile_partition.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.2,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 2.3,
+      "drawHeight": 1.7154166666666666,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_sterile_partition.png"
+      },
+      "physicalKind": "labSterilePartition",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 138,
+        "w": 480,
+        "h": 358
+      }
+    },
+    {
+      "id": "lab_experiment_machine",
+      "chapter": "lab",
+      "category": "MAJOR",
+      "path": "assets/environment/lab/major/lab_experiment_machine.png",
+      "image": "assets/environment/lab/major/lab_experiment_machine.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2,
+        "h": 0.9
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 2.1,
+      "drawHeight": 1.6343096234309624,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_experiment_machine.png"
+      },
+      "physicalKind": "labExperimentMachine",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 123,
+        "w": 478,
+        "h": 372
+      }
+    },
+    {
+      "id": "lab_large_table",
+      "chapter": "lab",
+      "category": "MAJOR",
+      "path": "assets/environment/lab/major/lab_large_table.png",
+      "image": "assets/environment/lab/major/lab_large_table.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.7,
+        "h": 1.1
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 2.8,
+      "drawHeight": 1.6041666666666667,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_large_table.png"
+      },
+      "physicalKind": "labLargeTable",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 221,
+        "w": 480,
+        "h": 275
+      }
+    },
+    {
+      "id": "lab_cryo_unit",
+      "chapter": "lab",
+      "category": "MAJOR",
+      "path": "assets/environment/lab/major/lab_cryo_unit.png",
+      "image": "assets/environment/lab/major/lab_cryo_unit.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.3,
+        "h": 1.1
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 2.884482758620689,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_cryo_unit.png"
+      },
+      "physicalKind": "labCryoUnit",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 140,
+        "y": 17,
+        "w": 232,
+        "h": 478
+      }
+    },
+    {
+      "id": "lab_equipment_rack",
+      "chapter": "lab",
+      "category": "MAJOR",
+      "path": "assets/environment/lab/major/lab_equipment_rack.png",
+      "image": "assets/environment/lab/major/lab_equipment_rack.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.7,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.8,
+      "drawHeight": 3.5121951219512195,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_equipment_rack.png"
+      },
+      "physicalKind": "labEquipmentRack",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 133,
+        "y": 16,
+        "w": 246,
+        "h": 480
+      }
+    },
+    {
+      "id": "lab_sample_storage",
+      "chapter": "lab",
+      "category": "MAJOR",
+      "path": "assets/environment/lab/major/lab_sample_storage.png",
+      "image": "assets/environment/lab/major/lab_sample_storage.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.9,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 2,
+      "drawHeight": 3.4532374100719423,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_sample_storage.png"
+      },
+      "physicalKind": "labSampleStorage",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 117,
+        "y": 16,
+        "w": 278,
+        "h": 480
+      }
+    },
+    {
+      "id": "lab_observation_console",
+      "chapter": "lab",
+      "category": "MAJOR",
+      "path": "assets/environment/lab/major/lab_observation_console.png",
+      "image": "assets/environment/lab/major/lab_observation_console.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.7,
+        "h": 0.9
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 2.8,
+      "drawHeight": 1.5574999999999999,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_observation_console.png"
+      },
+      "physicalKind": "labObservationConsole",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 229,
+        "w": 480,
+        "h": 267
+      }
+    },
+    {
+      "id": "lab_workstation",
+      "chapter": "lab",
+      "category": "SOFT",
+      "path": "assets/environment/lab/soft/lab_workstation.png",
+      "image": "assets/environment/lab/soft/lab_workstation.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.8,
+        "h": 0.85
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.9,
+      "drawHeight": 1.4395543175487464,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_workstation.png"
+      },
+      "physicalKind": "labWorkstation",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 100,
+        "w": 359,
+        "h": 272
+      }
+    },
+    {
+      "id": "lab_cart",
+      "chapter": "lab",
+      "category": "SOFT",
+      "path": "assets/environment/lab/soft/lab_cart.png",
+      "image": "assets/environment/lab/soft/lab_cart.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 1.087248322147651,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_cart.png"
+      },
+      "physicalKind": "labCart",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 43,
+        "y": 12,
+        "w": 298,
+        "h": 360
+      }
+    },
+    {
+      "id": "lab_sample_case",
+      "chapter": "lab",
+      "category": "SOFT",
+      "path": "assets/environment/lab/soft/lab_sample_case.png",
+      "image": "assets/environment/lab/soft/lab_sample_case.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.75,
+        "h": 0.55
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.85,
+      "drawHeight": 0.4722222222222222,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_sample_case.png"
+      },
+      "physicalKind": "labSampleCase",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 171,
+        "w": 360,
+        "h": 200
+      }
+    },
+    {
+      "id": "lab_small_machine",
+      "chapter": "lab",
+      "category": "SOFT",
+      "path": "assets/environment/lab/soft/lab_small_machine.png",
+      "image": "assets/environment/lab/soft/lab_small_machine.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 0.8270949720670392,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_small_machine.png"
+      },
+      "physicalKind": "labSmallMachine",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 13,
+        "y": 42,
+        "w": 358,
+        "h": 329
+      }
+    },
+    {
+      "id": "lab_stool",
+      "chapter": "lab",
+      "category": "SOFT",
+      "path": "assets/environment/lab/soft/lab_stool.png",
+      "image": "assets/environment/lab/soft/lab_stool.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.5,
+        "h": 0.5
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.65,
+      "drawHeight": 1.0833333333333333,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_stool.png"
+      },
+      "physicalKind": "labStool",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 84,
+        "y": 12,
+        "w": 216,
+        "h": 360
+      }
+    },
+    {
+      "id": "lab_monitor",
+      "chapter": "lab",
+      "category": "DECORATION",
+      "path": "assets/environment/lab/decoration/lab_monitor.png",
+      "image": "assets/environment/lab/decoration/lab_monitor.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.8,
+      "drawHeight": 0.8648648648648649,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_monitor.png"
+      },
+      "physicalKind": "labMonitor",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 8,
+        "w": 222,
+        "h": 240
+      }
+    },
+    {
+      "id": "lab_warning_sign",
+      "chapter": "lab",
+      "category": "DECORATION",
+      "path": "assets/environment/lab/decoration/lab_warning_sign.png",
+      "image": "assets/environment/lab/decoration/lab_warning_sign.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.65,
+      "drawHeight": 0.5633333333333334,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_warning_sign.png"
+      },
+      "physicalKind": "labWarningSign",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 40,
+        "w": 240,
+        "h": 208
+      }
+    },
+    {
+      "id": "lab_specimen_container",
+      "chapter": "lab",
+      "category": "DECORATION",
+      "path": "assets/environment/lab/decoration/lab_specimen_container.png",
+      "image": "assets/environment/lab/decoration/lab_specimen_container.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.5,
+      "drawHeight": 0.8623188405797102,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_specimen_container.png"
+      },
+      "physicalKind": "labSpecimenContainer",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 59,
+        "y": 9,
+        "w": 138,
+        "h": 238
+      }
+    },
+    {
+      "id": "lab_cable",
+      "chapter": "lab",
+      "category": "DECORATION",
+      "path": "assets/environment/lab/decoration/lab_cable.png",
+      "image": "assets/environment/lab/decoration/lab_cable.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 0.9858333333333333,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_cable.png"
+      },
+      "physicalKind": "labCable",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 79,
+        "w": 240,
+        "h": 169
+      }
+    },
+    {
+      "id": "lab_wall_screen",
+      "chapter": "lab",
+      "category": "DECORATION",
+      "path": "assets/environment/lab/decoration/lab_wall_screen.png",
+      "image": "assets/environment/lab/decoration/lab_wall_screen.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 0.9275,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_wall_screen.png"
+      },
+      "physicalKind": "labWallScreen",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 89,
+        "w": 240,
+        "h": 159
+      }
+    },
+    {
+      "id": "lab_floor_marker",
+      "chapter": "lab",
+      "category": "DECORATION",
+      "path": "assets/environment/lab/decoration/lab_floor_marker.png",
+      "image": "assets/environment/lab/decoration/lab_floor_marker.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 0.8108333333333333,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_floor_marker.png"
+      },
+      "physicalKind": "labFloorMarker",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 109,
+        "w": 240,
+        "h": 139
+      }
+    },
+    {
+      "id": "lab_prototype_machine",
+      "chapter": "lab",
+      "category": "LANDMARK",
+      "path": "assets/environment/lab/landmark/lab_prototype_machine.png",
+      "image": "assets/environment/lab/landmark/lab_prototype_machine.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.1,
+        "h": 1.5
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.2,
+      "drawHeight": 3.301149425287356,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_prototype_machine.png"
+      },
+      "physicalKind": "labPrototypeMachine",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 36,
+        "y": 25,
+        "w": 696,
+        "h": 718
+      }
+    },
+    {
+      "id": "lab_cryo_chamber",
+      "chapter": "lab",
+      "category": "LANDMARK",
+      "path": "assets/environment/lab/landmark/lab_cryo_chamber.png",
+      "image": "assets/environment/lab/landmark/lab_cryo_chamber.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.1,
+        "h": 1.5
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 2.2,
+      "drawHeight": 3.929353233830846,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_cryo_chamber.png"
+      },
+      "physicalKind": "labCryoChamber",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 183,
+        "y": 25,
+        "w": 402,
+        "h": 718
+      }
+    },
+    {
+      "id": "lab_central_experiment",
+      "chapter": "lab",
+      "category": "LANDMARK",
+      "path": "assets/environment/lab/landmark/lab_central_experiment.png",
+      "image": "assets/environment/lab/landmark/lab_central_experiment.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.3,
+        "h": 1.8
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 3.4,
+      "drawHeight": 3.177437325905293,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_central_experiment.png"
+      },
+      "physicalKind": "labCentralExperiment",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 25,
+        "y": 72,
+        "w": 718,
+        "h": 671
+      }
+    },
+    {
+      "id": "lab_observation_room",
+      "chapter": "lab",
+      "category": "LANDMARK",
+      "path": "assets/environment/lab/landmark/lab_observation_room.png",
+      "image": "assets/environment/lab/landmark/lab_observation_room.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 4,
+        "h": 0.5
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 4,
+      "drawHeight": 2.635097493036212,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/lab/_source/lab_observation_room.png"
+      },
+      "physicalKind": "labObservationRoom",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "collisionParts": [
+        {
+          "x": -2,
+          "y": -0.5,
+          "w": 0.35,
+          "h": 0.5
+        },
+        {
+          "x": 1.65,
+          "y": -0.5,
+          "w": 0.35,
+          "h": 0.5
+        }
+      ],
+      "objectBounds": {
+        "x": 25,
+        "y": 270,
+        "w": 718,
+        "h": 473
+      }
+    },
+    {
+      "id": "casino_wall",
+      "chapter": "casino",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/casino/architecture/casino_wall.png",
+      "image": "assets/environment/casino/architecture/casino_wall.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.1,
+      "drawHeight": 1.6308977035490606,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_wall.png"
+      },
+      "physicalKind": "casinoWall",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 244,
+        "w": 479,
+        "h": 252
+      }
+    },
+    {
+      "id": "casino_velvet_partition",
+      "chapter": "casino",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/casino/architecture/casino_velvet_partition.png",
+      "image": "assets/environment/casino/architecture/casino_velvet_partition.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.2,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 2.3,
+      "drawHeight": 1.6099999999999999,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_velvet_partition.png"
+      },
+      "physicalKind": "casinoVelvetPartition",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 160,
+        "w": 480,
+        "h": 336
+      }
+    },
+    {
+      "id": "casino_gold_arch",
+      "chapter": "casino",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/casino/architecture/casino_gold_arch.png",
+      "image": "assets/environment/casino/architecture/casino_gold_arch.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.2,
+        "h": 0.5
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 3.2,
+      "drawHeight": 2.46,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_gold_arch.png"
+      },
+      "physicalKind": "casinoGoldArch",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "collisionParts": [
+        {
+          "x": -1.6,
+          "y": -0.5,
+          "w": 0.35,
+          "h": 0.5
+        },
+        {
+          "x": 1.25,
+          "y": -0.5,
+          "w": 0.35,
+          "h": 0.5
+        }
+      ],
+      "objectBounds": {
+        "x": 16,
+        "y": 127,
+        "w": 480,
+        "h": 369
+      }
+    },
+    {
+      "id": "casino_vip_door",
+      "chapter": "casino",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/casino/architecture/casino_vip_door.png",
+      "image": "assets/environment/casino/architecture/casino_vip_door.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.8,
+        "h": 0.35
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 1.9,
+      "drawHeight": 1.9241525423728811,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_vip_door.png"
+      },
+      "physicalKind": "casinoVipDoor",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 20,
+        "y": 17,
+        "w": 472,
+        "h": 478
+      }
+    },
+    {
+      "id": "casino_bar_counter",
+      "chapter": "casino",
+      "category": "ARCHITECTURE",
+      "path": "assets/environment/casino/architecture/casino_bar_counter.png",
+      "image": "assets/environment/casino/architecture/casino_bar_counter.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.9,
+        "h": 0.85
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 3,
+      "drawHeight": 1.1125,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_bar_counter.png"
+      },
+      "physicalKind": "casinoBarCounter",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 318,
+        "w": 480,
+        "h": 178
+      }
+    },
+    {
+      "id": "casino_slot_bank",
+      "chapter": "casino",
+      "category": "MAJOR",
+      "path": "assets/environment/casino/major/casino_slot_bank.png",
+      "image": "assets/environment/casino/major/casino_slot_bank.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3,
+        "h": 0.9
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 3.1,
+      "drawHeight": 2.5033472803347285,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_slot_bank.png"
+      },
+      "physicalKind": "casinoSlotBank",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 17,
+        "y": 109,
+        "w": 478,
+        "h": 386
+      }
+    },
+    {
+      "id": "casino_roulette_table",
+      "chapter": "casino",
+      "category": "MAJOR",
+      "path": "assets/environment/casino/major/casino_roulette_table.png",
+      "image": "assets/environment/casino/major/casino_roulette_table.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.3,
+        "h": 1.5
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 2.4,
+      "drawHeight": 1.325,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_roulette_table.png"
+      },
+      "physicalKind": "casinoRouletteTable",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 231,
+        "w": 480,
+        "h": 265
+      }
+    },
+    {
+      "id": "casino_blackjack_table",
+      "chapter": "casino",
+      "category": "MAJOR",
+      "path": "assets/environment/casino/major/casino_blackjack_table.png",
+      "image": "assets/environment/casino/major/casino_blackjack_table.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.3,
+        "h": 1.4
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 2.4,
+      "drawHeight": 1.3299999999999998,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_blackjack_table.png"
+      },
+      "physicalKind": "casinoBlackjackTable",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 230,
+        "w": 480,
+        "h": 266
+      }
+    },
+    {
+      "id": "casino_cashier_cage",
+      "chapter": "casino",
+      "category": "MAJOR",
+      "path": "assets/environment/casino/major/casino_cashier_cage.png",
+      "image": "assets/environment/casino/major/casino_cashier_cage.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2.4,
+        "h": 0.8
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 2.5,
+      "drawHeight": 1.96875,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_cashier_cage.png"
+      },
+      "physicalKind": "casinoCashierCage",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 118,
+        "w": 480,
+        "h": 378
+      }
+    },
+    {
+      "id": "casino_bar_island",
+      "chapter": "casino",
+      "category": "MAJOR",
+      "path": "assets/environment/casino/major/casino_bar_island.png",
+      "image": "assets/environment/casino/major/casino_bar_island.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.1,
+        "h": 1.3
+      },
+      "collision": true,
+      "losBehavior": "BREAKER",
+      "defaultScale": 1,
+      "drawWidth": 3.2,
+      "drawHeight": 2.493333333333333,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_bar_island.png"
+      },
+      "physicalKind": "casinoBarIsland",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 122,
+        "w": 480,
+        "h": 374
+      }
+    },
+    {
+      "id": "casino_security_station",
+      "chapter": "casino",
+      "category": "MAJOR",
+      "path": "assets/environment/casino/major/casino_security_station.png",
+      "image": "assets/environment/casino/major/casino_security_station.png",
+      "resolution": {
+        "width": 512,
+        "height": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 2,
+        "h": 0.85
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 2.1,
+      "drawHeight": 2.4724137931034487,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_security_station.png"
+      },
+      "physicalKind": "casinoSecurityStation",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 53,
+        "y": 17,
+        "w": 406,
+        "h": 478
+      }
+    },
+    {
+      "id": "casino_slot_machine",
+      "chapter": "casino",
+      "category": "SOFT",
+      "path": "assets/environment/casino/soft/casino_slot_machine.png",
+      "image": "assets/environment/casino/soft/casino_slot_machine.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.75,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 0.85,
+      "drawHeight": 1.7386363636363635,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_slot_machine.png"
+      },
+      "physicalKind": "casinoSlotMachine",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 104,
+        "y": 12,
+        "w": 176,
+        "h": 360
+      }
+    },
+    {
+      "id": "casino_chair",
+      "chapter": "casino",
+      "category": "SOFT",
+      "path": "assets/environment/casino/soft/casino_chair.png",
+      "image": "assets/environment/casino/soft/casino_chair.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.5,
+        "h": 0.5
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.65,
+      "drawHeight": 1.1142857142857143,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_chair.png"
+      },
+      "physicalKind": "casinoChair",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 87,
+        "y": 12,
+        "w": 210,
+        "h": 360
+      }
+    },
+    {
+      "id": "casino_cocktail_table",
+      "chapter": "casino",
+      "category": "SOFT",
+      "path": "assets/environment/casino/soft/casino_cocktail_table.png",
+      "image": "assets/environment/casino/soft/casino_cocktail_table.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.8
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 1.0261146496815285,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_cocktail_table.png"
+      },
+      "physicalKind": "casinoCocktailTable",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 35,
+        "y": 13,
+        "w": 314,
+        "h": 358
+      }
+    },
+    {
+      "id": "casino_divider",
+      "chapter": "casino",
+      "category": "SOFT",
+      "path": "assets/environment/casino/soft/casino_divider.png",
+      "image": "assets/environment/casino/soft/casino_divider.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 1.8,
+        "h": 0.25
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.9,
+      "drawHeight": 1.1030555555555555,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_divider.png"
+      },
+      "physicalKind": "casinoDivider",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 163,
+        "w": 360,
+        "h": 209
+      }
+    },
+    {
+      "id": "casino_chip_cart",
+      "chapter": "casino",
+      "category": "SOFT",
+      "path": "assets/environment/casino/soft/casino_chip_cart.png",
+      "image": "assets/environment/casino/soft/casino_chip_cart.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0.8,
+        "h": 0.65
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.9,
+      "drawHeight": 1.0318471337579618,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_chip_cart.png"
+      },
+      "physicalKind": "casinoChipCart",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 35,
+        "y": 12,
+        "w": 314,
+        "h": 360
+      }
+    },
+    {
+      "id": "casino_chandelier",
+      "chapter": "casino",
+      "category": "DECORATION",
+      "path": "assets/environment/casino/decoration/casino_chandelier.png",
+      "image": "assets/environment/casino/decoration/casino_chandelier.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.4,
+      "drawHeight": 1.411764705882353,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_chandelier.png"
+      },
+      "physicalKind": "casinoChandelier",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 9,
+        "y": 8,
+        "w": 238,
+        "h": 240
+      }
+    },
+    {
+      "id": "casino_wall_art",
+      "chapter": "casino",
+      "category": "DECORATION",
+      "path": "assets/environment/casino/decoration/casino_wall_art.png",
+      "image": "assets/environment/casino/decoration/casino_wall_art.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.2,
+      "drawHeight": 1.2857142857142858,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_wall_art.png"
+      },
+      "physicalKind": "casinoWallArt",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 16,
+        "y": 8,
+        "w": 224,
+        "h": 240
+      }
+    },
+    {
+      "id": "casino_drink_tray",
+      "chapter": "casino",
+      "category": "DECORATION",
+      "path": "assets/environment/casino/decoration/casino_drink_tray.png",
+      "image": "assets/environment/casino/decoration/casino_drink_tray.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.65,
+      "drawHeight": 0.593125,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_drink_tray.png"
+      },
+      "physicalKind": "casinoDrinkTray",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 29,
+        "w": 240,
+        "h": 219
+      }
+    },
+    {
+      "id": "casino_neon_sign_generic",
+      "chapter": "casino",
+      "category": "DECORATION",
+      "path": "assets/environment/casino/decoration/casino_neon_sign_generic.png",
+      "image": "assets/environment/casino/decoration/casino_neon_sign_generic.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.2,
+      "drawHeight": 0.42,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_neon_sign_generic.png"
+      },
+      "physicalKind": "casinoNeonSignGeneric",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 164,
+        "w": 240,
+        "h": 84
+      }
+    },
+    {
+      "id": "casino_carpet_pattern",
+      "chapter": "casino",
+      "category": "DECORATION",
+      "path": "assets/environment/casino/decoration/casino_carpet_pattern.png",
+      "image": "assets/environment/casino/decoration/casino_carpet_pattern.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 3,
+      "drawHeight": 1.575,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_carpet_pattern.png"
+      },
+      "physicalKind": "casinoCarpetPattern",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 8,
+        "y": 122,
+        "w": 240,
+        "h": 126
+      }
+    },
+    {
+      "id": "casino_chip_stack",
+      "chapter": "casino",
+      "category": "DECORATION",
+      "path": "assets/environment/casino/decoration/casino_chip_stack.png",
+      "image": "assets/environment/casino/decoration/casino_chip_stack.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.5,
+      "drawHeight": 0.5714285714285714,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_chip_stack.png"
+      },
+      "physicalKind": "casinoChipStack",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 23,
+        "y": 8,
+        "w": 210,
+        "h": 240
+      }
+    },
+    {
+      "id": "casino_roulette_centerpiece",
+      "chapter": "casino",
+      "category": "LANDMARK",
+      "path": "assets/environment/casino/landmark/casino_roulette_centerpiece.png",
+      "image": "assets/environment/casino/landmark/casino_roulette_centerpiece.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.3,
+        "h": 2.1
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 3.4,
+      "drawHeight": 2.4813370473537604,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_roulette_centerpiece.png"
+      },
+      "physicalKind": "casinoRouletteCenterpiece",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 25,
+        "y": 219,
+        "w": 718,
+        "h": 524
+      }
+    },
+    {
+      "id": "casino_high_roller_table",
+      "chapter": "casino",
+      "category": "LANDMARK",
+      "path": "assets/environment/casino/landmark/casino_high_roller_table.png",
+      "image": "assets/environment/casino/landmark/casino_high_roller_table.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.2,
+        "h": 1.9
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 3.3,
+      "drawHeight": 1.5675,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_high_roller_table.png"
+      },
+      "physicalKind": "casinoHighRollerTable",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 24,
+        "y": 402,
+        "w": 720,
+        "h": 342
+      }
+    },
+    {
+      "id": "casino_cashier_vault",
+      "chapter": "casino",
+      "category": "LANDMARK",
+      "path": "assets/environment/casino/landmark/casino_cashier_vault.png",
+      "image": "assets/environment/casino/landmark/casino_cashier_vault.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 3.3,
+        "h": 0.85
+      },
+      "collision": true,
+      "losBehavior": "BLOCK",
+      "defaultScale": 1,
+      "drawWidth": 3.4,
+      "drawHeight": 2.5997214484679665,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_cashier_vault.png"
+      },
+      "physicalKind": "casinoCashierVault",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "objectBounds": {
+        "x": 25,
+        "y": 194,
+        "w": 718,
+        "h": 549
+      }
+    },
+    {
+      "id": "casino_vip_room",
+      "chapter": "casino",
+      "category": "LANDMARK",
+      "path": "assets/environment/casino/landmark/casino_vip_room.png",
+      "image": "assets/environment/casino/landmark/casino_vip_room.png",
+      "resolution": {
+        "width": 768,
+        "height": 768
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 4,
+        "h": 0.5
+      },
+      "collision": true,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 4,
+      "drawHeight": 2.8802228412256268,
+      "status": "READY_FOR_USER_REVIEW",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/casino/_source/casino_vip_room.png"
+      },
+      "physicalKind": "casinoVipRoom",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "DEVICE_REVIEW_PENDING",
+        "productionApproved": false
+      },
+      "collisionParts": [
+        {
+          "x": -2,
+          "y": -0.5,
+          "w": 0.35,
+          "h": 0.5
+        },
+        {
+          "x": 1.65,
+          "y": -0.5,
+          "w": 0.35,
+          "h": 0.5
+        }
+      ],
+      "objectBounds": {
+        "x": 25,
+        "y": 226,
+        "w": 718,
+        "h": 517
+      }
+    },
+    {
+      "id": "gallery_portrait_frame_a",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_portrait_frame_a.png",
+      "image": "assets/environment/gallery/decoration/gallery_portrait_frame_a.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 73,
+        "y": 12,
+        "w": 238,
+        "h": 360
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.7,
+      "drawHeight": 1.0588235294117645,
+      "status": "VISUAL_HOTFIX_REVIEWED",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/portrait-hotfix/gallery_portrait_frame_a.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_portrait_frame_b",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_portrait_frame_b.png",
+      "image": "assets/environment/gallery/decoration/gallery_portrait_frame_b.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 73,
+        "y": 12,
+        "w": 238,
+        "h": 360
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.7,
+      "drawHeight": 1.0588235294117645,
+      "status": "VISUAL_HOTFIX_REVIEWED",
+      "source": {
+        "kind": "IMAGEGEN_INDEPENDENT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/portrait-hotfix/gallery_portrait_frame_b.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    }
+  ]
+}

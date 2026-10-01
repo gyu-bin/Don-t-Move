@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/landmark/casino_roulette_centerpiece.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 25,
+    "y": 219,
+    "w": 718,
+    "h": 524
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_roulette_centerpiece.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 100,
+      "y": 27,
+      "w": 1340,
+      "h": 977
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 293491,
+    "transparentFraction": 0.4982621934678819,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 25,
+      "y": 219,
+      "w": 718,
+      "h": 524
+    }
+  }
+}

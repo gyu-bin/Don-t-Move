@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/landmark/casino_cashier_vault.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 25,
+    "y": 194,
+    "w": 718,
+    "h": 549
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_cashier_vault.png",
+    "resolution": {
+      "width": 1374,
+      "height": 1145
+    },
+    "bounds": {
+      "x": 49,
+      "y": 70,
+      "w": 1277,
+      "h": 976
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 348209,
+    "transparentFraction": 0.4005076090494792,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 25,
+      "y": 194,
+      "w": 718,
+      "h": 549
+    }
+  }
+}

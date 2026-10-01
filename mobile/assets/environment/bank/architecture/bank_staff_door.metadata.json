@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/architecture/bank_staff_door.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 117,
+    "y": 16,
+    "w": 278,
+    "h": 480
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-01c4307d-83a7-449e-bad2-2a7b5960aa59.png",
+    "resolution": {
+      "width": 1024,
+      "height": 1536
+    },
+    "bounds": {
+      "x": 129,
+      "y": 96,
+      "w": 771,
+      "h": 1327
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 127795,
+    "transparentFraction": 0.4993438720703125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 117,
+      "y": 16,
+      "w": 278,
+      "h": 480
+    }
+  }
+}

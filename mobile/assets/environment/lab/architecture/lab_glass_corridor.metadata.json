@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/architecture/lab_glass_corridor.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 232,
+    "w": 478,
+    "h": 263
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_glass_corridor.png",
+    "resolution": {
+      "width": 1254,
+      "height": 1254
+    },
+    "bounds": {
+      "x": 34,
+      "y": 565,
+      "w": 1186,
+      "h": 653
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 42226,
+    "transparentFraction": 0.8205184936523438,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 232,
+      "w": 478,
+      "h": 263
+    }
+  }
+}

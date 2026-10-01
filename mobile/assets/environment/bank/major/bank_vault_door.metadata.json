@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_vault_door.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 92,
+    "w": 478,
+    "h": 403
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-813f2929-35d2-402d-8f89-d0e9a21dcb95.png",
+    "resolution": {
+      "width": 1254,
+      "height": 1254
+    },
+    "bounds": {
+      "x": 50,
+      "y": 119,
+      "w": 1153,
+      "h": 971
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 187861,
+    "transparentFraction": 0.2772102355957031,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 92,
+      "w": 478,
+      "h": 403
+    }
+  }
+}

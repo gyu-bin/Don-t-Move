@@ -31,7 +31,9 @@ async function main() {
   const {renderPlaygroundFrame} = require('../../src/rendering/renderFrame');
   const {fill} = require('../../src/rendering/paints');
   const decode = (file: string) => Skia.Image.MakeImageFromEncoded(Skia.Data.fromBytes(fs.readFileSync(file)));
+  const {decodeEnvironmentImages}=require('../../src/assets/environmentKit');
   const assets = buildGameAssets(ASSET_MANIFEST, {
+    ...decodeEnvironmentImages(decode),
     museumAtlas: decode('assets/museum/museum_atlas.png'),
     legacyGuard: decode('assets/characters/legacy/guard_directions.png'),
     playerWalk: decode('assets/characters/player_walk.png'),

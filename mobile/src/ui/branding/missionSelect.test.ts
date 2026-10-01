@@ -30,20 +30,20 @@ test('Route states: none cleared, partial, current and locked follow release pro
  assert(fresh.missions.slice(1).every(m=>!m.playable),'release build: locked missions cannot start');
  // Chapter 02 with two missions cleared → 02-03 is the current mission.
  const p=clearUpTo(12);
- assert.deepEqual(states(p,1),['cleared','cleared','current','locked','locked']);
+ assert.deepEqual(states(p,1),['cleared','cleared','current',...Array(CHAPTER_MISSION_COUNTS[1]-3).fill('locked')]);
  const route=chapterRoute(p,1,false);
- assert.equal(route.cleared,2);assert.equal(route.total,5);assert.equal(route.ratio,0.4);
+ assert.equal(route.cleared,2);assert.equal(route.total,CHAPTER_MISSION_COUNTS[1]);assert.equal(route.ratio,2/CHAPTER_MISSION_COUNTS[1]);
  assert.equal(route.missions[0].record?.bestTime,70.25);
  assert.equal(route.missions[2].playable,true);assert.equal(route.missions[3].playable,false);
  // Chapter not reached yet: everything locked, no current.
- assert.deepEqual(states(p,2),['locked','locked','locked','locked','locked']);
+ assert.deepEqual(states(p,2),Array(CHAPTER_MISSION_COUNTS[2]).fill('locked'));
  assert.equal(chapterRoute(p,2,false).current,null);
 });
 
 test('All cleared: full progress, no current, every mission replayable',()=>{
- const p=clearUpTo(15);
+ const p=clearUpTo(20);
  const route=chapterRoute(p,1,false);
- assert.deepEqual(route.missions.map(m=>m.state),Array(5).fill('cleared'));
+ assert.deepEqual(route.missions.map(m=>m.state),Array(CHAPTER_MISSION_COUNTS[1]).fill('cleared'));
  assert.equal(route.ratio,1);assert.equal(route.current,null);
  assert(route.missions.every(m=>m.playable));
  assert.equal(chapterRoute(p,2,false).missions[0].state,'current');
@@ -51,7 +51,7 @@ test('All cleared: full progress, no current, every mission replayable',()=>{
 
 test('Current mission prefers the Continue mission when it is open in this chapter',()=>{
  const p={...clearUpTo(10),highestUnlocked:13,lastMission:'02-03'};
- assert.deepEqual(states(p,1),['available','available','current','available','locked']);
+ assert.deepEqual(states(p,1),['available','available','current','available',...Array(CHAPTER_MISSION_COUNTS[1]-4).fill('locked')]);
 });
 
 test('Dev/test unlock keeps the release visuals but lets locked missions start',()=>{

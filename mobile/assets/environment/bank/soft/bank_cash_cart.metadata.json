@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_cash_cart.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 99,
+    "w": 360,
+    "h": 273
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-2acbd35e-7315-493f-8528-05429b969636.png",
+    "resolution": {
+      "width": 1499,
+      "height": 1049
+    },
+    "bounds": {
+      "x": 181,
+      "y": 99,
+      "w": 1139,
+      "h": 864
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 76215,
+    "transparentFraction": 0.4689737955729167,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 12,
+      "y": 99,
+      "w": 360,
+      "h": 273
+    }
+  }
+}

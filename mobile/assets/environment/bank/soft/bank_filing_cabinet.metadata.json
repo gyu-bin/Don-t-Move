@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_filing_cabinet.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 49,
+    "y": 12,
+    "w": 286,
+    "h": 360
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "/Users/mungyubin/.codex/generated_images/01a0ba03-93ca-75d3-94cf-eba152e582ee/exec-6737efe9-8a34-4ce2-9c91-48967dca9f67.png",
+    "resolution": {
+      "width": 1024,
+      "height": 1536
+    },
+    "bounds": {
+      "x": 36,
+      "y": 172,
+      "w": 953,
+      "h": 1199
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 96182,
+    "transparentFraction": 0.3420613606770833,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 49,
+      "y": 12,
+      "w": 286,
+      "h": 360
+    }
+  }
+}

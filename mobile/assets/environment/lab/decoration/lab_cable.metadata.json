@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/decoration/lab_cable.png",
+  "resolution": {
+    "width": 256,
+    "height": 256
+  },
+  "objectBounds": {
+    "x": 8,
+    "y": 79,
+    "w": 240,
+    "h": 169
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_cable.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 182,
+      "y": 108,
+      "w": 1164,
+      "h": 820
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 21124,
+    "transparentFraction": 0.6472625732421875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 8,
+      "y": 79,
+      "w": 240,
+      "h": 169
+    }
+  }
+}

@@ -3,8 +3,9 @@ export type AudioPhase = 'INTRO' | 'LOBBY' | 'STEALTH' | 'THEFT_ALERT' | 'PLAYER
 export type MusicEvent = 'bgm_lobby' | 'bgm_stealth' | 'bgm_chase';
 export type WhistleEvent = 'whistle_theft' | 'whistle_spotted';
 export type UiSoundEvent = 'ui_select' | 'ui_back';
-export type AudioEvent = MusicEvent | WhistleEvent | UiSoundEvent;
+export type AudioEvent = MusicEvent | WhistleEvent | UiSoundEvent | 'objective_pickup';
 export interface GameAudioInput {
+  objectiveRevision?: number;
   masterBgmVolume?: number;
   sfxSuspended?: boolean;
   sessionKey: string;
@@ -17,17 +18,21 @@ export interface GameAudioInput {
   active: boolean;
 }
 export interface AudioState {
+  objectiveRevision: number;
   sessionKey: string;
   theftRevision: number;
   spottedRevision: number;
   music: MusicEvent;
 }
 export function reduceAudio(previous: AudioState | null, input: GameAudioInput): {
-  state: AudioState; whistles: WhistleEvent[]; music: MusicEvent | null;
+  state: AudioState; pickup: boolean; whistles: WhistleEvent[]; music: MusicEvent | null;
 } {
   const sameSession = previous?.sessionKey === input.sessionKey;
   const audible = input.active && !input.paused;
   const whistles: WhistleEvent[] = [];
+  const pickup = sameSession && audible && input.sfxEnabled && !input.sfxSuspended
+    && input.phase !== 'LOBBY' && input.phase !== 'INTRO'
+    && (input.objectiveRevision ?? 0) > previous.objectiveRevision;
   // First mount and retry consume current counters, never replay historical events.
   if (sameSession && audible && input.sfxEnabled && !input.sfxSuspended && input.phase !== 'LOBBY' && input.phase !== 'INTRO') {
     if (input.theftRevision > previous.theftRevision && !playerAlertOwnsAudio(input, previous)) whistles.push('whistle_theft');
@@ -39,9 +44,9 @@ export function reduceAudio(previous: AudioState | null, input: GameAudioInput):
   else if (input.phase === 'THEFT_ALERT' || input.phase === 'PLAYER_SPOTTED'
     || input.phase === 'SEARCH' || input.phase === 'RETURN') music = 'bgm_chase';
   // SEARCH and RETURN retain the last alert tension, including while muted/paused.
-  const state = { sessionKey: input.sessionKey, theftRevision: input.theftRevision,
+  const state = { objectiveRevision: input.objectiveRevision ?? 0, sessionKey: input.sessionKey, theftRevision: input.theftRevision,
     spottedRevision: input.spottedRevision, music };
-  return { state, whistles, music: audible && input.bgmEnabled && input.phase !== 'INTRO' ? music : null };
+  return { state, pickup, whistles, music: audible && input.bgmEnabled && input.phase !== 'INTRO' ? music : null };
 }
 export const MUSIC_EVENTS: readonly MusicEvent[] = ['bgm_lobby', 'bgm_stealth', 'bgm_chase'];
 export type MusicMix = Record<MusicEvent, number>;
@@ -50,6 +55,7 @@ export function silenceMix(): MusicMix { return { bgm_lobby: 0, bgm_stealth: 0, 
 export const TRACK_BASE_GAIN: MusicMix = { bgm_lobby: 0.50, bgm_stealth: 0.61, bgm_chase: 0.63 };
 export const WHISTLE_GAIN = 0.8;
 export const UI_GAIN = 0.45;
+export const OBJECTIVE_PICKUP_GAIN = 0.60;
 /** Fade normalized track weights; apply one master factor only at native output. */
 export function fadeMix(current: MusicMix, target: MusicEvent | null, dt: number): MusicMix {
   const duration = 0.9;

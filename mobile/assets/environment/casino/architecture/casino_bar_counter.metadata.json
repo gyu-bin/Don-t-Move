@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/architecture/casino_bar_counter.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 16,
+    "y": 318,
+    "w": 480,
+    "h": 178
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_bar_counter.png",
+    "resolution": {
+      "width": 1774,
+      "height": 887
+    },
+    "bounds": {
+      "x": 66,
+      "y": 127,
+      "w": 1642,
+      "h": 607
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 64513,
+    "transparentFraction": 0.7470741271972656,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 318,
+      "w": 480,
+      "h": 178
+    }
+  }
+}

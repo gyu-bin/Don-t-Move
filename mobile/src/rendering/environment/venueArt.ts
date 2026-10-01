@@ -18,10 +18,23 @@ function bolts(c:SkCanvas,w:number,h:number){for(const x of [-w/2+4,w/2-4])for(c
 
 export function drawVenueFloor(c:SkCanvas,s:CompiledStage){
  const theme=s.def.theme,m=MATERIALS[theme],variant=(s.def.mission??1)-1;
+ const galleryBase=theme==='gallery'?fill(m.floor):null;
+ // Adjacent anti-aliased tile fills leave fractional-zoom fringes over VOID.
+ // Only the opaque Gallery substrate disables AA; intentional panel seams retain AA.
+ if(galleryBase)galleryBase.setAntiAlias(false);
  for(let y=0;y<s.rows;y++)for(let x=0;x<s.cols;x++){
   if(s.grid[y*s.cols+x]!==Cell.Floor)continue;
-  c.save();c.translate(x*TILE,y*TILE);rect(c,0,0,TILE,TILE,m.floor);
-  if(theme==='mansion'){
+  c.save();c.translate(x*TILE,y*TILE);
+  if(galleryBase)c.drawRect(Skia.XYWHRect(0,0,TILE,TILE),galleryBase);
+  else rect(c,0,0,TILE,TILE,m.floor);
+  if(theme==='gallery'){
+   // Large matte stone panels; restrained seams leave the red vision overlay legible.
+   // The 2×2 panel rhythm differs from Museum's contrasting small marble checks.
+   if(x%2===0)line(c,0,0,0,TILE,m.seam+'66',.7);
+   if(y%2===0)line(c,0,0,TILE,0,m.seam+'66',.7);
+   const gx=(x*17+y*11)%31+4,gy=(x*7+y*19)%31+4;
+   rect(c,gx,gy,1,1,'#c7c8ba16');
+  }else if(theme==='mansion'){
    for(let i=0;i<4;i++){const yy=i*10;line(c,0,yy,40,yy,m.seam);line(c,(x%2?10:28),yy,(x%2?10:28),yy+10,m.seam);line(c,3,yy+4,33,yy+5,'#81614344');}
   }else if(theme==='casino'){
    for(let i=0;i<2;i++)for(let j=0;j<2;j++){const xx=i*20+10,yy=j*20+10;line(c,xx,yy-5,xx+5,yy,m.inlay);line(c,xx+5,yy,xx,yy+5,m.inlay);line(c,xx,yy+5,xx-5,yy,m.inlay);line(c,xx-5,yy,xx,yy-5,m.inlay);}
@@ -49,10 +62,24 @@ export function drawVenueFloor(c:SkCanvas,s:CompiledStage){
 
 export function drawVenueProp(c:SkCanvas,p:CompiledProp,s:CompiledStage):boolean{
  const t=s.def.theme,m=MATERIALS[t],kind=p.kind;
- const special=['counter','table','shelf','partition','equipment','sofa','objectiveCase','door'].includes(kind);
+ const special=['galleryGlassPanel','galleryGlassPanelVertical','counter','table','shelf','partition','equipment','sofa','objectiveCase','door'].includes(kind);
  if(!special)return false;
  c.save();c.translate(p.x,p.y);c.scale(p.scale,p.scale);
- if(kind==='door'){
+ if(kind==='galleryGlassPanel'||kind==='galleryGlassPanelVertical'){
+  // Continuous visible glazing: no opening is implied by a collider-only barrier.
+  // Dedicated glass PNG is FULL KIT REQUIRED; this is a technical module, not a new approved asset.
+  const vertical=kind==='galleryGlassPanelVertical',h=36/p.scale;
+  const ax=vertical?-3.6:-28,ay=vertical?-56:-7.2,bx=vertical?-3.6:28,by=vertical?0:-7.2;
+  const tx=vertical?7.2:0;
+  const glass=Skia.PathBuilder.Make();glass.moveTo(ax,ay);glass.lineTo(bx,by);glass.lineTo(bx+tx,by-h);glass.lineTo(ax+tx,ay-h);glass.close();
+  c.drawPath(glass.detach(),fill('#9bd2d329'));
+  line(c,ax,ay,bx,by,'#71989a',2.5);line(c,ax+tx,ay-h,bx+tx,by-h,'#aec8c3',2);
+  line(c,ax,ay,ax+tx,ay-h,'#506b70',2.5);line(c,bx,by,bx+tx,by-h,'#506b70',2.5);
+  const fx=vertical?3.6:bx,fy=vertical?by:0;
+  line(c,ax,ay,vertical?3.6:ax,vertical?ay:0,'#e0dfcf',2);
+  line(c,bx,by,fx,fy,'#e0dfcf',2);line(c,vertical?3.6:ax,vertical?ay:0,fx,fy,'#739da1',2);
+  line(c,ax+(bx-ax)*.25,ay+(by-ay)*.25-h*.75,ax+(bx-ax)*.55,ay+(by-ay)*.55-h*.55,'#e8f5ef99',1.3);
+ }else if(kind==='door'){
   box(c,33,39,'#52616a','#192733',m.trim);rect(c,-13,-36,26,32,'#0a141e');line(c,0,-36,0,-4,m.trim);rect(c,8,-19,3,6,m.trim);
  }else if(kind==='counter'){
   box(c,56,25,t==='bank'?'#72817c':t==='casino'?'#715543':'#485966','#24313a',m.trim);

@@ -111,6 +111,10 @@ export interface PlayerView {
 export type GamePhase = 'STEALTH' | 'THEFT_ALERT' | 'PLAYER_SPOTTED' | 'SEARCH' | 'RETURN';
 
 export interface GuardEvents {
+  /** CCTV intelligence is updated only during real LOS; no fake whistle event. */
+  cameraSeesPlayer?:boolean;
+  cameraAlertRevision?:number;
+  cameraAlertSource?:string;
   phase: GamePhase;
   theftWhistleRevision: number;
   spottedWhistleRevision: number;
@@ -143,7 +147,7 @@ export interface GuardEvents {
 }
 
 export function createGuardEvents(): GuardEvents {
-  return { phase:'STEALTH', theftWhistleRevision:0, spottedWhistleRevision:0, spottedEpisode:false, spottedSource:'',
+  return {cameraSeesPlayer:false,cameraAlertRevision:0,cameraAlertSource:'', phase:'STEALTH', theftWhistleRevision:0, spottedWhistleRevision:0, spottedEpisode:false, spottedSource:'',
     theftActivatedAt:-1, lockdownDuration:0, lockdownRemaining:0, lockdownActive:false, theftRolesAssigned:false, theftAlert:false, theftGuard:'', theftConfirmer:'', theftAge:0, theftSound:false, theftRevision:0,
     whistleCount: 0, alertCount: 0, globalAlert: false, globalX: 0, globalY: 0, globalT: 0,
     globalRevision: 0, sawPlayer: false, whistleGuard: '', caught: false, caughtBy: '' };

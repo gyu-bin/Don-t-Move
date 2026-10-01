@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/gallery/decoration/gallery_portrait_frame_a.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 73,
+    "y": 12,
+    "w": 238,
+    "h": 360
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/portrait-hotfix/gallery_portrait_frame_a.png",
+    "resolution": {
+      "width": 1049,
+      "height": 1499
+    },
+    "bounds": {
+      "x": 124,
+      "y": 145,
+      "w": 801,
+      "h": 1210
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 85439,
+    "transparentFraction": 0.41571044921875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 73,
+      "y": 12,
+      "w": 238,
+      "h": 360
+    }
+  }
+}

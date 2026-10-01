@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_experiment_machine.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 123,
+    "w": 478,
+    "h": 372
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_experiment_machine.png",
+    "resolution": {
+      "width": 1402,
+      "height": 1122
+    },
+    "bounds": {
+      "x": 89,
+      "y": 36,
+      "w": 1244,
+      "h": 968
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 125649,
+    "transparentFraction": 0.5086669921875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 123,
+      "w": 478,
+      "h": 372
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/architecture/bank_security_gate.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 62,
+    "w": 478,
+    "h": 433
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_security_gate.png",
+    "resolution": {
+      "width": 1254,
+      "height": 1254
+    },
+    "bounds": {
+      "x": 72,
+      "y": 110,
+      "w": 1110,
+      "h": 1006
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 105415,
+    "transparentFraction": 0.5872917175292969,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 62,
+      "w": 478,
+      "h": 433
+    }
+  }
+}

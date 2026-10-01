@@ -1,3 +1,5 @@
+import {drawCctvDevice} from './effects/cctvArt';
+import type {CctvArt} from './effects/cctvArt';
 import { guardIndicator } from './effects/guardIndicator';
 import { Skia } from '@shopify/react-native-skia';
 import { exitGuidance } from '../ui/hud/exitGuidance';
@@ -19,6 +21,7 @@ import { drawSpriteFrame } from './sprites/spriteAnimation';
 import type { SpriteFrame } from './sprites/spriteTypes';
 
 const MAX_GUARDS = 8;
+const MAX_CAMERAS = 8;
 
 /** Everything the frame worklet needs; built once on the JS thread. */
 export interface RenderResources {
@@ -26,6 +29,7 @@ export interface RenderResources {
   player: CharacterVisual;
   guard: CharacterVisual;
   cone: ConeArt;
+  cctv?:CctvArt;
   icons: IconArt;
   fx: LightFx;
   /** Objective gem sprite (atlas frame 'diamond'); null → glow only. */
@@ -44,6 +48,7 @@ export interface RenderResources {
 
 interface FrameScratch {
   paths: (SkPath | null)[];
+  cameraPaths:(SkPath|null)[];
   order: number[];
   keys: number[];
 }
@@ -56,10 +61,16 @@ function frameScratch(): FrameScratch {
   if (f === undefined) {
     f = {
       paths: new Array(MAX_GUARDS).fill(null),
-      order: new Array(MAX_GUARDS + 2).fill(0),
-      keys: new Array(MAX_GUARDS + 2).fill(0),
+      cameraPaths:new Array(MAX_CAMERAS).fill(null),
+      order: new Array(MAX_GUARDS + MAX_CAMERAS + 2).fill(0),
+      keys: new Array(MAX_GUARDS + MAX_CAMERAS + 2).fill(0),
     };
     globalThis.__dmFrame = f;
+  }
+  if(!f.cameraPaths){
+    f.cameraPaths=new Array(MAX_CAMERAS).fill(null);
+    f.order=new Array(MAX_GUARDS+MAX_CAMERAS+2).fill(0);
+    f.keys=new Array(MAX_GUARDS+MAX_CAMERAS+2).fill(0);
   }
   return f;
 }
@@ -81,6 +92,9 @@ function drawEntity(c: SkCanvas, id: number, s: PlaygroundState, r: RenderResour
       const bob = Math.sin(s.t * 2.2) * 2;
       drawSpriteFrame(c, gem, r.diamondPos.x, r.diamondPos.y - 28 + bob, 24 / gem.sw, false, r.fx.white);
     }
+  } else if(id>=MAX_GUARDS+2){
+    const camera=s.securityCameras[id-MAX_GUARDS-2];
+    if(r.cctv)drawCctvDevice(c,r.cctv,camera.x,camera.y,camera.facing,camera.alerted);
   } else {
     const g = s.guards[id - 2];
     const a = s.guardPlayback[id - 2];
@@ -92,6 +106,7 @@ function entityY(id: number, s: PlaygroundState, r: RenderResources): number {
   'worklet';
   if (id === 0) return s.player.y;
   if (id === 1) return r.diamondPos.y + 0.25;
+  if(id>=MAX_GUARDS+2)return s.securityCameras[id-MAX_GUARDS-2].y+0.6;
   return s.guards[id - 2].y;
 }
 
@@ -108,6 +123,8 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
   const c = rec.beginRecording(r.screen);
   const guards = s.guards;
   const ng = Math.min(guards.length, MAX_GUARDS);
+  const cameras=s.securityCameras??[];
+  const nc=r.cctv?Math.min(cameras.length,MAX_CAMERAS):0;
 
   c.save();
   c.scale(r.zoom, r.zoom);
@@ -133,11 +150,20 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
     drawConeEdge(c, r.cone, path, g.awareness, g.x, g.y, g.visionRange);
   }
 
+  for(let i=0;i<nc;i++){
+    const camera=cameras[i],level=camera.alerted?2:camera.suspicion>0?1:0,art=r.cctv!.cone;
+    const path=buildConePath(art,camera.fan,camera.fanCount,camera.x,camera.y,camera.visionRange);
+    fs.cameraPaths[i]=path;
+    drawConePass(c,path,art.floor[level],camera.x,camera.y,camera.visionRange);
+    drawConeEdge(c,art,path,level,camera.x,camera.y,camera.visionRange);
+  }
+
   // Painter's sort of dynamic entities (insertion sort, no allocation).
-  const n = ng + 2;
+  const n = ng + 2 + nc;
   for (let i = 0; i < n; i++) {
-    fs.order[i] = i;
-    fs.keys[i] = entityY(i, s, r);
+    const id=i<ng+2?i:MAX_GUARDS+2+i-ng-2;
+    fs.order[i] = id;
+    fs.keys[i] = entityY(id, s, r);
   }
   for (let i = 1; i < n; i++) {
     const id = fs.order[i];
@@ -177,6 +203,10 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
     c.scale(36, 36);
     c.drawCircle(0, 0, 1, r.fx.hole);
     c.restore();
+  }
+  for(let i=0;i<nc;i++){
+    const camera=cameras[i],level=camera.alerted?2:camera.suspicion>0?1:0;
+    drawConePass(c,fs.cameraPaths[i]!,r.cctv!.cone.hole[level],camera.x,camera.y,camera.visionRange);
   }
   c.save();
   c.translate(s.player.x, s.player.y - 18);
@@ -230,6 +260,12 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
     else if(indicator==='search')drawSearch(c,r.icons,g.x,iy+4,s.t);
     if (g.action === GuardAction.Whistle && g.actionT > 0.32)
       drawWhistleLines(c, r.icons, g.x + 10, g.y - 44, s.t);
+  }
+
+  for(let i=0;i<nc;i++){
+    const camera=cameras[i];
+    if(camera.alerted)drawAlert(c,r.icons,camera.x,camera.y-53,1,s.t);
+    else if(camera.suspicion>0)drawSuspicion(c,r.icons,camera.x,camera.y-53,camera.suspicion,s.t);
   }
 
   if (debug) {

@@ -1,10 +1,10 @@
 import { createAudioPlayer, setAudioModeAsync, type AudioPlayer } from 'expo-audio';
 import { AUDIO_SOURCES } from './audioAssets';
 import { audioTransitionLog } from './audioDiagnostics';
-import { fadeMix, UI_GAIN, WHISTLE_GAIN, MUSIC_EVENTS, reduceAudio, silenceMix, type AudioState, type GameAudioInput,
+import { fadeMix, OBJECTIVE_PICKUP_GAIN, UI_GAIN, WHISTLE_GAIN, MUSIC_EVENTS, reduceAudio, silenceMix, type AudioState, type GameAudioInput,
   type AudioEvent, type UiSoundEvent, type MusicEvent, type WhistleEvent } from './audioState';
 
-/** Native backend for the prototype's named audio events. Max 4 music + 4 SFX voices.
+/** Native backend for the prototype's named audio events. Max 3 music + 5 SFX voices.
  * Bundled assets preload before playback; each whistle has one replace-oldest voice.
  * Final mastering/tempo/spatial metadata remain part of asset acceptance.
  */
@@ -23,6 +23,8 @@ export class GameAudioManager {
   private uiAllowed = false;
   private uiGeneration = 0;
   private subscriptions: { remove(): void }[] = [];
+  private pickupGeneration = 0;
+  private pendingPickup: { generation: number; requestedAt: number } | null = null;
   private pendingWhistles = new Map<WhistleEvent, { generation: number; requestedAt: number }>();
 
   constructor() {
@@ -49,6 +51,7 @@ export class GameAudioManager {
         if (status.error && status.error !== lastError && __DEV__)
           console.warn(`[AUDIO] NATIVE_ERROR ${key} ${status.error}`);
         lastError = status.error;
+        if (status.isLoaded && key === 'objective_pickup') this.flushPickup();
         if (status.isLoaded && key.startsWith('whistle_')) this.flushWhistle(key as WhistleEvent);
       }));
     }
@@ -61,6 +64,7 @@ export class GameAudioManager {
   update(input: GameAudioInput): void {
     if (this.disposed) return;
     if (this.state && this.state.sessionKey !== input.sessionKey) {
+      this.cancelPickup();
       this.generation++; this.pendingWhistles.clear();
       for (const name of ['whistle_theft', 'whistle_spotted'] as const) this.players.get(name)?.pause();
     }
@@ -79,9 +83,14 @@ export class GameAudioManager {
     }
     this.sfxAllowed = input.active && !input.paused && !input.sfxSuspended && input.sfxEnabled;
     if (!this.sfxAllowed) {
+      this.cancelPickup();
       this.generation++;
       this.pendingWhistles.clear();
       for (const name of ['whistle_theft', 'whistle_spotted'] as const) this.players.get(name)?.pause();
+    }
+    if (decision.pickup) {
+      this.pendingPickup = { generation: ++this.pickupGeneration, requestedAt: Date.now() };
+      this.flushPickup();
     }
     for (const event of decision.whistles) this.whistle(event);
     this.target = decision.music;
@@ -108,6 +117,26 @@ export class GameAudioManager {
       player.volume = UI_GAIN; player.play();
       if (__DEV__) console.info(`[AUDIO] UI_PLAY ${name}`);
     }).catch(error => { if (__DEV__) console.warn(`[AUDIO] ${name} SEEK_FAILED`, error); });
+  }
+
+  private cancelPickup(): void {
+    this.pickupGeneration++;
+    this.pendingPickup = null;
+    this.players.get('objective_pickup')?.pause();
+  }
+
+  private flushPickup(): void {
+    const player = this.players.get('objective_pickup');
+    const pending = this.pendingPickup;
+    if (!player?.isLoaded || !pending) return;
+    this.pendingPickup = null;
+    if (!this.sfxAllowed || pending.generation !== this.pickupGeneration || Date.now() - pending.requestedAt > 2000) return;
+    void player.seekTo(0).then(() => {
+      if (this.disposed || !this.sfxAllowed || pending.generation !== this.pickupGeneration) return;
+      player.volume = OBJECTIVE_PICKUP_GAIN;
+      player.play();
+      if (__DEV__) console.info('[AUDIO] OBJECTIVE_PICKUP PLAY');
+    }).catch(error => { if (__DEV__) console.warn('[AUDIO] OBJECTIVE_PICKUP SEEK_FAILED', error); });
   }
 
   private whistle(name: WhistleEvent): void {
@@ -155,6 +184,7 @@ export class GameAudioManager {
 
   private clearTimer(): void { if (this.timer) clearInterval(this.timer); this.timer = null; }
   private stopAll(): void {
+    this.cancelPickup();
     this.generation++;
     this.pendingWhistles.clear();
     this.clearTimer();
