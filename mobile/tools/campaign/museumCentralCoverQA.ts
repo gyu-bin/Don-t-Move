@@ -1,16 +1,14 @@
+import {writeRuntimeCctvQA} from './museumRuntimeCctvQA';
 import {guardPhysicalContract} from './guardPhysicalContract';
 /** Sampled geometry evidence, not rendered-gap or human Tilt certification. */
 import assert from 'node:assert/strict';
-import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
 import {buildNavigation,clearSegment,findPath} from '../../src/game/world/navigation';
 import {BODY} from '../../src/game/guards/guardTuning';
 import {PROP_KIT} from '../../src/game/world/propKit';
-import {campaignStages} from '../../src/game/levels/campaignStages';
 import {describeMuseumDesign,type MuseumDesignZone} from './museumFinalDesign';
 import {auditHideability,structureRole} from './museumHideabilityQA';
-import {runMission} from './museumFinalPlayQA';
 import {CENTRAL_COVER_MOVES} from './museumCentralCover';
 import {createPlaygroundState,stepPlayground} from '../../src/game/playground/playgroundState';
 import {stepGuards} from '../../src/game/guards/guardSystem';
@@ -78,13 +76,8 @@ export function auditCentralPatrol(def:StageDefinition){
  return metrics.map((m,i)=>({id:m.id,seconds:120,visited:m.visited.size,total:s.guards[i].route.length,collisionFrames:m.collisionFrames,recoveries:m.recoveries,pass:m.visited.size===s.guards[i].route.length&&m.collisionFrames===0&&m.recoveries===0}));
 }
 export function assertCentralProtected(a:StageDefinition,b:StageDefinition){for(const key of ['layout','playerSpawn','objective','exit','guards','patrolRoutes','testRoutes','escapeRoutes','patrolPlan','securityZones'] as const)assert.deepEqual(key==='guards'?guardPhysicalContract(b.guards):b[key],key==='guards'?guardPhysicalContract(a.guards):a[key],`${b.id}: protected ${key}`);}
-export function writeCentralCoverQA(){
- const baseline:StageDefinition[]=JSON.parse(readFileSync('Reports/MuseumCentralCoverV1/before/campaignStages.json','utf8'));
- const defs=campaignStages.filter(d=>d.chapter===1);const missions=defs.map(d=>{const b=baseline.find(x=>x.id===d.id)!;assertCentralProtected(b,d);return {before:auditCentralCover(b),after:auditCentralCover(d),islandBypasses:auditIslandBypasses(d),patrol:auditCentralPatrol(d)};});
- const replays=[{id:'01-05',route:0,escape:0,mode:1,delay:0},{id:'01-08',route:0,escape:1,mode:1,delay:6},{id:'01-10',route:1,escape:0,mode:1,delay:3}].map(({id,...input})=>({id,before:runMission(baseline.find(d=>d.id===id)!,input),after:runMission(defs.find(d=>d.id===id)!,input)}));
- const report={method:['Central region is inner55% of each semantic rectangular subregion in both axes; ratio counts real LOS props, not floor-area percentage.','Gap: opposing collision faces overlap >=8 world units, positive opening>2 units, point-clear crossing and at least one reachable body-clear end. Rendered visibility is only a floor-geometry proxy; screenshots/human review required.','18 world-unit player diameter;9 units spare each side = run150 × smoothing.06. Conservative overshoot proxy, not measured Tilt acceptance.','Potential exposure: quarter-tile route samples visible from ANY authored patrol anchor within range ignoring facing and timing; conservative static geometry metric, NOT actual continuous in-game guard observation.','Hide chain uses actual player-radius nav paths between five-ray hide witnesses; not proof of survival.','120second patrol uses offmap hidden player to isolate patrol; real guard collisions and route visits checked.', 'Replays are continuous-input shared-engine bots, not native or humanTilt evidence. Nearby moved prop at LOS loss is not causal proof; movedPropOccludesPriorObserver separately tests the last visible guard ray against its box.'],playerRadius:BODY.playerRadius,minComfortGap:MIN_COMFORT_GAP,missions,replays,centralChase:['01-05','01-08','01-09'].map(id=>({id,...findCentralChaseWitness(defs.find(d=>d.id===id)!)}))};mkdirSync('Reports/MuseumCentralCoverV1',{recursive:true});writeFileSync('Reports/MuseumCentralCoverV1/qa.json',JSON.stringify(report,null,2)+'\n');return report;
-}
-if(process.argv[1]?.endsWith('museumCentralCoverQA.ts'))console.log(JSON.stringify(writeCentralCoverQA().missions.map(m=>({id:m.after.id,beforeGaps:m.before.gaps,afterGaps:m.after.gaps})),null,2));
+export function writeCentralCoverQA(){return writeRuntimeCctvQA();}
+if(process.argv[1]?.endsWith('museumCentralCoverQA.ts'))writeCentralCoverQA();
 
 /** Continuous custom approach→natural alert→run to verified cover. No state forcing. */
 export type CentralHideScenario={structure:number;point:P;approach:P;delay:number;gait:number;pocketChoice:number};

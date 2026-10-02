@@ -101,13 +101,40 @@ function secondsToAlert(x:number,y:number,gait:number){
  for(let f=0;f<60*30;f++){stepSecurityCameras([c],{x,y,gait},[],ev,1/60,f/60);if(c.alerted)return (f+1)/60;}
  return Infinity;
 }
-test('camera time-to-alert is fast and bounded: close 1.0-1.3s, mid 1.3-1.7s, far edge 1.8-2.2s',()=>{
- const near=secondsToAlert(120+15,200,2),mid=secondsToAlert(120+110,200+18,2);
- const far=secondsToAlert(120+205*Math.cos(.33),200+205*Math.sin(.33),2);
- assert(near>=1&&near<=1.3,`near ${near}`);assert(mid>=1.3&&mid<=1.7,`mid ${mid}`);assert(far>=1.8&&far<=2.2,`far ${far}`);
-});
-test('sneaking or standing in a camera cone is slower but still detected within seconds',()=>{
- const idle=secondsToAlert(120+110,200,0),sneak=secondsToAlert(120+15,200,1),farIdle=secondsToAlert(120+205*Math.cos(.33),200+205*Math.sin(.33),0);
- assert(idle>2.5&&idle<4,`idle ${idle}`);assert(sneak>2.5&&sneak<3.3,`sneak ${sneak}`);assert(farIdle<5.5,`far idle ${farIdle}`);
+test('V9 CCTV detects every gait within its near/general/far-edge timing band',()=>{
+ const points=[
+  {label:'near',x:135,y:200,slow:[1.5,2],fast:[1,1.3]},
+  {label:'general',x:120+110*Math.cos(.16),y:200+110*Math.sin(.16),slow:[1.7,2.2],fast:[1.3,1.7]},
+  {label:'far-edge',x:120+205*Math.cos(.33),y:200+205*Math.sin(.33),slow:[2,2.5],fast:[2,2.5]},
+ ];
+ for(const point of points){
+  const times=[0,1,2,3].map(gait=>secondsToAlert(point.x,point.y,gait));
+  for(let gait=0;gait<4;gait++){
+   const [min,max]=gait<2?point.slow:point.fast;
+   assert(times[gait]>=min&&times[gait]<=max,`${point.label} gait ${gait}: ${times[gait]}s`);
+  }
+  assert(times[0]>=times[1]&&times[1]>times[2]&&times[2]>times[3],`${point.label}: faster motion remains easier to detect`);
+ }
  assert.equal(secondsToAlert(120,60,3),Infinity,'outside the cone stays unseen');
+});
+test('V9 edge detection converges across gaits, without removing authored camera rate',()=>{
+ const x=120+205*Math.cos(.33),y=200+205*Math.sin(.33);
+ assert(secondsToAlert(x,y,0)-secondsToAlert(x,y,3)<.2,'Camera edges must not make Idle 2.5x safer than Run');
+ const rates=[.2,.4,.8].map(rate=>{
+  const c=camera();c.suspicionRate=rate;const ev=createGuardEvents();
+  for(let f=0;f<60*10;f++){
+   stepSecurityCameras([c],{x:135,y:200,gait:0},[],ev,1/60,f/60);
+   if(c.alerted)return (f+1)/60;
+  }
+  return Infinity;
+ });
+ assert(Math.abs(rates[0]-rates[1]*2)<=1/60);
+ assert(Math.abs(rates[1]-rates[2]*2)<=1/60);
+});
+test('V9 fractional gait stays continuous and monotonic for real locomotion transitions',()=>{
+ const values=Array.from({length:31},(_,i)=>secondsToAlert(230,200,i/10));
+ for(let i=1;i<values.length;i++){
+  assert(values[i]<=values[i-1],`gait ${i/10} cannot reduce detection`);
+  assert(values[i-1]-values[i]<.15,'A gait boundary must not abruptly change detection pacing');
+ }
 });

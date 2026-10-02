@@ -57,3 +57,19 @@ test('serialized theft sector dispatch helper is callable on UI and never uses p
   const context={posts:[[{x:0,y:0}]],sectors:[[{id:'a',anchors:[{x:40,y:50}]},{id:'b',anchors:[{x:70,y:80}]}]]};
   assert.deepEqual(JSON.parse(JSON.stringify(get(context,0,[]))),[{x:40,y:50},{x:70,y:80}]);
 });
+
+test('serialized CCTV V9 keeps stationary exposure threatening and edge gait timing convergent', () => {
+  const step=onUI(cameras.stepSecurityCameras);
+  function measure(gait,distance,angle){
+    const camera=cameras.createSecurityCamera({id:'timing',x:100,y:100,centerFacing:0,sweepAngle:0,sweepSpeed:0,pauseAtEnds:0,range:220,visionAngle:.7,suspicionRate:.4});
+    const events={cameraSeesPlayer:false,cameraAlertRevision:0,globalRevision:0,globalAlert:false,globalX:0,globalY:0,alertCount:0};
+    for(let frame=0;frame<600;frame++){
+      step([camera],{x:100+distance*Math.cos(angle),y:100+distance*Math.sin(angle),gait},[],events,1/60,frame/60);
+      if(camera.alerted)return (frame+1)/60;
+    }
+    return Infinity;
+  }
+  const near=measure(0,15,0);
+  assert(near>=1.5&&near<=2,'Standing near a CCTV must produce real UI-thread alert');
+  for(let gait=0;gait<4;gait++)assert(measure(gait,205,.33)>=2&&measure(gait,205,.33)<=2.5);
+});

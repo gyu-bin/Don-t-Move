@@ -1,5 +1,10 @@
+import {composeV9Heist} from './curatedHeistFlows';
 import {applyV5MuseumGallery} from './v5MuseumGallery';
 import {applyFurnishing} from './furnishingPass';
+import {applyTheftCoverage} from './theftCoverage';
+import {applyRoamingGuard} from './roamingGuards';
+import {applyExhibitCells} from './exhibitCells';
+import {applyDifficultyTuning} from './difficultyTuning';
 import {BANK_PRODUCTION} from './bankProductionDesign';
 import {applyV3MuseumGallery} from './v3MuseumGallery';
 import {applySecurityData} from './bankSecurityOverlay';
@@ -144,9 +149,9 @@ export const HIGH_SECURITY_MISSIONS=new Set(['02-10','03-10']);
 export function buildMission(index:number):StageDefinition {
  const authored=buildAuthoredMission(index);
  const secured=index<30?applySecurityData(authored):authored;
- const def=applyFurnishing(index<20?applyV5MuseumGallery(applyV3MuseumGallery(secured)):secured);
+ const def=applyFurnishing(applyExhibitCells(index<20?applyV5MuseumGallery(applyV3MuseumGallery(secured)):secured));
  // Chapter finales guard their prize with a pickup alarm instead of waiting for a witness.
- if(HIGH_SECURITY_MISSIONS.has(def.id)&&def.objective)return {...def,objective:{...def.objective,highSecurity:true}};
- return def;
+ if(HIGH_SECURITY_MISSIONS.has(def.id)&&def.objective)return applyDifficultyTuning(applyTheftCoverage(applyRoamingGuard(composeV9Heist({...def,objective:{...def.objective,highSecurity:true}}))));
+ return applyDifficultyTuning(applyTheftCoverage(applyRoamingGuard(composeV9Heist(def))));
 }
 export const buildCampaign=()=>Array.from({length:MISSION_COUNT},(_,i)=>buildMission(i));

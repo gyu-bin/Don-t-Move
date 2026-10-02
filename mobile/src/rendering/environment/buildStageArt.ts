@@ -255,7 +255,12 @@ function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:
       const remountedPortrait=stage.def.id==='02-02'&&wallIndex===1;
       // Odd panels used to stay blank grey slabs; they now carry a portrait.
       const oddPortrait=wallIndex%2===1&&!remountedPortrait;
-      const artwork=remountedPortrait?atlas?.gallery_portrait_frame_a:wallIndex%2===0?(portraitHall?atlas?.gallery_portrait_frame_b:atlas?.gallery_abstract_frame):wallIndex%4===1?atlas?.gallery_portrait_frame_a:atlas?.gallery_portrait_frame_b;
+      // Each panel takes the next work from the pool, offset per mission, so one
+      // mission never shows the same canvas on two panels until the pool runs out.
+      const abstracts=[atlas?.gallery_abstract_frame,atlas?.gallery_abstract_frame_b,atlas?.gallery_abstract_frame_c,atlas?.gallery_abstract_frame_d,atlas?.gallery_abstract_frame_e];
+      const portraits=[atlas?.gallery_portrait_frame_c,atlas?.gallery_portrait_frame_d,atlas?.gallery_portrait_frame_e,atlas?.gallery_portrait_frame_f,atlas?.gallery_portrait_frame_a,atlas?.gallery_portrait_frame_b];
+      const turn=(stage.def.mission??0)+(wallIndex>>1);
+      const artwork=remountedPortrait?atlas?.gallery_portrait_frame_a:wallIndex%2===0?(portraitHall?atlas?.gallery_portrait_frame_b:abstracts[turn%abstracts.length]??atlas?.gallery_abstract_frame):portraits[turn%portraits.length]??atlas?.gallery_portrait_frame_a;
       const width=spec.drawWidth*TILE*p.scale;
       if(artwork)drawFrame(c,artwork,p.x,p.y-width*.30,width*((portraitHall||remountedPortrait||oddPortrait)?.30:.57),!portraitHall&&!remountedPortrait&&wallIndex%4===2);
     }

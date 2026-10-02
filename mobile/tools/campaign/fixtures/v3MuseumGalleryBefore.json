@@ -6290,20 +6290,6 @@
           }
         ]
       }
-    ],
-    "cameras": [
-      {
-        "id": "01-08-cam1",
-        "x": 7.23,
-        "y": 7.5,
-        "centerFacing": 0,
-        "sweepAngle": 0.65,
-        "sweepSpeed": 0.35,
-        "pauseAtEnds": 0.6,
-        "range": 4.8,
-        "visionAngle": 0.65,
-        "suspicionRate": 0.4
-      }
     ]
   },
   {
@@ -9070,20 +9056,6 @@
           "kind": "cool",
           "intensity": 0.22
         }
-      }
-    ],
-    "cameras": [
-      {
-        "id": "01-10-cam1",
-        "x": 12.5,
-        "y": 9.23,
-        "centerFacing": 1.5707963267948966,
-        "sweepAngle": 0.65,
-        "sweepSpeed": 0.35,
-        "pauseAtEnds": 0.6,
-        "range": 4.8,
-        "visionAngle": 0.65,
-        "suspicionRate": 0.4
       }
     ]
   },

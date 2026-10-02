@@ -24,10 +24,11 @@ export function skiaSceneGfx(c: SkCanvas, images: Record<SceneImageKey, SkImage>
       c.drawRect(Skia.XYWHRect(x, y, w, h), p);
     },
     poly(points, fx, fy, tx, ty, color, a0, a1, blur) {
-      const p = paint(), path = Skia.Path.Make();
-      path.moveTo(points[0], points[1]);
-      for (let i = 2; i < points.length; i += 2) path.lineTo(points[i], points[i + 1]);
-      path.close();
+      const p = paint(), builder = Skia.PathBuilder.Make();
+      builder.moveTo(points[0], points[1]);
+      for (let i = 2; i < points.length; i += 2) builder.lineTo(points[i], points[i + 1]);
+      builder.close();
+      const path = builder.detach();
       p.setShader(Skia.Shader.MakeLinearGradient({ x: fx, y: fy }, { x: tx, y: ty }, [col(color, a0), col(color, a1)], null, TileMode.Clamp));
       if (blur > 0) p.setMaskFilter(Skia.MaskFilter.MakeBlur(BlurStyle.Normal, blur, true));
       c.drawPath(path, p);

@@ -4048,6 +4048,342 @@
         "native": "SIMULATOR_REVIEW_PENDING",
         "productionApproved": false
       }
+    },
+    {
+      "id": "gallery_portrait_frame_c",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_portrait_frame_c.png",
+      "image": "assets/environment/gallery/decoration/gallery_portrait_frame_c.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 69,
+        "y": 12,
+        "w": 245,
+        "h": 360
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.7,
+      "drawHeight": 1.0285714285714285,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_portrait_frame_c.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_portrait_frame_d",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_portrait_frame_d.png",
+      "image": "assets/environment/gallery/decoration/gallery_portrait_frame_d.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 74,
+        "y": 12,
+        "w": 236,
+        "h": 360
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.7,
+      "drawHeight": 1.0677966101694913,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_portrait_frame_d.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_portrait_frame_e",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_portrait_frame_e.png",
+      "image": "assets/environment/gallery/decoration/gallery_portrait_frame_e.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 70,
+        "y": 12,
+        "w": 244,
+        "h": 360
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.7,
+      "drawHeight": 1.0327868852459015,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_portrait_frame_e.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_portrait_frame_f",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_portrait_frame_f.png",
+      "image": "assets/environment/gallery/decoration/gallery_portrait_frame_f.png",
+      "resolution": {
+        "width": 384,
+        "height": 384
+      },
+      "objectBounds": {
+        "x": 73,
+        "y": 12,
+        "w": 238,
+        "h": 360
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 0.7,
+      "drawHeight": 1.0588235294117645,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_portrait_frame_f.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_abstract_frame_b",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_abstract_frame_b.png",
+      "image": "assets/environment/gallery/decoration/gallery_abstract_frame_b.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 134,
+        "w": 232,
+        "h": 110
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.3,
+      "drawHeight": 0.6163793103448276,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_abstract_frame_b.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_abstract_frame_c",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_abstract_frame_c.png",
+      "image": "assets/environment/gallery/decoration/gallery_abstract_frame_c.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 134,
+        "w": 232,
+        "h": 110
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.3,
+      "drawHeight": 0.6163793103448276,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_abstract_frame_c.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_abstract_frame_d",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_abstract_frame_d.png",
+      "image": "assets/environment/gallery/decoration/gallery_abstract_frame_d.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 135,
+        "w": 232,
+        "h": 109
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.3,
+      "drawHeight": 0.6107758620689656,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_abstract_frame_d.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
+    },
+    {
+      "id": "gallery_abstract_frame_e",
+      "chapter": "gallery",
+      "category": "DECORATION",
+      "path": "assets/environment/gallery/decoration/gallery_abstract_frame_e.png",
+      "image": "assets/environment/gallery/decoration/gallery_abstract_frame_e.png",
+      "resolution": {
+        "width": 256,
+        "height": 256
+      },
+      "objectBounds": {
+        "x": 12,
+        "y": 133,
+        "w": 232,
+        "h": 111
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.97,
+        "units": "normalized"
+      },
+      "footprint": {
+        "w": 0,
+        "h": 0
+      },
+      "collision": false,
+      "losBehavior": "PASS",
+      "defaultScale": 1,
+      "drawWidth": 1.3,
+      "drawHeight": 0.6219827586206897,
+      "status": "ARTWORK_V9_REVIEW_PENDING",
+      "source": {
+        "kind": "IMAGEGEN_REFERENCE_EDIT_RUNTIME_CUTOUT",
+        "path": "assets/environment/_source/artwork-v9/gallery_abstract_frame_e.png"
+      },
+      "physicalKind": "painting",
+      "review": {
+        "style": "USER_VISUAL_REVIEW_PENDING",
+        "native": "SIMULATOR_REVIEW_PENDING",
+        "productionApproved": false
+      }
     }
   ]
 }

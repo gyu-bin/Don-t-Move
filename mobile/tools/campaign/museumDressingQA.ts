@@ -11,7 +11,7 @@ import {DRESSING_KIT} from '../../src/game/world/dressingKit';
 import {createPlaygroundState} from '../../src/game/playground/playgroundState';
 import {stepGuards} from '../../src/game/guards/guardSystem';
 import {auditHideability} from './museumHideabilityQA';
-import {runMission} from './museumFinalPlayQA';
+import {writeRuntimeCctvQA} from './museumRuntimeCctvQA';
 
 export function assertGameplayPreserved(before:StageDefinition,after:StageDefinition){
  for(const key of ['layout','playerSpawn','objective','exit','props','guards','patrolRoutes','testRoutes','escapeRoutes','patrolPlan','securityZones'] as const)
@@ -55,9 +55,8 @@ export function writeDressingQA(){
  const defs=campaignStages.filter(d=>d.chapter===1);
  for(const def of defs)assert(def.dressing?.length,`${def.id} dressing must be baked before QA report`);
  const missions=defs.map(d=>auditDressingMission(before.find(b=>b.id===d.id)!,d));
- const wins=[{id:'01-05',route:0,escape:0,mode:1,delay:0},{id:'01-08',route:0,escape:1,mode:1,delay:6},{id:'01-10',route:1,escape:0,mode:1,delay:3}];
- const replays=wins.map(({id,...input})=>{const a=runMission(before.find(d=>d.id===id)!,input),b=runMission(campaignStages.find(d=>d.id===id)!,input);assert(a.clear&&b.clear,`${id} winning baseline no longer completes`);assert.deepEqual(b,a,`${id} same-input behavior changed`);return {id,baseline:a,after:b,exactOutcomeMatch:true};});
- const report={method:['Protected original props, walls, vision, guards, route, objective and exit compared exactly against immediate pre-dressing snapshot.','Existing player-radius route margins cannot shrink; every old hide witness remains body-clear and reachable.','120s real patrol each mission, finite poses, no collision or recovery and every patrol anchor visited.','Three baseline winning continuous-input game replays compared exactly. 08 includes actual Spotted→LOS Break→Search→Complete.','No native Simulator/iPhone, human Tilt or visual approval implied.'],missions,replays};
+ const replays=writeRuntimeCctvQA();
+ const report={method:['Protected original props, walls, vision, guards, route, objective and exit compared exactly against immediate pre-dressing snapshot.','Existing player-radius route margins cannot shrink; every old hide witness remains body-clear and reachable.','120s real patrol each mission, finite poses, no collision or recovery and every patrol anchor visited.','Dynamic replays use current runtime mission data, not historical baseline cameras.','No native Simulator/iPhone, human Tilt or visual approval implied.'],missions,replays};
  mkdirSync('Reports/MuseumDressingV1',{recursive:true});writeFileSync('Reports/MuseumDressingV1/qa.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));return report;
 }
 if(process.argv[1]?.endsWith('museumDressingQA.ts'))writeDressingQA();

@@ -758,7 +758,7 @@
     "mission": 2,
     "title": "Main Gallery",
     "theme": "museum",
-    "structurePlan": "Painting Gallery \u2192 octagonal Central Rotunda (southern recess / central crossing) \u2192 Sculpture Wing \u2192 Artifact Room \u2192 south staff exit",
+    "structurePlan": "Painting Gallery → octagonal Central Rotunda (southern recess / central crossing) → Sculpture Wing → Artifact Room → south staff exit",
     "layout": [
       "         ######",
       "         #....#",
@@ -1361,7 +1361,7 @@
     "mission": 3,
     "title": "Archive",
     "theme": "museum",
-    "structurePlan": "Bent Staff Corridor \u2192 Archive Shelves (shelf-end cover / central aisle) \u2192 Storage \u2192 Restricted Archive \u2192 return through Storage inspection corner \u2192 east staff door",
+    "structurePlan": "Bent Staff Corridor → Archive Shelves (shelf-end cover / central aisle) → Storage → Restricted Archive → return through Storage inspection corner → east staff door",
     "layout": [
       "#####             ",
       "#...#             ",
@@ -1978,7 +1978,7 @@
     "mission": 4,
     "title": "Security Wing",
     "theme": "museum",
-    "structurePlan": "Security Office / CCTV Room \u2192 Security Hub observation pocket \u2192 timed Junction \u2192 Security Gate inspection \u2192 Restricted Passage",
+    "structurePlan": "Security Office / CCTV Room → Security Hub observation pocket → timed Junction → Security Gate inspection → Restricted Passage",
     "layout": [
       "           ##..#",
       "           #...#",
@@ -2706,7 +2706,7 @@
     "mission": 5,
     "title": "Restricted Collection",
     "theme": "museum",
-    "structurePlan": "Entry Gallery \u2192 two Central Collection exhibition islands \u2192 Restricted Gallery observation pair \u2192 Diamond Chamber \u2192 cornered Service Escape",
+    "structurePlan": "Entry Gallery → two Central Collection exhibition islands → Restricted Gallery observation pair → Diamond Chamber → cornered Service Escape",
     "layout": [
       "                 ",
       "            #### ",
@@ -3559,7 +3559,7 @@
     "mission": 6,
     "title": "Conservation Lab",
     "theme": "museum",
-    "structurePlan": "West intake \u2192 restoration work bays \u2192 north specimen storage \u2192 east equipment aisle or central crossing \u2192 south service exit",
+    "structurePlan": "West intake → restoration work bays → north specimen storage → east equipment aisle or central crossing → south service exit",
     "layout": [
       "      ###########  ",
       "      #.........#  ",
@@ -4390,7 +4390,7 @@
     "mission": 7,
     "title": "Private Gallery",
     "theme": "museum",
-    "structurePlan": "North private foyer \u2192 west portrait rooms or exposed VIP bridge \u2192 south objective salon \u2192 west side gallery \u2192 service exit",
+    "structurePlan": "North private foyer → west portrait rooms or exposed VIP bridge → south objective salon → west side gallery → service exit",
     "layout": [
       "     ########    ",
       "     #......#    ",
@@ -5293,7 +5293,7 @@
     "mission": 8,
     "title": "Security Core",
     "theme": "museum",
-    "structurePlan": "East checkpoint \u2192 multi-door junction \u2192 north restricted hall \u2192 central crossing or west maintenance bypass \u2192 south evacuation desk",
+    "structurePlan": "East checkpoint → multi-door junction → north restricted hall → central crossing or west maintenance bypass → south evacuation desk",
     "layout": [
       "       #######       ",
       "       #.....#       ",
@@ -6338,20 +6338,6 @@
           }
         ]
       }
-    ],
-    "cameras": [
-      {
-        "id": "01-08-cam1",
-        "x": 7.23,
-        "y": 7.5,
-        "centerFacing": 0,
-        "sweepAngle": 0.65,
-        "sweepSpeed": 0.35,
-        "pauseAtEnds": 0.6,
-        "range": 4.8,
-        "visionAngle": 0.65,
-        "suspicionRate": 0.4
-      }
     ]
   },
   {
@@ -6361,7 +6347,7 @@
     "mission": 9,
     "title": "Master Exhibition",
     "theme": "museum",
-    "structurePlan": "North vestibule \u2192 west sculpture pockets \u2192 south collection loop \u2192 east master case \u2192 upper portrait connector \u2192 north final-heist door",
+    "structurePlan": "North vestibule → west sculpture pockets → south collection loop → east master case → upper portrait connector → north final-heist door",
     "layout": [
       "########     ######## ",
       "#......#     #......# ",
@@ -7695,7 +7681,7 @@
     "mission": 10,
     "title": "Grand Heist",
     "theme": "museum",
-    "structurePlan": "South entry \u2192 Grand Exhibition \u2192 western galleries or high-security shortcut \u2192 north Master Diamond Chamber \u2192 theft \u2192 west service circulation \u2192 service exit",
+    "structurePlan": "South entry → Grand Exhibition → western galleries or high-security shortcut → north Master Diamond Chamber → theft → west service circulation → service exit",
     "layout": [
       "          #############  ",
       "          #...........#  ",
@@ -9127,20 +9113,6 @@
           "intensity": 0.22
         }
       }
-    ],
-    "cameras": [
-      {
-        "id": "01-10-cam1",
-        "x": 12.5,
-        "y": 9.23,
-        "centerFacing": 1.5707963267948966,
-        "sweepAngle": 0.65,
-        "sweepSpeed": 0.35,
-        "pauseAtEnds": 0.6,
-        "range": 4.8,
-        "visionAngle": 0.65,
-        "suspicionRate": 0.4
-      }
     ]
   },
   {
@@ -9150,7 +9122,7 @@
     "mission": 1,
     "title": "Front Exhibition",
     "theme": "gallery",
-    "structurePlan": "Arrival (read the clean gallery axis) \u2192 Sculpture Court (two-sided central artwork bypass) \u2192 Featured Wall (approach artwork then take east exit)",
+    "structurePlan": "Arrival (read the clean gallery axis) → Sculpture Court (two-sided central artwork bypass) → Featured Wall (approach artwork then take east exit)",
     "layout": [
       "                        ",
       "                        ",
@@ -9834,7 +9806,7 @@
     "mission": 2,
     "title": "Portrait Hall",
     "theme": "gallery",
-    "structurePlan": "Reception (observe long axis) \u2192 Portrait Spine (long LOS broken by paired art screens) \u2192 Portrait Recess (side approach to featured collection)",
+    "structurePlan": "Reception (observe long axis) → Portrait Spine (long LOS broken by paired art screens) → Portrait Recess (side approach to featured collection)",
     "layout": [
       "             ###########",
       "             #.........#",
@@ -10560,7 +10532,7 @@
     "mission": 3,
     "title": "Sculpture Studio",
     "theme": "gallery",
-    "structurePlan": "Studio Entrance (see sculpture before crossing) \u2192 Model Studio (large sculptural island) \u2192 Installation Annex (alternate installation path) \u2192 Studio Collection (artwork and side return)",
+    "structurePlan": "Studio Entrance (see sculpture before crossing) → Model Studio (large sculptural island) → Installation Annex (alternate installation path) → Studio Collection (artwork and side return)",
     "layout": [
       "       ###########       ",
       "       #.........#       ",
@@ -11470,7 +11442,7 @@
     "mission": 4,
     "title": "Modern Wing",
     "theme": "gallery",
-    "structurePlan": "Arrival (read movable exhibition screens) \u2192 Lower Installation (low plinths permit sight across route) \u2192 Movable Wall Wing (alternate screen shoulders) \u2192 Modern Collection (curated east wing)",
+    "structurePlan": "Arrival (read movable exhibition screens) → Lower Installation (low plinths permit sight across route) → Movable Wall Wing (alternate screen shoulders) → Modern Collection (curated east wing)",
     "layout": [
       "                            ",
       "       ############         ",
@@ -12536,7 +12508,7 @@
     "mission": 5,
     "title": "Collector's Room",
     "theme": "gallery",
-    "structurePlan": "Reception (calm exhibit read) \u2192 West Collection (safe screen-lined approach) \u2192 Collector Atrium (central curated installation) \u2192 Private Exhibition (mid-heist artwork) \u2192 Service Gallery (independent return circulation)",
+    "structurePlan": "Reception (calm exhibit read) → West Collection (safe screen-lined approach) → Collector Atrium (central curated installation) → Private Exhibition (mid-heist artwork) → Service Gallery (independent return circulation)",
     "layout": [
       "                              ",
       "                              ",
@@ -13731,7 +13703,7 @@
     "mission": 6,
     "title": "Glass Gallery",
     "theme": "gallery",
-    "structurePlan": "Threshold (distinguish route from inaccessible display) \u2192 West Viewing Hall (long clean viewing line) \u2192 Central Viewing Court (open installation crossing) \u2192 East Viewing Hall (return axis opposite west) \u2192 Glazed Study (featured wall, glazing needs full kit)",
+    "structurePlan": "Threshold (distinguish route from inaccessible display) → West Viewing Hall (long clean viewing line) → Central Viewing Court (open installation crossing) → East Viewing Hall (return axis opposite west) → Glazed Study (featured wall, glazing needs full kit)",
     "layout": [
       "                  ###########",
       "##########        #.........#",
@@ -14937,7 +14909,7 @@
       {
         "id": "02-06-enrich-3",
         "zoneId": "02-06-C",
-        "identity": "Glass Viewing Island: Central Viewing Court \u2014 installation, low plinth and paired pedestals",
+        "identity": "Glass Viewing Island: Central Viewing Court — installation, low plinth and paired pedestals",
         "items": [
           {
             "kind": "gallery_plinth_low",
@@ -15117,7 +15089,7 @@
     "mission": 7,
     "title": "Curator's Floor",
     "theme": "gallery",
-    "structurePlan": "Visitor Foyer (choose public or curator route) \u2192 Public Portrait Wing (safe observation loop) \u2192 Curator Study (investigation waypoint) \u2192 Installation Crossroads (lure and break sight) \u2192 Curated Collection (objective and east return)",
+    "structurePlan": "Visitor Foyer (choose public or curator route) → Public Portrait Wing (safe observation loop) → Curator Study (investigation waypoint) → Installation Crossroads (lure and break sight) → Curated Collection (objective and east return)",
     "layout": [
       "############                   ",
       "#..........#                   ",
@@ -16638,7 +16610,7 @@
     "mission": 8,
     "title": "Grand Atrium",
     "theme": "gallery",
-    "structurePlan": "West Arrival (read the large open centre) \u2192 North Art Terrace (safe upper bypass) \u2192 Grand Atrium (exposed crossing with two sculpture shoulders) \u2192 East Collection (featured artwork) \u2192 South Return (independent escape corridor)",
+    "structurePlan": "West Arrival (read the large open centre) → North Art Terrace (safe upper bypass) → Grand Atrium (exposed crossing with two sculpture shoulders) → East Collection (featured artwork) → South Return (independent escape corridor)",
     "layout": [
       "     ####################         ",
       "     #..................#         ",
@@ -18255,7 +18227,7 @@
     "mission": 9,
     "title": "Private Collection",
     "theme": "gallery",
-    "structurePlan": "Reception \u2192 West Collection / North Salon \u2192 private courtyard viewing head \u2192 East Exhibition \u2192 East Private Return; west service balcony is the alternate courtyard arm",
+    "structurePlan": "Reception → West Collection / North Salon → private courtyard viewing head → East Exhibition → East Private Return; west service balcony is the alternate courtyard arm",
     "layout": [
       "        #############          ",
       "        #...........#          ",
@@ -19740,7 +19712,7 @@
     "mission": 10,
     "title": "Masterpiece",
     "theme": "gallery",
-    "structurePlan": "South Entrance (establish opposite-side escape) \u2192 West Installation (safe peripheral circulation) \u2192 Portrait Terrace (upper bypass and refuge) \u2192 Masterpiece Court (major artwork approach) \u2192 Atrium Crossing (risk central installation) \u2192 East Escape Gallery (post-theft opposite-side escape)",
+    "structurePlan": "South Entrance (establish opposite-side escape) → West Installation (safe peripheral circulation) → Portrait Terrace (upper bypass and refuge) → Masterpiece Court (major artwork approach) → Atrium Crossing (risk central installation) → East Escape Gallery (post-theft opposite-side escape)",
     "layout": [
       "##############################    ",
       "#............................#    ",
@@ -20680,7 +20652,7 @@
       }
     ],
     "landmark": {
-      "name": "Masterpiece Wall \u2014 objective court climax",
+      "name": "Masterpiece Wall — objective court climax",
       "kind": "partition",
       "x": 25.5,
       "y": 5.8
@@ -21524,7 +21496,7 @@
       {
         "id": "02-10-enrich-4",
         "zoneId": "02-10-D",
-        "identity": "Masterpiece Chamber: Masterpiece Court \u2014 objective remains clear, paired low plinths and flanking modern works",
+        "identity": "Masterpiece Chamber: Masterpiece Court — objective remains clear, paired low plinths and flanking modern works",
         "items": [
           {
             "kind": "pedestal_medium",

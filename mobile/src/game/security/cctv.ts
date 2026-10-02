@@ -5,7 +5,7 @@ import type {VisionFan} from '../guards/guardVision';
 import {clamp,wrapAngle} from '../core/math';
 import {GUARD_TUNING as T} from '../guards/guardTuning';
 /** CCTV detection pacing. `referenceRate` is the authored per-camera suspicionRate that maps to these times. */
-export const CAMERA_TUNING={nearCenterSeconds:1.15,farFactor:1.35,edgeFactor:1.3,movement:[0.4,0.4,1,1.15],referenceRate:0.4} as const;
+export const CAMERA_TUNING={nearCenterSeconds:1.15,distanceSeconds:.95,edgeSeconds:.85,maxSeconds:2.4,movement:[.64,.68,1,1.1],referenceRate:.4} as const;
 const C=CAMERA_TUNING;
 /** Explicit asset slot: intentionally silent until a reviewed production SFX exists. */
 export const CAMERA_ALERT_AUDIO_SLOT='camera_alert';
@@ -43,12 +43,13 @@ export function stepSecurityCameras(cameras:SecurityCameraState[],player:PlayerV
    const gait=clamp(player.gait,0,3),i=Math.min(2,Math.floor(gait));
    const distance=clamp(Math.hypot(player.x-camera.x,player.y-camera.y)/camera.visionRange,0,1);
    const center=clamp(Math.abs(wrapAngle(Math.atan2(player.y-camera.y,player.x-camera.x)-camera.facing))/camera.visionHalfAngle,0,1);
-   // Cameras are a fixed, predictable but fast sensor: time-to-alert is authored
-   // directly for a walking thief (close/centre ~1.15s, far/edge ~2s). Sneaking
-   // or standing takes 2.5x longer (~2.9-5s): still unsafe to linger, but the
-   // stealth counter-play and authored sneak lines stay valid.
-   const seconds=C.nearCenterSeconds*(1+(C.farFactor-1)*distance)*(1+(C.edgeFactor-1)*center);
-   const cameraMovement=C.movement[i]+(C.movement[i+1]-C.movement[i])*(gait-i);
+   // Unlike a guard, CCTV detects a stationary person. Movement matters most
+   // nearby; at the far boundary/cone edge all gaits approach the same pacing.
+   // Authored suspicionRate still scales the camera's sensitivity independently.
+   const seconds=Math.min(C.maxSeconds,C.nearCenterSeconds+C.distanceSeconds*distance*distance+C.edgeSeconds*center*center);
+   const gaitMovement=C.movement[i]+(C.movement[i+1]-C.movement[i])*(gait-i);
+   const exposure=Math.max(distance,center);
+   const cameraMovement=1+(gaitMovement-1)*(1-exposure*exposure);
    camera.detectionGain=cameraMovement*(camera.suspicionRate/C.referenceRate)/seconds;
    camera.suspicion=Math.min(1,camera.suspicion+camera.detectionGain*dt);
    if(camera.suspicion>=1&&!camera.alerted){

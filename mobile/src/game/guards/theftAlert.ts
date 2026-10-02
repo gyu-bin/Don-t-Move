@@ -161,8 +161,8 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
         const post=posts[g.searchIndex%posts.length];
         g.awareness=Awareness.Investigate;g.action=GuardAction.None;
         g.targetX=post.x;g.targetY=post.y;
-        if(travel(g,n,T.walkSpeed*g.pace*(c.roles && c.missionId!=='02-10' ? (ev.lockdownActive?T.lockdownPaceScale:T.theftPaceScale) : 1.2),dt,t)){
-          g.searchIndex++;g.searchWait=c.roles && c.missionId!=='02-10'?(ev.lockdownActive?T.lockdownSearchWait:T.theftSearchWait):1;g.searchBase=g.facing;g.path=[];
+        if(travel(g,n,T.walkSpeed*g.pace*(c.roles ? (ev.lockdownActive?T.lockdownPaceScale:T.theftPaceScale) : 1.2),dt,t)){
+          g.searchIndex++;g.searchWait=c.roles?(ev.lockdownActive?T.lockdownSearchWait:T.theftSearchWait):1;g.searchBase=g.facing;g.path=[];
         }
       }else g.speed=0;
       g.gait+=(gaitFromSpeed(g.speed)-g.gait)*damp(14,dt);

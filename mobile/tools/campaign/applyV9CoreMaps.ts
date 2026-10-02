@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import {composeV9Heist,V9_CORE_IDS,V9_HEIST_PLANS} from './curatedHeistFlows';
+import type {StageDefinition} from '../../src/game/levels/StageDefinition';
+import {auditV5Geometry} from './v5Geometry';
+const root='Reports/HeistV9';fs.mkdirSync(root,{recursive:true});
+const before=JSON.parse(fs.readFileSync(`${root}/campaign-before.json`,'utf8')) as StageDefinition[];
+const candidate=before.map(composeV9Heist);const scope=candidate.filter((q,i)=>JSON.stringify(q)!==JSON.stringify(before[i])).map(q=>q.id);
+if(scope.length!==4||scope.some(id=>!V9_CORE_IDS.includes(id as typeof V9_CORE_IDS[number])))throw Error('V9 core authoring escaped four-map scope');
+const geometry=candidate.filter(d=>V9_CORE_IDS.includes(d.id as typeof V9_CORE_IDS[number])).map(auditV5Geometry);
+fs.writeFileSync(`${root}/core-candidate.json`,JSON.stringify(candidate,null,2)+'\n');fs.writeFileSync(`${root}/core-geometry.json`,JSON.stringify({changed:scope,unchanged:before.length-scope.length,missions:geometry,actualPlay:'PENDING_REAL_SIMULATOR'},null,2)+'\n');
+fs.writeFileSync(`${root}/core-design.json`,JSON.stringify(V9_HEIST_PLANS,null,2)+'\n');
+for(const q of geometry)if(q.issues.length)throw Error(q.id+': '+q.issues.join('; '));
+console.log(JSON.stringify({scope,geometry:'PASS',runtimePromoted:false,actualPlay:'PENDING_REAL_SIMULATOR'}));

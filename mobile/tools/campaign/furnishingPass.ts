@@ -23,7 +23,7 @@ const KIT:Record<number,{wall:Item[];center:Item[];decor:Item[]}>={
  2:{
   wall:[{kind:'bench',asset:'gallery_modern_bench',scale:1.2},{kind:'statuePedestal',asset:'gallery_low_pedestal',scale:.85}],
   center:[{kind:'statuePedestal',asset:'gallery_central_plinth',scale:2},{kind:'bench',asset:'gallery_modern_bench',scale:1.2}],
-  decor:[{kind:'painting',asset:'gallery_portrait_frame_a',scale:.6},{kind:'painting',asset:'gallery_abstract_frame',scale:.85},{kind:'painting',asset:'gallery_portrait_frame_b',scale:.6}],
+  decor:[],
  },
  3:{
   wall:[{kind:'bankOfficeDesk',asset:'bank_office_desk'},{kind:'bankPlant',asset:'bank_plant'},{kind:'bankCashCart',asset:'bank_cash_cart'},{kind:'bankCashProcessingTable',asset:'bank_cash_processing_table'}],
@@ -31,6 +31,20 @@ const KIT:Record<number,{wall:Item[];center:Item[];decor:Item[]}>={
   decor:[{kind:'bankMonitor',asset:'bank_monitor'},{kind:'bankClock',asset:'bank_clock'}],
  },
 };
+
+const portrait=(id:'a'|'b'|'c'|'d'|'e'|'f'):Item=>({kind:'painting',asset:`gallery_portrait_frame_${id}`,scale:.6});
+const abstract=(id:''|'_b'|'_c'|'_d'|'_e'):Item=>({kind:'painting',asset:`gallery_abstract_frame${id}`,scale:.85});
+const PORTRAITS=(['c','d','e','f','a','b'] as const).map(portrait),ABSTRACTS=(['','_b','_c','_d','_e'] as const).map(abstract);
+/** Wall art is curated by what the mission is: a portrait hall hangs portraits, the modern wing abstracts,
+ *  everything else alternates. The order is rotated per mission and a work repeats only after the pool is used up. */
+function galleryWallArt(def:StageDefinition):Item[]{
+ const rotate=<T,>(list:T[],n:number)=>[...list.slice(n%list.length),...list.slice(0,n%list.length)];
+ const turn=def.mission??0,p=rotate(PORTRAITS,turn),a=rotate(ABSTRACTS,turn);
+ if(def.id==='02-02')return [...p,...a.slice(0,1)];
+ if(def.id==='02-04')return [...a,...p.slice(0,1)];
+ const mixed:Item[]=[];for(let i=0;i<Math.max(p.length,a.length);i++){if(p[i])mixed.push(p[i]);if(a[i])mixed.push(a[i]);}
+ return mixed;
+}
 
 /** Authored placement errors found by tools/campaign/mapAudit.ts. */
 function fixPlacement(def:StageDefinition){
@@ -54,6 +68,8 @@ function toProp(item:Item,x:number,y:number):PropDef{
  if(item.scale!==undefined){p.scale=item.scale;if(PROP_KIT[item.kind].footprint.w>0&&!item.kind.startsWith('bank'))p.collisionScale=item.scale;}
  return p;
 }
+/** Visual/physical extents of free-standing props, in tiles. */
+export function propBoxes(def:StageDefinition){return boxes(def);}
 function boxes(def:StageDefinition):Box[]{
  const out:Box[]=[];
  for(const p of def.props){
@@ -108,6 +124,15 @@ function contractsHold(def:StageDefinition,baseReach:Set<number>,baseLegs:Map<st
  const {nav,seen}=reachable(def);
  for(const i of baseReach)if(nav.walkable[i]&&!seen.has(i))return false;
  return true;
+}
+
+/** Snapshot of a stage's movement contracts; the returned check says whether a modified copy still honours them. */
+export function movementContract(def:StageDefinition):(candidate:StageDefinition)=>boolean{
+ const baseReach=reachable(def).seen,baseLegs=new Map<string,number>();
+ const stage=compileStage(def);
+ for(const g of stage.guards)for(let i=0;i<g.route.length;i++){const a=g.route[i],b=g.route[(i+1)%g.route.length];
+  for(const margin of [8,0])if(clearSegment(a.x,a.y,b.x,b.y,stage.movementBlockers,BODY.guardRadius+margin)){baseLegs.set(`${g.id}:${i}`,margin);break;}}
+ return candidate=>contractsHold(candidate,baseReach,baseLegs);
 }
 
 export function applyFurnishing(source:StageDefinition):StageDefinition{
@@ -198,13 +223,14 @@ export function applyFurnishing(source:StageDefinition):StageDefinition{
  }
 
  // 4. Wall decor on north wall faces: no collider, purely visual.
+ const wallArt=def.chapter===2?galleryWallArt(def):kit.decor;
  const decorCap=Math.ceil(floorTiles/60),decor:Point[]=def.props.filter(p=>PROP_KIT[p.kind].wallMounted).map(p=>({x:p.x,y:p.y}));let hung=0;
  for(let y=1;y<layout.length&&hung<decorCap;y++)for(let x=1;x<layout[y].length&&hung<decorCap;x++){
   if(!floor(x,y)||floor(x,y-1)||!floor(x-1,y)||!floor(x+1,y)||floor(x-1,y-1)||floor(x+1,y-1))continue;
   const at={x:x+.5,y:def.chapter===3?y+.15:y};
   if(decor.some(d=>Math.hypot(d.x-at.x,d.y-at.y)<4))continue;
   if(boxes(def).some(b=>pointGap(b,{x:at.x,y:at.y+.4})<.9))continue;
-  def.props.push(toProp(kit.decor[hung%kit.decor.length],at.x,at.y));decor.push(at);hung++;
+  def.props.push(toProp(wallArt[hung%wallArt.length],at.x,at.y));decor.push(at);hung++;
  }
  if(!contractsHold(def,baseReach,baseLegs))throw Error(`${def.id}: furnishing pass broke an authored movement contract`);
  return def;

@@ -52,6 +52,7 @@ async function main() {
     guardWhistle: decode(c + 'guard_whistle.png'), guardSearch: decode(c + 'guard_search.png'),
   });
   // CAMPAIGN_JSON renders another baked campaign (e.g. the pre-density version) for comparison.
+  if(process.env.CAMPAIGN_JSON && process.env.GAMEPLAY_PREVIEW==='1')throw Error('Gameplay preview must use runtime campaignStages; archived input is static comparison only.');
   const source: StageDefinition[] = process.env.CAMPAIGN_JSON ? JSON.parse(fs.readFileSync(process.env.CAMPAIGN_JSON, 'utf8')) : campaignStages;
   const {museumDensity} = require('../campaign/museumDensity');
   const {PROP_KIT} = require('../../src/game/world/propKit');
