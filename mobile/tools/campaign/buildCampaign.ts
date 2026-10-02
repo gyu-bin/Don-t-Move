@@ -1,4 +1,5 @@
 import {applyV5MuseumGallery} from './v5MuseumGallery';
+import {applyFurnishing} from './furnishingPass';
 import {BANK_PRODUCTION} from './bankProductionDesign';
 import {applyV3MuseumGallery} from './v3MuseumGallery';
 import {applySecurityData} from './bankSecurityOverlay';
@@ -138,9 +139,14 @@ function buildAuthoredMission(index:number):StageDefinition {
  if(index<30)return BANK_PRODUCTION[index-20];
  return buildLegacyMission(index-15);
 }
+/** Masterpiece (02-10) and Main Vault (03-10). */
+export const HIGH_SECURITY_MISSIONS=new Set(['02-10','03-10']);
 export function buildMission(index:number):StageDefinition {
- const def=buildAuthoredMission(index);
- const secured=index<30?applySecurityData(def):def;
- return index<20?applyV5MuseumGallery(applyV3MuseumGallery(secured)):secured;
+ const authored=buildAuthoredMission(index);
+ const secured=index<30?applySecurityData(authored):authored;
+ const def=applyFurnishing(index<20?applyV5MuseumGallery(applyV3MuseumGallery(secured)):secured);
+ // Chapter finales guard their prize with a pickup alarm instead of waiting for a witness.
+ if(HIGH_SECURITY_MISSIONS.has(def.id)&&def.objective)return {...def,objective:{...def.objective,highSecurity:true}};
+ return def;
 }
 export const buildCampaign=()=>Array.from({length:MISSION_COUNT},(_,i)=>buildMission(i));

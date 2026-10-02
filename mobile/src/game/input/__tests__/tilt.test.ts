@@ -46,10 +46,10 @@ test('Calibration requires 0.5 seconds of stable, distinct sensor samples, then 
   near(s.x,0); near(s.y,0);
   stepTilt(s,sample(identity,.9),900,1/60,DEFAULT_TILT); assert.equal(s.status,'PLAY');
 });
-test('Moving, shaking, sparse or duplicate samples cannot complete calibration', () => {
+test('Moving, shaking, sparse or duplicate samples cannot complete calibration before deadline', () => {
   for (const mode of ['moving','shaking','gap','duplicate']) {
     const s = createTiltState();
-    for (let i=0;i<100;i++) {
+    for (let i=0;i<(mode==='gap'?10:100);i++) {
       const a = sample(identity,mode==='gap' ? i*.2 : mode==='duplicate' ? 0 : i/60);
       if (mode==='moving') a.rotationRate=1;
       if (mode==='shaking') a.acceleration=.4;

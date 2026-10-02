@@ -91,17 +91,21 @@ export function StartupScreen() {
   pendingMission.current=index;pendingGame.current=true;setPreparing(true);setError(undefined);
   const current=++generation.current;
   try {
+   const tapAt=Date.now();
    const screen=await withDeadline((async()=>{
     const module=Game?{VisualPlaygroundScreen:Game}:await import('../VisualPlaygroundScreen');
+    const importedAt=Date.now();
     const [{preloadGameAssets},{PLAYTEST_MANIFEST}]=await Promise.all([
      import('../../assets/useGameAssets'),import('../../assets/manifest'),
     ]);
     const assets=await preloadGameAssets(PLAYTEST_MANIFEST);
+    const assetsAt=Date.now();
     const [{prepareMission},{campaignStages}]=await Promise.all([
      import('../preparedMission'),import('../../game/levels/campaignStages'),
     ]);
     const definition=campaignStages[index];
     if(definition)prepareMission(definition,assets);
+    if(__DEV__)console.info('[LOAD] mission',JSON.stringify({id:definition?.id,importMs:importedAt-tapAt,assetsMs:assetsAt-importedAt,prepareMs:Date.now()-assetsAt,totalMs:Date.now()-tapAt}));
     return module.VisualPlaygroundScreen;
    })(),12000,'Stage preparation');
    if(mounted.current&&generation.current===current)launch(screen,index);

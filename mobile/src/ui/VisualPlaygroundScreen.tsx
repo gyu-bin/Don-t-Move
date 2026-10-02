@@ -150,7 +150,17 @@ function GameRun({ progress, onProgress }: { progress: StageProgress; onProgress
     const next=(index+1)%playableStages.length;
     // Shared images are already decoded; compile static art/navigation while
     // the result screen is visible. Keep the outgoing scene until next is ready.
-    void preloadGameAssets(PLAYTEST_MANIFEST).then(assets=>prepareMission(playableStages[next],assets)).catch(()=>{});
+    // The compile blocks the JS thread, so start it only after the result
+    // popup has been committed; starting at clear time delayed the popup itself.
+    setTimeout(()=>{
+      const prepareStarted=Date.now();
+      void preloadGameAssets(PLAYTEST_MANIFEST).then(assets=>{
+        const compileStarted=Date.now();
+        const prepared=prepareMission(playableStages[next],assets);
+        if(__DEV__)console.info('[NAV] next mission prepared',JSON.stringify({assetsMs:compileStarted-prepareStarted,compileMs:Date.now()-compileStarted}));
+        return prepared;
+      }).catch(()=>{});
+    },MISSION_FINISH_HOLD_MS+200);
   };
   const nextStage=()=>{
     if(pending!==null||nextLock.current)return;
@@ -158,7 +168,10 @@ function GameRun({ progress, onProgress }: { progress: StageProgress; onProgress
     void (async()=>{
       try {
         await monetization.presentInterstitialIfNeeded();
+      } catch (error) {
+        if (__DEV__) console.warn('[ADS] optional presentation failed', error);
       } finally {
+        if (__DEV__) console.info('[NAV] mission complete continue');
         const next=(index+1)%playableStages.length;
         onProgress({...progress,campaign:{...migrateCampaign(progress),lastMission:missionId(next)}});
         startedTransition.current=false;transition.set(0);setPending(next);
@@ -229,7 +242,9 @@ function StageGame({
     () => ({ x: 0, y: -WALL_HEIGHT-90, w: stage.width, h: stage.height + WALL_HEIGHT+90 }),
     [stage],
   );
-  const zoom = width / (VIEW_TILES_WIDE * TILE);
+  // DEV map review: EXPO_PUBLIC_DM_QA_VIEW_TILES at Metro start widens the camera to show a whole map.
+  const qaViewTiles = __DEV__ ? Number(process.env.EXPO_PUBLIC_DM_QA_VIEW_TILES) : NaN;
+  const zoom = width / ((qaViewTiles > 0 ? qaViewTiles : VIEW_TILES_WIDE) * TILE);
   const viewW = width / zoom;
   const viewH = height / zoom;
 
@@ -302,6 +317,9 @@ function StageGame({
   const { movementBlockers, visionBlockers } = stage;
   const { enabled: tiltEnabled, controller, sample, tuning, active, reset: inputReset } = tilt;
   const previousTiltEnabled = useSharedValue(tiltEnabled);
+  // DEV simulator QA: EXPO_PUBLIC_DM_QA_VIRTUAL_TILT=1 drives the real tilt movement path from touch.
+  const virtualTilt = __DEV__ && !tiltEnabled && process.env.EXPO_PUBLIC_DM_QA_VIRTUAL_TILT === '1';
+  const virtualVector = useSharedValue({ x: 0, y: 0 });
 
   useGameAudio({sessionKey:`${definition.id}:${audioSession}`,phase:replayIntro?'INTRO':phaseInfo.phase,
     objectiveRevision:pickupRevision,theftRevision:phaseInfo.theft,spottedRevision:phaseInfo.spotted,
@@ -442,7 +460,7 @@ function StageGame({
       y: controller.value.y,
       paused: !active.value || (controller.value.status !== 'PLAY' && controller.value.status !== 'CENTER RESET'),
       reset: inputReset.value,
-    } : undefined;
+    } : virtualTilt ? { x: virtualVector.value.x, y: virtualVector.value.y, paused: false, reset: inputReset.value } : undefined;
     const elapsed = accumulated.value + dt;
     const steps = Math.floor(elapsed * 60);
     accumulated.value = elapsed - steps / 60;
@@ -452,9 +470,9 @@ function StageGame({
     state.modify((s) => {
       'worklet';
       syncInputMode(s, previousTilt, tiltEnabled, tch.seq);
-      s.playerMode = tiltEnabled ? -2 : playerMode.value;
+      s.playerMode = tiltEnabled || virtualTilt ? -2 : playerMode.value;
       s.patrol = true;
-      if (!tiltEnabled && tch.seq !== s.touchSeq) {
+      if (!tiltEnabled && !virtualTilt && tch.seq !== s.touchSeq) {
         s.touchSeq = tch.seq;
         s.player.tx = tch.x / zoom + s.cam.x;
         s.player.ty = tch.y / zoom + s.cam.y;
@@ -469,6 +487,13 @@ function StageGame({
 
   const onTouch = (x: number, y: number) => {
     if (tiltEnabled || pausedValue.value || caught || completed) return;
+    if (virtualTilt) {
+      // Direction and distance from the player on screen stand in for device tilt.
+      const s = state.value, dx = x-(s.player.x-s.cam.x)*zoom, dy = y-(s.player.y-s.cam.y)*zoom;
+      const k = Math.min(1, Math.hypot(dx, dy)/120)/Math.max(1, Math.hypot(dx, dy));
+      virtualVector.set({ x: dx*k, y: dy*k });
+      return;
+    }
     touch.set({ x, y, seq: touch.value.seq + 1 });
   };
 
@@ -495,6 +520,7 @@ function StageGame({
         onStartShouldSetResponder={() => !tiltEnabled}
         onMoveShouldSetResponder={() => !tiltEnabled}
         onResponderGrant={(event) => onTouch(event.nativeEvent.locationX, event.nativeEvent.locationY)}
+        onResponderRelease={() => { if (virtualTilt) virtualVector.set({ x: 0, y: 0 }); }}
         onResponderMove={(event) => onTouch(event.nativeEvent.locationX, event.nativeEvent.locationY)}
       />
 
@@ -545,7 +571,7 @@ function StageGame({
         <Text style={styles.modalBody}>{t('alerts')} {result.alerts}</Text>
         <Text style={styles.modalBody}>{t('best')} {(migrateCampaign(progress).records[definition.id]?.bestTime ?? result.seconds).toFixed(1)}s</Text>
         <Text style={styles.nextMissionName}>{missionName((missionIndex(definition.id)+1)%MISSION_COUNT,progress.language)}</Text>
-        <Pressable disabled={monetization.adPresenting} onPress={()=>{if(monetization.adPresenting)return;playUI('ui_select');onNextStage();}} style={styles.primaryButton}><Text style={styles.primaryText}>{missionIndex(definition.id) === MISSION_COUNT-1 ? t('again') : t('next')}</Text></Pressable>
+        <Pressable onPress={()=>{if(monetization.adPresenting){monetization.confirmAdDismissed();return;}playUI('ui_select');onNextStage();}} style={styles.primaryButton}><Text style={styles.primaryText}>{missionIndex(definition.id) === MISSION_COUNT-1 ? t('again') : t('next')}</Text></Pressable>
         <Pressable onPress={()=>{playUI('ui_select');retry();}} style={styles.button}><Text style={styles.buttonText}>{t('retry')}</Text></Pressable>
         <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
       </View>}

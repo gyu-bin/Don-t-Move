@@ -9,8 +9,11 @@ import { buildStageArt } from '../rendering/environment/buildStageArt';
 // frames independent of image loading and static floor-plan compilation.
 const cache = new Map<StageDefinition, {assets:GameAssets; value:ReturnType<typeof build>}>();
 function build(definition:StageDefinition,assets:GameAssets) {
-  const stage=compileStage(definition);
-  return {stage,navigation:buildNavigation(stage,BODY.guardRadius),art:buildStageArt(stage,assets.museum)};
+  const t0=Date.now(),stage=compileStage(definition);
+  const t1=Date.now(),navigation=buildNavigation(stage,BODY.guardRadius);
+  const t2=Date.now(),art=buildStageArt(stage,assets.museum);
+  if(__DEV__)console.info('[LOAD] build',JSON.stringify({id:definition.id,compileMs:t1-t0,navMs:t2-t1,artMs:Date.now()-t2}));
+  return {stage,navigation,art};
 }
 export function prepareMission(definition:StageDefinition,assets:GameAssets) {
   const existing=cache.get(definition);

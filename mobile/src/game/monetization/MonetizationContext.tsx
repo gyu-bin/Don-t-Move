@@ -1,4 +1,5 @@
 import {
+  Component,
   createContext,
   useCallback,
   useContext,
@@ -36,6 +37,8 @@ export type MonetizationApi = {
   recordMissionClear: () => void;
   /** Call from Mission Complete → Next. Never blocks forever. */
   presentInterstitialIfNeeded: () => Promise<void>;
+  /** A touch on app UI while adPresenting proves the ad is gone; recovers a lost close signal. */
+  confirmAdDismissed: () => void;
   purchaseRemoveAds: () => Promise<void>;
   restorePurchases: () => Promise<void>;
   clearPurchaseMessage: () => void;
@@ -96,12 +99,24 @@ function MonetizationStubProvider({ children }: { children: ReactNode }) {
     purchaseMessage: null,
     recordMissionClear,
     presentInterstitialIfNeeded,
+    confirmAdDismissed: () => {},
     purchaseRemoveAds: unavailablePurchase,
     restorePurchases: unavailablePurchase,
     clearPurchaseMessage: () => {},
   }), [ready, adState, recordMissionClear, presentInterstitialIfNeeded]);
 
   return <MonetizationContext.Provider value={value}>{children}</MonetizationContext.Provider>;
+}
+
+/** Optional native-service render failure must not blank Home. A repeated child
+ * failure in the service-free tree escapes this boundary to the app diagnostics. */
+class MonetizationBoundary extends Component<{children: ReactNode; fallback: ReactNode}, {failed: boolean}> {
+  state = {failed: false};
+  static getDerivedStateFromError() { return {failed: true}; }
+  componentDidCatch(error: Error, info: {componentStack?: string | null}) {
+    if (__DEV__) console.error('[BOOT] optional monetization subtree failed', error, info.componentStack);
+  }
+  render() { return this.state.failed ? this.props.fallback : this.props.children; }
 }
 
 export function MonetizationProvider({ children }: { children: ReactNode }) {
@@ -117,7 +132,7 @@ export function MonetizationProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  if (Native) return <Native>{children}</Native>;
+  if (Native) return <MonetizationBoundary fallback={<MonetizationStubProvider>{children}</MonetizationStubProvider>}><Native>{children}</Native></MonetizationBoundary>;
   return <MonetizationStubProvider>{children}</MonetizationStubProvider>;
 }
 
@@ -133,6 +148,7 @@ export function useMonetization(): MonetizationApi {
       purchaseMessage: null,
       recordMissionClear: () => {},
       presentInterstitialIfNeeded: async () => {},
+      confirmAdDismissed: () => {},
       purchaseRemoveAds: async () => {},
       restorePurchases: async () => {},
       clearPurchaseMessage: () => {},

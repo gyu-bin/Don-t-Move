@@ -8893,6 +8893,22 @@
         "visualAssetId": "gallery_track_light",
         "x": 19,
         "y": 4
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 13,
+        "y": 6.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 20.2,
+        "y": 10.85,
+        "scale": 1.2,
+        "collisionScale": 1.2
       }
     ],
     "lights": [
@@ -9595,6 +9611,54 @@
         "visualAssetId": "gallery_track_light",
         "x": 18.5,
         "y": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 7.42,
+        "y": 7.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 14.58,
+        "y": 14.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 14.02,
+        "y": 17.3,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 5.55,
+        "y": 17.77,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 20.12,
+        "y": 9.3,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 11.5,
+        "y": 15.1,
+        "scale": 2,
+        "collisionScale": 2
       }
     ],
     "lights": [
@@ -10288,6 +10352,112 @@
         "y": 2.4,
         "scale": 2,
         "collisionScale": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 27,
+        "y": 5.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 30,
+        "y": 5.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 3,
+        "y": 10.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 6,
+        "y": 10.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 20.58,
+        "y": 5.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 31.58,
+        "y": 8.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 18.8,
+        "y": 12.78,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 14.5,
+        "y": 16.1,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 11.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 19.5,
+        "y": 1,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 25.5,
+        "y": 5,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 10.5,
+        "y": 8,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 19.5,
+        "y": 8,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 4.5,
+        "y": 10,
+        "scale": 0.6
       }
     ],
     "lights": [
@@ -11123,6 +11293,159 @@
         "y": 13.9,
         "scale": 2,
         "collisionScale": 2
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 20,
+        "y": 8.68,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 4,
+        "y": 10.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 26,
+        "y": 19.68,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 30,
+        "y": 19.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 13,
+        "y": 20.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 20,
+        "y": 20.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 10.98,
+        "y": 23.3,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 10.42,
+        "y": 26.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 19.58,
+        "y": 3.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 21.58,
+        "y": 12.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 15,
+        "y": 6.65,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 18.3,
+        "y": 13.28,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 12.5,
+        "y": 16.1,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 13.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 17.5,
+        "y": 1,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 10.5,
+        "y": 8,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 2.5,
+        "y": 10,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 6.5,
+        "y": 10,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 28.5,
+        "y": 19,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 11.5,
+        "y": 20,
+        "scale": 0.6
       }
     ],
     "lights": [
@@ -11922,6 +12245,112 @@
         "y": 3.9,
         "scale": 2,
         "collisionScale": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 13,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 16,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 19,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 19,
+        "y": 8.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 28,
+        "y": 10.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 1.42,
+        "y": 7.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 25,
+        "y": 11.12,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 14.5,
+        "y": 16.1,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 11.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 17.5,
+        "y": 1,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 2.5,
+        "y": 2,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 6.5,
+        "y": 2,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 12.5,
+        "y": 8,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 2.5,
+        "y": 13,
+        "scale": 0.6
       }
     ],
     "lights": [
@@ -12871,6 +13300,129 @@
         "y": 14.3,
         "scale": 2.857142857142857,
         "collisionScale": 2.857142857142857
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 4,
+        "y": 3.68,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 13,
+        "y": 6.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 28,
+        "y": 9.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 31,
+        "y": 9.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 13.42,
+        "y": 3.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 1.42,
+        "y": 6.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 1.42,
+        "y": 10.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 10.42,
+        "y": 11.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 1.42,
+        "y": 16.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 5,
+        "y": 16.62,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 5,
+        "y": 6.66,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 6.5,
+        "y": 3,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 9.5,
+        "y": 6,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 14.5,
+        "y": 6,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 21.5,
+        "y": 6,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 26.5,
+        "y": 9,
+        "scale": 0.85
       }
     ],
     "lights": [
@@ -13836,6 +14388,150 @@
         "y": 9.9,
         "scale": 2,
         "collisionScale": 2
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 19,
+        "y": 1.68,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 13,
+        "y": 9.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 20,
+        "y": 9.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 28,
+        "y": 10.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 31,
+        "y": 10.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 9.42,
+        "y": 4.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 1.42,
+        "y": 13.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 10.42,
+        "y": 17.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 20,
+        "y": 3.65,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 19.5,
+        "y": 15.1,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 27.5,
+        "y": 17.8,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 10.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 14.5,
+        "y": 1,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 21.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 2.5,
+        "y": 8,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 6.5,
+        "y": 8,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 11.5,
+        "y": 9,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 21.5,
+        "y": 9,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 26.5,
+        "y": 10,
+        "scale": 0.85
       }
     ],
     "lights": [
@@ -14802,6 +15498,166 @@
         "y": 13.9,
         "scale": 2,
         "collisionScale": 2
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 14,
+        "y": 1.68,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 20,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 13,
+        "y": 9.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 24,
+        "y": 9.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 31,
+        "y": 18.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 34,
+        "y": 18.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 10.42,
+        "y": 12.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 28.42,
+        "y": 26.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 22.58,
+        "y": 3.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 16.5,
+        "y": 7.35,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 13.5,
+        "y": 18.75,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 17.5,
+        "y": 21.1,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 19.5,
+        "y": 15.8,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 16.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 21.5,
+        "y": 1,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 11.5,
+        "y": 9,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 21.5,
+        "y": 9,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 2.5,
+        "y": 11,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 6.5,
+        "y": 11,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 29.5,
+        "y": 18,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 35.5,
+        "y": 18,
+        "scale": 0.85
       }
     ],
     "lights": [
@@ -15852,6 +16708,141 @@
         "y": 25.9,
         "scale": 2,
         "collisionScale": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 18,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 21,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 24,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 3,
+        "y": 8.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 6,
+        "y": 8.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 23,
+        "y": 24.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 10.42,
+        "y": 4.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 28.58,
+        "y": 7.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 5.5,
+        "y": 14.35,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 11.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 15.5,
+        "y": 1,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 19.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 27.5,
+        "y": 5,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 4.5,
+        "y": 8,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 30.5,
+        "y": 9,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 16.5,
+        "y": 24,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 20.5,
+        "y": 24,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 24.5,
+        "y": 24,
+        "scale": 0.6
       }
     ],
     "lights": [
@@ -16968,6 +17959,218 @@
         "y": 3.9,
         "scale": 2,
         "collisionScale": 2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 16,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 19,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 27,
+        "y": 1.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 4,
+        "y": 4.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 7,
+        "y": 4.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 32,
+        "y": 13.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 35,
+        "y": 13.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 16,
+        "y": 15.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 25,
+        "y": 15.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 9,
+        "y": 25.59,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 24,
+        "y": 26.68,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 1.42,
+        "y": 7.25,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_low_pedestal",
+        "x": 1.42,
+        "y": 10.26,
+        "scale": 0.85,
+        "collisionScale": 0.85
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 5.5,
+        "y": 6.78,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "statuePedestal",
+        "visualAssetId": "gallery_central_plinth",
+        "x": 4.5,
+        "y": 30.1,
+        "scale": 2,
+        "collisionScale": 2
+      },
+      {
+        "kind": "bench",
+        "visualAssetId": "gallery_modern_bench",
+        "x": 19.5,
+        "y": 22.8,
+        "scale": 1.2,
+        "collisionScale": 1.2
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 14.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 20.5,
+        "y": 1,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 24.5,
+        "y": 1,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 2.5,
+        "y": 4,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 8.5,
+        "y": 4,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 30.5,
+        "y": 13,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 36.5,
+        "y": 13,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 14.5,
+        "y": 15,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 23.5,
+        "y": 15,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_a",
+        "x": 2.5,
+        "y": 25,
+        "scale": 0.6
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_abstract_frame",
+        "x": 10.5,
+        "y": 25,
+        "scale": 0.85
+      },
+      {
+        "kind": "painting",
+        "visualAssetId": "gallery_portrait_frame_b",
+        "x": 17.5,
+        "y": 26,
+        "scale": 0.6
       }
     ],
     "lights": [
@@ -17037,7 +18240,8 @@
     "objective": {
       "kind": "painting",
       "x": 23.5,
-      "y": 5
+      "y": 5,
+      "highSecurity": true
     },
     "exit": {
       "x": 1,
@@ -18242,6 +19446,30 @@
         "visualAssetId": "bank_small_safe",
         "x": 17.5,
         "y": 7.45
+      },
+      {
+        "kind": "bankCashProcessingTable",
+        "visualAssetId": "bank_cash_processing_table",
+        "x": 13.5,
+        "y": 7
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 3.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 12.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 16.5,
+        "y": 3.15
       }
     ],
     "lights": [
@@ -18693,6 +19921,54 @@
         "visualAssetId": "bank_small_safe",
         "x": 15,
         "y": 8.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 8,
+        "y": 3.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 11,
+        "y": 3.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 14,
+        "y": 3.53
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 3.5,
+        "y": 3.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 9.5,
+        "y": 3.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 15.5,
+        "y": 3.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 19.5,
+        "y": 3.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 7.5,
+        "y": 13.15
       }
     ],
     "lights": [
@@ -19400,6 +20676,78 @@
         "visualAssetId": "bank_small_safe",
         "x": 27,
         "y": 14.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 25,
+        "y": 7.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 28,
+        "y": 7.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 2.33,
+        "y": 4.22
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 2.33,
+        "y": 15.22
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 20.47,
+        "y": 4.33
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 3.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 7.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 13.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 17.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 26.5,
+        "y": 7.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 3.5,
+        "y": 10.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 8.5,
+        "y": 10.15
       }
     ],
     "lights": [
@@ -20309,6 +21657,54 @@
         "visualAssetId": "bank_small_safe",
         "x": 6.5,
         "y": 7.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 13,
+        "y": 12.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 6.33,
+        "y": 13.22
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 6.33,
+        "y": 17.23
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 3.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 7.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 14.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 18.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 19.5,
+        "y": 12.15
       }
     ],
     "lights": [
@@ -21108,6 +22504,108 @@
         "visualAssetId": "bank_small_safe",
         "x": 27,
         "y": 8.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 24,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 27,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 30,
+        "y": 2.53
+      },
+      {
+        "kind": "bankCashProcessingTable",
+        "visualAssetId": "bank_cash_processing_table",
+        "x": 24,
+        "y": 13.08
+      },
+      {
+        "kind": "bankOfficeDesk",
+        "visualAssetId": "bank_office_desk",
+        "x": 30,
+        "y": 14.98
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 22.33,
+        "y": 8.22
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 31.47,
+        "y": 18.32
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 19.47,
+        "y": 25.32
+      },
+      {
+        "kind": "bankQueueBarrier",
+        "visualAssetId": "bank_queue_barrier",
+        "x": 6,
+        "y": 11.4
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 28.5,
+        "y": 18.82
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 25.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 20.5,
+        "y": 4.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 3.5,
+        "y": 10.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 8.5,
+        "y": 10.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 21.5,
+        "y": 12.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 13.5,
+        "y": 21.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 18.5,
+        "y": 21.15
       }
     ],
     "lights": [
@@ -21991,6 +23489,96 @@
         "visualAssetId": "bank_small_safe",
         "x": 17,
         "y": 26.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 14,
+        "y": 20.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 20,
+        "y": 20.53
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 2.53,
+        "y": 12.32
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 12.33,
+        "y": 15.22
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 2.33,
+        "y": 22.23
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 19.47,
+        "y": 6.33
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 8.47,
+        "y": 12.32
+      },
+      {
+        "kind": "bankQueueBarrier",
+        "visualAssetId": "bank_queue_barrier",
+        "x": 28.5,
+        "y": 24.43
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 13.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 17.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 5.5,
+        "y": 4.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 9.5,
+        "y": 4.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 7.5,
+        "y": 10.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 13.5,
+        "y": 10.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 18.5,
+        "y": 10.15
       }
     ],
     "lights": [
@@ -22884,7 +24472,7 @@
         "kind": "bankCashProcessingTable",
         "visualAssetId": "bank_cash_processing_table",
         "x": 12,
-        "y": 11
+        "y": 12
       },
       {
         "kind": "bankCashProcessingTable",
@@ -22909,6 +24497,102 @@
         "visualAssetId": "bank_small_safe",
         "x": 4.5,
         "y": 18.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 21,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 4,
+        "y": 8.53
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 12.53,
+        "y": 26.32
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 22.67,
+        "y": 5.22
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 24.67,
+        "y": 10.22
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 24.47,
+        "y": 13.32
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 19.47,
+        "y": 26.32
+      },
+      {
+        "kind": "bankQueueBarrier",
+        "visualAssetId": "bank_queue_barrier",
+        "x": 20.5,
+        "y": 7.59
+      },
+      {
+        "kind": "bankQueueBarrier",
+        "visualAssetId": "bank_queue_barrier",
+        "x": 8.5,
+        "y": 17.59
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 11.5,
+        "y": 15.82
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 15.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 19.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 5.5,
+        "y": 8.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 8.5,
+        "y": 11.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 13.5,
+        "y": 24.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 18.5,
+        "y": 24.15
       }
     ],
     "lights": [
@@ -23593,8 +25277,8 @@
       {
         "kind": "bankSecurityGate",
         "visualAssetId": "bank_security_gate",
-        "x": 16,
-        "y": 20.5
+        "x": 17,
+        "y": 19.5
       },
       {
         "kind": "bankOfficeDesk",
@@ -23667,6 +25351,114 @@
         "visualAssetId": "bank_small_safe",
         "x": 29.5,
         "y": 10.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 21,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 27,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 30,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 4,
+        "y": 10.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 8,
+        "y": 10.53
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 14,
+        "y": 10.73
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 21,
+        "y": 10.73
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 2.53,
+        "y": 15.32
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 33.47,
+        "y": 4.33
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 13.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 17.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 28.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 32.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 5.5,
+        "y": 10.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 19.5,
+        "y": 10.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 24.5,
+        "y": 13.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 31.5,
+        "y": 15.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 3.5,
+        "y": 20.15
       }
     ],
     "lights": [
@@ -24792,6 +26584,78 @@
         "visualAssetId": "bank_small_safe",
         "x": 7,
         "y": 9.45
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 4,
+        "y": 16.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 2.33,
+        "y": 4.22
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 2.53,
+        "y": 7.33
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 2.33,
+        "y": 19.23
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 20.67,
+        "y": 16.23
+      },
+      {
+        "kind": "bankQueueBarrier",
+        "visualAssetId": "bank_queue_barrier",
+        "x": 7,
+        "y": 4.2
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 3.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 9.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 15.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 19.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 19.5,
+        "y": 13.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 9.5,
+        "y": 15.15
       }
     ],
     "lights": [
@@ -25780,6 +27644,174 @@
         "visualAssetId": "bank_small_safe",
         "x": 32,
         "y": 7.2
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 15,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 18,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 21,
+        "y": 2.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 20,
+        "y": 13.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 4,
+        "y": 24.53
+      },
+      {
+        "kind": "bankPlant",
+        "visualAssetId": "bank_plant",
+        "x": 8,
+        "y": 24.53
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 34,
+        "y": 29.73
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 36,
+        "y": 38.73
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 37.47,
+        "y": 4.33
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 37.47,
+        "y": 18.32
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 37.47,
+        "y": 31.32
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 14.5,
+        "y": 7.83
+      },
+      {
+        "kind": "bankQueueBarrier",
+        "visualAssetId": "bank_queue_barrier",
+        "x": 28.5,
+        "y": 5.59
+      },
+      {
+        "kind": "bankCashCart",
+        "visualAssetId": "bank_cash_cart",
+        "x": 14.5,
+        "y": 18.82
+      },
+      {
+        "kind": "bankQueueBarrier",
+        "visualAssetId": "bank_queue_barrier",
+        "x": 34.5,
+        "y": 5.59
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 13.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 19.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 27.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 35.5,
+        "y": 2.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 24.5,
+        "y": 5.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 13.5,
+        "y": 13.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 21.5,
+        "y": 13.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 24.5,
+        "y": 16.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 28.5,
+        "y": 16.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 35.5,
+        "y": 16.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 5.5,
+        "y": 24.15
+      },
+      {
+        "kind": "bankClock",
+        "visualAssetId": "bank_clock",
+        "x": 13.5,
+        "y": 24.15
+      },
+      {
+        "kind": "bankMonitor",
+        "visualAssetId": "bank_monitor",
+        "x": 19.5,
+        "y": 24.15
       }
     ],
     "lights": [
@@ -25856,7 +27888,8 @@
     "objective": {
       "kind": "vaultGem",
       "x": 32,
-      "y": 6.75
+      "y": 6.75,
+      "highSecurity": true
     },
     "exit": {
       "x": 37,

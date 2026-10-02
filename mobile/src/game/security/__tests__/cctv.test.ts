@@ -96,3 +96,18 @@ test('Camera-only stage maintains alert during real sight and clears pursuit aft
  const known=[s.events.globalX,s.events.globalY];s.player.x=1000;s.player.y=80;tick();
  assert.equal(s.events.globalAlert,false);assert.equal(s.events.spottedEpisode,false);assert.deepEqual([s.events.globalX,s.events.globalY],known);
 });
+function secondsToAlert(x:number,y:number,gait:number){
+ const c=createSecurityCamera({id:'camera-T',x:120,y:200,centerFacing:0,sweepAngle:0,sweepSpeed:.3,pauseAtEnds:.5,range:220,visionAngle:.7,suspicionRate:.4}),ev=createGuardEvents();
+ for(let f=0;f<60*30;f++){stepSecurityCameras([c],{x,y,gait},[],ev,1/60,f/60);if(c.alerted)return (f+1)/60;}
+ return Infinity;
+}
+test('camera time-to-alert is fast and bounded: close 1.0-1.3s, mid 1.3-1.7s, far edge 1.8-2.2s',()=>{
+ const near=secondsToAlert(120+15,200,2),mid=secondsToAlert(120+110,200+18,2);
+ const far=secondsToAlert(120+205*Math.cos(.33),200+205*Math.sin(.33),2);
+ assert(near>=1&&near<=1.3,`near ${near}`);assert(mid>=1.3&&mid<=1.7,`mid ${mid}`);assert(far>=1.8&&far<=2.2,`far ${far}`);
+});
+test('sneaking or standing in a camera cone is slower but still detected within seconds',()=>{
+ const idle=secondsToAlert(120+110,200,0),sneak=secondsToAlert(120+15,200,1),farIdle=secondsToAlert(120+205*Math.cos(.33),200+205*Math.sin(.33),0);
+ assert(idle>2.5&&idle<4,`idle ${idle}`);assert(sneak>2.5&&sneak<3.3,`sneak ${sneak}`);assert(farIdle<5.5,`far idle ${farIdle}`);
+ assert.equal(secondsToAlert(120,60,3),Infinity,'outside the cone stays unseen');
+});

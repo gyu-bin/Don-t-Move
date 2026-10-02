@@ -11,6 +11,7 @@ import type { Navigation } from '../world/navigation';
 import { moveWithCollision } from '../world/collision';
 import type { CompiledStage } from '../world/compileStage';
 import { stepTiltPlayer, stopPlayer } from '../input/tiltMovement';
+import { HIGH_SECURITY_ALARM_SECONDS } from '../guards/theftAlert';
 import type { TiltMovement } from '../input/tiltMovement';
 import { createMissionState, stepMission } from '../mission/mission';
 import type { MissionState } from '../mission/mission';
@@ -30,6 +31,11 @@ import type { PlayableBoundary } from '../world/museumBoundary';
  */
 
 export interface PlayerState {
+  lastValidX?: number;
+  lastValidY?: number;
+  /** Sign of the axis direction blocked by a surface last frame (wall slide); 0/undefined when free. */
+  contactX?: number;
+  contactY?: number;
   spritePhase: number;
   x: number;
   y: number;
@@ -90,11 +96,14 @@ export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[
     boundary: stage.def.chapter===1 ? createPlayableBoundary(stage) : undefined,
     securityCameras:(stage.cameras??[]).map(createSecurityCamera),
     theft: { empty:false,x:stage.objective.x,y:stage.objective.y,missionId:stage.def.id,
+      ...(stage.def.objective?.highSecurity ? {alarmDelay:HIGH_SECURITY_ALARM_SECONDS,alarmAge:0} : {}),
       posts:stage.guards.map(g=>g.theftPosts ?? g.route.map(p=>({x:p.x,y:p.y}))),
       sectors:stage.guards.map(g=>g.theftSearchSectors??[]),
       ...(stage.def.chapter===1 || stage.def.id==='02-10' || stage.guards.some(g=>g.theftSearchSectors?.length||g.theftPosts?.length) ? {roles:stage.guards.map(g=>g.theftRole ?? 'zone')} : {}) },
     t: 0,
     player: {
+      lastValidX: sp.x,
+      lastValidY: sp.y,
       spritePhase: 0,
       x: sp.x,
       y: sp.y,
@@ -193,6 +202,22 @@ export function stepPlayground(
 ): void {
   'worklet';
   if (s.events.caught || s.mission.complete) return;
+  if (!Number.isFinite(dt) || dt <= 0) {
+    stopPlayer(s.player);
+    if (typeof __DEV__ !== 'undefined' && __DEV__) console.warn('[COLLISION] invalid simulation delta');
+    return;
+  }
+  const motion = s.player;
+  if (![motion.x,motion.y,motion.vx,motion.vy,motion.speed,motion.facing,motion.phase,motion.dist,motion.spritePhase,motion.gait,motion.visualGait].every(Number.isFinite)) {
+    motion.x = Number.isFinite(motion.lastValidX) ? motion.lastValidX! : 0;
+    motion.y = Number.isFinite(motion.lastValidY) ? motion.lastValidY! : 0;
+    motion.facing = Number.isFinite(motion.facing) ? motion.facing : 0;
+    motion.phase = motion.spritePhase = 0;
+    motion.dist = Number.isFinite(motion.dist) ? motion.dist : 0;
+    stopPlayer(motion);
+    if (typeof __DEV__ !== 'undefined' && __DEV__) console.warn('[COLLISION] restored invalid player motion');
+    return;
+  }
   if (tilt?.paused) { stopPlayer(s.player); return; }
   s.t += dt;
   const p = s.player;
@@ -211,6 +236,7 @@ export function stepPlayground(
       p.spritePhase=advancePlayerSpritePhase(p.spritePhase,p.speed*dt,p.speed,playerLocoStride(p.visualGait,p.facing),p.visualGait);
     }
   }
+  p.lastValidX = p.x; p.lastValidY = p.y;
   // Crossing an active Exit completes the escape before this frame's contact pass.
   stepMission(s.mission, p.x, p.y, false);
   s.theft.empty=s.mission.enabled && s.mission.treasure;

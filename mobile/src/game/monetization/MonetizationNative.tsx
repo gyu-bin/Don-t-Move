@@ -88,9 +88,10 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
       const stored = await loadAdState();
       if (!alive) return;
       persist(stored);
+      setReady(true); // Storage/UI readiness never waits on optional SDK initialization.
       try {
         await interstitialController.initialize();
-        if (!stored.removeAdsOwned) interstitialController.preload();
+        if (alive && !stored.removeAdsOwned) interstitialController.preload();
       } catch (error) {
         adsLog('sdk bootstrap failed', error);
       }
@@ -128,7 +129,10 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
   const presentInterstitialIfNeeded = useCallback(async () => {
     if (presentingLock.current) return;
     const current = adStateRef.current;
-    if (!shouldShowInterstitial(current)) return;
+    if (!shouldShowInterstitial(current) || !interstitialController.isReady()) {
+      adsLog('continue immediately — ineligible or ad not loaded');
+      return;
+    }
     presentingLock.current = true;
     setAdPresenting(true);
     try {
@@ -141,6 +145,10 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
       presentingLock.current = false;
     }
   }, [persist]);
+
+  const confirmAdDismissed = useCallback(() => {
+    if (presentingLock.current) interstitialController.confirmPresentationDismissed();
+  }, []);
 
   const purchaseRemoveAds = useCallback(async () => {
     if (adStateRef.current.removeAdsOwned || purchaseStatus === 'purchasing') return;
@@ -190,12 +198,13 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     purchaseMessage,
     recordMissionClear,
     presentInterstitialIfNeeded,
+    confirmAdDismissed,
     purchaseRemoveAds,
     restorePurchases,
     clearPurchaseMessage: () => setPurchaseMessage(null),
   }), [
     ready, adState, adPresenting, product, purchaseStatus, purchaseMessage,
-    recordMissionClear, presentInterstitialIfNeeded, purchaseRemoveAds, restorePurchases,
+    recordMissionClear, presentInterstitialIfNeeded, confirmAdDismissed, purchaseRemoveAds, restorePurchases,
   ]);
 
   return <MonetizationContext.Provider value={value}>{children}</MonetizationContext.Provider>;

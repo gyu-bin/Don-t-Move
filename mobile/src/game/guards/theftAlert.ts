@@ -14,7 +14,13 @@ export type TheftRole = 'objective' | 'corridor' | 'exit' | 'zone' | 'roaming';
 /** Security Core has a brief reaction window; other missions retain their timing. */
 export const SECURITY_CORE_REACTION_SECONDS = 0.85;
 
+/** High-security objectives trip their own alarm this long after pickup. */
+export const HIGH_SECURITY_ALARM_SECONDS = 1.5;
+
 export interface TheftContext {
+  /** Present only for high-security objectives: silent delay, then Theft Alert without any witness. */
+  alarmDelay?: number;
+  alarmAge?: number;
   missionId?: string;
   empty: boolean;
   x: number;
@@ -46,11 +52,38 @@ function recordTheft(ev:GuardEvents, source:string, t:number):void {
   if(typeof __DEV__!=='undefined'&&__DEV__)console.log('[ALERT] THEFT_DISCOVERED',source);
 }
 
+/** Every guard takes its authored theft assignment. Targets are authored posts only, never player data. */
+function dispatchTheftSearch(guards:GuardState[],c:TheftContext):void {
+  'worklet';
+  for(let i=0;i<guards.length;i++){
+    const guard=guards[i];
+    guard.awareness=Awareness.Investigate;guard.action=GuardAction.None;
+    guard.suspicion=0;guard.hasLkp=false;guard.path=[];guard.repathAt=0;
+    guard.searchIndex=0;guard.searchWait=0;guard.stateT=0;
+    guard.localInvestigating=false;guard.localReturning=false;guard.localArrived=false;
+    guard.whistled=true;guard.speed=0;
+    const post=c.posts[i]?.[0] ?? guard.route[0];
+    guard.targetX=post?.x ?? guard.homeX;guard.targetY=post?.y ?? guard.homeY;
+  }
+}
+
 /** Returns the confirming guard id. Never reads player coordinates for theft targets. */
 export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Navigation,
   ev:GuardEvents,c:TheftContext,dt:number,t:number):string {
   'worklet';
   if(!c.empty)return '';
+  // High-security alarm: pickup → short silent tension → Theft Alert and global
+  // search. It shares no player position; only an actual sighting starts a chase.
+  if(c.alarmDelay!==undefined && !ev.theftAlert){
+    c.alarmAge=(c.alarmAge??0)+dt;
+    if(c.alarmAge>=c.alarmDelay){
+      const pursuing=hasPlayerAlert(guards,ev);
+      recordTheft(ev,'alarm',t);ev.theftRolesAssigned=true;ev.theftConfirmer='';ev.theftGuard=ev.theftGuard||'alarm';
+      if(!ev.theftSound){ev.theftSound=true;ev.whistleCount++;ev.theftWhistleRevision++;}
+      // Guards already chasing/searching for a seen player keep that state.
+      if(!pursuing)dispatchTheftSearch(guards,c);
+    }
+  }
   if(hasPlayerAlert(guards,ev)){
     // Preserve Chase/Search, every guard's target/path/velocity/timers and LKP.
     // A previously confirming guard already witnessed the empty case; otherwise
@@ -86,18 +119,7 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
       if(!ev.theftSound && g.whistleT>=T.whistleSoundAt){ev.theftSound=true;ev.whistleCount++;ev.theftWhistleRevision++;}
       if(g.whistleT>=T.whistleDuration){
         recordTheft(ev,g.id,t);ev.theftRolesAssigned=true;ev.theftConfirmer='';
-        for(let i=0;i<guards.length;i++){
-          const guard=guards[i];
-          guard.awareness=Awareness.Investigate;guard.action=GuardAction.None;
-          guard.suspicion=0;guard.hasLkp=false;guard.path=[];guard.repathAt=0;
-          guard.searchIndex=0;guard.searchWait=0;guard.stateT=0;
-          guard.localInvestigating=false;guard.localReturning=false;guard.localArrived=false;
-          guard.whistled=true;guard.speed=0;
-          // Every guard receives its assignment in the whistle completion frame.
-          // Targets come exclusively from authored positions, never hidden player data.
-          const post=c.posts[i]?.[0] ?? guard.route[0];
-          guard.targetX=post?.x ?? guard.homeX;guard.targetY=post?.y ?? guard.homeY;
-        }
+        dispatchTheftSearch(guards,c);
       }
     }
     g.actionT+=((g.action===GuardAction.Whistle?1:0)-g.actionT)*damp(12,dt);

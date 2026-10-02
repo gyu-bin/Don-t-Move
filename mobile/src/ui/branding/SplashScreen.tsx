@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { cancelAnimation, Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BRAND } from './introTimeline';
+import { completionDeadline } from './initialization';
 
 export const SPLASH_FADE_MS = 420;
 /**
@@ -15,7 +16,10 @@ export function SplashScreen({ leaving = false, onGone }: { leaving?: boolean; o
   const opacity = useSharedValue(1);
   useEffect(() => {
     if (!leaving) return;
-    opacity.set(withTiming(0, { duration: SPLASH_FADE_MS, easing: Easing.out(Easing.quad) }, done => { if (done && onGone) scheduleOnRN(onGone); }));
+    const completion = completionDeadline(() => onGone?.(), SPLASH_FADE_MS + 500);
+    const finish = completion.finish;
+    opacity.set(withTiming(0, { duration: SPLASH_FADE_MS, easing: Easing.out(Easing.quad) }, done => { if (done) scheduleOnRN(finish); }));
+    return () => { completion.cancel(); cancelAnimation(opacity); };
   }, [leaving, onGone, opacity]);
   const fade = useAnimatedStyle(() => ({ opacity: opacity.value }));
   const { width } = useWindowDimensions();

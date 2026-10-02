@@ -162,7 +162,8 @@ export interface StageDefinition {
   dressing?:DressingCluster[];
   lights: LightDef[];
   playerSpawn: { x: number; y: number; facing: number };
-  objective?: { kind: ValuableKind; x: number; y: number };
+  /** `highSecurity`: the pickup itself trips an alarm after a short delay (no guard has to see the empty case). */
+  objective?: { kind: ValuableKind; x: number; y: number; highSecurity?: boolean };
   exit?: { x: number; y: number; w: number; h: number };
   /** Development acceptance target, independent of mission/diamond/exit rules. Tile units. */
   temporaryGoal?: { x: number; y: number; radius: number };

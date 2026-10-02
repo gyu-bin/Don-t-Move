@@ -6,3 +6,12 @@ export function withDeadline<T>(work: Promise<T>, milliseconds: number, label: s
    error => { clearTimeout(timer); reject(error); });
  });
 }
+
+/** Resolve a transition once, independently of a UI-thread animation callback.
+ * Disposal invalidates stale worklet callbacks as well as the timer. */
+export function completionDeadline(onComplete: () => void, milliseconds: number) {
+ let active = true;
+ const finish = () => { if (!active) return; active = false; clearTimeout(timer); onComplete(); };
+ const timer = setTimeout(finish, milliseconds);
+ return {finish, cancel: () => { active = false; clearTimeout(timer); }};
+}

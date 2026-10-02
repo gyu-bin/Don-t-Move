@@ -253,9 +253,11 @@ function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:
       const wallIndex=stage.props.filter(q=>environmentAssetForProp(stage.def,q)==='gallery_movable_art_wall').indexOf(p);
       const portraitHall=stage.def.id==='02-02'&&wallIndex===0;
       const remountedPortrait=stage.def.id==='02-02'&&wallIndex===1;
-      const artwork=remountedPortrait?atlas?.gallery_portrait_frame_a:wallIndex%2===0?(portraitHall?atlas?.gallery_portrait_frame_b:atlas?.gallery_abstract_frame):null;
+      // Odd panels used to stay blank grey slabs; they now carry a portrait.
+      const oddPortrait=wallIndex%2===1&&!remountedPortrait;
+      const artwork=remountedPortrait?atlas?.gallery_portrait_frame_a:wallIndex%2===0?(portraitHall?atlas?.gallery_portrait_frame_b:atlas?.gallery_abstract_frame):wallIndex%4===1?atlas?.gallery_portrait_frame_a:atlas?.gallery_portrait_frame_b;
       const width=spec.drawWidth*TILE*p.scale;
-      if(artwork)drawFrame(c,artwork,p.x,p.y-width*.30,width*((portraitHall||remountedPortrait)?.30:.57),!portraitHall&&!remountedPortrait&&wallIndex%4===2);
+      if(artwork)drawFrame(c,artwork,p.x,p.y-width*.30,width*((portraitHall||remountedPortrait||oddPortrait)?.30:.57),!portraitHall&&!remountedPortrait&&wallIndex%4===2);
     }
     // A contained exhibit-case attachment, not a freestanding barrier. Its entire
     // ground span is narrower than the existing case footprint and its base is

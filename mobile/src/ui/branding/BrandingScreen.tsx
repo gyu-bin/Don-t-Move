@@ -89,6 +89,13 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
   return () => { mounted.current = false; sub.remove(); cancelAnimation(time); };
  }, [finish, time]);
 
+ // Independent of RAF/worklet completion: a lost timeline callback cannot hide Home forever.
+ useEffect(() => {
+  if (!intro) return;
+  const deadline = setTimeout(() => { markStartup('intro-timeout-fallback'); finish(); }, INTRO_MS + 2000);
+  return () => clearTimeout(deadline);
+ }, [intro, art, finish]);
+
  // The timeline starts once the artwork can be drawn, so no frame of the intro is ever blank.
  useEffect(() => {
   if (!art || done.current) return;
@@ -104,7 +111,7 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
  }, [art, finish, time]);
 
  useBrandAudio(intro && started, !!art && active && soundEnabled);
- useEffect(() => { if (!intro && ready) markStartup('start-interactive'); }, [intro, ready]);
+ useEffect(() => { if (!intro && ready) { markStartup('start-interactive'); if (__DEV__) console.info('[HOME] mounted'); } }, [intro, ready]);
 
  const frame = useDerivedValue(() => introFrame(time.value));
  const picture = useDerivedValue(() => {

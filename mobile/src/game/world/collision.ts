@@ -11,6 +11,23 @@ export function moveWithCollision(
   blockers: number[],
 ): void {
   'worklet';
+  const beforeX = pos.x, beforeY = pos.y;
+  if (!Number.isFinite(beforeX) || !Number.isFinite(beforeY) ||
+      !Number.isFinite(dx) || !Number.isFinite(dy) || !Number.isFinite(radius) || radius < 0 ||
+      !Array.isArray(blockers) || blockers.length % 4 !== 0) {
+    if (typeof __DEV__ !== 'undefined' && __DEV__) console.warn('[COLLISION] invalid movement input');
+    return;
+  }
+  // Validate before either axis changes; a malformed collider cancels this
+  // movement rather than passing a nonfinite coordinate to the renderer.
+  for (let i = 0; i < blockers.length; i += 4) {
+    if (!Number.isFinite(blockers[i]) || !Number.isFinite(blockers[i + 1]) ||
+        !Number.isFinite(blockers[i + 2]) || !Number.isFinite(blockers[i + 3]) ||
+        blockers[i] > blockers[i + 2] || blockers[i + 1] > blockers[i + 3]) {
+      if (typeof __DEV__ !== 'undefined' && __DEV__) console.warn('[COLLISION] invalid blocker', i);
+      return;
+    }
+  }
   const eps = 0.01;
   pos.x += dx;
   for (let i = 0; i < blockers.length; i += 4) {
@@ -31,5 +48,9 @@ export function moveWithCollision(
     if (pos.x > x0 && pos.x < x1 && pos.y > y0 && pos.y < y1) {
       pos.y = dy > 0 ? y0 - eps : dy < 0 ? y1 + eps : pos.y;
     }
+  }
+  if (!Number.isFinite(pos.x) || !Number.isFinite(pos.y)) {
+    pos.x = beforeX; pos.y = beforeY;
+    if (typeof __DEV__ !== 'undefined' && __DEV__) console.warn('[COLLISION] invalid resolved position');
   }
 }

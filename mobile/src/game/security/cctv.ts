@@ -4,6 +4,9 @@ import {buildVisionFan,createFanBuffers,pointVisible} from '../guards/guardVisio
 import type {VisionFan} from '../guards/guardVision';
 import {clamp,wrapAngle} from '../core/math';
 import {GUARD_TUNING as T} from '../guards/guardTuning';
+/** CCTV detection pacing. `referenceRate` is the authored per-camera suspicionRate that maps to these times. */
+export const CAMERA_TUNING={nearCenterSeconds:1.15,farFactor:1.35,edgeFactor:1.3,movement:[0.4,0.4,1,1.15],referenceRate:0.4} as const;
+const C=CAMERA_TUNING;
 /** Explicit asset slot: intentionally silent until a reviewed production SFX exists. */
 export const CAMERA_ALERT_AUDIO_SLOT='camera_alert';
 export const CAMERA_ALERT_AUDIO_STATUS='CAMERA_ALERT_SFX_REQUIRED';
@@ -38,10 +41,15 @@ export function stepSecurityCameras(cameras:SecurityCameraState[],player:PlayerV
   if(camera.canSee){
    camera.unseenTime=0;
    const gait=clamp(player.gait,0,3),i=Math.min(2,Math.floor(gait));
-   const movement=T.movementFactor[i]+(T.movementFactor[i+1]-T.movementFactor[i])*(gait-i);
    const distance=clamp(Math.hypot(player.x-camera.x,player.y-camera.y)/camera.visionRange,0,1);
    const center=clamp(Math.abs(wrapAngle(Math.atan2(player.y-camera.y,player.x-camera.x)-camera.facing))/camera.visionHalfAngle,0,1);
-   camera.detectionGain=camera.suspicionRate*movement*(T.distanceFactorNear+(T.distanceFactorFar-T.distanceFactorNear)*distance)*(1+(T.coneFactorEdge-1)*center);
+   // Cameras are a fixed, predictable but fast sensor: time-to-alert is authored
+   // directly for a walking thief (close/centre ~1.15s, far/edge ~2s). Sneaking
+   // or standing takes 2.5x longer (~2.9-5s): still unsafe to linger, but the
+   // stealth counter-play and authored sneak lines stay valid.
+   const seconds=C.nearCenterSeconds*(1+(C.farFactor-1)*distance)*(1+(C.edgeFactor-1)*center);
+   const cameraMovement=C.movement[i]+(C.movement[i+1]-C.movement[i])*(gait-i);
+   camera.detectionGain=cameraMovement*(camera.suspicionRate/C.referenceRate)/seconds;
    camera.suspicion=Math.min(1,camera.suspicion+camera.detectionGain*dt);
    if(camera.suspicion>=1&&!camera.alerted){
     camera.alerted=true;camera.alertRevision++;

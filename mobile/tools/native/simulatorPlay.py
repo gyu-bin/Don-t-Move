@@ -41,8 +41,13 @@ def open_mission(mid):
  if any(e.get('role')=='AXHeading' and e.get('AXLabel') in ['MISSION SELECT','SETTINGS'] for e in ax()):tap('BACK')
  labels=[e.get('AXLabel','')for e in ax()]
  if 'CHOOSE YOUR NEXT MISSION' not in labels:tap('CHAPTER SELECT')
- chap={'01':'01 MUSEUM','02':'02 ART GALLERY','03':'03 BANK'}[mid[:2]]
- tap(chap)
+ for _ in range(18):
+  found=[e for e in ax() if (e.get('AXLabel')or'').startswith(mid[:2]+' ') and 'Button' in e.get('traits',[])]
+  if found and 100<found[0]['frame']['y']<760:
+   tap(found[0]['AXLabel']);break
+  down=not found or found[0]['frame']['y']>760
+  cmd('idb','ui','swipe','--udid',UDID,'210','735' if down else '315','210','315' if down else '735','--duration','0.35')
+ else:raise RuntimeError('chapter card not found '+mid[:2])
  for _ in range(8):
   found=[e for e in ax() if (e.get('AXLabel')or'').startswith(mid+',')]
   if found and 140<found[0]['frame']['y']<780:
@@ -55,7 +60,7 @@ def open_mission(mid):
   time.sleep(.2)
  raise RuntimeError('mission did not open '+mid)
 
-def run(mid,route=None,mode='SNEAK',timeout=240):
+def run(mid,route=None,mode='SNEAK',timeout=45):
  q=open_mission(mid);d=DEFS[mid]
  routes=d['testRoutes'];r=next((x for x in routes if x['name'].startswith(route or 'safe')),routes[0])
  pts=r['points'][1:]+d['escapeRoutes'][0]['points'][1:]

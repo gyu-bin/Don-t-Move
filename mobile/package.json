@@ -57,16 +57,17 @@
     "test:environment": "node --import tsx --test src/assets/environmentKit.test.ts src/game/levels/__tests__/galleryGlass.test.ts tools/environment/contract.test.ts",
     "test:branding": "node --import tsx --test src/ui/branding/*.test.ts",
     "test:maps": "node --import tsx --test src/game/levels/__tests__/tiltTestMaps.test.ts",
-    "test:tilt": "node --import tsx --test src/game/input/__tests__/tilt.test.ts src/game/input/__tests__/androidTilt.test.ts",
-    "test:global": "tsx src/game/guards/__tests__/globalAlert.test.ts && node --import tsx --test src/game/guards/__tests__/stealthV2.test.ts src/game/guards/__tests__/theftV3.test.ts src/game/guards/__tests__/alertPriority.test.ts src/game/guards/__tests__/chaseBalance.test.ts",
+    "test:tilt": "node --import tsx --test src/game/input/__tests__/tilt.test.ts src/game/input/__tests__/androidTilt.test.ts src/game/input/__tests__/calibrationHotfix.test.ts",
+    "test:global": "tsx src/game/guards/__tests__/globalAlert.test.ts && node --import tsx --test src/game/guards/__tests__/stealthV2.test.ts src/game/guards/__tests__/theftV3.test.ts src/game/guards/__tests__/alertPriority.test.ts src/game/guards/__tests__/chaseBalance.test.ts src/game/guards/__tests__/highSecurityAlarm.test.ts",
     "sprites:views": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/extractViews.ts",
     "sprites:identity": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/makeIdentityRefs.ts",
     "test:rules": "tsx src/game/__tests__/coreRules.test.ts",
     "test:playable": "node --import tsx --test src/game/__tests__/playableV1.test.ts src/game/__tests__/chapter1.test.ts src/game/__tests__/characterAnimation.test.ts src/game/__tests__/rightWalkTrial.test.ts src/game/__tests__/polishV52.test.ts src/game/__tests__/motionV61.test.ts",
     "lint": "expo lint",
     "test:theft-support": "node --import tsx --test src/game/audio/__tests__/audioState.test.ts src/game/world/museumBoundary.test.ts",
-    "test:monetization": "node --import tsx --test src/game/monetization/__tests__/adState.test.ts",
-    "test:crash-hotfix": "node --test src/game/guards/__tests__/workletChase.test.cjs && node --import tsx --test src/game/guards/__tests__/theftSpottedCrash.test.ts src/game/guards/__tests__/animationBounds.test.ts"
+    "test:monetization": "node --import tsx --test src/game/monetization/__tests__/adState.test.ts src/game/security/__tests__/cctv.test.ts",
+    "test:crash-hotfix": "node --test src/game/guards/__tests__/workletChase.test.cjs && node --import tsx --test src/game/guards/__tests__/theftSpottedCrash.test.ts src/game/guards/__tests__/animationBounds.test.ts",
+    "test:stability": "node --test src/game/world/__tests__/collisionWorklet.test.cjs && node --import tsx --test src/game/world/__tests__/collisionStability.test.ts src/game/world/__tests__/wallSlide.test.ts src/game/monetization/__tests__/interstitialPresentation.test.ts src/game/monetization/__tests__/adsController.test.cjs"
   },
   "private": true
 }

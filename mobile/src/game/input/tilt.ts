@@ -9,6 +9,7 @@ export interface AttitudeSample {
 }
 export interface TiltTuning { deadZone: number; maxTilt: number; sensitivity: number; smoothing: number }
 export const DEFAULT_TILT: TiltTuning = { deadZone: 2, maxTilt: 16, sensitivity: 1, smoothing: 0.06 };
+export const CALIBRATION_TIMEOUT_MS = 2500;
 /** Background ends a reference session; foreground alone must never recalibrate. */
 export function sensorLifecycleAction(state: string, running: boolean, started: boolean) {
   if (state === 'background') return 'stop';
@@ -27,12 +28,15 @@ export interface TiltState {
   smoothX: number; smoothY: number;
   x: number; y: number;
   progress: number;
+  calibrationStartedAt: number;
+  calibrationSamples: {q:Quaternion;receivedAt:number}[];
+  calibrationMethod: 'pending' | 'stable' | 'recent-median' | 'recent-sample' | 'manual';
   status: 'HOLD COMFORTABLY' | 'READY' | 'PLAY' | 'SENSOR PAUSED' | 'CENTER RESET';
 }
 export function createTiltState(): TiltState {
   return { neutral: null, candidate: null, stableSince: 0, lastTimestamp: -1, readyAt: 0,
     pitch: 0, roll: 0, magnitude: 0, deadX: 0, deadY: 0, smoothX: 0, smoothY: 0,
-    x: 0, y: 0, progress: 0, status: 'HOLD COMFORTABLY' };
+    x: 0, y: 0, progress: 0, calibrationStartedAt:-1,calibrationSamples:[],calibrationMethod:'pending',status: 'HOLD COMFORTABLY' };
 }
 export function multiply(a: Quaternion, b: Quaternion): Quaternion {
   'worklet';
@@ -60,12 +64,14 @@ export function freshSample(sample: AttitudeSample | null, now: number): boolean
 export function recenterTilt(s: TiltState, sample: AttitudeSample | null, now: number): boolean {
   'worklet';
   zeroTilt(s);
+  s.candidate=null;s.stableSince=0;s.progress=0;s.calibrationStartedAt=now;s.calibrationSamples=[];
   if (!sample || !freshSample(sample, now)) return false;
   s.neutral = normalized(sample.q);
   s.candidate = null;
   s.lastTimestamp = sample.timestamp;
   s.pitch = s.roll = s.magnitude = 0;
   s.status = 'CENTER RESET';
+  s.calibrationMethod='manual';
   s.readyAt = now + 450;
   return true;
 }
@@ -96,6 +102,33 @@ export function response(magnitude: number, tuning: TiltTuning): number {
 }
 export function stepTilt(s: TiltState, sample: AttitudeSample | null, now: number, dt: number, tuning: TiltTuning): void {
   'worklet';
+  if(!s.neutral && s.calibrationStartedAt<0)s.calibrationStartedAt=now;
+  if(!s.neutral){
+    s.calibrationSamples=s.calibrationSamples.filter(value=>now>=value.receivedAt&&now-value.receivedAt<=600);
+    if(sample&&freshSample(sample,now)&&sample.timestamp>s.lastTimestamp){
+      s.calibrationSamples.push({q:normalized(sample.q)!,receivedAt:sample.receivedAt});
+      if(s.calibrationSamples.length>32)s.calibrationSamples.shift();
+    }
+    if(now-s.calibrationStartedAt>=CALIBRATION_TIMEOUT_MS && s.calibrationSamples.length){
+      const reference=s.calibrationSamples[0].q;
+      const values=s.calibrationSamples.map(value=>{
+        const q=value.q,sign=q.x*reference.x+q.y*reference.y+q.z*reference.z+q.w*reference.w<0?-1:1;
+        return {x:q.x*sign,y:q.y*sign,z:q.z*sign,w:q.w*sign};
+      });
+      const components=['x','y','z','w'] as const;
+      const median={x:0,y:0,z:0,w:0};
+      for(const component of components){
+        const sorted=values.map(q=>q[component]).sort((a,b)=>a-b),middle=Math.floor(sorted.length/2);
+        median[component]=sorted.length%2?sorted[middle]:(sorted[middle-1]+sorted[middle])/2;
+      }
+      const filtered=normalized(median);
+      const neutral=filtered??normalized(values[values.length-1]);
+      if(neutral){
+        zeroTilt(s);s.neutral=neutral;s.candidate=null;s.progress=1;s.readyAt=now+350;
+        s.calibrationSamples=[];s.calibrationMethod=filtered?'recent-median':'recent-sample';s.status='READY';return;
+      }
+    }
+  }
   if (!sample || !freshSample(sample, now)) {
     zeroTilt(s); s.candidate = null; s.progress = 0; s.status = 'SENSOR PAUSED'; return;
   }
@@ -113,11 +146,11 @@ export function stepTilt(s: TiltState, sample: AttitudeSample | null, now: numbe
     }
     s.progress = Math.min(1, (sample.timestamp-s.stableSince)/0.5);
     if (s.progress >= 1) {
-      s.neutral = q; s.candidate = null; s.readyAt = now+350; s.status = 'READY';
+      s.neutral = q; s.candidate = null; s.calibrationSamples=[];s.calibrationMethod='stable';s.readyAt = now+350; s.status = 'READY';
     }
     return;
   }
-  if (now < s.readyAt && s.status === 'READY') { zeroTilt(s); return; }
+  if (now < s.readyAt && s.calibrationMethod !== 'manual') { zeroTilt(s);s.status='READY';return; }
   // Recenter feedback must not become a repeatable pause/escape button for Guards.
   s.status = now < s.readyAt && s.status === 'CENTER RESET' ? 'CENTER RESET' : 'PLAY';
   const tilt = relativeTilt(s.neutral, q);

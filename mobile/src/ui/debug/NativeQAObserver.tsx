@@ -32,7 +32,7 @@ export function NativeQAObserver({state,zoom,width,height,paused,transitioning,c
  useEffect(()=>{
   const sample=()=>{
    const s=state.get(),p=s.player,c=cadence.get();
-   setLabel('NATIVE_QA '+JSON.stringify({
+   const json=JSON.stringify({
     missionId:s.theft.missionId,time:round(s.t),sampleWallMs:Date.now(),paused,transitioning,
     zoom,dimensions:{width,height,worldWidth:round(width/zoom),worldHeight:round(height/zoom)},
     cam:{x:round(s.cam.x),y:round(s.cam.y)},touchSeq:s.touchSeq,playerMode:s.playerMode,
@@ -42,7 +42,10 @@ export function NativeQAObserver({state,zoom,width,height,paused,transitioning,c
     guards:s.guards.map(g=>({id:g.id,x:round(g.x),y:round(g.y),facing:round(g.facing),speed:round(g.speed),awareness:g.awareness,suspicion:round(g.suspicion),canSee:g.canSee,visionRange:g.visionRange,visionHalfAngle:g.visionHalfAngle})),
     cameras:s.securityCameras.map(c=>({id:c.id,x:round(c.x),y:round(c.y),facing:round(c.facing),suspicion:round(c.suspicion),canSee:c.canSee,alerted:c.alerted,visionRange:c.visionRange,visionHalfAngle:c.visionHalfAngle})),
     uiCallbackCadence:{frames:c.frames,elapsedMs:round(c.elapsedMs),hz:c.elapsedMs?round(c.frames*1000/c.elapsedMs):0,meanMs:c.frames?round(c.elapsedMs/c.frames):0,maxMs:round(c.maxMs),over33Ms:c.over33Ms,lastMs:round(c.lastMs)},
-   }));
+   });
+   setLabel('NATIVE_QA '+json);
+   // Device QA: mirror telemetry into the Metro log (EXPO_PUBLIC_DM_QA_LOG=1 at Metro start).
+   if(process.env.EXPO_PUBLIC_DM_QA_LOG==='1')console.info('[QA] '+json);
   };
   sample();const timer=setInterval(sample,250);return()=>clearInterval(timer);
  },[state,cadence,zoom,width,height,paused,transitioning]);

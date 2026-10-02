@@ -62,8 +62,35 @@ export function buildNavigation(stage: CompiledStage, radius: number): Navigatio
   blockers.push(-cell, -cell, 0, stage.height + cell, stage.width, -cell, stage.width + cell, stage.height + cell,
     0, -cell, stage.width, 0, 0, stage.height, stage.width, stage.height + cell);
   const n: Navigation = { cols, rows, cell, radius, blockers, walkable: [], neighbors: [], components: [] };
+  // Bucket blockers by the grid cells their radius-expanded box touches. A node
+  // or a step between adjacent nodes can only be hit by blockers registered in
+  // those cells, so each query tests a handful of boxes instead of all of them.
+  const buckets: number[][] = Array.from({ length: cols * rows }, () => []);
+  for (let b = 0; b < blockers.length; b += 4) {
+    const c0 = Math.max(0, Math.floor((blockers[b] - radius) / cell)), c1 = Math.min(cols - 1, Math.floor((blockers[b + 2] + radius) / cell));
+    const r0 = Math.max(0, Math.floor((blockers[b + 1] - radius) / cell)), r1 = Math.min(rows - 1, Math.floor((blockers[b + 3] + radius) / cell));
+    for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) buckets[r * cols + c].push(b);
+  }
+  const clearLocal = (i: number, j: number): boolean => {
+    const ax = nodeX(n, i), ay = nodeY(n, i), bx = nodeX(n, j), by = nodeY(n, j);
+    // A diagonal step crosses the corner shared by four cells; a box touching
+    // only that corner may be registered in either of the other two.
+    const ci = i % cols, cj = j % cols, ri = (i - ci) / cols, rj = (j - cj) / cols;
+    const cells = i === j ? [i] : ci !== cj && ri !== rj ? [i, j, ri * cols + cj, rj * cols + ci] : [i, j];
+    for (const cellIndex of cells) for (const b of buckets[cellIndex]) {
+      let lo = 0, hi = 1;
+      for (let axis = 0; axis < 2; axis++) {
+        const a = axis === 0 ? ax : ay, d = (axis === 0 ? bx : by) - a;
+        const min = blockers[b + axis] - radius, max = blockers[b + axis + 2] + radius;
+        if (Math.abs(d) < 1e-8) { if (a < min || a > max) { hi = -1; break; } }
+        else { const u = (min - a) / d, v = (max - a) / d; lo = Math.max(lo, Math.min(u, v)); hi = Math.min(hi, Math.max(u, v)); }
+      }
+      if (lo <= hi) return false;
+    }
+    return true;
+  };
   for (let i = 0; i < cols * rows; i++) {
-    n.walkable.push(clearSegment(nodeX(n, i), nodeY(n, i), nodeX(n, i), nodeY(n, i), blockers, radius));
+    n.walkable.push(clearLocal(i, i));
     n.neighbors.push([]);
     n.components.push(-1);
   }
@@ -74,7 +101,7 @@ export function buildNavigation(stage: CompiledStage, radius: number): Navigatio
       const y = Math.floor(i / cols) + dy;
       const j = y * cols + x;
       if ((dx === 0 && dy === 0) || x < 0 || y < 0 || x >= cols || y >= rows || !n.walkable[j]) continue;
-      if (clearSegment(nodeX(n, i), nodeY(n, i), nodeX(n, j), nodeY(n, j), blockers, radius)) n.neighbors[i].push(j);
+      if (clearLocal(i, j)) n.neighbors[i].push(j);
     }
   }
   let component = 0;

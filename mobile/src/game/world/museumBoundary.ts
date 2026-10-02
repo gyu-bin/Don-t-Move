@@ -22,7 +22,8 @@ export function createPlayableBoundary(stage: CompiledStage): PlayableBoundary {
 
 export function isPlayableBody(x: number, y: number, radius: number, b: PlayableBoundary): boolean {
   'worklet';
-  if (!Number.isFinite(x) || !Number.isFinite(y) || x < radius || y < radius ||
+  if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(radius) || radius < 0 ||
+    !Number.isFinite(b.tile) || b.tile <= 0 || x < radius || y < radius ||
     x > b.width - radius || y > b.height - radius) return false;
   // The collision system uses a square-expanded body, so validate its whole
   // footprint rather than just its center (prevents void/corner clipping).
@@ -58,6 +59,12 @@ export function enforcePlayableStage(
   const dx = targetX - beforeX, dy = targetY - beforeY;
   const steps = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) / Math.max(1, radius / 2)));
   pos.x = beforeX; pos.y = beforeY;
+  // Normal fixed ticks need only a few steps. Cancel pathological movement
+  // instead of monopolizing the UI thread in an unbounded recovery loop.
+  if (!Number.isFinite(steps) || steps > 128) {
+    if (typeof __DEV__ !== 'undefined' && __DEV__) console.warn('[COLLISION] boundary iteration cap');
+    return true;
+  }
   for (let i = 0; i < steps; i++) {
     const x = pos.x, y = pos.y;
     moveWithCollision(pos, dx / steps, dy / steps, radius, b.blockers);
