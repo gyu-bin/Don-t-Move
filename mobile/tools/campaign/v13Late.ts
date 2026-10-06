@@ -1,14 +1,14 @@
 /**
- * V13 Phase 4 — Chapter 6–9, structural first pass (see v13Reuse.ts).
- * Mansion ← Gallery plans, Warehouse ← Museum plans, Security HQ ← Lab plans (all mirrored), Vault ← Bank plans.
+ * V13 Phase 4 — Chapter 6–8, structural first pass (see v13Reuse.ts).
+ * Mansion ← Gallery plans, Warehouse ← Museum plans, Security HQ ← Lab plans, all mirrored. Which plans exactly, and
+ * whether they carry the Phase 7 layer, is set in v13Sources.ts. Chapter 9 has plans of its own (v13Vault.ts).
  * These chapters have no painted kit of their own: furniture uses the nearest existing art or the theme's drawn
  * shapes, and is meant to be swapped piece for piece when their art exists (docs/design/v13/ASSET_REQUEST_CH6_CH9.md).
  */
 import type {V13Mission,V13Structure} from './v13Types';
-import {V13_MUSEUM} from './v13Museum';
-import {V13_GALLERY} from './v13Gallery';
-import {V13_LAB} from './v13Lab';
+import {derivedBases} from './v13Sources';
 import {mirrorX,refit,secure,type Refit} from './v13Reuse';
+import {phase7Late} from './v13Phase7';
 import {PROP_KIT} from '../../src/game/world/propKit';
 
 const as=(s:V13Structure,kind:V13Structure['kind'],asset:V13Structure['asset']|undefined,factor=1):V13Structure[]=>[{...s,kind,asset,scale:+(s.scale*factor).toFixed(3)}];
@@ -48,10 +48,9 @@ const WAREHOUSE=(mission:number):Refit=>{
   const options=slots[s.kind];if(!options)return [s];const n=turn.get(s.kind)??0;turn.set(s.kind,n+1);const[kind,asset]=options[n%options.length];return fit(s,kind,asset);};
 };
 /** Security HQ: the Lab's control-room pieces; wet-lab pieces become racks, consoles and monitor stations. */
-/** Cryo units have no place in a security building: each becomes a server rack scaled to the unit's width. A unit that
- *  stood against its wall keeps its back on the wall (the rack is shallower), a free-standing one keeps its centre. */
-const serverRow=(s:V13Structure):V13Structure[]=>{const a=PROP_KIT[s.kind].footprint,b=PROP_KIT.labServerRack.footprint,factor=a.w/b.w,back=/Bank/.test(s.name);
- return [{...s,kind:'labServerRack',asset:'lab_server_rack_front',scale:+(s.scale*factor).toFixed(3),y:back?+(s.y-a.h*s.scale/2+b.h*s.scale*factor/2).toFixed(3):s.y}];};
+/** Cryo units have no place in a security building: each is drawn as a pair of server racks. The unit's footprint is kept
+ *  (Phase 7C): the shallower rack tried first hid much less than the Lab's unit and opened long uncovered stretches. */
+const serverRow=(s:V13Structure):V13Structure[]=>[{...s,asset:'hq_server_row'}];
 const HQ:Refit=s=>s.kind==='labCryoUnit'?serverRow(s):s.kind==='labCryoChamber'?as(s,'labMonitorStation','lab_monitor_station',1.1)
  :s.kind==='labSpecimenTank'?as(s,'labObservationConsole','lab_observation_console',.92):s.kind==='labCentrifugeBench'?as(s,'labMonitorStation','lab_monitor_station',1.17)
  :s.kind==='labFumeHood'?as(s,'labServerRack','lab_server_rack_front',1.2):s.kind==='labSampleFridge'?as(s,'labServerRack','lab_server_rack_front'):s.kind==='labCentralExperiment'?as(s,'labObservationConsole','lab_observation_console',1.2)
@@ -66,12 +65,12 @@ const HQ_PICTURE:Partial<Record<V13Structure['kind'],NonNullable<V13Structure['a
 const hqArt=(mission:number):Refit=>HQ_ART.has(mission)?s=>HQ(s).map(q=>HQ_PICTURE[q.kind]?{...q,asset:HQ_PICTURE[q.kind]}:q):HQ;
 /** Generated cameras that must stay where they were when furniture changed (the rule would otherwise re-seat them):
  *  08-04 kept its storage camera when the cryo units became server racks. */
-const PINNED:Record<string,Record<string,{x:number;y:number}>>={'08-04':{storage:{x:5.5,y:7.4}}};
+export const PINNED:Record<string,Record<string,{x:number;y:number}>>={'08-04':{storage:{x:5.5,y:7.4}}};
 const pin=(m:V13Mission):V13Mission=>PINNED[m.id]?{...m,cameras:m.cameras.map(c=>PINNED[m.id][c.zone]?{...c,at:PINNED[m.id][c.zone]}:c)}:m;
 const chapter=(n:number,titles:string[],bases:V13Mission[],family:string,swap:(mission:number)=>Refit,doors:{normal:string;secure:string},guards:number,cameras:number)=>
- bases.map((b,i)=>pin(secure(refit(b,`0${n}-0${i+1}`,titles[i],family,swap(i),doors),guards,cameras)));
-export const V13_MANSION=chapter(6,['Reception Wing','Library Passage','Private Courtyard','East Family Wing','Secret Vault'],V13_GALLERY.map(mirrorX),'Mansion',mansionArt,{normal:'mansionWood',secure:'mansionLibrary'},4,2);
-export const V13_WAREHOUSE=chapter(7,['Loading Aisles','Restricted Freight','Machinery Cross','Container Spine','Secure Container'],V13_MUSEUM.map(mirrorX),'Warehouse',WAREHOUSE,{normal:'warehouseIndustrial',secure:'warehouseIndustrial'},4,2);
-export const V13_HQ=chapter(8,['Monitoring Spine','Guard Network','Surveillance Junction','Operations Block','Control Core Heist'],V13_LAB.map(mirrorX),'Security HQ',hqArt,{normal:'hqSteel',secure:'hqSteel'},5,3);
+ bases.map((b,i)=>phase7Late(pin(secure(refit(b,`0${n}-0${i+1}`,titles[i],family,swap(i),doors),guards,cameras))));
+export const V13_MANSION=chapter(6,['Reception Wing','Library Passage','Private Courtyard','East Family Wing','Secret Vault'],derivedBases(6).map(mirrorX),'Mansion',mansionArt,{normal:'mansionWood',secure:'mansionLibrary'},4,2);
+export const V13_WAREHOUSE=chapter(7,['Loading Aisles','Restricted Freight','Machinery Cross','Container Spine','Secure Container'],derivedBases(7).map(mirrorX),'Warehouse',WAREHOUSE,{normal:'warehouseIndustrial',secure:'warehouseIndustrial'},4,2);
+export const V13_HQ=chapter(8,['Monitoring Spine','Guard Network','Surveillance Junction','Operations Block','Control Core Heist'],derivedBases(8).map(mirrorX),'Security HQ',hqArt,{normal:'hqSteel',secure:'hqSteel'},5,3);
 // Chapter 9 has floor plans of its own: tools/campaign/v13Vault.ts.
 export const V13_LATE=[...V13_MANSION,...V13_WAREHOUSE,...V13_HQ];

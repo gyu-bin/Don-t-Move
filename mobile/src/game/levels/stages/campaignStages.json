@@ -1607,6 +1607,14 @@
         "collisionScale": 1.6
       },
       {
+        "kind": "displayCase",
+        "visualAssetId": "museum_display_case_large",
+        "x": 7.1,
+        "y": 12.585,
+        "scale": 1.3,
+        "collisionScale": 1.3
+      },
+      {
         "kind": "objectiveCase",
         "visualAssetId": "museum_diamond_case",
         "x": 2.25,
@@ -2748,6 +2756,14 @@
           "y": 1.96,
           "scale": 1.6,
           "collisionScale": 1.6
+        },
+        {
+          "kind": "displayCase",
+          "visualAssetId": "museum_display_case_large",
+          "x": 7.1,
+          "y": 12.585,
+          "scale": 1.3,
+          "collisionScale": 1.3
         }
       ],
       "islands": [
@@ -7201,12 +7217,12 @@
         "collisionScale": 2.2
       },
       {
-        "kind": "table",
-        "visualAssetId": "gallery_central_plinth",
-        "x": 18.92,
+        "kind": "statue",
+        "visualAssetId": "gallery_sculpture_large",
+        "x": 19.325,
         "y": 6.36,
-        "scale": 1.8,
-        "collisionScale": 1.8
+        "scale": 1.5,
+        "collisionScale": 1.5
       },
       {
         "kind": "painting",
@@ -7526,14 +7542,14 @@
             "turnDuration": 0.4
           },
           {
-            "x": 17.75,
+            "x": 18.75,
             "y": 4.75,
             "waitDuration": 0,
             "lookDirection": 3.141592653589793,
             "turnDuration": 0.4
           },
           {
-            "x": 17.25,
+            "x": 18.25,
             "y": 5.25,
             "waitDuration": 0,
             "lookDirection": 2.356194490192345,
@@ -7547,14 +7563,14 @@
             "turnDuration": 0.4
           },
           {
-            "x": 17.25,
+            "x": 18.25,
             "y": 5.25,
             "waitDuration": 0,
-            "lookDirection": -1.8045395076637982,
+            "lookDirection": -1.6183794300718801,
             "turnDuration": 0.4
           },
           {
-            "x": 17.75,
+            "x": 18.75,
             "y": 4.75,
             "waitDuration": 0,
             "lookDirection": -0.7853981633974483,
@@ -7564,7 +7580,7 @@
             "x": 24.25,
             "y": 4.25,
             "waitDuration": 0,
-            "lookDirection": -0.07677189126977804,
+            "lookDirection": -0.09065988720074511,
             "turnDuration": 0.4
           }
         ]
@@ -7790,16 +7806,8 @@
             "y": 3.5
           },
           {
-            "x": 17.25,
-            "y": 4.25
-          },
-          {
-            "x": 17.25,
-            "y": 7.25
-          },
-          {
             "x": 17.75,
-            "y": 7.25
+            "y": 5.25
           },
           {
             "x": 19,
@@ -8464,12 +8472,12 @@
           "collisionScale": 2.2
         },
         {
-          "kind": "table",
-          "visualAssetId": "gallery_central_plinth",
-          "x": 18.92,
+          "kind": "statue",
+          "visualAssetId": "gallery_sculpture_large",
+          "x": 19.325,
           "y": 6.36,
-          "scale": 1.8,
-          "collisionScale": 1.8
+          "scale": 1.5,
+          "collisionScale": 1.5
         },
         {
           "kind": "painting",
@@ -8764,7 +8772,7 @@
       "#.......................#",
       "#.......................#",
       "#.......................#",
-      "#....#.............#....#",
+      "#....#.......#.....#....#",
       "#########################"
     ],
     "props": [
@@ -8847,6 +8855,14 @@
         "y": 1.7,
         "scale": 1.4,
         "collisionScale": 1.4
+      },
+      {
+        "kind": "statue",
+        "visualAssetId": "gallery_sculpture_large",
+        "x": 18.75,
+        "y": 16.05,
+        "scale": 1.5,
+        "collisionScale": 1.5
       },
       {
         "kind": "objectiveCase",
@@ -8984,7 +9000,7 @@
           },
           {
             "x": 12.5,
-            "y": 17.9
+            "y": 17.75
           }
         ],
         "facing": 1.5707963267948966,
@@ -9002,7 +9018,7 @@
               },
               {
                 "x": 12.5,
-                "y": 17.9
+                "y": 17.75
               },
               {
                 "x": 15.75,
@@ -9082,9 +9098,9 @@
           },
           {
             "x": 12.5,
-            "y": 17.9,
+            "y": 17.75,
             "waitDuration": 1.5,
-            "lookDirection": 0,
+            "lookDirection": 0.042830932668726916,
             "turnDuration": 0.4
           },
           {
@@ -10101,6 +10117,14 @@
           "y": 1.7,
           "scale": 1.4,
           "collisionScale": 1.4
+        },
+        {
+          "kind": "statue",
+          "visualAssetId": "gallery_sculpture_large",
+          "x": 18.75,
+          "y": 16.05,
+          "scale": 1.5,
+          "collisionScale": 1.5
         }
       ],
       "islands": [
@@ -10171,6 +10195,12 @@
           "h": 1
         },
         {
+          "x": 13,
+          "y": 18,
+          "w": 1,
+          "h": 1
+        },
+        {
           "x": 19,
           "y": 18,
           "w": 1,
@@ -10187,7 +10217,7 @@
             },
             {
               "x": 12.5,
-              "y": 17.9
+              "y": 17.75
             },
             {
               "x": 15.75,
@@ -10375,6 +10405,14 @@
         "y": 10.85,
         "scale": 1.4,
         "collisionScale": 1.4
+      },
+      {
+        "kind": "statue",
+        "visualAssetId": "gallery_sculpture_large",
+        "x": 23.325,
+        "y": 11.125,
+        "scale": 1.5,
+        "collisionScale": 1.5
       },
       {
         "kind": "objectiveCase",
@@ -10680,6 +10718,14 @@
           {
             "x": 22.5,
             "y": 11.75
+          },
+          {
+            "x": 22.25,
+            "y": 11.75
+          },
+          {
+            "x": 21.75,
+            "y": 11.25
           },
           {
             "x": 22.5,
@@ -11716,6 +11762,14 @@
           "y": 10.85,
           "scale": 1.4,
           "collisionScale": 1.4
+        },
+        {
+          "kind": "statue",
+          "visualAssetId": "gallery_sculpture_large",
+          "x": 23.325,
+          "y": 11.125,
+          "scale": 1.5,
+          "collisionScale": 1.5
         }
       ],
       "islands": [
@@ -11973,6 +12027,14 @@
         "y": 8.48,
         "scale": 1.6,
         "collisionScale": 1.6
+      },
+      {
+        "kind": "partition",
+        "visualAssetId": "gallery_movable_art_wall",
+        "x": 13.5,
+        "y": 14.745,
+        "scale": 1.4,
+        "collisionScale": 1.4
       },
       {
         "kind": "objectiveCase",
@@ -13157,6 +13219,14 @@
           "y": 8.48,
           "scale": 1.6,
           "collisionScale": 1.6
+        },
+        {
+          "kind": "partition",
+          "visualAssetId": "gallery_movable_art_wall",
+          "x": 13.5,
+          "y": 14.745,
+          "scale": 1.4,
+          "collisionScale": 1.4
         }
       ],
       "islands": [
@@ -13431,6 +13501,14 @@
         "x": 23.5,
         "y": 18.6,
         "scale": 2.2
+      },
+      {
+        "kind": "statue",
+        "visualAssetId": "gallery_sculpture_large",
+        "x": 15.5,
+        "y": 19.05,
+        "scale": 1.5,
+        "collisionScale": 1.5
       },
       {
         "kind": "objectiveCase",
@@ -13897,6 +13975,10 @@
           {
             "x": 19.5,
             "y": 19.5
+          },
+          {
+            "x": 12.75,
+            "y": 19.75
           },
           {
             "x": 12,
@@ -14631,6 +14713,14 @@
           "x": 23.5,
           "y": 18.6,
           "scale": 2.2
+        },
+        {
+          "kind": "statue",
+          "visualAssetId": "gallery_sculpture_large",
+          "x": 15.5,
+          "y": 19.05,
+          "scale": 1.5,
+          "collisionScale": 1.5
         }
       ],
       "islands": [
@@ -16921,10 +17011,10 @@
       },
       {
         "id": "03-02-g3",
-        "x": 3,
+        "x": 2.5,
         "y": 16,
-        "facing": 0.7242500007481474,
-        "initialFacing": 0.7242500007481474,
+        "facing": 0.638319808009046,
+        "initialFacing": 0.638319808009046,
         "routeId": "03-02-g3",
         "role": "exit",
         "theftRole": "exit",
@@ -16934,11 +17024,11 @@
         "startDelay": 0,
         "theftPosts": [
           {
-            "x": 3,
+            "x": 2.5,
             "y": 16
           },
           {
-            "x": 3,
+            "x": 2.5,
             "y": 11.2
           }
         ],
@@ -16947,11 +17037,11 @@
             "id": "03-02-g3: Staff Stairs",
             "anchors": [
               {
-                "x": 3,
+                "x": 2.5,
                 "y": 16
               },
               {
-                "x": 3,
+                "x": 2.5,
                 "y": 11.2
               }
             ]
@@ -17044,14 +17134,14 @@
         "mode": "loop",
         "points": [
           {
-            "x": 3,
+            "x": 2.5,
             "y": 16,
             "waitDuration": 3,
-            "lookDirection": 0.7242500007481474,
+            "lookDirection": 0.638319808009046,
             "turnDuration": 0.4
           },
           {
-            "x": 3,
+            "x": 2.5,
             "y": 11.2,
             "waitDuration": 4,
             "lookDirection": 0,
@@ -17385,7 +17475,11 @@
             "y": 11.5
           },
           {
-            "x": 3.5,
+            "x": 4.2,
+            "y": 11.5
+          },
+          {
+            "x": 4.2,
             "y": 14.5
           },
           {
@@ -17744,7 +17838,11 @@
           "role": "alternateEscape",
           "via": [
             {
-              "x": 3.5,
+              "x": 4.2,
+              "y": 11.5
+            },
+            {
+              "x": 4.2,
               "y": 14.5
             },
             {
@@ -18136,11 +18234,11 @@
           "room": "stairs",
           "points": [
             {
-              "x": 3,
+              "x": 2.5,
               "y": 16
             },
             {
-              "x": 3,
+              "x": 2.5,
               "y": 11.2
             }
           ],
@@ -20154,7 +20252,7 @@
       "#.....#.........#...#...#",
       "#...................#...#",
       "#...................#...#",
-      "#.......................#",
+      "#...............#.......#",
       "#.....#.........#.......#",
       "##...############...#####",
       "#.....#.........#.......#",
@@ -21726,6 +21824,12 @@
         {
           "x": 20,
           "y": 3,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "x": 16,
+          "y": 4,
           "w": 1,
           "h": 1
         },
@@ -24000,7 +24104,7 @@
       "#........................#",
       "#........................#",
       "#........................#",
-      "#........................#",
+      "#.............#..........#",
       "##########################"
     ],
     "props": [
@@ -24547,6 +24651,10 @@
           {
             "x": 22.5,
             "y": 17.8
+          },
+          {
+            "x": 9.75,
+            "y": 17.25
           },
           {
             "x": 3,
@@ -25423,6 +25531,12 @@
           "x": 5,
           "y": 13,
           "w": 3,
+          "h": 1
+        },
+        {
+          "x": 14,
+          "y": 18,
+          "w": 1,
           "h": 1
         }
       ],
@@ -27674,6 +27788,22 @@
         "scale": 1.3
       },
       {
+        "kind": "labGasRack",
+        "visualAssetId": "lab_gas_rack",
+        "x": 17.75,
+        "y": 12.865,
+        "scale": 1,
+        "collisionScale": 1
+      },
+      {
+        "kind": "labGasRack",
+        "visualAssetId": "lab_gas_rack",
+        "x": 11.89,
+        "y": 3.325,
+        "scale": 1,
+        "collisionScale": 1
+      },
+      {
         "kind": "objectiveCase",
         "visualAssetId": "lab_sample_case",
         "x": 24,
@@ -28797,6 +28927,22 @@
           "x": 2.5,
           "y": 8.6,
           "scale": 1.3
+        },
+        {
+          "kind": "labGasRack",
+          "visualAssetId": "lab_gas_rack",
+          "x": 17.75,
+          "y": 12.865,
+          "scale": 1,
+          "collisionScale": 1
+        },
+        {
+          "kind": "labGasRack",
+          "visualAssetId": "lab_gas_rack",
+          "x": 11.89,
+          "y": 3.325,
+          "scale": 1,
+          "collisionScale": 1
         }
       ],
       "islands": [
@@ -29430,6 +29576,22 @@
         "x": 6,
         "y": 13.6,
         "scale": 1.4
+      },
+      {
+        "kind": "labMonitorStation",
+        "visualAssetId": "lab_monitor_station",
+        "x": 10.5,
+        "y": 18.85,
+        "scale": 1,
+        "collisionScale": 1
+      },
+      {
+        "kind": "labGasRack",
+        "visualAssetId": "lab_gas_rack",
+        "x": 8.25,
+        "y": 1.65,
+        "scale": 1,
+        "collisionScale": 1
       },
       {
         "kind": "objectiveCase",
@@ -30519,6 +30681,22 @@
           "x": 6,
           "y": 13.6,
           "scale": 1.4
+        },
+        {
+          "kind": "labMonitorStation",
+          "visualAssetId": "lab_monitor_station",
+          "x": 10.5,
+          "y": 18.85,
+          "scale": 1,
+          "collisionScale": 1
+        },
+        {
+          "kind": "labGasRack",
+          "visualAssetId": "lab_gas_rack",
+          "x": 8.25,
+          "y": 1.65,
+          "scale": 1,
+          "collisionScale": 1
         }
       ],
       "islands": [
@@ -30920,7 +31098,7 @@
       "#..........#....#...#......#",
       "#.....#.............#......#",
       "#.....#.............#......#",
-      "#.....#.............#......#",
+      "#.....#..#..........#......#",
       "##...################...####",
       "#.....#..........#.........#",
       "#..........................#",
@@ -31104,6 +31282,14 @@
         "x": 25.5,
         "y": 17.6,
         "scale": 1.4
+      },
+      {
+        "kind": "labSampleFridge",
+        "visualAssetId": "lab_sample_fridge_front",
+        "x": 10,
+        "y": 7.586,
+        "scale": 0.9,
+        "collisionScale": 0.9
       },
       {
         "kind": "objectiveCase",
@@ -31544,7 +31730,19 @@
           },
           {
             "x": 8.25,
-            "y": 15
+            "y": 14.4
+          },
+          {
+            "x": 10.75,
+            "y": 14.25
+          },
+          {
+            "x": 10.75,
+            "y": 14.75
+          },
+          {
+            "x": 14,
+            "y": 14.4
           },
           {
             "x": 14,
@@ -31606,6 +31804,10 @@
           {
             "x": 8.25,
             "y": 8
+          },
+          {
+            "x": 9.25,
+            "y": 8.25
           },
           {
             "x": 14,
@@ -31967,7 +32169,11 @@
           "via": [
             {
               "x": 8.25,
-              "y": 15
+              "y": 14.4
+            },
+            {
+              "x": 14,
+              "y": 14.4
             },
             {
               "x": 14,
@@ -32379,6 +32585,14 @@
           "x": 25.5,
           "y": 17.6,
           "scale": 1.4
+        },
+        {
+          "kind": "labSampleFridge",
+          "visualAssetId": "lab_sample_fridge_front",
+          "x": 10,
+          "y": 7.586,
+          "scale": 0.9,
+          "collisionScale": 0.9
         }
       ],
       "islands": [
@@ -32540,6 +32754,12 @@
         },
         {
           "x": 6,
+          "y": 15,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "x": 9,
           "y": 15,
           "w": 1,
           "h": 1
@@ -34960,25 +35180,25 @@
         ]
       },
       {
-        "x": 21,
+        "x": 21.5,
         "y": 16,
         "id": "05-02-g3",
         "role": "exit",
         "routeId": "05-02-g3",
-        "facing": 2.417342652841646,
+        "facing": 2.5032728455807476,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.3,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": 2.417342652841646,
+        "initialFacing": 2.5032728455807476,
         "theftRole": "exit",
         "theftPosts": [
           {
-            "x": 21,
+            "x": 21.5,
             "y": 16
           },
           {
-            "x": 21,
+            "x": 21.5,
             "y": 11.2
           }
         ],
@@ -34987,11 +35207,11 @@
             "id": "05-02-g3: Staff Stairs",
             "anchors": [
               {
-                "x": 21,
+                "x": 21.5,
                 "y": 16
               },
               {
-                "x": 21,
+                "x": 21.5,
                 "y": 11.2
               }
             ]
@@ -35084,14 +35304,14 @@
         "mode": "loop",
         "points": [
           {
-            "x": 21,
+            "x": 21.5,
             "y": 16,
             "waitDuration": 3,
-            "lookDirection": 2.417342652841646,
+            "lookDirection": 2.5032728455807476,
             "turnDuration": 0.4
           },
           {
-            "x": 21,
+            "x": 21.5,
             "y": 11.2,
             "waitDuration": 4,
             "lookDirection": 3.141592653589793,
@@ -35447,7 +35667,11 @@
             "y": 11.5
           },
           {
-            "x": 20.5,
+            "x": 19.8,
+            "y": 11.5
+          },
+          {
+            "x": 19.8,
             "y": 14.5
           },
           {
@@ -35851,7 +36075,11 @@
           "role": "alternateEscape",
           "via": [
             {
-              "x": 20.5,
+              "x": 19.8,
+              "y": 11.5
+            },
+            {
+              "x": 19.8,
               "y": 14.5
             },
             {
@@ -36243,11 +36471,11 @@
           "room": "stairs",
           "points": [
             {
-              "x": 21,
+              "x": 21.5,
               "y": 16
             },
             {
-              "x": 21,
+              "x": 21.5,
               "y": 11.2
             }
           ],
@@ -36507,7 +36735,7 @@
       "#...#...#.........#.....#",
       "#...#...................#",
       "#...#...................#",
-      "#.......................#",
+      "#.......#...............#",
       "#.......#.........#.....#",
       "#####...############...##",
       "#.......#.........#.....#",
@@ -38066,6 +38294,12 @@
         {
           "x": 4,
           "y": 3,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "x": 8,
+          "y": 4,
           "w": 1,
           "h": 1
         },
@@ -40405,7 +40639,7 @@
         "kind": "casinoPlanter",
         "visualAssetId": "casino_planter",
         "x": 1.35,
-        "y": 16.623,
+        "y": 17.223,
         "scale": 0.77,
         "collisionScale": 0.77
       },
@@ -41690,7 +41924,7 @@
           "kind": "casinoPlanter",
           "visualAssetId": "casino_planter",
           "x": 1.35,
-          "y": 16.623,
+          "y": 17.223,
           "scale": 0.77,
           "collisionScale": 0.77
         },
@@ -42201,12 +42435,12 @@
         "collisionScale": 2.2
       },
       {
-        "kind": "table",
-        "visualAssetId": "mansion_writing_desk",
-        "x": 8.08,
-        "y": 6.36,
-        "scale": 1.8,
-        "collisionScale": 1.8
+        "kind": "statue",
+        "visualAssetId": "mansion_armor_display",
+        "x": 7.675,
+        "y": 6.229,
+        "scale": 1.125,
+        "collisionScale": 1.125
       },
       {
         "kind": "painting",
@@ -42231,7 +42465,7 @@
       },
       {
         "kind": "statue",
-        "visualAssetId": "mansion_armor_display",
+        "visualAssetId": "mansion_cabinet",
         "x": 13.5,
         "y": 7.978,
         "scale": 1.65,
@@ -42255,7 +42489,7 @@
       },
       {
         "kind": "statue",
-        "visualAssetId": "mansion_cabinet",
+        "visualAssetId": "mansion_armor_display",
         "x": 10.01,
         "y": 2.348,
         "scale": 1.65,
@@ -42617,17 +42851,17 @@
             "turnDuration": 0.4
           },
           {
-            "x": 9.25,
+            "x": 8.25,
             "y": 4.75,
             "waitDuration": 0,
             "lookDirection": 0,
             "turnDuration": 0.4
           },
           {
-            "x": 9.75,
-            "y": 5.25,
+            "x": 8.75,
+            "y": 6.25,
             "waitDuration": 0,
-            "lookDirection": 0.7853981633974483,
+            "lookDirection": 1.2490457723982544,
             "turnDuration": 0.4
           },
           {
@@ -42638,24 +42872,24 @@
             "turnDuration": 0.4
           },
           {
-            "x": 9.75,
+            "x": 8.75,
             "y": 5.25,
             "waitDuration": 0,
-            "lookDirection": -1.3370531459259951,
+            "lookDirection": -1.5232132235179132,
             "turnDuration": 0.4
           },
           {
-            "x": 9.25,
+            "x": 7.25,
             "y": 4.75,
             "waitDuration": 0,
-            "lookDirection": -2.356194490192345,
+            "lookDirection": -2.819842099193151,
             "turnDuration": 0.4
           },
           {
             "x": 2.75,
             "y": 4.25,
             "waitDuration": 0,
-            "lookDirection": -3.064820762320015,
+            "lookDirection": -3.0309354324158977,
             "turnDuration": 0.4
           }
         ]
@@ -42900,16 +43134,12 @@
             "y": 3.5
           },
           {
-            "x": 9.75,
-            "y": 4.25
+            "x": 8.75,
+            "y": 4.75
           },
           {
-            "x": 9.75,
-            "y": 7.25
-          },
-          {
-            "x": 9.25,
-            "y": 7.25
+            "x": 8.75,
+            "y": 10.25
           },
           {
             "x": 8,
@@ -43415,12 +43645,12 @@
           "collisionScale": 2.2
         },
         {
-          "kind": "table",
-          "visualAssetId": "mansion_writing_desk",
-          "x": 8.08,
-          "y": 6.36,
-          "scale": 1.8,
-          "collisionScale": 1.8
+          "kind": "statue",
+          "visualAssetId": "mansion_armor_display",
+          "x": 7.675,
+          "y": 6.229,
+          "scale": 1.125,
+          "collisionScale": 1.125
         },
         {
           "kind": "painting",
@@ -43445,7 +43675,7 @@
         },
         {
           "kind": "statue",
-          "visualAssetId": "mansion_armor_display",
+          "visualAssetId": "mansion_cabinet",
           "x": 13.5,
           "y": 7.978,
           "scale": 1.65,
@@ -43469,7 +43699,7 @@
         },
         {
           "kind": "statue",
-          "visualAssetId": "mansion_cabinet",
+          "visualAssetId": "mansion_armor_display",
           "x": 10.01,
           "y": 2.348,
           "scale": 1.65,
@@ -43964,7 +44194,7 @@
       "#.......................#",
       "#.......................#",
       "#.......................#",
-      "#....#.............#....#",
+      "#....#.....#.......#....#",
       "#########################"
     ],
     "props": [
@@ -44047,6 +44277,14 @@
         "y": 1.699,
         "scale": 1.162,
         "collisionScale": 1.162
+      },
+      {
+        "kind": "statue",
+        "visualAssetId": "mansion_armor_display",
+        "x": 6.25,
+        "y": 15.919,
+        "scale": 1.125,
+        "collisionScale": 1.125
       },
       {
         "kind": "objectiveCase",
@@ -44163,7 +44401,7 @@
           },
           {
             "x": 12.5,
-            "y": 17.9
+            "y": 17.75
           }
         ],
         "theftSearchSectors": [
@@ -44176,7 +44414,7 @@
               },
               {
                 "x": 12.5,
-                "y": 17.9
+                "y": 17.75
               },
               {
                 "x": 9.25,
@@ -44340,9 +44578,9 @@
           },
           {
             "x": 12.5,
-            "y": 17.9,
+            "y": 17.75,
             "waitDuration": 1.5,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 3.0987617209210665,
             "turnDuration": 0.4
           },
           {
@@ -45272,6 +45510,14 @@
           "y": 1.699,
           "scale": 1.162,
           "collisionScale": 1.162
+        },
+        {
+          "kind": "statue",
+          "visualAssetId": "mansion_armor_display",
+          "x": 6.25,
+          "y": 15.919,
+          "scale": 1.125,
+          "collisionScale": 1.125
         }
       ],
       "islands": [
@@ -45342,6 +45588,12 @@
           "h": 1
         },
         {
+          "x": 11,
+          "y": 18,
+          "w": 1,
+          "h": 1
+        },
+        {
           "x": 19,
           "y": 18,
           "w": 1,
@@ -45358,7 +45610,7 @@
             },
             {
               "x": 12.5,
-              "y": 17.9
+              "y": 17.75
             },
             {
               "x": 9.25,
@@ -45792,6 +46044,14 @@
         "collisionScale": 1.162
       },
       {
+        "kind": "statue",
+        "visualAssetId": "mansion_cabinet",
+        "x": 1.675,
+        "y": 10.994,
+        "scale": 1.125,
+        "collisionScale": 1.125
+      },
+      {
         "kind": "objectiveCase",
         "visualAssetId": "museum_diamond_case",
         "x": 23.1,
@@ -46213,6 +46473,14 @@
           {
             "x": 2.5,
             "y": 11.75
+          },
+          {
+            "x": 2.75,
+            "y": 11.75
+          },
+          {
+            "x": 2.75,
+            "y": 8.25
           },
           {
             "x": 2.5,
@@ -47041,6 +47309,14 @@
           "y": 10.849,
           "scale": 1.162,
           "collisionScale": 1.162
+        },
+        {
+          "kind": "statue",
+          "visualAssetId": "mansion_cabinet",
+          "x": 1.675,
+          "y": 10.994,
+          "scale": 1.125,
+          "collisionScale": 1.125
         }
       ],
       "islands": [
@@ -47570,6 +47846,14 @@
         "y": 8.48,
         "scale": 1.6,
         "collisionScale": 1.6
+      },
+      {
+        "kind": "partition",
+        "visualAssetId": "mansion_room_divider",
+        "x": 13.5,
+        "y": 14.745,
+        "scale": 1.4,
+        "collisionScale": 1.4
       },
       {
         "kind": "objectiveCase",
@@ -48695,6 +48979,14 @@
           "y": 8.48,
           "scale": 1.6,
           "collisionScale": 1.6
+        },
+        {
+          "kind": "partition",
+          "visualAssetId": "mansion_room_divider",
+          "x": 13.5,
+          "y": 14.745,
+          "scale": 1.4,
+          "collisionScale": 1.4
         }
       ],
       "islands": [
@@ -49213,6 +49505,14 @@
         "x": 2.5,
         "y": 18.6,
         "scale": 2.2
+      },
+      {
+        "kind": "statue",
+        "visualAssetId": "mansion_armor_display",
+        "x": 10.5,
+        "y": 18.919,
+        "scale": 1.125,
+        "collisionScale": 1.125
       },
       {
         "kind": "objectiveCase",
@@ -50277,6 +50577,14 @@
           "x": 2.5,
           "y": 18.6,
           "scale": 2.2
+        },
+        {
+          "kind": "statue",
+          "visualAssetId": "mansion_armor_display",
+          "x": 10.5,
+          "y": 18.919,
+          "scale": 1.125,
+          "collisionScale": 1.125
         }
       ],
       "islands": [
@@ -52495,6 +52803,14 @@
         "collisionScale": 1.6
       },
       {
+        "kind": "warehouseCrateStack",
+        "visualAssetId": "warehouse_crate_stack",
+        "x": 16.9,
+        "y": 12.57,
+        "scale": 0.95,
+        "collisionScale": 0.95
+      },
+      {
         "kind": "objectiveCase",
         "visualAssetId": "museum_diamond_case",
         "x": 21.75,
@@ -53628,6 +53944,14 @@
           "y": 1.96,
           "scale": 1.6,
           "collisionScale": 1.6
+        },
+        {
+          "kind": "warehouseCrateStack",
+          "visualAssetId": "warehouse_crate_stack",
+          "x": 16.9,
+          "y": 12.57,
+          "scale": 0.95,
+          "collisionScale": 0.95
         }
       ],
       "islands": [
@@ -58758,7 +59082,7 @@
       "#........................#",
       "#........................#",
       "#........................#",
-      "#........................#",
+      "#..........#.............#",
       "##########################"
     ],
     "props": [
@@ -59305,6 +59629,10 @@
           {
             "x": 3.5,
             "y": 17.8
+          },
+          {
+            "x": 16.25,
+            "y": 17.25
           },
           {
             "x": 23,
@@ -60183,6 +60511,12 @@
         {
           "x": 24,
           "y": 13,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "x": 11,
+          "y": 18,
           "w": 1,
           "h": 1
         }
@@ -62599,6 +62933,22 @@
         "scale": 1.3
       },
       {
+        "kind": "labServerRack",
+        "visualAssetId": "hq_server_row",
+        "x": 8.25,
+        "y": 12.794,
+        "scale": 0.89,
+        "collisionScale": 0.89
+      },
+      {
+        "kind": "labServerRack",
+        "visualAssetId": "hq_server_row",
+        "x": 14.11,
+        "y": 3.289,
+        "scale": 0.89,
+        "collisionScale": 0.89
+      },
+      {
         "kind": "objectiveCase",
         "visualAssetId": "museum_diamond_case",
         "x": 2,
@@ -63792,6 +64142,22 @@
           "x": 23.5,
           "y": 8.6,
           "scale": 1.3
+        },
+        {
+          "kind": "labServerRack",
+          "visualAssetId": "hq_server_row",
+          "x": 8.25,
+          "y": 12.794,
+          "scale": 0.89,
+          "collisionScale": 0.89
+        },
+        {
+          "kind": "labServerRack",
+          "visualAssetId": "hq_server_row",
+          "x": 14.11,
+          "y": 3.289,
+          "scale": 0.89,
+          "collisionScale": 0.89
         }
       ],
       "islands": [
@@ -64379,68 +64745,68 @@
         "scale": 1.4
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 18.25,
-        "y": 8.542,
-        "scale": 0.833,
-        "collisionScale": 0.833
+        "y": 9.27,
+        "scale": 1.1538,
+        "collisionScale": 1.1538
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 16.75,
-        "y": 8.542,
-        "scale": 0.833,
-        "collisionScale": 0.833
+        "y": 9.27,
+        "scale": 1.1538,
+        "collisionScale": 1.1538
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 13.333,
-        "y": 8.482,
-        "scale": 0.741,
-        "collisionScale": 0.741
+        "y": 9.128,
+        "scale": 1.0256,
+        "collisionScale": 1.0256
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 12,
-        "y": 8.482,
-        "scale": 0.741,
-        "collisionScale": 0.741
+        "y": 9.128,
+        "scale": 1.0256,
+        "collisionScale": 1.0256
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 10.667,
-        "y": 8.482,
-        "scale": 0.741,
-        "collisionScale": 0.741
+        "y": 9.128,
+        "scale": 1.0256,
+        "collisionScale": 1.0256
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 4.333,
-        "y": 8.482,
-        "scale": 0.741,
-        "collisionScale": 0.741
+        "y": 9.128,
+        "scale": 1.0256,
+        "collisionScale": 1.0256
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 3,
-        "y": 8.482,
-        "scale": 0.741,
-        "collisionScale": 0.741
+        "y": 9.128,
+        "scale": 1.0256,
+        "collisionScale": 1.0256
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 1.667,
-        "y": 8.482,
-        "scale": 0.741,
-        "collisionScale": 0.741
+        "y": 9.128,
+        "scale": 1.0256,
+        "collisionScale": 1.0256
       },
       {
         "kind": "labMonitorStation",
@@ -64479,6 +64845,22 @@
         "x": 18,
         "y": 13.6,
         "scale": 1.4
+      },
+      {
+        "kind": "labMonitorStation",
+        "visualAssetId": "hq_security_desk",
+        "x": 13.5,
+        "y": 18.85,
+        "scale": 1,
+        "collisionScale": 1
+      },
+      {
+        "kind": "labServerRack",
+        "visualAssetId": "hq_server_row",
+        "x": 15.75,
+        "y": 1.579,
+        "scale": 0.89,
+        "collisionScale": 0.89
       },
       {
         "kind": "objectiveCase",
@@ -65471,68 +65853,68 @@
           "scale": 1.4
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 18.25,
-          "y": 8.542,
-          "scale": 0.833,
-          "collisionScale": 0.833
+          "y": 9.27,
+          "scale": 1.1538,
+          "collisionScale": 1.1538
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 16.75,
-          "y": 8.542,
-          "scale": 0.833,
-          "collisionScale": 0.833
+          "y": 9.27,
+          "scale": 1.1538,
+          "collisionScale": 1.1538
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 13.333,
-          "y": 8.482,
-          "scale": 0.741,
-          "collisionScale": 0.741
+          "y": 9.128,
+          "scale": 1.0256,
+          "collisionScale": 1.0256
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 12,
-          "y": 8.482,
-          "scale": 0.741,
-          "collisionScale": 0.741
+          "y": 9.128,
+          "scale": 1.0256,
+          "collisionScale": 1.0256
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 10.667,
-          "y": 8.482,
-          "scale": 0.741,
-          "collisionScale": 0.741
+          "y": 9.128,
+          "scale": 1.0256,
+          "collisionScale": 1.0256
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 4.333,
-          "y": 8.482,
-          "scale": 0.741,
-          "collisionScale": 0.741
+          "y": 9.128,
+          "scale": 1.0256,
+          "collisionScale": 1.0256
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 3,
-          "y": 8.482,
-          "scale": 0.741,
-          "collisionScale": 0.741
+          "y": 9.128,
+          "scale": 1.0256,
+          "collisionScale": 1.0256
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 1.667,
-          "y": 8.482,
-          "scale": 0.741,
-          "collisionScale": 0.741
+          "y": 9.128,
+          "scale": 1.0256,
+          "collisionScale": 1.0256
         },
         {
           "kind": "labMonitorStation",
@@ -65571,6 +65953,22 @@
           "x": 18,
           "y": 13.6,
           "scale": 1.4
+        },
+        {
+          "kind": "labMonitorStation",
+          "visualAssetId": "hq_security_desk",
+          "x": 13.5,
+          "y": 18.85,
+          "scale": 1,
+          "collisionScale": 1
+        },
+        {
+          "kind": "labServerRack",
+          "visualAssetId": "hq_server_row",
+          "x": 15.75,
+          "y": 1.579,
+          "scale": 0.89,
+          "collisionScale": 0.89
         }
       ],
       "islands": [
@@ -66012,7 +66410,7 @@
       "#......#...#....#..........#",
       "#......#.............#.....#",
       "#......#.............#.....#",
-      "#......#.............#.....#",
+      "#......#..........#..#.....#",
       "####...################...##",
       "#.........#..........#.....#",
       "#..........................#",
@@ -66138,20 +66536,20 @@
         "collisionScale": 1
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 14.5,
-        "y": 19.535,
-        "scale": 0.722,
-        "collisionScale": 0.722
+        "y": 19.85,
+        "scale": 1,
+        "collisionScale": 1
       },
       {
-        "kind": "labServerRack",
+        "kind": "labCryoUnit",
         "visualAssetId": "hq_server_row",
         "x": 13.2,
-        "y": 19.535,
-        "scale": 0.722,
-        "collisionScale": 0.722
+        "y": 19.85,
+        "scale": 1,
+        "collisionScale": 1
       },
       {
         "kind": "labObservationConsole",
@@ -66196,6 +66594,14 @@
         "x": 2.5,
         "y": 17.6,
         "scale": 1.4
+      },
+      {
+        "kind": "labServerRack",
+        "visualAssetId": "hq_server_row",
+        "x": 18,
+        "y": 7.579,
+        "scale": 0.89,
+        "collisionScale": 0.89
       },
       {
         "kind": "objectiveCase",
@@ -66695,7 +67101,19 @@
           },
           {
             "x": 19.75,
-            "y": 15
+            "y": 14.4
+          },
+          {
+            "x": 17.25,
+            "y": 14.25
+          },
+          {
+            "x": 17.25,
+            "y": 14.75
+          },
+          {
+            "x": 14,
+            "y": 14.4
           },
           {
             "x": 14,
@@ -66757,6 +67175,10 @@
           {
             "x": 19.75,
             "y": 8
+          },
+          {
+            "x": 18.75,
+            "y": 8.25
           },
           {
             "x": 14,
@@ -67126,7 +67548,11 @@
           "via": [
             {
               "x": 19.75,
-              "y": 15
+              "y": 14.4
+            },
+            {
+              "x": 14,
+              "y": 14.4
             },
             {
               "x": 14,
@@ -67484,20 +67910,20 @@
           "collisionScale": 1
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 14.5,
-          "y": 19.535,
-          "scale": 0.722,
-          "collisionScale": 0.722
+          "y": 19.85,
+          "scale": 1,
+          "collisionScale": 1
         },
         {
-          "kind": "labServerRack",
+          "kind": "labCryoUnit",
           "visualAssetId": "hq_server_row",
           "x": 13.2,
-          "y": 19.535,
-          "scale": 0.722,
-          "collisionScale": 0.722
+          "y": 19.85,
+          "scale": 1,
+          "collisionScale": 1
         },
         {
           "kind": "labObservationConsole",
@@ -67542,6 +67968,14 @@
           "x": 2.5,
           "y": 17.6,
           "scale": 1.4
+        },
+        {
+          "kind": "labServerRack",
+          "visualAssetId": "hq_server_row",
+          "x": 18,
+          "y": 7.579,
+          "scale": 0.89,
+          "collisionScale": 0.89
         }
       ],
       "islands": [
@@ -67703,6 +68137,12 @@
         },
         {
           "x": 7,
+          "y": 15,
+          "w": 1,
+          "h": 1
+        },
+        {
+          "x": 18,
           "y": 15,
           "w": 1,
           "h": 1
@@ -76012,7 +76452,7 @@
         "kind": "partition",
         "visualAssetId": "vault_blast_screen",
         "x": 11.5,
-        "y": 5.815,
+        "y": 5.415,
         "scale": 1.8,
         "collisionScale": 1.8
       },
@@ -77370,7 +77810,7 @@
           "kind": "partition",
           "visualAssetId": "vault_blast_screen",
           "x": 11.5,
-          "y": 5.815,
+          "y": 5.415,
           "scale": 1.8,
           "collisionScale": 1.8
         },

@@ -18,7 +18,7 @@ import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgre
 import {missionId,missionIndex} from '../../game/levels/campaignCatalog';
 import StageSelectScreen from '../menu/StageSelectScreen';
 type GameProps = { initialMissionIndex?: number; initialProgress?: StageProgress; onProgressChange?: (progress:StageProgress)=>void };
-export function StartupScreen() {
+export function StartupScreen({ holdSplash = false }: { holdSplash?: boolean }) {
  const audio=useAppAudio();
  const [phase,setPhase]=useState<'BOOT'|'INTRO'|'HOME'>('BOOT');
  const homeVisible=phase==='HOME', splashDone=phase!=='BOOT';
@@ -60,14 +60,15 @@ export function StartupScreen() {
  useEffect(() => {
   markStartup('splash-start');
   let alive=true,minimum=false,art=false;
-  const reveal=()=>{if(alive&&minimum&&art){markStartup('splash-end');setPhase('INTRO');}};
+  const reveal=()=>{if(alive&&minimum&&art&&!holdSplash){markStartup('splash-end');setPhase('INTRO');}};
   void preloadOpeningArt().then(()=>{art=true;reveal();}).catch(reason=>{
    console.error('Museum background unavailable',reason);
    if(alive)setBackgroundError(true);
   });
+  if(holdSplash)return ()=>{alive=false;};
   const timer=setTimeout(()=>{minimum=true;reveal();},SPLASH_MS);
   return ()=>{alive=false;clearTimeout(timer);};
- },[backgroundAttempt]);
+ },[backgroundAttempt,holdSplash]);
  const storageAttempt=useRef(0);
  const restoreProgress=useCallback(()=>{
   const attempt=++storageAttempt.current;

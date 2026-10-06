@@ -4,6 +4,7 @@
  * Only the front-facing Lab art is used; the skewed glass / partition / rack sprites are left out.
  */
 import type {V13Mission} from './v13Types';
+import {phase7} from './v13Phase7';
 
 const SAMPLE={objectiveAsset:'lab_sample_case',objectiveScale:1.5,secureDoorStyle:'labPrototypeSecurity4c'} as const;
 
@@ -491,4 +492,6 @@ const M0405:V13Mission={
  ...SAMPLE,
 };
 
-export const V13_LAB:V13Mission[]=[M0401,M0402,M0403,M0404,M0405];
+/** The plans as first shipped, without the Phase 7 cover: Chapter 8 is built from these. */
+export const V13_LAB_FROZEN:V13Mission[]=[M0401,M0402,M0403,M0404,M0405];
+export const V13_LAB:V13Mission[]=V13_LAB_FROZEN.map(phase7);

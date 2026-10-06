@@ -7,7 +7,7 @@
  * per floor (the chapter archetype). This is a stand-in for individually drawn casino plans, not a substitute.
  */
 import type {V13Mission,V13Structure} from './v13Types';
-import {V13_BANK} from './v13Bank';
+import {derivedBases} from './v13Sources';
 
 type Swap=[kind:V13Structure['kind'],asset:NonNullable<V13Structure['asset']>,factor:number];
 /** Each Bank piece has one or more Casino counterparts; a floor uses them in turn so no piece repeats down a room. */
@@ -32,18 +32,23 @@ const SWAP:Record<string,Swap[]>={
  bankBrassScreen:[['casinoRopeStanchion','casino_rope_stanchion',1.45]],bankWaitingBench:[['casinoSofa','casino_sofa',1]],
  bankQueueBarrier:[['casinoRopeStanchion','casino_rope_stanchion',1]],bankPlant:[['casinoPlanter','casino_planter',.55]],
 };
-const ROTATE:Record<string,number[]>={bankCashProcessingTable:[0,1,0,2,1],bankDepositIsland:[0,1,0,1,0]};
+export const ROTATE:Record<string,number[]>={bankCashProcessingTable:[0,1,0,2,1],bankDepositIsland:[0,1,0,1,0]};
 const WORDS:[RegExp,string][]=[[/Banking Hall/g,'Gaming Floor'],[/Teller/g,'Cashier'],[/teller/g,'cashier'],[/Main Vault/g,'Count Room'],[/Vault/g,'Count Room'],[/vault/g,'count room'],
  [/Deposit/g,'Chip'],[/deposit/g,'chip'],[/bank/g,'casino'],[/Bank/g,'Casino'],[/cash safe|records safe|deposit safe|vault gem|cash/g,'jewel'],[/safe bay|gem bay/g,'jewel bay'],[/scanner/g,'slot bank'],[/Scanner/g,'Slot Bank']];
 const say=(s:string)=>WORDS.reduce((t,[a,b])=>t.replace(a,b),s);
 const SIDE={left:'right',right:'left',top:'top',bottom:'bottom'} as const;
 /** Second camera of each floor, in the Bank plan's own coordinates (mirrored with everything else). */
-const EXTRA_CAMERA:Record<string,V13Mission['cameras'][number]>={
+export const EXTRA_CAMERA:Record<string,V13Mission['cameras'][number]>={
  '03-01':{zone:'tellerFloor',at:{x:13.5,y:7.4},facing:1.5708,watches:'The east half of the cashier floor, on the way to the staff door'},
  '03-02':{zone:'files',at:{x:8.5,y:15.4},facing:1.5708,watches:'The west end of the corridor in front of the stair door'},
  '03-03':{zone:'southRing',at:{x:14.2,y:13.4},facing:1.5708,watches:'The middle of the south aisle between the tables'},
  '03-04':{zone:'passage',at:{x:8.2,y:1.4},facing:1.3,watches:'The west end of the north passage in front of the exit lobby door'},
  '03-05':{zone:'exitLobby',at:{x:25.5,y:16.4},facing:2.2,watches:'The exit lobby below the stair door'},
+};
+/** A Casino piece that does not stand where its Bank counterpart does (Casino coordinates, centre of the footprint).
+ *  Only the named piece moves; its place in the structure list, and everything else in the plan, is unchanged. */
+export const MOVED:Record<string,Record<string,{x:number;y:number;why:string}>>={
+ '05-05':{'Exit Plant':{x:1.35,y:16.915,why:'Phase 9: 0.6 tile south, out from under the exit-lobby camera — at gameplay zoom the camera read as standing in the planter. 0.6 is the smallest move that leaves no fake gap: up to 0.55 the strip between the wall and the planter is floor the thief cannot stand on.'}},
 };
 function casino(base:V13Mission,id:string,title:string):V13Mission{
  const W=base.map[0].length,mx=<T extends {x:number;y:number}>(p:T):T=>({...p,x:+(W-p.x).toFixed(3)});
@@ -52,7 +57,8 @@ function casino(base:V13Mission,id:string,title:string):V13Mission{
  const structures=base.structures.map(s=>{const options=SWAP[s.kind];if(!options)throw Error(`${id}: no casino counterpart for ${s.kind}`);
   // Table slots start on a different piece on each floor, so the roulette, blackjack and high-roller tables are all seen.
   const n=turn.get(s.kind)??(ROTATE[s.kind]?.[Number(id.slice(-1))-1]??0);turn.set(s.kind,n+1);const swap=options[n%options.length];
-  return {...mx(s),name:say(s.name),kind:swap[0],asset:swap[1],scale:+(s.scale*swap[2]).toFixed(3)};});
+  return {...mx(s),name:say(s.name),kind:swap[0],asset:swap[1],scale:+(s.scale*swap[2]).toFixed(3)};})
+  .map(s=>{const to=MOVED[id]?.[s.name];return to?{...s,x:to.x,y:to.y}:s;});
  const names=new Set([...structures.map(s=>s.name),...base.walls.map(w=>say(w.name))]),lane=(l:string[])=>l.map(say).filter(n=>names.has(n));
  return {...base,id,title,family:'Casino',topology:say(base.topology),map:base.map.map(r=>[...r].reverse().join('')),
   zones:Object.fromEntries(Object.entries(base.zones).map(([k,z])=>[k,{...z,name:say(z.name),purpose:say(z.purpose),...(z.hub?{hub:mx(z.hub)}:{})}])),
@@ -65,8 +71,6 @@ function casino(base:V13Mission,id:string,title:string):V13Mission{
   cameras:[...base.cameras,EXTRA_CAMERA[base.id]].map(c=>({...c,at:mx(c.at),facing:+(Math.PI-c.facing).toFixed(4),watches:say(c.watches)})),
   objectiveAsset:'museum_diamond_case',objectiveScale:1.15,secureDoorStyle:'casinoVip4d',highSecurity:undefined};
 }
-const bank=(id:string)=>V13_BANK.find(m=>m.id===id)!;
-export const V13_CASINO:V13Mission[]=[
- casino(bank('03-01'),'05-01','Cashier Floor'),casino(bank('03-02'),'05-02','High Roller Rooms'),casino(bank('03-04'),'05-03','Surveillance Suite'),
- casino(bank('03-03'),'05-04','Roulette Exchange'),casino(bank('03-05'),'05-05','Casino Heist'),
-];
+const TITLES=['Cashier Floor','High Roller Rooms','Surveillance Suite','Roulette Exchange','Casino Heist'];
+// Base plans and their order (Bank after Phase 7; the third and fourth swapped) are set in v13Sources.ts.
+export const V13_CASINO:V13Mission[]=derivedBases(5).map((base,i)=>casino(base,`05-0${i+1}`,TITLES[i]));

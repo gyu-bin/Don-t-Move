@@ -14,9 +14,9 @@ const TOAST_MS = 2800;
 
 /** Playable five-stage V1. Native tilt is used on iPhone; Simulator keeps touch fallback. */
 export default function App() {
-  const [boot, setBoot] = useState(0);
+  const [holdSplash, setHoldSplash] = useState(true);
   const [notice, setNotice] = useState<string | null>(null);
-  const restartFromSplash = useCallback(() => setBoot((value) => value + 1), []);
+  const releaseSplash = useCallback(() => setHoldSplash(false), []);
 
   useEffect(() => {
     let alive = true;
@@ -36,10 +36,10 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <View key={boot} style={{ flex: 1 }}>
-        <StartupScreen />
+      <View style={{ flex: 1 }}>
+        <StartupScreen holdSplash={holdSplash} />
       </View>
-      <OtaRefresh onSplashRestart={restartFromSplash} />
+      <OtaRefresh onReady={releaseSplash} />
       {notice ? <OtaToast message={notice} /> : null}
       <StatusBar style="light" hidden={false} />
     </SafeAreaProvider>

@@ -2,7 +2,6 @@
 import fs from 'node:fs';
 import raw from '../../docs/design/v12/phase4d/SOURCE_STAGES.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
-import {buildV125Campaign} from './v125Build';
 import {auditV124bCampaign,auditV124bTopology,pathLength} from './v124bTopologyQA';
 import {composeV13,v13Draft} from './v13Builder';
 import {V13_MUSEUM} from './v13Museum';
@@ -10,13 +9,29 @@ import {V13_GALLERY} from './v13Gallery';
 import {V13_BANK} from './v13Bank';
 import {V13_LAB} from './v13Lab';
 import {V13_CASINO} from './v13Casino';
-import {V13_LATE} from './v13Late';
+import {V13_MANSION,V13_WAREHOUSE,V13_HQ} from './v13Late';
 import {V13_VAULT_CH9} from './v13Vault';
 import {previewStage} from './v13Preview';
-export const V13_MISSIONS=[...V13_MUSEUM,...V13_GALLERY,...V13_BANK,...V13_LAB,...V13_CASINO,...V13_LATE,...V13_VAULT_CH9];
+import {DERIVED_FROM} from './v13Sources';
+import type {V13Mission} from './v13Types';
+/** The campaign, chapter by chapter, in bake order. `plans` is where the missions are authored; a derived chapter's
+ *  base plans (and whether it inherits the Phase 7 layer) are set in v13Sources.ts. */
+export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string;derivedFrom?:number}[]=[
+ {chapter:1,missions:V13_MUSEUM,plans:'v13Museum.ts'},
+ {chapter:2,missions:V13_GALLERY,plans:'v13Gallery.ts'},
+ {chapter:3,missions:V13_BANK,plans:'v13Bank.ts'},
+ {chapter:4,missions:V13_LAB,plans:'v13Lab.ts'},
+ {chapter:5,missions:V13_CASINO,plans:'v13Casino.ts',derivedFrom:DERIVED_FROM[5].chapter},
+ {chapter:6,missions:V13_MANSION,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[6].chapter},
+ {chapter:7,missions:V13_WAREHOUSE,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[7].chapter},
+ {chapter:8,missions:V13_HQ,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[8].chapter},
+ {chapter:9,missions:V13_VAULT_CH9,plans:'v13Vault.ts'},
+];
+export const V13_MISSIONS:V13Mission[]=CHAPTER_SOURCE.flatMap(c=>c.missions);
+/** Every mission is composed from its V13 plan; SOURCE_STAGES only supplies the approved guard and camera constants. */
 export function buildV13Campaign():StageDefinition[]{
- const source=raw as StageDefinition[],base=JSON.parse(JSON.stringify(buildV125Campaign())) as StageDefinition[];
- return base.map(def=>{const m=V13_MISSIONS.find(m=>m.id===def.id);return m?JSON.parse(JSON.stringify(composeV13(m,source))) as StageDefinition:def;});
+ const source=raw as StageDefinition[];
+ return V13_MISSIONS.map(m=>JSON.parse(JSON.stringify(composeV13(m,source))) as StageDefinition);
 }
 if(process.argv[1]?.endsWith('v13Build.ts')){
  const only=process.env.ONLY?.split(',');

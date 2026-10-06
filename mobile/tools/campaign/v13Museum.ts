@@ -1,5 +1,6 @@
 /** V13 Phase 1 — Chapter 1 Museum (EASY). Architecture first; guards are authored last. */
 import type {V13Mission} from './v13Types';
+import {phase7} from './v13Phase7';
 
 /**
  * 01-01 Entrance Hall — L-shape.
@@ -395,4 +396,6 @@ const M0105:V13Mission={
  ],
  cameras:[],
 };
-export const V13_MUSEUM:V13Mission[]=[M0101,M0102,M0103,M0104,M0105];
+/** The plans as first shipped, without the Phase 7 cover: Chapter 7 is built from these. */
+export const V13_MUSEUM_FROZEN:V13Mission[]=[M0101,M0102,M0103,M0104,M0105];
+export const V13_MUSEUM:V13Mission[]=V13_MUSEUM_FROZEN.map(phase7);

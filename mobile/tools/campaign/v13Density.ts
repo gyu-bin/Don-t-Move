@@ -6,8 +6,8 @@
  */
 import {V13_MISSIONS} from './v13Build';
 import {PROP_KIT} from '../../src/game/world/propKit';
-const ids=process.argv.slice(2);
-for(const m of V13_MISSIONS.filter(m=>!ids.length||ids.some(i=>m.id.startsWith(i)))){
+import {pickMissions} from './v13QaLib';
+for(const m of pickMissions(V13_MISSIONS,process.argv.slice(2))){
  const wall=(x:number,y:number)=>{const ch=m.map[Math.floor(y)]?.[Math.floor(x)];return !ch||ch==='#'||ch===' ';};
  const boxes=m.structures.map(s=>{const k=PROP_KIT[s.kind],w=k.footprint.w*s.scale,h=k.footprint.h*s.scale;return{s,k,x0:s.x-w/2,x1:s.x+w/2,y0:k.wallMounted?s.y-h:s.y-h/2,y1:k.wallMounted?s.y:s.y+h/2};}).filter(b=>b.k.blocksMovement);
  const flush=(b:typeof boxes[number])=>{for(let x=b.x0;x<=b.x1+1e-6;x+=.25)if(wall(x,b.y0-.3)||wall(x,b.y1+.3))return true;for(let y=b.y0;y<=b.y1+1e-6;y+=.25)if(wall(b.x0-.3,y)||wall(b.x1+.3,y))return true;return false;};

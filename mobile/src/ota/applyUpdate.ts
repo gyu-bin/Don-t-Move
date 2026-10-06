@@ -51,62 +51,71 @@ export async function consumeFreshOtaNotice(): Promise<boolean> {
 
 type UpdatesModule = NonNullable<ReturnType<typeof updatesModule>>;
 
-let reloadStarted = false;
-let checkInFlight = false;
-let restartedFor: string | null = null;
+let reloadInProgress = false;
+let checkInFlight: Promise<'reloading' | 'current'> | null = null;
+const reloadTried = new Set<string>();
 
-/**
- * Restart the whole app onto the downloaded bundle so launch runs again from the splash.
- * If the native reload does not tear the runtime down, remount the tree and play the splash anyway.
- */
-export async function reloadOntoUpdate(
-  Updates: UpdatesModule,
-  downloadedId: string | null,
-  onSplashRestart: () => void,
-): Promise<void> {
-  if (reloadStarted || (downloadedId != null && restartedFor === downloadedId)) return;
-  reloadStarted = true;
-  restartedFor = downloadedId;
-  try {
-    await Updates.reloadAsync({ reloadScreenOptions: OTA_RELOAD_SCREEN });
-  } catch (error) {
-    console.warn('[OTA] reload failed', error);
-    try {
-      const { reloadAppAsync } = require('expo') as typeof import('expo');
-      await reloadAppAsync();
-    } catch (fallback) {
-      console.warn('[OTA] app reload failed', fallback);
-    }
-  }
-  // reloadAsync resolves before the runtime actually dies. If we are still here, it did not restart.
-  await new Promise((resolve) => setTimeout(resolve, 1200));
-  onSplashRestart();
+export function isOtaReloadInProgress(): boolean {
+  return reloadInProgress;
 }
 
 /**
- * Download a newer bundle and restart the app onto it.
- * Retries while the native startup check is still holding the updates lock.
- * A failed attempt never cancels a later one: the screen refresh is the point.
+ * Switch the running bundle to the one already downloaded.
+ * Resolves only if this runtime is still alive afterwards, which means the switch did not happen.
  */
-export async function downloadAndReload(Updates: UpdatesModule, onSplashRestart: () => void): Promise<void> {
-  if (checkInFlight || reloadStarted) return;
-  checkInFlight = true;
+export async function reloadOntoUpdate(Updates: UpdatesModule, downloadedId: string | null): Promise<boolean> {
+  const key = downloadedId ?? 'pending';
+  if (reloadInProgress || reloadTried.has(key)) return false;
+  reloadInProgress = true;
+  reloadTried.add(key);
   try {
-    for (let attempt = 0; attempt < 8; attempt++) {
-      try {
-        const check = await Updates.checkForUpdateAsync();
-        if (!check.isAvailable) return;
-        const fetched = await Updates.fetchUpdateAsync();
-        if (!fetched.isNew) return;
-        const manifest = fetched.manifest as { id?: string } | undefined;
-        await reloadOntoUpdate(Updates, manifest?.id ?? null, onSplashRestart);
-        return;
-      } catch (error) {
-        console.warn('[OTA] update attempt failed', error);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      }
+    try {
+      await Updates.reloadAsync();
+    } catch (error) {
+      console.warn('[OTA] reload failed', error);
+      await Updates.reloadAsync({ reloadScreenOptions: OTA_RELOAD_SCREEN });
     }
+    // reloadAsync resolves just before the runtime is replaced. Still being here means it was not.
+    await new Promise((resolve) => setTimeout(resolve, 1600));
+    return false;
+  } catch (error) {
+    console.warn('[OTA] reload did not start', error);
+    reloadTried.delete(key);
+    return false;
   } finally {
-    checkInFlight = false;
+    reloadInProgress = false;
   }
+}
+
+/**
+ * Download a newer bundle and restart onto it.
+ * An update that is already on disk still restarts: a zero launch wait has already
+ * booted the previous bundle, and killing the app does not switch it.
+ */
+export function downloadAndReload(Updates: UpdatesModule): Promise<'reloading' | 'current'> {
+  if (reloadInProgress) return Promise.resolve('reloading');
+  if (!checkInFlight) checkInFlight = fetchAndReload(Updates).finally(() => { checkInFlight = null; });
+  return checkInFlight;
+}
+
+async function fetchAndReload(Updates: UpdatesModule): Promise<'reloading' | 'current'> {
+  for (let attempt = 0; attempt < 8; attempt++) {
+    try {
+      const check = await Updates.checkForUpdateAsync();
+      if (check.isRollBackToEmbedded) {
+        await reloadOntoUpdate(Updates, null);
+        return isOtaReloadInProgress() ? 'reloading' : 'current';
+      }
+      if (!check.isAvailable) return 'current';
+      const fetched = await Updates.fetchUpdateAsync();
+      if (!fetched.isNew && !fetched.isRollBackToEmbedded) return 'current';
+      const manifest = fetched.manifest as { id?: string } | undefined;
+      await reloadOntoUpdate(Updates, manifest?.id ?? null);
+      return isOtaReloadInProgress() ? 'reloading' : 'current';
+    } catch (error) {
+      console.warn('[OTA] update attempt failed', error);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+  return 'current';
 }

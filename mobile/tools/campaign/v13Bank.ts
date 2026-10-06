@@ -1,5 +1,6 @@
 /** V13 Phase 2 — Chapter 3 Bank (MEDIUM). Layered security: public floor, staff floor, strong room. Guards are authored last. */
 import type {V13Mission} from './v13Types';
+import {phase7} from './v13Phase7';
 
 /**
  * 03-01 Lobby / Teller — the counter line.
@@ -470,4 +471,4 @@ const M0305:V13Mission={
  cameras:[{zone:'hall',at:{x:11.4,y:12.3},facing:2.2,watches:'The west side of the Security Hall, in front of the watched west opening'}],
  objectiveAsset:'bank_small_safe',objectiveScale:1.15,secureDoorStyle:'bankSecurity4c',highSecurity:false,
 };
-export const V13_BANK:V13Mission[]=[M0301,M0302,M0303,M0304,M0305];
+export const V13_BANK:V13Mission[]=[M0301,M0302,M0303,M0304,M0305].map(phase7);

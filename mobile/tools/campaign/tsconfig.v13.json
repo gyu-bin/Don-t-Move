@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "noEmit": true
+  },
+  "include": [
+    "v13*.ts",
+    "buildMissionBriefs.ts"
+  ],
+  "exclude": [
+    "../../node_modules"
+  ]
+}

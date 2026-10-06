@@ -1,5 +1,6 @@
 /** V13 Phase 1 — Chapter 2 Gallery (EASY+). Longer sightlines and open crossings; guards are authored last. */
 import type {V13Mission} from './v13Types';
+import {phase7} from './v13Phase7';
 
 /**
  * 02-01 Portrait Hall — diagonal.
@@ -425,4 +426,4 @@ const M0205:V13Mission={
  // The alarm waits for a guard to see the empty stand, like every other Chapter 1–2 mission.
  highSecurity:false,
 };
-export const V13_GALLERY:V13Mission[]=[M0201,M0202,M0203,M0204,M0205];
+export const V13_GALLERY:V13Mission[]=[M0201,M0202,M0203,M0204,M0205].map(phase7);

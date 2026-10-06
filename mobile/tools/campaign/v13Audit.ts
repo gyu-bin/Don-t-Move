@@ -2,9 +2,9 @@
 import live from '../../src/game/levels/stages/campaignStages.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
-import {clearSegment} from '../../src/game/world/navigation';
 import {PROP_KIT} from '../../src/game/world/propKit';
 import {V13_MISSIONS} from './v13Build';
+import {cameraView} from './v13QaLib';
 const ids=process.argv.slice(2);
 // Sprite height in tiles at scale 1, measured from the asset sheets (only the tall ones matter here).
 const TALL:Record<string,number>={labCryoUnit:2.9,labCryoChamber:3.7,labEquipmentRack:3.4,labSampleStorage:3,labPrototypeMachine:3.25,labCentralExperiment:3.2,labObservationRoom:2.6,labWall:1.7,bankWall:1.7,bankDepositBoxWall:1.9,bankVaultCorridorWall:1.7,bankMainVault:3.3,bankVaultDoor:2.4,bankSecurityCheckpoint:2,bankSecurityGate:2.4,bankFilingCabinet:1.6};
@@ -13,11 +13,8 @@ for(const m of V13_MISSIONS.filter(m=>ids.length?ids.includes(m.id):m.id>='03'))
  const zoneOf=(x:number,y:number)=>plan.rooms.find(r=>x>=r.x&&x<r.x+r.w&&y>=r.y&&y<r.y+r.h)?.id??'?';
  // Cameras: share of the cone (range × half-angle incl. sweep) that is actually visible, and the nearest blocker straight ahead.
  for(const c of stage.cameras??[]){
-  let seen=0,total=0;const spread=c.sweepAngle+c.visionAngle/2;
-  for(let a=-spread;a<=spread;a+=spread/12)for(let r=TILE*.75;r<=c.range;r+=TILE*.25){const x=c.x+Math.cos(c.centerFacing+a)*r,y=c.y+Math.sin(c.centerFacing+a)*r;
-   if(!clearSegment(x,y,x,y,stage.movementBlockers,6))continue;total++;if(clearSegment(c.x,c.y,x,y,stage.visionBlockers))seen++;}
-  let ahead=c.range;for(let r=TILE*.25;r<=c.range;r+=TILE*.25)if(!clearSegment(c.x,c.y,c.x+Math.cos(c.centerFacing)*r,c.y+Math.sin(c.centerFacing)*r,stage.visionBlockers)){ahead=r;break;}
-  notes.push(`camera ${zoneOf(c.x/TILE,c.y/TILE)} @${(c.x/TILE).toFixed(1)},${(c.y/TILE).toFixed(1)}: sees ${Math.round(100*seen/Math.max(1,total))}% of its floor, clear ahead ${(ahead/TILE).toFixed(1)} of ${(c.range/TILE).toFixed(1)} tiles`);
+  const {share,ahead}=cameraView(stage,c);
+  notes.push(`camera ${zoneOf(c.x/TILE,c.y/TILE)} @${(c.x/TILE).toFixed(1)},${(c.y/TILE).toFixed(1)}: sees ${share}% of its floor, clear ahead ${(ahead/TILE).toFixed(1)} of ${(c.range/TILE).toFixed(1)} tiles`);
  }
  // Zones on a declared route with no guard stop and no camera.
  const watched=new Set<string>();for(const r of def.patrolRoutes)for(const p of r.points)watched.add(zoneOf(p.x,p.y));for(const c of stage.cameras??[])watched.add(zoneOf(c.x/TILE,c.y/TILE));

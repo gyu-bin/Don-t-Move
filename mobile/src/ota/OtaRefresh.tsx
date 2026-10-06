@@ -1,44 +1,84 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 
-import { downloadAndReload, reloadOntoUpdate, updatesModule } from './applyUpdate';
-import { shouldReloadPending } from './otaNotice';
+import { downloadAndReload, isOtaReloadInProgress, reloadOntoUpdate, updatesModule } from './applyUpdate';
+import { coldStartGate } from './otaNotice';
 
 type UpdatesModule = NonNullable<ReturnType<typeof updatesModule>>;
 
+const CHECK_WAIT_MS = 12000;
+const DOWNLOAD_WAIT_MS = 45000;
+
 /**
- * When a newer bundle is on disk, restart the app from the splash.
- * The native reload boots index again. If that reload never tears the runtime down,
- * `onSplashRestart` remounts the tree so the splash still plays.
+ * Cold start stays on the splash until the running bundle is the newest one on disk.
+ * A downloaded update is applied with reloadAsync before the splash ends, so the next
+ * splash is already the new bundle. Killing the app is not what switches bundles.
  */
-export function OtaRefresh({ onSplashRestart }: { onSplashRestart: () => void }) {
+export function OtaRefresh({ onReady }: { onReady: () => void }) {
   const [Updates] = useState(updatesModule);
+  useEffect(() => {
+    if (!Updates) onReady();
+  }, [Updates, onReady]);
   if (!Updates) return null;
-  return <OtaRefreshRunner Updates={Updates} onSplashRestart={onSplashRestart} />;
+  return <OtaRefreshRunner Updates={Updates} onReady={onReady} />;
 }
 
-function OtaRefreshRunner({ Updates, onSplashRestart }: { Updates: UpdatesModule; onSplashRestart: () => void }) {
+function OtaRefreshRunner({ Updates, onReady }: { Updates: UpdatesModule; onReady: () => void }) {
   const state = Updates.useUpdates();
-  const checked = useRef(false);
+  const readySent = useRef(false);
+  const fetchStarted = useRef(false);
+  const downloadedId = state.downloadedUpdate?.type === 'new' ? state.downloadedUpdate.updateId : null;
+  const runningId = state.currentlyRunning.updateId ?? null;
+  const release = useCallback(() => {
+    if (readySent.current || isOtaReloadInProgress()) return;
+    readySent.current = true;
+    onReady();
+  }, [onReady]);
 
   useEffect(() => {
-    if (state.isStartupProcedureRunning || state.isChecking || state.isDownloading) return;
-    const downloadedId = state.downloadedUpdate?.type === 'new' ? state.downloadedUpdate.updateId : null;
-    if (state.isUpdatePending && shouldReloadPending(false, state.currentlyRunning.updateId, downloadedId)) {
-      void reloadOntoUpdate(Updates, downloadedId, onSplashRestart);
+    const decision = coldStartGate({
+      startupRunning: state.isStartupProcedureRunning,
+      checking: state.isChecking,
+      downloading: state.isDownloading,
+      pending: state.isUpdatePending,
+      runningId,
+      downloadedId,
+    });
+    if (decision === 'wait') return;
+    if (decision === 'reload') {
+      void reloadOntoUpdate(Updates, downloadedId).then((switched) => {
+        if (!switched) release();
+      });
       return;
     }
-    if (checked.current) return;
-    checked.current = true;
-    void downloadAndReload(Updates, onSplashRestart);
-  }, [Updates, onSplashRestart, state.currentlyRunning.updateId, state.downloadedUpdate, state.isChecking, state.isDownloading, state.isStartupProcedureRunning, state.isUpdatePending]);
+    if (fetchStarted.current) return;
+    fetchStarted.current = true;
+    void downloadAndReload(Updates).then((outcome) => {
+      if (outcome === 'reloading' || isOtaReloadInProgress()) return;
+      release();
+    });
+  }, [Updates, downloadedId, release, runningId, state.isChecking, state.isDownloading, state.isStartupProcedureRunning, state.isUpdatePending]);
+
+  useEffect(() => {
+    const cap = setTimeout(release, state.isDownloading || state.isStartupProcedureRunning ? DOWNLOAD_WAIT_MS : CHECK_WAIT_MS);
+    return () => clearTimeout(cap);
+  }, [release, state.isDownloading, state.isStartupProcedureRunning]);
+
+  useEffect(() => {
+    const cap = setTimeout(() => {
+      if (readySent.current) return;
+      readySent.current = true;
+      onReady();
+    }, DOWNLOAD_WAIT_MS);
+    return () => clearTimeout(cap);
+  }, [onReady]);
 
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
-      if (next === 'active') void downloadAndReload(Updates, onSplashRestart);
+      if (next === 'active' && readySent.current) void downloadAndReload(Updates);
     });
     return () => sub.remove();
-  }, [Updates, onSplashRestart]);
+  }, [Updates]);
 
   return null;
 }

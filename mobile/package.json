@@ -39,7 +39,7 @@
     "web": "expo start --web",
     "update:production": "eas update --channel production --environment production",
     "update:preview": "eas update --channel preview --environment preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && npm run typecheck:campaign",
     "test:guards": "tsx src/game/guards/__tests__/guardVision.test.ts",
     "sprites:templates": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/makeTemplates.ts",
     "sprites:validate": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/validateSprites.ts",
@@ -53,8 +53,9 @@
     "sprites:extract": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/extractSheet.ts",
     "test:locomotion": "tsx src/game/core/__tests__/footPlanting.test.ts",
     "test": "npm run test:locomotion && npm run test:guards && npm run test:rules && npm run test:global && npm run test:tilt && npm run test:maps && npm run test:playable && npm run test:sprite-contract && npm run test:branding && npm run test:campaign && npm run test:theft-support && npm run test:monetization && npm run test:crash-hotfix && npm run test:environment && npm run test:doors",
-    "test:campaign": "node --import tsx --test tools/campaign/validateCampaign.test.ts tools/campaign/museumQA.test.ts tools/campaign/museumFinalDesign.test.ts tools/campaign/museumDressingQA.test.ts tools/campaign/museumCentralCoverQA.test.ts tools/campaign/museumSecurityCleanupQA.test.ts tools/campaign/galleryEnvironmentDesign.test.ts tools/campaign/v3Audit.test.ts tools/campaign/v5Geometry.test.ts tools/campaign/v5MuseumGallery.test.ts tools/campaign/v5Bank.test.ts tools/campaign/curatedHeistFlows.test.ts tools/campaign/navigationRegression.test.ts tools/campaign/museumRuntimeCctvQA.test.ts tools/campaign/chapterDifficulty.test.ts tools/campaign/v101PressureAudit.test.ts tools/campaign/v11Museum.test.ts tools/campaign/v11GalleryBank.test.ts tools/campaign/v11ScopeRegression.test.ts tools/campaign/v12Runtime.test.ts src/game/progress/__tests__/campaignMigration.test.ts tools/campaign/v124aRuntimeQA.test.ts tools/campaign/v124aSpatial.test.ts tools/campaign/v124bTopologyQA.test.ts tools/campaign/v124bRuntimeQA.test.ts tools/campaign/v124cTopologyQA.test.ts tools/campaign/v124cScope.test.ts tools/campaign/v124dScope.test.ts tools/campaign/v125Scope.test.ts tools/campaign/v13Scope.test.ts",
-    "test:environment": "node --import tsx --test src/assets/environmentKit.test.ts src/game/levels/__tests__/galleryGlass.test.ts tools/environment/contract.test.ts",
+    "test:campaign": "node --import tsx --test tools/campaign/validateCampaign.test.ts tools/campaign/museumQA.test.ts tools/campaign/museumFinalDesign.test.ts tools/campaign/museumDressingQA.test.ts tools/campaign/museumCentralCoverQA.test.ts tools/campaign/museumSecurityCleanupQA.test.ts tools/campaign/galleryEnvironmentDesign.test.ts tools/campaign/v3Audit.test.ts tools/campaign/v5Geometry.test.ts tools/campaign/v5MuseumGallery.test.ts tools/campaign/v5Bank.test.ts tools/campaign/curatedHeistFlows.test.ts tools/campaign/navigationRegression.test.ts tools/campaign/museumRuntimeCctvQA.test.ts tools/campaign/chapterDifficulty.test.ts tools/campaign/v101PressureAudit.test.ts tools/campaign/v11Museum.test.ts tools/campaign/v11GalleryBank.test.ts tools/campaign/v11ScopeRegression.test.ts tools/campaign/v12Runtime.test.ts src/game/progress/__tests__/campaignMigration.test.ts tools/campaign/v124aRuntimeQA.test.ts tools/campaign/v124aSpatial.test.ts tools/campaign/v124bTopologyQA.test.ts tools/campaign/v124bRuntimeQA.test.ts tools/campaign/v124cTopologyQA.test.ts tools/campaign/v124cScope.test.ts tools/campaign/v124dScope.test.ts tools/campaign/v125Scope.test.ts tools/campaign/v13Scope.test.ts tools/campaign/v13Integrity.test.ts",
+    "test:environment": "node --import tsx --test src/assets/environmentKit.test.ts src/game/levels/__tests__/galleryGlass.test.ts tools/environment/contract.test.ts tools/environment/catalogKit.test.ts",
+    "environment:validate": "node --import tsx tools/environment/validate.ts",
     "test:branding": "node --import tsx --test src/ui/branding/*.test.ts",
     "test:maps": "node --import tsx --test src/game/levels/__tests__/tiltTestMaps.test.ts",
     "test:tilt": "node --import tsx --test src/game/input/__tests__/tilt.test.ts src/game/input/__tests__/androidTilt.test.ts src/game/input/__tests__/calibrationHotfix.test.ts src/game/input/__tests__/tiltProfiles.test.ts",
@@ -69,8 +70,12 @@
     "test:crash-hotfix": "node --test src/game/guards/__tests__/workletChase.test.cjs && node --import tsx --test src/game/guards/__tests__/theftSpottedCrash.test.ts src/game/guards/__tests__/animationBounds.test.ts",
     "test:stability": "node --test src/game/world/__tests__/collisionWorklet.test.cjs && node --import tsx --test src/game/world/__tests__/collisionStability.test.ts src/game/world/__tests__/wallSlide.test.ts src/game/playground/__tests__/tapToMove.test.ts src/game/monetization/__tests__/interstitialPresentation.test.ts src/game/monetization/__tests__/adsController.test.cjs",
     "test:doors": "node --import tsx --test src/game/doors/__tests__/doors.test.ts src/game/doors/__tests__/doorIntegration.test.ts && node --test src/game/doors/__tests__/doorWorklet.test.cjs && node --test tools/campaign/v124aDoorArtWorklet.test.cjs",
-    "campaign:bake": "node --import tsx tools/campaign/v124dBuild.ts",
-    "typecheck:campaign": "tsc -p tools/campaign/tsconfig.v124b.json --noEmit"
+    "campaign:bake": "node --import tsx tools/campaign/v13Build.ts && node --import tsx tools/campaign/buildMissionBriefs.ts",
+    "campaign:snapshot": "node --import tsx tools/campaign/v13Snapshot.ts check docs/design/v13/PHASE8_SNAPSHOT_HASHES.json",
+    "campaign:audit": "node --import tsx tools/campaign/v13FullAudit.ts",
+    "campaign:overrides": "node --import tsx tools/campaign/v13Overrides.ts",
+    "typecheck:campaign": "tsc -p tools/campaign/tsconfig.v13.json --noEmit",
+    "typecheck:campaign:legacy": "tsc -p tools/campaign/tsconfig.v124b.json --noEmit"
   },
   "private": true
 }

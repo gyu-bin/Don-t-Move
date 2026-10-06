@@ -317,7 +317,7 @@ const M0905=finish(lower({
  cover:{safe:['Checkpoint Lockers','Antechamber Blast Screen','Vault Blast Screen','Vault Gold Pallet'],risk:['Checkpoint Cash Table','Vault Blast Screen'],escape:['Vault Pier','Stair Screen North','Stair Screen South','Stair Armoured Crate','Wing Case Stack','Lobby Black Cases']},
  structures:[
   s('Vault Door','vault_door',10.2,1.16,.9,['losBreak','sightline']),s('Vault Deposit Wall','vault_deposit_wall',21,1.23,1.3,['losBreak','sightline']),
-  s('Vault Blast Screen','vault_blast_screen',11.5,4.5,1.8),s('Vault Gold Pallet','vault_gold_pallet',15.8,4.5,1.6),
+  s('Vault Blast Screen','vault_blast_screen',11.5,4.1,1.8),s('Vault Gold Pallet','vault_gold_pallet',15.8,4.5,1.6),
   s('Antechamber Blast Screen','vault_blast_screen',14.5,11.5,2),s('Antechamber Gold Bars','vault_gold_strapped',18.4,11.5,1.4),s('Antechamber Cash Cage','vault_cash_cage',21.25,9.6,1.5),
   s('Checkpoint Cash Table','vault_cash_table',12.4,17.5,1.5),s('Checkpoint Lockers','vault_lockers',16.4,17.5,1.6),
   s('Lobby Black Cases','vault_black_cases',17.8,23,1.2),
