@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_liquid_tank.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 25,
+    "y": 16,
+    "w": 462,
+    "h": 481
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_liquid_tank.png",
+    "resolution": {
+      "width": 176,
+      "height": 184
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 176,
+      "h": 184
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 164334,
+    "transparentFraction": 0.3715324401855469,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 25,
+      "y": 16,
+      "w": 462,
+      "h": 481
+    }
+  }
+}

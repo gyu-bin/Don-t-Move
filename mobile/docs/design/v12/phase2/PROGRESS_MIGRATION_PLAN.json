@@ -1,0 +1,449 @@
+{
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "oldVersion": 4,
+  "proposedVersion": 5,
+  "oldChapterCounts": [
+    10,
+    10,
+    10,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "newChapterCounts": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "mappings": [
+    {
+      "oldId": "01-01",
+      "disposition": "KEEP",
+      "progressDestination": "01-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-02",
+      "disposition": "MERGE",
+      "progressDestination": "01-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-03",
+      "disposition": "REBUILD",
+      "progressDestination": "01-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-04",
+      "disposition": "REBUILD",
+      "progressDestination": "01-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-05",
+      "disposition": "MERGE",
+      "progressDestination": "01-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-06",
+      "disposition": "MERGE",
+      "progressDestination": "01-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-07",
+      "disposition": "MERGE",
+      "progressDestination": "01-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-08",
+      "disposition": "REMOVE",
+      "progressDestination": "01-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-09",
+      "disposition": "MERGE",
+      "progressDestination": "01-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "01-10",
+      "disposition": "REBUILD",
+      "progressDestination": "01-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-01",
+      "disposition": "MERGE",
+      "progressDestination": "02-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-02",
+      "disposition": "KEEP",
+      "progressDestination": "02-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-03",
+      "disposition": "MERGE",
+      "progressDestination": "02-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-04",
+      "disposition": "REBUILD",
+      "progressDestination": "02-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-05",
+      "disposition": "REMOVE",
+      "progressDestination": "02-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-06",
+      "disposition": "REBUILD",
+      "progressDestination": "02-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-07",
+      "disposition": "MERGE",
+      "progressDestination": "02-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-08",
+      "disposition": "MERGE",
+      "progressDestination": "02-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-09",
+      "disposition": "REMOVE",
+      "progressDestination": "02-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "02-10",
+      "disposition": "REBUILD",
+      "progressDestination": "02-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-01",
+      "disposition": "MERGE",
+      "progressDestination": "03-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-02",
+      "disposition": "MERGE",
+      "progressDestination": "03-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-03",
+      "disposition": "MERGE",
+      "progressDestination": "03-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-04",
+      "disposition": "MERGE",
+      "progressDestination": "03-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-05",
+      "disposition": "KEEP",
+      "progressDestination": "03-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-06",
+      "disposition": "REBUILD",
+      "progressDestination": "03-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-07",
+      "disposition": "MERGE",
+      "progressDestination": "03-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-08",
+      "disposition": "MERGE",
+      "progressDestination": "03-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-09",
+      "disposition": "MERGE",
+      "progressDestination": "03-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "03-10",
+      "disposition": "KEEP",
+      "progressDestination": "03-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "04-01",
+      "disposition": "REBUILD",
+      "progressDestination": "04-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "04-02",
+      "disposition": "REBUILD",
+      "progressDestination": "04-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "04-03",
+      "disposition": "REBUILD",
+      "progressDestination": "04-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "04-04",
+      "disposition": "REBUILD",
+      "progressDestination": "04-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "04-05",
+      "disposition": "REBUILD",
+      "progressDestination": "04-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "05-01",
+      "disposition": "REBUILD",
+      "progressDestination": "05-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "05-02",
+      "disposition": "REBUILD",
+      "progressDestination": "05-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "05-03",
+      "disposition": "REBUILD",
+      "progressDestination": "05-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "05-04",
+      "disposition": "REBUILD",
+      "progressDestination": "05-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "05-05",
+      "disposition": "REBUILD",
+      "progressDestination": "05-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "06-01",
+      "disposition": "REBUILD",
+      "progressDestination": "06-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "06-02",
+      "disposition": "REBUILD",
+      "progressDestination": "06-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "06-03",
+      "disposition": "REBUILD",
+      "progressDestination": "06-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "06-04",
+      "disposition": "REBUILD",
+      "progressDestination": "06-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "06-05",
+      "disposition": "REBUILD",
+      "progressDestination": "06-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "07-01",
+      "disposition": "REBUILD",
+      "progressDestination": "07-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "07-02",
+      "disposition": "REBUILD",
+      "progressDestination": "07-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "07-03",
+      "disposition": "REBUILD",
+      "progressDestination": "07-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "07-04",
+      "disposition": "REBUILD",
+      "progressDestination": "07-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "07-05",
+      "disposition": "REBUILD",
+      "progressDestination": "07-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "08-01",
+      "disposition": "REBUILD",
+      "progressDestination": "08-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "08-02",
+      "disposition": "REBUILD",
+      "progressDestination": "08-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "08-03",
+      "disposition": "REBUILD",
+      "progressDestination": "08-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "08-04",
+      "disposition": "REBUILD",
+      "progressDestination": "08-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "08-05",
+      "disposition": "REBUILD",
+      "progressDestination": "08-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "09-01",
+      "disposition": "REBUILD",
+      "progressDestination": "09-01",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "09-02",
+      "disposition": "REBUILD",
+      "progressDestination": "09-02",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "09-03",
+      "disposition": "REBUILD",
+      "progressDestination": "09-03",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "09-04",
+      "disposition": "REBUILD",
+      "progressDestination": "09-04",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    },
+    {
+      "oldId": "09-05",
+      "disposition": "REBUILD",
+      "progressDestination": "09-05",
+      "preserveOldRecordInArchive": true,
+      "comparableBestTime": false
+    }
+  ]
+}

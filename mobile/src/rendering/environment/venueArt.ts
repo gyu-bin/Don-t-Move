@@ -145,20 +145,72 @@ export function drawVenueProp(c:SkCanvas,p:CompiledProp,s:CompiledStage):boolean
  c.restore();return true;
 }
 
-export function drawPortal(c:SkCanvas,s:CompiledStage,entry:boolean,active=false){
+/** Door leaf colour per venue; the frame uses the venue trim. */
+const DOOR_LEAF:Partial<Record<string,string>>={museum:'#4b3b2e',gallery:'#40454a',bank:'#3d4750',lab:'#35505a',casino:'#4f2a37',mansion:'#5e412c',warehouse:'#4c5648'};
+export type PortalPart='floor'|'door'|'lit'|'sign';
+/** Where a portal meets its wall: the point on the wall face, tiles from the portal position to it, and the rotation that turns "out of the building" to up. */
+export function portalFrame(s:CompiledStage,entry:boolean){
  const p=entry?s.def.entryPosition:s.def.exitPosition,edge=entry?s.def.entryEdge:s.def.exitEdge;
- if(!p||!edge)return;
- const theme=s.def.theme,m=MATERIALS[theme];
- c.save();c.translate(p.x*TILE,p.y*TILE);
- // The door's threshold lies on the navigable tile. Rotation points out of the building.
- c.rotate(edge==='top'?0:edge==='right'?90:edge==='bottom'?180:270,0,0);
- rect(c,-24,-14,48,29,'#0c1720');rect(c,-28,-17,6,31,m.trim);rect(c,22,-17,6,31,m.trim);
- rect(c,-24,-20,48,6,'#566575');rect(c,-21,-12,42,22,'#1d303e');
- if(theme==='warehouse'){for(let y=-10;y<10;y+=5)line(c,-20,y,20,y,'#7b897b');}
- else if(theme==='mansion'){rect(c,-18,-10,16,18,'#725039');rect(c,2,-10,16,18,'#725039');}
- else {line(c,0,-11,0,8,'#97a9b1');for(let x=-17;x<=17;x+=34)rect(c,x,-7,2,10,'#879ba8');}
- const color=entry?'#7a929f':active?'#73bca7':'#626d75';
- line(c,-19,15,19,15,color,3);line(c,-12,20,12,20,color+'88',1);
- if(!entry&&!active){rect(c,-3,-3,6,5,'#a5acac');c.drawCircle(0,-4,2,stroke('#a5acac',1));}
+ if(!p||!edge)return null;
+ const dx=edge==='left'?-1:edge==='right'?1:0,dy=edge==='top'?-1:edge==='bottom'?1:0;
+ let x=Math.floor(p.x),y=Math.floor(p.y),reach=1.2;
+ for(let n=0;n<4;n++){
+  const nx=x+dx,ny=y+dy,floor=nx>=0&&ny>=0&&nx<s.cols&&ny<s.rows&&s.grid[ny*s.cols+nx]===Cell.Floor;
+  if(!floor){reach=dy<0?p.y-y:dy>0?y+1-p.y:dx<0?p.x-x:x+1-p.x;break;}
+  x=nx;y=ny;
+ }
+ return {edge,x:(p.x+dx*reach)*TILE,y:(p.y+dy*reach)*TILE,reach:reach*TILE,angle:edge==='top'?0:edge==='right'?90:edge==='bottom'?180:270,
+  // Drawn just after the wall it sits in, so it is never painted over by that wall.
+  sortY:(edge==='top'?(p.y-reach)*TILE:edge==='bottom'?(p.y+reach+1)*TILE:(Math.floor(p.y+.8)+1)*TILE)+.5};
+}
+/**
+ * Entry and exit doors. `floor` is the runner on the walkable tiles (baked into the floor), `door` is the
+ * door itself set in the wall (a static layer); `lit` (runner) and `sign` (lamp) are the exit's open state once
+ * the prize is carried.
+ * North and south walls show a face, so their doors are drawn standing; side walls are seen from above.
+ */
+export function drawPortal(c:SkCanvas,s:CompiledStage,entry:boolean,active=false,part:PortalPart='floor'){
+ const f=portalFrame(s,entry);if(!f)return;
+ const theme=s.def.theme,m=MATERIALS[theme],leaf=DOOR_LEAF[theme]??'#34424e',standing=f.edge==='top'||f.edge==='bottom';
+ // A south wall shows its outer face below the floor line, so its door stands on that face, one tile down, unrotated.
+ const outside=f.edge==='bottom'&&(part==='door'||part==='sign');
+ const lamp=entry?'#8b99a3':active?'#5ff0a8':'#c0564b',run=f.reach+24;
+ c.save();c.translate(f.x,f.y+(outside?TILE:0));c.rotate(outside?0:f.angle,0,0);
+ if(part==='floor'){
+  // Runner from the door to the spot the thief has to reach.
+  rect(c,-24,3,48,run-3,entry?'#2b3238':'#27323a');
+  c.drawRect(Skia.XYWHRect(-24,3,48,run-3),stroke(entry?'#56616a':'#64727b',1));
+  line(c,-19,7,-19,run-4,'#00000040');line(c,19,7,19,run-4,'#00000040');
+  rect(c,-30,-1,60,4,'#6f7b84');
+ }else if(part==='lit'){
+  if(active){
+   rect(c,-24,3,48,run-3,'#39e8872e');c.drawRect(Skia.XYWHRect(-24,3,48,run-3),stroke('#8affbd',1.5));
+   // Chevrons point out through the door.
+   for(let y=run-12;y>12;y-=14){line(c,-9,y,0,y-7,'#b6ffd6',2);line(c,9,y,0,y-7,'#b6ffd6',2);}
+  }
+ }else if(part==='sign'){
+  // Only the lamp changes when the exit opens, so nothing is repainted over a character at the door.
+  if(standing){rect(c,-13,-67,26,5,lamp);rect(c,-21,-74,42,19,'#5ff0a822');}
+  else{rect(c,-12,-7,24,3,lamp);rect(c,-20,-14,40,17,'#5ff0a822');}
+ }else if(standing){
+  // Elevation: a double door standing in the north wall face.
+  rect(c,-33,-58,66,58,m.trim);rect(c,-29,-54,58,54,'#0c1318');
+  for(const x of [-28,1]){
+   rect(c,x,-53,27,53,leaf);c.drawRect(Skia.XYWHRect(x+4,-48,19,19),stroke('#ffffff26',1));c.drawRect(Skia.XYWHRect(x+4,-25,19,20),stroke('#ffffff26',1));
+   line(c,x,-53,x,0,'#00000055');
+  }
+  line(c,0,-53,0,0,'#0a0f13',2);rect(c,-6,-27,3,9,m.trim);rect(c,3,-27,3,9,m.trim);
+  rect(c,-33,-2,66,3,'#00000066');
+  // Sign box over the lintel.
+  rect(c,-17,-70,34,11,'#151c22');c.drawRect(Skia.XYWHRect(-17,-70,34,11),stroke(m.trim,1));
+  rect(c,-13,-67,26,5,lamp);
+ }else{
+  // Plan view: the doorway cut through the wall, door leaves closed on its outer side.
+  rect(c,-30,-TILE,60,TILE,'#11191f');rect(c,-36,-TILE-1,7,TILE+2,m.trim);rect(c,29,-TILE-1,7,TILE+2,m.trim);
+  rect(c,-29,-TILE+5,58,8,leaf);c.drawRect(Skia.XYWHRect(-29,-TILE+5,58,8),stroke('#00000080',1));
+  line(c,0,-TILE+5,0,-TILE+13,'#0a0f13',2);rect(c,-7,-TILE+14,4,3,m.trim);rect(c,3,-TILE+14,4,3,m.trim);
+  // Lamp bar on the inner edge of the wall.
+  rect(c,-15,-9,30,7,'#151c22');rect(c,-12,-7,24,3,lamp);
+ }
  c.restore();
 }

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/mansion/major/mansion_dining_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 19,
+    "y": 281,
+    "w": 474,
+    "h": 212
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/mansion/_source/mansion_dining_table.png",
+    "resolution": {
+      "width": 425,
+      "height": 199
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 409,
+      "h": 183
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 69850,
+    "transparentFraction": 0.7335433959960938,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 19,
+      "y": 281,
+      "w": 474,
+      "h": 212
+    }
+  }
+}

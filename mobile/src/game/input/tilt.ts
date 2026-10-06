@@ -8,7 +8,8 @@ export interface AttitudeSample {
   receivedAt: number;
 }
 export interface TiltTuning { deadZone: number; maxTilt: number; sensitivity: number; smoothing: number }
-export const DEFAULT_TILT: TiltTuning = { deadZone: 2, maxTilt: 16, sensitivity: 1, smoothing: 0.06 };
+// V12 Phase 2: candidate B selected after physical iPhone feel comparison.
+export const DEFAULT_TILT: TiltTuning = { deadZone: 1.75, maxTilt: 10, sensitivity: 1, smoothing: 0.07 };
 export const CALIBRATION_TIMEOUT_MS = 2500;
 /** Background ends a reference session; foreground alone must never recalibrate. */
 export function sensorLifecycleAction(state: string, running: boolean, started: boolean) {
@@ -90,7 +91,8 @@ export function relativeTilt(neutral: Quaternion, current: Quaternion) {
   return { roll: radial > 1e-8 ? nx/radial*angle : 0,
     pitch: radial > 1e-8 ? -ny/radial*angle : 0, magnitude: angle };
 }
-/** Continuous nonlinear speed curve; defaults: 5.18° Sneak, 9.64° Walk, 16° Run. */
+/** Continuous nonlinear curve: default anchors 3.625° = 38, 6.25° = 72,
+ * 10° = 150 world units/sec. Gait thresholds use actual player velocity. */
 export function response(magnitude: number, tuning: TiltTuning): number {
   'worklet';
   const a = tuning.deadZone + magnitude*(tuning.maxTilt-tuning.deadZone);

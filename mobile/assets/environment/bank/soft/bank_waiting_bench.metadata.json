@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_waiting_bench.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 11,
+    "y": 213,
+    "w": 362,
+    "h": 160
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_waiting_bench.png",
+    "resolution": {
+      "width": 256,
+      "height": 113
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 256,
+      "h": 113
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 39994,
+    "transparentFraction": 0.7277492947048612,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 11,
+      "y": 213,
+      "w": 362,
+      "h": 160
+    }
+  }
+}

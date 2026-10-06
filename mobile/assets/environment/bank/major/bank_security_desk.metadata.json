@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_security_desk.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 163,
+    "w": 482,
+    "h": 334
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_security_desk.png",
+    "resolution": {
+      "width": 253,
+      "height": 175
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 253,
+      "h": 175
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 120929,
+    "transparentFraction": 0.53765869140625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 163,
+      "w": 482,
+      "h": 334
+    }
+  }
+}

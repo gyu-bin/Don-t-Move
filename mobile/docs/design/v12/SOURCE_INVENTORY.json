@@ -1,0 +1,1574 @@
+{
+  "phase": "V12 Phase 1: audit and blueprint only",
+  "runtimeMissionCount": 60,
+  "chapterCounts": [
+    10,
+    10,
+    10,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "protectedHashes": {
+    "src/game/levels/stages/campaignStages.json": "bd7a3a4de9e0cb63f3627a0cd03e5cfbb1fa43561e94f224926fbbd7e9895202",
+    "src/game/levels/campaignCatalog.ts": "4d03b291c8842ffed7e2f224a8db7d1091de7a1774b469273c25ae320b512beb",
+    "src/game/levels/chapterDifficulty.ts": "aea39c38ac7053656484d3e6a75459b4643ada9ddeaadeaa8b4ecc5b0b3ce8e9",
+    "src/game/input/tilt.ts": "1648d229ada65176884a545b4ed1bd9d6bce3fcf55dac969ddda8c1bd4c663b6",
+    "src/game/input/tiltMovement.ts": "756a695b4b6af2382dae4465f362153f2a1c060d977e63cea754caf6696ad82d",
+    "src/game/input/useTiltControl.ts": "9fd5608747bd565c1178e54a3b8f6337bdbaa8be89077b86ff8b5bddb3c6db70",
+    "src/game/guards/guardPhase.ts": "1ac5efe8d990d8edc3da321ea356be8caef6986f8fb750078071c2d921d75083"
+  },
+  "missions": [
+    {
+      "id": "01-01",
+      "title": "Entrance Hall",
+      "chapter": 1,
+      "stageHash": "1871ac2ec42fba11d89da578d66123b9a4d772c4d67f03b45498f4fc17ec9486",
+      "bounds": [
+        21,
+        14
+      ],
+      "guards": 2,
+      "cameras": 0,
+      "props": 8,
+      "routes": [
+        {
+          "name": "safe: observation pockets linked by structural cover",
+          "lengthTiles": 21.77
+        },
+        {
+          "name": "risk: short exposed sightline crossing",
+          "lengthTiles": 14.64
+        },
+        {
+          "name": "main: room sequence and objective reveal",
+          "lengthTiles": 14.64
+        }
+      ],
+      "floorCellsBeforePropCollision": 129
+    },
+    {
+      "id": "01-02",
+      "title": "Main Gallery",
+      "chapter": 1,
+      "stageHash": "8f77b068743aee86ef9d6da194c44ee7eaa16f1fc1a349769e8a007a0368d602",
+      "bounds": [
+        28,
+        18
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 5,
+      "routes": [
+        {
+          "name": "main: Enter the rotunda from the west, circle its paired classical exhibits, steal the north collection jewel and leave through the east portrait loggia.",
+          "lengthTiles": 21.11
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 27.71
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 21.19
+        }
+      ],
+      "floorCellsBeforePropCollision": 232
+    },
+    {
+      "id": "01-03",
+      "title": "Archive",
+      "chapter": 1,
+      "stageHash": "5782acb153e2eb7ae9eb630d0391fbdb755e6db6c731cb9e94d03f18cce80931",
+      "bounds": [
+        18,
+        14
+      ],
+      "guards": 2,
+      "cameras": 0,
+      "props": 8,
+      "routes": [
+        {
+          "name": "safe: structural observation route",
+          "lengthTiles": 22.8
+        },
+        {
+          "name": "risk: shorter timed crossing",
+          "lengthTiles": 22.16
+        }
+      ],
+      "floorCellsBeforePropCollision": 84
+    },
+    {
+      "id": "01-04",
+      "title": "Security Wing",
+      "chapter": 1,
+      "stageHash": "9f78df1c001aaf29189451c7cbe86d7ebaaaabe8e7cb70c0207e0f3da7be7813",
+      "bounds": [
+        21,
+        14
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 8,
+      "routes": [
+        {
+          "name": "safe: structural observation route",
+          "lengthTiles": 21.23
+        },
+        {
+          "name": "risk: shorter timed crossing",
+          "lengthTiles": 17.3
+        }
+      ],
+      "floorCellsBeforePropCollision": 106
+    },
+    {
+      "id": "01-05",
+      "title": "Restricted Collection",
+      "chapter": 1,
+      "stageHash": "43a770022372f62c8402d40ac27770f9d0b824c2edbcf34c33925df28e4ea79c",
+      "bounds": [
+        33,
+        22
+      ],
+      "guards": 4,
+      "cameras": 1,
+      "props": 8,
+      "routes": [
+        {
+          "name": "main: Cross a restricted collection court, infiltrate its east jewel chamber and escape through a separate north service gallery.",
+          "lengthTiles": 30.95
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 41.25
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 36.77
+        }
+      ],
+      "floorCellsBeforePropCollision": 366
+    },
+    {
+      "id": "01-06",
+      "title": "Conservation Lab",
+      "chapter": 1,
+      "stageHash": "15fd0d71423aaafd05d8e04ceeb1140ff71cb1b415c731a87c1857cdd0553a5f",
+      "bounds": [
+        34,
+        21
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 8,
+      "routes": [
+        {
+          "name": "main: Cross paired restoration work bays, take the protected specimen in the eastern store and escape through the north intake service door.",
+          "lengthTiles": 31.16
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 39.03
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 31.19
+        }
+      ],
+      "floorCellsBeforePropCollision": 360
+    },
+    {
+      "id": "01-07",
+      "title": "Private Gallery",
+      "chapter": 1,
+      "stageHash": "8ee8db94be157278d3b93923eac20b0bbe4f25ecb02a4fe068d2cab367e66658",
+      "bounds": [
+        17,
+        20
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 12,
+      "routes": [
+        {
+          "name": "safe: structural observation route",
+          "lengthTiles": 26.0
+        },
+        {
+          "name": "risk: shorter timed crossing",
+          "lengthTiles": 17.96
+        }
+      ],
+      "floorCellsBeforePropCollision": 170
+    },
+    {
+      "id": "01-08",
+      "title": "Security Core",
+      "chapter": 1,
+      "stageHash": "fe2b2b60addfcc0eeecccd59d1a96523aba077c8120e1b40cb56a40dcf12c121",
+      "bounds": [
+        31,
+        27
+      ],
+      "guards": 5,
+      "cameras": 2,
+      "props": 9,
+      "routes": [
+        {
+          "name": "main: Read a museum security cross from the east, steal the archive core beyond the northern checkpoint and escape down the west maintenance gallery.",
+          "lengthTiles": 21.06
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 46.1
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 20.65
+        }
+      ],
+      "floorCellsBeforePropCollision": 403
+    },
+    {
+      "id": "01-09",
+      "title": "Master Exhibition",
+      "chapter": 1,
+      "stageHash": "4162eea9139df326f5d3cda08c7934fb189325ea47ae04b7f3917274a17e1f38",
+      "bounds": [
+        36,
+        26
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 8,
+      "routes": [
+        {
+          "name": "main: Traverse a stepped sculpture promenade into the eastern collection, then turn north through the portrait balcony rather than retracing the promenade.",
+          "lengthTiles": 42.43
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 55.91
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 39.86
+        }
+      ],
+      "floorCellsBeforePropCollision": 361
+    },
+    {
+      "id": "01-10",
+      "title": "Grand Heist",
+      "chapter": 1,
+      "stageHash": "5e3a3cd73183500625b0ff9f2e7bfd71c02fc6e3348bf1fffb72c0b2d99201b3",
+      "bounds": [
+        38,
+        31
+      ],
+      "guards": 6,
+      "cameras": 2,
+      "props": 12,
+      "routes": [
+        {
+          "name": "main: Enter the grand exhibition, steal the master diamond from its north sanctuary and escape through a western sculpture cloister and independent south service door.",
+          "lengthTiles": 24.75
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 57.78
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 25.32
+        }
+      ],
+      "floorCellsBeforePropCollision": 686
+    },
+    {
+      "id": "02-01",
+      "title": "Front Exhibition",
+      "chapter": 2,
+      "stageHash": "92e5f3a87015a969ed79c981255850c31e7e26a69ca5bce98e361ef74ad74dfe",
+      "bounds": [
+        24,
+        18
+      ],
+      "guards": 2,
+      "cameras": 0,
+      "props": 17,
+      "routes": [
+        {
+          "name": "safe: peripheral curated exhibit observation",
+          "lengthTiles": 23.82
+        },
+        {
+          "name": "risk: open exhibition crossing",
+          "lengthTiles": 21.76
+        },
+        {
+          "name": "main: featured artwork reveal",
+          "lengthTiles": 21.76
+        }
+      ],
+      "floorCellsBeforePropCollision": 206
+    },
+    {
+      "id": "02-02",
+      "title": "Portrait Hall",
+      "chapter": 2,
+      "stageHash": "3f7fee0ff04e2243fdda9caff53d1e35f6db49c7bd552aaf02c75ece0b455e5e",
+      "bounds": [
+        24,
+        20
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 22,
+      "routes": [
+        {
+          "name": "safe: peripheral curated exhibit observation",
+          "lengthTiles": 26.61
+        },
+        {
+          "name": "risk: open exhibition crossing",
+          "lengthTiles": 24.41
+        },
+        {
+          "name": "main: featured artwork reveal",
+          "lengthTiles": 24.41
+        }
+      ],
+      "floorCellsBeforePropCollision": 244
+    },
+    {
+      "id": "02-03",
+      "title": "Sculpture Studio",
+      "chapter": 2,
+      "stageHash": "0c338f196438f70b72727a632edad9a22a29c0c4667352eb626b181fdd505898",
+      "bounds": [
+        34,
+        20
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 23,
+      "routes": [
+        {
+          "name": "main: Cross working sculpture bays from the western studio entrance, steal the commissioned centerpiece in the north collection and escape through the eastern installation annex.",
+          "lengthTiles": 24.28
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 52.15
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 23.58
+        }
+      ],
+      "floorCellsBeforePropCollision": 353
+    },
+    {
+      "id": "02-04",
+      "title": "Modern Wing",
+      "chapter": 2,
+      "stageHash": "d4906c82ca9742d3d824eb2dbc6f53a62099f32a3b204c082c431197c65cd9f8",
+      "bounds": [
+        34,
+        30
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 26,
+      "routes": [
+        {
+          "name": "main: Traverse a staggered modern art wing from north to south, reach its western collection recess and leave through the southeast courtyard.",
+          "lengthTiles": 24.5
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 40.42
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 23.51
+        }
+      ],
+      "floorCellsBeforePropCollision": 427
+    },
+    {
+      "id": "02-05",
+      "title": "Collector's Room",
+      "chapter": 2,
+      "stageHash": "6bec87f79fedeb335dbb8036f15c6b5ad33404299e1c7c8291e86026d1684239",
+      "bounds": [
+        32,
+        24
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 26,
+      "routes": [
+        {
+          "name": "main: Enter a collector suite from the east, infiltrate the northwest private painting room and circle its separate south service return.",
+          "lengthTiles": 29.88
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 51.91
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 33.81
+        }
+      ],
+      "floorCellsBeforePropCollision": 397
+    },
+    {
+      "id": "02-06",
+      "title": "Glass Gallery",
+      "chapter": 2,
+      "stageHash": "1ae64d6d8661326346dc8995449333b55cdad4cc5f5d258473e11067623853f4",
+      "bounds": [
+        35,
+        29
+      ],
+      "guards": 5,
+      "cameras": 1,
+      "props": 20,
+      "routes": [
+        {
+          "name": "main: authored heist security sequence",
+          "lengthTiles": 35.61
+        },
+        {
+          "name": "safe: longer exhibit / analyst shoulders",
+          "lengthTiles": 38.51
+        },
+        {
+          "name": "risk: exposed security crossings",
+          "lengthTiles": 41.44
+        }
+      ],
+      "floorCellsBeforePropCollision": 521
+    },
+    {
+      "id": "02-07",
+      "title": "Curator's Floor",
+      "chapter": 2,
+      "stageHash": "71d4d5436c39e2bb17b745361bd328b0efb6116aedb2b04f17bcca615ed86a88",
+      "bounds": [
+        35,
+        30
+      ],
+      "guards": 5,
+      "cameras": 1,
+      "props": 32,
+      "routes": [
+        {
+          "name": "main: Use a curator\u2019s crossing gallery to reach the western private workroom, steal its painting and escape through the northern public portrait corridor.",
+          "lengthTiles": 28.79
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 45.98
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 31.44
+        }
+      ],
+      "floorCellsBeforePropCollision": 479
+    },
+    {
+      "id": "02-08",
+      "title": "Grand Atrium",
+      "chapter": 2,
+      "stageHash": "a126a61cc08f39a92010a43a81e731ed33bc509d7d40b772c895e4f0e64f00e7",
+      "bounds": [
+        39,
+        30
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 31,
+      "routes": [
+        {
+          "name": "main: Enter the grand atrium from above, cross a paired monumental installation, steal the west masterpiece and leave through a separate southeast return gallery.",
+          "lengthTiles": 29.94
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 50.13
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 29.7
+        }
+      ],
+      "floorCellsBeforePropCollision": 500
+    },
+    {
+      "id": "02-09",
+      "title": "Private Collection",
+      "chapter": 2,
+      "stageHash": "536dea409d86b5b7d4f28c4f49356ec0a9299253d4058bacccfe4da6fd931f78",
+      "bounds": [
+        34,
+        33
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 34,
+      "routes": [
+        {
+          "name": "main: Enter the private collection from the west, circle a sculpture courtyard to steal the southern collection painting and leave through its northeast portrait balcony.",
+          "lengthTiles": 29.9
+        },
+        {
+          "name": "safe: cover-chain viewing shoulders",
+          "lengthTiles": 110.08
+        },
+        {
+          "name": "risk: exposed direct artwork crossing",
+          "lengthTiles": 26.79
+        }
+      ],
+      "floorCellsBeforePropCollision": 521
+    },
+    {
+      "id": "02-10",
+      "title": "Masterpiece",
+      "chapter": 2,
+      "stageHash": "47558699bf29cc71bad3d9b4675da60b093d9c4c8c8789d06cbbd028bd0a2f52",
+      "bounds": [
+        38,
+        34
+      ],
+      "guards": 7,
+      "cameras": 2,
+      "props": 22,
+      "routes": [
+        {
+          "name": "main: authored heist security sequence",
+          "lengthTiles": 35.73
+        },
+        {
+          "name": "safe: longer exhibit / analyst shoulders",
+          "lengthTiles": 66.67
+        },
+        {
+          "name": "risk: exposed security crossings",
+          "lengthTiles": 35.77
+        }
+      ],
+      "floorCellsBeforePropCollision": 750
+    },
+    {
+      "id": "03-01",
+      "title": "Public Lobby",
+      "chapter": 3,
+      "stageHash": "e2ea2b3b453570f6ac52ad8b6709230957690a29d72567f2234bd1838cb2aaaa",
+      "bounds": [
+        23,
+        17
+      ],
+      "guards": 2,
+      "cameras": 0,
+      "props": 16,
+      "routes": [
+        {
+          "name": "main: Compact public crossing, two queue approaches and teller target",
+          "lengthTiles": 16.35
+        },
+        {
+          "name": "safe: Compact public crossing, two queue approaches and teller target",
+          "lengthTiles": 15.98
+        },
+        {
+          "name": "risk: Compact public crossing, two queue approaches and teller target",
+          "lengthTiles": 18.43
+        }
+      ],
+      "floorCellsBeforePropCollision": 178
+    },
+    {
+      "id": "03-02",
+      "title": "Teller Hall",
+      "chapter": 3,
+      "stageHash": "0e30f93f8749fe17f244e436a100e2e95034bb6f89aa0c7b4bd9de7f2f77d065",
+      "bounds": [
+        23,
+        22
+      ],
+      "guards": 3,
+      "cameras": 1,
+      "props": 22,
+      "routes": [
+        {
+          "name": "main: Long teller spine with west staff bypass and U escape",
+          "lengthTiles": 24.99
+        },
+        {
+          "name": "safe: Long teller spine with west staff bypass and U escape",
+          "lengthTiles": 30.54
+        },
+        {
+          "name": "risk: Long teller spine with west staff bypass and U escape",
+          "lengthTiles": 28.92
+        }
+      ],
+      "floorCellsBeforePropCollision": 250
+    },
+    {
+      "id": "03-03",
+      "title": "Staff Offices",
+      "chapter": 3,
+      "stageHash": "f5902d69c906b4333037e6fa9bd54f2c0ab9cfe87d4bb26b329d56548b6b268c",
+      "bounds": [
+        33,
+        28
+      ],
+      "guards": 4,
+      "cameras": 1,
+      "props": 30,
+      "routes": [
+        {
+          "name": "main: Six-room staggered office network with shared central record bank and diagonal dispatch escape",
+          "lengthTiles": 42.23
+        },
+        {
+          "name": "safe: Six-room staggered office network with shared central record bank and diagonal dispatch escape",
+          "lengthTiles": 38.01
+        },
+        {
+          "name": "risk: Six-room staggered office network with shared central record bank and diagonal dispatch escape",
+          "lengthTiles": 40.75
+        }
+      ],
+      "floorCellsBeforePropCollision": 375
+    },
+    {
+      "id": "03-04",
+      "title": "Records Room",
+      "chapter": 3,
+      "stageHash": "f587d41f408648dbfee620f85ee21215487a9e19bf261b25e6d6a8ee17cc8d92",
+      "bounds": [
+        27,
+        23
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 21,
+      "routes": [
+        {
+          "name": "main: Stepped records network: narrow intake, ledger spine, secure audit alcove and separate upper verification return",
+          "lengthTiles": 30.28
+        },
+        {
+          "name": "safe: Stepped records network: narrow intake, ledger spine, secure audit alcove and separate upper verification return",
+          "lengthTiles": 28.75
+        },
+        {
+          "name": "risk: Stepped records network: narrow intake, ledger spine, secure audit alcove and separate upper verification return",
+          "lengthTiles": 30.37
+        }
+      ],
+      "floorCellsBeforePropCollision": 281
+    },
+    {
+      "id": "03-05",
+      "title": "Deposit Boxes",
+      "chapter": 3,
+      "stageHash": "6e037546f20195864c1da32a5d74bb114dd588bc5e44964efa2a52733cf88ef1",
+      "bounds": [
+        34,
+        29
+      ],
+      "guards": 4,
+      "cameras": 1,
+      "props": 32,
+      "routes": [
+        {
+          "name": "main: Deposit wall landmark, two lane approaches and independent service return",
+          "lengthTiles": 39.34
+        },
+        {
+          "name": "safe: Deposit wall landmark, two lane approaches and independent service return",
+          "lengthTiles": 39.8
+        },
+        {
+          "name": "risk: Deposit wall landmark, two lane approaches and independent service return",
+          "lengthTiles": 42.7
+        }
+      ],
+      "floorCellsBeforePropCollision": 401
+    },
+    {
+      "id": "03-06",
+      "title": "Security Checkpoint",
+      "chapter": 3,
+      "stageHash": "6ad83e52bf6185f261023ba51d3888b59c24c1c892f45a279d812f82f8cbb720",
+      "bounds": [
+        34,
+        30
+      ],
+      "guards": 4,
+      "cameras": 2,
+      "props": 26,
+      "routes": [
+        {
+          "name": "main: Gate is the main choke point, west bypass is an actual second security route",
+          "lengthTiles": 29.26
+        },
+        {
+          "name": "safe: Gate is the main choke point, west bypass is an actual second security route",
+          "lengthTiles": 47.99
+        },
+        {
+          "name": "risk: Gate is the main choke point, west bypass is an actual second security route",
+          "lengthTiles": 28.32
+        }
+      ],
+      "floorCellsBeforePropCollision": 381
+    },
+    {
+      "id": "03-07",
+      "title": "Cash Processing",
+      "chapter": 3,
+      "stageHash": "2639e17ad781755cad1a682c08f98363b78ee3907addcf3a3c756160b825c17d",
+      "bounds": [
+        27,
+        32
+      ],
+      "guards": 4,
+      "cameras": 1,
+      "props": 38,
+      "routes": [
+        {
+          "name": "main: Wide cash floor divided into table, cart, record and loading cells",
+          "lengthTiles": 23.0
+        },
+        {
+          "name": "safe: Wide cash floor divided into table, cart, record and loading cells",
+          "lengthTiles": 24.88
+        },
+        {
+          "name": "risk: Wide cash floor divided into table, cart, record and loading cells",
+          "lengthTiles": 24.88
+        }
+      ],
+      "floorCellsBeforePropCollision": 368
+    },
+    {
+      "id": "03-08",
+      "title": "Inner Security",
+      "chapter": 3,
+      "stageHash": "6b894c6be2f3884154c0a10c2cdb28aff0d9d905df53f882fdaca6e4bf29005e",
+      "bounds": [
+        37,
+        28
+      ],
+      "guards": 5,
+      "cameras": 2,
+      "props": 36,
+      "routes": [
+        {
+          "name": "main: authored heist security sequence",
+          "lengthTiles": 44.31
+        },
+        {
+          "name": "safe: longer exhibit / analyst shoulders",
+          "lengthTiles": 39.79
+        },
+        {
+          "name": "risk: exposed security crossings",
+          "lengthTiles": 44.52
+        }
+      ],
+      "floorCellsBeforePropCollision": 595
+    },
+    {
+      "id": "03-09",
+      "title": "Vault Antechamber",
+      "chapter": 3,
+      "stageHash": "bd8e07fc885536b5721c4a7eaf30ce359cb97805eb8d2ce6dc4658bccd861965",
+      "bounds": [
+        34,
+        25
+      ],
+      "guards": 5,
+      "cameras": 2,
+      "props": 25,
+      "routes": [
+        {
+          "name": "main: Visible vault door, observation approach and records detour, south service escape",
+          "lengthTiles": 29.55
+        },
+        {
+          "name": "safe: Visible vault door, observation approach and records detour, south service escape",
+          "lengthTiles": 44.88
+        },
+        {
+          "name": "risk: Visible vault door, observation approach and records detour, south service escape",
+          "lengthTiles": 30.12
+        }
+      ],
+      "floorCellsBeforePropCollision": 350
+    },
+    {
+      "id": "03-10",
+      "title": "Main Vault",
+      "chapter": 3,
+      "stageHash": "e99001516a581c881fea0da710109f1a4cc2bac3968f6c311477dd7b53f9bcc2",
+      "bounds": [
+        40,
+        42
+      ],
+      "guards": 7,
+      "cameras": 3,
+      "props": 53,
+      "routes": [
+        {
+          "name": "main: authored heist security sequence",
+          "lengthTiles": 60.08
+        },
+        {
+          "name": "safe: longer exhibit / analyst shoulders",
+          "lengthTiles": 106.25
+        },
+        {
+          "name": "risk: exposed security crossings",
+          "lengthTiles": 58.78
+        }
+      ],
+      "floorCellsBeforePropCollision": 774
+    },
+    {
+      "id": "04-01",
+      "title": "Observation Lobby",
+      "chapter": 4,
+      "stageHash": "866554a5d3fa2cbc6f4b92f2b34a670778bd99f8bf0cfb70ad041830455268c0",
+      "bounds": [
+        20,
+        18
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 24,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 20.44
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 4.92
+        }
+      ],
+      "floorCellsBeforePropCollision": 248
+    },
+    {
+      "id": "04-02",
+      "title": "Research Wing",
+      "chapter": 4,
+      "stageHash": "5d49786ea4599c9352b2d4748cd0c5a481734b24a707b14c8b34415850d02530",
+      "bounds": [
+        21,
+        19
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 35,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 24.06
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 19.91
+        }
+      ],
+      "floorCellsBeforePropCollision": 292
+    },
+    {
+      "id": "04-03",
+      "title": "Specimen Lab",
+      "chapter": 4,
+      "stageHash": "b977f301a110e1fa06aa7a5bf9e0cc5847b80e9633659b2b29f80f65cfa78e48",
+      "bounds": [
+        22,
+        20
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 29,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 33.03
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 8.73
+        }
+      ],
+      "floorCellsBeforePropCollision": 337
+    },
+    {
+      "id": "04-04",
+      "title": "Containment Sector",
+      "chapter": 4,
+      "stageHash": "0b430d713d57ac2e1f37637469b98a6ebe0e2b0cb6a724dd3b3ea910212edf42",
+      "bounds": [
+        22,
+        20
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 32,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 17.7
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 17.35
+        }
+      ],
+      "floorCellsBeforePropCollision": 323
+    },
+    {
+      "id": "04-05",
+      "title": "Prototype Chamber",
+      "chapter": 4,
+      "stageHash": "2c87b9494425955aeb0c541977df53fbbe1e9207da12d02399ee3e713710970b",
+      "bounds": [
+        22,
+        23
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 39,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 24.57
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 20.04
+        }
+      ],
+      "floorCellsBeforePropCollision": 373
+    },
+    {
+      "id": "05-01",
+      "title": "Hotel Reception",
+      "chapter": 5,
+      "stageHash": "4cbf978416f336e87d83d437ddf41af1e89af2b082637a8ae3c702fcb5616d44",
+      "bounds": [
+        20,
+        18
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 29,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 19.5
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 9.71
+        }
+      ],
+      "floorCellsBeforePropCollision": 270
+    },
+    {
+      "id": "05-02",
+      "title": "Gaming Floor",
+      "chapter": 5,
+      "stageHash": "6c256cfe436a4969833354002f2760b1f2ac1de4e69450b661f9b4fe98807d8f",
+      "bounds": [
+        20,
+        21
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 46,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 18.16
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 16.6
+        }
+      ],
+      "floorCellsBeforePropCollision": 325
+    },
+    {
+      "id": "05-03",
+      "title": "Service Lounge",
+      "chapter": 5,
+      "stageHash": "e020290aa6fd96f61c4e8e1d10df270d3fb30f68053bddd21d565936085f673b",
+      "bounds": [
+        22,
+        19
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 39,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 35.51
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 6.8
+        }
+      ],
+      "floorCellsBeforePropCollision": 315
+    },
+    {
+      "id": "05-04",
+      "title": "VIP Salon",
+      "chapter": 5,
+      "stageHash": "ea265ccc510ae77b606cda0329674fa6ab734826fd25a87051f496b4659e38f9",
+      "bounds": [
+        22,
+        21
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 34,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 27.04
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 21.98
+        }
+      ],
+      "floorCellsBeforePropCollision": 353
+    },
+    {
+      "id": "05-05",
+      "title": "Royal Jewel Room",
+      "chapter": 5,
+      "stageHash": "de8943ed03dbd5e25b122767bb928b01d1d20f6f3a8c10f3fbcd94dab4f3d3b8",
+      "bounds": [
+        24,
+        21
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 37,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 39.78
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 7.76
+        }
+      ],
+      "floorCellsBeforePropCollision": 383
+    },
+    {
+      "id": "06-01",
+      "title": "Garden Vestibule",
+      "chapter": 6,
+      "stageHash": "264ee77e4ea2b45298a9a4e4071452892e45aae369f0ac9034df6c938e510ce6",
+      "bounds": [
+        19,
+        19
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 27,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 27.44
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 16.5
+        }
+      ],
+      "floorCellsBeforePropCollision": 267
+    },
+    {
+      "id": "06-02",
+      "title": "Drawing Room",
+      "chapter": 6,
+      "stageHash": "e2d87212a4a6a9307cf970480756f71b13a5792cce8e9140d41961f09ebfe396",
+      "bounds": [
+        22,
+        18
+      ],
+      "guards": 3,
+      "cameras": 0,
+      "props": 33,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 35.86
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 4.92
+        }
+      ],
+      "floorCellsBeforePropCollision": 298
+    },
+    {
+      "id": "06-03",
+      "title": "Library Wing",
+      "chapter": 6,
+      "stageHash": "94f1641e5f1f04c5da4cd3e45ee7e2a108530d6d957b81bd7a80161d738c7a2b",
+      "bounds": [
+        23,
+        20
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 47,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 28.96
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 7.28
+        }
+      ],
+      "floorCellsBeforePropCollision": 346
+    },
+    {
+      "id": "06-04",
+      "title": "Family Apartments",
+      "chapter": 6,
+      "stageHash": "6b8f1d3c2a5c7c757aa6990a6c6d43020523691f238c6dcfdf7eee96a74d1ab4",
+      "bounds": [
+        23,
+        20
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 41,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 39.23
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 10.69
+        }
+      ],
+      "floorCellsBeforePropCollision": 353
+    },
+    {
+      "id": "06-05",
+      "title": "Heirloom Gallery",
+      "chapter": 6,
+      "stageHash": "4881fc069660515effd95f23a3e9494a4c396516fcbb7989f6ffc135196aed50",
+      "bounds": [
+        23,
+        24
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 49,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 41.26
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 8.25
+        }
+      ],
+      "floorCellsBeforePropCollision": 424
+    },
+    {
+      "id": "07-01",
+      "title": "Loading Entrance",
+      "chapter": 7,
+      "stageHash": "da37d3be56efc5745a072690941a1291294638d47bd9ad3bbdbe837ba4c51a86",
+      "bounds": [
+        21,
+        19
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 31,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 23.27
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 19.87
+        }
+      ],
+      "floorCellsBeforePropCollision": 284
+    },
+    {
+      "id": "07-02",
+      "title": "Cargo Sorting",
+      "chapter": 7,
+      "stageHash": "3480ec84032507611cb477b36fce5f38397d6cdec1927648751e70330c06f517",
+      "bounds": [
+        21,
+        22
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 27,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 33.39
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 19.92
+        }
+      ],
+      "floorCellsBeforePropCollision": 322
+    },
+    {
+      "id": "07-03",
+      "title": "Storage Aisles",
+      "chapter": 7,
+      "stageHash": "77621fcf2e17a9783d45401feeac9a95b6195ef564e5224f257b0e5d6c3d21ac",
+      "bounds": [
+        23,
+        20
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 30,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 34.32
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 18.07
+        }
+      ],
+      "floorCellsBeforePropCollision": 351
+    },
+    {
+      "id": "07-04",
+      "title": "Inspection Bay",
+      "chapter": 7,
+      "stageHash": "511ead34d618460563ea469fd1030537c1ea17eab7420bb009903dc46162266d",
+      "bounds": [
+        23,
+        22
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 45,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 40.46
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 18.46
+        }
+      ],
+      "floorCellsBeforePropCollision": 389
+    },
+    {
+      "id": "07-05",
+      "title": "Secured Shipment",
+      "chapter": 7,
+      "stageHash": "1cc4384174eb031ec54fc529825c18622ab3b6e9dd5850ff94bfd7ed5b192d9e",
+      "bounds": [
+        25,
+        22
+      ],
+      "guards": 6,
+      "cameras": 0,
+      "props": 23,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 40.27
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 21.21
+        }
+      ],
+      "floorCellsBeforePropCollision": 388
+    },
+    {
+      "id": "08-01",
+      "title": "Security Reception",
+      "chapter": 8,
+      "stageHash": "9feeb124ac97e692b6e7e6717ff5b5fb6da1222a880c9b0d1fc1a0143d3eddde",
+      "bounds": [
+        20,
+        20
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 41,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 17.42
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 15.4
+        }
+      ],
+      "floorCellsBeforePropCollision": 294
+    },
+    {
+      "id": "08-02",
+      "title": "Monitoring Room",
+      "chapter": 8,
+      "stageHash": "66a498894723ea1e3eb0c140a6d47da681d3ff5d372af72f3ff1be2a628ed9e8",
+      "bounds": [
+        23,
+        19
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 33,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 36.95
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 14.71
+        }
+      ],
+      "floorCellsBeforePropCollision": 315
+    },
+    {
+      "id": "08-03",
+      "title": "Server Wing",
+      "chapter": 8,
+      "stageHash": "66afc3aeb45ce59a796076219a0526c4167b9d2b91cfcca3decdf5fb764c8cbb",
+      "bounds": [
+        22,
+        22
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 38,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 35.26
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 19.05
+        }
+      ],
+      "floorCellsBeforePropCollision": 373
+    },
+    {
+      "id": "08-04",
+      "title": "Restricted Corridor",
+      "chapter": 8,
+      "stageHash": "c162d06259df94fba668b3e47585bbf981cfb5286fe6b56341d9d95804fb37fa",
+      "bounds": [
+        24,
+        20
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 28,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 33.69
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 21.52
+        }
+      ],
+      "floorCellsBeforePropCollision": 362
+    },
+    {
+      "id": "08-05",
+      "title": "Black Site Archive",
+      "chapter": 8,
+      "stageHash": "7d9929247fa52430f25fce9fcb6c2d43e35b97b17d0750fbae80eb6f3954c141",
+      "bounds": [
+        23,
+        25
+      ],
+      "guards": 6,
+      "cameras": 0,
+      "props": 47,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 40.2
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 21.39
+        }
+      ],
+      "floorCellsBeforePropCollision": 407
+    },
+    {
+      "id": "09-01",
+      "title": "Outer Checkpoint",
+      "chapter": 9,
+      "stageHash": "d7dfc59eca671c3c62bc1dd379bcb6d806d4067914ca605f24b8cbfe417214b4",
+      "bounds": [
+        21,
+        21
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 44,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 18.4
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 16.49
+        }
+      ],
+      "floorCellsBeforePropCollision": 319
+    },
+    {
+      "id": "09-02",
+      "title": "Vault Antechamber",
+      "chapter": 9,
+      "stageHash": "e070af4f872d8d55a7feabe0a3e86428d1c29195899f34925d44cb47c3e25098",
+      "bounds": [
+        21,
+        24
+      ],
+      "guards": 4,
+      "cameras": 0,
+      "props": 42,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 41.58
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 16.62
+        }
+      ],
+      "floorCellsBeforePropCollision": 387
+    },
+    {
+      "id": "09-03",
+      "title": "Mechanism Hall",
+      "chapter": 9,
+      "stageHash": "982969f85076e11eb36debbd7c9319109bdd20793646a1e435f1310c282bba7b",
+      "bounds": [
+        23,
+        24
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 52,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 27.2
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 7.28
+        }
+      ],
+      "floorCellsBeforePropCollision": 427
+    },
+    {
+      "id": "09-04",
+      "title": "Security Ring",
+      "chapter": 9,
+      "stageHash": "ebbb3cd61ec34a5bb81270e3dfc84f9c03e8c608b174b57d2f7957c6351a8960",
+      "bounds": [
+        22,
+        25
+      ],
+      "guards": 5,
+      "cameras": 0,
+      "props": 46,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 36.92
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 22.8
+        }
+      ],
+      "floorCellsBeforePropCollision": 422
+    },
+    {
+      "id": "09-05",
+      "title": "Master Diamond Chamber",
+      "chapter": 9,
+      "stageHash": "b641f62a6b6feca8ca3a440ff493388df127951e58a12160668fe94a9b267d7c",
+      "bounds": [
+        26,
+        24
+      ],
+      "guards": 6,
+      "cameras": 0,
+      "props": 51,
+      "routes": [
+        {
+          "name": "safe: wall-side observation and cover approach",
+          "lengthTiles": 31.72
+        },
+        {
+          "name": "risk: direct cross-room approach",
+          "lengthTiles": 9.22
+        }
+      ],
+      "floorCellsBeforePropCollision": 467
+    }
+  ]
+}

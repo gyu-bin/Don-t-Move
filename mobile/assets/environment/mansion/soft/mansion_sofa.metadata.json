@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/mansion/soft/mansion_sofa.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 213,
+    "w": 354,
+    "h": 156
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/mansion/_source/mansion_sofa.png",
+    "resolution": {
+      "width": 320,
+      "height": 152
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 300,
+      "h": 132
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 41893,
+    "transparentFraction": 0.7158949110243056,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 213,
+      "w": 354,
+      "h": 156
+    }
+  }
+}

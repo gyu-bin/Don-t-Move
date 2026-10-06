@@ -2,16 +2,24 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
-import {BANK_PRODUCTION,BANK_PLANS} from './bankProductionDesign';
+import {BANK_PRODUCTION as authoredBank,BANK_PLANS} from './bankProductionDesign';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
 import {buildNavigation,clearSegment,findPath} from '../../src/game/world/navigation';
 
+import type {StageDefinition} from '../../src/game/levels/StageDefinition';
+import historicalSource from '../../docs/design/v12/phase3/SOURCE_STAGES.json';
 import {MISSION_COUNT,missionId,missionIndex} from '../../src/game/levels/campaignCatalog';
 
-test('ten authored Bank missions are selectable without changing stable later IDs',()=>{
- assert.equal(BANK_PRODUCTION.length,10);assert.equal(MISSION_COUNT,60);
- for(let i=0;i<10;i++){assert.equal(missionIndex(BANK_PRODUCTION[i].id),20+i);assert.equal(missionId(20+i),BANK_PRODUCTION[i].id);}
- assert.equal(missionIndex('04-01'),30);assert.equal(missionId(59),'09-05');
+// Historical V3 replay reports are bound to their original frozen candidate,
+// never to subsequently changed authoring or the new five-mission runtime.
+const BANK_PRODUCTION=(JSON.parse(fs.readFileSync('Reports/LevelDesignV3/candidate.json','utf8')) as StageDefinition[]).filter(d=>d.chapter===3);
+test('historical ten Bank authoring missions remain archived; current five Bank IDs preserve later chapters',()=>{
+ assert.equal(BANK_PRODUCTION.length,10);
+ assert.deepEqual(BANK_PRODUCTION.map(d=>d.id),historicalSource.filter(d=>d.chapter===3).map(d=>d.id));
+ assert.equal(MISSION_COUNT,45);
+ for(let i=0;i<5;i++){const id=`03-${String(i+1).padStart(2,'0')}`;assert.equal(missionIndex(id),10+i);assert.equal(missionId(10+i),id);}
+ for(let i=6;i<=10;i++)assert.equal(missionIndex(`03-${String(i).padStart(2,'0')}`),-1,'removed Bank ID');
+ assert.equal(missionIndex('04-01'),15);assert.equal(missionId(44),'09-05');
 });
 test('all twenty approved Bank assets are used; final focal mainvault occurs exactly once',()=>{
  const ids=new Set(BANK_PRODUCTION.flatMap(s=>s.props.map(p=>p.visualAssetId).filter(Boolean)));
@@ -21,8 +29,8 @@ test('all twenty approved Bank assets are used; final focal mainvault occurs exa
  assert(BANK_PRODUCTION[9].props.some(p=>p.kind==='bankMainVault'));
 });
 test('authored approach and escape geometry supports body and Tilt margin, varied coverage budgets',()=>{
- for(const [i,plan]of BANK_PLANS.entries()){assert.equal(BANK_PRODUCTION[i].guards.length,plan.guardZones.length);assert(new Set(plan.guardZones).size===plan.guardZones.length,'roles distributed by purpose, not mission ordinal');assert(plan.rooms.every((r,zi)=>plan.guardZones.includes(zi)||plan.cameras.includes(zi)||r.safeReason),'all rooms intentionally assigned');}
- for(const def of BANK_PRODUCTION){const stage=compileStage(def),nav=buildNavigation(stage,18);
+ for(const [i,plan]of BANK_PLANS.entries()){assert.equal(authoredBank[i].guards.length,plan.guardZones.length);assert(new Set(plan.guardZones).size===plan.guardZones.length,'roles distributed by purpose, not mission ordinal');assert(plan.rooms.every((r,zi)=>plan.guardZones.includes(zi)||plan.cameras.includes(zi)||r.safeReason),'all rooms intentionally assigned');}
+ for(const def of authoredBank){const stage=compileStage(def),nav=buildNavigation(stage,18);
   for(const r of [...def.testRoutes!,...def.escapeRoutes!])for(let i=1;i<r.points.length;i++){
    const a=r.points[i-1],b=r.points[i];assert(clearSegment(a.x*TILE,a.y*TILE,b.x*TILE,b.y*TILE,stage.movementBlockers,18),`${def.id} ${r.name}`);
   }

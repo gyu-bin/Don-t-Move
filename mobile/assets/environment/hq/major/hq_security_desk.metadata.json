@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/major/hq_security_desk.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 312,
+    "w": 472,
+    "h": 180
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_security_desk.png",
+    "resolution": {
+      "width": 342,
+      "height": 143
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 322,
+      "h": 123
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 70209,
+    "transparentFraction": 0.7321739196777344,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 312,
+      "w": 472,
+      "h": 180
+    }
+  }
+}

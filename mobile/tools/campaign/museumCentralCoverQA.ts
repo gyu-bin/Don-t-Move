@@ -20,20 +20,20 @@ type P={x:number;y:number};
 type Box={id:string;l:number;t:number;r:number;b:number};
 const round=(v:number)=>Math.round(v*100)/100;
 function pathDistance(nav:ReturnType<typeof buildNavigation>,a:P,b:P){const p=findPath(nav,a.x,a.y,b.x,b.y);if(p.length<2||Math.hypot(p.at(-2)!-b.x,p.at(-1)!-b.y)>.01)return null;let d=0,x=a.x,y=a.y;for(let i=0;i<p.length;i+=2){d+=Math.hypot(p[i]-x,p[i+1]-y);x=p[i];y=p[i+1];}return d;}
-export function narrowGap(a:Box,b:Box){
+export function narrowGap(a:Box,b:Box,comfortGap=MIN_COMFORT_GAP){
  const result:{axis:'x'|'y';width:number;from:P;to:P}[]=[];
  for(const [left,right] of [[a,b],[b,a]]){
   const overlap=Math.min(left.b,right.b)-Math.max(left.t,right.t),width=right.l-left.r;
-  if(width>2&&width<MIN_COMFORT_GAP-1e-6&&overlap>=8){const x=(right.l+left.r)/2;result.push({axis:'x',width,from:{x,y:Math.max(left.t,right.t)-18},to:{x,y:Math.min(left.b,right.b)+18}});}
+  if(width>2&&width<comfortGap-1e-6&&overlap>=8){const x=(right.l+left.r)/2;result.push({axis:'x',width,from:{x,y:Math.max(left.t,right.t)-18},to:{x,y:Math.min(left.b,right.b)+18}});}
   const horizontal=Math.min(left.r,right.r)-Math.max(left.l,right.l),height=right.t-left.b;
-  if(height>2&&height<MIN_COMFORT_GAP-1e-6&&horizontal>=8){const y=(right.t+left.b)/2;result.push({axis:'y',width:height,from:{x:Math.max(left.l,right.l)-18,y},to:{x:Math.min(left.r,right.r)+18,y}});}
+  if(height>2&&height<comfortGap-1e-6&&horizontal>=8){const y=(right.t+left.b)/2;result.push({axis:'y',width:height,from:{x:Math.max(left.l,right.l)-18,y},to:{x:Math.min(left.r,right.r)+18,y}});}
  }
  return result;
 }
-export function auditCentralCover(def:StageDefinition,design:{zones:MuseumDesignZone[]}=describeMuseumDesign(def)){
+export function auditCentralCover(def:StageDefinition,design:{zones:MuseumDesignZone[]}=describeMuseumDesign(def),comfortGap=MIN_COMFORT_GAP){
  const s=compileStage(def),nav=buildNavigation(s,BODY.playerRadius),hide=auditHideability(def,design);
  const boxes:Box[]=[];for(let i=0;i<s.movementBlockers.length;i+=4)boxes.push({id:`collision-${i/4}`,l:s.movementBlockers[i],t:s.movementBlockers[i+1],r:s.movementBlockers[i+2],b:s.movementBlockers[i+3]});
- const gaps=[];for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++)for(const g of narrowGap(boxes[i],boxes[j])){
+ const gaps=[];for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++)for(const g of narrowGap(boxes[i],boxes[j],comfortGap)){
   if(!clearSegment(g.from.x,g.from.y,g.to.x,g.to.y,s.movementBlockers,0))continue;
   const accessibleEnds=[g.from,g.to].filter(p=>clearSegment(p.x,p.y,p.x,p.y,s.movementBlockers,BODY.playerRadius)&&pathDistance(nav,s.playerSpawn,p)!==null).length;if(!accessibleEnds)continue;
   gaps.push({accessibleEnds,crossingOrBlindSlot:accessibleEnds===2?'CROSSING':'BLIND_SLOT',a:boxes[i].id,b:boxes[j].id,...g,width:round(g.width/TILE),from:{x:round(g.from.x/TILE),y:round(g.from.y/TILE)},to:{x:round(g.to.x/TILE),y:round(g.to.y/TILE)},bodyPassable:clearSegment(g.from.x,g.from.y,g.to.x,g.to.y,s.movementBlockers,BODY.playerRadius),classification:!clearSegment(g.from.x,g.from.y,g.to.x,g.to.y,s.movementBlockers,BODY.playerRadius)?'PHYSICAL_FAKE_GAP':'TILT_MARGIN_WARNING'});
@@ -50,8 +50,8 @@ export function auditCentralCover(def:StageDefinition,design:{zones:MuseumDesign
  const routeHideDistances=routes.map(r=>r.averageNearestHidePathTiles).filter((d):d is number=>d!==null);
  return {id:def.id,centralCoverCount,edgeCoverCount:uniqueCovers.length-centralCoverCount,fakeGapCount:gaps.filter(g=>!g.bodyPassable).length,maxExposureDistance:Math.max(0,...routes.map(r=>r.maxPotentialExposureTiles)),nearestHideDistance:routeHideDistances.length?round(routeHideDistances.reduce((a,b)=>a+b,0)/routeHideDistances.length):null,hideToHideDistance:hideDistances.length?round(hideDistances.reduce((a,b)=>a+b,0)/hideDistances.length):null,centralCoverageWarning:zones.filter(z=>z.warning).map(z=>z.id),zones,gaps,physicalFakeGaps:gaps.filter(g=>!g.bodyPassable).length,tiltMarginWarnings:gaps.filter(g=>g.bodyPassable).length,hideChain:chain,averageHideToHidePathTiles:chain.some(p=>p.nearestHidePathTiles!==null)?round(chain.reduce((sum,p)=>sum+(p.nearestHidePathTiles??0),0)/chain.filter(p=>p.nearestHidePathTiles!==null).length):null,hidePoints:hide.hidePoints,escapePockets:hide.escapePockets,routeMetrics:routes,routeClearance:hide.routes,guardAnchors:hide.guards};
 }
-export function auditIslandBypasses(def:StageDefinition){
- const stage=compileStage(def);const r=BODY.playerRadius+TILT_SPARE_PER_SIDE;
+export function auditIslandBypasses(def:StageDefinition,sparePerSide=TILT_SPARE_PER_SIDE){
+ const stage=compileStage(def);const r=BODY.playerRadius+sparePerSide;
  return (CENTRAL_COVER_MOVES[def.id]??[]).map(move=>{const prop=def.props.find(p=>p.kind===move.kind&&p.x===move.to[0]&&p.y===move.to[1])!;const spec=PROP_KIT[prop.kind],sc=prop.collisionScale??1,cx=prop.x*TILE,cy=(prop.y-spec.footprint.h*sc/2)*TILE,dx=spec.footprint.w*sc*TILE/2+r+.01,dy=spec.footprint.h*sc*TILE/2+r+.01;
  const p=(x:number,y:number)=>({x:cx+x*dx,y:cy+y*dy});
  const options=[[[p(0,-1),p(-1,-1),p(-1,1),p(0,1)],[p(0,-1),p(1,-1),p(1,1),p(0,1)]],[[p(-1,0),p(-1,-1),p(1,-1),p(1,0)],[p(-1,0),p(-1,1),p(1,1),p(1,0)]]];

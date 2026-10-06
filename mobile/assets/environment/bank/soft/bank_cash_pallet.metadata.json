@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_cash_pallet.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 15,
+    "w": 351,
+    "h": 351
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_cash_pallet.png",
+    "resolution": {
+      "width": 220,
+      "height": 220
+    },
+    "bounds": {
+      "x": 2,
+      "y": 2,
+      "w": 216,
+      "h": 216
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 93813,
+    "transparentFraction": 0.3637898763020833,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 15,
+      "w": 351,
+      "h": 351
+    }
+  }
+}

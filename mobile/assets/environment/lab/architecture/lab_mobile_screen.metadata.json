@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/architecture/lab_mobile_screen.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 157,
+    "w": 482,
+    "h": 340
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_mobile_screen.png",
+    "resolution": {
+      "width": 254,
+      "height": 179
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 254,
+      "h": 179
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 116720,
+    "transparentFraction": 0.5537643432617188,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 157,
+      "w": 482,
+      "h": 340
+    }
+  }
+}

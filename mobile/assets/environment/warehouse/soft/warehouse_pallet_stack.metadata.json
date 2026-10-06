@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/soft/warehouse_pallet_stack.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 11,
+    "y": 59,
+    "w": 362,
+    "h": 314
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_pallet_stack.png",
+    "resolution": {
+      "width": 167,
+      "height": 145
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 167,
+      "h": 145
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 78927,
+    "transparentFraction": 0.4646538628472222,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 11,
+      "y": 59,
+      "w": 362,
+      "h": 314
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+ "01-01": "Checked (whole-map view). Reads as one building: lobby and hall along the bottom, court statue against its pier, Collection Room top right with the pier and diamond bay, exit sign top centre. Structures are to scale; guards face the court opening and the diamond.",
+ "01-02": "Checked. Rotunda core with the statue in front, colonnade on the west, vestibule projecting at the bottom, exit hall top right. Open floor remains on the crossing by intent.",
+ "01-03": "Checked. Small rooms read clearly: stacks along the bottom, storage racks, workbench room, Secure Archive in the centre with pier, reading room on top. Storage uses cabinet and case art because Museum has no shelf asset.",
+ "01-04": "Checked. Stepped outline, U along the west and bottom, Central Gallery short cut with the camera above the partition, pier in front of the artifact bay, exit bottom right.",
+ "01-05": "Checked. Long hall with Grand Statue and two columns on top, Display Wall room and Diamond Chamber on the left, service rooms along the bottom, three guards each in a different room.",
+ "02-01": "Checked. Two staggered portrait walls give the diagonal; sculpture and benches form the Viewing Island; Private Gallery top right. The hall is the most open of the ten.",
+ "02-02": "Checked. Central island (core, colossus and two sculptures) is the focus; the guard circles it; studio on top with the pier and bay; exit hall on the right.",
+ "02-03": "Checked. Both glass lines render as glass and leave the two gaps; camera cone covers the east turn; glass screen stands in front of the painting. The south-lane art wall partly overlaps the glass line and the middle-lane sculpture on screen.",
+ "02-04": "Checked. Four cells around the installation are distinct (sculpture island, two movable walls, art wall, sculpture); camera above the crossing; Private Atrium at the bottom; service corridor on the right.",
+ "02-05": "Checked. Clockwise route reads from the Public Gallery to the chamber bottom right; installation with art wall in the hall; camera on the east lane; loading corridor and service rooms along the bottom."
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_guard_booth.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 90,
+    "y": 20,
+    "w": 332,
+    "h": 468
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_guard_booth.png",
+    "resolution": {
+      "width": 160,
+      "height": 226
+    },
+    "bounds": {
+      "x": 2,
+      "y": 2,
+      "w": 156,
+      "h": 222
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 129647,
+    "transparentFraction": 0.5054359436035156,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 90,
+      "y": 20,
+      "w": 332,
+      "h": 468
+    }
+  }
+}

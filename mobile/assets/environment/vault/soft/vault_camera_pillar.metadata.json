@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/soft/vault_camera_pillar.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 65,
+    "y": 16,
+    "w": 254,
+    "h": 352
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_camera_pillar.png",
+    "resolution": {
+      "width": 174,
+      "height": 233
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 154,
+      "h": 213
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 65143,
+    "transparentFraction": 0.5582207573784722,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 65,
+      "y": 16,
+      "w": 254,
+      "h": 352
+    }
+  }
+}

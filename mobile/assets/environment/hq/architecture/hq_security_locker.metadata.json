@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/architecture/hq_security_locker.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 240,
+    "w": 472,
+    "h": 252
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_security_locker.png",
+    "resolution": {
+      "width": 307,
+      "height": 173
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 287,
+      "h": 153
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 118351,
+    "transparentFraction": 0.5485267639160156,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 240,
+      "w": 472,
+      "h": 252
+    }
+  }
+}

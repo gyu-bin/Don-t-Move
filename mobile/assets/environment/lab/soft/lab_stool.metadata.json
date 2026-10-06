@@ -5,10 +5,10 @@
     "height": 384
   },
   "objectBounds": {
-    "x": 84,
-    "y": 12,
-    "w": 216,
-    "h": 360
+    "x": 68,
+    "y": 11,
+    "w": 248,
+    "h": 362
   },
   "pivot": {
     "x": 0.5,
@@ -18,19 +18,19 @@
   "source": {
     "path": "assets/environment/lab/_source/lab_stool.png",
     "resolution": {
-      "width": 1224,
-      "height": 1285
+      "width": 159,
+      "height": 233
     },
     "bounds": {
-      "x": 257,
-      "y": 56,
-      "w": 693,
-      "h": 1155
+      "x": 0,
+      "y": 0,
+      "w": 159,
+      "h": 233
     }
   },
   "diagnostics": {
-    "opaquePixels": 38467,
-    "transparentFraction": 0.7113104926215278,
+    "opaquePixels": 44313,
+    "transparentFraction": 0.6994086371527778,
     "edgePixels": 0,
     "cornerAlpha": [
       0,
@@ -39,10 +39,10 @@
       0
     ],
     "bounds": {
-      "x": 84,
-      "y": 12,
-      "w": 216,
-      "h": 360
+      "x": 68,
+      "y": 11,
+      "w": 248,
+      "h": 362
     }
   }
 }

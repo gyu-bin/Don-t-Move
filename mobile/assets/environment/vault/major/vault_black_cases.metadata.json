@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_black_cases.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 21,
+    "y": 203,
+    "w": 470,
+    "h": 288
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_black_cases.png",
+    "resolution": {
+      "width": 260,
+      "height": 167
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 240,
+      "h": 147
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 114589,
+    "transparentFraction": 0.5628776550292969,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 21,
+      "y": 203,
+      "w": 470,
+      "h": 288
+    }
+  }
+}

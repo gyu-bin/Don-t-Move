@@ -17,17 +17,20 @@ import { MonetizationProvider } from '../../game/monetization/MonetizationContex
 import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgress';
 import {missionId,missionIndex} from '../../game/levels/campaignCatalog';
 import StageSelectScreen from '../menu/StageSelectScreen';
-type GameProps = { initialProgress?: StageProgress; onProgressChange?: (progress:StageProgress)=>void };
+type GameProps = { initialMissionIndex?: number; initialProgress?: StageProgress; onProgressChange?: (progress:StageProgress)=>void };
 export function StartupScreen() {
  const audio=useAppAudio();
- const [homeVisible,setHomeVisible]=useState(false);
- const [splashDone,setSplashDone]=useState(false);
+ const [phase,setPhase]=useState<'BOOT'|'INTRO'|'HOME'>('BOOT');
+ const homeVisible=phase==='HOME', splashDone=phase!=='BOOT';
+ const [backgroundError,setBackgroundError]=useState(false);
+ const [backgroundAttempt,setBackgroundAttempt]=useState(0);
  const [splashGone,setSplashGone]=useState(false);
  const hideSplash=useCallback(()=>setSplashGone(true),[]);
  const [lobbyAudioReady,setLobbyAudioReady]=useState(false);
  const [progress, setProgress] = useState<StageProgress>();
  const [Game, setGame] = useState<ComponentType<GameProps>>();
  const [started, setStarted] = useState(false);
+ const [initialMissionIndex,setInitialMissionIndex]=useState<number>();
  const [route,setRoute]=useState<'home'|'stages'|'settings'>('home');
  const [introVersion,setIntroVersion]=useState(0);
  const [skipIntro,setSkipIntro]=useState(false);
@@ -43,7 +46,7 @@ export function StartupScreen() {
   else setSaveError(true);
  },[]);
  const startLobbyAudio=useCallback(()=>setLobbyAudioReady(true),[]);
- const home=useCallback(()=>{setStarted(false);setRoute('home');setSkipIntro(true);setLobbyAudioReady(false);setHomeVisible(true);},[]);
+ const home=useCallback(()=>{setStarted(false);setRoute('home');setSkipIntro(true);setLobbyAudioReady(false);setPhase('HOME');},[]);
  const [error, setError] = useState<string>();
  const mounted = useRef(true), generation = useRef(0);
  useEffect(() => {
@@ -57,12 +60,14 @@ export function StartupScreen() {
  useEffect(() => {
   markStartup('splash-start');
   let alive=true,minimum=false,art=false;
-  const reveal=()=>{if(alive&&minimum&&art){markStartup('splash-end');setSplashDone(true);}};
-  void preloadOpeningArt().catch(()=>{}).finally(()=>{art=true;reveal();});
+  const reveal=()=>{if(alive&&minimum&&art){markStartup('splash-end');setPhase('INTRO');}};
+  void preloadOpeningArt().then(()=>{art=true;reveal();}).catch(reason=>{
+   console.error('Museum background unavailable',reason);
+   if(alive)setBackgroundError(true);
+  });
   const timer=setTimeout(()=>{minimum=true;reveal();},SPLASH_MS);
-  const grace=setTimeout(()=>{art=true;reveal();},SPLASH_MS+1500);
-  return ()=>{alive=false;clearTimeout(timer);clearTimeout(grace);};
- },[]);
+  return ()=>{alive=false;clearTimeout(timer);};
+ },[backgroundAttempt]);
  const storageAttempt=useRef(0);
  const restoreProgress=useCallback(()=>{
   const attempt=++storageAttempt.current;
@@ -84,7 +89,7 @@ export function StartupScreen() {
   const campaign=migrateCampaign(current);
   if(!canPlayMission(campaign,index,__DEV__))return;
   updateProgress({...current,campaign:{...campaign,lastMission:missionId(index)},hasStarted:true});
-  setGame(()=>screen);setSkipIntro(true);setLobbyAudioReady(false);setStarted(true);setError(undefined);
+  setInitialMissionIndex(index);setGame(()=>screen);setSkipIntro(true);setLobbyAudioReady(false);setStarted(true);setError(undefined);
  };
  const play=async(index:number)=>{
   if(!progress||pendingGame.current)return;
@@ -119,7 +124,7 @@ export function StartupScreen() {
  const campaign=migrateCampaign(progress??DEFAULT_PROGRESS);
  const lastIndex=missionIndex(campaign.lastMission);
  const continueIndex=canPlayMission(campaign,lastIndex,__DEV__)?lastIndex:campaign.highestUnlocked;
- const replay=()=>{setHomeVisible(false);setLobbyAudioReady(false);setRoute('home');setSkipIntro(false);setIntroVersion(version=>version+1);};
+ const replay=()=>{setPhase('INTRO');setLobbyAudioReady(false);setRoute('home');setSkipIntro(false);setIntroVersion(version=>version+1);};
  const retryPrepare=()=>{void play(pendingMission.current??continueIndex);};
  useEffect(()=>{
   if(!started)audio.update({sessionKey:'menu',phase:(homeVisible||lobbyAudioReady)?'LOBBY':'INTRO',theftRevision:0,spottedRevision:0,
@@ -127,11 +132,11 @@ export function StartupScreen() {
  },[started,homeVisible,lobbyAudioReady,progress?.soundEnabled,progress?.musicEnabled,audio]);
  return <GameAudioContext.Provider value={audio}><MonetizationProvider><MenuContext.Provider value={{progress:progress??DEFAULT_PROGRESS,home,
   preferences:patch=>updateProgress({...progressRef.current,...patch})}}>
-  {started&&Game&&progress?<Game initialProgress={progress} onProgressChange={updateProgress}/>:
+  {started&&Game&&progress?<Game initialMissionIndex={initialMissionIndex} initialProgress={progress} onProgressChange={updateProgress}/>:
    <View style={{flex:1}}>
     {splashDone && <>
      <View style={{flex:1}} accessibilityElementsHidden={route!=='home'} importantForAccessibility={route==='home'?'auto':'no-hide-descendants'} pointerEvents={route==='home'?'auto':'none'}>
-      <BrandingScreen key={introVersion} skipInitial={skipIntro} onFinished={()=>setHomeVisible(true)}
+      <BrandingScreen key={introVersion} skipInitial={skipIntro} onFinished={()=>setPhase('HOME')}
        onLobbyAudioStart={startLobbyAudio} soundEnabled={progress?.soundEnabled??false}
        musicEnabled={progress?.musicEnabled??false} ready={!!progress&&!preparing}
        loadingError={error} onRetry={retryPrepare} onStart={()=>play(continueIndex)}>
@@ -145,6 +150,11 @@ export function StartupScreen() {
      </View>}
     </>}
     {!splashGone && <SplashScreen leaving={splashDone} onGone={hideSplash}/>}
+    {backgroundError && phase==='BOOT' && <Text accessibilityRole="button"
+     onPress={()=>{setBackgroundError(false);setBackgroundAttempt(value=>value+1);}}
+     style={{position:'absolute',bottom:80,left:24,right:24,textAlign:'center',color:'#FFF4D6',backgroundColor:'#102331',padding:16}}>
+     {translate(progress?.language??'en','artError')} {translate(progress?.language??'en','retry')}
+    </Text>}
    </View>}
   {saveError&&<Text onPress={retrySave} style={{position:'absolute',bottom:30,left:20,right:20,color:'#FFF4D6',backgroundColor:'#102331',padding:12}}>{translate(progress?.language??'en','saveError')}</Text>}
  </MenuContext.Provider></MonetizationProvider></GameAudioContext.Provider>;

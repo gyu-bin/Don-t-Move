@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/soft/warehouse_barrier.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 11,
+    "y": 208,
+    "w": 362,
+    "h": 165
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_barrier.png",
+    "resolution": {
+      "width": 196,
+      "height": 89
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 196,
+      "h": 89
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 26721,
+    "transparentFraction": 0.8177354600694444,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 11,
+      "y": 208,
+      "w": 362,
+      "h": 165
+    }
+  }
+}

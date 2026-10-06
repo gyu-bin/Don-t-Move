@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/architecture/bank_marble_column.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 150,
+    "y": 22,
+    "w": 208,
+    "h": 466
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_marble_column.png",
+    "resolution": {
+      "width": 112,
+      "height": 235
+    },
+    "bounds": {
+      "x": 2,
+      "y": 2,
+      "w": 108,
+      "h": 231
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 80515,
+    "transparentFraction": 0.6928596496582031,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 150,
+      "y": 22,
+      "w": 208,
+      "h": 466
+    }
+  }
+}

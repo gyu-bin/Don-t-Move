@@ -71,7 +71,7 @@ function fixture(id: string) {
   return { state, tick, until, stageSighting, concealedPlayer };
 }
 
-for (const id of ['01-05', '01-08', '01-10']) {
+for (const id of ['01-03', '01-04', '01-05']) {
   test(`${id} A: stolen objective → spotted before theft dispatch → direct chase`, () => {
     const f = fixture(id), player = f.stageSighting();
     f.until(() => f.state.events.globalAlert, player, 600);

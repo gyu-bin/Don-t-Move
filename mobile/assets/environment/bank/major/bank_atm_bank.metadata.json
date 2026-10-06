@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_atm_bank.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 30,
+    "w": 482,
+    "h": 467
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_atm_bank.png",
+    "resolution": {
+      "width": 196,
+      "height": 190
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 196,
+      "h": 190
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 208381,
+    "transparentFraction": 0.20393753051757812,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 30,
+      "w": 482,
+      "h": 467
+    }
+  }
+}

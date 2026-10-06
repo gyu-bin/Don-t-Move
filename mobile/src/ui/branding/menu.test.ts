@@ -51,3 +51,11 @@ test('Ten distinct optimized thumbnails exist; no eager image preload in HOME',(
  assert(game.match(/onPress={home}/g)!.length>=3);
  assert(game.includes('onFinished={menuHome}'), 'automatic intro completion navigates without a button SFX');
 });
+
+// Mature campaign-only saves must keep Continue after the V12 compression.
+test('campaign-only migration retains Continue and unrelated preferences',()=>{
+ const p=normalizeProgress({hasStarted:false,language:'ko',musicEnabled:false,soundEnabled:true,campaign:{version:4,lastMission:'02-06',highestUnlocked:15,records:{'01-10':{cleared:true,bestTime:30}}}});
+ assert.equal(p.hasStarted,true);assert.equal(p.campaign?.lastMission,'02-04');
+ assert.equal(p.language,'ko');assert.equal(p.musicEnabled,false);assert.equal(p.soundEnabled,true);
+ assert.equal(normalizeProgress({campaign:{version:5,lastMission:'01-01',highestUnlocked:0,records:{}}}).hasStarted,false);
+});

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_drum_stack.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 31,
+    "w": 482,
+    "h": 466
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_drum_stack.png",
+    "resolution": {
+      "width": 183,
+      "height": 177
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 183,
+      "h": 177
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 153550,
+    "transparentFraction": 0.41422271728515625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 31,
+      "w": 482,
+      "h": 466
+    }
+  }
+}

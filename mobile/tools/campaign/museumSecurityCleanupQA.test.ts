@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import historicalJSON from './fixtures/v3MuseumGalleryBefore.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
-import {campaignStages} from '../../src/game/levels/campaignStages';
+import phase3Source from '../../docs/design/v12/phase3/SOURCE_STAGES.json';
 import {assertSecurityScope,auditSecurityVisual,fixture,visualBounds} from './museumSecurityCleanupQA';
+const campaignStages=phase3Source as import('../../src/game/levels/StageDefinition').StageDefinition[]; // Historical authoring contract; runtime is covered separately.
 const historicalCampaign=campaignStages.map(d=>d.chapter===1?(historicalJSON as StageDefinition[]).find(h=>h.id===d.id)!:d);
 test('Historical Security cleanup preserves Museum other9 / Chapter04–09, allowing the authorized Gallery expansion',()=>{
  assertSecurityScope(historicalCampaign);

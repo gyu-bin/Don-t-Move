@@ -3,19 +3,21 @@ import type { SkCanvas, SkImage } from '@shopify/react-native-skia';
 import type { RGB, SceneGfx, SceneImageKey } from './museumScene';
 
 /** react-native-skia implementation of SceneGfx (runs inside the UI-thread picture worklet). */
-export function skiaSceneGfx(c: SkCanvas, images: Record<SceneImageKey, SkImage>): SceneGfx {
+export function skiaSceneGfx(c: SkCanvas, images: Partial<Record<SceneImageKey, SkImage>>): SceneGfx {
   'worklet';
   const col = (rgb: RGB, a: number) => Float32Array.of(rgb[0], rgb[1], rgb[2], a);
   const paint = () => { const p = Skia.Paint(); p.setAntiAlias(true); return p; };
   const full = Skia.XYWHRect(-4000, -4000, 8000, 8000);
   return {
     image(key, x, y, w, h, alpha) {
-      const img = images[key], p = paint(); p.setAlphaf(alpha);
+      const img = images[key]; if (!img) return;
+      const p = paint(); p.setAlphaf(alpha);
       c.drawImageRectOptions(img, Skia.XYWHRect(0, 0, img.width(), img.height()), Skia.XYWHRect(x, y, w, h), FilterMode.Linear, MipmapMode.Linear, p);
     },
     imageRect(key, sx, sy, sw, sh, x, y, w, h, alpha) {
+      const img = images[key]; if (!img) return;
       const p = paint(); p.setAlphaf(alpha);
-      c.drawImageRectOptions(images[key], Skia.XYWHRect(sx, sy, sw, sh), Skia.XYWHRect(x, y, w, h), FilterMode.Linear, MipmapMode.Linear, p);
+      c.drawImageRectOptions(img, Skia.XYWHRect(sx, sy, sw, sh), Skia.XYWHRect(x, y, w, h), FilterMode.Linear, MipmapMode.Linear, p);
     },
     rect(x, y, w, h, color, alpha) { const p = paint(); p.setColor(col(color, alpha)); c.drawRect(Skia.XYWHRect(x, y, w, h), p); },
     vGradient(x, y, w, h, color, stops) {

@@ -111,7 +111,8 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
     if (g.awareness === Awareness.Chase) pursue(g, n, directChaseSpeed(theft?.missionId), dt, t, CONTACT_DISTANCE);
     else if (travel(g, n, T.investigateSpeed, dt, t)) enter(g, Awareness.Search);
   } else if (g.awareness === Awareness.Search) {
-    const searchSeconds=theft?.roles && theft.missionId!=='02-10' ? (ev?.lockdownActive?T.lockdownSearchSeconds:T.museumSearchSeconds) : T.searchSeconds;
+    // V12 Masterpiece is the successor of historical02-10; retain its search duration.
+    const searchSeconds=theft?.roles && theft.missionId!=='02-10' && theft.missionId!=='02-05' ? (ev?.lockdownActive?T.lockdownSearchSeconds:T.museumSearchSeconds) : T.searchSeconds;
     if (g.stateT >= searchSeconds) {
       enter(g, Awareness.Return);
     } else if (g.searchWait > 0) {

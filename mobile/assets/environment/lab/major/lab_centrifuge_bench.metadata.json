@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_centrifuge_bench.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 92,
+    "w": 482,
+    "h": 405
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_centrifuge_bench.png",
+    "resolution": {
+      "width": 231,
+      "height": 195
+    },
+    "bounds": {
+      "x": 0,
+      "y": 1,
+      "w": 231,
+      "h": 194
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 148940,
+    "transparentFraction": 0.43061065673828125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 92,
+      "w": 482,
+      "h": 405
+    }
+  }
+}

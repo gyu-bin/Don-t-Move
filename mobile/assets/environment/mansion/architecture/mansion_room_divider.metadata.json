@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/mansion/architecture/mansion_room_divider.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 204,
+    "w": 472,
+    "h": 288
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/mansion/_source/mansion_room_divider.png",
+    "resolution": {
+      "width": 303,
+      "height": 191
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 287,
+      "h": 175
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 122788,
+    "transparentFraction": 0.5316009521484375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 204,
+      "w": 472,
+      "h": 288
+    }
+  }
+}

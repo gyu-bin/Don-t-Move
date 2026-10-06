@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/architecture/bank_brass_screen.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 289,
+    "w": 478,
+    "h": 206
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_brass_screen.png",
+    "resolution": {
+      "width": 700,
+      "height": 304
+    },
+    "bounds": {
+      "x": 2,
+      "y": 2,
+      "w": 696,
+      "h": 300
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 85890,
+    "transparentFraction": 0.6723556518554688,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 289,
+      "w": 478,
+      "h": 206
+    }
+  }
+}

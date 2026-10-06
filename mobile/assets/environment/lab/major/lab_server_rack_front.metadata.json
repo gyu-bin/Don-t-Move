@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_server_rack_front.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 36,
+    "y": 15,
+    "w": 440,
+    "h": 482
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_server_rack_front.png",
+    "resolution": {
+      "width": 200,
+      "height": 219
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 200,
+      "h": 219
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 197757,
+    "transparentFraction": 0.24431610107421875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 36,
+      "y": 15,
+      "w": 440,
+      "h": 482
+    }
+  }
+}

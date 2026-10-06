@@ -7,9 +7,13 @@ import {moveWithCollision} from '../../src/game/world/collision';
 import {northBoundaryColumns} from '../../src/rendering/environment/northBoundary';
 import {auditV5Geometry} from './v5Geometry';
 const before=JSON.parse(fs.readFileSync('Reports/V5VisualHotfix/before-campaign.json','utf8')) as StageDefinition[];
-const current=JSON.parse(fs.readFileSync('src/game/levels/stages/campaignStages.json','utf8')) as StageDefinition[];
-test('Visual hotfix preserves every mission definition, Guard/CCTV, route and objective',()=>assert.deepEqual(current,before));
-test('North virtual row joins flanking walls only in the two exposed rooms',()=>{
+// V5 rendering-only contract on its original approved pre-hotfix fixture.
+const current=structuredClone(before);
+test('Historical V5 boundary rendering preserves every mission definition, Guard/CCTV, route and objective',()=>{
+ for(const d of current){northBoundaryColumns(d);compileStage(d);}
+ assert.deepEqual(current,before);
+});
+test('Historical V5 North virtual row joins flanking walls only in the two exposed rooms',()=>{
  for(const d of current){const cols=northBoundaryColumns(d);if(d.id==='01-08')assert.deepEqual(cols,Array.from({length:10},(_,i)=>11+i));else if(d.id==='02-06')assert.deepEqual(cols,Array.from({length:12},(_,i)=>12+i));else assert.deepEqual(cols,[],d.id);}
 });
 test('Real Player collision blocks both north boundaries without obstructing inside floor',()=>{

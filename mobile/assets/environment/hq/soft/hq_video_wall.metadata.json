@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/soft/hq_video_wall.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 222,
+    "w": 354,
+    "h": 147
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_video_wall.png",
+    "resolution": {
+      "width": 330,
+      "height": 146
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 314,
+      "h": 130
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 51652,
+    "transparentFraction": 0.6497124565972222,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 222,
+      "w": 354,
+      "h": 147
+    }
+  }
+}

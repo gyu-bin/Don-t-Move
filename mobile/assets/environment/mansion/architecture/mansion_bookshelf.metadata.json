@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/mansion/architecture/mansion_bookshelf.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 19,
+    "y": 228,
+    "w": 474,
+    "h": 265
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/mansion/_source/mansion_bookshelf.png",
+    "resolution": {
+      "width": 380,
+      "height": 221
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 360,
+      "h": 201
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 118868,
+    "transparentFraction": 0.5465545654296875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 19,
+      "y": 228,
+      "w": 474,
+      "h": 265
+    }
+  }
+}

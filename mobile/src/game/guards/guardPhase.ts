@@ -2,14 +2,12 @@ import { hasPlayerAlert } from './guardPriority';
 import { Awareness } from '../core/types';
 import type { GuardEvents, GuardState } from './guardBrain';
 
-/** Seconds after confirmed theft; zero means this mission has no lockdown. */
-export const MUSEUM_LOCKDOWN_SECONDS: Record<string, number> = {
-  '01-07': 28, '01-08': 28, '01-09': 28, '01-10': 20,
-};
+/** Shared campaign rule: confirmed theft starts pressure, never a timeout loss. */
+export const ESCAPE_TIMER_SECONDS = 10;
 
-export function updateGuardPhase(ev:GuardEvents, guards:GuardState[], t:number, missionId?:string):void {
+export function updateGuardPhase(ev:GuardEvents, guards:GuardState[], t:number, _missionId?:string):void {
   'worklet';
-  ev.lockdownDuration=missionId ? (MUSEUM_LOCKDOWN_SECONDS[missionId]??0) : 0;
+  ev.lockdownDuration=ESCAPE_TIMER_SECONDS;
   if(ev.theftAlert && ev.theftActivatedAt>=0 && ev.lockdownDuration>0){
     ev.lockdownRemaining=Math.max(0,ev.lockdownDuration-(t-ev.theftActivatedAt));
     ev.lockdownActive=ev.lockdownRemaining<=0;

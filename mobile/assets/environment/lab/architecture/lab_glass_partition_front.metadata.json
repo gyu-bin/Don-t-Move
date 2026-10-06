@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/architecture/lab_glass_partition_front.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 250,
+    "w": 478,
+    "h": 245
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_glass_partition_front.png",
+    "resolution": {
+      "width": 647,
+      "height": 333
+    },
+    "bounds": {
+      "x": 2,
+      "y": 2,
+      "w": 643,
+      "h": 329
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 114208,
+    "transparentFraction": 0.5643310546875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 250,
+      "w": 478,
+      "h": 245
+    }
+  }
+}

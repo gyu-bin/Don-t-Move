@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
-import {campaignStages} from '../../src/game/levels/campaignStages';
+import phase3Source from '../../docs/design/v12/phase3/SOURCE_STAGES.json';
 import {measureMuseum} from './museumQA';
 import {validateMuseumV2} from './museumV2Validation';
 import historical from './fixtures/v3MuseumGalleryBefore.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
+const campaignStages=phase3Source as import('../../src/game/levels/StageDefinition').StageDefinition[]; // Historical authoring contract; runtime is covered separately.
 
 const museum=campaignStages.filter(d=>d.chapter===1);
 test('Museum V2 contains ten consecutively selectable missions',()=>{

@@ -25,6 +25,10 @@ export type PropKind =
   | 'bankTellerCounter' | 'bankSecurityCheckpoint' | 'bankDepositBoxWall' | 'bankCashProcessingTable' | 'bankVaultDoor'
   | 'bankOfficeDesk' | 'bankFilingCabinet' | 'bankCashCart' | 'bankQueueBarrier' | 'bankSmallSafe'
   | 'bankMonitor' | 'bankClock' | 'bankPaperwork' | 'bankFloorMarker' | 'bankPlant' | 'bankMainVault'
+  | 'bankMarbleColumn' | 'bankAtmBank' | 'bankWaitingBench' | 'bankSecurityDesk' | 'bankGuardBooth' | 'bankCashPallet' | 'bankCageTrolley' | 'bankCountingMachine' | 'bankDepositIsland' | 'bankBrassScreen'
+  | 'labServerRack' | 'labSampleFridge' | 'labMobileScreen' | 'labGlassPartition' | 'labFumeHood' | 'labCentrifugeBench' | 'warehouseRack' | 'warehouseContainer' | 'warehouseForklift' | 'warehouseCrateStack' | 'warehouseTarpCargo' | 'warehouseDrumStack' | 'warehouseLiquidTank' | 'warehouseStorageCage' | 'warehousePalletStack' | 'warehouseConveyor' | 'warehousePlankStack' | 'warehousePipeStack' | 'warehouseWorkbench' | 'warehouseToolCart' | 'warehouseHandTrolley' | 'warehouseCones' | 'warehouseBarrier' | 'warehouseFence' | 'warehouseControlPanel'
+  | 'casinoColumn' | 'casinoPlanter' | 'casinoSofa' | 'casinoCardTable' | 'casinoRopeStanchion'
+  | 'labRobotCell' | 'labMonitorStation' | 'labGasRack' | 'labSpecimenTank' | 'labDeconArch'
   | 'galleryGlassPanel' | 'galleryGlassPanelVertical'
   | 'statue'
   | 'statuePedestal'
@@ -139,7 +143,17 @@ export interface GuardDef {
   escapePatrol?: { pace?: number; waitDuration?: number; lookDirection?: number };
 }
 
+/** Door transforms are TILE units here; compiled door runtime uses world pixels. */
+export type StageDoorDef = import('../doors/doorTypes').DoorDefinition;
+
 export interface StageDefinition {
+  visualRevision?: 'v12-4c';
+  /** Authored room graph for spatial QA; geometry remains the runtime source. */
+  topologyPlan?: import('../../../tools/campaign/v124bTypes').V124bPlan;
+  functionalZones?: {id:string;name:string;role:'public'|'transition'|'restricted'|'objective'|'escape';x:number;y:number;w:number;h:number;purpose:string}[];
+  doors?: StageDoorDef[];
+  /** Explicit doors affected by confirmed-Theft countdown. */
+  lockdownDoors?: string[];
   cameras?:SecurityCameraDef[];
   patrolPlan?: import('./semanticPatrol').PatrolPlan;
   entryEdge?: 'top'|'bottom'|'left'|'right';

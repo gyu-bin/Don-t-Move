@@ -5,14 +5,14 @@
     "height": 512
   },
   "objectBounds": {
-    "x": 133,
-    "y": 16,
-    "w": 246,
-    "h": 480
+    "x": 141,
+    "y": 37,
+    "w": 230,
+    "h": 437
   },
   "pivot": {
     "x": 0.5,
-    "y": 0.97,
+    "y": 1,
     "units": "normalized"
   },
   "source": {
@@ -29,8 +29,8 @@
     }
   },
   "diagnostics": {
-    "opaquePixels": 99699,
-    "transparentFraction": 0.6169662475585938,
+    "opaquePixels": 85620,
+    "transparentFraction": 0.672710418701172,
     "edgePixels": 0,
     "cornerAlpha": [
       0,
@@ -39,10 +39,10 @@
       0
     ],
     "bounds": {
-      "x": 133,
-      "y": 16,
-      "w": 246,
-      "h": 480
+      "x": 141,
+      "y": 37,
+      "w": 230,
+      "h": 437
     }
   }
 }

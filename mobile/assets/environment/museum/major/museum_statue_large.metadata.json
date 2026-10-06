@@ -1,0 +1,28 @@
+{
+  "path": "assets/environment/museum/major/museum_statue_large.png",
+  "source": {
+    "kind": "EXISTING_GAME_ATLAS_REUSE",
+    "path": "assets/museum/museum_atlas.png",
+    "rect": {
+      "x": 96,
+      "y": 352,
+      "w": 145,
+      "h": 259
+    }
+  },
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 123,
+    "y": 17,
+    "w": 268,
+    "h": 480
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  }
+}

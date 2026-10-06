@@ -1,0 +1,31 @@
+{
+  "phase": "A_DESIGN_ONLY",
+  "status": "PASS",
+  "designMissionCount": 90,
+  "chapterCounts": {
+    "1": 10,
+    "2": 10,
+    "3": 10,
+    "4": 10,
+    "5": 10,
+    "6": 10,
+    "7": 10,
+    "8": 10,
+    "9": 10
+  },
+  "requiredFieldsPerMission": 19,
+  "requiredFieldCount": 1710,
+  "supplementalMainMechanicCount": 90,
+  "currentRuntimeMissionCount": 60,
+  "newDesignOnlyCount": 30,
+  "auditCounts": {
+    "TUNE": 12,
+    "KEEP": 13,
+    "PARTIAL REBUILD": 5
+  },
+  "verifiedRuntimeFileCount": 540,
+  "runtimeFileDrift": [],
+  "missionDrift": [],
+  "issues": [],
+  "limitations": "Completeness and read-only baseline validation only. No geometry/Fake Gap, runtime rebuild, pressure ordering, Simulator clear or real Tilt certification."
+}

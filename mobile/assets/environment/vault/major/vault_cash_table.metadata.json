@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_cash_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 21,
+    "y": 228,
+    "w": 470,
+    "h": 263
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_cash_table.png",
+    "resolution": {
+      "width": 267,
+      "height": 158
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 247,
+      "h": 138
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 78604,
+    "transparentFraction": 0.7001495361328125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 21,
+      "y": 228,
+      "w": 470,
+      "h": 263
+    }
+  }
+}

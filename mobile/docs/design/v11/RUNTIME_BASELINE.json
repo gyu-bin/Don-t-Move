@@ -1,0 +1,3021 @@
+{
+  "purpose": "Phase A read-only runtime baseline; approval required before Phase B",
+  "gitHead": "c8da4f1e78e3f0f1d730115940ad8b8429291e67",
+  "date": "2026-10-03",
+  "campaignSha256": "8cb031c5f82c1f5802157966c12d8c7ef4ed3f83a5342d6d9d7ecbaa20ac6ab0",
+  "count": 60,
+  "chapterCounts": {
+    "1": 10,
+    "2": 10,
+    "3": 10,
+    "4": 5,
+    "5": 5,
+    "6": 5,
+    "7": 5,
+    "8": 5,
+    "9": 5
+  },
+  "runtimeFileSha256": {
+    "src/assets/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/assets/buildSprites.ts": "253f071c5f3d7c4722b7566125d782ddd7eccabfc10622d95408abdf9bb574da",
+    "src/assets/characterReadiness.ts": "b36a6a40572513f18d883fd55d840197bbb2409d32bf842889459cbd7f3c737b",
+    "src/assets/environmentKit.test.ts": "d100fe2adb848b07a8f77cfeb51fb96284322d12683eb5ab822ca455c7245ae6",
+    "src/assets/environmentKit.ts": "e7515afc8b1eb4cb43a89c949def0678cdcc1e1204230e3975de23644f9a3d58",
+    "src/assets/manifest.ts": "029c94a7b12eca27b89cb466fcded5cb185528faf5e19163126f65d2df633623",
+    "src/assets/useGameAssets.ts": "fcbef77928c0e6a73c0e8fe0b3c27894ff4eff839940ee2cc06bb2b1c8d5ad17",
+    "src/game/__tests__/chapter1.test.ts": "d1d997ae2c1ef88229e9e6d4e0bd96930d142dee817f3eac79c5820db2a86f5d",
+    "src/game/__tests__/characterAnimation.test.ts": "297cc2f6479e9edad8790f2804c90d72b53da2c8cf3e3f8676a123ca78ce1a41",
+    "src/game/__tests__/coreRules.test.ts": "8a8b9a555092e28a34170559c8fa081e72b431c133fbecc1412e184cdc836ad4",
+    "src/game/__tests__/motionV61.test.ts": "247cb1bd614558221d54b1603cca2d384c553e9101650089fd6bf8ba15bd1149",
+    "src/game/__tests__/playableV1.test.ts": "e059555861498e9520bff8ba065e668f815d32c2bff3b2adb481aa90bdffc6e2",
+    "src/game/__tests__/polishV52.test.ts": "2c2ce8f669f7fa4123432f7911af041737186279050dace1de9f370d34aaf094",
+    "src/game/__tests__/rightWalkTrial.test.ts": "7223bce991c708f38df1a84776bd38ae46d17090463ab27becd96006a777f854",
+    "src/game/audio/GameAudioManager.ts": "88bebe3c106c40f1277b3acccc502f7d184d2e9b57a22c43aec2c1d7c87175f6",
+    "src/game/audio/README.md": "3c6d2444de5b3464e76ae77ede36ae5bd6f0f685baf64df825bf3f781a74f4fe",
+    "src/game/audio/__tests__/audioState.test.ts": "dc657bcc5e594c2e9caa3521f1314e790137cce862084541dec02c1a42013242",
+    "src/game/audio/audioAssets.ts": "d902592ad03c61a0061bad6132e3583c51d391d4ec2f745b102d463c6cc4208a",
+    "src/game/audio/audioCredits.ts": "12d58c6e4aded82b349399945c5c9dbf5ae856623631886bbc69e1f1c45b3d8b",
+    "src/game/audio/audioDiagnostics.ts": "a881ebe16935195eb1c8104d4ef023fea2f5c2f02f997337f5986aa8a506af26",
+    "src/game/audio/audioState.ts": "c980f14cc5781b5a847c276a91f2067aa2686a4d9ded957d570da441b70f4c71",
+    "src/game/audio/useGameAudio.ts": "a96741c2fd7fedb822fe1d0eddf16b97388568b0f0f5782d7016bcd26c2d01ad",
+    "src/game/audio/usePickupAudio.ts": "8f72714a1c4fbc22be616df6552acd4a53acfbf845890975831e59cdc79140a9",
+    "src/game/audio/useWhistleAudio.ts": "6255040c591e013075aeafea41280913878854aa5f2fd48a1a7d97058c840c9f",
+    "src/game/audio/whistleAudio.ts": "3503381d9a5fa9f733247c2f4b1d9f3735a84b67e6f048cb06c692d37ac9b177",
+    "src/game/core/__tests__/footPlanting.test.ts": "3642e318d6763b37dc2ef9cf0d858722a4ddf4a28ffa6a701bfbd3a45564901d",
+    "src/game/core/locomotion.ts": "2da788f71f63020bdf6e5c07e2b1dd6bd8af2b6f6802d551f9a42bc4f3857da1",
+    "src/game/core/locomotionAtlas.ts": "4a4388d2a2abed38d0a0a7a44c75dfde59cc834fe1d8b6450df54c993058ead8",
+    "src/game/core/math.ts": "9f29565feb9bb159837fff233b77a564fd90dad7951de7ab15946ef326ab495e",
+    "src/game/core/rightWalkTrial.ts": "68b6b76c39c45516b31eee3c7fc52e502b2c74f3794160966241274b8342c3b5",
+    "src/game/core/types.ts": "3af9b30bac4051cfc5d8808456d969769c8c3cb32cb80e6b2bdf752a50c0add2",
+    "src/game/guards/__tests__/alertPriority.test.ts": "98a2e11312543e07d096ff0fb2a911d72cbd0ec10d443567197927d563d54e94",
+    "src/game/guards/__tests__/animationBounds.test.ts": "8610118a9caffc28716890fa614013e94d68b4250142bd69d75629095d975523",
+    "src/game/guards/__tests__/chaseBalance.test.ts": "7d309f63ed99f60873e51458f33d50ce1acb7e49a081536ffed3b4376b791ccd",
+    "src/game/guards/__tests__/galleryChaseSpeed.test.ts": "069e31af3521914c1ab01598c4b517c18ea00139476ecca0663700aba0dbb53f",
+    "src/game/guards/__tests__/globalAlert.test.ts": "e005723c09343ddba1ec30852f546133bf818982636a31b359503dc27e4122d5",
+    "src/game/guards/__tests__/guardVision.test.ts": "5bfd829e9fed66ab6e09ed3d76ed261026d9a6eee06a535179a93cce4488f0a9",
+    "src/game/guards/__tests__/highSecurityAlarm.test.ts": "fd5f7b5d21db5af3310d46eef71dffeb4b4d95472308f107d2508226da96a6a5",
+    "src/game/guards/__tests__/stealthV2.test.ts": "5956a653160edb93a4c42a3af42f4a9952a56cbe517c703db88eb91efc905737",
+    "src/game/guards/__tests__/theftSpottedCrash.test.ts": "7acd440d45a6910fc1113a518e2a4dd7ce3e8f2167d362c33a4351810c4fa6c0",
+    "src/game/guards/__tests__/theftV3.test.ts": "abb38bd3ce48c38901bb58726b989005ce106218306d3863c6febf57488ac213",
+    "src/game/guards/__tests__/workletChase.test.cjs": "da158e2126e8d9c4285e2ed3d13fe60b594194990985fcc2f48a083789457d04",
+    "src/game/guards/guardBrain.ts": "3388373c87f8f19bc29c29a2e2211f146c0b2ceab4d7bf3d783885dd9095799e",
+    "src/game/guards/guardChaseSpeed.ts": "8827501bb921fcec534b5fcd2d4964d9fc2917b0da39514edf35a3434ef0c819",
+    "src/game/guards/guardPhase.ts": "7373cc27d279db34c5cc0b0f343b4aaa19dd36054f2f3dd039e85e4b5012cd70",
+    "src/game/guards/guardPriority.ts": "4db012d2329881989c72692e513ee5865d54dfc0b665f85402528e5d89bacae7",
+    "src/game/guards/guardSystem.ts": "c19771cd83683c1f5e30f75a66510cbccad5f1dbecffaf6f1d2dca850f80a9e0",
+    "src/game/guards/guardTravel.ts": "45b26cbc4ffaedba2b8f08e2b419df83f4d2608922a75704f17482acdbe9cbb7",
+    "src/game/guards/guardTuning.ts": "309747828b7ce8467ecd78418fd41a981e242ed2fd3d9c2403d5b8a37207186a",
+    "src/game/guards/guardVision.ts": "fc086e31c3cb5ff8bc3d9f0cc09850201f9676b99d922405ffed61de51fd75f2",
+    "src/game/guards/theftAlert.ts": "7b05e999c67edf81ef71104dbeb154232dcf37849c2cfb552582965d9d9f887f",
+    "src/game/input/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/game/input/__tests__/androidTilt.test.ts": "ef216c326df52777d14c0377637937e50ee124504324eac6e7b90f70e7b1a709",
+    "src/game/input/__tests__/calibrationHotfix.test.ts": "362c14bd5d713b7fa86fe5ffe3cf9ad01d2a055f4337a526be1dd9d154e97a2c",
+    "src/game/input/__tests__/tilt.test.ts": "c807cadfd5b91e447fb484cd54db77502d3e368970daeac2cb1317a5d2a68924",
+    "src/game/input/androidMotion.ts": "02253f9ef1319c646724df013abbaaedc7477ab681d6c50a78656c0418437411",
+    "src/game/input/androidTiltSession.ts": "aa2966cef8a778ae0fd2eb566284f79eee5855765e9ca235330e1ed686b6dc16",
+    "src/game/input/inputPolicy.ts": "19e62a7b9bdee3bdf3782bc27dfb0f5391ba66c2b48f9aff0391e8c4e90de0af",
+    "src/game/input/inputTransition.ts": "ba4cddd667c9e297745e830a15f87efaaa320eebd3f84faf7222600a9890dce5",
+    "src/game/input/iosTiltSession.ts": "03f5baa2d285eaa0913fe61c4fe2520690d4d3bc5b01591152c1019a11932f86",
+    "src/game/input/tilt.ts": "1648d229ada65176884a545b4ed1bd9d6bce3fcf55dac969ddda8c1bd4c663b6",
+    "src/game/input/tiltMovement.ts": "756a695b4b6af2382dae4465f362153f2a1c060d977e63cea754caf6696ad82d",
+    "src/game/input/useTiltControl.ts": "9fd5608747bd565c1178e54a3b8f6337bdbaa8be89077b86ff8b5bddb3c6db70",
+    "src/game/levels/StageDefinition.ts": "b5f87fa0b5d3ac44d3f5481a20216fd24afead0b4deff327e25eb54cd6c6c8d1",
+    "src/game/levels/__tests__/galleryGlass.test.ts": "94dd77d826073202418017fca5a7d705b41da7b92dbfc1b683bbca85fcb9ecf3",
+    "src/game/levels/__tests__/tiltTestMaps.test.ts": "32dc5d64741eb83c19fe580bae6079b9262e030aa362d156cd932c36ac47079e",
+    "src/game/levels/campaignCatalog.ts": "4d03b291c8842ffed7e2f224a8db7d1091de7a1774b469273c25ae320b512beb",
+    "src/game/levels/campaignStages.ts": "00f7b32e69c82c78d3cdde1a91482f32d3bda72053a319681cf0510918779d78",
+    "src/game/levels/chapterArt.ts": "73746bdf6b6dbcafea4aad73de5117c6ea1d025de66de87644f2240ff94fecff",
+    "src/game/levels/chapterDifficulty.ts": "aea39c38ac7053656484d3e6a75459b4643ada9ddeaadeaa8b4ecc5b0b3ce8e9",
+    "src/game/levels/missionBriefs.ts": "f59b65069c6b411269bbf6e901398e8bd5c0cfd8a1356eea89fbd3d95bb77892",
+    "src/game/levels/missionContinuity.ts": "bb76e05d048459be272cefc4e097b729640d656f67019143c8cba3015ff94663",
+    "src/game/levels/semanticPatrol.ts": "c9c21064e848c0bbeb0445f6cd5d3b06a2571a83f3b5784b61350f72fcb852bb",
+    "src/game/levels/stagePresentation.ts": "6eb0bd3f725d4e5b71fb7cfb26ad8de039edbfdbb938f15f2508bccd06c90897",
+    "src/game/levels/stages/campaignStages.json": "8cb031c5f82c1f5802157966c12d8c7ef4ed3f83a5342d6d9d7ecbaa20ac6ab0",
+    "src/game/levels/stages/guardDeployment.ts": "8bed38b05fd5bbbe5f064fda511fb4daca672c30c7e5b455efe4676606661617",
+    "src/game/levels/stages/startupStages.json": "f5b63c1e6b795ceb30743876b4876662e8119e002ea457428406e1a5e33e26a7",
+    "src/game/levels/stages/stealthPolish.ts": "617a63eb99cfe1a5b4521be7369c583be2b192680fedce96fe94d9088061ea7f",
+    "src/game/levels/stages/tiltTestMaps.ts": "90c85d6170bfb857d200d82463f058ecb70f5ef0189c448ee6a1042c63048b9d",
+    "src/game/levels/stages/visualPlayground.ts": "219426ce9bdf2a1c8bd8d6e07feb48cbe27dbefefbf4d5deec5d1f419febe4ac",
+    "src/game/levels/testGoal.ts": "cab6a401545206650dcede966049ac77755d0a1dbd3bc3cb21e891846f3cd5a2",
+    "src/game/mission/mission.ts": "2783f5a471b36bdaedde9238f9e742b6e743c1f5d3df04ccbd1094053d1dfbf8",
+    "src/game/monetization/MonetizationContext.tsx": "fa391da5ae81d3071b2d94d5b79415719f1360ca45d3815efd8aa48cfe960f37",
+    "src/game/monetization/MonetizationNative.tsx": "d522c72349e33da1687fd2cc1b4ab4483d548465772167fd18be55fc4925a8ed",
+    "src/game/monetization/__tests__/adState.test.ts": "528d751a1e52a38f32e87b52c5a428765a4c60d3f78781f63af029b3c60e7582",
+    "src/game/monetization/__tests__/adsController.test.cjs": "85550fbfc4d97e7ca5528e2b285dbe26930a788c4c9062d1d111df6fbbde1361",
+    "src/game/monetization/__tests__/interstitialPresentation.test.ts": "cdea7b9d77811b7f1408f380cad9befecff4e8750607d2bb888b435fa46e8656",
+    "src/game/monetization/adState.ts": "e90c89fe34c91b37b36f5d107c92a7b44ac1463b14f65ed55963753c32bcc406",
+    "src/game/monetization/ads.ts": "9a982b0335afd3049c22f6532f3a49093e932af18a324104644004de891a9e27",
+    "src/game/monetization/adsConfig.ts": "f0a1fbedbd4bce8de57a41a45e0c1a3a040fdd2ba013f5d175966a67443f8a78",
+    "src/game/monetization/interstitialPresentation.ts": "3d121c995a0b55aa531af5954ea67e7bcdf1735fb3a4f1b207f10dbf697caee2",
+    "src/game/monetization/monetizationStorage.ts": "bf7111d355b1a7d0fbb74d14e1592be45a547822143edcaec4b6bf682d0278e9",
+    "src/game/monetization/nativeGate.ts": "6015cbb22d9d3953c856f5eefb54d006b3bbfdd0e3782209fc5ad30ef9f2526c",
+    "src/game/monetization/purchases.ts": "1dfeecb0a5f80ac13276a7cdea528e33e003d4fba28ab1fd65b7370cb58e3e1e",
+    "src/game/player/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/game/playground/alertReplay.ts": "9cf46381ee90681842bdf540e341744cd35ab9e0f20951944b0bc2bf9d4571ef",
+    "src/game/playground/playgroundState.ts": "d05ce4a94e781feaa3b420fa33b987714e92c132b524ce41e2d936b95ea3ecd4",
+    "src/game/progress/campaignProgress.ts": "86864d4d9c0ffdb9efd517a03b8ee3715f7569d86438aa5bab98522397530624",
+    "src/game/progress/stageProgress.ts": "6fff823cb79329ca54893481d7039e1ea5a1e77e9d85fc9bd208e61a0a4a4a7d",
+    "src/game/security/__tests__/cctv.test.ts": "0b76d836e9001488eab1dade11545770964afb6d02cf391a9712587765c82aec",
+    "src/game/security/__tests__/securityWorklet.test.cjs": "b82b3f8e6cd541072a2e50c393646e75ffee45737aa996ceef611a31d6de82cb",
+    "src/game/security/__tests__/theftSearch.test.ts": "3321784fbd0a4d6542abcb055c665c2e91074d45a63136f68c2f1713a4959dc5",
+    "src/game/security/cctv.ts": "be91462c65f01ebf5a19108cbaa881b6b9a3fcd5b4ddc62b353cc60ca01098ac",
+    "src/game/world/__tests__/collisionStability.test.ts": "5348569d3d896cacace40843458ae421fcf4c86b6ec98a4f3e7f341aa9a57cf6",
+    "src/game/world/__tests__/collisionWorklet.test.cjs": "e96285f6e20d58907349ed93808681e0249ef103fd4d1351bf804820f6c750c3",
+    "src/game/world/__tests__/wallSlide.test.ts": "055fa039ca9ecea27cd8776b7b894043a9b71f7728845812363db1ae53fce061",
+    "src/game/world/collision.ts": "314b63772ac9baad8b6924c14d4342996f96e5af1c521944aecc1d408e93850f",
+    "src/game/world/compileStage.ts": "4532951b94e75b58497a78495f6297f8d54af7a0a0965f8303f3881664e113bb",
+    "src/game/world/dressingKit.ts": "ad62b12c9a2b54b284555863b9b3671ec05e44f3def54015df8f9d7a3b7543f6",
+    "src/game/world/museumBoundary.test.ts": "b9f7787e5028b4fbc0334d527d467c47fb5bfc042834aa8d84ad7e693caaf0ca",
+    "src/game/world/museumBoundary.ts": "d340a11b5290a356390188750a23ca1f9264900c21397281906cd6828546b18a",
+    "src/game/world/navigation.ts": "c62efeb6e65ef0f3db8d69084509b551d17bd93f357976e5d07b2369b17e8959",
+    "src/game/world/propKit.ts": "3bab5b831b7334afa702614f966188ffc01baba460ec086e65f629e3dbf98bab",
+    "src/game/world/visibility.ts": "bf03602765164fa669dbfe2e06aacce8633b1ba47cf2c5ad9f3a57d20f916e5a",
+    "src/ota/OtaRefresh.tsx": "cbb3c7a1287d9b1f023f303ee29a140a74ec89738b3005c3bafb6c37302a0e42",
+    "src/ota/OtaToast.tsx": "3258021387be3c9d2745a50d915fe6f9a9116c57eb08167f9d957232aa6191b8",
+    "src/ota/applyUpdate.ts": "1b8ca6ddc09b8e42827e1d38446dea00b964a8a84cd34cbb2260f94cd8ef239a",
+    "src/ota/otaNotice.test.ts": "98a1533b01b5b059d9ec32dd2effd7f0cf89858385b49d926666b772467fedb8",
+    "src/ota/otaNotice.ts": "72b860819f29f3bac6bcc33a5a20b2702cacba988f9a7d0153ecd39773d94d67",
+    "src/rendering/characters/characterVisual.ts": "ca46cecaeef37919274e34e692f9a895b09b124a48678a729cebf0d5bd503142",
+    "src/rendering/characters/guardAnimation.ts": "a0ed2508238fb6541aa96f366045ea1077697d9c26f3478f87c36e659e31cc37",
+    "src/rendering/characters/locomotionPolish.ts": "8a22f3aeed25473e7507ebe08fcf03ad3cc183a299b957b0083eaf7f3c62894b",
+    "src/rendering/characters/motionAudit.ts": "1eac74f4c86c209e8142c1fce83e10e52005eb3d2c3e91ef4e0da36a1b206bbf",
+    "src/rendering/debug/guardDebug.ts": "92ad03e498b61a9b049481553ea896e73f1c9bad8eb276aa53773f89790b720c",
+    "src/rendering/effects/alertIcons.ts": "9fe5ab5dcce11f110aa614ac1fdcde0e7d0a77573e167c2fedbff58fc890c4a3",
+    "src/rendering/effects/cctvArt.ts": "1e04504af85071f604049f0d54bad120b572a919558946d8ba4bf3ea80e273c6",
+    "src/rendering/effects/guardIndicator.ts": "94cf3b3d586cd906f9c0c07912be41a41fd3b0ab213d08ef2c9fcc4d09a321b0",
+    "src/rendering/effects/lightFx.ts": "7b43b9f114d7cba9e0fd73f27d527f31fa03631a2e216f50e124866d8f26f6f1",
+    "src/rendering/effects/visionCone.ts": "63082625cb9f268f31560c3baad25cc1b2bf544d426e7f9a84695b560a708227",
+    "src/rendering/environment/buildStageArt.ts": "213332109469dbdc57ec6abc12bc7d3248d7d96ba93afafb3619d210a10d765c",
+    "src/rendering/environment/museumDressingArt.ts": "7d95190e13c5378bcc086937f9f45a1690eb2ff84ee04e75b4de51a62895d37f",
+    "src/rendering/environment/northBoundary.ts": "e3070defef340c770c2f854fe17e386e7dcacf60ca5267d960e824ecde740a73",
+    "src/rendering/environment/venueArt.ts": "782a03b20c8e2258d30641202070061268b1ed55f3e9cb537ae379cf62270065",
+    "src/rendering/fallback/characterPalettes.ts": "fa2d5f8cb2c3c2f197f29fbe6ac3c4218af06431b929edefd10443378be74e21",
+    "src/rendering/fallback/proceduralCharacter.ts": "7e6d752ebaa49b8a4b322e416ce45e949558a7fff5cd78345f1ea81271c7268a",
+    "src/rendering/fallback/proceduralMuseum.ts": "7c783a11473dc985bb9c99f2bb66944dc4297d2263d7e47ca1d307539d712eeb",
+    "src/rendering/paints.ts": "494ad3ca10de9f33835be2951d0e429d606228c27991e79e0fd46f3712216376",
+    "src/rendering/renderFrame.ts": "dd84b3ffdaab6675f080625412ce48a8d716698634f4d12c3cbc1b9f0b75272b",
+    "src/rendering/skiaScratch.ts": "91face50a3f3800ffa6149e251691f230d1593a58fcbd28251d69afdf5607de9",
+    "src/rendering/sprites/spriteAnimation.ts": "c17fb30be3b303fa8b7f41bbb56b32271ad408d637f5083382cc4d1557105c5d",
+    "src/rendering/sprites/spriteTypes.ts": "1e334deb98a0d24e866659a08a833806a8575db891ef249089792984f3b7dfab",
+    "src/ui/CharacterMotionDebug.tsx": "75c0f3f1b6bc2a00cccfb361e556e08181bd01d5b7da1c2eb8611446d3c9500d",
+    "src/ui/VisualPlaygroundScreen.tsx": "b1273458d838fc8f440bffb90ae6d629f7e2d9de6c9c03f1a659000758d81fe5",
+    "src/ui/branding/BrandingScreen.tsx": "ff2d614b6a9ceb45ff35c9b86aecec3cb5e23687520155b96968701f4e19da38",
+    "src/ui/branding/SplashScreen.tsx": "ebf0be3fc2d09b6ba92b6e48735b13312abd24b423dc7849c6118738c49c1bbe",
+    "src/ui/branding/StartupScreen.tsx": "218e18c0f9cbd0ad8cd190291142e47ac84b3eea123ae6546cffc3016faba016",
+    "src/ui/branding/audioCleanup.test.ts": "08deb64f5f5e97ab351999d8539d67b0c527adec8cc1f9031a76abed7d06df51",
+    "src/ui/branding/brandAudioSession.test.ts": "06ff17a9f960ace5e85ab84b30046e18d1502bcc2f94b0ccc45036432b5c6653",
+    "src/ui/branding/brandAudioSession.ts": "41f42395ec924a75ff2e97f8cbd454305f2fe06d218b61f1c9f90385f18eff1f",
+    "src/ui/branding/completionDeadline.test.ts": "d312fa5213216ac75c48eee25d0344eda74aaab4299c340349d4ad3343480bdf",
+    "src/ui/branding/initialization.test.ts": "3dfd7065a03b15fa5ce92389028666022140609728478eafb4c2981eeeea91c8",
+    "src/ui/branding/initialization.ts": "ca5bb36fd0ade98eb6ce99d3c161205e11f929cec5fd44fb162c418f162743ea",
+    "src/ui/branding/introCues.ts": "28b25acd5d98d899535157b3d560e163c692d524f3cedbe1038ea20f93536f46",
+    "src/ui/branding/introTimeline.test.ts": "e9d4ce9e1cb889afac9cdb9af5504f55c782e962232f39dad45d7d45bf61f272",
+    "src/ui/branding/introTimeline.ts": "9a136dde81b5031b459e553bae895ea6469598399563577b7cee346c4d8521a1",
+    "src/ui/branding/lobbyReveal.ts": "b5f3c1039aaf835ddfdafe3a76621785f28040e90a6357210caa472588db0993",
+    "src/ui/branding/menu.test.ts": "4154c2977d11c958938fa4624f22e0be6b353af9b6886c6b216a12b875943d28",
+    "src/ui/branding/missionSelect.test.ts": "ba29e07d56f02edf0d305d4a214aff8d55bd8652bcd72942ca16e8e375faeaaf",
+    "src/ui/branding/motionDiagnostics.ts": "bdb5c3ad25befb96bc725025aa5ebff6b7b6f2b76140c81e027e46d9465eddec",
+    "src/ui/branding/museumScene.ts": "85ae91fae07c2184684bbf5f177121740afe57711159645d09f24bcecc64f0f9",
+    "src/ui/branding/openingArtLoader.test.ts": "ab5a8f74e4015c451f5dbcba6cdfeac34d8a7a049cc5bee4f8e95413a95eddc2",
+    "src/ui/branding/openingArtLoader.ts": "5685e41e6e5f9a9ba2b248386d4d3a16d1f3f2786becb57f8251129949971099",
+    "src/ui/branding/openingLayout.test.ts": "c1b7a7633bb41e993e3d962a8ca6d0495745b08edc8558300054c8e53c189030",
+    "src/ui/branding/openingLayout.ts": "dab61edc74e0575b1f31f6e6652b736efa6b92a6ea63076a5cd0a9b7cf622711",
+    "src/ui/branding/skiaSceneGfx.ts": "1473761ddadedb09e270be1aeaa2a97b6bfe79da49fb4e1b3f72167596f695bd",
+    "src/ui/branding/startupMetrics.ts": "8d98c5908289d88295e5ea41baa72eef66771a7830d7ee26b09b5774637116d0",
+    "src/ui/branding/startupStages.test.ts": "428ed438b936942b61b1be1643824acfb34ad38e2a92a63d08bc0e54e874b401",
+    "src/ui/branding/useBrandAudio.ts": "05ff2cf8785d8c500babe2a352bc0700f4dbb39be59a2d99bf5d14813d27f175",
+    "src/ui/debug/NativeQAObserver.tsx": "f6ec5c8f4a5bf0e5e1da0f380e848554f02e1a9df4ad7b2b608fd3b4e03d5161",
+    "src/ui/hud/StageHeader.tsx": "f969d7def4d6af7b60927997961e2bd0566f482662b3773a65218e12295a809b",
+    "src/ui/hud/exitGuidance.ts": "89b52443de9bf5974b55fbb134be2febd3ed56b11d210de1ccb3c60a046cc26a",
+    "src/ui/menu/MenuContext.tsx": "385770d9326875888d229119563be99b1748cddae7baeaa952393337a6e58bc9",
+    "src/ui/menu/MenuScreens.tsx": "cf35e9d82bb1e89bdb5747bb17578cef7e25f12ae01a898d7b37ead271304cc9",
+    "src/ui/menu/MissionSelect.tsx": "f44b59ca6c1af5c4d35b7f09d4511b8eb9c83841494218c59ecf322ddb2edd30",
+    "src/ui/menu/StageSelectScreen.tsx": "eef3ba0c8162ec9d52620b553e3509b545f3493fb927ac1311ea9efe4b1f2e3d",
+    "src/ui/menu/missionRoute.ts": "a961943b4ed36744b87b6a784932b8f7be3a3d289a61650308dcec96ffaeba5c",
+    "src/ui/menu/stageCard.ts": "766e0d2978492f3d0a9f7ddd4ebdc689a5b6e52426693d93e556c2a16afc3c52",
+    "src/ui/menu/strings.ts": "8402389232a946e15bd55aab4c6d719da66ef56835627843679994064487e185",
+    "src/ui/missionTransition.ts": "4809fbca2510dfa83abfe400d44633bf4c8d6d25e3b0a0eb520fb9d49522aa03",
+    "src/ui/preparedMission.ts": "72a6dcd4f18aacd0d8392892b1ce41399b9d56d1d7e66d93d21d54f25a909465",
+    "assets/README.md": "a4fca57f6a77bee9c8e93718f5557740d3e7c8abfe3470d8b7600e84cb4bd9c4",
+    "assets/android-icon-background.png": "fb139c2dee362ebf2070e23b96da6fc0d43f8492de38b8af1fd7223e19b5861d",
+    "assets/android-icon-foreground.png": "9e3d0315a33c6799de601dd34cd8bf8cc3a8d16f3bf75592baec2ceb7240b391",
+    "assets/android-icon-monochrome.png": "6371fc2c12e33ad2215a86c281db3d682a81bebe7c957a842c13b8bf00cceb83",
+    "assets/audio/LICENSES.md": "5d9da29c078222a445db96312989d5852d710bf756bde524a042c16cbf5989ec",
+    "assets/audio/bgm/chase.m4a": "f13045e3711b1a68513c4ca3ef0dec82b93432bcfe190d8108ffc79dcf8d1146",
+    "assets/audio/bgm/chase.mp3": "478f34b0b22f37344c7acb857824b94255a20072256f3f292561222a3b5c4519",
+    "assets/audio/bgm/lobby.m4a": "ca1eae927e5b906d37702354e189ebeac1f8e8e76e084d0230ad53d254215933",
+    "assets/audio/bgm/lobby.mp3": "74eb232b4b7e1603379f9e055e07e1fc3a8b84fc89e0085bdfa4ac36f769f1b5",
+    "assets/audio/bgm/stealth.m4a": "302951dc77b6007def73835a38cde7feaff33f800b47d88ece2220008cac7606",
+    "assets/audio/bgm/stealth.mp3": "0bbcda3310b95d5774c644d30d1ae83d90a91f95dcb115bfcaf506d14f749335",
+    "assets/audio/bgm/theft-alert.m4a": "3759b9dbb8878f5a69f48554c53984a8ac174ccb68f78657b3506b8fdcb26b48",
+    "assets/audio/sfx/objective-pickup.wav": "5e4f232119c0bb59a9ae24490f1cefd783a7cf83f64e32e40481c1829e6a2e8d",
+    "assets/audio/sfx/ui-back.wav": "544791d9509aa981e982696be2426712ff893f21589d9fd5aae1ae8871a1aafc",
+    "assets/audio/sfx/ui-select.wav": "b316031e55968c9225a60e8beed2182cf7101964bd2d8f0f5dbb110a7ac0510f",
+    "assets/audio/sfx/whistle-spotted.wav": "33fca584afee8edcc28335d75df83218f6d3ef4a110e9a47c722110a8e59fc82",
+    "assets/audio/sfx/whistle-theft.wav": "60c2f264e0a01319e6bd717a0fdbfcaeac02a83067ff58ca701986a30df93fcd",
+    "assets/branding/adaptive-foreground.png": "5f8044cfcbb09fa409a0bff7911c1ccd07ef97b7cdbc72cfaeae314ac6de0b9b",
+    "assets/branding/app-icon.png": "830b0a8d66ea36bb86681cb2599798ff8c98cbcf5e4d4b52283346c07508fed3",
+    "assets/branding/opening/bg_museum.png": "f861bf663a4474278f8ff3c001aabef15eb7d32d9aeac11151bbeb2e525fd721",
+    "assets/branding/opening/fg_column_left.png": "1e6a8080fd204728418ae1d12656f694445d8e1f07bd2f9e17f660918e40f934",
+    "assets/branding/opening/guard_away.png": "95747d91e9efe345da11a007261e311620fe06b621dc461507ae7f42fe445f41",
+    "assets/branding/opening/guard_turn.png": "2bd92c05f985f237ccf39fe1b40d60689a3927d388583da6eddead6ff1e44d0d",
+    "assets/branding/opening/thief_freeze.png": "701163e048ede2dba6f269bc1229ce6e718d24600cf9ccb482c450b3a901a689",
+    "assets/branding/opening/thief_peek.png": "07221de4e66f7a16a5c48be6e32b5254b4aa38366f8cd737210501853075e74b",
+    "assets/branding/opening/thief_sneak.png": "e8b6475112f279f242d342652581d59b726f58fb3cc1daca0b2c56780a75945b",
+    "assets/branding/splash-mark.png": "0fad0c762e9e81c557bdbc0b34d04e276da7179c7f80879a51570672ba925880",
+    "assets/branding/stages/01.jpg": "964c4bdbd9b292ea9b1309fa95c45025fe1a105a4a9a09401da298f09a14529e",
+    "assets/branding/stages/02.jpg": "eaa5e02a8a44a154c9b121386aaf368b5af0c49c426883611c781ebb10553ed3",
+    "assets/branding/stages/03.jpg": "d571f7fd153b4e492d5af8b280080b8897c283c7675e7ba9c5887be39f768d59",
+    "assets/branding/stages/04.jpg": "794f0551c65ff1d243d4458a501a61cbd5a48c021160682a1ea4b05880e5b597",
+    "assets/branding/stages/05.jpg": "00b139c42dabbfad825b2e442a34b939857f38dbccfded9edd57581db74c0baa",
+    "assets/branding/stages/06.jpg": "427d50a182e6f55d850bc4161e2b1e756432915b01c9e889377daee897fa6ec7",
+    "assets/branding/stages/07.jpg": "f0822901f2bd711a7278b946dfea9007b34bed415228a31a621606d7bf9335e9",
+    "assets/branding/stages/08.jpg": "85dffff10aaa210a96e3997b1e4815c939376aca234eb836d18a9e4f8aed25bc",
+    "assets/branding/stages/09.jpg": "bee0eeae38ef52d1be760d71910f6f2d6e7745cbac0ac2fabcf58f1e7ff1f2c6",
+    "assets/branding/stages/10.jpg": "605f5d96cf912ad4695285c58d69d82babeb04edfd9181c65dd8b289584f9496",
+    "assets/characters/guard_idle.png": "b76fb7d88c8b9070654d67d7c47b878785c9f12797e80cf5336575775034cfa0",
+    "assets/characters/guard_run.png": "7ffca1070b0817556434a9392d5e47d927fc743f8c44fbd53698f3537173c37e",
+    "assets/characters/guard_search.png": "a49762915ec4be7f54224e157486804812457c397bb08192be1b9afdaa674581",
+    "assets/characters/guard_walk.png": "1c4f4ee3046c4734ee9322e440b2375bf147fa9b27490aaa9f4fdfd9f5f434d7",
+    "assets/characters/guard_whistle.png": "c51442198054952ac478db5f71607625e2c944723f0ced6d83e9a11be09ac3da",
+    "assets/characters/legacy/agent_directions.png": "cb1412638867eaf176e7b94bcaf065aa308044115cd9d929beff490c4b3b0b3e",
+    "assets/characters/legacy/guard_directions.png": "adf7c56297e46cef17c183c580e45b8d347b1b3b871bcef50a9a73652a608752",
+    "assets/characters/locomotion-feet.json": "5d6bc615d9cfa0e2bed0572aa60e6ada00279ef198937db56656ab423955fe0b",
+    "assets/characters/locomotion-manifest.json": "626ccdb1e0238e2281959fb54b5c2c4aa4c813ed97510fe10e603a3314cf0b71",
+    "assets/characters/player_idle.png": "28ce7f601c6dadf8cd402b70e973f957ec0a0f99613bdb88390aa3c73fbbdc64",
+    "assets/characters/player_run.png": "8ebdc5236e8bf58dda27058c63ed4be56c49beaf83b1ed5b13605bc555c586fd",
+    "assets/characters/player_sneak.png": "2afb9e78efa50311b8ca3a0fe06d0363f97d075eb42ab0ff61a7dc6244278827",
+    "assets/characters/player_walk.png": "9617026c056afa78ffac411cf34b86234ea3f7a4a9513ae757624bedb4052ff2",
+    "assets/environment/_review/gallery-wall-rejected-angle.png": "09d039ee78e324e335b47396e9e8dad3f16dddb6aee8a2201ba51424dc90b2b4",
+    "assets/environment/_source/artwork-v9/gallery_abstract_frame_b.png": "0efb9579f1dcd0cbddcaaa1723f9695b17393bc7f6c45985f72b879f06d4398e",
+    "assets/environment/_source/artwork-v9/gallery_abstract_frame_c.png": "acd9ee51698845e658e52cbfabe0c1e3e4de31aba85f93e2bcd078588643ed35",
+    "assets/environment/_source/artwork-v9/gallery_abstract_frame_d.png": "7c99e5135c37a7d4be30080c10532fd83ee52626547c6ac244ac91d421d26470",
+    "assets/environment/_source/artwork-v9/gallery_abstract_frame_e.png": "8697b08ed7f7be001898ce3bb46967d4fe1edc7466ed4e5947cf55815027ffa9",
+    "assets/environment/_source/artwork-v9/gallery_portrait_frame_c.png": "ff1b4062b43f118301283175539bcc603b587589b74637cb8d4d9eb880d1bfd6",
+    "assets/environment/_source/artwork-v9/gallery_portrait_frame_d.png": "19f58f5593feef379f2ecccf4c034799031fcd8555fda9f81084d6336f5333a9",
+    "assets/environment/_source/artwork-v9/gallery_portrait_frame_e.png": "5b0c841f3dacdd6a79f0ae9e626bd773606160e294c862b26a4d0f84ce28eaf2",
+    "assets/environment/_source/artwork-v9/gallery_portrait_frame_f.png": "0f5f82fa7183dbf7d7d4af4139501528854247ac4cc5f4af7f0ad9a77dfcc00e",
+    "assets/environment/_source/gallery_abstract_frame.png": "a0c86a98ab2ec06a4aabeb939c933aaf832091e04fb5c7c265b968b9306d6bb2",
+    "assets/environment/_source/gallery_central_plinth.png": "215d6d39a72fa5974819b2573681cf6c1d8347357c9048444658f5695d19c557",
+    "assets/environment/_source/gallery_installation_art.png": "52d83bf4c3dea3533251d61efee968183734752e510f71e81520faa95e9e7355",
+    "assets/environment/_source/gallery_low_pedestal.png": "37c03d37af67c0467a882916417b8efb9cdd8ad3e517c20623ade4e4041e1cda",
+    "assets/environment/_source/gallery_masterpiece_wall.png": "a414c836183bbaf2bb0ee64a9ab658ddb92056f34017a4244210d89a1479e1fa",
+    "assets/environment/_source/gallery_modern_bench.png": "b0f7559701ad107a3d83204fb56cddfb9ff1500be94c4f2628cd5ee8faafc3be",
+    "assets/environment/_source/gallery_movable_art_wall.png": "fc3bb00ccf421ed05fa30ea528e4e016273ef7d71309f467bb840078403a6c56",
+    "assets/environment/_source/gallery_sculpture_large.png": "f8319f39be252a616e7042e20b4ab5501500b374433d3265e14404afac8f4b01",
+    "assets/environment/_source/gallery_track_light.png": "0c9c3d889178574b22d3670c67afd240ea60564bacde547199e52146f66caf28",
+    "assets/environment/_source/gallery_white_wall.png": "e66cb3cd03011d110ad87f05716c81115a78c031e274b24d380abcfe696e8b38",
+    "assets/environment/_source/museum_column.png": "fefb5bbdccd1297b3f8eb9fd184664286665017e7a6e22de71eeb0b6c9ee9eb2",
+    "assets/environment/_source/museum_diamond_case.png": "5d553db82dcd0fc2f1646480636d8f3bb147e36f8673ce13661478e1dcc5df99",
+    "assets/environment/_source/museum_display_low.png": "344ee3006507424ac545dc601a63725582982d70e556d91b1000c959b3598d95",
+    "assets/environment/_source/museum_partition.png": "9f04d5e4a7709eeee8f8f64c9b21825fcb671a8b0169672b8633f5901bbc9707",
+    "assets/environment/_source/museum_rope_barrier.png": "b7dd1ffd8ad2226a7673172ae64eca6b4dc16e9eaa1d20e839647eb7b3feb417",
+    "assets/environment/_source/museum_security_desk.png": "cf756733cb88ef75723fa3c32ad402e4863b0d512e796ae47b1b7227d1bcba3a",
+    "assets/environment/_source/portrait-hotfix/gallery_portrait_frame_a.png": "61165f40ea7b5abcb70a3956a6b1626d8f939dee3296c113cf50651f68111cff",
+    "assets/environment/_source/portrait-hotfix/gallery_portrait_frame_b.png": "95c2097242a77c6dc03e6d65d36fe35e8c68cca8bdd692b76296757ec1943ee5",
+    "assets/environment/bank/_source/bank_cash_cart.png": "6938b37e4c252b4070ea5c6fafb5cc5de4b12e98f3c558d61c81e0eb4a23ca1b",
+    "assets/environment/bank/_source/bank_cash_processing_table.png": "2ba751e04b9c7f0a1713091fc06df89d0604d4f261f5117992e93fdc2ec92da8",
+    "assets/environment/bank/_source/bank_clock.png": "2498b3a5df8f832ee896d9524fcffa33895b4feaac5a5cc2113e6cf05bbf0830",
+    "assets/environment/bank/_source/bank_deposit_box_wall.png": "3d4475157d0ea1c91488d38f264d815c4186544f3c4394c928afb0e58181ff27",
+    "assets/environment/bank/_source/bank_filing_cabinet.png": "0a642cc1bde5e4b2d307fe8190c861fc38fda74f2aa90c3d0d223f2599076b3c",
+    "assets/environment/bank/_source/bank_floor_marker.png": "8ad3367ec08775ae7c1f029665b00dbb7316cbbb0f07f9ae36b5be82d0e75dc6",
+    "assets/environment/bank/_source/bank_main_vault.png": "6475e7da0a2c1390c8642e2bdd223486091efe4b446b3e88b2ebc292324303bb",
+    "assets/environment/bank/_source/bank_monitor.png": "31525fde6fe99dc489cf8dcc7638e07eadda1c28709fe4bce7da9085a581541c",
+    "assets/environment/bank/_source/bank_office_desk.png": "d0cb1433aef91f68c14965e53451d5b1f0ac8a799f16e0a6525791936cfa5935",
+    "assets/environment/bank/_source/bank_paperwork.png": "ea89d26ec0415913b6d1276ec981da17c0a8349ddc46b35b2fe2d72966e1d693",
+    "assets/environment/bank/_source/bank_plant.png": "626377b07d4594e492f462c7228876e691c9997917bea0b1556962491d81d9c6",
+    "assets/environment/bank/_source/bank_queue_barrier.png": "0bf703490c00ff1ef57fdfb7362310f26a6fb4fc7a72b0a562455d252df25a9a",
+    "assets/environment/bank/_source/bank_security_checkpoint.png": "b81eb4feb8831daf9871a5eb94b6613645a0a663831d8ab7cd5d4da0bc6f0731",
+    "assets/environment/bank/_source/bank_security_gate.png": "33d57bc2728cd9cd2fc3d787f92859e6d91e55cfd9dee9646dbe81ddaba1755b",
+    "assets/environment/bank/_source/bank_small_safe.png": "d8eb07c6e183b79a27729921be069b6a4c93d86660b483c6ba24d53778d1410a",
+    "assets/environment/bank/_source/bank_staff_door.png": "1d3ffaa759a504589ec3546d2f78106275e3a68bd356bb778b47cd04ccf16d94",
+    "assets/environment/bank/_source/bank_teller_counter.png": "b474bb359e41475bba67b061f500d6d3ee32cbdfe03db51625a1403cd726de95",
+    "assets/environment/bank/_source/bank_vault_corridor_wall.png": "3ce0f5d3b3def546b1c212a4a7fd8fc3ddb3ca625e82f062d0e021ae021c2411",
+    "assets/environment/bank/_source/bank_vault_door.png": "fd6eb22dbfa26b778c942a4c4534fcf17c0f7bc6d3e39f20c9b9522bda52948b",
+    "assets/environment/bank/_source/bank_wall.png": "35079706b4c02037cfd6eae7417dc2381bef9488294d56bb5f76e6a15f52d75b",
+    "assets/environment/bank/architecture/bank_security_gate.metadata.json": "c7c7ddc8c6b4f11adc938bc18b55b639655d5e6b8fdd24485a41f6798f127d79",
+    "assets/environment/bank/architecture/bank_security_gate.png": "01202b4da551c7be490677c1635c13c8e97001c885cbad6558805905063b97f9",
+    "assets/environment/bank/architecture/bank_staff_door.metadata.json": "2c99d7edf6dd3ca95b5e21f1c2775dd27bfe2b598bca03be7a12642f627e6e37",
+    "assets/environment/bank/architecture/bank_staff_door.png": "972e68c8c19daa7ea811f42c7235a0340b394c2652790e40c67c3cf6e70a1be9",
+    "assets/environment/bank/architecture/bank_vault_corridor_wall.metadata.json": "373284c0e6e423c2b35da00bd34be6ee39b34cab3dafb1110d9608350f815267",
+    "assets/environment/bank/architecture/bank_vault_corridor_wall.png": "bfc7b71d9ce40ca5f795d33e5a814521bd8a410089ebcf435ba307bd1063035d",
+    "assets/environment/bank/architecture/bank_wall.metadata.json": "bc469e3cc5abb4027c46c44bb07fe57441d441f54821db739fa9024ed9da3d63",
+    "assets/environment/bank/architecture/bank_wall.png": "aab3a0a6d365b947290d6280695ba6a9fedd3e6afc2725feb614cefba22caf24",
+    "assets/environment/bank/decoration/bank_clock.metadata.json": "c7c2683f8ad06dc238175411b44651bda7fe4a58682699fb4585ba55ce199d33",
+    "assets/environment/bank/decoration/bank_clock.png": "fc0b3b54d84756b705c02cfcf017c50a3c6356e86f168054c42d38930503d5a6",
+    "assets/environment/bank/decoration/bank_floor_marker.metadata.json": "dd836925145ae263b13b6727cf2b7b6ca3dc9fcdca453e167f7ba4c123d668b4",
+    "assets/environment/bank/decoration/bank_floor_marker.png": "46c262218972f1e7a3020882abe0ac4bc9aeac5f32093c79c1b7ee125c2caf5c",
+    "assets/environment/bank/decoration/bank_monitor.metadata.json": "6ecdc082715eef2e0e274584f709cb830d576ef77b2012a1e7c71886013bd8a6",
+    "assets/environment/bank/decoration/bank_monitor.png": "a8b7f3864e1041e06185ae66407d6bdfdd2b7d29672a88c716e2a2e7f0456a66",
+    "assets/environment/bank/decoration/bank_paperwork.metadata.json": "1b52d515ec3c612ac63627ff6f37573249b516de081a8b47414f1d7a4da23b57",
+    "assets/environment/bank/decoration/bank_paperwork.png": "e63904dff527cb92e1007cc1327b7e17434fa23501659553c92ccad5442d60e8",
+    "assets/environment/bank/decoration/bank_plant.metadata.json": "0caef1b8be28296ff042aa2b30dcd38459d6a7180086081dff7f3d7c72fcc16d",
+    "assets/environment/bank/decoration/bank_plant.png": "a12efa6420a19da227a1f1792ba645175ac172b99e13537db7801914a9e1a753",
+    "assets/environment/bank/landmark/bank_main_vault.metadata.json": "b4aad60d79662955f09ad69964bc9b7f020b159aeb5244b7dcdb387e9a8c3c36",
+    "assets/environment/bank/landmark/bank_main_vault.png": "a151ad731b0bfd5f814103432b6e66bbab56507606c22d1c820cdce470d9a41f",
+    "assets/environment/bank/major/bank_cash_processing_table.metadata.json": "376aec570802c7de0eda4b3a13527df0e1a9f70d3b6a394521154185b3fef170",
+    "assets/environment/bank/major/bank_cash_processing_table.png": "01994b796e199e3b79ab03647ecb36231591ad121d0ece3115707c98dae15ff9",
+    "assets/environment/bank/major/bank_deposit_box_wall.metadata.json": "9b9f373a30a7d88c3fa65903203663a389c71dfb5233bb0077223951cc85b481",
+    "assets/environment/bank/major/bank_deposit_box_wall.png": "44c66b10537ce4f3c9cdb09cd77773377fea00e14a75eaca2a9953a3195a35e8",
+    "assets/environment/bank/major/bank_security_checkpoint.metadata.json": "62d7a849a6526c74a2c2bc615be98f285fd538e6a648db3d8103e3e4dd959e9c",
+    "assets/environment/bank/major/bank_security_checkpoint.png": "1e525a0354800a20ee788e2a297dbb1fcd9a36fd93ddbabbc26c012232476530",
+    "assets/environment/bank/major/bank_teller_counter.metadata.json": "fd2112e086636f1fa865317a36f05647ffcdd0d05220929e530676bbd52d7d0c",
+    "assets/environment/bank/major/bank_teller_counter.png": "e388c53b22999607b425f57369d12cff6ab154502aeecdc11b8e84119b2cb549",
+    "assets/environment/bank/major/bank_vault_door.metadata.json": "89196905df6af33a024a857bf29b2bdec0ee55e930b2aac49b399a0526a769bc",
+    "assets/environment/bank/major/bank_vault_door.png": "6beaab80d7cd8794ee88c0e9fcd78f60de3c139ebc0e15cac2f142f2dccb9d67",
+    "assets/environment/bank/soft/bank_cash_cart.metadata.json": "61346c6fe4baf7b7ac630165ce6efb2a7bd4cba0d2fa54bcdc80728f0274d07e",
+    "assets/environment/bank/soft/bank_cash_cart.png": "73eaf51ddf3dbb572632e2951ccc8fae5732e7908c6064e9761fe7bdd67ceefc",
+    "assets/environment/bank/soft/bank_filing_cabinet.metadata.json": "4a531fe94e604588e8cdeef0d0239db4f51b47709b0349f5930aec134fe86097",
+    "assets/environment/bank/soft/bank_filing_cabinet.png": "ae4c8cde3791cd5ee2d3c04f71d953c6128f61ef61bf207f42a51201480b7fb5",
+    "assets/environment/bank/soft/bank_office_desk.metadata.json": "20d6ba7e3a8f578e40c81eba6a902892665c5af0208407ca185bd888d3fe6574",
+    "assets/environment/bank/soft/bank_office_desk.png": "ca4c0532f4af7755571e1d8759e05ce141346078a11404bc3e2023f7746fda59",
+    "assets/environment/bank/soft/bank_queue_barrier.metadata.json": "9b5de640a3c6f27aef12f0d0e3f9c5cf213e3a523dd7a79f6ee0352660b24517",
+    "assets/environment/bank/soft/bank_queue_barrier.png": "809081ec1d38f8cb5f4bf2429317437ccd28ff23e091972e70e66e0cd96901c8",
+    "assets/environment/bank/soft/bank_small_safe.metadata.json": "ba15c8d1e0af4e63c48ee303022f5c27f629ee478cc860b5d2f03d6fa747eae1",
+    "assets/environment/bank/soft/bank_small_safe.png": "59fd77de0aae7cd5092b96cae1060adfb99beb7df253e88e2b764cfafd8bddc7",
+    "assets/environment/casino/_source/casino_bar_counter.png": "67bd64371582863cbdf9c84e3020d0fd95c5b3d22f246d4b5645afef1741cf6e",
+    "assets/environment/casino/_source/casino_bar_island.png": "8529d57e9a287e0fb54ed159c358234a9a1b3dfffc1116b442fca818a836f575",
+    "assets/environment/casino/_source/casino_blackjack_table.png": "47229b2d35e9b94bb3116aeadb48dfae7ca826ce928bafec5fee8c7f74e1d403",
+    "assets/environment/casino/_source/casino_carpet_pattern.png": "5992a592bf753255efa234dc9e935c8f6b537e336e6053db687df2c4182a4419",
+    "assets/environment/casino/_source/casino_cashier_cage.png": "3b4585500b237dde985c2e79760cc21f1d7c0d4074d0d63862e57abc2d5791f1",
+    "assets/environment/casino/_source/casino_cashier_vault.png": "99de1fa7da18e8eebfeb197bde3661e5b64e56212c6432b167d1ec0fd112c5e4",
+    "assets/environment/casino/_source/casino_chair.png": "a547474e9b5a39c4953c30089e4583e6fdc3c4479353b055b8a2ef4d68005c90",
+    "assets/environment/casino/_source/casino_chandelier.png": "b2f87d238e42dd9bce37ae96ce0c25539d6f9d35e05aea602aba0eebfafe3527",
+    "assets/environment/casino/_source/casino_chip_cart.png": "43366a759e898e01d501be782ca6395137ab2558b97058a5d1eefb1d200aae7c",
+    "assets/environment/casino/_source/casino_chip_stack.png": "4c316153493190cacce2a9100dc8501e615fa1e865c278715f7dfeb473ecab52",
+    "assets/environment/casino/_source/casino_cocktail_table.png": "d09c6a3b6a8ee54d3b02de0681df8f740fab4c828208de5af31b55c216b6ffa1",
+    "assets/environment/casino/_source/casino_divider.png": "eed36e0a846c9a99fa21e1d93a235361600b4c7efad5150ba211818cad35e18e",
+    "assets/environment/casino/_source/casino_drink_tray.png": "44a65a6049c3c0adfef52f38f3eddfd87cb68b1554e09ddb3834fc51dfe3e17c",
+    "assets/environment/casino/_source/casino_gold_arch.png": "9dbce3538a3324138a261a5e9764748409483146827a5c913ba7dfe06356e849",
+    "assets/environment/casino/_source/casino_high_roller_table.png": "4371c0dc785a613b59722ec8c913f7380f76728e778c5d3455db8cc90091e03d",
+    "assets/environment/casino/_source/casino_neon_sign_generic.png": "919ac383024ef09f2fe99e7eef534202a998a62106266062c4e008d4df559b55",
+    "assets/environment/casino/_source/casino_roulette_centerpiece.png": "f79d8864dd27e547a7600c1d89d92a6c647cdfaa8dbe93aa637665e049cd0b0c",
+    "assets/environment/casino/_source/casino_roulette_table.png": "c3ded730b4e4e7bf6a8543c152c5657bedf72307d662a165980c8a133fdd1f01",
+    "assets/environment/casino/_source/casino_security_station.png": "30c4d99479d5fde79f0120b437a70972ebdcbe7641d58ab4f222fe0f78d87364",
+    "assets/environment/casino/_source/casino_slot_bank.png": "9858d796e53942080eac4378acc7cbc5fd24590b7217dfe2d328386045b56a14",
+    "assets/environment/casino/_source/casino_slot_machine.png": "a20bfd7cd13d5287075f0c36461efd541a394bb305e970af94517138419f1db9",
+    "assets/environment/casino/_source/casino_velvet_partition.png": "725d57d7feeae2b066e33c547b4f50a3f5b90b7cd4a8efce169a33bfdc0b7f67",
+    "assets/environment/casino/_source/casino_vip_door.png": "0cf80cb5f855d0e9b03e41964f8b47ff971c400b48ab553f07d317ffea91eb3d",
+    "assets/environment/casino/_source/casino_vip_room.png": "554b749eb67ed4f8fa66d42bd45fee298ac46c849d0622165803cc4774be06c9",
+    "assets/environment/casino/_source/casino_wall.png": "251b0a80f0c3fae956ea370d70f803a3eb5249a1acbc752ac2f0452cef268a95",
+    "assets/environment/casino/_source/casino_wall_art.png": "f611da42e620484a5097b534827115958d3e9d6b971fc55e5ba0753c6a710ef6",
+    "assets/environment/casino/architecture/casino_bar_counter.metadata.json": "0b4046b78fc5b828270890d8bd9c694e174fa0f62a019dd3aa003b71236e7529",
+    "assets/environment/casino/architecture/casino_bar_counter.png": "1de0ae870d0e009e887c5e4818369178a02422965325a53c325d9a8cf2731378",
+    "assets/environment/casino/architecture/casino_gold_arch.metadata.json": "4186e7a5b2b28da0c4e8064596af6c3872fb8e303424a17ec719899ec0a2358e",
+    "assets/environment/casino/architecture/casino_gold_arch.png": "4a935953b03df29575daf113ff38353560d48a089c344f3c09bed916e45b94ce",
+    "assets/environment/casino/architecture/casino_velvet_partition.metadata.json": "3088d251e4d25aa8249b7f26f822ec07d2d48824d174bf4d456471efb6c509fb",
+    "assets/environment/casino/architecture/casino_velvet_partition.png": "8bf0bd44a04b30520d78a5d99850a00cac91e2bb0d792bc74d95d55911c2b25d",
+    "assets/environment/casino/architecture/casino_vip_door.metadata.json": "93017315c8f4c793f83acb966762b2ee295c8fd105a2d2d3d8ea07bf94609c9e",
+    "assets/environment/casino/architecture/casino_vip_door.png": "8eabbdd7b56306e55f3e69fde597c477e9971f6a7a10877a22a4dd3fd4f733d3",
+    "assets/environment/casino/architecture/casino_wall.metadata.json": "165b27fa78cac15674c6f813a913fd34960d2ed879358b0ee2d15da037457dca",
+    "assets/environment/casino/architecture/casino_wall.png": "72769452dd5d01d7d2e761a2793490598a191467fea407ec6ed991a5cbad1376",
+    "assets/environment/casino/decoration/casino_carpet_pattern.metadata.json": "27d3065eb8174309a95789cbb538281c783417fd1e87bd4d4dc41a87472c7525",
+    "assets/environment/casino/decoration/casino_carpet_pattern.png": "e78dce6879d8a64b020933745ea3d75887d69197b5fc4d281cab363d89982edf",
+    "assets/environment/casino/decoration/casino_chandelier.metadata.json": "698cc441d96d2aec06c69e672175d1a484a7ab9d9825e0133f6fdf131d2d6f0b",
+    "assets/environment/casino/decoration/casino_chandelier.png": "6777a690c707cd85eb0313c3bb2d3c6dc26ef1297c2512a9bd2c978fd07f753e",
+    "assets/environment/casino/decoration/casino_chip_stack.metadata.json": "607cf61a09911ee58b651f035600674735f8d4509c69e44bae44235197b52c85",
+    "assets/environment/casino/decoration/casino_chip_stack.png": "66bb9918f41f4ec34df38274cf37168b99fb1601da53365c71849802b8702747",
+    "assets/environment/casino/decoration/casino_drink_tray.metadata.json": "4751be043eb1b636b57111ae9421e5653f799b88048a6709aba30aecb4d4553b",
+    "assets/environment/casino/decoration/casino_drink_tray.png": "74d4b021b31d49f7efc1949fd19848f81613b881d7072b1fcd544a348331ad6b",
+    "assets/environment/casino/decoration/casino_neon_sign_generic.metadata.json": "6d9258282dbcde813712cdcafcb8f678243f78c992fc40059d9ea1b380e89c38",
+    "assets/environment/casino/decoration/casino_neon_sign_generic.png": "f76010dc36bc257c19088b8dcb8b0dbc11852c5f75eaa5198e1d8490dfaa5acd",
+    "assets/environment/casino/decoration/casino_wall_art.metadata.json": "da1499eaab20193c0fe14d20f63483e9a7de1922a71e43590ae9e31021a5ef35",
+    "assets/environment/casino/decoration/casino_wall_art.png": "b98bd9823a39557edd100cc886b358ff1c683ce207cd0dcb946a63453864e3ff",
+    "assets/environment/casino/landmark/casino_cashier_vault.metadata.json": "4ef4d5f458715236674afcb56bce02050c698515119e64761853cb33e1921697",
+    "assets/environment/casino/landmark/casino_cashier_vault.png": "506494a40d9e945d95209cefc8956c79064a6161eb64c6c42716f38338ce2e83",
+    "assets/environment/casino/landmark/casino_high_roller_table.metadata.json": "fd67925ba4809de66ff90579193c411220cab1bc70690fdee0f93eef0f4e0137",
+    "assets/environment/casino/landmark/casino_high_roller_table.png": "542d0ca29ab7569b3f81ff67b8d835c668f63de21e49298c805d428fcf1eb164",
+    "assets/environment/casino/landmark/casino_roulette_centerpiece.metadata.json": "089465802096a210a62d2497a808c10417d4731d7c39fae617962fd396910547",
+    "assets/environment/casino/landmark/casino_roulette_centerpiece.png": "e34f8dd3535b54a876341988ad19bb4893c99cbbb368b7d474fa7d9003f5af83",
+    "assets/environment/casino/landmark/casino_vip_room.metadata.json": "0b142d8ce7b718740639ef6b3312db39653e5c48d9f1b2de722946b19cd7c284",
+    "assets/environment/casino/landmark/casino_vip_room.png": "27f241d6f01b59d0b80f18dd3f70788d8c92bf8a6766e9c351de5ed94365e001",
+    "assets/environment/casino/major/casino_bar_island.metadata.json": "0b98d7246e0773d5b558d5e9a0b6909f8976a69f56547024141610eb05b50ec5",
+    "assets/environment/casino/major/casino_bar_island.png": "25ef62ad429218249d6df51c6965412296f204e100c386a7389085da5f59b5bb",
+    "assets/environment/casino/major/casino_blackjack_table.metadata.json": "8c89474387db6a24d181bfcf9d9d103c7d02372e2489fb81977945dff3875d53",
+    "assets/environment/casino/major/casino_blackjack_table.png": "91aec6cf6e4aeb250ab1f33f29a128a8f17c6212a6432b249feb55acb007f08f",
+    "assets/environment/casino/major/casino_cashier_cage.metadata.json": "7280bde3a7a6e6369a18374d3db86f75f0e7e2d4600a21d1173a21a7f2fd1342",
+    "assets/environment/casino/major/casino_cashier_cage.png": "937dc78efed56800a2b77d43b815816aaf78de2ce32b64c40dfd37eeb40744cc",
+    "assets/environment/casino/major/casino_roulette_table.metadata.json": "e1b0ecd09b083446ffeadf44d826b67d3a16d446f505b3c4401cef565b7a7262",
+    "assets/environment/casino/major/casino_roulette_table.png": "9434f5db1c34cd24bde148dc79db11a38dec20729284bb77e081ab160109a768",
+    "assets/environment/casino/major/casino_security_station.metadata.json": "08f29f5c57e5a631d2f76e210272abdd4daad8ffea3e07f72392612f670cb87c",
+    "assets/environment/casino/major/casino_security_station.png": "7f799485ad696cbe33e4e86264b72609c39b33b95747029b47846ceab5faac51",
+    "assets/environment/casino/major/casino_slot_bank.metadata.json": "0c4a6a439ef17e3ff64104f515462cf25dfbb2d5273c78682dae6f05426646f8",
+    "assets/environment/casino/major/casino_slot_bank.png": "dbdace3e0bb7846d5774d3f935856766d4bbcf45a4e5735a60bd6c5d381017ac",
+    "assets/environment/casino/soft/casino_chair.metadata.json": "a2707dd5c4410f09da9d3b1fbc9e0307ae640662aebebbbc5d74557ef764809d",
+    "assets/environment/casino/soft/casino_chair.png": "c8f550c07ea4e715da853c8359a48be7db0e0b7897d3df536e5ce8f9b42f3c2c",
+    "assets/environment/casino/soft/casino_chip_cart.metadata.json": "07bf0d7122f7db9a9eda4201cfaabdbcd4bbad19cd5e773ed67a6f97ec4ccb89",
+    "assets/environment/casino/soft/casino_chip_cart.png": "dd80ff58a880314a5ba25d9b70919f48f9a00755ee2669d553985b61466b451e",
+    "assets/environment/casino/soft/casino_cocktail_table.metadata.json": "c834511f99abacecdd5405acc13b98d54b216ad2c1e50603217a29ce40a9c076",
+    "assets/environment/casino/soft/casino_cocktail_table.png": "3815dd29f515abd6102127b0a84137a995c0f733a77648bbeeb36085659cf6e5",
+    "assets/environment/casino/soft/casino_divider.metadata.json": "b50fccf7f5e281c4262691d078e66b11fec314e3b9082c353c43a76e71bc8347",
+    "assets/environment/casino/soft/casino_divider.png": "d59ab95c518c5c5ee4bf34d2f246b2e48ff7454eb28ffe9896528ec58ebc25f0",
+    "assets/environment/casino/soft/casino_slot_machine.metadata.json": "1ceb998bc56a0fc8ac0e52ed10cc86902f94ae81d486521c7c6b53b1e9bc49ce",
+    "assets/environment/casino/soft/casino_slot_machine.png": "59175e4017e24ba1678a4380c194dc2dccee7016ebe808030e8cc8b10d411baf",
+    "assets/environment/environment-assets.json": "11bacd35f668648ac5c8c099469b8ae0b481c8f768eee0e1ae082d2be2a316a8",
+    "assets/environment/gallery/architecture/gallery_movable_art_wall.metadata.json": "8f6f7b5235c52643eaa04b734a733208fd17c09ca74a9ec3afd8ca10b8946044",
+    "assets/environment/gallery/architecture/gallery_movable_art_wall.png": "bb993a33e1ccce49cc679c40649764e6bce519af902a47b9b7f3873bf7753fc8",
+    "assets/environment/gallery/architecture/gallery_white_wall.metadata.json": "07c5eb9815804a41fe80c22edf3ded25e109a26dc8bd4d7af7756c7348fcd128",
+    "assets/environment/gallery/architecture/gallery_white_wall.png": "8af22cefdbc4d60499e82e248d0ea2d59ea7cf6361bc824764f12b7421da09ec",
+    "assets/environment/gallery/decoration/gallery_abstract_frame.metadata.json": "fd47dbd6dd5a706895d4a84f1bcf473e1beb5e84fc132393d52ad0aab4a22599",
+    "assets/environment/gallery/decoration/gallery_abstract_frame.png": "9a79e4cc122171b5abe354052aa036ae4e08c1709babe857b6694f59f71ce799",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_b.metadata.json": "3c080788e159133c9b5ebbe7bbd2ab12d8dfe9983d12cc00bc5ffae50de7bc8e",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_b.png": "41a01a72d6a063b2901242cd7c2028f1c58553699084b39900ba53ce30e842c1",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_c.metadata.json": "1eed90cbfc0af1ccd13d0d00ff3ebbcfd1efa2bfb9207df56f41eac640bc0bd8",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_c.png": "bdc5219ced2b0c29daac9d2ea76d76199dcbeba59e8b1d4863448eb8dc3e646a",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_d.metadata.json": "82722884f3a2ffc1c38f81bebebd52a8551feed6236286592be049a2fbaef4ff",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_d.png": "7893c44fd77ad3543c377d02e807b59440c1ac602355680ae525009abcf57b52",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_e.metadata.json": "a5f3da85310bfd664280fe2dd70ac6a844f137379af994f384cbad41fbcd54ae",
+    "assets/environment/gallery/decoration/gallery_abstract_frame_e.png": "4fa15703e1a772de5d9201166a0befd2100221432c19c838cbb95d495a9f2e87",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_a.metadata.json": "f5e43bf84904d542a65910753623cf25e9a1160e8e671a0a809a58cede7ad701",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_a.png": "4692933142059e1fa77ef1db9d1791d07983f74c81199c52fcc6c825eaafb903",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_b.metadata.json": "9d3bf80875072332ee5896906f260a74d7e4f599ec9c45e3d56c100b5c99ec33",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_b.png": "21093fbf2b9aed259ab9f61ce76fcc8ab36fa3b11cb0f9a0788816c00e68c37b",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_c.metadata.json": "8c4c6e7d5da2d0e389c43f173d79d5df77d8226ec15b02296ffd3336d6a8dfc0",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_c.png": "ec62442fab249f28fd55ce3e080f1e8ed06d8bd62b9d9072f51f67399f17c945",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_d.metadata.json": "db4fcf9c9678c3c2bc26bfc42b6cbdd36a67a349b65cb54f510e8cd402fb9376",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_d.png": "7677345eae94eb5114e70f5406ca049c36ad517ff6c6ec201eb8da5fa76e4914",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_e.metadata.json": "4de3c51d3b079c4657410fdd5e8c5161b5af4e212aa28a8d6e7a4cb43fa0bb2b",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_e.png": "285056af01995507f017c75919ab1a0c0517bb2869805ec4f579c3b788ce1fab",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_f.metadata.json": "460d0515fa563c7d4b5692014c252814c89cc63ff55b9581d28b9f71383e79d1",
+    "assets/environment/gallery/decoration/gallery_portrait_frame_f.png": "db009beb56dffa4242c416bc1ebb648b8c7e82585fe679421460f3181c7d614a",
+    "assets/environment/gallery/decoration/gallery_track_light.metadata.json": "99b4280bb9c4795c0c966b16aea2f4889b13491460a0de23ad27ec390010005a",
+    "assets/environment/gallery/decoration/gallery_track_light.png": "40c56127cd5a2bfce469d1ec31e993eb909665a5d28fb3ec48c1bb514671def4",
+    "assets/environment/gallery/landmark/gallery_masterpiece_wall.metadata.json": "244c980b9b28c6cb018684c6269a5af305806df054fea656a7313b7d4c5ec646",
+    "assets/environment/gallery/landmark/gallery_masterpiece_wall.png": "44f8e1c133fc1f8f69bb1bb0c13e7bef7387a14e500cf018093ce879e6371961",
+    "assets/environment/gallery/major/gallery_central_plinth.metadata.json": "742601cca74dbc6a795075aa617628b4ca828c6fcadc50cdeb5a18cef566b80e",
+    "assets/environment/gallery/major/gallery_central_plinth.png": "63f7faee9d54339ca00dde1d04104b67b4655216162adbad426e6ddef9ac0d10",
+    "assets/environment/gallery/major/gallery_installation_art.metadata.json": "308233ed027d12265201559004ebf9cbc1bcf691d598e5e277f3f28657876cd4",
+    "assets/environment/gallery/major/gallery_installation_art.png": "dd2dc7172a2ab779caacc6157354395920ed9fb1d37f09261d1bb114e895c7e4",
+    "assets/environment/gallery/major/gallery_sculpture_large.metadata.json": "9744774830d2c41778b363e29c0322c9c0e72ec6ff0e287c2880c2c03011a3fa",
+    "assets/environment/gallery/major/gallery_sculpture_large.png": "0f27a2cebdb69cd39076fd9ae2a8676fdcbcef57c9d7fe1a349adb9030baeaa3",
+    "assets/environment/gallery/soft/gallery_low_pedestal.metadata.json": "c44605be49d2c5db5dbc0f79bca096a665c9dfa95e1b97ec70db6280cab413dc",
+    "assets/environment/gallery/soft/gallery_low_pedestal.png": "11f10dff5b52a84067f8e1f66898212160288d2bb53c8bc8a88624423cb2b3d7",
+    "assets/environment/gallery/soft/gallery_modern_bench.metadata.json": "357a0de5f070fa4a3ea7fb8c354d763081e64e96e33abc4d00e134b0866f1c45",
+    "assets/environment/gallery/soft/gallery_modern_bench.png": "d84c85ff655c0b49f58d6eb8f076a5d3bb1f8dfd10c561d01b737d2cd2f9638e",
+    "assets/environment/generation-provenance.json": "3ff5f55719a155e10542cfecca2e71ce80fcd17cb5094094a42d824c40f8741c",
+    "assets/environment/lab/_source/lab_cable.png": "befcb629693f934705b7b6e09c8fc1b12e68912e75afa5ca8f31dd7134514784",
+    "assets/environment/lab/_source/lab_cart.png": "4f5025caf92a7b8ed6042dfc497a70b88ef7b16cf702e4f627417094846f92e6",
+    "assets/environment/lab/_source/lab_central_experiment.png": "ab4b93d85a1b9ed49b3696f0b23092d4eb96e47555b03199f5ab701a153fa332",
+    "assets/environment/lab/_source/lab_cryo_chamber.png": "7d9441987cc977bbd7f57820aaf0f3e943678a4e0e947a4ff5d42cd7f67027ec",
+    "assets/environment/lab/_source/lab_cryo_unit.png": "b6dc0cfa1d79a97bb99096c221f947839e55151a76abecb567a0c7fcd20a2321",
+    "assets/environment/lab/_source/lab_equipment_rack.png": "ab5e25ed211954e912d42b4e6a8f65666e968307eaca90ee370c2b3e4e9cc1a8",
+    "assets/environment/lab/_source/lab_experiment_machine.png": "1d656bc0557d5b89576b74f147663ec8a2a89c7fd3a244d9f3be0817a32f6101",
+    "assets/environment/lab/_source/lab_floor_marker.png": "b6c36035acb8d7d4b3cd6588b931dacfa70b6f0b668df6d73bac140b6c8ce2a6",
+    "assets/environment/lab/_source/lab_glass_corridor.png": "3c7b17fdc0506c21d2792392c2bb498405ce3cfdfbae81e7128cb36c0f88a660",
+    "assets/environment/lab/_source/lab_glass_wall.png": "79b7b92a7a9a5db6180a3c8427c1c3a2773013b4c9762f4d023dd2e1baee03bc",
+    "assets/environment/lab/_source/lab_large_table.png": "4e9de782240312ee626387783b33b5986ac5f4fb63c64ea50b3690ddd80a97e3",
+    "assets/environment/lab/_source/lab_monitor.png": "8067d09a4977e14e413d2e0a4ec13cbe361dcb9551557ad61e15c9cd988b520a",
+    "assets/environment/lab/_source/lab_observation_console.png": "9579def80136b20bd53aa770cde86b86447c35f8d14cc14ab5b1efd4e1df24ca",
+    "assets/environment/lab/_source/lab_observation_room.png": "62dac4b32fa367d5bae42f72a495ee44d4db0c5c09e6d6a4a81425ac057e88b6",
+    "assets/environment/lab/_source/lab_prototype_machine.png": "311c38025eb63262fb9c2261c1779392db5f9b006fe2a1dd1652cf1bcc651882",
+    "assets/environment/lab/_source/lab_sample_case.png": "93a94ee4cf18d4707c97b39d7f052f6815562638e7be78b8aad60711ef2605db",
+    "assets/environment/lab/_source/lab_sample_storage.png": "0886b08c2091862388aefb86ba61336eed8be8410d170f56565c566168e94245",
+    "assets/environment/lab/_source/lab_sliding_door.png": "579bc5e6a34f85a219c24cc1d521ef39ceb7c7e76e0267227bf61f144c0aa61e",
+    "assets/environment/lab/_source/lab_small_machine.png": "8fc6c962f2c2abf2868c8659499bea1d6cda88ea4c0009b6e97daca047b13cd2",
+    "assets/environment/lab/_source/lab_specimen_container.png": "a03bd5be9e072479d05f757919a589c94e30bc13e7860c7494305eaa63f00fa2",
+    "assets/environment/lab/_source/lab_sterile_partition.png": "aea2c097e7a992907d98f692b9b964e97c5a5974a9ce720d8b9db9860523c052",
+    "assets/environment/lab/_source/lab_stool.png": "1173801f764642f748b44efd316d0f879287e216dbc2b20c9fda89a9afddd6a6",
+    "assets/environment/lab/_source/lab_wall.png": "3bc4d8b7a2db274b043ffbf88e797e28bceecc9bcd99044865c580cd2cc4307d",
+    "assets/environment/lab/_source/lab_wall_screen.png": "ea6892041e64ee62d852ae3c5528b7f62214d7973401e3abb8cd79eb0fc34102",
+    "assets/environment/lab/_source/lab_warning_sign.png": "fbd5f5e074c0a7372d59731a684f92af6815ef7497fd442ff3d50cfcb7f1e851",
+    "assets/environment/lab/_source/lab_workstation.png": "aedd3cb403102e0ec42634fe004c1ea6f77d919794481bfae63695cdec60f208",
+    "assets/environment/lab/architecture/lab_glass_corridor.metadata.json": "ce0bb7ea82b4e3a2a48801f268ed0c55bccda698ea6a304c8244f6b56935d859",
+    "assets/environment/lab/architecture/lab_glass_corridor.png": "26598d8cdf6c6d72f068a3c9b1c291b0b69da7422c7c3044deeb06218f0afe46",
+    "assets/environment/lab/architecture/lab_glass_wall.metadata.json": "ea65002989b80e73f86f44bd564c42080164c9b78f1e3368bc2d8202b792a865",
+    "assets/environment/lab/architecture/lab_glass_wall.png": "8ddf57e511ef3392e03b8ec8c50ca380ea850dccd4acf6efd54ba9a9b837870e",
+    "assets/environment/lab/architecture/lab_sliding_door.metadata.json": "e6e83bfcc45f240770cb933d0eef69f3a83a29c8cc514fae070c1a4095da5acd",
+    "assets/environment/lab/architecture/lab_sliding_door.png": "7dad655e2a643a9494c42052f6854e8090aa3dc94c212f7292e69259ef362307",
+    "assets/environment/lab/architecture/lab_sterile_partition.metadata.json": "313644500508e03e76d9cbc4c1d2ada05703ed1c032bed2b83ce861ad018b24c",
+    "assets/environment/lab/architecture/lab_sterile_partition.png": "ea4997ec323e493ca371b2bf82703adfc6fcb8150cf4b0f5a331edc381e4f842",
+    "assets/environment/lab/architecture/lab_wall.metadata.json": "3d4431f5a4de9a8f72ea9b7cbdd733e1c67730218d28a9de223b32ef0e8860e6",
+    "assets/environment/lab/architecture/lab_wall.png": "09bd4bf52767cf368cf921f299277723526e898fda91cab74f1355de064a081b",
+    "assets/environment/lab/decoration/lab_cable.metadata.json": "9e9d5c97ddb45cecac0a81d4bea43cfa7c55f8a1e10644d74a8becc0a703d39e",
+    "assets/environment/lab/decoration/lab_cable.png": "cd007998f509423e4c02f4f27adad86b3ed7826260e78e2e37947b67fce368f0",
+    "assets/environment/lab/decoration/lab_floor_marker.metadata.json": "4c10fb4723a3d584eb722dad7c4208d9c365785803d645d9d029fd16d229350a",
+    "assets/environment/lab/decoration/lab_floor_marker.png": "37748ce1804749b0158ec31e91cca444f19d1a9922ca09a478950000cee3c84e",
+    "assets/environment/lab/decoration/lab_monitor.metadata.json": "d7aaf76a047cfa65a0b4660658a7a756dc170a10441ac94ce87e41de9691b85b",
+    "assets/environment/lab/decoration/lab_monitor.png": "b78ec8d8da725d61732531e6f4e4e2088079b9d496d01a70e4c357fc66e607aa",
+    "assets/environment/lab/decoration/lab_specimen_container.metadata.json": "8c675fdf7ff5d1253278612d9b2dd090c7647d333cf93cb8128fb68ccbabafba",
+    "assets/environment/lab/decoration/lab_specimen_container.png": "36f2b0cff4957f1820843a7d2718667f374b3bfcad008578b0ed8ff2a51031de",
+    "assets/environment/lab/decoration/lab_wall_screen.metadata.json": "28ebfb19edfa12588471698ac1f251e4b455cad729a35bf0825ea64b73c6fac4",
+    "assets/environment/lab/decoration/lab_wall_screen.png": "c6df1d9a3af1106bd6bd2f508c72cbde99d2f85b66d84440de5ce1ac148143d8",
+    "assets/environment/lab/decoration/lab_warning_sign.metadata.json": "a63edeba503fa0f87b64177042cdabc377ad7fd0bc966f91e9cf288e24ca3591",
+    "assets/environment/lab/decoration/lab_warning_sign.png": "cbd75ce3dad7e9cdbc50f0cdaabbfacfae9e6bfe46024d6b9c15b1bc2220043b",
+    "assets/environment/lab/landmark/lab_central_experiment.metadata.json": "6d78eab48a5dcafa25ad6000bf19de25ace60c4f523f4cc9f039a60332d0fd8b",
+    "assets/environment/lab/landmark/lab_central_experiment.png": "2c2f94b068202331898a887e7fa4559961d34777d2bd222c1b51624f6eda51ef",
+    "assets/environment/lab/landmark/lab_cryo_chamber.metadata.json": "416caf84a002b8c85b2d01c7af87054d233c334283ea5b93453e9a896e66063f",
+    "assets/environment/lab/landmark/lab_cryo_chamber.png": "096ccfc952093b0921f7424080f844a41460fafec804d80885f16dc5ac121286",
+    "assets/environment/lab/landmark/lab_observation_room.metadata.json": "9589ca0b737110b76ee831b34537cc80cfd2c5a3695247bf7fd4d7ea4697c36b",
+    "assets/environment/lab/landmark/lab_observation_room.png": "2afab5db0fdc092e811bf5b0639d69d150312b6e36ec06437ae35c14439816d6",
+    "assets/environment/lab/landmark/lab_prototype_machine.metadata.json": "453022a199b6d7897474d4c0ab6589f3fc012e10b45ac88a5f6639280be110b9",
+    "assets/environment/lab/landmark/lab_prototype_machine.png": "4edf36cc7bd628262661df945fc0d5613c209e7d5662f30d2da581d8de7b7382",
+    "assets/environment/lab/major/lab_cryo_unit.metadata.json": "35a5a52cc9e3f761b37910656695a66c42ce5512407185a59723dab73c6199dc",
+    "assets/environment/lab/major/lab_cryo_unit.png": "a57e3f153c2c0f4a0cc9f447a328dd3bf1329868c378fe62bb4aa42dc8ed7bdd",
+    "assets/environment/lab/major/lab_equipment_rack.metadata.json": "3c0ed8a628f2ea3e10a431766b1ae5310a4efb7ac6dc65be89b81eaaff472494",
+    "assets/environment/lab/major/lab_equipment_rack.png": "1a5a55a6d539ec7e129f789cd8779d8e0ad4ca484067e2419db097037aaa8f50",
+    "assets/environment/lab/major/lab_experiment_machine.metadata.json": "86ea0e78808ae2ca28b3a7e0a25fa0a0bc5b82296bb0c0c6ccf5af5f5292bc83",
+    "assets/environment/lab/major/lab_experiment_machine.png": "8b1bfcab5593e1a9b8a2b2f687a72439dc4baf4d7779f48483752b6d8e12325b",
+    "assets/environment/lab/major/lab_large_table.metadata.json": "00429142fb3cbd263ef0dd2137be17a3963ae8796448c94243c38e026053b9a2",
+    "assets/environment/lab/major/lab_large_table.png": "aad466c6053a67365dc84f64e3a961dd53ea19c290bed9307c888daea45f424d",
+    "assets/environment/lab/major/lab_observation_console.metadata.json": "67620562a0b132c20586c829a4e7fea96bca79b7e1d5d33ae5bb202a3bfc7a26",
+    "assets/environment/lab/major/lab_observation_console.png": "8f5cc818da42cf5af93d5a630a85f1338f21945bb51de6eb59f9388088a833cd",
+    "assets/environment/lab/major/lab_sample_storage.metadata.json": "f74b83f22041ea43a2deee02f7351306a340bbf97a61d7cb1f77584617e0dce4",
+    "assets/environment/lab/major/lab_sample_storage.png": "b32d5e5f820a15b23aec9b060ed1149c2784640af4474abfd97fd303ebcac891",
+    "assets/environment/lab/soft/lab_cart.metadata.json": "47587aedd5eb7a17b0f8041fd362e29b430ed2bb503da23dfe9e252efb812238",
+    "assets/environment/lab/soft/lab_cart.png": "64dd0195ed4986c64810ce0ae89935ba25306e288ec4e104648446c10b0e408f",
+    "assets/environment/lab/soft/lab_sample_case.metadata.json": "a64242616952d74dde14b6405d25a60ec65f3b93e2d208aa0203f29d914c02c7",
+    "assets/environment/lab/soft/lab_sample_case.png": "85548ee3c29cbec7125c0559f3baee695d6ee090f84f8d5bf5b5231f8355a9f4",
+    "assets/environment/lab/soft/lab_small_machine.metadata.json": "d0366013eb5f2637f8d7461bda8d4ac94b214fe2068ce3907846ddd7cc794070",
+    "assets/environment/lab/soft/lab_small_machine.png": "7926455c532acd4501bf0f354f0bdd23ca912f2a84522f511002de146e43f75e",
+    "assets/environment/lab/soft/lab_stool.metadata.json": "9b8ac270d856eb62db5f00a65759cd37971a35c0549ed773f03be540963f06ee",
+    "assets/environment/lab/soft/lab_stool.png": "9310fe2948380b15f93d79a638dcc662d73e3b9ffacfc5908f16658819329580",
+    "assets/environment/lab/soft/lab_workstation.metadata.json": "24bcc91967e15e7a928655b87126bf0c58b6779cd00319b593940392d06e4b07",
+    "assets/environment/lab/soft/lab_workstation.png": "e93ffb4ba9daac4223db312432e45ba4cd02a2b11461877ce411f6a7adcdc2ac",
+    "assets/environment/museum/architecture/museum_column.metadata.json": "a24a2fb98672487a84b2595f7631a71643df925fcdbc7762983fcc47e70085bf",
+    "assets/environment/museum/architecture/museum_column.png": "24804c1a15a04a95936bad4e99a8e0a7cceb2ba14c54df17d97b59fbd0cdc330",
+    "assets/environment/museum/architecture/museum_partition.metadata.json": "1633883c78702156f1a0573b1b6fa42dbced6833c726f0709ad5550083cbcfea",
+    "assets/environment/museum/architecture/museum_partition.png": "c65cd3c1fe61e01906ff3380504231f9f028ac31b42425505687081e34f6b87c",
+    "assets/environment/museum/decoration/museum_painting.png": "2a5307377673b1ec2043061f9368822f29f4ee922f8b82421b5e08d7528742f9",
+    "assets/environment/museum/decoration/museum_rope_barrier.metadata.json": "cbebecd506880221cb97f4517aef391e198a1823bb268b4117d384268b6e0e3f",
+    "assets/environment/museum/decoration/museum_rope_barrier.png": "07059f09623f83bd418f201c80f262b8e16418036f3f9af1918d6e0b5b6609c0",
+    "assets/environment/museum/landmark/museum_diamond_case.metadata.json": "3b2d9562fb7aac82854660fb6dc0b37d56ed51714edbaee2207b38849a1595fe",
+    "assets/environment/museum/landmark/museum_diamond_case.png": "283c53655d1c4379d573d6c421ae099bcac34c398370bbf7868fa4d7df8c1d57",
+    "assets/environment/museum/major/museum_display_case_large.png": "dd7f64de6a5ccf3473f4991e058e55ac32d6a1d4c491ecee0aeec47fc79d436b",
+    "assets/environment/museum/major/museum_security_desk.metadata.json": "ed768ba9b77aa7b03f41d69448cf7a4bb33d16b44758fb9c735bdf99f568347d",
+    "assets/environment/museum/major/museum_security_desk.png": "1cbcde14d7634676b9adb0c12a50f0624f2c688041252588af842e9c809b18c8",
+    "assets/environment/museum/major/museum_statue_large.png": "5d57fa6d932fbd8029395bd23c769e2413eac692e0c40d7b92d0e7876ec91650",
+    "assets/environment/museum/soft/museum_display_low.metadata.json": "ad63df4483124280b63b67ac5db38e3fcdc12bd0a4e392d070d26c81ca2e0302",
+    "assets/environment/museum/soft/museum_display_low.png": "c6dc237701d9d45044c5352325f67043e72db8c645bb26d7ccc7def59d6a5458",
+    "assets/environment/museum/soft/museum_pedestal.png": "08390268900bf4db5567c80243346ef0eaf9a6dfa9a14a95e4f1f8894fe31812",
+    "assets/favicon.png": "a4e030697a7571b3e95d31860e4da55d2f98e5e861e2b55e414f45a8556828ba",
+    "assets/icon.png": "119462bb78eb240a65c869fc067ee599639b3cb5a41953f25c07b17d2a8c7e0f",
+    "assets/museum/museum_atlas.png": "c7bc08c6fea6ad72aa29408b0dab538a1fa13cd1896164b321e524908d4df9aa",
+    "assets/splash-icon.png": "5f4c0a732b6325bf4071d9124d2ae67e037cb24fcc9c482ef82bea742109a3b8",
+    "plugins/withSceneLifecycle.js": "802ad7f2cdd1487b4dcbad54bb68c369d7f2efdd349ad31d17bb5583fb40e3ff",
+    "App.tsx": "a83020416756e98368163b6a3ac74225892d86df120bd61c8662a3b89d96449c",
+    "index.ts": "74fc0e7e8486cacd1b22f7673c15366c2f5811072bb6a7e52297012d1b52cea4",
+    "app.json": "6ae7a61344b22c86c39905c3355526ac9b84f48f5f38fcdf62ee7454edae84c7",
+    "package.json": "8c5f5ef7dc6c255cc3051c78d36b9df2b9a839a5614b82739fc4d8b2c39eff22"
+  },
+  "missions": [
+    {
+      "id": "01-01",
+      "title": "Entrance Hall",
+      "chapter": 1,
+      "definitionSha256": "6fb6ba210e3bfdabdb73a3ad7d8dbfb088543b5aded2b4ced6c4730e3982f846",
+      "entry": {
+        "x": 1.75,
+        "y": 9.75,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "diamond",
+        "x": 15,
+        "y": 6.5
+      },
+      "exit": {
+        "x": 18.65,
+        "y": 8.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Grand Statue",
+        "kind": "statue",
+        "x": 7.8,
+        "y": 7.5
+      },
+      "guards": 2,
+      "cameras": 0,
+      "routes": [
+        "safe: observation pockets linked by structural cover",
+        "risk: short exposed sightline crossing",
+        "main: room sequence and objective reveal"
+      ],
+      "escapeRoutes": [
+        "escape: separate post-objective circulation"
+      ],
+      "safePockets": 3,
+      "explicitTheftRoles": 2,
+      "theftSectorCount": 4
+    },
+    {
+      "id": "01-02",
+      "title": "Main Gallery",
+      "chapter": 1,
+      "definitionSha256": "8f77b068743aee86ef9d6da194c44ee7eaa16f1fc1a349769e8a007a0368d602",
+      "entry": {
+        "x": 1.6,
+        "y": 13,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "artifact",
+        "x": 15.5,
+        "y": 2.6
+      },
+      "exit": {
+        "x": 24.799999999999997,
+        "y": 12.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Featured collection case",
+        "kind": "objectiveCase",
+        "x": 15.5,
+        "y": 2.5500000000000003
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "main: Enter the rotunda from the west, circle its paired classical exhibits, steal the north collection jewel and leave through the east portrait loggia.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: rotunda / north-in east-out",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 4,
+      "explicitTheftRoles": 3,
+      "theftSectorCount": 6
+    },
+    {
+      "id": "01-03",
+      "title": "Archive",
+      "chapter": 1,
+      "definitionSha256": "5782acb153e2eb7ae9eb630d0391fbdb755e6db6c731cb9e94d03f18cce80931",
+      "entry": {
+        "x": 2.5,
+        "y": 1.5,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 12.5,
+        "y": 8,
+        "kind": "classified"
+      },
+      "exit": {
+        "x": 15.9,
+        "y": 10.9,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Archive Shelves",
+        "kind": "shelf",
+        "x": 7,
+        "y": 8
+      },
+      "guards": 2,
+      "cameras": 0,
+      "routes": [
+        "safe: structural observation route",
+        "risk: shorter timed crossing"
+      ],
+      "escapeRoutes": [
+        "escape: rear staff circulation"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 2,
+      "theftSectorCount": 4
+    },
+    {
+      "id": "01-04",
+      "title": "Security Wing",
+      "chapter": 1,
+      "definitionSha256": "2966ab4f2912daa47aba5d8e7d322b71996fb11998d5b857806d23e728911986",
+      "entry": {
+        "x": 1.75,
+        "y": 10.25,
+        "facing": 0
+      },
+      "objective": {
+        "x": 13.7,
+        "y": 7.3,
+        "kind": "data"
+      },
+      "exit": {
+        "x": 13.4,
+        "y": 0.9,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Security Control Room",
+        "kind": "equipment",
+        "x": 6.8,
+        "y": 12.5
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: structural observation route",
+        "risk: shorter timed crossing"
+      ],
+      "escapeRoutes": [
+        "escape: rear staff circulation"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 3,
+      "theftSectorCount": 6
+    },
+    {
+      "id": "01-05",
+      "title": "Restricted Collection",
+      "chapter": 1,
+      "definitionSha256": "098a47dbe803ff6fd895883c7001254100ec1866f2b6fb3c71a7f172c73dcaee",
+      "entry": {
+        "x": 1.6,
+        "y": 17,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "diamond",
+        "x": 28.2,
+        "y": 5
+      },
+      "exit": {
+        "x": 2,
+        "y": 2,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Featured collection case",
+        "kind": "objectiveCase",
+        "x": 28.2,
+        "y": 4.95
+      },
+      "guards": 4,
+      "cameras": 1,
+      "routes": [
+        "main: Cross a restricted collection court, infiltrate its east jewel chamber and escape through a separate north service gallery.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: west→east intrusion / northern service reverse L",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 5,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 8
+    },
+    {
+      "id": "01-06",
+      "title": "Conservation Lab",
+      "chapter": 1,
+      "definitionSha256": "15fd0d71423aaafd05d8e04ceeb1140ff71cb1b415c731a87c1857cdd0553a5f",
+      "entry": {
+        "x": 1.6,
+        "y": 16,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "artifact",
+        "x": 29.5,
+        "y": 12
+      },
+      "exit": {
+        "x": 16.4,
+        "y": 1,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Featured collection case",
+        "kind": "objectiveCase",
+        "x": 29.5,
+        "y": 11.95
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "main: Cross paired restoration work bays, take the protected specimen in the eastern store and escape through the north intake service door.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: restoration work bays / west→east→north service",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 4,
+      "explicitTheftRoles": 3,
+      "theftSectorCount": 6
+    },
+    {
+      "id": "01-07",
+      "title": "Private Gallery",
+      "chapter": 1,
+      "definitionSha256": "8ee8db94be157278d3b93923eac20b0bbe4f25ecb02a4fe068d2cab367e66658",
+      "entry": {
+        "x": 8.5,
+        "y": 1.5,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 12.5,
+        "y": 16.5,
+        "kind": "artifact"
+      },
+      "exit": {
+        "x": 0.9,
+        "y": 6.9,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "VIP Portrait Salon",
+        "kind": "statue",
+        "x": 6.5,
+        "y": 12.5
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: structural observation route",
+        "risk: shorter timed crossing"
+      ],
+      "escapeRoutes": [
+        "escape: rear staff circulation",
+        "escape alternate: timed security crossing"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 3,
+      "theftSectorCount": 6
+    },
+    {
+      "id": "01-08",
+      "title": "Security Core",
+      "chapter": 1,
+      "definitionSha256": "c0f6bc237acbec746b71fbd073378449321bb9ea349fd7cfaa960001d8728b0d",
+      "entry": {
+        "x": 28.4,
+        "y": 13,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "kind": "artifact",
+        "x": 16.5,
+        "y": 2.3
+      },
+      "exit": {
+        "x": 4.4,
+        "y": 23.799999999999997,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Featured collection case",
+        "kind": "objectiveCase",
+        "x": 16.5,
+        "y": 2.25
+      },
+      "guards": 5,
+      "cameras": 2,
+      "routes": [
+        "main: Read a museum security cross from the east, steal the archive core beyond the northern checkpoint and escape down the west maintenance gallery.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: east→north / west→south security cross",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 5,
+      "explicitTheftRoles": 5,
+      "theftSectorCount": 10
+    },
+    {
+      "id": "01-09",
+      "title": "Master Exhibition",
+      "chapter": 1,
+      "definitionSha256": "4162eea9139df326f5d3cda08c7934fb189325ea47ae04b7f3917274a17e1f38",
+      "entry": {
+        "x": 1.6,
+        "y": 21,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "artifact",
+        "x": 31.5,
+        "y": 13.5
+      },
+      "exit": {
+        "x": 27.9,
+        "y": 1,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Featured collection case",
+        "kind": "objectiveCase",
+        "x": 31.5,
+        "y": 13.45
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "main: Traverse a stepped sculpture promenade into the eastern collection, then turn north through the portrait balcony rather than retracing the promenade.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: stepped diagonal / east→north balcony",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 4,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 8
+    },
+    {
+      "id": "01-10",
+      "title": "Grand Heist",
+      "chapter": 1,
+      "definitionSha256": "d27293dd5ce40cc9c9aaa98c594b7ddb60116334fbf8bd0607d89c4b7aca6279",
+      "entry": {
+        "x": 20,
+        "y": 28.4,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "kind": "masterDiamond",
+        "x": 23,
+        "y": 4.5
+      },
+      "exit": {
+        "x": 1,
+        "y": 24.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Featured collection case",
+        "kind": "objectiveCase",
+        "x": 23,
+        "y": 4.45
+      },
+      "guards": 6,
+      "cameras": 2,
+      "routes": [
+        "main: Enter the grand exhibition, steal the master diamond from its north sanctuary and escape through a western sculpture cloister and independent south service door.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: south→north deep-in / west cloister alternate-out",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 7,
+      "explicitTheftRoles": 6,
+      "theftSectorCount": 12
+    },
+    {
+      "id": "02-01",
+      "title": "Front Exhibition",
+      "chapter": 2,
+      "definitionSha256": "92e5f3a87015a969ed79c981255850c31e7e26a69ca5bce98e361ef74ad74dfe",
+      "entry": {
+        "x": 2,
+        "y": 14,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 22.05,
+        "y": 5.6,
+        "kind": "painting"
+      },
+      "exit": {
+        "x": 11.9,
+        "y": 14.8,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Front Exhibition featured artwork",
+        "kind": "statue",
+        "x": 12.49,
+        "y": 11.8
+      },
+      "guards": 2,
+      "cameras": 0,
+      "routes": [
+        "safe: peripheral curated exhibit observation",
+        "risk: open exhibition crossing",
+        "main: featured artwork reveal"
+      ],
+      "escapeRoutes": [
+        "escape: independent collection-to-exit circulation",
+        "escape: sheltered return via observation terrace"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 2,
+      "theftSectorCount": 4
+    },
+    {
+      "id": "02-02",
+      "title": "Portrait Hall",
+      "chapter": 2,
+      "definitionSha256": "2a3c770ed510101a869f1c330383e1cb03bb473181d43d60e64a0a9422df92a8",
+      "entry": {
+        "x": 2,
+        "y": 16,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 22.05,
+        "y": 3.6,
+        "kind": "painting"
+      },
+      "exit": {
+        "x": 7,
+        "y": 3.9,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Portrait Hall featured artwork",
+        "kind": "partition",
+        "x": 20.12,
+        "y": 6.8500000000000005
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: peripheral curated exhibit observation",
+        "risk: open exhibition crossing",
+        "main: featured artwork reveal"
+      ],
+      "escapeRoutes": [
+        "escape: independent collection-to-exit circulation",
+        "escape: sheltered return via observation terrace"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 3,
+      "theftSectorCount": 5
+    },
+    {
+      "id": "02-03",
+      "title": "Sculpture Studio",
+      "chapter": 2,
+      "definitionSha256": "3e23f58b97de0bb2d8ab4241da89ae419c8c10c9fe06e202009a8359daf91489",
+      "entry": {
+        "x": 1.6,
+        "y": 14,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 17,
+        "y": 3.5
+      },
+      "exit": {
+        "x": 30.799999999999997,
+        "y": 13.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Masterpiece and premium display plinth",
+        "kind": "partition",
+        "x": 17,
+        "y": 2.4
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "main: Cross working sculpture bays from the western studio entrance, steal the commissioned centerpiece in the north collection and escape through the eastern installation annex.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: working bays / west→north→east dogleg",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 4,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 6
+    },
+    {
+      "id": "02-04",
+      "title": "Modern Wing",
+      "chapter": 2,
+      "definitionSha256": "d4906c82ca9742d3d824eb2dbc6f53a62099f32a3b204c082c431197c65cd9f8",
+      "entry": {
+        "x": 16,
+        "y": 1.6,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 3.5,
+        "y": 15
+      },
+      "exit": {
+        "x": 30.799999999999997,
+        "y": 24.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Masterpiece and premium display plinth",
+        "kind": "partition",
+        "x": 3.5,
+        "y": 13.9
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "main: Traverse a staggered modern art wing from north to south, reach its western collection recess and leave through the southeast courtyard.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: north→west→southeast staggered screen S",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 5,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 6
+    },
+    {
+      "id": "02-05",
+      "title": "Collector's Room",
+      "chapter": 2,
+      "definitionSha256": "6bec87f79fedeb335dbb8036f15c6b5ad33404299e1c7c8291e86026d1684239",
+      "entry": {
+        "x": 29.4,
+        "y": 14,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 4.5,
+        "y": 5
+      },
+      "exit": {
+        "x": 1.9,
+        "y": 20.799999999999997,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Masterpiece and premium display plinth",
+        "kind": "partition",
+        "x": 4.5,
+        "y": 3.9
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "main: Enter a collector suite from the east, infiltrate the northwest private painting room and circle its separate south service return.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: east-in / private U around collection court",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 4,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 7
+    },
+    {
+      "id": "02-06",
+      "title": "Glass Gallery",
+      "chapter": 2,
+      "definitionSha256": "eeaf1f326c1269fe1c3b0f83bd698c7cc813288e01c86c5ce37a69a19c3064db",
+      "entry": {
+        "x": 1.6,
+        "y": 24,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 19,
+        "y": 3.8
+      },
+      "exit": {
+        "x": 31.799999999999997,
+        "y": 19.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Featured Study",
+        "kind": "partition",
+        "x": 19,
+        "y": 2.6
+      },
+      "guards": 5,
+      "cameras": 1,
+      "routes": [
+        "main: authored heist security sequence",
+        "safe: longer exhibit / analyst shoulders",
+        "risk: exposed security crossings"
+      ],
+      "escapeRoutes": [
+        "escape: distinct post-theft exhibition / service circuit",
+        "escape: alternate security shoulders"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 5,
+      "theftSectorCount": 8
+    },
+    {
+      "id": "02-07",
+      "title": "Curator's Floor",
+      "chapter": 2,
+      "definitionSha256": "3d2bfe7c94afb51643057ca5d728730c00d8177b5395e424f8af0a0a00adf75c",
+      "entry": {
+        "x": 17,
+        "y": 27.4,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 4.5,
+        "y": 11
+      },
+      "exit": {
+        "x": 15.4,
+        "y": 1,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Masterpiece and premium display plinth",
+        "kind": "partition",
+        "x": 4.5,
+        "y": 9.9
+      },
+      "guards": 5,
+      "cameras": 1,
+      "routes": [
+        "main: Use a curator’s crossing gallery to reach the western private workroom, steal its painting and escape through the northern public portrait corridor.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: south→west / north portrait cross",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 5,
+      "explicitTheftRoles": 5,
+      "theftSectorCount": 8
+    },
+    {
+      "id": "02-08",
+      "title": "Grand Atrium",
+      "chapter": 2,
+      "definitionSha256": "10eb13d5710a3e2ee45b74c2e505c57c693bee4a45a638b49b6d85bd5304add6",
+      "entry": {
+        "x": 17,
+        "y": 1.6,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 4.5,
+        "y": 15
+      },
+      "exit": {
+        "x": 35.8,
+        "y": 24.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Masterpiece and premium display plinth",
+        "kind": "partition",
+        "x": 4.5,
+        "y": 13.9
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "main: Enter the grand atrium from above, cross a paired monumental installation, steal the west masterpiece and leave through a separate southeast return gallery.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: north→west / south-east atrium fan",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 5,
+      "explicitTheftRoles": 5,
+      "theftSectorCount": 9
+    },
+    {
+      "id": "02-09",
+      "title": "Private Collection",
+      "chapter": 2,
+      "definitionSha256": "51099e27b9a1b15d1f2add6d6c641fe2c33cd1b46f319e98b383a579e7e24e04",
+      "entry": {
+        "x": 1.6,
+        "y": 12,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 18.5,
+        "y": 27
+      },
+      "exit": {
+        "x": 29.9,
+        "y": 9,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Masterpiece and premium display plinth",
+        "kind": "partition",
+        "x": 18.5,
+        "y": 25.9
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "main: Enter the private collection from the west, circle a sculpture courtyard to steal the southern collection painting and leave through its northeast portrait balcony.",
+        "safe: cover-chain viewing shoulders",
+        "risk: exposed direct artwork crossing"
+      ],
+      "escapeRoutes": [
+        "escape: west→south / courtyard U → northeast",
+        "escape: alternate cell shoulders"
+      ],
+      "safePockets": 5,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 7
+    },
+    {
+      "id": "02-10",
+      "title": "Masterpiece",
+      "chapter": 2,
+      "definitionSha256": "23d9ebdee4da9a6c70cb70e5025a8b807477e1d50300b58f5915152022f0032a",
+      "entry": {
+        "x": 21,
+        "y": 31.4,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "kind": "painting",
+        "x": 23,
+        "y": 4.5,
+        "highSecurity": true
+      },
+      "exit": {
+        "x": 1,
+        "y": 28.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Masterpiece Chamber",
+        "kind": "partition",
+        "x": 23,
+        "y": 3.2
+      },
+      "guards": 7,
+      "cameras": 2,
+      "routes": [
+        "main: authored heist security sequence",
+        "safe: longer exhibit / analyst shoulders",
+        "risk: exposed security crossings"
+      ],
+      "escapeRoutes": [
+        "escape: distinct post-theft exhibition / service circuit",
+        "escape: alternate security shoulders"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 7,
+      "theftSectorCount": 12
+    },
+    {
+      "id": "03-01",
+      "title": "Public Lobby",
+      "chapter": 3,
+      "definitionSha256": "285c1f6368813c0531f06c1311b33b33dcb0043f3c3aa70e8361ecedf7762b6a",
+      "entry": {
+        "x": 2.5,
+        "y": 6,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 17.5,
+        "y": 7
+      },
+      "exit": {
+        "x": 20,
+        "y": 5.5,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Public Lobby",
+        "kind": "bankTellerCounter",
+        "x": 17.5,
+        "y": 5.5
+      },
+      "guards": 2,
+      "cameras": 0,
+      "routes": [
+        "main: Compact public crossing, two queue approaches and teller target",
+        "safe: Compact public crossing, two queue approaches and teller target",
+        "risk: Compact public crossing, two queue approaches and teller target"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 2,
+      "theftSectorCount": 4
+    },
+    {
+      "id": "03-02",
+      "title": "Teller Hall",
+      "chapter": 3,
+      "definitionSha256": "0e30f93f8749fe17f244e436a100e2e95034bb6f89aa0c7b4bd9de7f2f77d065",
+      "entry": {
+        "x": 13,
+        "y": 19.5,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 15,
+        "y": 8
+      },
+      "exit": {
+        "x": 2,
+        "y": 15.5,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Teller Hall",
+        "kind": "bankTellerCounter",
+        "x": 12,
+        "y": 7
+      },
+      "guards": 3,
+      "cameras": 1,
+      "routes": [
+        "main: Long teller spine with west staff bypass and U escape",
+        "safe: Long teller spine with west staff bypass and U escape",
+        "risk: Long teller spine with west staff bypass and U escape"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 3,
+      "theftSectorCount": 5
+    },
+    {
+      "id": "03-03",
+      "title": "Staff Offices",
+      "chapter": 3,
+      "definitionSha256": "f5902d69c906b4333037e6fa9bd54f2c0ab9cfe87d4bb26b329d56548b6b268c",
+      "entry": {
+        "x": 6,
+        "y": 2.5,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 27,
+        "y": 14
+      },
+      "exit": {
+        "x": 26.5,
+        "y": 25,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Staff Offices",
+        "kind": "bankFilingCabinet",
+        "x": 27,
+        "y": 10.5
+      },
+      "guards": 4,
+      "cameras": 1,
+      "routes": [
+        "main: Six-room staggered office network with shared central record bank and diagonal dispatch escape",
+        "safe: Six-room staggered office network with shared central record bank and diagonal dispatch escape",
+        "risk: Six-room staggered office network with shared central record bank and diagonal dispatch escape"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 3,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 7
+    },
+    {
+      "id": "03-04",
+      "title": "Records Room",
+      "chapter": 3,
+      "definitionSha256": "f587d41f408648dbfee620f85ee21215487a9e19bf261b25e6d6a8ee17cc8d92",
+      "entry": {
+        "x": 24.5,
+        "y": 15,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 6.5,
+        "y": 7
+      },
+      "exit": {
+        "x": 16.5,
+        "y": 2,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Records Room",
+        "kind": "bankFilingCabinet",
+        "x": 6.5,
+        "y": 5
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "main: Stepped records network: narrow intake, ledger spine, secure audit alcove and separate upper verification return",
+        "safe: Stepped records network: narrow intake, ledger spine, secure audit alcove and separate upper verification return",
+        "risk: Stepped records network: narrow intake, ledger spine, secure audit alcove and separate upper verification return"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 7
+    },
+    {
+      "id": "03-05",
+      "title": "Deposit Boxes",
+      "chapter": 3,
+      "definitionSha256": "8232928309766dbfc9f1bd5522d896d17aa2313b360ba088f97260c1190c0096",
+      "entry": {
+        "x": 2.5,
+        "y": 13,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 27,
+        "y": 8
+      },
+      "exit": {
+        "x": 15.5,
+        "y": 26,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Deposit Boxes",
+        "kind": "bankDepositBoxWall",
+        "x": 27,
+        "y": 6
+      },
+      "guards": 4,
+      "cameras": 1,
+      "routes": [
+        "main: Deposit wall landmark, two lane approaches and independent service return",
+        "safe: Deposit wall landmark, two lane approaches and independent service return",
+        "risk: Deposit wall landmark, two lane approaches and independent service return"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 3,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 7
+    },
+    {
+      "id": "03-06",
+      "title": "Security Checkpoint",
+      "chapter": 3,
+      "definitionSha256": "6ad83e52bf6185f261023ba51d3888b59c24c1c892f45a279d812f82f8cbb720",
+      "entry": {
+        "x": 16,
+        "y": 2.5,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 17,
+        "y": 26
+      },
+      "exit": {
+        "x": 31,
+        "y": 23.5,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Security Checkpoint",
+        "kind": "bankSecurityGate",
+        "x": 17,
+        "y": 18.5
+      },
+      "guards": 4,
+      "cameras": 2,
+      "routes": [
+        "main: Gate is the main choke point, west bypass is an actual second security route",
+        "safe: Gate is the main choke point, west bypass is an actual second security route",
+        "risk: Gate is the main choke point, west bypass is an actual second security route"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 3,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 7
+    },
+    {
+      "id": "03-07",
+      "title": "Cash Processing",
+      "chapter": 3,
+      "definitionSha256": "d36cb1315b6c910564ef6dd14d7ac66f928c2378e7df6101e6f3882e79c805d6",
+      "entry": {
+        "x": 16,
+        "y": 29.5,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 4.5,
+        "y": 18
+      },
+      "exit": {
+        "x": 17.5,
+        "y": 2,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Cash Processing",
+        "kind": "bankCashProcessingTable",
+        "x": 4.5,
+        "y": 13
+      },
+      "guards": 4,
+      "cameras": 1,
+      "routes": [
+        "main: Wide cash floor divided into table, cart, record and loading cells",
+        "safe: Wide cash floor divided into table, cart, record and loading cells",
+        "risk: Wide cash floor divided into table, cart, record and loading cells"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 4,
+      "theftSectorCount": 7
+    },
+    {
+      "id": "03-08",
+      "title": "Inner Security",
+      "chapter": 3,
+      "definitionSha256": "467bbf4067d23946703f9eeb58863c46fcdbfa56031f10c31990afe63c4641a4",
+      "entry": {
+        "x": 1.6,
+        "y": 23,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 30,
+        "y": 8.8
+      },
+      "exit": {
+        "x": 33.8,
+        "y": 19.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Monitor Records Command",
+        "kind": "bankSecurityCheckpoint",
+        "x": 17,
+        "y": 13.3
+      },
+      "guards": 5,
+      "cameras": 2,
+      "routes": [
+        "main: authored heist security sequence",
+        "safe: longer exhibit / analyst shoulders",
+        "risk: exposed security crossings"
+      ],
+      "escapeRoutes": [
+        "escape: distinct post-theft exhibition / service circuit",
+        "escape: alternate security shoulders"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 5,
+      "theftSectorCount": 9
+    },
+    {
+      "id": "03-09",
+      "title": "Vault Antechamber",
+      "chapter": 3,
+      "definitionSha256": "bd8e07fc885536b5721c4a7eaf30ce359cb97805eb8d2ce6dc4658bccd861965",
+      "entry": {
+        "x": 31.5,
+        "y": 5,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 7,
+        "y": 9
+      },
+      "exit": {
+        "x": 6.5,
+        "y": 22,
+        "w": 1,
+        "h": 1
+      },
+      "landmark": {
+        "name": "Vault Antechamber",
+        "kind": "bankVaultDoor",
+        "x": 7,
+        "y": 2.65
+      },
+      "guards": 5,
+      "cameras": 2,
+      "routes": [
+        "main: Visible vault door, observation approach and records detour, south service escape",
+        "safe: Visible vault door, observation approach and records detour, south service escape",
+        "risk: Visible vault door, observation approach and records detour, south service escape"
+      ],
+      "escapeRoutes": [
+        "escape: distinct service/security return"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 5,
+      "theftSectorCount": 9
+    },
+    {
+      "id": "03-10",
+      "title": "Main Vault",
+      "chapter": 3,
+      "definitionSha256": "e99001516a581c881fea0da710109f1a4cc2bac3968f6c311477dd7b53f9bcc2",
+      "entry": {
+        "x": 1.6,
+        "y": 28,
+        "facing": 0
+      },
+      "objective": {
+        "kind": "vaultGem",
+        "x": 32,
+        "y": 7.2,
+        "highSecurity": true
+      },
+      "exit": {
+        "x": 11,
+        "y": 36.4,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Main Vault",
+        "kind": "bankMainVault",
+        "x": 32,
+        "y": 3.2
+      },
+      "guards": 7,
+      "cameras": 3,
+      "routes": [
+        "main: authored heist security sequence",
+        "safe: longer exhibit / analyst shoulders",
+        "risk: exposed security crossings"
+      ],
+      "escapeRoutes": [
+        "escape: distinct post-theft exhibition / service circuit",
+        "escape: alternate security shoulders"
+      ],
+      "safePockets": 1,
+      "explicitTheftRoles": 7,
+      "theftSectorCount": 13
+    },
+    {
+      "id": "04-01",
+      "title": "Observation Lobby",
+      "chapter": 4,
+      "definitionSha256": "866554a5d3fa2cbc6f4b92f2b34a670778bd99f8bf0cfb70ad041830455268c0",
+      "entry": {
+        "x": 1.25,
+        "y": 7.75,
+        "facing": 0
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "prototype"
+      },
+      "exit": {
+        "x": 17.65,
+        "y": 5.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Observation Tank",
+        "kind": "equipment",
+        "x": 2.1,
+        "y": 12.6
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "04-02",
+      "title": "Research Wing",
+      "chapter": 4,
+      "definitionSha256": "5d49786ea4599c9352b2d4748cd0c5a481734b24a707b14c8b34415850d02530",
+      "entry": {
+        "x": 1.25,
+        "y": 12.25,
+        "facing": 0
+      },
+      "objective": {
+        "x": 17.25,
+        "y": 3.25,
+        "kind": "prototype"
+      },
+      "exit": {
+        "x": 12.15,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Research Console",
+        "kind": "table",
+        "x": 4.2,
+        "y": 14.7
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "04-03",
+      "title": "Specimen Lab",
+      "chapter": 4,
+      "definitionSha256": "b977f301a110e1fa06aa7a5bf9e0cc5847b80e9633659b2b29f80f65cfa78e48",
+      "entry": {
+        "x": 9.75,
+        "y": 18.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 18.25,
+        "y": 16.25,
+        "kind": "prototype"
+      },
+      "exit": {
+        "x": 0.65,
+        "y": 8.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Specimen Cylinder",
+        "kind": "equipment",
+        "x": 6.300000000000001,
+        "y": 16.8
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "04-04",
+      "title": "Containment Sector",
+      "chapter": 4,
+      "definitionSha256": "0b430d713d57ac2e1f37637469b98a6ebe0e2b0cb6a724dd3b3ea910212edf42",
+      "entry": {
+        "x": 20.25,
+        "y": 13.75,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 16.25,
+        "kind": "prototype"
+      },
+      "exit": {
+        "x": 14.65,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Containment Array",
+        "kind": "partition",
+        "x": 18.900000000000002,
+        "y": 12.6
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "04-05",
+      "title": "Prototype Chamber",
+      "chapter": 4,
+      "definitionSha256": "2c87b9494425955aeb0c541977df53fbbe1e9207da12d02399ee3e713710970b",
+      "entry": {
+        "x": 10.75,
+        "y": 21.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "prototype"
+      },
+      "exit": {
+        "x": 19.65,
+        "y": 10.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Prototype Reactor",
+        "kind": "equipment",
+        "x": 12.6,
+        "y": 18.900000000000002
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "05-01",
+      "title": "Hotel Reception",
+      "chapter": 5,
+      "definitionSha256": "4cbf978416f336e87d83d437ddf41af1e89af2b082637a8ae3c702fcb5616d44",
+      "entry": {
+        "x": 6.75,
+        "y": 1.25,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 16.25,
+        "y": 3.25,
+        "kind": "jewel"
+      },
+      "exit": {
+        "x": 6.15,
+        "y": 15.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Gold Reception Desk",
+        "kind": "counter",
+        "x": 4.2,
+        "y": 6.300000000000001
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "05-02",
+      "title": "Gaming Floor",
+      "chapter": 5,
+      "definitionSha256": "6c256cfe436a4969833354002f2760b1f2ac1de4e69450b661f9b4fe98807d8f",
+      "entry": {
+        "x": 13.25,
+        "y": 1.25,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 16.25,
+        "y": 17.25,
+        "kind": "jewel"
+      },
+      "exit": {
+        "x": 18.15,
+        "y": 12.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Roulette Table",
+        "kind": "table",
+        "x": 8.4,
+        "y": 4.2
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "05-03",
+      "title": "Service Lounge",
+      "chapter": 5,
+      "definitionSha256": "e020290aa6fd96f61c4e8e1d10df270d3fb30f68053bddd21d565936085f673b",
+      "entry": {
+        "x": 1.25,
+        "y": 8.75,
+        "facing": 0
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 15.25,
+        "kind": "jewel"
+      },
+      "exit": {
+        "x": 9.15,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Card Table",
+        "kind": "table",
+        "x": 2.1,
+        "y": 6.300000000000001
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "05-04",
+      "title": "VIP Salon",
+      "chapter": 5,
+      "definitionSha256": "ea265ccc510ae77b606cda0329674fa6ab734826fd25a87051f496b4659e38f9",
+      "entry": {
+        "x": 15.25,
+        "y": 19.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "jewel"
+      },
+      "exit": {
+        "x": 0.65,
+        "y": 14.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "VIP Sofa",
+        "kind": "sofa",
+        "x": 16.8,
+        "y": 16.8
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "05-05",
+      "title": "Royal Jewel Room",
+      "chapter": 5,
+      "definitionSha256": "de8943ed03dbd5e25b122767bb928b01d1d20f6f3a8c10f3fbcd94dab4f3d3b8",
+      "entry": {
+        "x": 22.25,
+        "y": 10.75,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "x": 20.25,
+        "y": 3.25,
+        "kind": "jewel"
+      },
+      "exit": {
+        "x": 11.65,
+        "y": 18.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Royal Display",
+        "kind": "displayCase",
+        "x": 16.8,
+        "y": 10.5
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "06-01",
+      "title": "Garden Vestibule",
+      "chapter": 6,
+      "definitionSha256": "264ee77e4ea2b45298a9a4e4071452892e45aae369f0ac9034df6c938e510ce6",
+      "entry": {
+        "x": 1.25,
+        "y": 6.75,
+        "facing": 0
+      },
+      "objective": {
+        "x": 15.25,
+        "y": 15.25,
+        "kind": "artifact"
+      },
+      "exit": {
+        "x": 16.65,
+        "y": 6.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Grand Stair",
+        "kind": "equipment",
+        "x": 2.1,
+        "y": 4.2
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "06-02",
+      "title": "Drawing Room",
+      "chapter": 6,
+      "definitionSha256": "e2d87212a4a6a9307cf970480756f71b13a5792cce8e9140d41961f09ebfe396",
+      "entry": {
+        "x": 1.25,
+        "y": 9.75,
+        "facing": 0
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 14.25,
+        "kind": "artifact"
+      },
+      "exit": {
+        "x": 13.65,
+        "y": 15.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Library Cabinet",
+        "kind": "shelf",
+        "x": 6.300000000000001,
+        "y": 4.2
+      },
+      "guards": 3,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "06-03",
+      "title": "Library Wing",
+      "chapter": 6,
+      "definitionSha256": "94f1641e5f1f04c5da4cd3e45ee7e2a108530d6d957b81bd7a80161d738c7a2b",
+      "entry": {
+        "x": 10.25,
+        "y": 1.25,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "artifact"
+      },
+      "exit": {
+        "x": 0.65,
+        "y": 8.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Reading Alcove",
+        "kind": "table",
+        "x": 10.5,
+        "y": 4.2
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "06-04",
+      "title": "Family Apartments",
+      "chapter": 6,
+      "definitionSha256": "6b8f1d3c2a5c7c757aa6990a6c6d43020523691f238c6dcfdf7eee96a74d1ab4",
+      "entry": {
+        "x": 21.25,
+        "y": 13.75,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "x": 19.25,
+        "y": 3.25,
+        "kind": "artifact"
+      },
+      "exit": {
+        "x": 14.15,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Family Sofa",
+        "kind": "sofa",
+        "x": 18.900000000000002,
+        "y": 14.7
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "06-05",
+      "title": "Heirloom Gallery",
+      "chapter": 6,
+      "definitionSha256": "4881fc069660515effd95f23a3e9494a4c396516fcbb7989f6ffc135196aed50",
+      "entry": {
+        "x": 11.25,
+        "y": 22.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 19.25,
+        "y": 20.25,
+        "kind": "artifact"
+      },
+      "exit": {
+        "x": 20.65,
+        "y": 11.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Antique Cabinet",
+        "kind": "displayCase",
+        "x": 8.4,
+        "y": 18.900000000000002
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "07-01",
+      "title": "Loading Entrance",
+      "chapter": 7,
+      "definitionSha256": "da37d3be56efc5745a072690941a1291294638d47bd9ad3bbdbe837ba4c51a86",
+      "entry": {
+        "x": 19.25,
+        "y": 6.75,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 15.25,
+        "kind": "case"
+      },
+      "exit": {
+        "x": 0.65,
+        "y": 6.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Pallet Stack",
+        "kind": "crate",
+        "x": 16.8,
+        "y": 6.300000000000001
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "07-02",
+      "title": "Cargo Sorting",
+      "chapter": 7,
+      "definitionSha256": "3480ec84032507611cb477b36fce5f38397d6cdec1927648751e70330c06f517",
+      "entry": {
+        "x": 19.25,
+        "y": 14.25,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "case"
+      },
+      "exit": {
+        "x": 13.15,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Cargo Shelf",
+        "kind": "shelf",
+        "x": 16.8,
+        "y": 14.7
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "07-03",
+      "title": "Storage Aisles",
+      "chapter": 7,
+      "definitionSha256": "77621fcf2e17a9783d45401feeac9a95b6195ef564e5224f257b0e5d6c3d21ac",
+      "entry": {
+        "x": 10.25,
+        "y": 18.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 19.25,
+        "y": 3.25,
+        "kind": "case"
+      },
+      "exit": {
+        "x": 20.65,
+        "y": 8.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Shipping Crates",
+        "kind": "crate",
+        "x": 14.7,
+        "y": 16.8
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "07-04",
+      "title": "Inspection Bay",
+      "chapter": 7,
+      "definitionSha256": "511ead34d618460563ea469fd1030537c1ea17eab7420bb009903dc46162266d",
+      "entry": {
+        "x": 1.25,
+        "y": 15.25,
+        "facing": 0
+      },
+      "objective": {
+        "x": 19.25,
+        "y": 18.25,
+        "kind": "case"
+      },
+      "exit": {
+        "x": 14.65,
+        "y": 20.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Inspection Desk",
+        "kind": "counter",
+        "x": 4.2,
+        "y": 14.7
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "07-05",
+      "title": "Secured Shipment",
+      "chapter": 7,
+      "definitionSha256": "1cc4384174eb031ec54fc529825c18622ab3b6e9dd5850ff94bfd7ed5b192d9e",
+      "entry": {
+        "x": 12.25,
+        "y": 1.25,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 18.25,
+        "kind": "case"
+      },
+      "exit": {
+        "x": 0.65,
+        "y": 10.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Secured Container",
+        "kind": "equipment",
+        "x": 2.1,
+        "y": 4.2
+      },
+      "guards": 6,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "08-01",
+      "title": "Security Reception",
+      "chapter": 8,
+      "definitionSha256": "9feeb124ac97e692b6e7e6717ff5b5fb6da1222a880c9b0d1fc1a0143d3eddde",
+      "entry": {
+        "x": 6.75,
+        "y": 18.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "data"
+      },
+      "exit": {
+        "x": 7.15,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Security Desk",
+        "kind": "counter",
+        "x": 8.4,
+        "y": 16.8
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "08-02",
+      "title": "Monitoring Room",
+      "chapter": 8,
+      "definitionSha256": "66a498894723ea1e3eb0c140a6d47da681d3ff5d372af72f3ff1be2a628ed9e8",
+      "entry": {
+        "x": 14.75,
+        "y": 17.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 19.25,
+        "y": 3.25,
+        "kind": "data"
+      },
+      "exit": {
+        "x": 20.65,
+        "y": 11.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Monitor Wall",
+        "kind": "equipment",
+        "x": 16.8,
+        "y": 16.8
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "08-03",
+      "title": "Server Wing",
+      "chapter": 8,
+      "definitionSha256": "66afc3aeb45ce59a796076219a0526c4167b9d2b91cfcca3decdf5fb764c8cbb",
+      "entry": {
+        "x": 1.25,
+        "y": 9.75,
+        "facing": 0
+      },
+      "objective": {
+        "x": 18.25,
+        "y": 18.25,
+        "kind": "data"
+      },
+      "exit": {
+        "x": 9.15,
+        "y": 19.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Server Rack",
+        "kind": "shelf",
+        "x": 2.1,
+        "y": 14.7
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "08-04",
+      "title": "Restricted Corridor",
+      "chapter": 8,
+      "definitionSha256": "c162d06259df94fba668b3e47585bbf981cfb5286fe6b56341d9d95804fb37fa",
+      "entry": {
+        "x": 16.75,
+        "y": 1.25,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 16.25,
+        "kind": "data"
+      },
+      "exit": {
+        "x": 0.65,
+        "y": 11.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Security Gate",
+        "kind": "partition",
+        "x": 12.6,
+        "y": 4.2
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "08-05",
+      "title": "Black Site Archive",
+      "chapter": 8,
+      "definitionSha256": "7d9929247fa52430f25fce9fcb6c2d43e35b97b17d0750fbae80eb6f3954c141",
+      "entry": {
+        "x": 21.25,
+        "y": 12.25,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "data"
+      },
+      "exit": {
+        "x": 10.65,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Archive Terminal",
+        "kind": "equipment",
+        "x": 21.000000000000004,
+        "y": 10.5
+      },
+      "guards": 6,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "09-01",
+      "title": "Outer Checkpoint",
+      "chapter": 9,
+      "definitionSha256": "d7dfc59eca671c3c62bc1dd379bcb6d806d4067914ca605f24b8cbfe417214b4",
+      "entry": {
+        "x": 1.25,
+        "y": 7.25,
+        "facing": 0
+      },
+      "objective": {
+        "x": 17.25,
+        "y": 3.25,
+        "kind": "masterDiamond"
+      },
+      "exit": {
+        "x": 19.15,
+        "y": 6.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Heavy Door",
+        "kind": "equipment",
+        "x": 2.1,
+        "y": 10.5
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "09-02",
+      "title": "Vault Antechamber",
+      "chapter": 9,
+      "definitionSha256": "e070af4f872d8d55a7feabe0a3e86428d1c29195899f34925d44cb47c3e25098",
+      "entry": {
+        "x": 1.25,
+        "y": 15.75,
+        "facing": 0
+      },
+      "objective": {
+        "x": 17.25,
+        "y": 20.25,
+        "kind": "masterDiamond"
+      },
+      "exit": {
+        "x": 13.15,
+        "y": 0.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Vault Wheel",
+        "kind": "equipment",
+        "x": 2.1,
+        "y": 18.900000000000002
+      },
+      "guards": 4,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "09-03",
+      "title": "Mechanism Hall",
+      "chapter": 9,
+      "definitionSha256": "982969f85076e11eb36debbd7c9319109bdd20793646a1e435f1310c282bba7b",
+      "entry": {
+        "x": 10.25,
+        "y": 22.25,
+        "facing": -1.5707963267948966
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 20.25,
+        "kind": "masterDiamond"
+      },
+      "exit": {
+        "x": 0.65,
+        "y": 10.15,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Mechanism Rack",
+        "kind": "shelf",
+        "x": 12.6,
+        "y": 14.7
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "09-04",
+      "title": "Security Ring",
+      "chapter": 9,
+      "definitionSha256": "ebbb3cd61ec34a5bb81270e3dfc84f9c03e8c608b174b57d2f7957c6351a8960",
+      "entry": {
+        "x": 20.25,
+        "y": 17.25,
+        "facing": 3.141592653589793
+      },
+      "objective": {
+        "x": 3.25,
+        "y": 3.25,
+        "kind": "masterDiamond"
+      },
+      "exit": {
+        "x": 14.65,
+        "y": 22.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Security Pillar",
+        "kind": "pillar",
+        "x": 16.8,
+        "y": 10.5
+      },
+      "guards": 5,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    },
+    {
+      "id": "09-05",
+      "title": "Master Diamond Chamber",
+      "chapter": 9,
+      "definitionSha256": "b641f62a6b6feca8ca3a440ff493388df127951e58a12160668fe94a9b267d7c",
+      "entry": {
+        "x": 13.25,
+        "y": 1.25,
+        "facing": 1.5707963267948966
+      },
+      "objective": {
+        "x": 22.25,
+        "y": 3.25,
+        "kind": "masterDiamond"
+      },
+      "exit": {
+        "x": 23.65,
+        "y": 11.65,
+        "w": 1.2,
+        "h": 1.2
+      },
+      "landmark": {
+        "name": "Master Display",
+        "kind": "displayCase",
+        "x": 8.4,
+        "y": 6.300000000000001
+      },
+      "guards": 6,
+      "cameras": 0,
+      "routes": [
+        "safe: wall-side observation and cover approach",
+        "risk: direct cross-room approach"
+      ],
+      "escapeRoutes": [
+        "escape: independent objective-to-exit leg"
+      ],
+      "safePockets": 2,
+      "explicitTheftRoles": 0,
+      "theftSectorCount": 0
+    }
+  ],
+  "hashMethod": {
+    "fileSha256": "SHA-256 over raw file bytes",
+    "definitionSha256": "SHA-256 over UTF-8 bytes of Python json.dumps(definition, sort_keys=True, separators=(comma,colon), ensure_ascii=True, allow_nan=False); no newline",
+    "pythonJsonSeparators": [
+      ",",
+      ":"
+    ],
+    "pythonEnsureAscii": true,
+    "pythonSortKeys": true,
+    "note": "Floating point lexemes use Python JSON encoding. Original campaign file byte hash is the authoritative byte-level baseline."
+  }
+}

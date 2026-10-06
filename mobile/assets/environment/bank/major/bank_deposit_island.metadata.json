@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/major/bank_deposit_island.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 143,
+    "w": 482,
+    "h": 354
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_deposit_island.png",
+    "resolution": {
+      "width": 241,
+      "height": 177
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 241,
+      "h": 177
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 155728,
+    "transparentFraction": 0.4049835205078125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 143,
+      "w": 482,
+      "h": 354
+    }
+  }
+}

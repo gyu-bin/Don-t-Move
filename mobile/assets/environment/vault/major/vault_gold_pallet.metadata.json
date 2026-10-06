@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_gold_pallet.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 22,
+    "y": 86,
+    "w": 468,
+    "h": 404
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_gold_pallet.png",
+    "resolution": {
+      "width": 221,
+      "height": 193
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 205,
+      "h": 177
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 175871,
+    "transparentFraction": 0.3291053771972656,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 22,
+      "y": 86,
+      "w": 468,
+      "h": 404
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/soft/vault_cash_trolley.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 17,
+    "y": 23,
+    "w": 350,
+    "h": 344
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_cash_trolley.png",
+    "resolution": {
+      "width": 194,
+      "height": 191
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 178,
+      "h": 175
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 88837,
+    "transparentFraction": 0.3975355360243056,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 17,
+      "y": 23,
+      "w": 350,
+      "h": 344
+    }
+  }
+}

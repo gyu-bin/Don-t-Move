@@ -4,7 +4,9 @@ import { NativeModule, requireOptionalNativeModule } from 'expo';
 import { DeviceMotion } from 'expo-sensors';
 import { useAnimatedReaction,useSharedValue } from 'react-native-reanimated';
 import {scheduleOnRN} from 'react-native-worklets';
-import { createTiltState, DEFAULT_TILT } from './tilt';
+import { createTiltState } from './tilt';
+import { clearProfileInput, currentTiltProfile, profileTuning, rememberTiltProfile, tiltCompareEnabled } from './tiltProfiles';
+import type { TiltProfileId } from './tiltProfiles';
 import type { AttitudeSample, TiltTuning } from './tilt';
 import { usesTiltInput } from './inputPolicy';
 import { createAndroidTiltSession } from './androidTiltSession';
@@ -29,9 +31,21 @@ export const TILT_DEVICE = Platform.OS === 'android' || usesTiltInput(Platform.O
 export function useTiltControl() {
   const sample = useSharedValue<AttitudeSample | null>(null);
   const controller = useSharedValue(createTiltState());
-  const tuning = useSharedValue<TiltTuning>({ ...DEFAULT_TILT });
+  const compareEnabled = tiltCompareEnabled(__DEV__, process.env.EXPO_PUBLIC_DM_TILT_COMPARE);
+  const [profile, setProfile] = useState<TiltProfileId>(currentTiltProfile);
+  const tuning = useSharedValue<TiltTuning>(profileTuning(compareEnabled, profile));
   const active = useSharedValue(false);
   const reset = useSharedValue(0);
+  const selectProfile = useCallback((next: TiltProfileId) => {
+    if (!compareEnabled) return;
+    tuning.set(profileTuning(true, next));
+    controller.modify(state => { 'worklet'; clearProfileInput(state); return state; });
+    reset.set(reset.get() + 1);
+    rememberTiltProfile(next); setProfile(next);
+  }, [compareEnabled, controller, reset, tuning, setProfile]);
+  useEffect(() => {
+    if (compareEnabled) console.info('[TILT PROFILE]', JSON.stringify({profile, ...profileTuning(true, profile)}));
+  }, [compareEnabled, profile]);
   const [error, setError] = useState(Platform.OS === 'ios' && TILT_DEVICE ? !native ? 'Development build required · rebuild iOS' : !native.available ? 'Device motion unavailable' : '' : '');
   const [restart, setRestart] = useState(0);
   // DEV device QA: EXPO_PUBLIC_DM_FORCE_TOUCH=1 at Metro start plays a real iPhone by touch.
@@ -137,7 +151,7 @@ export function useTiltControl() {
       active.set(false);sample.set(null);
     };
   }, [active, controller, enabled, reset, restart, sample]);
-  return { enabled, available: Platform.OS === 'android' ? androidAvailable === true : native?.available ?? false,
+  return { compareEnabled, profile, selectProfile, enabled, available: Platform.OS === 'android' ? androidAvailable === true : native?.available ?? false,
     canRetry: Platform.OS === 'android' || !!native?.available,
     referenceFrame: Platform.OS === 'android' ? ANDROID_REFERENCE_FRAME : native?.referenceFrame ?? 'none', sample, controller, tuning, active, reset,
     error, restart: () => {

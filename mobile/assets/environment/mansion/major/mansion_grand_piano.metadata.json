@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/mansion/major/mansion_grand_piano.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 127,
+    "w": 472,
+    "h": 365
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/mansion/_source/mansion_grand_piano.png",
+    "resolution": {
+      "width": 317,
+      "height": 249
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 301,
+      "h": 233
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 91954,
+    "transparentFraction": 0.6492233276367188,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 127,
+      "w": 472,
+      "h": 365
+    }
+  }
+}

@@ -3,6 +3,8 @@ import { test } from 'node:test';
 import { exitGuidance } from '../../ui/hud/exitGuidance';
 import { openingLayout } from '../../ui/branding/openingLayout';
 import { campaignStages } from '../levels/campaignStages';
+import phase4Baseline from '../../../docs/design/v12/phase4a/SOURCE_STAGES.json';
+import type {StageDefinition} from '../levels/StageDefinition';
 import { MUSEUM_PATROL } from '../levels/semanticPatrol';
 import { compileStage } from '../world/compileStage';
 import { buildNavigation, clearSegment, findPath } from '../world/navigation';
@@ -38,10 +40,36 @@ test('Lobby scene and centred menu stay inside safe areas on every portrait iPho
 });
 
 function fixture(){
-  const stage=compileStage(campaignStages[0]),nav=buildNavigation(stage,BODY.guardRadius);
+  // V5.2's six-zone semantic-tour contract belongs to its authored Museum,
+  // preserved before Phase4A. New spatial maps have separate real patrol tests.
+  const stage=compileStage((phase4Baseline as StageDefinition[])[0]),nav=buildNavigation(stage,BODY.guardRadius);
   return {stage,nav,guards:stage.guards.map(g=>createGuardState(g)),ev:createGuardEvents()};
 }
 const hidden={x:-1000,y:-1000,gait:0};
+test('Current Museum/Gallery patrols physically visit every authored anchor for 120 seconds',()=>{
+  const missions=campaignStages.filter(d=>(d.chapter??0)<=2);assert.equal(missions.length,10);
+  for(const def of missions){
+    const stage=compileStage(def),nav=buildNavigation(stage,BODY.guardRadius);
+    const guards=stage.guards.map(g=>createGuardState(g)),ev=createGuardEvents();
+    const visited=guards.map(g=>g.route.map(()=>false)),distance=guards.map(()=>0);
+    for(let frame=0;frame<7200;frame++){
+      const previous=guards.map(g=>({x:g.x,y:g.y}));
+      stepGuards(guards,hidden,stage.visionBlockers,nav,1/60,ev,frame/60,true);
+      guards.forEach((g,i)=>{
+        const p=previous[i];assert(clearSegment(p.x,p.y,g.x,g.y,nav.blockers,BODY.guardRadius),`${def.id}:${g.id}: patrol crossed collision`);
+        const d=Math.hypot(g.x-p.x,g.y-p.y);distance[i]+=d;
+        if(d>.001)assert(Math.abs(wrapAngle(g.facing-Math.atan2(g.y-p.y,g.x-p.x)))<.001,`${def.id}:${g.id}: moving facing mismatch`);
+        g.route.forEach((a,j)=>{if(Math.hypot(g.x-a.x,g.y-a.y)<=9)visited[i][j]=true;});
+      });
+    }
+    guards.forEach((g,i)=>{
+      assert(distance[i]>50,`${def.id}:${g.id}: patrol never moved`);
+      assert(visited[i].every(Boolean),`${def.id}:${g.id}: missed anchors ${visited[i].map((v,j)=>v?null:j).filter(j=>j!==null)}`);
+      assert(g.pathPlans<150,`${def.id}:${g.id}: excessive path planning`);
+      assert.equal(g.patrolRecoveries,0,`${def.id}:${g.id}: patrol needed stall recovery`);
+    });
+  }
+});
 test('Museum anchors are exact reachable subjects in assigned zones, not arbitrary floor samples',()=>{
   const {stage,nav}=fixture();
   assert.equal(MUSEUM_PATROL.zones.length,6);

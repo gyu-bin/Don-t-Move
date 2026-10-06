@@ -1,0 +1,233 @@
+{
+  "status": "REAL_TILT_PLAYTEST_IN_PROGRESS_WITH_01-08_FEEDBACK",
+  "requestedDevice": "physical iPhone 17 Pro",
+  "detectedPhysicalDevice": "iPhone 14 Pro",
+  "detectedOS": "27.0.1",
+  "requestedModelAvailable": false,
+  "bundleIdentifier": "com.dontmove.prototype",
+  "installedAppVersion": "1.0.0 (1)",
+  "installedBuildMode": "Signed existing Debug iphoneos build; actual dev=true bundle GET from current mobile on dedicated Metro8082 verified in native console",
+  "metroStatus": "Running; real device requested current RN bundle",
+  "campaignSHA256": "bd7a3a4de9e0cb63f3627a0cd03e5cfbb1fa43561e94f224926fbbd7e9895202",
+  "coldLaunches": [
+    {
+      "run": 1,
+      "homeObserved": true,
+      "serverReconnectErrorObserved": false,
+      "intro": "Skipped via existing saved preference; full intro sequence NOT verified"
+    },
+    {
+      "run": 2,
+      "homeObserved": true,
+      "serverReconnectErrorObserved": false,
+      "intro": "Skipped via existing saved preference; full intro sequence NOT verified"
+    },
+    {
+      "run": 3,
+      "homeObserved": true,
+      "serverReconnectErrorObserved": false,
+      "intro": "Skipped via existing saved preference; full intro sequence NOT verified"
+    }
+  ],
+  "calibration": {
+    "result": "USER CONFIRMED PASS",
+    "source": "User: 중심 설정 완료, Tilt 이동 정상",
+    "runtimeEvidence": {
+      "input": "[INPUT] TILT — IOS",
+      "method": "stable",
+      "readyElapsedMs": 526,
+      "playElapsedMs": 897
+    }
+  },
+  "recenter": "NOT RUN",
+  "realTiltVerified": false,
+  "missions": [
+    {
+      "id": "01-08",
+      "attempts": [
+        {
+          "run": 1,
+          "input": "Physical iPhone14Pro user Tilt",
+          "result": "CLEAR",
+          "events": [
+            {
+              "time": 0,
+              "objective": false,
+              "clear": false,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "STEALTH",
+              "lockdown": false,
+              "remaining": 0,
+              "player": {
+                "x": 1136,
+                "y": 520,
+                "speed": 0
+              }
+            },
+            {
+              "time": 25.03,
+              "objective": true,
+              "clear": false,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "STEALTH",
+              "lockdown": false,
+              "remaining": 0,
+              "player": {
+                "x": 646.8,
+                "y": 83.66,
+                "speed": 19.44
+              }
+            },
+            {
+              "time": 35.38,
+              "objective": true,
+              "clear": false,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "THEFT_ALERT",
+              "lockdown": false,
+              "remaining": 27.77,
+              "player": {
+                "x": 498.81,
+                "y": 347.91,
+                "speed": 74.24
+              }
+            },
+            {
+              "time": 40.83,
+              "objective": true,
+              "clear": false,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "PLAYER_SPOTTED",
+              "lockdown": false,
+              "remaining": 22.32,
+              "player": {
+                "x": 337.04,
+                "y": 572.23,
+                "speed": 103.68
+              }
+            },
+            {
+              "time": 42.43,
+              "objective": true,
+              "clear": false,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "SEARCH",
+              "lockdown": false,
+              "remaining": 20.72,
+              "player": {
+                "x": 285.21,
+                "y": 678.92,
+                "speed": 149.59
+              }
+            },
+            {
+              "time": 43.2,
+              "objective": true,
+              "clear": false,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "PLAYER_SPOTTED",
+              "lockdown": false,
+              "remaining": 19.95,
+              "player": {
+                "x": 209.62,
+                "y": 749.56,
+                "speed": 149.13
+              }
+            },
+            {
+              "time": 43.42,
+              "objective": true,
+              "clear": false,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "SEARCH",
+              "lockdown": false,
+              "remaining": 19.73,
+              "player": {
+                "x": 208.15,
+                "y": 781.85,
+                "speed": 149.83
+              }
+            },
+            {
+              "time": 44.5,
+              "objective": true,
+              "clear": true,
+              "caught": false,
+              "caughtBy": "",
+              "phase": "SEARCH",
+              "lockdown": false,
+              "remaining": 18.67,
+              "player": {
+                "x": 207.25,
+                "y": 944.28,
+                "speed": 149.99
+              }
+            }
+          ],
+          "sampledVisibilityLoss": {
+            "time": 42.43,
+            "position": [
+              285.21,
+              678.92
+            ],
+            "meaning": "Sampled loss of every source visibility after pickup; occlusion cause not certified"
+          },
+          "timerRestartObserved": false,
+          "performance": "UI callback max598.16ms observed; GPU FPS not measured, human hitch feedback pending",
+          "failureClassification": null
+        }
+      ],
+      "maxAttempts": 3,
+      "status": "REAL_TILT_FULL_HEIST_CLEAR_CONFIRMED",
+      "userFeedback": {
+        "objectiveDifficulty": "Still excessively difficult",
+        "hitching": "User observed hitching",
+        "levelIssue": "CANDIDATE — repetition/location/timing evidence pending",
+        "runtimeIssue": "HITCH OBSERVED — cause not yet established"
+      }
+    },
+    {
+      "id": "01-10",
+      "attempts": [],
+      "maxAttempts": 3,
+      "status": "NOT RUN"
+    },
+    {
+      "id": "02-10",
+      "attempts": [],
+      "maxAttempts": 3,
+      "status": "NOT RUN"
+    },
+    {
+      "id": "03-10",
+      "attempts": [],
+      "maxAttempts": 3,
+      "status": "NOT RUN"
+    }
+  ],
+  "gameplayChanges": [],
+  "limitations": [
+    "Agent cannot physically tilt the phone. Human player required.",
+    "iPhone 17 Pro listed by CoreDevice is simulated, not physical.",
+    "Existing test results do not certify current real-device gameplay."
+  ],
+  "selectedDevice": "physical iPhone 14 Pro",
+  "deviceSelectionAuthorized": true,
+  "touchOverride": false,
+  "virtualTilt": false,
+  "qaTelemetryEnabled": true,
+  "logDirectory": "Reports/V11B1",
+  "realTiltMovement": {
+    "result": "USER CONFIRMED PASS",
+    "fullHeistVerified": false,
+    "runtimeEvidence": "Physical Debug iphoneos, native module enabled; playerMode=-2, no virtual/Touch override"
+  },
+  "currentMission": "01-10"
+}

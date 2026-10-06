@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/soft/warehouse_hand_trolley.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 27,
+    "y": 11,
+    "w": 330,
+    "h": 359
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_hand_trolley.png",
+    "resolution": {
+      "width": 142,
+      "height": 156
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 142,
+      "h": 155
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 77443,
+    "transparentFraction": 0.47198486328125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 27,
+      "y": 11,
+      "w": 330,
+      "h": 359
+    }
+  }
+}

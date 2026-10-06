@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_cash_cage.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 89,
+    "y": 23,
+    "w": 334,
+    "h": 466
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_cash_cage.png",
+    "resolution": {
+      "width": 153,
+      "height": 208
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 137,
+      "h": 192
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 139696,
+    "transparentFraction": 0.46710205078125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 89,
+      "y": 23,
+      "w": 334,
+      "h": 466
+    }
+  }
+}

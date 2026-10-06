@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/mansion/major/mansion_cabinet.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 37,
+    "y": 22,
+    "w": 438,
+    "h": 468
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/mansion/_source/mansion_cabinet.png",
+    "resolution": {
+      "width": 226,
+      "height": 241
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 210,
+      "h": 225
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 181245,
+    "transparentFraction": 0.3086051940917969,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 37,
+      "y": 22,
+      "w": 438,
+      "h": 468
+    }
+  }
+}

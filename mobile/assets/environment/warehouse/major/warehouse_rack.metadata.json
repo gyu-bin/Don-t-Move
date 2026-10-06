@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_rack.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 37,
+    "y": 15,
+    "w": 438,
+    "h": 482
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_rack.png",
+    "resolution": {
+      "width": 178,
+      "height": 196
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 178,
+      "h": 196
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 180446,
+    "transparentFraction": 0.30965423583984375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 37,
+      "y": 15,
+      "w": 438,
+      "h": 482
+    }
+  }
+}

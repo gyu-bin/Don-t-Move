@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_cage_trolley.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 69,
+    "y": 12,
+    "w": 246,
+    "h": 361
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_cage_trolley.png",
+    "resolution": {
+      "width": 154,
+      "height": 226
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 154,
+      "h": 226
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 67062,
+    "transparentFraction": 0.5439724392361112,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 69,
+      "y": 12,
+      "w": 246,
+      "h": 361
+    }
+  }
+}

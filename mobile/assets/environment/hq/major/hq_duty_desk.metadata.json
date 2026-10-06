@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/major/hq_duty_desk.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 21,
+    "y": 223,
+    "w": 470,
+    "h": 268
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_duty_desk.png",
+    "resolution": {
+      "width": 258,
+      "height": 154
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 242,
+      "h": 138
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 83407,
+    "transparentFraction": 0.6818275451660156,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 21,
+      "y": 223,
+      "w": 470,
+      "h": 268
+    }
+  }
+}

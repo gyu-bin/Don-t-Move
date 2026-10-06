@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/bank/soft/bank_counting_machine.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 19,
+    "y": 12,
+    "w": 346,
+    "h": 361
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/bank/_source/bank_counting_machine.png",
+    "resolution": {
+      "width": 194,
+      "height": 203
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 194,
+      "h": 203
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 85147,
+    "transparentFraction": 0.4208170572916667,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 19,
+      "y": 12,
+      "w": 346,
+      "h": 361
+    }
+  }
+}

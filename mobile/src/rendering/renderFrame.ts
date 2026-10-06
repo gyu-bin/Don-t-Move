@@ -1,3 +1,5 @@
+import {drawPhysicalDoor} from './environment/doorArt';
+import type {DoorArtSet} from './environment/doorArt';
 import {drawCctvDevice} from './effects/cctvArt';
 import type {CctvArt} from './effects/cctvArt';
 import { guardIndicator } from './effects/guardIndicator';
@@ -22,10 +24,13 @@ import type { SpriteFrame } from './sprites/spriteTypes';
 
 const MAX_GUARDS = 8;
 const MAX_CAMERAS = 8;
+const MAX_DOORS = 12;
+const DOOR_ENTITY_START = MAX_GUARDS + MAX_CAMERAS + 2;
 
 /** Everything the frame worklet needs; built once on the JS thread. */
 export interface RenderResources {
   stage: StageArt;
+  doors?:DoorArtSet;
   player: CharacterVisual;
   guard: CharacterVisual;
   cone: ConeArt;
@@ -35,6 +40,8 @@ export interface RenderResources {
   /** Objective gem sprite (atlas frame 'diamond'); null → glow only. */
   diamond: SpriteFrame | null;
   diamondPos: { x: number; y: number };
+  /** Height above floor for the authored objective support; legacy default 40. */
+  objectiveGlowHeight?: number;
   exit: SkRect;
   exitPosition?: {x:number;y:number};
   guidanceInsets?: {top:number;bottom:number;left:number;right:number};
@@ -62,15 +69,15 @@ function frameScratch(): FrameScratch {
     f = {
       paths: new Array(MAX_GUARDS).fill(null),
       cameraPaths:new Array(MAX_CAMERAS).fill(null),
-      order: new Array(MAX_GUARDS + MAX_CAMERAS + 2).fill(0),
-      keys: new Array(MAX_GUARDS + MAX_CAMERAS + 2).fill(0),
+      order: new Array(DOOR_ENTITY_START + MAX_DOORS).fill(0),
+      keys: new Array(DOOR_ENTITY_START + MAX_DOORS).fill(0),
     };
     globalThis.__dmFrame = f;
   }
   if(!f.cameraPaths){
     f.cameraPaths=new Array(MAX_CAMERAS).fill(null);
-    f.order=new Array(MAX_GUARDS+MAX_CAMERAS+2).fill(0);
-    f.keys=new Array(MAX_GUARDS+MAX_CAMERAS+2).fill(0);
+    f.order=new Array(DOOR_ENTITY_START+MAX_DOORS).fill(0);
+    f.keys=new Array(DOOR_ENTITY_START+MAX_DOORS).fill(0);
   }
   return f;
 }
@@ -92,6 +99,8 @@ function drawEntity(c: SkCanvas, id: number, s: PlaygroundState, r: RenderResour
       const bob = Math.sin(s.t * 2.2) * 2;
       drawSpriteFrame(c, gem, r.diamondPos.x, r.diamondPos.y - 28 + bob, 24 / gem.sw, false, r.fx.white);
     }
+  } else if(id>=DOOR_ENTITY_START){
+    if(r.doors&&s.doors)drawPhysicalDoor(c,s.doors[id-DOOR_ENTITY_START],r.doors,s.t);
   } else if(id>=MAX_GUARDS+2){
     const camera=s.securityCameras[id-MAX_GUARDS-2];
     if(r.cctv)drawCctvDevice(c,r.cctv,camera.x,camera.y,camera.facing,camera.alerted);
@@ -106,6 +115,7 @@ function entityY(id: number, s: PlaygroundState, r: RenderResources): number {
   'worklet';
   if (id === 0) return s.player.y;
   if (id === 1) return r.diamondPos.y + 0.25;
+  if(id>=DOOR_ENTITY_START)return s.doors![id-DOOR_ENTITY_START].y+0.8;
   if(id>=MAX_GUARDS+2)return s.securityCameras[id-MAX_GUARDS-2].y+0.6;
   return s.guards[id - 2].y;
 }
@@ -125,6 +135,7 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
   const ng = Math.min(guards.length, MAX_GUARDS);
   const cameras=s.securityCameras??[];
   const nc=r.cctv?Math.min(cameras.length,MAX_CAMERAS):0;
+  const nd=r.doors?Math.min(s.doors?.length??0,MAX_DOORS):0;
 
   c.save();
   c.scale(r.zoom, r.zoom);
@@ -159,9 +170,9 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
   }
 
   // Painter's sort of dynamic entities (insertion sort, no allocation).
-  const n = ng + 2 + nc;
+  const n = ng + 2 + nc + nd;
   for (let i = 0; i < n; i++) {
-    const id=i<ng+2?i:MAX_GUARDS+2+i-ng-2;
+    const id=i<ng+2?i:i<ng+2+nc?MAX_GUARDS+2+i-ng-2:DOOR_ENTITY_START+i-ng-2-nc;
     fs.order[i] = id;
     fs.keys[i] = entityY(id, s, r);
   }
@@ -191,6 +202,7 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
     c.drawPicture(layers[li].picture);
     li++;
   }
+  if (r.stage.exitActiveTop && s.mission.enabled && s.mission.treasure) c.drawPicture(r.stage.exitActiveTop);
 
   // Darkness with light holes.
   c.saveLayer();
@@ -222,7 +234,7 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
   const dp = r.diamondPos;
   const pulse = 1 + Math.sin(s.t * 2.2) * 0.08;
   c.save();
-  c.translate(dp.x, dp.y - 40);
+  c.translate(dp.x, dp.y - (r.objectiveGlowHeight ?? 40));
   c.save();
   c.scale(46 * pulse, 40 * pulse);
   c.drawCircle(0, 0, 1, r.fx.diamondGlow);

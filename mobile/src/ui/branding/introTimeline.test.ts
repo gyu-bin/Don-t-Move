@@ -42,7 +42,7 @@ test('FREEZE: once hidden and holding still, every thief channel is constant',()
 test('intro final frame IS the lobby frame; old branding art and white diamond overlay are gone',()=>{
  assert.deepEqual(introFrame(INTRO_MS),introFrame(INTRO_MS+100000));
  const src=readFileSync('src/ui/branding/BrandingScreen.tsx','utf8');
- assert(src.includes('drawMuseumScene(skiaSceneGfx(canvas, art), L, frame.value)'),'one shared scene for intro and lobby');
+ assert.equal((src.match(/drawMuseumScene\(skiaSceneGfx\(canvas, art\), L,/g)??[]).length,1,'one shared scene for intro and lobby, including optional guard omission');
  assert(!/room-v2|player-v2|guard-v2|wall-v2|homeComposition/.test(src),'no legacy branding art or separate Home composition');
  for(const n of ['bg_museum','thief_peek','thief_sneak','thief_freeze','guard_away','guard_turn','fg_column_left'])assert(src.includes(`opening/${n}.png`),n);
  assert(!/M 195 452 L 219 478 L 195 516 L 171 478 Z/.test(src),'no white diamond overlay');

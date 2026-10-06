@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/major/casino_sofa.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 195,
+    "w": 482,
+    "h": 302
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_sofa.png",
+    "resolution": {
+      "width": 278,
+      "height": 174
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 278,
+      "h": 174
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 111735,
+    "transparentFraction": 0.5729255676269531,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 195,
+      "w": 482,
+      "h": 302
+    }
+  }
+}

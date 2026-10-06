@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_container.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 123,
+    "w": 482,
+    "h": 374
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_container.png",
+    "resolution": {
+      "width": 210,
+      "height": 163
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 210,
+      "h": 163
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 144016,
+    "transparentFraction": 0.4492950439453125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 123,
+      "w": 482,
+      "h": 374
+    }
+  }
+}

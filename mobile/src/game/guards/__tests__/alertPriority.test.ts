@@ -7,7 +7,7 @@ import { compileStage } from '../../world/compileStage';
 import { buildNavigation } from '../../world/navigation';
 import { createGuardEvents, createGuardState } from '../guardBrain';
 import type { GuardState, PlayerView } from '../guardBrain';
-import { updateGuardPhase } from '../guardPhase';
+import { updateGuardPhase, ESCAPE_TIMER_SECONDS } from '../guardPhase';
 import { stepGuards } from '../guardSystem';
 import { BODY } from '../guardTuning';
 import { buildVisionFan } from '../guardVision';
@@ -82,8 +82,8 @@ for (const state of [Awareness.Chase, Awareness.Search]) {
     assert.equal(f.ev.theftRevision, 1); assert.equal(f.ev.theftWhistleRevision, 0);
     assert.deepEqual(f.guards.map(protectedState), before);
     updateGuardPhase(f.ev, f.guards, 12, '01-10');
-    assert.equal(f.ev.lockdownRemaining, 18); assert(!f.ev.lockdownActive);
-    updateGuardPhase(f.ev, f.guards, 30, '01-10');
+    assert.equal(f.ev.lockdownRemaining, ESCAPE_TIMER_SECONDS-2); assert(!f.ev.lockdownActive);
+    updateGuardPhase(f.ev, f.guards, 10+ESCAPE_TIMER_SECONDS, '01-10');
     assert(f.ev.lockdownActive); assert(!f.ev.caught);
     assert.notEqual(f.ev.phase, 'THEFT_ALERT');
   });
@@ -146,7 +146,7 @@ test('Scenario A: player-first Chase survives later empty-case discovery across 
     assert.deepEqual({ x: backup.targetX, y: backup.targetY }, backupTarget,
       'late theft must not redirect an uninformed pursuer from player LKP to its exit post');
   }
-  assert(witness.speed > 0); assert(f.ev.lockdownRemaining > 19 && f.ev.lockdownRemaining < 20);
+  assert(witness.speed > 0); assert(f.ev.lockdownRemaining > ESCAPE_TIMER_SECONDS-1 && f.ev.lockdownRemaining < ESCAPE_TIMER_SECONDS);
   assert.equal(f.ev.theftWhistleRevision, 0); assert.equal(f.ev.spottedWhistleRevision, 1);
 });
 
@@ -183,7 +183,7 @@ test('Scenario C: player lost into Search retains memory and search timing after
     assert.deepEqual({ x: f.ev.globalX, y: f.ev.globalY, revision: f.ev.globalRevision }, lkp);
   }
   assert.equal(f.ev.theftWhistleRevision, 0); assert.equal(f.ev.spottedWhistleRevision, 1);
-  assert(f.ev.lockdownRemaining > 19); assert(!f.ev.caught);
+  assert(f.ev.lockdownRemaining > ESCAPE_TIMER_SECONDS-9); assert(!f.ev.caught);
 });
 
 test('advanced theft whistle cannot publish fake player intelligence before the real witness finishes', () => {

@@ -28,7 +28,7 @@ export function introFrame(ms:number){
 
  const fadeIn=out(0,500);
  const reveal=ease(500,1200);
- const veil=lerp(lerp(1,.74,fadeIn),.5,reveal);
+ const veil=lerp(lerp(1,.74,fadeIn),.28,reveal);
 
  // Thief motion is evaluated at min(t, FREEZE) → literally frozen afterwards.
  const m=Math.min(t,FREEZE_MS);

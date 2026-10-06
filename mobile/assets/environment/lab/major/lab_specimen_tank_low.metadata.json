@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_specimen_tank_low.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 171,
+    "w": 482,
+    "h": 326
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_specimen_tank_low.png",
+    "resolution": {
+      "width": 208,
+      "height": 141
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 208,
+      "h": 141
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 136460,
+    "transparentFraction": 0.47808837890625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 171,
+      "w": 482,
+      "h": 326
+    }
+  }
+}

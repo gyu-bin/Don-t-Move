@@ -12,7 +12,7 @@ import { skiaSceneGfx } from './skiaSceneGfx';
 import { LOBBY_REVEAL_MS, LobbyRevealContext } from './lobbyReveal';
 import { useBrandAudio } from './useBrandAudio';
 import { markStartup } from './startupMetrics';
-import { withDeadline } from './initialization';
+import { createOpeningArtLoader, type OpeningArt } from './openingArtLoader';
 import { useMenu } from '../menu/MenuContext';
 
 const SOURCES: Record<SceneImageKey, number> = {
@@ -24,25 +24,22 @@ const SOURCES: Record<SceneImageKey, number> = {
  guardTurn: require('../../../assets/branding/opening/guard_turn.png'),
  column: require('../../../assets/branding/opening/fg_column_left.png'),
 };
-type Art = Record<SceneImageKey, SkImage>;
-let artPromise: Promise<Art> | undefined;
-let cachedArt: Art | null = null;
-/** Decode the opening artwork once; StartupScreen starts this during the brand splash. */
-export function preloadOpeningArt() {
- if (!artPromise) {
-  markStartup('intro-images-start');
-  artPromise = withDeadline(Promise.all(Object.entries(SOURCES).map(async ([key, source]) => {
-   const image = await loadData(source, data => Skia.Image.MakeImageFromEncoded(data));
-   if (!image) throw new Error('Intro image decode failed: ' + key);
-   return [key, image] as const;
-  })), 8000, 'Intro artwork').then(pairs => {
-   markStartup('intro-images-ready');
-   cachedArt = Object.fromEntries(pairs) as Art;
-   return cachedArt;
-  }).catch(error => { artPromise = undefined; throw error; });
+type Art = OpeningArt<SkImage>;
+const openingArt = createOpeningArtLoader(async key => {
+ // Native startup QA only. Unset EXPO_PUBLIC_OPENING_ART_TEST for normal loading.
+ // Restart Metro with background-only or guard-failure, then cold-launch the app.
+ // Release builds always decode normally, even if the test variable is present.
+ const testMode = __DEV__ ? process.env.EXPO_PUBLIC_OPENING_ART_TEST : undefined;
+ if ((testMode === 'background-only' && key !== 'bg') || (testMode === 'guard-failure' && key === 'guardTurn')) {
+  throw new Error(`[OPENING QA] simulated optional decode failure: ${key}`);
  }
- return artPromise;
-}
+ const image = await loadData(SOURCES[key], data => Skia.Image.MakeImageFromEncoded(data));
+ if (!image) throw new Error('Intro image decode failed: ' + key);
+ if (key === 'bg') markStartup('intro-background-ready');
+ return image;
+}, 8000, (key, error) => { if (__DEV__) console.warn('Optional opening art omitted:', key, error); });
+/** Resolve when the museum alone can render; optional poses never gate Home. */
+export function preloadOpeningArt() { return openingArt.preload(); }
 
 type Props = {
  children?: import('react').ReactNode; skipInitial?: boolean; musicEnabled?: boolean; onFinished?: () => void;
@@ -58,7 +55,8 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
  const { width, height } = useWindowDimensions();
  const insets = useSafeAreaInsets();
  const L = useMemo(() => openingLayout(width, height, insets), [width, height, insets]);
- const [art, setArt] = useState<Art | null>(() => cachedArt);
+ const [art, setArt] = useState<Art>(() => openingArt.snapshot());
+ const hasBackground = !!art.bg;
  const [artError, setArtError] = useState<string>();
  const [attempt, setAttempt] = useState(0);
  const [intro, setIntro] = useState(!skipInitial);
@@ -79,9 +77,10 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
 
  useEffect(() => {
   let alive = true;
-  preloadOpeningArt().then(value => { if (alive) { setArt(value); setArtError(undefined); } })
+  const unsubscribe = openingArt.subscribe(setArt);
+  preloadOpeningArt().then(() => { if (alive) setArtError(undefined); })
    .catch(error => { console.error('Intro artwork failed', error); if (alive) { setArtError(String(error)); finish(); } });
-  return () => { alive = false; };
+  return () => { alive = false; unsubscribe(); };
  }, [attempt, finish]);
  useEffect(() => {
   mounted.current = true;
@@ -91,14 +90,14 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
 
  // Independent of RAF/worklet completion: a lost timeline callback cannot hide Home forever.
  useEffect(() => {
-  if (!intro) return;
+  if (!intro || !hasBackground) return;
   const deadline = setTimeout(() => { markStartup('intro-timeout-fallback'); finish(); }, INTRO_MS + 2000);
   return () => clearTimeout(deadline);
- }, [intro, art, finish]);
+ }, [intro, hasBackground, finish]);
 
  // The timeline starts once the artwork can be drawn, so no frame of the intro is ever blank.
  useEffect(() => {
-  if (!art || done.current) return;
+  if (!hasBackground || done.current) return;
   let second = 0, handoff: ReturnType<typeof setTimeout> | undefined;
   const first = requestAnimationFrame(() => {
    second = requestAnimationFrame(() => {
@@ -108,16 +107,17 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
    });
   });
   return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); if (handoff) clearTimeout(handoff); };
- }, [art, finish, time]);
+ }, [hasBackground, finish, time]);
 
- useBrandAudio(intro && started, !!art && active && soundEnabled);
+ useBrandAudio(intro && started, hasBackground && active && soundEnabled);
  useEffect(() => { if (!intro && ready) { markStartup('start-interactive'); if (__DEV__) console.info('[HOME] mounted'); } }, [intro, ready]);
 
  const frame = useDerivedValue(() => introFrame(time.value));
  const picture = useDerivedValue(() => {
   const recorder = Skia.PictureRecorder();
   const canvas = recorder.beginRecording(Skia.XYWHRect(0, 0, L.W, L.H));
-  if (art) drawMuseumScene(skiaSceneGfx(canvas, art), L, frame.value);
+  if (art.bg) drawMuseumScene(skiaSceneGfx(canvas, art), L,
+   art.guardTurn ? frame.value : { ...frame.value, beamAlpha: 0 });
   return recorder.finishRecordingAsPicture();
  }, [art, L]);
 
@@ -130,7 +130,7 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
  const menuStyle = useAnimatedStyle(() => ({ opacity: Math.min(1, reveal.value / 120) }));
 
  return <View style={styles.root}>
-  {art ? <Canvas style={StyleSheet.absoluteFill}><Picture picture={picture} /></Canvas> : null}
+  {hasBackground ? <Canvas style={StyleSheet.absoluteFill}><Picture picture={picture} /></Canvas> : null}
   <Animated.Text pointerEvents="none" style={[styles.copy, { top: L.H * 0.78 }, copyStyle]}>SOME THINGS{'\n'}SHOULD STAY{'\n'}UNTOUCHED</Animated.Text>
   <View pointerEvents="none" style={[styles.logo, { top: L.logoTop }]} accessibilityRole="header" accessibilityLabel="Don't Move">
    <View style={styles.logoWords}>

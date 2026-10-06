@@ -1,3 +1,8 @@
+import {buildV13Campaign} from './v13Build';
+import {applyV11Museum} from './v11Museum';
+import {applyV11GalleryBank} from './v11GalleryBank';
+import shippedStages from '../../src/game/levels/stages/campaignStages.json';
+import {chapterDifficulty} from '../../src/game/levels/chapterDifficulty';
 import {composeV9Heist} from './curatedHeistFlows';
 import {applyV5MuseumGallery} from './v5MuseumGallery';
 import {applyFurnishing} from './furnishingPass';
@@ -96,8 +101,9 @@ function buildLegacyMission(index:number):StageDefinition {
  s.escapeRoutes=[{name:'escape: independent objective-to-exit leg',points:escape}];
  stage=compileStage(s);nav=buildNavigation(stage,BODY.guardRadius);
  const nodes=available().filter(p=>clearSegment(p.x*TILE,p.y*TILE,p.x*TILE,p.y*TILE,nav.blockers,BODY.playerRadius));
- const guardCount=Math.min(6,2+Math.floor(chapter/3)+Math.floor(mission/2));
- const roamingCount=mission<2?0:Math.min(guardCount-1,mission-1);
+ const budget=chapterDifficulty(chapter+1).authoring;
+ const guardCount=budget.guardCount;
+ const roamingCount=Math.min(guardCount-1,budget.roamingCount);
  const used:Point[]=[];
  // Objective watcher has one inspection stop and look-away waits: never a permanent cone gate.
  const objective=anchors[1];
@@ -120,12 +126,12 @@ function buildLegacyMission(index:number):StageDefinition {
   const inspectionWait=s.id==='04-05'?7:5;
   const points:PatrolPoint[]=[{...start,waitDuration:isObjective?inspectionWait:1.5,lookDirection:isObjective?Math.atan2(objective.y-start.y,objective.x-start.x):undefined,turnDuration:1.1}];
   for(const p of stops.sort((a,b)=>distance(b,start)-distance(a,start))){
-   if(points.every(q=>distance(p,q)>1&&clearSegment(p.x*TILE,p.y*TILE,q.x*TILE,q.y*TILE,nav.blockers,BODY.guardRadius)))points.push({...p,waitDuration:isObjective?2:1+mission*0.2,lookDirection:isObjective?Math.atan2(objective.y-p.y,objective.x-p.x):undefined,turnDuration:1.1});
+   if(points.every(q=>distance(p,q)>1&&clearSegment(p.x*TILE,p.y*TILE,q.x*TILE,q.y*TILE,nav.blockers,BODY.guardRadius)))points.push({...p,waitDuration:isObjective?2:budget.patrolWait,lookDirection:isObjective?Math.atan2(objective.y-p.y,objective.x-p.x):undefined,turnDuration:1.1});
    if(points.length===3)break;
   }
   if(points.length<2)throw Error(`${s.id}: patrol cannot move`);
   const id=`${s.id}-g${i+1}`;
-  s.guards.push({...start,id,role,routeId:id,facing:isObjective?Math.atan2(start.y-objective.y,start.x-objective.x):Math.atan2(points[1].y-start.y,points[1].x-start.x),pace:0.8+mission*0.025,startDelay:isObjective?4:i*0.65,visionRange:3.5+mission*0.18,visionHalfAngle:Math.PI/6});
+  s.guards.push({...start,id,role,routeId:id,facing:isObjective?Math.atan2(start.y-objective.y,start.x-objective.x):Math.atan2(points[1].y-start.y,points[1].x-start.x),pace:budget.patrolPace,startDelay:isObjective?4:i*0.65,visionRange:budget.visionRange,visionHalfAngle:Math.PI/6});
   s.patrolRoutes.push({id,points,mode:role==='roaming'?'roaming':isObjective?'pingpong':i%2?'waitAndLook':'loop'});
   (s.securityZones??=[]).push({name:role,x:start.x,y:start.y,radius:role==='roaming'?5:3.5,guardId:id});
   if(isObjective)s.objectiveZone={guardId:id,spotlight:true};
@@ -146,12 +152,24 @@ function buildAuthoredMission(index:number):StageDefinition {
 }
 /** Masterpiece (02-10) and Main Vault (03-10). */
 export const HIGH_SECURITY_MISSIONS=new Set(['02-10','03-10']);
-export function buildMission(index:number):StageDefinition {
+export function buildHistoricalMission(index:number):StageDefinition {
+ // V10 only audits existing Chapters 4–9; a new chapter blueprint must be explicitly authored.
+ if(index>=30)return structuredClone(shippedStages[index]) as StageDefinition;
  const authored=buildAuthoredMission(index);
  const secured=index<30?applySecurityData(authored):authored;
  const def=applyFurnishing(applyExhibitCells(index<20?applyV5MuseumGallery(applyV3MuseumGallery(secured)):secured));
  // Chapter finales guard their prize with a pickup alarm instead of waiting for a witness.
- if(HIGH_SECURITY_MISSIONS.has(def.id)&&def.objective)return applyDifficultyTuning(applyTheftCoverage(applyRoamingGuard(composeV9Heist({...def,objective:{...def.objective,highSecurity:true}}))));
- return applyDifficultyTuning(applyTheftCoverage(applyRoamingGuard(composeV9Heist(def))));
+ const configured=HIGH_SECURITY_MISSIONS.has(def.id)&&def.objective
+  ? {...def,objective:{...def.objective,highSecurity:true}} : def;
+ const tuned=applyDifficultyTuning(applyTheftCoverage(applyRoamingGuard(composeV9Heist(configured))));
+ return applyV11GalleryBank(applyV11Museum(tuned));
+}
+let v12Campaign:StageDefinition[]|undefined;
+/** Offline V12 authoring; phone imports only the baked JSON. */
+export function buildMission(index:number):StageDefinition {
+ if(!Number.isInteger(index)||index<0||index>=MISSION_COUNT)throw new RangeError(`Invalid campaign index ${index}`);
+ // Phase 5 = Phase 4D composition + Chapter 1–5 security tuning (see v125Build.ts).
+ v12Campaign??=buildV13Campaign();
+ return structuredClone(v12Campaign[index]);
 }
 export const buildCampaign=()=>Array.from({length:MISSION_COUNT},(_,i)=>buildMission(i));

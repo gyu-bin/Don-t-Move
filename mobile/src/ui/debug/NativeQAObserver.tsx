@@ -38,8 +38,9 @@ export function NativeQAObserver({state,zoom,width,height,paused,transitioning,c
     cam:{x:round(s.cam.x),y:round(s.cam.y)},touchSeq:s.touchSeq,playerMode:s.playerMode,
     player:{x:round(p.x),y:round(p.y),vx:round(p.vx),vy:round(p.vy),speed:round(p.speed),facing:round(p.facing),tx:round(p.tx),ty:round(p.ty),hasTarget:p.hasTarget},
     mission:s.mission,
-    events:{caught:s.events.caught,caughtBy:s.events.caughtBy,phase:s.events.phase,alerts:s.events.alertCount,whistles:s.events.whistleCount,lockdown:s.events.lockdownActive,lockdownRemaining:round(s.events.lockdownRemaining),cameraAlertRevision:s.events.cameraAlertRevision??0},
+    events:{caught:s.events.caught,caughtBy:s.events.caughtBy,phase:s.events.phase,theftAlert:s.events.theftAlert,theftActivatedAt:s.events.theftActivatedAt,alerts:s.events.alertCount,whistles:s.events.whistleCount,lockdown:s.events.lockdownActive,lockdownRemaining:round(s.events.lockdownRemaining),cameraAlertRevision:s.events.cameraAlertRevision??0},
     guards:s.guards.map(g=>({id:g.id,x:round(g.x),y:round(g.y),facing:round(g.facing),speed:round(g.speed),awareness:g.awareness,suspicion:round(g.suspicion),canSee:g.canSee,visionRange:g.visionRange,visionHalfAngle:g.visionHalfAngle})),
+    doors:s.doors?.map(d=>({id:d.id,type:d.type,style:d.style,state:d.state,progress:round(d.progress),pausedForOccupancy:d.pausedForOccupancy,x:round(d.x),y:round(d.y)})),
     cameras:s.securityCameras.map(c=>({id:c.id,x:round(c.x),y:round(c.y),facing:round(c.facing),suspicion:round(c.suspicion),canSee:c.canSee,alerted:c.alerted,visionRange:c.visionRange,visionHalfAngle:c.visionHalfAngle})),
     uiCallbackCadence:{frames:c.frames,elapsedMs:round(c.elapsedMs),hz:c.elapsedMs?round(c.frames*1000/c.elapsedMs):0,meanMs:c.frames?round(c.elapsedMs/c.frames):0,maxMs:round(c.maxMs),over33Ms:c.over33Ms,lastMs:round(c.lastMs)},
    });

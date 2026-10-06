@@ -121,8 +121,8 @@ export function drawMuseumScene(g: SceneGfx, L: OpeningLayout, f: IntroFrame) {
   g.imageRect('column', 0, COLUMN.capitalBottom, COLUMN.w, COLUMN.baseTop - COLUMN.capitalBottom, cx, -2, cw, baseY + 2.5, 1);
 
   // Legibility bands for logo (top) and menu (bottom).
-  g.vGradient(0, 0, W, H * 0.32, C.bg, [[0, 0.82], [0.6, 0.4], [1, 0]]);
-  g.vGradient(0, L.pedestalBottomY, W, H - L.pedestalBottomY, C.bg, [[0, 0], [0.35, 0.72], [1, 0.97]]);
+  g.vGradient(0, 0, W, H * 0.32, C.bg, [[0, 0.65], [0.6, 0.30], [1, 0]]);
+  g.vGradient(0, L.pedestalBottomY, W, H - L.pedestalBottomY, C.bg, [[0, 0], [0.35, 0.50], [1, 0.76]]);
 }
 
 /** Guard lens position is part of the asset contract (tests assert it sits on the flashlight). */

@@ -47,14 +47,17 @@ export function stepTiltPlayer(p: PlayerState, input: TiltMovement, dt: number, 
   const intent = Math.hypot(tx, ty);
   const slide = (tangent: number, normal: number): number => {
     const share = intent > 0 ? Math.abs(tangent)/intent : 0;
-    const fade = Math.max(0, Math.min(1, (share-0.1)/0.25));
-    return Math.sign(tangent)*Math.min(intent, Math.abs(tangent)+fade*0.6*Math.abs(normal));
+    // Full pace while the input leans up to about 75 degrees into the surface;
+    // only the last few degrees before square-on fade to a stop.
+    const fade = Math.max(0, Math.min(1, (share-0.05)/0.2));
+    return Math.sign(tangent)*Math.min(intent, Math.abs(tangent)+fade*0.85*Math.abs(normal));
   };
   const gx = pushX ? 0 : pushY ? slide(tx, ty) : tx;
   const gy = pushY ? 0 : pushX ? slide(ty, tx) : ty;
   const dx = gx-p.vx, dy = gy-p.vy;
   const change = Math.hypot(dx, dy);
-  const acceleration = Math.hypot(gx, gy) < Math.hypot(p.vx, p.vy) ? 1400 : 320;
+  // On a surface the redirected pace is reached at once; in the open the body still builds up speed.
+  const acceleration = Math.hypot(gx, gy) < Math.hypot(p.vx, p.vy) ? 1400 : pushX || pushY ? 900 : 320;
   const k = change > 0 ? Math.min(1, acceleration*dt/change) : 1;
   p.vx += dx*k; p.vy += dy*k;
   const bx = p.x, by = p.y;
@@ -62,13 +65,15 @@ export function stepTiltPlayer(p: PlayerState, input: TiltMovement, dt: number, 
   // ends the body leaves at probe speed and accelerates normally.
   const mx = pushX ? Math.sign(tx)*Math.min(Math.abs(tx), WALL_PROBE_SPEED) : p.vx;
   const my = pushY ? Math.sign(ty)*Math.min(Math.abs(ty), WALL_PROBE_SPEED) : p.vy;
-  moveWithCollision(p, mx*dt, my*dt, BODY.playerRadius, blockers);
+  const rounding = moveWithCollision(p, mx*dt, my*dt, BODY.playerRadius, blockers);
   const rx = (p.x-bx)/dt, ry = (p.y-by)/dt;
-  p.contactX = Math.abs(mx) > 1 && Math.abs(rx) < Math.abs(mx)*0.5 ? Math.sign(mx) : 0;
-  p.contactY = Math.abs(my) > 1 && Math.abs(ry) < Math.abs(my)*0.5 ? Math.sign(my) : 0;
+  // Being carried round a corner is not wall contact: the held-back axis keeps its
+  // velocity, so the body leaves the corner at pace instead of re-accelerating.
+  p.contactX = !rounding && Math.abs(mx) > 1 && Math.abs(rx) < Math.abs(mx)*0.5 ? Math.sign(mx) : 0;
+  p.contactY = !rounding && Math.abs(my) > 1 && Math.abs(ry) < Math.abs(my)*0.5 ? Math.sign(my) : 0;
   // Collision-resolved velocity is the only source of speed, suspicion and foot distance.
-  p.vx = (p.x-bx)/dt; p.vy = (p.y-by)/dt;
-  p.speed = Math.hypot(p.vx, p.vy);
+  p.speed = Math.hypot(rx, ry);
+  if (rounding) { p.vx = mx; p.vy = my; } else { p.vx = rx; p.vy = ry; }
   p.gait = gaitFromSpeed(p.speed);
   p.visualGait = stablePlayerSpriteGait(p.speed, p.visualGait);
   if (p.speed > 0.5) p.facing = turnToward(p.facing, Math.atan2(p.vy, p.vx), 10, dt);

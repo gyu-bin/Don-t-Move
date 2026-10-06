@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/architecture/warehouse_conveyor.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 234,
+    "w": 482,
+    "h": 263
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_conveyor.png",
+    "resolution": {
+      "width": 240,
+      "height": 131
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 240,
+      "h": 131
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 80674,
+    "transparentFraction": 0.6921463012695312,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 234,
+      "w": 482,
+      "h": 263
+    }
+  }
+}

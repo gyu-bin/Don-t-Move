@@ -33,7 +33,7 @@ test('V6.1 capture is body contact, not idle, visibility, full suspicion or glob
 });
 
 test('Touch phase and velocity use collision-resolved distance during diagonal wall sliding',()=>{
- const stage=compileStage(campaignStages[0]),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
+ const stage=compileStage({...campaignStages[0],doors:undefined,lockdownDoors:undefined}),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
  // Synthetic open-plane locomotion fixture; Museum bounds are tested separately.
  s.boundary=undefined;s.guards=[];s.guardPlayback=[];s.playerMode=2;s.player.x=100;s.player.y=100;
  s.player.tx=250;s.player.ty=220;s.player.hasTarget=true;
@@ -130,7 +130,8 @@ test('Production Locomotion Atlas registry: every Player/Guard state × directio
 });
 
 test('Developer touch modes sustain actual-distance animation for ten seconds and stop against a wall',()=>{
- const stage=compileStage(campaignStages[0]),nav=buildNavigation(stage,BODY.guardRadius);
+ // Synthetic changing blockers isolate locomotion from the static door-geometry cache.
+ const stage=compileStage({...campaignStages[0],doors:undefined,lockdownDoors:undefined}),nav=buildNavigation(stage,BODY.guardRadius);
  for(const mode of [1,2,3]){
   const s=createPlaygroundState(stage);s.boundary=undefined;s.guards=[];s.guardPlayback=[];s.playerMode=mode;
   s.player.x=100;s.player.y=100;s.player.tx=5000;s.player.ty=100;s.player.hasTarget=true;

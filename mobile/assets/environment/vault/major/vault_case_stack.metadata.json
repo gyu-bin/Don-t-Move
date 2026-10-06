@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_case_stack.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 21,
+    "y": 134,
+    "w": 470,
+    "h": 357
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_case_stack.png",
+    "resolution": {
+      "width": 246,
+      "height": 191
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 230,
+      "h": 175
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 147519,
+    "transparentFraction": 0.4372596740722656,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 21,
+      "y": 134,
+      "w": 470,
+      "h": 357
+    }
+  }
+}

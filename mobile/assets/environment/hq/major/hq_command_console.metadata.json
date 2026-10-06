@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/major/hq_command_console.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 19,
+    "y": 301,
+    "w": 474,
+    "h": 192
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_command_console.png",
+    "resolution": {
+      "width": 391,
+      "height": 168
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 375,
+      "h": 152
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 67293,
+    "transparentFraction": 0.7432975769042969,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 19,
+      "y": 301,
+      "w": 474,
+      "h": 192
+    }
+  }
+}

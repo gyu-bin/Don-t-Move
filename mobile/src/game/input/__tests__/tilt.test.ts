@@ -80,7 +80,7 @@ test('Yaw-only twist never moves; quaternion sign and angle wrap do not change i
   }
 });
 test('Radial deadzone has an exact zero and diagonal speed is never boosted', () => {
-  for (const angle of [0,1,1.9,2]) {
+  for (const angle of [0, DEFAULT_TILT.deadZone/2, DEFAULT_TILT.deadZone-0.01, DEFAULT_TILT.deadZone]) {
     const s=calibrated(); stepTilt(s,sample(rotation(1,1,0,angle),1),1000,1,DEFAULT_TILT);
     near(s.x,0);near(s.y,0);
   }
@@ -99,15 +99,15 @@ test('Response curve has Sneak/Walk/Run anchors and precision near neutral', () 
   assert.equal(movementName(20),'SNEAK'); assert.equal(movementName(60),'WALK'); assert.equal(movementName(120),'RUN');
   assert.equal(tiltVisualGait(1),1); assert.equal(tiltVisualGait(0),0);
 });
-test('Comfort tuning responds at 3 degrees, walks near 10, and reaches max at 16', () => {
-  const speeds = [3, 10, 16].map((angle) => {
+test('Locked B default gives precision just outside neutral and unchanged speed anchors at 3.625/6.25/10 degrees', () => {
+  assert.deepEqual(DEFAULT_TILT,{deadZone:1.75,maxTilt:10,sensitivity:1,smoothing:0.07});
+  const speeds = [2, 3.625, 6.25, 10, 16].map((angle) => {
     const s=calibrated();
     stepTilt(s,sample(rotation(0,1,0,angle),1),1000,1,{...DEFAULT_TILT,smoothing:0});
     return Math.hypot(s.x,s.y)*150;
   });
-  assert(speeds[0] > 5 && speeds[0] < 20);
-  assert(speeds[1] >= 72 && speeds[1] < 85);
-  near(speeds[2],150);
+  assert(speeds[0] > 1 && speeds[0] < 4, 'small tilt retains precise slow input');
+  near(speeds[1],38); near(speeds[2],72); near(speeds[3],150); near(speeds[4],150);
 });
 test('Player animation retains phase across gait changes and stops without advancing', () => {
   let phase=0.43;

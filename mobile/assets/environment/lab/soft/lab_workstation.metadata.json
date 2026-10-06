@@ -5,32 +5,32 @@
     "height": 384
   },
   "objectBounds": {
-    "x": 12,
-    "y": 100,
-    "w": 359,
-    "h": 272
+    "x": 13,
+    "y": 167,
+    "w": 358,
+    "h": 204
   },
   "pivot": {
     "x": 0.5,
-    "y": 0.97,
+    "y": 1,
     "units": "normalized"
   },
   "source": {
-    "path": "assets/environment/lab/_source/lab_workstation.png",
+    "path": "Reports/V12Phase4E/generated-source/lab_workstation_upright_clean.png",
     "resolution": {
       "width": 1536,
       "height": 1024
     },
     "bounds": {
-      "x": 174,
-      "y": 55,
-      "w": 1228,
-      "h": 928
+      "x": 228,
+      "y": 249,
+      "w": 1083,
+      "h": 618
     }
   },
   "diagnostics": {
-    "opaquePixels": 58658,
-    "transparentFraction": 0.58465576171875,
+    "opaquePixels": 58789,
+    "transparentFraction": 0.6012098524305556,
     "edgePixels": 0,
     "cornerAlpha": [
       0,
@@ -39,10 +39,10 @@
       0
     ],
     "bounds": {
-      "x": 12,
-      "y": 100,
-      "w": 359,
-      "h": 272
+      "x": 13,
+      "y": 167,
+      "w": 358,
+      "h": 204
     }
   }
 }

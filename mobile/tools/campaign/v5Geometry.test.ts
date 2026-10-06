@@ -27,7 +27,7 @@ test('V5 geometry rejects foreign physical kinds even without explicit artwork',
  assert(auditV5Geometry(d).issues.some(i=>i.includes('Foreign asset labCryoUnit')));
 });
 
-test('All current V5 runtime maps satisfy actual compiled navigation, approved art family and radius18 route clearance',()=>{
- const current=campaignStages.filter(d=>(d.chapter??0)<=3);assert.equal(current.length,30);
+test('All current V12 runtime maps satisfy actual compiled navigation, approved art family and radius18 route clearance',()=>{
+ const current=campaignStages.filter(d=>(d.chapter??0)<=3);assert.equal(current.length,15);
  for(const def of current)assert.deepEqual(auditV5Geometry(def).issues,[],def.id);
 });

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/mansion/major/mansion_armor_display.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 100,
+    "y": 23,
+    "w": 312,
+    "h": 466
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/mansion/_source/mansion_armor_display.png",
+    "resolution": {
+      "width": 146,
+      "height": 211
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 130,
+      "h": 195
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 129710,
+    "transparentFraction": 0.5051956176757812,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 100,
+      "y": 23,
+      "w": 312,
+      "h": 466
+    }
+  }
+}

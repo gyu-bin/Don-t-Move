@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_cash_desk.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 218,
+    "w": 472,
+    "h": 274
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_cash_desk.png",
+    "resolution": {
+      "width": 316,
+      "height": 190
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 300,
+      "h": 174
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 87544,
+    "transparentFraction": 0.666046142578125,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 218,
+      "w": 472,
+      "h": 274
+    }
+  }
+}

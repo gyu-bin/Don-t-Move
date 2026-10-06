@@ -41,15 +41,16 @@ export function normalizeProgress(value: unknown): StageProgress {
   const row = value as Partial<StageProgress>;
   const legacyFinale = !Array.isArray(row.clearedStages) && row.heistComplete === true && row.highestUnlocked === 4;
   const highestUnlocked = legacyFinale ? 5 : stageIndex(row.highestUnlocked);
+  const campaign = row.campaign ? normalizeCampaign(row.campaign) : undefined;
   return {
-    ...(row.campaign?{campaign:normalizeCampaign(row.campaign)}:{}),
+    ...(campaign ? {campaign} : {}),
     currentStage: Math.min(stageIndex(row.currentStage), highestUnlocked),
     highestUnlocked,
     heistComplete: row.heistComplete === true && highestUnlocked === STAGE_COUNT - 1,
     soundEnabled: row.soundEnabled !== false,
     musicEnabled: typeof row.musicEnabled === 'boolean' ? row.musicEnabled : row.soundEnabled !== false,
     language: row.language === 'ko' ? 'ko' : 'en',
-    hasStarted: row.hasStarted === true || highestUnlocked > 0 || (row.clearedStages?.length ?? 0) > 0,
+    hasStarted: row.hasStarted === true || highestUnlocked > 0 || (row.clearedStages?.length ?? 0) > 0 || !!(campaign && (campaign.highestUnlocked > 0 || Object.values(campaign.records).some(record => record.cleared))),
     clearedStages: Array.isArray(row.clearedStages)
       ? [...new Set(row.clearedStages.filter((n) => Number.isInteger(n) && n >= 0 && n < STAGE_COUNT))]
       : Array.from({ length: highestUnlocked }, (_, i) => i),

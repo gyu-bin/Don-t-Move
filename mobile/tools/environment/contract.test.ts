@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {metadataErrors,pixelDiagnostics,type EnvironmentAsset} from './contract';
+import {metadataErrors,pixelContractErrors,pixelDiagnostics,type EnvironmentAsset} from './contract';
 const sample:EnvironmentAsset={id:'case',chapter:'museum',category:'MAJOR',path:'assets/environment/museum/major/case.png',resolution:{width:384,height:384},pivot:{x:.5,y:.97,units:'normalized'},footprint:{w:1.2,h:.9},collision:true,losBehavior:'BLOCK',defaultScale:1,drawWidth:1.25,drawHeight:1.6,status:'NEEDS_REVIEW'};
 test('Valid tile40 independent PNG contract',()=>assert.deepEqual(metadataErrors(sample),[]));
 test('Rejects escaping path, empty collision footprint and NaN scale',()=>{
@@ -13,7 +13,14 @@ test('Pixel bounds ignore transparent margin and detect edge clipping',()=>{
 });
 test('Opaque presentation/checkerboard image has no transparent background',()=>{
   const data=new Uint8Array(4*4*4).fill(255);assert.equal(pixelDiagnostics(data,4,4).transparentFraction,0);
+  assert(pixelContractErrors(data,4,4).includes('Missing transparency'));
 });
 test('Crop bounds cannot escape the actual PNG canvas',()=>{
   assert(metadataErrors({...sample,objectBounds:{x:380,y:0,w:10,h:10}}).includes('Invalid sprite object bounds'));
+});
+test('Phase4E pixel gate rejects empty, clipped and contaminated cutouts',()=>{
+ const empty=new Uint8Array(4*4*4);assert(pixelContractErrors(empty,4,4).includes('Empty transparent asset'));
+ const clipped=new Uint8Array(4*4*4);clipped[3]=255;
+ assert(pixelContractErrors(clipped,4,4).includes('Opaque pixels touch canvas edge'));
+ assert(pixelContractErrors(clipped,4,4).includes('Contaminated transparent corner'));
 });

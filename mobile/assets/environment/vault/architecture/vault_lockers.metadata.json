@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/architecture/vault_lockers.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 21,
+    "y": 145,
+    "w": 470,
+    "h": 346
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_lockers.png",
+    "resolution": {
+      "width": 252,
+      "height": 191
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 232,
+      "h": 171
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 161000,
+    "transparentFraction": 0.385833740234375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 21,
+      "y": 145,
+      "w": 470,
+      "h": 346
+    }
+  }
+}

@@ -1,3 +1,8 @@
+import { LiveVisualQA, type InspectionView } from './debug/LiveVisualQA';
+import { stepDoors } from '../game/doors/doorSystem';
+import type { DoorRuntime } from '../game/doors/doorTypes';
+import {resolveInitialMissionIndex} from './branding/missionLaunch';
+import {createDoorArt} from '../rendering/environment/doorArt';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,6 +35,7 @@ import { createCharacterArt } from '../rendering/fallback/proceduralCharacter';
 import { renderPlaygroundFrame } from '../rendering/renderFrame';
 import type { RenderResources } from '../rendering/renderFrame';
 import { StageHeader } from './hud/StageHeader';
+import { alertHudVisible } from './hud/alertHud';
 import { useTiltControl } from '../game/input/useTiltControl';
 import { recenterTilt, stepTilt } from '../game/input/tilt';
 import { stopPlayer } from '../game/input/tiltMovement';
@@ -49,6 +55,7 @@ import { SettingsScreen } from './menu/MenuScreens';
 import { feedbackKey,valuableKey } from './menu/strings';
 import { CharacterMotionDebug } from './CharacterMotionDebug';
 import { NativeQAObserver,useNativeQACadence } from './debug/NativeQAObserver';
+import { TiltProfileDebug, TiltProfileSelector } from './debug/TiltProfileDebug';
 import { useMonetization } from '../game/monetization/MonetizationContext';
 
 type GamePhase = GuardEvents['phase'];
@@ -79,7 +86,7 @@ function makeVignette(w: number, h: number): SkPaint {
   return p;
 }
 
-export function VisualPlaygroundScreen({ initialProgress, onProgressChange }: { initialProgress?: StageProgress; onProgressChange?: (next:StageProgress)=>void } = {}) {
+export function VisualPlaygroundScreen({ initialMissionIndex, initialProgress, onProgressChange }: { initialMissionIndex?: number; initialProgress?: StageProgress; onProgressChange?: (next:StageProgress)=>void } = {}) {
   const [localProgress, setProgress] = useState<StageProgress>(initialProgress ?? DEFAULT_PROGRESS);
   const progress=onProgressChange&&initialProgress?initialProgress:localProgress;
   const {home,t}=useMenu();
@@ -117,12 +124,12 @@ export function VisualPlaygroundScreen({ initialProgress, onProgressChange }: { 
     );
   }
 
-  return <GameRun progress={progress} onProgress={updateProgress} />;
+  return <GameRun initialMissionIndex={initialMissionIndex} progress={progress} onProgress={updateProgress} />;
 }
 
-function GameRun({ progress, onProgress }: { progress: StageProgress; onProgress: (next: StageProgress) => void }) {
+function GameRun({ initialMissionIndex, progress, onProgress }: { initialMissionIndex?: number; progress: StageProgress; onProgress: (next: StageProgress) => void }) {
   const monetization=useMonetization();
-  const [index,setIndex]=useState(()=>missionIndex(migrateCampaign(progress).lastMission));
+  const [index,setIndex]=useState(()=>resolveInitialMissionIndex(progress,initialMissionIndex,__DEV__));
   const [pending,setPending]=useState<number|null>(null);
   const {width,height}=useWindowDimensions();
   const transition=useSharedValue(0);
@@ -250,15 +257,19 @@ function StageGame({
 
   const resources = useMemo<RenderResources | null>(() => {
     if (!assets || !assets.guard) return null;
+    const authoredLabCase = definition.chapter === 4 && definition.visualRevision === 'v12-4c'
+      && definition.props.some(p => p.kind === 'objectiveCase' && p.visualAssetId === 'lab_sample_case');
     return {
       stage: prepared!.art,
+      doors: stage.doors?.length?createDoorArt():undefined,
       player: createCharacterVisual(assets.player, createCharacterArt(PLAYER_PALETTE, false)),
       guard: createCharacterVisual(assets.guard, createCharacterArt(GUARD_PALETTE, true)),
       cone: createConeArt(),
       cctv: createCctvArt(assets.museum?.cctv ?? null),
       icons: createIconArt(assets.indicators),
       fx: createLightFx(),
-      diamond: assets.museum?.[VALUABLES[definition.objective?.kind ?? 'diamond'].sprite] ?? null,
+      diamond: authoredLabCase ? null : assets.museum?.[VALUABLES[definition.objective?.kind ?? 'diamond'].sprite] ?? null,
+      objectiveGlowHeight: authoredLabCase ? 20 : undefined,
       diamondPos: stage.objective,
       exit: Skia.XYWHRect(stage.exit.x, stage.exit.y, stage.exit.w, stage.exit.h),
       exitPosition: definition.exitPosition ? {x:definition.exitPosition.x*TILE,y:definition.exitPosition.y*TILE} : undefined,
@@ -297,6 +308,11 @@ function StageGame({
   const [completed, setCompleted] = useState(false);
   const [paused, setPaused] = useState(false);
   const qaCadence=useNativeQACadence(paused||caught||completed,transitioning);
+  const [inspection, setInspection] = useState<InspectionView | null>(null);
+  const [qaLockdown, setQaLockdown] = useState(false);
+  const inspectionActive = useSharedValue(false);
+  const qaDoorRequest = useSharedValue(false);
+  const inspectionDoors = useSharedValue<DoorRuntime[] | undefined>(undefined);
   const [motionDebug,setMotionDebug]=useState(false);
   const [settings, setSettings] = useState(false);
   const [pauseFeedback, setPauseFeedback] = useState('');
@@ -412,6 +428,20 @@ function StageGame({
     setPaused(true);
     setPauseFeedback('');
   };
+  const beginInspection = () => {
+    if (!__DEV__) return;
+    inspectionDoors.set(state.get().doors?.map(door => ({ ...door })));
+    inspectionActive.set(true);
+    setInspection('Entry');
+  };
+  const exitInspection = () => {
+    if (!__DEV__) return;
+    qaDoorRequest.set(false);
+    inspectionActive.set(false);
+    inspectionDoors.set(undefined);
+    setQaLockdown(false);
+    setInspection(null);
+  };
   const resume = () => {
     pausedValue.set(false);
     setSettings(false);
@@ -453,6 +483,17 @@ function StageGame({
     const now = Date.now();
     if (tiltEnabled && !transitioning) {
       controller.modify((s) => { 'worklet'; stepTilt(s, active.value ? sample.value : null, now, dt, tuning.value); return s; });
+    }
+    if (__DEV__ && inspectionActive.value) {
+      if (qaDoorRequest.value) inspectionDoors.modify(doors => {
+        'worklet';
+        const s = state.value;
+        const actors = [{ x: s.player.x, y: s.player.y, radius: BODY.playerRadius },
+          ...s.guards.map(g => ({ x: g.x, y: g.y, radius: BODY.guardRadius }))];
+        stepDoors(doors ?? [], dt, s.lockdownDoorIds ?? [], actors);
+        return doors;
+      });
+      return;
     }
     if (pausedValue.value || transitioning || !resources) return;
     const tiltInput = tiltEnabled ? {
@@ -502,11 +543,27 @@ function StageGame({
     rec.beginRecording(Skia.XYWHRect(0, 0, 1, 1));
     return rec.finishRecordingAsPicture();
   }, []);
+  // Camera is supplied only to the renderer; simulation camera/actors remain untouched.
+  const inspectionCamera = useMemo(() => {
+    if (!__DEV__ || !inspection) return null;
+    const door = stage.doors?.find(d => d.id === definition.lockdownDoors?.[0]);
+    const point = inspection === 'Entry' ? stage.playerSpawn : inspection === 'Objective' ? stage.objective
+      : inspection === 'Exit' ? { x: stage.exit.x + stage.exit.w / 2, y: stage.exit.y + stage.exit.h / 2 }
+      : inspection === 'Escape' ? (door ?? { x: stage.exit.x + stage.exit.w / 2, y: stage.exit.y + stage.exit.h / 2 })
+      : { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h / 2 };
+    const cameraZoom = inspection === 'Overview' ? Math.min(width / (bounds.w + TILE), height / (bounds.h + TILE)) : zoom;
+    const w = width / cameraZoom, h = height / cameraZoom;
+    return { zoom: cameraZoom, cam: {
+      x: bounds.w <= w ? bounds.x + (bounds.w - w) / 2 : Math.max(bounds.x, Math.min(bounds.x + bounds.w - w, point.x - w / 2)),
+      y: bounds.h <= h ? bounds.y + (bounds.h - h) / 2 : Math.max(bounds.y, Math.min(bounds.y + bounds.h - h, point.y - h / 2)),
+    } };
+  }, [inspection, stage, definition, bounds, width, height, zoom]);
   const picture = useDerivedValue(() => {
     if (!resources) return empty;
+    if (__DEV__ && inspectionCamera) return renderPlaygroundFrame({ ...state.value, cam: inspectionCamera.cam, doors: inspectionDoors.value }, { ...resources, zoom: inspectionCamera.zoom }, false);
     return __DEV__ && motionDebug ? renderPlaygroundFrame(state.value, resources, true)
       : renderPlaygroundFrame(state.value, resources, false);
-  }, [resources,motionDebug]);
+  }, [resources,motionDebug,inspectionCamera]);
 
   const calibrationVisible = tiltEnabled && !caught && !completed &&
     (tilt.error || ['HOLD COMFORTABLY', 'SENSOR PAUSED', 'READY'].includes(tiltStatus));
@@ -524,11 +581,12 @@ function StageGame({
         onResponderMove={(event) => onTouch(event.nativeEvent.locationX, event.nativeEvent.locationY)}
       />
 
+      {!inspection && <>
       <StageHeader number={definition.number} code={definition.id} title={missionName(missionIndex(definition.id),progress.language)} top={insets.top} onPause={stopAndPause} onRecenter={recenter} />
 
       <View pointerEvents="none" style={[styles.secured, { top: insets.top + 55 }]}><Text style={styles.securedText}>{secured ? `◇ ${t(definition.objective?.kind==='diamond'?'diamond':'secured')}` : `${t('target')} · ${t(valuableKey[definition.objective?.kind ?? 'diamond'])}`}</Text></View>
 
-      {definition.chapter===1 && phaseInfo.phase!=='STEALTH' && !completed && <View pointerEvents="none" style={[styles.phaseHud,{top:insets.top+77}]}>
+      {alertHudVisible(phaseInfo.phase,phaseInfo.remaining,phaseInfo.lockdown,completed||caught) && <View pointerEvents="none" style={[styles.phaseHud,{top:insets.top+77}]}>
         <Text style={styles.phaseText}>{t(phaseInfo.phase==='THEFT_ALERT'?'theft':phaseInfo.phase==='PLAYER_SPOTTED'?'spotted':phaseInfo.phase==='SEARCH'?'searching':'returning')}</Text>
         {(phaseInfo.remaining>0||phaseInfo.lockdown)&&<Text style={styles.lockdownText}>{phaseInfo.lockdown?t('lockdownActive'):`${t('lockdownIn')} ${phaseInfo.remaining}`}</Text>}
       </View>}
@@ -540,15 +598,22 @@ function StageGame({
         {!!tilt.error && <Pressable onPress={tilt.restart} style={styles.button}><Text style={styles.buttonText}>{t('sensorRetry')}</Text></Pressable>}
       </View>}
 
-      {paused && !settings && !replayIntro && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+      </>}
+      {paused && !settings && !replayIntro && !inspection && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
         {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
         <Text style={styles.modalTitle}>{t('paused')}</Text>
+        {__DEV__ && tilt.compareEnabled && <TiltProfileSelector profile={tilt.profile} onSelect={profile => {
+          tilt.selectProfile(profile);
+          state.modify(s => { 'worklet'; stopPlayer(s.player); return s; });
+          setPauseFeedback(`TILT ${profile} · NEUTRAL PRESERVED`);
+        }} />}
         {!!pauseFeedback && <Text style={styles.feedback}>{feedbackKey(pauseFeedback)?t(feedbackKey(pauseFeedback)):pauseFeedback}</Text>}
           <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');resume();}} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('resume')}</Text></Pressable>
           <Pressable accessibilityRole="button" onPress={recenter} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('recenter')}</Text></Pressable>
           <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');retry();}} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('restart')}</Text></Pressable>
           <Pressable accessibilityRole="button" onPress={() => { playUI('ui_select'); setPauseFeedback(''); setSettings(true); }} style={({pressed}) => [styles.button, pressed && styles.buttonPressed]}><Text style={styles.buttonText}>{t('settings')}</Text></Pressable>
           <Pressable accessibilityRole="button" onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
+          {__DEV__&&<Pressable accessibilityRole="button" onPress={beginInspection} style={styles.button}><Text style={styles.buttonText}>LIVE VISUAL QA</Text></Pressable>}
           {__DEV__&&<Pressable accessibilityRole="button" onPress={()=>{setMotionDebug(true);resume();}} style={styles.button}><Text style={styles.buttonText}>CHARACTER MOTION DEBUG</Text></Pressable>}
       </View>}
 
@@ -581,8 +646,10 @@ function StageGame({
         {tilt.canRetry && !!tilt.error && <Pressable accessibilityRole="button" onPress={tilt.restart} style={styles.touchMode}><Text style={styles.buttonText}>{t('sensorRetry')}</Text></Pressable>}
         <View style={{ flexDirection: 'row', gap: 6 }}>{['IDLE', 'SNEAK', 'WALK', 'RUN'].map((label, mode) => <Pressable key={label} accessibilityRole="button" accessibilityState={{ selected: touchMode === mode }} onPress={() => selectTouchMode(mode)} style={[styles.touchMode, touchMode === mode && { borderColor: '#54DDF7' }]}><Text style={styles.buttonText}>{label}</Text></Pressable>)}</View>
       </View>}
-      {__DEV__&&motionDebug&&resources&&<CharacterMotionDebug state={state} resources={resources} blockers={movementBlockers} bottom={insets.bottom+4} onClose={()=>setMotionDebug(false)} onMode={tiltEnabled?undefined:selectTouchMode}/>}
-      {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
+      {__DEV__&&!inspection&&motionDebug&&resources&&<CharacterMotionDebug state={state} resources={resources} blockers={movementBlockers} bottom={insets.bottom+4} onClose={()=>setMotionDebug(false)} onMode={tiltEnabled?undefined:selectTouchMode}/>}
+      {__DEV__ && !inspection && tilt.compareEnabled && <TiltProfileDebug profile={tilt.profile} controller={controller} state={state} bottom={insets.bottom + 52} enabled={tiltEnabled && !transitioning} />}
+      {__DEV__&&!inspection&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
+      {__DEV__&&inspection&&<LiveVisualQA mission={definition.id} selected={inspection} top={insets.top} bottom={insets.bottom} onView={setInspection} onExit={exitInspection} lockdown={qaLockdown} onLockdown={()=>{qaDoorRequest.set(true);setQaLockdown(true);setInspection('Escape');}}/>}
     </View>
   );
 }

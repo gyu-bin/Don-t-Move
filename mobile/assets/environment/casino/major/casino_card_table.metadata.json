@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/major/casino_card_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 70,
+    "w": 482,
+    "h": 427
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_card_table.png",
+    "resolution": {
+      "width": 212,
+      "height": 188
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 212,
+      "h": 188
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 140302,
+    "transparentFraction": 0.4646873474121094,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 70,
+      "w": 482,
+      "h": 427
+    }
+  }
+}

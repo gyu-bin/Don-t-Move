@@ -12,9 +12,9 @@ import {
   VOID_COLOR,
 } from '../fallback/proceduralMuseum';
 import { fill, stroke } from '../paints';
-import { fillOval, fillRect } from '../skiaScratch';
+import { fillRect } from '../skiaScratch';
 import type { SpriteAtlas, SpriteFrame } from '../sprites/spriteTypes';
-import {drawVenueFloor,drawVenueProp,drawPortal} from './venueArt';
+import {drawVenueFloor,drawVenueProp,drawPortal,portalFrame} from './venueArt';
 import { DRESSING_KIT } from '../../game/world/dressingKit';
 import { drawDressingFloor, drawDressingItem } from './museumDressingArt';
 import {MATERIALS} from '../../game/levels/chapterArt';
@@ -42,6 +42,8 @@ export interface StaticLayer {
 
 export interface StageArt {
   exitActive?:SkPicture;
+  /** Lit exit sign on the door itself; drawn above the walls once the prize is carried. */
+  exitActiveTop?:SkPicture;
   floor: SkPicture;
   layers: StaticLayer[];
   darkness: SkPicture;
@@ -98,7 +100,7 @@ function radial(
 }
 
 /** Draws an atlas frame at world width `width`, anchor at (x, y). */
-function drawFrame(c: SkCanvas, f: SpriteFrame, x: number, y: number, width: number, flip: boolean) {
+function drawFrame(c: SkCanvas, f: SpriteFrame, x: number, y: number, width: number, flip: boolean, alpha = 1) {
   const s = width / f.sw;
   c.save();
   if (flip) {
@@ -110,7 +112,7 @@ function drawFrame(c: SkCanvas, f: SpriteFrame, x: number, y: number, width: num
     f.image,
     Skia.XYWHRect(f.sx, f.sy, f.sw, f.sh),
     Skia.XYWHRect(x - f.ax * s, y - f.ay * s, f.sw * s, f.sh * s),
-    fill('#ffffff'),
+    fill('#ffffff', alpha),
   );
   c.restore();
 }
@@ -161,13 +163,8 @@ function drawFloorShading(c: SkCanvas, stage: CompiledStage): void {
     }
   }
 
-  const shadow = fill('#000000', 0.42);
-  for (const p of stage.props) {
-    const spec = PROP_KIT[p.kind];
-    if (spec.shadow <= 0) continue;
-    const rw = spec.shadow * TILE * p.scale;
-    fillOval(c, p.x - rw, p.y - rw * 0.32, rw * 2, rw * 0.64, shadow);
-  }
+  // No shadow is drawn under structures (2026-10-06): the dark patch read as a stain on the floor and made the
+  // painted pieces look as if they hovered. Characters keep theirs.
 
   if (!stage.def.exit) return;
   const ex = stage.exit;
@@ -243,16 +240,17 @@ function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: Sprite
 function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:CompiledStage): void {
   // The existing Portrait Hall painting was occluded behind a movable wall.
   // Remount its visual on that hall's blank central panel below; never duplicate it.
-  if(stage.def.id==='02-02'&&p.kind==='painting')return;
+  if(!stage.def.topologyPlan&&stage.def.id==='02-02'&&p.kind==='painting')return;
   const productionId=environmentAssetForProp(stage.def,p),production=productionId?atlas?.[productionId]:null;
   if(production){
+    // Glass panes are translucent in the PNG itself (frame opaque): see tools/environment/labTune.cjs.
     const spec=PROP_KIT[p.kind];drawFrame(c,production,p.x,p.y-spec.mountHeight,spec.drawWidth*TILE*p.scale,p.flip);
     // Wall-face exhibit attachment: reuse the approved frame inside the panel,
     // never as a floating independent prop or a new movement/LOS blocker.
     if(stage.def.theme==='gallery'&&productionId==='gallery_movable_art_wall'){
       const wallIndex=stage.props.filter(q=>environmentAssetForProp(stage.def,q)==='gallery_movable_art_wall').indexOf(p);
-      const portraitHall=stage.def.id==='02-02'&&wallIndex===0;
-      const remountedPortrait=stage.def.id==='02-02'&&wallIndex===1;
+      const portraitHall=!stage.def.topologyPlan&&stage.def.id==='02-02'&&wallIndex===0;
+      const remountedPortrait=!stage.def.topologyPlan&&stage.def.id==='02-02'&&wallIndex===1;
       // Odd panels used to stay blank grey slabs; they now carry a portrait.
       const oddPortrait=wallIndex%2===1&&!remountedPortrait;
       // Each panel takes the next work from the pool, offset per mission, so one
@@ -310,6 +308,8 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
   if (northBoundaryColumns(stage.def).length) {
     layers.push({ sortY: 0, picture: record(pad, c => { drawWallRow(c, stage, -1, atlas); }) });
   }
+  // Entry and exit doors stand in their wall, above the wall art.
+  if(stage.def.entryEdge)for(const entry of [true,false]){const f=portalFrame(stage,entry);if(f)layers.push({sortY:f.sortY,picture:record(pad,c=>drawPortal(c,stage,entry,false,'door'))});}
   for (let r = 0; r < stage.rows; r++) {
     let any = false;
     const pic = record(pad, (c) => {
@@ -410,5 +410,7 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
     }
   });
 
-  return { floor, layers, darkness, glow,exitActive:stage.def.exitEdge?record(pad,c=>drawPortal(c,stage,false,true)):undefined };
+  return { floor, layers, darkness, glow,
+    exitActive:stage.def.exitEdge?record(pad,c=>drawPortal(c,stage,false,true,'lit')):undefined,
+    exitActiveTop:stage.def.exitEdge?record(pad,c=>drawPortal(c,stage,false,true,'sign')):undefined };
 }

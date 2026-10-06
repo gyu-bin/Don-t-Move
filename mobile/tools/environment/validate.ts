@@ -9,8 +9,12 @@ async function main(){
   const manifest:EnvironmentManifest=JSON.parse(fs.readFileSync(manifestFile,'utf8'));
   if(manifest.schemaVersion!==1||manifest.units.tileWorldUnits!==40||manifest.units.footprint!=='tiles')throw Error('Unexpected environment coordinate contract');
   const ck=await initSkiaNode();
-  const expectedChapters={museum:10,gallery:10,bank:20,lab:26,casino:26};
-  if(manifest.assets.length!==92||manifest.assets.some(a=>!Object.hasOwn(expectedChapters,a.chapter))||Object.entries(expectedChapters).some(([chapter,count])=>manifest.assets.filter(a=>a.chapter===chapter).length!==count))throw Error('Environment scope must be Museum10/Gallery10/Bank20/Lab26/Casino26 assets');
+  // The runtime kit (src/assets/environmentKit.ts) is the source of truth for which assets exist: the manifest
+  // must describe exactly those ids, once each, in a known chapter. No per-chapter numbers to keep in step.
+  const kitIds=[...fs.readFileSync('src/assets/environmentKit.ts','utf8').matchAll(/^ (\w+):require\('\.\.\/\.\.\/assets\/environment\//gm)].map(m=>m[1]);
+  const manifestIds=manifest.assets.map(a=>a.id as string),knownChapters=['museum','gallery','bank','lab','casino','warehouse','vault','mansion','hq'];
+  const notInManifest=kitIds.filter(id=>!manifestIds.includes(id)),notInKit=manifestIds.filter(id=>!kitIds.includes(id)),repeated=manifestIds.filter((id,k)=>manifestIds.indexOf(id)!==k);
+  if(notInManifest.length||notInKit.length||repeated.length||manifest.assets.some(a=>!knownChapters.includes(a.chapter)))throw Error(`Environment manifest and runtime kit disagree: missing ${notInManifest.join(',')||'-'}; not in kit ${notInKit.join(',')||'-'}; repeatedlicated ${repeated.join(',')||'-'}`);
   const ids=new Set<string>();
   const assets=manifest.assets.map(a=>{
     const errors=metadataErrors(a),warnings:string[]=[];

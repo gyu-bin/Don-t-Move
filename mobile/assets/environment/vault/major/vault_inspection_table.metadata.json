@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_inspection_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 195,
+    "w": 472,
+    "h": 297
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_inspection_table.png",
+    "resolution": {
+      "width": 295,
+      "height": 193
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 275,
+      "h": 173
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 86301,
+    "transparentFraction": 0.6707878112792969,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 195,
+      "w": 472,
+      "h": 297
+    }
+  }
+}

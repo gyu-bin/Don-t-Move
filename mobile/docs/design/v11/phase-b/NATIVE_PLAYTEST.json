@@ -1,0 +1,107 @@
+{
+  "device": "iPhone 17 Pro Simulator",
+  "ios": "27.0",
+  "bundleId": "com.dontmove.prototype",
+  "input": "Actual Device Hub UI Touch; ordinary RUN/WALK controls; observer read only",
+  "fullHeistVerified": false,
+  "physicalTiltVerified": false,
+  "limits": "Maximum two driven/started attempts per mission;45s active limit checked between UI observations, slight observation overshoot explicitly recorded. No forced pickup/CLEAR/AI mutation. No historical saved-clear menu badge accepted as current-run evidence.",
+  "missions": [
+    {
+      "id": "01-05",
+      "attempts": 2,
+      "lastObservedSeconds": 46.3,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "Touch waypoint/camera-coordinate and timing limitations before pickup"
+    },
+    {
+      "id": "01-08",
+      "attempts": 2,
+      "lastObservedSeconds": 13.82,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "Captured before pickup; fixed waypoint timing is not human fairness proof"
+    },
+    {
+      "id": "01-10",
+      "attempts": 2,
+      "lastObservedSeconds": 44.08,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "Latest affected-map retry reached objective vicinity but no pickup; waypoint input limitation"
+    },
+    {
+      "id": "02-06",
+      "attempts": 1,
+      "lastObservedSeconds": 42.25,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "Valid driven attempt stopped on approach before pickup; earlier unattended blocked-tool launch excluded"
+    },
+    {
+      "id": "02-10",
+      "attempts": 2,
+      "lastObservedSeconds": 32.75,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "First unattended menu-to-input delay captured at20.48; second driven attempt captured at32.75 before pickup"
+    },
+    {
+      "id": "03-01",
+      "attempts": 2,
+      "lastObservedSeconds": 42.43,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "Input plan stalled near291.46,390.99 before pickup; no crash"
+    },
+    {
+      "id": "03-08",
+      "attempts": 1,
+      "lastObservedSeconds": 36.57,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "Captured before pickup at514.17,433.18"
+    },
+    {
+      "id": "03-10",
+      "attempts": 1,
+      "lastObservedSeconds": 47.03,
+      "result": "INPUT/TEST LIMITATION",
+      "objectiveAcquired": false,
+      "theftConfirmed": false,
+      "firstEscapeLOSBreak": "NOT VERIFIED",
+      "exitReached": false,
+      "clear": false,
+      "note": "Stopped after45s check with observation overshoot; before pickup"
+    }
+  ]
+}

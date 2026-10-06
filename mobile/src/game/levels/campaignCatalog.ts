@@ -1,7 +1,8 @@
+import {chapterDifficulty,type DifficultyTier} from './chapterDifficulty';
 import type {StageTheme,ValuableKind} from './StageDefinition';
 import {CHAPTER_AREAS,CHAPTER_AREAS_KO} from './chapterArt';
 export const CHAPTER_COUNT=9;
-export const CHAPTER_MISSION_COUNTS=[10,10,10,5,5,5,5,5,5] as const;
+export const CHAPTER_MISSION_COUNTS=[5,5,5,5,5,5,5,5,5] as const;
 export const MISSION_COUNT=CHAPTER_MISSION_COUNTS.reduce((sum,count)=>sum+count,0);
 export const chapterStart=(chapter:number)=>CHAPTER_MISSION_COUNTS.slice(0,chapter).reduce((sum,count)=>sum+count,0);
 export const chapterMissionIndices=(chapter:number)=>Array.from({length:CHAPTER_MISSION_COUNTS[chapter]??0},(_,i)=>chapterStart(chapter)+i);
@@ -17,8 +18,8 @@ export function missionIndex(id:string){
  const chapter=Number(match[1])-1,mission=Number(match[2])-1;
  return mission>=0&&mission<CHAPTER_MISSION_COUNTS[chapter]?chapterStart(chapter)+mission:-1;
 }
-export interface Chapter {theme:StageTheme;name:string;ko:string;objective:ValuableKind[];names:string[];namesKo:string[];}
-export const CHAPTERS:Chapter[]=[
+export interface Chapter {difficultyTier:DifficultyTier;theme:StageTheme;name:string;ko:string;objective:ValuableKind[];names:string[];namesKo:string[];}
+const authoredChapters:Omit<Chapter,'difficultyTier'>[]=[
  {theme:'museum',name:'MUSEUM',ko:'박물관',objective:['diamond','artifact'],names:CHAPTER_AREAS[0],namesKo:CHAPTER_AREAS_KO[0]},
  {theme:'gallery',name:'ART GALLERY',ko:'미술관',objective:['painting','jewel'],names:CHAPTER_AREAS[1],namesKo:CHAPTER_AREAS_KO[1]},
  {theme:'bank',name:'BANK',ko:'은행',objective:['vaultGem','case'],names:CHAPTER_AREAS[2],namesKo:CHAPTER_AREAS_KO[2]},
@@ -29,4 +30,5 @@ export const CHAPTERS:Chapter[]=[
  {theme:'security',name:'SECURITY HQ',ko:'보안 본부',objective:['data'],names:['CONTROL DESK','SERVER LOOP','BLIND FEED','RESTRICTED WING','BLACK SITE ARCHIVE'],namesKo:['관제 책상','서버 순환로','사각 영상','제한 구역','비밀 시설 기록']},
  {theme:'vault',name:'HIGH SECURITY VAULT',ko:'최고 보안 금고',objective:['masterDiamond'],names:['OUTER SEAL','INNER CHAMBERS','DECOY CORRIDOR','LOCKDOWN ROUTE','THE MASTER DIAMOND'],namesKo:['외곽 봉인','내부 방','위장 통로','봉쇄 탈출로','마스터 다이아몬드']},
 ];
+export const CHAPTERS:Chapter[]=authoredChapters.map((chapter,i)=>({...chapter,difficultyTier:chapterDifficulty(i+1).difficultyTier}));
 export function missionName(index:number,language:'en'|'ko') {const location=missionLocation(index);return location?(language==='ko'?CHAPTER_AREAS_KO:CHAPTER_AREAS)[location.chapter][location.mission]:'';}

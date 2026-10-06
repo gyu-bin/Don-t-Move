@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_gold_strapped.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 22,
+    "y": 198,
+    "w": 468,
+    "h": 292
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_gold_strapped.png",
+    "resolution": {
+      "width": 223,
+      "height": 145
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 207,
+      "h": 129
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 125173,
+    "transparentFraction": 0.5225028991699219,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 22,
+      "y": 198,
+      "w": 468,
+      "h": 292
+    }
+  }
+}

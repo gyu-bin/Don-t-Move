@@ -1,3 +1,5 @@
+import { createDoor } from '../doors/doorSystem';
+import type { DoorDefinition } from '../doors/doorTypes';
 import type { LightDef, PropKind, StageDefinition } from '../levels/StageDefinition';
 import type { Rect } from '../core/types';
 import { PROP_KIT } from './propKit';
@@ -51,6 +53,7 @@ export interface CompiledGuard {
 
 export interface CompiledStage {
   def: StageDefinition;
+  doors?: DoorDefinition[];
   cols: number;
   rows: number;
   width: number;
@@ -95,6 +98,17 @@ function mergeWalls(grid: Uint8Array, cols: number, rows: number, cell: number =
 }
 
 export function compileStage(def: StageDefinition): CompiledStage {
+  const doors = (def.doors ?? []).map(door => {
+    const compiled = {...door,x:door.x*TILE,y:door.y*TILE,width:door.width*TILE,thickness:door.thickness*TILE,
+      ...(door.occupancyMargin !== undefined ? {occupancyMargin:door.occupancyMargin*TILE} : {})};
+    createDoor(compiled); // Validate before any nonfinite shape reaches UI worklets.
+    return compiled;
+  });
+  if (new Set(doors.map(door=>door.id)).size !== doors.length) throw new Error(`${def.id}: duplicate door id`);
+  for (const id of def.lockdownDoors ?? []) {
+    const door=doors.find(door=>door.id===id);
+    if (!door || door.lockdownBehavior === 'stayOpen') throw new Error(`${def.id}: invalid lockdown door ${id}`);
+  }
   const rows = def.layout.length;
   const cols = Math.max(...def.layout.map((r) => r.length));
   const grid = new Uint8Array(cols * rows);
@@ -208,6 +222,7 @@ export function compileStage(def: StageDefinition): CompiledStage {
 
   return {
     def,
+    ...(doors.length ? {doors} : {}),
     cols,
     rows,
     width: cols * TILE,

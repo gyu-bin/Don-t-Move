@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/architecture/hq_checkpoint.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 21,
+    "y": 170,
+    "w": 470,
+    "h": 321
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_checkpoint.png",
+    "resolution": {
+      "width": 262,
+      "height": 184
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 246,
+      "h": 168
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 67317,
+    "transparentFraction": 0.7432060241699219,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 21,
+      "y": 170,
+      "w": 470,
+      "h": 321
+    }
+  }
+}

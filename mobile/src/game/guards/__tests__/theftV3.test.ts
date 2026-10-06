@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {ESCAPE_TIMER_SECONDS} from '../guardPhase';
 import { test } from 'node:test';
 import { compileStage,TILE } from '../../world/compileStage';
 import { buildNavigation,clearSegment } from '../../world/navigation';
@@ -139,20 +140,20 @@ test('Museum theft sighting keeps the unseen exit guard at its assigned intercep
 });
 
 
-test('Museum phase/lockdown configuration never uses hidden coordinates or causes a timeout failure',()=>{
+test('Common phase/lockdown configuration never uses hidden coordinates or causes a timeout failure',()=>{
  for(let mission=1;mission<=10;mission++){
   const f=fixture();f.c.missionId=`01-${String(mission).padStart(2,'0')}`;
   f.c.roles=['objective','exit'];
   assert.equal(f.ev.phase,'STEALTH');
   f.c.empty=false;for(let i=0;i<60;i++)f.tick();
-  assert.equal(f.ev.theftWhistleRevision,0);assert.equal(f.ev.lockdownDuration,mission<7?0:mission===10?20:28);
+  assert.equal(f.ev.theftWhistleRevision,0);assert.equal(f.ev.lockdownDuration,ESCAPE_TIMER_SECONDS);
   assert(!f.ev.lockdownActive);
   f.c.empty=true;for(let i=0;i<150;i++)f.tick();
   assert.equal(f.ev.phase,'THEFT_ALERT');assert.equal(f.ev.theftWhistleRevision,1);
   assert.equal(f.ev.spottedWhistleRevision,0);assert.equal(f.ev.globalRevision,0);
   assert(!f.ev.caught);assert(!f.ev.lockdownActive);
   for(let i=0;i<60*31;i++)f.tick({x:-777,y:-888,gait:3});
-  assert.equal(f.ev.lockdownActive,mission>=7);assert.equal(f.ev.lockdownRemaining,0);
+  assert.equal(f.ev.lockdownActive,true);assert.equal(f.ev.lockdownRemaining,0);
   assert(!f.ev.caught,'zero countdown is never a game over');
   assert.equal(f.ev.globalX,0);assert.equal(f.ev.globalY,0);assert.equal(f.ev.globalRevision,0);
   assert.equal(f.ev.theftWhistleRevision,1);
@@ -193,7 +194,7 @@ test('all ten actual Museum missions: natural empty-case discovery, independent 
   const activatedAt=s.events.theftActivatedAt;
   for(let i=0;i<60*31;i++)tick();
   assert.equal(s.events.theftActivatedAt,activatedAt);
-  assert.equal(s.events.lockdownActive,Number(def.id.slice(-2))>=7,def.id);
+  assert.equal(s.events.lockdownActive,true,def.id);
   assert(!s.events.caught);assert.equal(s.events.globalRevision,0);
   assert(s.guards.every(g=>!g.hasLkp));
   assert.equal(s.events.theftWhistleRevision,1);assert.equal(s.events.spottedWhistleRevision,0);

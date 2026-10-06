@@ -52,6 +52,27 @@ export const ENVIRONMENT_IMAGE_SOURCES = {
  bank_floor_marker:require('../../assets/environment/bank/decoration/bank_floor_marker.png'),
  bank_plant:require('../../assets/environment/bank/decoration/bank_plant.png'),
  bank_main_vault:require('../../assets/environment/bank/landmark/bank_main_vault.png'),
+ bank_marble_column:require('../../assets/environment/bank/architecture/bank_marble_column.png'),
+ bank_atm_bank:require('../../assets/environment/bank/major/bank_atm_bank.png'),
+ bank_waiting_bench:require('../../assets/environment/bank/soft/bank_waiting_bench.png'),
+ bank_security_desk:require('../../assets/environment/bank/major/bank_security_desk.png'),
+ bank_guard_booth:require('../../assets/environment/bank/major/bank_guard_booth.png'),
+ bank_cash_pallet:require('../../assets/environment/bank/soft/bank_cash_pallet.png'),
+ bank_cage_trolley:require('../../assets/environment/bank/soft/bank_cage_trolley.png'),
+ bank_counting_machine:require('../../assets/environment/bank/soft/bank_counting_machine.png'),
+ bank_deposit_island:require('../../assets/environment/bank/major/bank_deposit_island.png'),
+ bank_brass_screen:require('../../assets/environment/bank/architecture/bank_brass_screen.png'),
+ lab_server_rack_front:require('../../assets/environment/lab/major/lab_server_rack_front.png'),
+ lab_sample_fridge_front:require('../../assets/environment/lab/major/lab_sample_fridge_front.png'),
+ lab_mobile_screen:require('../../assets/environment/lab/architecture/lab_mobile_screen.png'),
+ lab_glass_partition_front:require('../../assets/environment/lab/architecture/lab_glass_partition_front.png'),
+ lab_fume_hood:require('../../assets/environment/lab/major/lab_fume_hood.png'),
+ lab_centrifuge_bench:require('../../assets/environment/lab/major/lab_centrifuge_bench.png'),
+ lab_robot_cell:require('../../assets/environment/lab/major/lab_robot_cell.png'),
+ lab_monitor_station:require('../../assets/environment/lab/major/lab_monitor_station.png'),
+ lab_gas_rack:require('../../assets/environment/lab/soft/lab_gas_rack.png'),
+ lab_specimen_tank_low:require('../../assets/environment/lab/major/lab_specimen_tank_low.png'),
+ lab_decon_arch:require('../../assets/environment/lab/architecture/lab_decon_arch.png'),
  lab_wall:require('../../assets/environment/lab/architecture/lab_wall.png'),
  lab_glass_wall:require('../../assets/environment/lab/architecture/lab_glass_wall.png'),
  lab_sliding_door:require('../../assets/environment/lab/architecture/lab_sliding_door.png'),
@@ -104,11 +125,68 @@ export const ENVIRONMENT_IMAGE_SOURCES = {
  casino_high_roller_table:require('../../assets/environment/casino/landmark/casino_high_roller_table.png'),
  casino_cashier_vault:require('../../assets/environment/casino/landmark/casino_cashier_vault.png'),
  casino_vip_room:require('../../assets/environment/casino/landmark/casino_vip_room.png'),
+ warehouse_rack:require('../../assets/environment/warehouse/major/warehouse_rack.png'),
+ warehouse_container:require('../../assets/environment/warehouse/major/warehouse_container.png'),
+ warehouse_forklift:require('../../assets/environment/warehouse/major/warehouse_forklift.png'),
+ warehouse_crate_stack:require('../../assets/environment/warehouse/major/warehouse_crate_stack.png'),
+ warehouse_tarp_cargo:require('../../assets/environment/warehouse/major/warehouse_tarp_cargo.png'),
+ warehouse_drum_stack:require('../../assets/environment/warehouse/major/warehouse_drum_stack.png'),
+ warehouse_liquid_tank:require('../../assets/environment/warehouse/major/warehouse_liquid_tank.png'),
+ warehouse_storage_cage:require('../../assets/environment/warehouse/major/warehouse_storage_cage.png'),
+ warehouse_pallet_stack:require('../../assets/environment/warehouse/soft/warehouse_pallet_stack.png'),
+ warehouse_conveyor:require('../../assets/environment/warehouse/architecture/warehouse_conveyor.png'),
+ warehouse_plank_stack:require('../../assets/environment/warehouse/architecture/warehouse_plank_stack.png'),
+ warehouse_pipe_stack:require('../../assets/environment/warehouse/architecture/warehouse_pipe_stack.png'),
+ warehouse_workbench:require('../../assets/environment/warehouse/major/warehouse_workbench.png'),
+ warehouse_tool_cart:require('../../assets/environment/warehouse/soft/warehouse_tool_cart.png'),
+ warehouse_hand_trolley:require('../../assets/environment/warehouse/soft/warehouse_hand_trolley.png'),
+ warehouse_cones:require('../../assets/environment/warehouse/soft/warehouse_cones.png'),
+ warehouse_barrier:require('../../assets/environment/warehouse/soft/warehouse_barrier.png'),
+ warehouse_fence:require('../../assets/environment/warehouse/architecture/warehouse_fence.png'),
+ warehouse_control_panel:require('../../assets/environment/warehouse/soft/warehouse_control_panel.png'),
+ vault_door:require('../../assets/environment/vault/landmark/vault_door.png'),
+ vault_deposit_wall:require('../../assets/environment/vault/architecture/vault_deposit_wall.png'),
+ vault_blast_screen:require('../../assets/environment/vault/architecture/vault_blast_screen.png'),
+ vault_lockers:require('../../assets/environment/vault/architecture/vault_lockers.png'),
+ vault_cash_table:require('../../assets/environment/vault/major/vault_cash_table.png'),
+ vault_inspection_table:require('../../assets/environment/vault/major/vault_inspection_table.png'),
+ vault_cash_desk:require('../../assets/environment/vault/major/vault_cash_desk.png'),
+ vault_gold_pallet:require('../../assets/environment/vault/major/vault_gold_pallet.png'),
+ vault_cash_cage:require('../../assets/environment/vault/major/vault_cash_cage.png'),
+ vault_case_stack:require('../../assets/environment/vault/major/vault_case_stack.png'),
+ vault_armored_crate:require('../../assets/environment/vault/major/vault_armored_crate.png'),
+ vault_gold_strapped:require('../../assets/environment/vault/major/vault_gold_strapped.png'),
+ vault_black_cases:require('../../assets/environment/vault/major/vault_black_cases.png'),
+ vault_camera_pillar:require('../../assets/environment/vault/soft/vault_camera_pillar.png'),
+ vault_gold_rack:require('../../assets/environment/vault/major/vault_gold_rack.png'),
+ vault_cash_trolley:require('../../assets/environment/vault/soft/vault_cash_trolley.png'),
+ mansion_bookshelf:require('../../assets/environment/mansion/architecture/mansion_bookshelf.png'),
+ mansion_room_divider:require('../../assets/environment/mansion/architecture/mansion_room_divider.png'),
+ mansion_armor_display:require('../../assets/environment/mansion/major/mansion_armor_display.png'),
+ mansion_cabinet:require('../../assets/environment/mansion/major/mansion_cabinet.png'),
+ mansion_dining_table:require('../../assets/environment/mansion/major/mansion_dining_table.png'),
+ mansion_writing_desk:require('../../assets/environment/mansion/major/mansion_writing_desk.png'),
+ mansion_sofa:require('../../assets/environment/mansion/soft/mansion_sofa.png'),
+ mansion_grand_piano:require('../../assets/environment/mansion/major/mansion_grand_piano.png'),
+ hq_command_console:require('../../assets/environment/hq/major/hq_command_console.png'),
+ hq_security_desk:require('../../assets/environment/hq/major/hq_security_desk.png'),
+ hq_server_row:require('../../assets/environment/hq/major/hq_server_row.png'),
+ hq_video_wall:require('../../assets/environment/hq/soft/hq_video_wall.png'),
+ hq_security_locker:require('../../assets/environment/hq/architecture/hq_security_locker.png'),
+ hq_duty_desk:require('../../assets/environment/hq/major/hq_duty_desk.png'),
+ hq_checkpoint:require('../../assets/environment/hq/architecture/hq_checkpoint.png'),
+ hq_wall_sign:require('../../assets/environment/hq/soft/hq_wall_sign.png'),
+ hq_response_table:require('../../assets/environment/hq/major/hq_response_table.png'),
+ casino_column:require('../../assets/environment/casino/architecture/casino_column.png'),
+ casino_planter:require('../../assets/environment/casino/soft/casino_planter.png'),
+ casino_sofa:require('../../assets/environment/casino/major/casino_sofa.png'),
+ casino_card_table:require('../../assets/environment/casino/major/casino_card_table.png'),
+ casino_rope_stanchion:require('../../assets/environment/casino/soft/casino_rope_stanchion.png'),
 } as const;
 export type EnvironmentAssetId=keyof typeof ENVIRONMENT_IMAGE_SOURCES;
 export interface EnvironmentAssetSpec {
  id:EnvironmentAssetId;
- chapter:'museum'|'gallery'|'bank'|'lab'|'casino';
+ chapter:'museum'|'gallery'|'bank'|'lab'|'casino'|'warehouse'|'vault'|'mansion'|'hq';
  category:'ARCHITECTURE'|'MAJOR'|'SOFT'|'DECORATION'|'LANDMARK';
  path:string;
  resolution:{width:number;height:number};
@@ -134,7 +212,20 @@ const MUSEUM_REPLACEMENTS:Partial<Record<PropKind,EnvironmentAssetId>>={
  statuePedestal:'museum_pedestal',diamondPedestal:'museum_pedestal',painting:'museum_painting',
  objectiveCase:'museum_diamond_case',
 };
-export function environmentAssetForProp(stage:StageDefinition,prop:{kind:PropKind;visualAssetId?:EnvironmentAssetId}):EnvironmentAssetId|undefined {
+/** Chapter 9 Vault has no floor plans of its own yet: its maps place generic kinds, and the vault kit is chosen
+ *  for them here, several pieces per kind picked by position so a room does not repeat one piece. */
+const VAULT_REPLACEMENTS:Partial<Record<PropKind,EnvironmentAssetId[]>>={
+ counter:['vault_cash_table','vault_inspection_table','vault_cash_desk'],
+ partition:['vault_blast_screen','vault_deposit_wall','vault_lockers'],
+ equipment:['vault_gold_pallet','vault_cash_cage','vault_case_stack','vault_armored_crate','vault_gold_strapped','vault_black_cases'],
+ pillar:['vault_camera_pillar'],shelf:['vault_gold_rack','vault_cash_trolley'],
+};
+export function environmentAssetForProp(stage:StageDefinition,prop:{kind:PropKind;visualAssetId?:EnvironmentAssetId;x?:number;y?:number}):EnvironmentAssetId|undefined {
+ if(stage.chapter===9){
+  if(prop.visualAssetId==='bank_vault_door')return 'vault_door';
+  const options=prop.visualAssetId?undefined:VAULT_REPLACEMENTS[prop.kind];
+  if(options)return options[Math.abs(Math.round((prop.x??0)/20)*3+Math.round((prop.y??0)/20)*5)%options.length];
+ }
  if(prop.visualAssetId)return prop.visualAssetId;
  return stage.chapter===1?MUSEUM_REPLACEMENTS[prop.kind]:undefined;
 }

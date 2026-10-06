@@ -3,6 +3,7 @@ import {buildNavigation} from '../../src/game/world/navigation';
 import {BODY} from '../../src/game/guards/guardTuning';
 import {createPlaygroundState,stepPlayground} from '../../src/game/playground/playgroundState';
 import {stepGuards} from '../../src/game/guards/guardSystem';
+import {ESCAPE_TIMER_SECONDS} from '../../src/game/guards/guardPhase';
 import {Awareness} from '../../src/game/core/types';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 
@@ -37,7 +38,7 @@ export function measureSpeeds(){
   if(mode==='theft'||mode==='lockdown'){ev.theftAlert=true;ev.theftRevision=1;ev.theftActivatedAt=0;if(mode==='lockdown'){ev.lockdownActive=true;ev.lockdownDuration=.01;}}
   const theft={missionId:mode==='lockdown'?'01-10':undefined,empty:true,x:4800,y:240,roles:['zone' as const],posts:[[{x:4800,y:g.y,wait:0,look:0}]]};
   let distance=0;
-  for(let f=0;f<240;f++){const x=g.x,y=g.y;const p=mode==='direct'?{x:g.x+200,y:g.y,gait:3}:{x:-1000,y:-1000,gait:0};stepGuards([g],p,stage.visionBlockers,nav,1/60,ev,f/60+(mode==='lockdown'?21:0),true,1,(mode==='theft'||mode==='lockdown')?theft:undefined);if(f>=120)distance+=Math.hypot(g.x-x,g.y-y);}
+  for(let f=0;f<240;f++){const x=g.x,y=g.y;const p=mode==='direct'?{x:g.x+200,y:g.y,gait:3}:{x:-1000,y:-1000,gait:0};stepGuards([g],p,stage.visionBlockers,nav,1/60,ev,f/60+(mode==='lockdown'?ESCAPE_TIMER_SECONDS+1:0),true,1,(mode==='theft'||mode==='lockdown')?theft:undefined);if(f>=120)distance+=Math.hypot(g.x-x,g.y-y);}
   values[mode]=distance/2;
  }
  return values;

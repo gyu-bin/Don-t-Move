@@ -1,25 +1,25 @@
 import type {PropKind,StageTheme} from './StageDefinition';
 export const CHAPTER_AREAS=[
- ['Entrance Hall','Main Gallery','Archive','Security Wing','Restricted Collection','Conservation Lab','Private Gallery','Security Core','Master Exhibition','Grand Heist'],
- ['Front Exhibition','Portrait Hall','Sculpture Studio','Modern Wing',"Collector's Room",'Glass Gallery',"Curator's Floor",'Grand Atrium','Private Collection','Masterpiece'],
- ['Public Lobby','Teller Hall','Staff Offices','Records Room','Deposit Boxes','Security Checkpoint','Cash Processing','Inner Security','Vault Antechamber','Main Vault'],
+ ['Entrance Hall','Main Gallery','Archive & Conservation','Security Wing','Grand Heist'],
+ ['Portrait Hall','Sculpture Studio','Glass Gallery','Grand Atrium','Masterpiece'],
+ ['Lobby / Teller','Staff Offices','Cash Processing','Security Corridor','Main Vault'],
  ['Observation Lobby','Research Wing','Specimen Lab','Containment Sector','Prototype Chamber'],
  ['Hotel Reception','Gaming Floor','Service Lounge','VIP Salon','Royal Jewel Room'],
  ['Garden Vestibule','Drawing Room','Library Wing','Family Apartments','Heirloom Gallery'],
  ['Loading Entrance','Cargo Sorting','Storage Aisles','Inspection Bay','Secured Shipment'],
  ['Security Reception','Monitoring Room','Server Wing','Restricted Corridor','Black Site Archive'],
- ['Outer Checkpoint','Vault Antechamber','Mechanism Hall','Security Ring','Master Diamond Chamber'],
+ ['Core Ring','Split Perimeter','Vault Spine','Outer Shell','Final Vault'],
 ];
 export const CHAPTER_AREAS_KO=[
- ['입구 홀','중앙 갤러리','수장고','보안 구역','제한 컬렉션','보존 연구실','비공개 갤러리','보안 중심부','마스터 전시실','그랜드 하이스트'],
- ['정면 전시실','초상화 홀','조각 스튜디오','현대 전시동','컬렉터의 방','유리 갤러리','큐레이터 층','그랜드 아트리움','비공개 컬렉션','마스터피스'],
- ['은행 로비','창구 홀','직원 사무실','기록실','대여 금고','보안 검문소','현금 처리실','내부 보안','금고 전실','중앙 금고'],
+ ['입구 홀','메인 갤러리','수장고와 보존실','보안 구역','그랜드 하이스트'],
+ ['초상화 홀','조각 스튜디오','유리 갤러리','그랜드 아트리움','마스터피스'],
+ ['로비와 창구','직원 사무실','현금 처리실','보안 복도','중앙 금고'],
  ['관찰 로비','연구 구역','표본 연구실','격리 구역','시제품 실험실'],
  ['호텔 접견실','게임 플로어','서비스 라운지','VIP 살롱','왕실 보석실'],
  ['정원 현관','응접실','서재동','가족 거주실','가보 전시실'],
  ['하역 입구','화물 분류실','보관 통로','검사 구역','보안 화물실'],
  ['보안 접견실','관제실','서버동','제한 통로','비밀 시설 기록실'],
- ['외곽 검문소','금고 전실','기계 장치 홀','보안 순환로','마스터 다이아몬드실'],
+ ['코어 순환로','분리된 외곽','금고 중심축','외곽 회랑','최종 금고'],
 ];
 export const LANDMARKS=[
  ['Grand Statue','Central Rotunda','Archive Shelves','Security Control Room','Diamond Chamber'],

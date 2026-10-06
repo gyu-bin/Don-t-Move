@@ -6,31 +6,31 @@
   },
   "objectBounds": {
     "x": 16,
-    "y": 221,
+    "y": 254,
     "w": 480,
-    "h": 275
+    "h": 242
   },
   "pivot": {
     "x": 0.5,
-    "y": 0.97,
+    "y": 1,
     "units": "normalized"
   },
   "source": {
-    "path": "assets/environment/lab/_source/lab_large_table.png",
+    "path": "Reports/V12Phase4E/generated-source/lab_large_table_upright_clean.png",
     "resolution": {
       "width": 1536,
       "height": 1024
     },
     "bounds": {
-      "x": 44,
-      "y": 114,
-      "w": 1450,
-      "h": 832
+      "x": 81,
+      "y": 224,
+      "w": 1378,
+      "h": 695
     }
   },
   "diagnostics": {
-    "opaquePixels": 81196,
-    "transparentFraction": 0.6798820495605469,
+    "opaquePixels": 80781,
+    "transparentFraction": 0.6917953491210938,
     "edgePixels": 0,
     "cornerAlpha": [
       0,
@@ -40,9 +40,9 @@
     ],
     "bounds": {
       "x": 16,
-      "y": 221,
+      "y": 254,
       "w": 480,
-      "h": 275
+      "h": 242
     }
   }
 }

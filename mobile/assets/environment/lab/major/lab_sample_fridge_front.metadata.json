@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_sample_fridge_front.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 93,
+    "y": 16,
+    "w": 326,
+    "h": 481
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_sample_fridge_front.png",
+    "resolution": {
+      "width": 157,
+      "height": 232
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 157,
+      "h": 232
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 148025,
+    "transparentFraction": 0.43437957763671875,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 93,
+      "y": 16,
+      "w": 326,
+      "h": 481
+    }
+  }
+}

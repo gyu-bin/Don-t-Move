@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/casino/architecture/casino_column.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 140,
+    "y": 15,
+    "w": 232,
+    "h": 482
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_column.png",
+    "resolution": {
+      "width": 85,
+      "height": 177
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 85,
+      "h": 177
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 95282,
+    "transparentFraction": 0.6364860534667969,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 140,
+      "y": 15,
+      "w": 232,
+      "h": 482
+    }
+  }
+}

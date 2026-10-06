@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/major/vault_gold_rack.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 101,
+    "y": 23,
+    "w": 310,
+    "h": 466
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_gold_rack.png",
+    "resolution": {
+      "width": 149,
+      "height": 214
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 129,
+      "h": 194
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 128155,
+    "transparentFraction": 0.5111274719238281,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 101,
+      "y": 23,
+      "w": 310,
+      "h": 466
+    }
+  }
+}

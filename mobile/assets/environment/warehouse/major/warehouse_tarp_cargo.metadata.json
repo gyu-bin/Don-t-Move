@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_tarp_cargo.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 39,
+    "w": 482,
+    "h": 458
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_tarp_cargo.png",
+    "resolution": {
+      "width": 179,
+      "height": 170
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 179,
+      "h": 170
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 166512,
+    "transparentFraction": 0.36331939697265625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 39,
+      "w": 482,
+      "h": 458
+    }
+  }
+}

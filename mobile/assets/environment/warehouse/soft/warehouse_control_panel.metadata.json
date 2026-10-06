@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/soft/warehouse_control_panel.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 44,
+    "y": 11,
+    "w": 296,
+    "h": 362
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_control_panel.png",
+    "resolution": {
+      "width": 126,
+      "height": 154
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 126,
+      "h": 154
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 104392,
+    "transparentFraction": 0.2920125325520833,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 44,
+      "y": 11,
+      "w": 296,
+      "h": 362
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_fume_hood.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 60,
+    "y": 15,
+    "w": 391,
+    "h": 482
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_fume_hood.png",
+    "resolution": {
+      "width": 189,
+      "height": 233
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 189,
+      "h": 233
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 170727,
+    "transparentFraction": 0.3464088439941406,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 60,
+      "y": 15,
+      "w": 391,
+      "h": 482
+    }
+  }
+}

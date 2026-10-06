@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/soft/hq_wall_sign.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 18,
+    "y": 178,
+    "w": 348,
+    "h": 188
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_wall_sign.png",
+    "resolution": {
+      "width": 188,
+      "height": 109
+    },
+    "bounds": {
+      "x": 8,
+      "y": 8,
+      "w": 172,
+      "h": 93
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 64356,
+    "transparentFraction": 0.5635579427083334,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 18,
+      "y": 178,
+      "w": 348,
+      "h": 188
+    }
+  }
+}

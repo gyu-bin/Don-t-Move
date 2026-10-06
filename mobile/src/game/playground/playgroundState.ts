@@ -1,3 +1,7 @@
+import { createDoor, doorBlockers, stepDoors } from '../doors/doorSystem';
+import { navigationWithDoors } from '../doors/doorNavigation';
+import type { DoorActor, DoorRuntime } from '../doors/doorTypes';
+import { ESCAPE_TIMER_SECONDS } from '../guards/guardPhase';
 import {createSecurityCamera,stepSecurityCameras} from '../security/cctv';
 import type {SecurityCameraState} from '../security/cctv';
 import { clamp, damp, turnToward } from '../core/math';
@@ -8,6 +12,7 @@ import type { GuardEvents, GuardState } from '../guards/guardBrain';
 import { stepGuards } from '../guards/guardSystem';
 import { BODY } from '../guards/guardTuning';
 import type { Navigation } from '../world/navigation';
+import { clearSegment, findPath } from '../world/navigation';
 import { moveWithCollision } from '../world/collision';
 import type { CompiledStage } from '../world/compileStage';
 import { stepTiltPlayer, stopPlayer } from '../input/tiltMovement';
@@ -54,9 +59,23 @@ export interface PlayerState {
   hasTarget: boolean;
   tx: number;
   ty: number;
+  /** Tap-to-move only: intended speed, kept apart from the measured `speed` so a wall slide does not stall the walk. */
+  drive?: number;
+  /** Tap-to-move only: way round obstacles to the tapped point, flattened [x,y,…], and the next corner on it. */
+  path?: number[];
+  pathIndex?: number;
+  pathTx?: number;
+  pathTy?: number;
+  pathAt?: number;
 }
 
 export interface PlaygroundState {
+  doors?: DoorRuntime[];
+  lockdownDoorIds?: string[];
+  effectiveMovementBlockers?: number[];
+  effectiveVisionBlockers?: number[];
+  effectiveNavigation?: Navigation;
+  doorGeometryRevision?: number;
   theft: TheftContext;
   securityCameras:SecurityCameraState[];
   boundary?: PlayableBoundary;
@@ -93,6 +112,9 @@ const DEMO_PATH = [
 export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[][]): PlaygroundState {
   const sp = stage.playerSpawn;
   return {
+    ...(stage.doors?.length ? {
+      doors:stage.doors.map(createDoor),lockdownDoorIds:(stage.def.lockdownDoors??[]).slice(),doorGeometryRevision:-1,
+    } : {}),
     boundary: stage.def.chapter===1 ? createPlayableBoundary(stage) : undefined,
     securityCameras:(stage.cameras??[]).map(createSecurityCamera),
     theft: { empty:false,x:stage.objective.x,y:stage.objective.y,missionId:stage.def.id,
@@ -141,7 +163,7 @@ function advanceGait(p: PlayerState, dt: number): void {
   p.dist += p.speed * dt;
 }
 
-function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: number[]): void {
+function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: number[], nav?: Navigation): void {
   'worklet';
   const p = s.player;
   let tx = p.tx;
@@ -155,12 +177,33 @@ function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: numb
     else targetSpeed = GAIT_SPEED[wp.gait];
   } else if (p.hasTarget) {
     targetSpeed = GAIT_SPEED[s.playerMode];
+    // Tap-to-move walks round what is in the way. Steering straight at the tapped point pressed the body
+    // into the first wall or table corner between them and left it there.
+    // A clear line is walked directly, exactly as before; a path is only used when the body cannot get there
+    // in a straight line, and only if it really ends at the tapped point.
+    if (nav) {
+      if (p.pathTx !== p.tx || p.pathTy !== p.ty || s.t >= (p.pathAt ?? 0) || !p.path) {
+        let path: number[] = [];
+        if (!clearSegment(p.x, p.y, p.tx, p.ty, blockers, PLAYER_RADIUS)) {
+          path = findPath(nav, p.x, p.y, p.tx, p.ty);
+          const n = path.length;
+          if (n < 4 || Math.hypot(path[n - 2] - p.tx, path[n - 1] - p.ty) > 1) path = [];
+        }
+        p.path = path; p.pathIndex = 0; p.pathTx = p.tx; p.pathTy = p.ty; p.pathAt = s.t + 0.4;
+      }
+      const path = p.path;
+      let k = p.pathIndex ?? 0;
+      while (k < path.length - 2 && Math.hypot(path[k] - p.x, path[k + 1] - p.y) < 7) k += 2;
+      p.pathIndex = k;
+      if (path.length >= 2) { tx = path[k]; ty = path[k + 1]; }
+    }
   }
+  const lastLeg = !p.hasTarget || s.playerMode < 0 || !p.path || p.path.length < 2 || (p.pathIndex ?? 0) >= p.path.length - 2;
 
   const dx = tx - p.x;
   const dy = ty - p.y;
   const dist = Math.sqrt(dx * dx + dy * dy);
-  if (dist < 2) {
+  if (dist < 2 && lastLeg) {
     targetSpeed = 0;
     if (s.playerMode < 0 && p.pause <= 0) {
       p.pause = DEMO_PATH[p.wp].pause;
@@ -169,12 +212,15 @@ function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: numb
       p.hasTarget = false;
     }
   }
-  // Soft acceleration, fast precise stop.
-  const a = targetSpeed > p.speed ? 320 : 700;
-  p.speed += clamp(targetSpeed - p.speed, -a * dt, a * dt);
+  // Soft acceleration, fast precise stop. The intended speed is kept in `drive`: `speed` is overwritten below
+  // with the distance actually covered, and feeding that back in made every slide along a wall slower than the last.
+  const drive0 = p.drive ?? p.speed;
+  const a = targetSpeed > drive0 ? 320 : 700;
+  const drive = drive0 + clamp(targetSpeed - drive0, -a * dt, a * dt);
+  p.drive = drive;
   const bx = p.x, by = p.y;
-  if (dist > 0.5 && p.speed > 0) {
-    const move = Math.min(dist, p.speed * dt);
+  if (dist > 0.5 && drive > 0) {
+    const move = lastLeg ? Math.min(dist, drive * dt) : drive * dt;
     moveWithCollision(p, (dx / dist) * move, (dy / dist) * move, PLAYER_RADIUS, blockers);
   }
   // Same odometer contract as Tilt: a partial wall slide must not count the
@@ -186,6 +232,19 @@ function stepPlayer(s: PlaygroundState, dt: number, tile: number, blockers: numb
   advanceGait(p, dt);
   p.visualGait = stablePlayerSpriteGait(p.speed, p.visualGait);
   p.spritePhase = advancePlayerSpritePhase(p.spritePhase, p.speed * dt, p.speed, playerLocoStride(p.visualGait, p.facing), p.visualGait);
+}
+
+/** Geometry changes invalidate existing guard paths before movement/perception. */
+function refreshDoorGeometry(s:PlaygroundState,movement:number[],vision:number[],baseNav:Navigation):void {
+  'worklet';
+  const geometry=doorBlockers(s.doors??[],movement,vision);
+  s.effectiveMovementBlockers=geometry.movementBlockers;
+  s.effectiveVisionBlockers=geometry.visionBlockers;
+  s.effectiveNavigation=navigationWithDoors(baseNav,doorBlockers(s.doors??[]).movementBlockers);
+  s.doorGeometryRevision=(s.doorGeometryRevision??-1)+1;
+  for(let i=0;i<s.guards.length;i++) {
+    const guard=s.guards[i];guard.path=[];guard.pathIndex=0;guard.repathAt=0;
+  }
 }
 
 export function stepPlayground(
@@ -221,10 +280,13 @@ export function stepPlayground(
   if (tilt?.paused) { stopPlayer(s.player); return; }
   s.t += dt;
   const p = s.player;
+  // First tick builds effective geometry for initially CLOSED authored doors.
+  if (s.doors?.length && s.doorGeometryRevision === -1) refreshDoorGeometry(s,movementBlockers,visionBlockers,navigation);
+  const effectiveMovement=s.effectiveMovementBlockers??movementBlockers;
   const bx=p.x, by=p.y, oldGait=p.gait, oldPhase=p.phase, oldDist=p.dist,
     oldSprite=p.spritePhase, oldVisual=p.visualGait, oldFacing=p.facing;
-  if (tilt) stepTiltPlayer(s.player, tilt, dt, movementBlockers);
-  else stepPlayer(s, dt, tile, movementBlockers);
+  if (tilt) stepTiltPlayer(s.player, tilt, dt, effectiveMovement);
+  else stepPlayer(s, dt, tile, effectiveMovement, s.effectiveNavigation ?? navigation);
   if (s.boundary && enforcePlayableStage(p,bx,by,PLAYER_RADIUS,s.boundary)) {
     p.gait=oldGait;p.phase=oldPhase;p.dist=oldDist;p.spritePhase=oldSprite;p.visualGait=oldVisual;p.facing=oldFacing;
     if (!isPlayableBody(bx,by,PLAYER_RADIUS,s.boundary)) stopPlayer(p);
@@ -240,8 +302,19 @@ export function stepPlayground(
   // Crossing an active Exit completes the escape before this frame's contact pass.
   stepMission(s.mission, p.x, p.y, false);
   s.theft.empty=s.mission.enabled && s.mission.treasure;
-  if (!s.mission.complete) stepSecurityCameras(s.securityCameras,p,visionBlockers,s.events,dt,s.t);
-  if (!s.mission.complete) stepGuards(s.guards, p, visionBlockers, navigation, dt, s.events, s.t, s.patrol,1,s.theft);
+  if (!s.mission.complete && s.doors?.length) {
+    const close=s.events.theftAlert && s.events.theftActivatedAt>=0 &&
+      s.t-s.events.theftActivatedAt>=ESCAPE_TIMER_SECONDS;
+    const actors:DoorActor[]=[{x:p.x,y:p.y,radius:PLAYER_RADIUS}];
+    for (let i=0;i<s.guards.length;i++) actors.push({x:s.guards[i].x,y:s.guards[i].y,radius:BODY.guardRadius});
+    // Current post-movement bodies are checked immediately before commit.
+    const changed=stepDoors(s.doors,dt,close?(s.lockdownDoorIds??[]):[],actors);
+    if (changed) refreshDoorGeometry(s,movementBlockers,visionBlockers,navigation);
+  }
+  const effectiveVision=s.effectiveVisionBlockers??visionBlockers;
+  const effectiveNav=s.effectiveNavigation??navigation;
+  if (!s.mission.complete) stepSecurityCameras(s.securityCameras,p,effectiveVision,s.events,dt,s.t);
+  if (!s.mission.complete) stepGuards(s.guards, p, effectiveVision, effectiveNav, dt, s.events, s.t, s.patrol,1,s.theft);
   for (let i=0;i<s.guards.length;i++) stepGuardPlayback(s.guardPlayback[i],s.guards[i],dt);
 
   // Follow camera, clamped so nothing outside the map shows.
@@ -257,3 +330,4 @@ export function stepPlayground(
       ? bounds.y + (bounds.h - viewH) / 2
       : clamp(s.cam.y, bounds.y, bounds.y + bounds.h - viewH);
 }
+

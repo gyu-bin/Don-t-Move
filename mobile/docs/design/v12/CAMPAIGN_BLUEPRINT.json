@@ -1,0 +1,1234 @@
+{
+  "status": "BLUEPRINT_READY_FOR_REVIEW_NOT_RUNTIME_IMPLEMENTED",
+  "sourceMissionCount": 60,
+  "plannedMissionCount": 45,
+  "chapterMissionCounts": [
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5
+  ],
+  "auditCounts": {
+    "KEEP": 4,
+    "MERGE": 16,
+    "REBUILD": 37,
+    "REMOVE": 3
+  },
+  "audit": [
+    {
+      "oldId": "01-01",
+      "status": "KEEP",
+      "destinationIds": [
+        "01-01"
+      ],
+      "reason": "Compact entrance teaches a statue bypass and has only 2 guards, no camera, 6.0-tile authored escape. Preserve its read-before-crossing skeleton; physical Tier 1 acceptance remains required."
+    },
+    {
+      "oldId": "01-02",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-02"
+      ],
+      "reason": "232-floor-tile rotunda and west-in/east-out loggia offer a real two-sided route choice; combine its central exhibit identity with the private salon rather than retain both missions."
+    },
+    {
+      "oldId": "01-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "01-03"
+      ],
+      "reason": "Bent 18×14 archive is distinct, but safe/risk lengths 22.8/22.2 almost coincide and only the spawn is authored safe. Replace precision aisle dependency with wide shelf-end observation pockets."
+    },
+    {
+      "oldId": "01-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "01-04"
+      ],
+      "reason": "Keep office/hub/gate/inspection-bay story; 3 guards in 106 floor tiles need spatially separated crossings for an easy chapter."
+    },
+    {
+      "oldId": "01-05",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-05"
+      ],
+      "reason": "Keep the east jewel chamber and separate north service return as finale material; do not carry over 4-guard/1-camera coverage or 29.1-tile escape wholesale."
+    },
+    {
+      "oldId": "01-06",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-03"
+      ],
+      "reason": "Paired restoration tables and specimen store enrich archive/conservation fantasy; remove this 360-floor-tile separate mission and its 55.9-tile alternate escape."
+    },
+    {
+      "oldId": "01-07",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-02"
+      ],
+      "reason": "Private foyer, west portrait rooms and south salon supply an intimate collection wing to the rotunda; its separate 3-guard bridge challenge is redundant for Tier 1."
+    },
+    {
+      "oldId": "01-08",
+      "status": "REMOVE",
+      "destinationIds": [],
+      "reason": "Remove the old Security Core mission and its compound pressure. Its cross-hub visual landmark may inform Security Wing only; 5 guards/2 cameras, 46.1-tile safe approach and 46.5-tile escape contradict easy museum. Real user reported excessive objective pressure and hitching."
+    },
+    {
+      "oldId": "01-09",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-05"
+      ],
+      "reason": "Use stepped sculpture promenade and north portrait balcony as finale landmarks; do not retain an additional 55.9-tile safe approach with 4 guards."
+    },
+    {
+      "oldId": "01-10",
+      "status": "REBUILD",
+      "destinationIds": [
+        "01-05"
+      ],
+      "reason": "Keep sanctuary spectacle and a separate cloister escape; replace 686 floor tiles, 6 guards/2 cameras and exit-cluster pressure with the same easy encounter budget as the chapter."
+    },
+    {
+      "oldId": "02-01",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-01"
+      ],
+      "reason": "Compact clean arrival/sculpture-court/art-wall reveal supplies the introduction to the combined sculpture mission; 2-guard/0-camera baseline is useful."
+    },
+    {
+      "oldId": "02-02",
+      "status": "KEEP",
+      "destinationIds": [
+        "02-02"
+      ],
+      "reason": "Portrait spine, paired opaque art screens, east artwork and short northwest escape form a distinct long-LOS mission. Preserve corrected portrait identity; roaming overlap needs Tier 2 acceptance, not automatic certification."
+    },
+    {
+      "oldId": "02-03",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-01"
+      ],
+      "reason": "Carving bays/commission court/installation annex distinguish sculpture from portrait. Compress the 52.1-tile safe approach and merge with 02-01 rather than add another 4-guard mission."
+    },
+    {
+      "oldId": "02-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "02-03"
+      ],
+      "reason": "Staggered movable-screen wing with west collection and southeast court is useful; 38.9/60.3-tile escape and multiple junctions need compact, readable Easy+ circulation."
+    },
+    {
+      "oldId": "02-05",
+      "status": "REMOVE",
+      "destinationIds": [],
+      "reason": "Private reception/portrait salon/service return repeats the private-collection role already supplied by portrait and finale; no unique glass or movable-wall mechanic to preserve as a sixth mission."
+    },
+    {
+      "oldId": "02-06",
+      "status": "REBUILD",
+      "destinationIds": [
+        "02-04"
+      ],
+      "reason": "Preserve glazed installation court and separate east sculpture escape. 521 floor tiles, 5 guards/1 camera and 34.4/49.4-tile escapes exceed a concise Easy+ glass lesson; explicitly preserve BLOCK bodies/PASS LOS."
+    },
+    {
+      "oldId": "02-07",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-03"
+      ],
+      "reason": "Curator workroom and north public return add a clear service choice to Modern Wing; avoid importing its additional 5-guard/1-camera crossing network."
+    },
+    {
+      "oldId": "02-08",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-05"
+      ],
+      "reason": "Paired monumental atrium supplies finale approach and reveal, not a separate 43.0-tile guarded return."
+    },
+    {
+      "oldId": "02-09",
+      "status": "REMOVE",
+      "destinationIds": [],
+      "reason": "Southern private masterpiece and northeast portrait balcony repeat collection/portrait roles; 110.1-tile authored safe approach and 78.7-tile escape inflate travel without a necessary new mechanism."
+    },
+    {
+      "oldId": "02-10",
+      "status": "REBUILD",
+      "destinationIds": [
+        "02-05"
+      ],
+      "reason": "Keep masterpiece chamber, opaque first-break screen and delayed alarm; replace 750 floor tiles and 7 guards/2 cameras with compact Easy+ finale. Human Tilt CLEAR demonstrates playability, not equal chapter difficulty."
+    },
+    {
+      "oldId": "03-01",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-01"
+      ],
+      "reason": "Public/teller/staff verification/dispatch sequence is already bank-specific. Add Teller Hall route choice without simply stacking its security population."
+    },
+    {
+      "oldId": "03-02",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-01"
+      ],
+      "reason": "Long teller spine, west staff bypass and U-return provide two meaningful access modes to the same financial target; retain counter line as cover, not generic walls."
+    },
+    {
+      "oldId": "03-03",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-02"
+      ],
+      "reason": "Six-room staggered office network offers room transitions; combine with Records audit target, avoiding 42.2-tile traversal solely to increase duration."
+    },
+    {
+      "oldId": "03-04",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-02"
+      ],
+      "reason": "Narrow intake/ledger spine/audit alcove/upper verification return provides the actual restricted-records heist in the combined office mission."
+    },
+    {
+      "oldId": "03-05",
+      "status": "KEEP",
+      "destinationIds": [
+        "03-03"
+      ],
+      "reason": "Deposit-wall landmark, two access lanes and independent service return distinguish it from checkpoints/vault; 4 guards/1 camera are evidence only, not a fixed numeric difficulty requirement."
+    },
+    {
+      "oldId": "03-06",
+      "status": "REBUILD",
+      "destinationIds": [
+        "03-04"
+      ],
+      "reason": "Keep staffed main gate and genuine west bypass; restructure excessive 48.0-tile safe detour into readable sequential credential/command crossings."
+    },
+    {
+      "oldId": "03-07",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-05"
+      ],
+      "reason": "Cash-processing tables and carts are operational bank escape material. Their low tables do not block LOS; include as the vault return, not a detached repetitive cash-floor mission."
+    },
+    {
+      "oldId": "03-08",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-04"
+      ],
+      "reason": "Monitoring command objective plus independent east audit exit make Checkpoint a complete heist. Do not append its entire 5-guard/2-camera map to 03-06."
+    },
+    {
+      "oldId": "03-09",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-05"
+      ],
+      "reason": "Visible vault door and protected observation antechamber supply the final pre-vault read, rather than another stand-alone vaultGem pickup."
+    },
+    {
+      "oldId": "03-10",
+      "status": "KEEP",
+      "destinationIds": [
+        "03-05"
+      ],
+      "reason": "Keep PUBLIC→STAFF→SECURITY→VAULT progression and distinct east cash/records escape as the medium benchmark. User said manageable; 60.1-tile main/106.2-tile safe/56.8-tile escape are not mandatory retention targets or evidence of Tier 3 fairness."
+    },
+    {
+      "oldId": "04-01",
+      "status": "REBUILD",
+      "destinationIds": [
+        "04-01"
+      ],
+      "reason": "20×18; 3 guards; 0 runtime CCTV; layout `e32d6c5c0a`; preserve Central apparatus loop and isolated observation bay; Implement explicit glass/opaque distinction and connect objective to workcell landmark; flatten within-tier deployment."
+    },
+    {
+      "oldId": "04-02",
+      "status": "REBUILD",
+      "destinationIds": [
+        "04-02"
+      ],
+      "reason": "21×19; 3 guards; 0 runtime CCTV; layout `316e141d0a`; preserve Offset circular-equipment ring with two radial aisles; Implement explicit glass/opaque distinction and connect objective to workcell landmark; flatten within-tier deployment."
+    },
+    {
+      "oldId": "04-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "04-03"
+      ],
+      "reason": "22×20; 4 guards; 0 runtime CCTV; layout `22ff18ec72`; preserve Paired workcells and a false-signal side passage; Implement explicit glass/opaque distinction and connect objective to workcell landmark; flatten within-tier deployment."
+    },
+    {
+      "oldId": "04-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "04-04"
+      ],
+      "reason": "22×20; 4 guards; 0 runtime CCTV; layout `9a41952625`; preserve Containment cross with four independent exit connections; Implement explicit glass/opaque distinction and connect objective to workcell landmark; flatten within-tier deployment."
+    },
+    {
+      "oldId": "04-05",
+      "status": "REBUILD",
+      "destinationIds": [
+        "04-05"
+      ],
+      "reason": "22×23; 5 guards; 0 runtime CCTV; layout `72578b3e46`; preserve Dual experiment loops linked by a protected equipment spine; Implement explicit glass/opaque distinction and connect objective to workcell landmark; flatten within-tier deployment."
+    },
+    {
+      "oldId": "05-01",
+      "status": "REBUILD",
+      "destinationIds": [
+        "05-01"
+      ],
+      "reason": "20×18; 3 guards; 0 runtime CCTV; layout `1f6a77a3b7`; preserve Open gaming pit with staggered sight-breaking islands; Convert generic table/counter grid into functional pit/bar/VIP islands; flatten within-tier pressure."
+    },
+    {
+      "oldId": "05-02",
+      "status": "REBUILD",
+      "destinationIds": [
+        "05-02"
+      ],
+      "reason": "20×21; 3 guards; 0 runtime CCTV; layout `cc3dab823d`; preserve Two gaming pits and an offset cashier crossover; Convert generic table/counter grid into functional pit/bar/VIP islands; flatten within-tier pressure."
+    },
+    {
+      "oldId": "05-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "05-03"
+      ],
+      "reason": "22×19; 4 guards; 0 runtime CCTV; layout `ec409bf28f`; preserve Service alcoves around a long central table corridor; Convert generic table/counter grid into functional pit/bar/VIP islands; flatten within-tier pressure."
+    },
+    {
+      "oldId": "05-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "05-04"
+      ],
+      "reason": "22×21; 4 guards; 0 runtime CCTV; layout `3544ee7656`; preserve VIP rooms around a broken central perimeter; Convert generic table/counter grid into functional pit/bar/VIP islands; flatten within-tier pressure."
+    },
+    {
+      "oldId": "05-05",
+      "status": "REBUILD",
+      "destinationIds": [
+        "05-05"
+      ],
+      "reason": "24×21; 5 guards; 0 runtime CCTV; layout `ce6990f7f1`; preserve Royal room, cashier loop and two competing escape aisles; Convert generic table/counter grid into functional pit/bar/VIP islands; flatten within-tier pressure."
+    },
+    {
+      "oldId": "06-01",
+      "status": "REBUILD",
+      "destinationIds": [
+        "06-01"
+      ],
+      "reason": "19×19; 3 guards; 0 runtime CCTV; layout `c4eba15afd`; preserve Side entrance into two connected salons; Create semantic rooms/doorways/service route and objective refuge rather than generic furniture lattice."
+    },
+    {
+      "oldId": "06-02",
+      "status": "REBUILD",
+      "destinationIds": [
+        "06-02"
+      ],
+      "reason": "22×18; 3 guards; 0 runtime CCTV; layout `44f11d1db0`; preserve Long hall with alternating living-room doors; Create semantic rooms/doorways/service route and objective refuge rather than generic furniture lattice."
+    },
+    {
+      "oldId": "06-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "06-03"
+      ],
+      "reason": "23×20; 4 guards; 0 runtime CCTV; layout `d9cd572c5d`; preserve Stair landing loop and three room-to-room hiding pockets; Create semantic rooms/doorways/service route and objective refuge rather than generic furniture lattice."
+    },
+    {
+      "oldId": "06-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "06-04"
+      ],
+      "reason": "23×20; 4 guards; 0 runtime CCTV; layout `f9de88bb92`; preserve Night-watch chambers linked through a central reception hall; Create semantic rooms/doorways/service route and objective refuge rather than generic furniture lattice."
+    },
+    {
+      "oldId": "06-05",
+      "status": "REBUILD",
+      "destinationIds": [
+        "06-05"
+      ],
+      "reason": "23×24; 5 guards; 0 runtime CCTV; layout `6e8993df24`; preserve Heirloom suite, long service return and two connected loops; Create semantic rooms/doorways/service route and objective refuge rather than generic furniture lattice."
+    },
+    {
+      "oldId": "07-01",
+      "status": "REBUILD",
+      "destinationIds": [
+        "07-01"
+      ],
+      "reason": "21×19; 4 guards; 0 runtime CCTV; layout `046233aad3`; preserve Loading bay island and two cargo lanes; Retain readable rack/loading geometry but replace mission-count escalation with long-LOS/roaming tier budget and explicit escape chain."
+    },
+    {
+      "oldId": "07-02",
+      "status": "REBUILD",
+      "destinationIds": [
+        "07-02"
+      ],
+      "reason": "21×22; 4 guards; 0 runtime CCTV; layout `79e0f4b680`; preserve Three offset storage aisles with alternating end gaps; Retain readable rack/loading geometry but replace mission-count escalation with long-LOS/roaming tier budget and explicit escape chain."
+    },
+    {
+      "oldId": "07-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "07-03"
+      ],
+      "reason": "23×20; 5 guards; 0 runtime CCTV; layout `d7dc9461b9`; preserve Forked aisle with a hidden cross-loading passage; Retain readable rack/loading geometry but replace mission-count escalation with long-LOS/roaming tier budget and explicit escape chain."
+    },
+    {
+      "oldId": "07-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "07-04"
+      ],
+      "reason": "23×22; 5 guards; 0 runtime CCTV; layout `6230fea377`; preserve Inspection cross and independent perimeter loading lanes; Retain readable rack/loading geometry but replace mission-count escalation with long-LOS/roaming tier budget and explicit escape chain."
+    },
+    {
+      "oldId": "07-05",
+      "status": "REBUILD",
+      "destinationIds": [
+        "07-05"
+      ],
+      "reason": "25×22; 6 guards; 0 runtime CCTV; layout `6298935b23`; preserve Container compound with a long protected shipping exit; Retain readable rack/loading geometry but replace mission-count escalation with long-LOS/roaming tier budget and explicit escape chain."
+    },
+    {
+      "oldId": "08-01",
+      "status": "REBUILD",
+      "destinationIds": [
+        "08-01"
+      ],
+      "reason": "20×20; 4 guards; 0 runtime CCTV; layout `749871c7d4`; preserve Control desk loop and blind monitor-wall approach; Add authored functional CCTV/network sectors using existing systems, readable blind windows and objective refuge; decorative cameras are insufficient."
+    },
+    {
+      "oldId": "08-02",
+      "status": "REBUILD",
+      "destinationIds": [
+        "08-02"
+      ],
+      "reason": "23×19; 4 guards; 0 runtime CCTV; layout `ea12dd10cb`; preserve Two server islands with a surveillance crossover; Add authored functional CCTV/network sectors using existing systems, readable blind windows and objective refuge; decorative cameras are insufficient."
+    },
+    {
+      "oldId": "08-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "08-03"
+      ],
+      "reason": "22×22; 5 guards; 0 runtime CCTV; layout `048bd8ceef`; preserve Blind-feed S corridor with two technician bypasses; Add authored functional CCTV/network sectors using existing systems, readable blind windows and objective refuge; decorative cameras are insufficient."
+    },
+    {
+      "oldId": "08-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "08-04"
+      ],
+      "reason": "24×20; 5 guards; 0 runtime CCTV; layout `1be03fc5ca`; preserve Restricted rooms and a parallel security-return corridor; Add authored functional CCTV/network sectors using existing systems, readable blind windows and objective refuge; decorative cameras are insufficient."
+    },
+    {
+      "oldId": "08-05",
+      "status": "REBUILD",
+      "destinationIds": [
+        "08-05"
+      ],
+      "reason": "23×25; 6 guards; 0 runtime CCTV; layout `95b01fd637`; preserve Black Site archive: asymmetric rooms, security dog-leg and outer bypass; Add authored functional CCTV/network sectors using existing systems, readable blind windows and objective refuge; decorative cameras are insufficient."
+    },
+    {
+      "oldId": "09-01",
+      "status": "REBUILD",
+      "destinationIds": [
+        "09-01"
+      ],
+      "reason": "21×21; 4 guards; 0 runtime CCTV; layout `7b30c6d4b9`; preserve Outer seal loop around a heavy vault island; Combine authored functional security systems and readable vault doorway choices; remove mission-number security ramp."
+    },
+    {
+      "oldId": "09-02",
+      "status": "REBUILD",
+      "destinationIds": [
+        "09-02"
+      ],
+      "reason": "21×24; 4 guards; 0 runtime CCTV; layout `02df4eba0e`; preserve Inner chambers joined by opposing security doorways; Combine authored functional security systems and readable vault doorway choices; remove mission-number security ramp."
+    },
+    {
+      "oldId": "09-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "09-03"
+      ],
+      "reason": "23×24; 5 guards; 0 runtime CCTV; layout `b6ee474524`; preserve Decoy security corridor and a hidden side-room loop; Combine authored functional security systems and readable vault doorway choices; remove mission-number security ramp."
+    },
+    {
+      "oldId": "09-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "09-04"
+      ],
+      "reason": "22×25; 5 guards; 0 runtime CCTV; layout `332a2169ca`; preserve Lockdown cross with two independent protected escape lanes; Combine authored functional security systems and readable vault doorway choices; remove mission-number security ramp."
+    },
+    {
+      "oldId": "09-05",
+      "status": "REBUILD",
+      "destinationIds": [
+        "09-05"
+      ],
+      "reason": "26×24; 6 guards; 0 runtime CCTV; layout `e688e5bae2`; preserve Master vault compound with two antechambers, outer loop and rear escape; Combine authored functional security systems and readable vault doorway choices; remove mission-number security ramp."
+    }
+  ],
+  "missions": [
+    {
+      "id": "01-01",
+      "title": "Entrance Hall",
+      "fantasy": "Read the first guard, circle a grand statue, take the display diamond and leave confidently.",
+      "architecture": "Compact bent lobby / statue exhibition / recessed case room / east side door.",
+      "mainRoute": "Lobby → statue shoulder → single exhibition crossing → case.",
+      "safeRoute": "North viewing recess with a protected wait before the case.",
+      "riskRoute": "Direct south-side statue crossing while the guard faces away.",
+      "objective": "Diamond on a lit recessed display with one clear observation position.",
+      "exit": "East side door, visible after pickup; first opaque break at the case-room return corner.",
+      "securityIdentity": "One crossing at a time; no CCTV; no simultaneous objective/exit pressure.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-01"
+      ]
+    },
+    {
+      "id": "01-02",
+      "title": "Rotunda Collection",
+      "fantasy": "Choose a quiet portrait loggia or cross the central rotunda to reach a private collection.",
+      "architecture": "West vestibule / round-looking two-sided exhibit island / north salon / east loggia.",
+      "mainRoute": "Vestibule → exhibit shoulder → north salon → east loggia escape.",
+      "safeRoute": "Outer portrait arc with protected sightline reads at both ends.",
+      "riskRoute": "Short central rotunda crossing, visible guard turn providing a clear window.",
+      "objective": "Artifact in the north salon beside an opaque statue shoulder.",
+      "exit": "Independent east loggia; one return corner gives immediate post-theft separation.",
+      "securityIdentity": "Patrol watches the central floor; collection watch is sequential, never a double pickup cone.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-02",
+        "01-07"
+      ]
+    },
+    {
+      "id": "01-03",
+      "title": "Archive & Conservation",
+      "fantasy": "Slip through readable shelf ends and restoration benches to recover a catalogued artifact.",
+      "architecture": "Bent staff entry / two broad shelf bays / conservation workroom / east staff return.",
+      "mainRoute": "Staff elbow → shelf-end cover → restoration bay → restricted cabinet.",
+      "safeRoute": "Connected outer shelf shoulders with room to correct Tilt overshoot.",
+      "riskRoute": "Central shelf aisle shortcut with one timed perpendicular sightline.",
+      "objective": "Artifact in a conservation specimen cabinet, not an isolated corridor end.",
+      "exit": "East staff door via a short storage elbow; cabinet-side opaque shelf is first break.",
+      "securityIdentity": "Low-speed observation lesson through spatial windows, not narrower gaps; no CCTV.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-03",
+        "01-06"
+      ]
+    },
+    {
+      "id": "01-04",
+      "title": "Restricted Wing",
+      "fantasy": "Read a small security office and take a restricted museum record through a quiet outbound bay.",
+      "architecture": "Office / control hub / restricted case / east inspection bay / north staff door.",
+      "mainRoute": "Office → hub planning pocket → one guarded access → restricted case.",
+      "safeRoute": "Outer office-to-inspection circuit with one protected turn before pickup.",
+      "riskRoute": "Short hub crossing avoids the inspection detour but exposes the player briefly.",
+      "objective": "Restricted archive case adjacent to the control-room landmark and an opaque shoulder.",
+      "exit": "North staff door through inspection return; no stationary exit cluster.",
+      "securityIdentity": "At most one active sightline at the objective; optional single CCTV only on approach, spatially separated from pickup.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-04"
+      ]
+    },
+    {
+      "id": "01-05",
+      "title": "Grand Museum Heist",
+      "fantasy": "Steal the museum centerpiece, then disappear into its service cloister.",
+      "architecture": "Compact arrival gallery / sculpture promenade / sanctuary / separate cloister return.",
+      "mainRoute": "Arrival → sculpture landmark → sanctuary approach → centerpiece.",
+      "safeRoute": "Outer viewing shoulder and sanctuary alcove with clear stop-and-go opportunities.",
+      "riskRoute": "Direct exhibition axis offers a shorter, briefly exposed approach.",
+      "objective": "Master diamond in a warm-lit sanctuary with a nearby genuine opaque escape shoulder.",
+      "exit": "West service door after the cloister; no grouped guard posts near the door.",
+      "securityIdentity": "Same easy pressure as 01-01–04; grander landmark/space, not additional simultaneous watchers.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-05",
+        "01-09",
+        "01-10"
+      ]
+    },
+    {
+      "id": "02-01",
+      "title": "Sculpture Court",
+      "fantasy": "Cross an open modern gallery using commissioned sculptures as timing landmarks.",
+      "architecture": "Clean arrival / two-sided sculpture island / north commission recess / east installation annex.",
+      "mainRoute": "Arrival → central sculpture shoulder → north commissioned work → east annex.",
+      "safeRoute": "Outer island viewing edge with two explicit protected stops.",
+      "riskRoute": "Direct open-floor crossing when the patrol has passed.",
+      "objective": "Featured commissioned artwork integrated with the sculpture display.",
+      "exit": "East annex via an opaque art-screen corner immediately after the target.",
+      "securityIdentity": "Longer crossing than Museum, but a single interpretable patrol lane; no camera overlap at pickup.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-01",
+        "02-03"
+      ]
+    },
+    {
+      "id": "02-02",
+      "title": "Portrait Hall",
+      "fantasy": "Read a long portrait sightline and use paired art screens to reach a featured painting.",
+      "architecture": "Reception / long portrait spine / opaque screen shoulders / east portrait recess / northwest return.",
+      "mainRoute": "Reception → spine screen → portrait recess → upper collection return.",
+      "safeRoute": "Outer portrait wall and screen-back viewing shoulders.",
+      "riskRoute": "Direct spine crossing trades time for greater exposure.",
+      "objective": "Vertical portrait grouping with featured painting in the eastern recess.",
+      "exit": "Northwest public door via a short upper-wall return and first opaque screen break.",
+      "securityIdentity": "Long LOS/turn timing, not extra guard count; wandering watcher must not seal the safe option.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-02"
+      ]
+    },
+    {
+      "id": "02-03",
+      "title": "Modern Wing",
+      "fantasy": "Pick a public art-screen route or a curator service route through a staggered wing.",
+      "architecture": "North arrival / movable-screen exhibition / west curator recess / south installation / southeast court.",
+      "mainRoute": "Arrival → screen junction → west collection → installation return.",
+      "safeRoute": "Curator workroom shoulders behind opaque exhibition screens.",
+      "riskRoute": "Cross the open movable-screen axis in one observed timing window.",
+      "objective": "Modern artwork in the curator-side collection, anchored to a named screen ensemble.",
+      "exit": "Southeast court on a readable service return with a nearby opaque objective-side screen.",
+      "securityIdentity": "Two successive open-space reads; avoid simultaneous junction cones and long backtracking.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-04",
+        "02-07"
+      ]
+    },
+    {
+      "id": "02-04",
+      "title": "Glass Gallery",
+      "fantasy": "See the treasure through glass and deliberately choose a physical route around it.",
+      "architecture": "West studies / glazed central installation / north study / independent east sculpture gallery.",
+      "mainRoute": "Approach → glass-side viewing shoulder → north study → east art-cell return.",
+      "safeRoute": "Opaque art-screen perimeter; glass itself is never described as concealment.",
+      "riskRoute": "Short glazed-court crossing when the distant guard is facing away.",
+      "objective": "Featured study visible through glazing, with an accessible opaque return shoulder.",
+      "exit": "East sculpture door after art cells interrupt pursuit.",
+      "securityIdentity": "Glass BLOCK movement/PASS LOS; limited sweep watches one exposed crossing, not objective plus escape simultaneously.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-06"
+      ]
+    },
+    {
+      "id": "02-05",
+      "title": "Masterpiece Chamber",
+      "fantasy": "Take a major masterpiece and escape through an alternate public collection.",
+      "architecture": "Atrium introduction / masterpiece recess / opaque first-break screen / portrait inspection / separate exit collection.",
+      "mainRoute": "Atrium shoulder → masterpiece reveal → pickup → screened return.",
+      "safeRoute": "Outer installation arc with a protected wait before the masterpiece.",
+      "riskRoute": "Open atrium axis is shorter and has one clear observation window.",
+      "objective": "Masterpiece in a lit chamber; delayed alarm retained, no instant hidden-player knowledge.",
+      "exit": "Separate west collection door with an escape pocket before its final observed crossing.",
+      "securityIdentity": "Same Easy+ simultaneous-pressure ceiling as the other Gallery missions; no 7-guard finale escalation.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-08",
+        "02-10"
+      ]
+    },
+    {
+      "id": "03-01",
+      "title": "Teller Access",
+      "fantasy": "Move from the public queue through staffed access to a teller-held valuable.",
+      "architecture": "Public lobby / teller spine / west staff bypass / verification elbow / dispatch bay.",
+      "mainRoute": "Public planning pocket → teller access crossing → staff verification → teller target.",
+      "safeRoute": "West staff-office bypass behind counters, then one observed verification gate.",
+      "riskRoute": "Direct teller-spine crossing is shorter but watched from the public side.",
+      "objective": "Teller-held gem with counter landmark and staff threshold beyond it.",
+      "exit": "Independent dispatch door through the verification elbow; counter return offers first break.",
+      "securityIdentity": "Distinct public/staff security roles and a limited CCTV crossing, separated in time; medium budget shared across Bank.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-01",
+        "03-02"
+      ]
+    },
+    {
+      "id": "03-02",
+      "title": "Staff Records",
+      "fantasy": "Navigate real staff rooms to steal an audited record without retracing the intake.",
+      "architecture": "Staggered offices / ledger spine / secure audit alcove / upper verification return.",
+      "mainRoute": "Staff intake → office corner → records crossing → audit alcove.",
+      "safeRoute": "Filing-cabinet edge and an alternative office sequence with protected door reads.",
+      "riskRoute": "Shared records-bank crossing cuts a room but exposes the player.",
+      "objective": "Sealed valuable in the audit alcove with a visible record-bank landmark.",
+      "exit": "Upper verification dispatch; opaque cabinet corner immediately separates the pickup from search.",
+      "securityIdentity": "Door timing and room/corridor roles; CCTV belongs to one records crossing, not every doorway.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-03",
+        "03-04"
+      ]
+    },
+    {
+      "id": "03-03",
+      "title": "Deposit Boxes",
+      "fantasy": "Choose a monitored deposit lane or service approach to a bank deposit target.",
+      "architecture": "Public deposit reception / twin access lanes / deposit-wall landmark / security seam / service return.",
+      "mainRoute": "Reception → selected lane → restricted box wall → service return.",
+      "safeRoute": "Staff-office shoulder gives a longer but genuinely less exposed approach.",
+      "riskRoute": "Deposit-front lane offers a brief direct crossing during a sweep pause.",
+      "objective": "Valuable within the deposit-wall collection, accompanied by a staffed security seam.",
+      "exit": "Separate service door after a protected deposit-bank break and an observed dispatch crossing.",
+      "securityIdentity": "One CCTV with staffed roles, spatially separate watches; low desks/cash carts are not full LOS cover.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-05"
+      ]
+    },
+    {
+      "id": "03-04",
+      "title": "Checkpoint Command",
+      "fantasy": "Cross credential security or an analyst bypass to steal the monitoring command asset.",
+      "architecture": "Public read bay / staffed gate / west analyst bypass / controlled junction / command room / east audit exit.",
+      "mainRoute": "Planning bay → credential gate → controlled junction → monitoring command.",
+      "safeRoute": "West analyst circuit through protected room corners; comparable task count, reduced exposure.",
+      "riskRoute": "Short gate-and-junction route requires observing two sequential security phases.",
+      "objective": "Command asset among monitoring desks and record cabinets inside a restricted room.",
+      "exit": "Independent east audit door after an opaque command-room return corner.",
+      "securityIdentity": "CCTV plus guard timing with separated checkpoints; never make both options permanently covered.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-06",
+        "03-08"
+      ]
+    },
+    {
+      "id": "03-05",
+      "title": "Main Vault",
+      "fantasy": "Penetrate the actual bank vault and escape through cash operations and records dispatch.",
+      "architecture": "Staff access / credential checkpoint / inner security / visible antechamber / Main Vault / cash-processing return / records evacuation.",
+      "mainRoute": "Staff approach → checkpoint → antechamber read → vault pickup → cash circuit.",
+      "safeRoute": "Protected records shoulders and a side antechamber viewing route.",
+      "riskRoute": "Direct security crossings shorten the approach, never remove all waiting positions.",
+      "objective": "Delayed-alarm vault gem within the actual reinforced Main Vault landmark.",
+      "exit": "Lateral records evacuation separate from staff entry; vault-side opaque break before cash-floor exposure.",
+      "securityIdentity": "Retain old 03-10 manageable-feel benchmark; cash tables PASS LOS, opaque cabinets establish genuine cover. Do not raise speed or detection timing for finale.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-07",
+        "03-09",
+        "03-10"
+      ]
+    },
+    {
+      "id": "04-01",
+      "title": "Observation Lobby",
+      "fantasy": "관찰실의 시제품을 가져와 직원 출구로 빠진다.",
+      "architecture": "중앙 observation tank와 불투명 서비스 spine, 양쪽 관찰창.",
+      "mainRoute": "서쪽 입구→tank 어깨→관찰실 checkpoint→시제품.",
+      "safeRoute": "서비스 spine 뒤 우회→대기 pocket→관찰실; longer path with visible wait pockets.",
+      "riskRoute": "tank 앞 짧은 노출 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "관찰 bay 안 시제품, 기기 pedestal·작업등·인접 opaque refuge.",
+      "exit": "동쪽 직원 출구; bay 뒤 LOS break→남쪽 서비스 길.",
+      "securityIdentity": "유리 너머 순찰을 미리 읽고 한 checkpoint를 통과.",
+      "difficultyTier": "MEDIUM+",
+      "sourceIds": [
+        "04-01"
+      ]
+    },
+    {
+      "id": "04-02",
+      "title": "Research Wing",
+      "fantasy": "서로 보이는 두 연구실 중 안전한 접근면을 선택한다.",
+      "architecture": "두 workcell과 연결 vestibule, 투명 내벽/불투명 설비벽 구분.",
+      "mainRoute": "서쪽 입구→radial aisle→동쪽 연구실.",
+      "safeRoute": "장비 spine 바깥쪽→서쪽 wait pocket→연구실 측문; longer path with visible wait pockets.",
+      "riskRoute": "workcell 사이 중앙 crossover; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "동쪽 console alcove 시제품, 획득 후 equipment shoulder로 회피.",
+      "exit": "북쪽 직원 문; 두 radial aisle 중 빈 쪽 선택.",
+      "securityIdentity": "유리 시야는 열리지만 이동은 문을 거쳐야 함.",
+      "difficultyTier": "MEDIUM+",
+      "sourceIds": [
+        "04-02"
+      ]
+    },
+    {
+      "id": "04-03",
+      "title": "Specimen Lab",
+      "fantasy": "표본 검사 동선을 이용해 샘플을 반출한다.",
+      "architecture": "paired specimen workcell, 남쪽 관찰 통로와 두 연결문.",
+      "mainRoute": "남쪽 입구→표본 workcell→검사문→sample bay.",
+      "safeRoute": "불투명 storage back→sample bay 측면; longer path with visible wait pockets.",
+      "riskRoute": "paired cell 사이 검사 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "sample bay 실험대, 첫 LOS break는 storage return corner.",
+      "exit": "서쪽 샘플 반출구; 남쪽 workcell 뒤 복귀.",
+      "securityIdentity": "관찰창으로 guard facing을 읽고 검사문에서 timing 선택.",
+      "difficultyTier": "MEDIUM+",
+      "sourceIds": [
+        "04-03"
+      ]
+    },
+    {
+      "id": "04-04",
+      "title": "Containment Sector",
+      "fantasy": "격리 구획을 통과해 안전한 서비스 탈출을 고른다.",
+      "architecture": "containment cross와 2개의 명확한 서비스 연결, glass/opaque 혼합.",
+      "mainRoute": "동쪽 입구→격리 vestibule→남서 containment bay.",
+      "safeRoute": "북쪽 설비 spine→bay 후면; longer path with visible wait pockets.",
+      "riskRoute": "cross 중심을 직접 통과; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "격리 bay 시제품, opaque 장비 뒤 refuge.",
+      "exit": "북쪽 서비스 문; pickup bay 뒤→서쪽 return aisle.",
+      "securityIdentity": "서로 다른 창의 시야가 순차적으로 작동; 영구 동시 봉쇄 금지.",
+      "difficultyTier": "MEDIUM+",
+      "sourceIds": [
+        "04-04"
+      ]
+    },
+    {
+      "id": "04-05",
+      "title": "Prototype Chamber",
+      "fantasy": "시제품 반출실과 관찰 회랑을 연결하는 연구소 heist.",
+      "architecture": "두 experiment loop·서비스 spine·시제품 chamber.",
+      "mainRoute": "남쪽 입구→서쪽 loop→시제품 chamber.",
+      "safeRoute": "spine 뒤 observation pockets→chamber 측문; longer path with visible wait pockets.",
+      "riskRoute": "두 loop 사이 중앙 bridge; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "chamber 중심 reactor display, 곧바로 후면 설비 뒤 LOS break.",
+      "exit": "동쪽 emergency service 문; 반출 loop가 접근 loop와 분리.",
+      "securityIdentity": "유리 관찰·checkpoint·theft search 종합, 다른 Ch4보다 빡센 finale 금지.",
+      "difficultyTier": "MEDIUM+",
+      "sourceIds": [
+        "04-05"
+      ]
+    },
+    {
+      "id": "05-01",
+      "title": "Reception Jewel",
+      "fantasy": "카지노 입구 전시 보석을 테이블 틈으로 반출한다.",
+      "architecture": "reception apron·slot bank·두 table island.",
+      "mainRoute": "북쪽 입구→slot shoulder→display salon.",
+      "safeRoute": "외곽 bar back→reception alcove; longer path with visible wait pockets.",
+      "riskRoute": "table island 사이 짧은 직선; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "reception showcase, slot bank 뒤 첫 LOS break.",
+      "exit": "남쪽 service 문; bar pocket→직원 길.",
+      "securityIdentity": "다방향 guard가 다른 island를 보며 회전; 한 번에 읽을 crossing.",
+      "difficultyTier": "MEDIUM-HIGH",
+      "sourceIds": [
+        "05-01"
+      ]
+    },
+    {
+      "id": "05-02",
+      "title": "Gaming Floor",
+      "fantasy": "두 gaming pit 사이 경비 시선을 교대로 피한다.",
+      "architecture": "두 table pit·cashier crossover·외곽 직원 길.",
+      "mainRoute": "북쪽 입구→첫 pit→cashier crossover→남쪽 showcase.",
+      "safeRoute": "slot back aisle→pit 측면; longer path with visible wait pockets.",
+      "riskRoute": "두 pit 중앙 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "남쪽 cashier display, counter shoulder가 인접 refuge.",
+      "exit": "동쪽 staff 출구; counter 뒤 escape lane.",
+      "securityIdentity": "각 pit의 독립 patrol phase와 제한 CCTV가 순차 overlap.",
+      "difficultyTier": "MEDIUM-HIGH",
+      "sourceIds": [
+        "05-02"
+      ]
+    },
+    {
+      "id": "05-03",
+      "title": "Service Lounge",
+      "fantasy": "손님 공간과 바 뒤 직원 통로 사이에서 귀중품을 훔친다.",
+      "architecture": "bar front·service alcove·긴 table aisle.",
+      "mainRoute": "서쪽 입구→lounge island→private display.",
+      "safeRoute": "bar back→service alcove→display 후면; longer path with visible wait pockets.",
+      "riskRoute": "table aisle 직접 횡단; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "private lounge showcase, bar 후면에서 첫 LOS break.",
+      "exit": "북쪽 service lift; alcove→bar return.",
+      "securityIdentity": "실내 다방향 patrol, 서비스 동선은 느리지만 관찰 가능.",
+      "difficultyTier": "MEDIUM-HIGH",
+      "sourceIds": [
+        "05-03"
+      ]
+    },
+    {
+      "id": "05-04",
+      "title": "VIP Salon",
+      "fantasy": "VIP room 사이의 가구 island로 숨으며 보석을 탈취한다.",
+      "architecture": "VIP salons·central perimeter break·대체 staff corridor.",
+      "mainRoute": "남쪽 입구→salon 문→private showcase.",
+      "safeRoute": "staff corridor→sofa pocket→측문; longer path with visible wait pockets.",
+      "riskRoute": "central lounge→VIP 정문; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "VIP display, 불투명 salon door return이 첫 LOS break.",
+      "exit": "서쪽 staff 문; sofa pocket→서비스 corridor.",
+      "securityIdentity": "VIP door/checkpoint + lounge view, doorway를 동시에 봉쇄하지 않음.",
+      "difficultyTier": "MEDIUM-HIGH",
+      "sourceIds": [
+        "05-04"
+      ]
+    },
+    {
+      "id": "05-05",
+      "title": "Royal Jewel Room",
+      "fantasy": "cashier와 VIP 경비 사이로 왕실 보석을 반출한다.",
+      "architecture": "royal chamber·cashier loop·두 escape aisle.",
+      "mainRoute": "동쪽 입구→cashier shoulder→royal anteroom.",
+      "safeRoute": "bar-service perimeter→chamber 측문; longer path with visible wait pockets.",
+      "riskRoute": "gaming pit→anteroom 직접 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "royal chamber landmark showcase, 문 뒤 refuge.",
+      "exit": "남쪽 staff 문; cashier loop 또는 bar return 선택.",
+      "securityIdentity": "island timing·CCTV·theft sector 종합; pressure는 다른 Ch5와 동일.",
+      "difficultyTier": "MEDIUM-HIGH",
+      "sourceIds": [
+        "05-05"
+      ]
+    },
+    {
+      "id": "06-01",
+      "title": "Garden Vestibule",
+      "fantasy": "정원 옆문으로 들어가 손님 salon의 유물을 반출한다.",
+      "architecture": "두 실제 salon·중앙 doorway·정원 service return.",
+      "mainRoute": "서쪽 옆문→첫 salon→둘째 salon display.",
+      "safeRoute": "정원 return→curtain-wall pocket→salon 측문; longer path with visible wait pockets.",
+      "riskRoute": "salon 정문 직접 연결; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "둘째 salon cabinet, doorway 바깥 blind corner.",
+      "exit": "동쪽 정원 문; service return.",
+      "securityIdentity": "room patrol와 doorway facing으로 corner timing 선택.",
+      "difficultyTier": "MEDIUM-HIGH+",
+      "sourceIds": [
+        "06-01"
+      ]
+    },
+    {
+      "id": "06-02",
+      "title": "Drawing Room",
+      "fantasy": "응접실 문이 교대로 열리는 시야를 읽고 가보를 가져간다.",
+      "architecture": "긴 hallway·alternating doors·불투명 living-room pocket.",
+      "mainRoute": "서쪽 입구→hall 문→drawing room.",
+      "safeRoute": "service passage→small reading pocket; longer path with visible wait pockets.",
+      "riskRoute": "긴 hall 직선; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "drawing room mantel cabinet, 문 뒤 첫 LOS break.",
+      "exit": "남쪽 service 문; hall 횡단 1회와 독립 return.",
+      "securityIdentity": "door-facing wait window가 명확; 긴 hall 상시 봉쇄 금지.",
+      "difficultyTier": "MEDIUM-HIGH+",
+      "sourceIds": [
+        "06-02"
+      ]
+    },
+    {
+      "id": "06-03",
+      "title": "Library Wing",
+      "fantasy": "서가 측면과 독서실을 연결해 수집품을 훔친다.",
+      "architecture": "실제 library shelves·reading alcove·두 room return.",
+      "mainRoute": "북쪽 landing→library shoulder→reading vault.",
+      "safeRoute": "서가 back aisle→reading alcove 측면; longer path with visible wait pockets.",
+      "riskRoute": "reading room 중앙 통과; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "reading alcove cabinet, 불투명 bookshelf 뒤 회피.",
+      "exit": "서쪽 service 문; library return.",
+      "securityIdentity": "서가 corner마다 관찰 선택; grid 테이블 밀도 대신 의미 있는 서가.",
+      "difficultyTier": "MEDIUM-HIGH+",
+      "sourceIds": [
+        "06-03"
+      ]
+    },
+    {
+      "id": "06-04",
+      "title": "Family Apartments",
+      "fantasy": "침실과 reception 사이 방 전환을 이용해 유물을 반출한다.",
+      "architecture": "family chambers·reception hall·parallel service doors.",
+      "mainRoute": "동쪽 입구→reception→private suite.",
+      "safeRoute": "service door chain→suite 측문; longer path with visible wait pockets.",
+      "riskRoute": "reception 대각 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "suite cabinet, suite 후면 doorway corner.",
+      "exit": "북쪽 staff 문; 두 방을 거친 return.",
+      "securityIdentity": "room guard와 roaming guard의 공간 책임 분리.",
+      "difficultyTier": "MEDIUM-HIGH+",
+      "sourceIds": [
+        "06-04"
+      ]
+    },
+    {
+      "id": "06-05",
+      "title": "Heirloom Gallery",
+      "fantasy": "가보 suite에서 경비를 끊고 저택 서비스 회랑으로 돌아간다.",
+      "architecture": "heirloom suite·두 living-room loop·service return.",
+      "mainRoute": "남쪽 입구→첫 salon→suite.",
+      "safeRoute": "library-service chain→suite 후면; longer path with visible wait pockets.",
+      "riskRoute": "central reception→suite 정문; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "suite centerpiece, 인접 cabinet wall 뒤 LOS break.",
+      "exit": "동쪽 service 문; suite back→service loop.",
+      "securityIdentity": "door/corner/search 종합; 넓이만 증가, pressure 추가 누적 금지.",
+      "difficultyTier": "MEDIUM-HIGH+",
+      "sourceIds": [
+        "06-05"
+      ]
+    },
+    {
+      "id": "07-01",
+      "title": "Loading Entrance",
+      "fantasy": "하역 구역의 검수 물품을 cargo lane으로 반출한다.",
+      "architecture": "loading dock·pallet island·두 cargo lane.",
+      "mainRoute": "동쪽 dock→pallet shoulder→inspection case.",
+      "safeRoute": "rack back→loading pocket→검수대 측면; longer path with visible wait pockets.",
+      "riskRoute": "긴 cargo lane 직선; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "inspection case, container corner가 첫 LOS break.",
+      "exit": "서쪽 loading 문; outer cargo lane.",
+      "securityIdentity": "긴 LOS와 roaming patrol; lane 끝마다 관찰 pocket.",
+      "difficultyTier": "HARD",
+      "sourceIds": [
+        "07-01"
+      ]
+    },
+    {
+      "id": "07-02",
+      "title": "Cargo Sorting",
+      "fantasy": "서로 다른 끝이 열린 세 aisle 중 경비가 비운 aisle을 고른다.",
+      "architecture": "세 offset rack aisle와 alternating end gaps 유지.",
+      "mainRoute": "동쪽 입구→선택 aisle→sorting bay.",
+      "safeRoute": "외곽 rack end pockets→북서 sorting bay; longer path with visible wait pockets.",
+      "riskRoute": "중앙 aisle 직선; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "북서 shipping case, sorting partition 뒤 refuge.",
+      "exit": "북쪽 dispatch 문; 다른 aisle로 되돌아감.",
+      "securityIdentity": "roaming이 aisle 사이를 이동, 같은 lane을 영구 봉쇄하지 않음.",
+      "difficultyTier": "HARD",
+      "sourceIds": [
+        "07-02"
+      ]
+    },
+    {
+      "id": "07-03",
+      "title": "Storage Aisles",
+      "fantasy": "잘못 들어간 aisle에서 cross-loading 연결을 찾아 탈출한다.",
+      "architecture": "forked aisle·명확한 cross-loading passage·rack pocket.",
+      "mainRoute": "남쪽 입구→fork→동쪽 case bay.",
+      "safeRoute": "rack shoulder→cross-loading bypass; longer path with visible wait pockets.",
+      "riskRoute": "fork 중앙 긴 노출 aisle; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "case bay landmark crates, rack end에서 첫 LOS break.",
+      "exit": "동쪽 dispatch 문; pickup bay 후면 bypass.",
+      "securityIdentity": "long LOS 선택과 roaming timing; 숨은 passage를 시각적으로 명확히.",
+      "difficultyTier": "HARD",
+      "sourceIds": [
+        "07-03"
+      ]
+    },
+    {
+      "id": "07-04",
+      "title": "Inspection Bay",
+      "fantasy": "검수 checkpoint를 넘고 perimeter loading lane으로 빠진다.",
+      "architecture": "inspection cross·loading return·machine shoulder.",
+      "mainRoute": "서쪽 입구→inspection desk→동쪽 verified cargo.",
+      "safeRoute": "남쪽 perimeter→machine pocket→desk 후면; longer path with visible wait pockets.",
+      "riskRoute": "cross 중앙 직선; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "검수 cargo case, machine body 뒤 회피.",
+      "exit": "남쪽 loading 출구; perimeter lane.",
+      "securityIdentity": "checkpoint guard와 roaming sector가 순차 대응.",
+      "difficultyTier": "HARD",
+      "sourceIds": [
+        "07-04"
+      ]
+    },
+    {
+      "id": "07-05",
+      "title": "Secured Shipment",
+      "fantasy": "container compound의 봉인 화물을 dispatch lane으로 반출한다.",
+      "architecture": "container rows·shipping bay·두 protected exits.",
+      "mainRoute": "북쪽 gate→container shoulder→sealed shipment.",
+      "safeRoute": "outer loading ring→shipment 후면; longer path with visible wait pockets.",
+      "riskRoute": "container 간 long lane; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "sealed container case, opaque container end 뒤 refuge.",
+      "exit": "서쪽 dispatch 문; long lane 중간 pocket chain.",
+      "securityIdentity": "long LOS·roaming·search sector 종합, finale guard stacking 금지.",
+      "difficultyTier": "HARD",
+      "sourceIds": [
+        "07-05"
+      ]
+    },
+    {
+      "id": "08-01",
+      "title": "Security Reception",
+      "fantasy": "관제 책상 뒤 보안 데이터를 직원 통로로 반출한다.",
+      "architecture": "control desk loop·monitor wall·opaque service return.",
+      "mainRoute": "남쪽 입구→reception checkpoint→data alcove.",
+      "safeRoute": "monitor-wall back→wait pocket; longer path with visible wait pockets.",
+      "riskRoute": "desk 앞 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "data console, monitor-wall corner refuge.",
+      "exit": "북쪽 staff 문; blind service return.",
+      "securityIdentity": "실제 CCTV sweep + guard checkpoint를 시간으로 분리.",
+      "difficultyTier": "VERY HARD",
+      "sourceIds": [
+        "08-01"
+      ]
+    },
+    {
+      "id": "08-02",
+      "title": "Monitoring Room",
+      "fantasy": "서로 다른 camera feed가 지키는 server island를 건넌다.",
+      "architecture": "두 server islands·surveillance crossover·technician bypass.",
+      "mainRoute": "남쪽 입구→island shoulder→monitor bay.",
+      "safeRoute": "server back aisles→bay 측면; longer path with visible wait pockets.",
+      "riskRoute": "island 사이 crossover; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "monitor bay terminal, server corner 첫 LOS break.",
+      "exit": "동쪽 technician 문; opposite server return.",
+      "securityIdentity": "CCTV2개 권역과 guard sector, 각 sweep의 readable blind window.",
+      "difficultyTier": "VERY HARD",
+      "sourceIds": [
+        "08-02"
+      ]
+    },
+    {
+      "id": "08-03",
+      "title": "Server Wing",
+      "fantasy": "blind feed 회랑을 읽고 보안 데이터로 접근한다.",
+      "architecture": "server S corridor·두 technician bypass.",
+      "mainRoute": "서쪽 입구→server corner→data cage.",
+      "safeRoute": "technician bypass→rack back→cage 측문; longer path with visible wait pockets.",
+      "riskRoute": "S corridor 핵심 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "data cage terminal, rack corner refuge.",
+      "exit": "남쪽 service 문; 다른 bypass로 escape.",
+      "securityIdentity": "실제 camera coverage blind lane + roaming handoff.",
+      "difficultyTier": "VERY HARD",
+      "sourceIds": [
+        "08-03"
+      ]
+    },
+    {
+      "id": "08-04",
+      "title": "Restricted Corridor",
+      "fantasy": "보안 junction에서 순찰과 CCTV가 비우는 연결을 선택한다.",
+      "architecture": "restricted rooms·parallel return·security junction.",
+      "mainRoute": "북쪽 입구→junction checkpoint→archive cell.",
+      "safeRoute": "parallel technician return→cell 후면; longer path with visible wait pockets.",
+      "riskRoute": "junction 직접 횡단; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "restricted terminal, opaque cell-return corner.",
+      "exit": "서쪽 staff 문; independent technician lane.",
+      "securityIdentity": "networked sectors지만 미발각 player 위치 공유 금지.",
+      "difficultyTier": "VERY HARD",
+      "sourceIds": [
+        "08-04"
+      ]
+    },
+    {
+      "id": "08-05",
+      "title": "Black Site Archive",
+      "fantasy": "control network와 archive enclave를 통과해 기록을 반출한다.",
+      "architecture": "asymmetric archive rooms·security dogleg·outer bypass.",
+      "mainRoute": "동쪽 입구→monitor junction→archive anteroom.",
+      "safeRoute": "outer bypass→archive flank; longer path with visible wait pockets.",
+      "riskRoute": "dogleg checkpoint 직행; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "archive vault terminal, anteroom pillar-wall 회피.",
+      "exit": "북쪽 service 문; archive rear→outer return.",
+      "securityIdentity": "guard+CCTV network 종합; 같은 tier 내 더 좁은 windows 강제 금지.",
+      "difficultyTier": "VERY HARD",
+      "sourceIds": [
+        "08-05"
+      ]
+    },
+    {
+      "id": "09-01",
+      "title": "Outer Checkpoint",
+      "fantasy": "금고 outer seal의 전시 보석을 우회 반출한다.",
+      "architecture": "heavy vault island·checkpoint vestibule·outer ring.",
+      "mainRoute": "서쪽 입구→checkpoint→outer case bay.",
+      "safeRoute": "vault wall ring→측문; longer path with visible wait pockets.",
+      "riskRoute": "checkpoint 직접 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "outer case bay masterDiamond, vault shoulder refuge.",
+      "exit": "동쪽 sealed service 문; ring escape.",
+      "securityIdentity": "guard/CCTV/glass inspection 조합, 사전 관찰 pocket 필수.",
+      "difficultyTier": "FINAL",
+      "sourceIds": [
+        "09-01"
+      ]
+    },
+    {
+      "id": "09-02",
+      "title": "Vault Antechamber",
+      "fantasy": "opposing doorway의 보안 시간을 읽고 inner chamber를 통과한다.",
+      "architecture": "두 antechambers·opposing security doors·service link.",
+      "mainRoute": "서쪽 입구→첫 antechamber→inner showcase.",
+      "safeRoute": "service link→inner chamber flank; longer path with visible wait pockets.",
+      "riskRoute": "두 door 직선; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "inner showcase, 불투명 doorway return 뒤 refuge.",
+      "exit": "북쪽 staff 문; 다른 antechamber return.",
+      "securityIdentity": "door guard와 camera sweep이 겹쳐도 실행 가능한 시간 창.",
+      "difficultyTier": "FINAL",
+      "sourceIds": [
+        "09-02"
+      ]
+    },
+    {
+      "id": "09-03",
+      "title": "Mechanism Hall",
+      "fantasy": "미끼 회랑보다 안전한 mechanism service loop를 읽는다.",
+      "architecture": "decoy corridor·side-room loop·mechanism rack.",
+      "mainRoute": "남쪽 입구→mechanism shoulder→case room.",
+      "safeRoute": "side-room loop→case 후면; longer path with visible wait pockets.",
+      "riskRoute": "decoy corridor 정면 crossing; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "case room masterDiamond, rack corner first break.",
+      "exit": "서쪽 maintenance 문; side-room return.",
+      "securityIdentity": "미끼는 표지와 visible security로 읽힘; 정보 없는 trial/error 금지.",
+      "difficultyTier": "FINAL",
+      "sourceIds": [
+        "09-03"
+      ]
+    },
+    {
+      "id": "09-04",
+      "title": "Security Ring",
+      "fantasy": "pickup 후 lockdown 압박 속에서도 독립된 탈출 lane을 고른다.",
+      "architecture": "security cross·two protected escape lanes·wait pockets.",
+      "mainRoute": "동쪽 입구→cross checkpoint→vault alcove.",
+      "safeRoute": "outer ring→alcove rear; longer path with visible wait pockets.",
+      "riskRoute": "central cross 직행; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "vault alcove display, wall shoulder 즉시 회피.",
+      "exit": "남쪽 service 문; 둘 중 빈 escape lane.",
+      "securityIdentity": "confirmedTheft28s 동일; lockdown은 실패 아닌 network pressure.",
+      "difficultyTier": "FINAL",
+      "sourceIds": [
+        "09-04"
+      ]
+    },
+    {
+      "id": "09-05",
+      "title": "Master Diamond Chamber",
+      "fantasy": "전체 보안 문법을 읽고 최종 보석을 service exit로 반출한다.",
+      "architecture": "master chamber·두 antechambers·outer loop·rear escape.",
+      "mainRoute": "북쪽 입구→첫 antechamber→master chamber.",
+      "safeRoute": "outer loop→rear chamber entrance; longer path with visible wait pockets.",
+      "riskRoute": "central checkpoint→master front; shorter exposed leg whose guard/camera phase is observable.",
+      "objective": "master display landmark, 바로 옆 opaque chamber return.",
+      "exit": "동쪽 rear service 문; antechamber 또는 outer loop.",
+      "securityIdentity": "전체 시스템 종합; guard/LOS 동시중첩은 관찰가능한 해답 보장.",
+      "difficultyTier": "FINAL",
+      "sourceIds": [
+        "09-05"
+      ]
+    }
+  ],
+  "tiltSelection": "PENDING_PHYSICAL_A_B_C",
+  "runtimeChanged": false
+}

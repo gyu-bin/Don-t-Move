@@ -6,7 +6,6 @@ import {auditV3MuseumGallery} from './v3MuseumGalleryQA';
 import {guardPhysicalContract} from './guardPhysicalContract';
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
-import {buildMission} from './buildCampaign';
 import {museumMission05,museumMission08,museumMission10} from './museumProduction';
 import {applyMuseumFinalDesign} from './museumFinalDesign';
 import {auditHideability,structureRole} from './museumHideabilityQA';
@@ -50,7 +49,7 @@ test('guard-generation gate rejects an unreachable destination; decoration does 
 
 test('authored Museum landmarks refer to real props and the rotunda accent follows its approved sculpture',()=>{
  for(let i=0;i<10;i++){
-  const def=buildMission(i),landmark=def.landmark;
+  const def=(historicalJSON as StageDefinition[]).find(d=>d.id===`01-${String(i+1).padStart(2,'0')}`)!,landmark=def.landmark;
   assert(landmark,`${def.id}: landmark missing`);
   assert(def.props.some(p=>p.kind===landmark.kind&&p.x===landmark.x&&p.y===landmark.y),`${def.id}: landmark detached from prop`);
  }

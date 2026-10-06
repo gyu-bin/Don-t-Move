@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/architecture/vault_blast_screen.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 22,
+    "y": 113,
+    "w": 468,
+    "h": 377
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_blast_screen.png",
+    "resolution": {
+      "width": 246,
+      "height": 202
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 226,
+      "h": 182
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 157668,
+    "transparentFraction": 0.3985443115234375,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 22,
+      "y": 113,
+      "w": 468,
+      "h": 377
+    }
+  }
+}

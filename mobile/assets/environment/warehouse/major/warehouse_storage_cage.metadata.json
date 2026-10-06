@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_storage_cage.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 146,
+    "w": 482,
+    "h": 351
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_storage_cage.png",
+    "resolution": {
+      "width": 213,
+      "height": 155
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 213,
+      "h": 155
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 144370,
+    "transparentFraction": 0.4492378234863281,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 146,
+      "w": 482,
+      "h": 351
+    }
+  }
+}

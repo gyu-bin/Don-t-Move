@@ -41,3 +41,16 @@ export function pixelDiagnostics(data:Uint8Array,w:number,h:number) {
   return {opaquePixels:count,transparentFraction:transparent/(w*h),edgePixels:edge,cornerAlpha:corners,
     bounds:count?{x:left,y:top,w:right-left+1,h:bottom-top+1}:null};
 }
+
+/** Pixel-level Phase 4E gate. Semantic perspective and footprint agreement
+ * still require actual DeviceHub review; these checks reject broken cutouts. */
+export function pixelContractErrors(data:Uint8Array,w:number,h:number):string[] {
+  const errors:string[]=[];
+  if(data.length!==w*h*4||w<=0||h<=0)return ['Invalid RGBA pixel buffer'];
+  const d=pixelDiagnostics(data,w,h);
+  if(!d.opaquePixels)errors.push('Empty transparent asset');
+  if(d.transparentFraction===0)errors.push('Missing transparency');
+  if(d.edgePixels)errors.push('Opaque pixels touch canvas edge');
+  if(d.cornerAlpha.some(alpha=>alpha>16))errors.push('Contaminated transparent corner');
+  return errors;
+}

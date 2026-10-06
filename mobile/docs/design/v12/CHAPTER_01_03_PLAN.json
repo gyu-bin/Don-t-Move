@@ -1,0 +1,492 @@
+{
+  "audit": [
+    {
+      "oldId": "01-01",
+      "status": "KEEP",
+      "destinationIds": [
+        "01-01"
+      ],
+      "reason": "Compact entrance teaches a statue bypass and has only 2 guards, no camera, 6.0-tile authored escape. Preserve its read-before-crossing skeleton; physical Tier 1 acceptance remains required."
+    },
+    {
+      "oldId": "01-02",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-02"
+      ],
+      "reason": "232-floor-tile rotunda and west-in/east-out loggia offer a real two-sided route choice; combine its central exhibit identity with the private salon rather than retain both missions."
+    },
+    {
+      "oldId": "01-03",
+      "status": "REBUILD",
+      "destinationIds": [
+        "01-03"
+      ],
+      "reason": "Bent 18×14 archive is distinct, but safe/risk lengths 22.8/22.2 almost coincide and only the spawn is authored safe. Replace precision aisle dependency with wide shelf-end observation pockets."
+    },
+    {
+      "oldId": "01-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "01-04"
+      ],
+      "reason": "Keep office/hub/gate/inspection-bay story; 3 guards in 106 floor tiles need spatially separated crossings for an easy chapter."
+    },
+    {
+      "oldId": "01-05",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-05"
+      ],
+      "reason": "Keep the east jewel chamber and separate north service return as finale material; do not carry over 4-guard/1-camera coverage or 29.1-tile escape wholesale."
+    },
+    {
+      "oldId": "01-06",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-03"
+      ],
+      "reason": "Paired restoration tables and specimen store enrich archive/conservation fantasy; remove this 360-floor-tile separate mission and its 55.9-tile alternate escape."
+    },
+    {
+      "oldId": "01-07",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-02"
+      ],
+      "reason": "Private foyer, west portrait rooms and south salon supply an intimate collection wing to the rotunda; its separate 3-guard bridge challenge is redundant for Tier 1."
+    },
+    {
+      "oldId": "01-08",
+      "status": "REMOVE",
+      "destinationIds": [],
+      "reason": "Remove the old Security Core mission and its compound pressure. Its cross-hub visual landmark may inform Security Wing only; 5 guards/2 cameras, 46.1-tile safe approach and 46.5-tile escape contradict easy museum. Real user reported excessive objective pressure and hitching."
+    },
+    {
+      "oldId": "01-09",
+      "status": "MERGE",
+      "destinationIds": [
+        "01-05"
+      ],
+      "reason": "Use stepped sculpture promenade and north portrait balcony as finale landmarks; do not retain an additional 55.9-tile safe approach with 4 guards."
+    },
+    {
+      "oldId": "01-10",
+      "status": "REBUILD",
+      "destinationIds": [
+        "01-05"
+      ],
+      "reason": "Keep sanctuary spectacle and a separate cloister escape; replace 686 floor tiles, 6 guards/2 cameras and exit-cluster pressure with the same easy encounter budget as the chapter."
+    },
+    {
+      "oldId": "02-01",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-01"
+      ],
+      "reason": "Compact clean arrival/sculpture-court/art-wall reveal supplies the introduction to the combined sculpture mission; 2-guard/0-camera baseline is useful."
+    },
+    {
+      "oldId": "02-02",
+      "status": "KEEP",
+      "destinationIds": [
+        "02-02"
+      ],
+      "reason": "Portrait spine, paired opaque art screens, east artwork and short northwest escape form a distinct long-LOS mission. Preserve corrected portrait identity; roaming overlap needs Tier 2 acceptance, not automatic certification."
+    },
+    {
+      "oldId": "02-03",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-01"
+      ],
+      "reason": "Carving bays/commission court/installation annex distinguish sculpture from portrait. Compress the 52.1-tile safe approach and merge with 02-01 rather than add another 4-guard mission."
+    },
+    {
+      "oldId": "02-04",
+      "status": "REBUILD",
+      "destinationIds": [
+        "02-03"
+      ],
+      "reason": "Staggered movable-screen wing with west collection and southeast court is useful; 38.9/60.3-tile escape and multiple junctions need compact, readable Easy+ circulation."
+    },
+    {
+      "oldId": "02-05",
+      "status": "REMOVE",
+      "destinationIds": [],
+      "reason": "Private reception/portrait salon/service return repeats the private-collection role already supplied by portrait and finale; no unique glass or movable-wall mechanic to preserve as a sixth mission."
+    },
+    {
+      "oldId": "02-06",
+      "status": "REBUILD",
+      "destinationIds": [
+        "02-04"
+      ],
+      "reason": "Preserve glazed installation court and separate east sculpture escape. 521 floor tiles, 5 guards/1 camera and 34.4/49.4-tile escapes exceed a concise Easy+ glass lesson; explicitly preserve BLOCK bodies/PASS LOS."
+    },
+    {
+      "oldId": "02-07",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-03"
+      ],
+      "reason": "Curator workroom and north public return add a clear service choice to Modern Wing; avoid importing its additional 5-guard/1-camera crossing network."
+    },
+    {
+      "oldId": "02-08",
+      "status": "MERGE",
+      "destinationIds": [
+        "02-05"
+      ],
+      "reason": "Paired monumental atrium supplies finale approach and reveal, not a separate 43.0-tile guarded return."
+    },
+    {
+      "oldId": "02-09",
+      "status": "REMOVE",
+      "destinationIds": [],
+      "reason": "Southern private masterpiece and northeast portrait balcony repeat collection/portrait roles; 110.1-tile authored safe approach and 78.7-tile escape inflate travel without a necessary new mechanism."
+    },
+    {
+      "oldId": "02-10",
+      "status": "REBUILD",
+      "destinationIds": [
+        "02-05"
+      ],
+      "reason": "Keep masterpiece chamber, opaque first-break screen and delayed alarm; replace 750 floor tiles and 7 guards/2 cameras with compact Easy+ finale. Human Tilt CLEAR demonstrates playability, not equal chapter difficulty."
+    },
+    {
+      "oldId": "03-01",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-01"
+      ],
+      "reason": "Public/teller/staff verification/dispatch sequence is already bank-specific. Add Teller Hall route choice without simply stacking its security population."
+    },
+    {
+      "oldId": "03-02",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-01"
+      ],
+      "reason": "Long teller spine, west staff bypass and U-return provide two meaningful access modes to the same financial target; retain counter line as cover, not generic walls."
+    },
+    {
+      "oldId": "03-03",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-02"
+      ],
+      "reason": "Six-room staggered office network offers room transitions; combine with Records audit target, avoiding 42.2-tile traversal solely to increase duration."
+    },
+    {
+      "oldId": "03-04",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-02"
+      ],
+      "reason": "Narrow intake/ledger spine/audit alcove/upper verification return provides the actual restricted-records heist in the combined office mission."
+    },
+    {
+      "oldId": "03-05",
+      "status": "KEEP",
+      "destinationIds": [
+        "03-03"
+      ],
+      "reason": "Deposit-wall landmark, two access lanes and independent service return distinguish it from checkpoints/vault; 4 guards/1 camera are evidence only, not a fixed numeric difficulty requirement."
+    },
+    {
+      "oldId": "03-06",
+      "status": "REBUILD",
+      "destinationIds": [
+        "03-04"
+      ],
+      "reason": "Keep staffed main gate and genuine west bypass; restructure excessive 48.0-tile safe detour into readable sequential credential/command crossings."
+    },
+    {
+      "oldId": "03-07",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-05"
+      ],
+      "reason": "Cash-processing tables and carts are operational bank escape material. Their low tables do not block LOS; include as the vault return, not a detached repetitive cash-floor mission."
+    },
+    {
+      "oldId": "03-08",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-04"
+      ],
+      "reason": "Monitoring command objective plus independent east audit exit make Checkpoint a complete heist. Do not append its entire 5-guard/2-camera map to 03-06."
+    },
+    {
+      "oldId": "03-09",
+      "status": "MERGE",
+      "destinationIds": [
+        "03-05"
+      ],
+      "reason": "Visible vault door and protected observation antechamber supply the final pre-vault read, rather than another stand-alone vaultGem pickup."
+    },
+    {
+      "oldId": "03-10",
+      "status": "KEEP",
+      "destinationIds": [
+        "03-05"
+      ],
+      "reason": "Keep PUBLIC→STAFF→SECURITY→VAULT progression and distinct east cash/records escape as the medium benchmark. User said manageable; 60.1-tile main/106.2-tile safe/56.8-tile escape are not mandatory retention targets or evidence of Tier 3 fairness."
+    }
+  ],
+  "missions": [
+    {
+      "id": "01-01",
+      "title": "Entrance Hall",
+      "fantasy": "Read the first guard, circle a grand statue, take the display diamond and leave confidently.",
+      "architecture": "Compact bent lobby / statue exhibition / recessed case room / east side door.",
+      "mainRoute": "Lobby → statue shoulder → single exhibition crossing → case.",
+      "safeRoute": "North viewing recess with a protected wait before the case.",
+      "riskRoute": "Direct south-side statue crossing while the guard faces away.",
+      "objective": "Diamond on a lit recessed display with one clear observation position.",
+      "exit": "East side door, visible after pickup; first opaque break at the case-room return corner.",
+      "securityIdentity": "One crossing at a time; no CCTV; no simultaneous objective/exit pressure.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-01"
+      ]
+    },
+    {
+      "id": "01-02",
+      "title": "Rotunda Collection",
+      "fantasy": "Choose a quiet portrait loggia or cross the central rotunda to reach a private collection.",
+      "architecture": "West vestibule / round-looking two-sided exhibit island / north salon / east loggia.",
+      "mainRoute": "Vestibule → exhibit shoulder → north salon → east loggia escape.",
+      "safeRoute": "Outer portrait arc with protected sightline reads at both ends.",
+      "riskRoute": "Short central rotunda crossing, visible guard turn providing a clear window.",
+      "objective": "Artifact in the north salon beside an opaque statue shoulder.",
+      "exit": "Independent east loggia; one return corner gives immediate post-theft separation.",
+      "securityIdentity": "Patrol watches the central floor; collection watch is sequential, never a double pickup cone.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-02",
+        "01-07"
+      ]
+    },
+    {
+      "id": "01-03",
+      "title": "Archive & Conservation",
+      "fantasy": "Slip through readable shelf ends and restoration benches to recover a catalogued artifact.",
+      "architecture": "Bent staff entry / two broad shelf bays / conservation workroom / east staff return.",
+      "mainRoute": "Staff elbow → shelf-end cover → restoration bay → restricted cabinet.",
+      "safeRoute": "Connected outer shelf shoulders with room to correct Tilt overshoot.",
+      "riskRoute": "Central shelf aisle shortcut with one timed perpendicular sightline.",
+      "objective": "Artifact in a conservation specimen cabinet, not an isolated corridor end.",
+      "exit": "East staff door via a short storage elbow; cabinet-side opaque shelf is first break.",
+      "securityIdentity": "Low-speed observation lesson through spatial windows, not narrower gaps; no CCTV.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-03",
+        "01-06"
+      ]
+    },
+    {
+      "id": "01-04",
+      "title": "Restricted Wing",
+      "fantasy": "Read a small security office and take a restricted museum record through a quiet outbound bay.",
+      "architecture": "Office / control hub / restricted case / east inspection bay / north staff door.",
+      "mainRoute": "Office → hub planning pocket → one guarded access → restricted case.",
+      "safeRoute": "Outer office-to-inspection circuit with one protected turn before pickup.",
+      "riskRoute": "Short hub crossing avoids the inspection detour but exposes the player briefly.",
+      "objective": "Restricted archive case adjacent to the control-room landmark and an opaque shoulder.",
+      "exit": "North staff door through inspection return; no stationary exit cluster.",
+      "securityIdentity": "At most one active sightline at the objective; optional single CCTV only on approach, spatially separated from pickup.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-04"
+      ]
+    },
+    {
+      "id": "01-05",
+      "title": "Grand Museum Heist",
+      "fantasy": "Steal the museum centerpiece, then disappear into its service cloister.",
+      "architecture": "Compact arrival gallery / sculpture promenade / sanctuary / separate cloister return.",
+      "mainRoute": "Arrival → sculpture landmark → sanctuary approach → centerpiece.",
+      "safeRoute": "Outer viewing shoulder and sanctuary alcove with clear stop-and-go opportunities.",
+      "riskRoute": "Direct exhibition axis offers a shorter, briefly exposed approach.",
+      "objective": "Master diamond in a warm-lit sanctuary with a nearby genuine opaque escape shoulder.",
+      "exit": "West service door after the cloister; no grouped guard posts near the door.",
+      "securityIdentity": "Same easy pressure as 01-01–04; grander landmark/space, not additional simultaneous watchers.",
+      "difficultyTier": "Tier 1 — VERY EASY / EASY",
+      "sourceIds": [
+        "01-05",
+        "01-09",
+        "01-10"
+      ]
+    },
+    {
+      "id": "02-01",
+      "title": "Sculpture Court",
+      "fantasy": "Cross an open modern gallery using commissioned sculptures as timing landmarks.",
+      "architecture": "Clean arrival / two-sided sculpture island / north commission recess / east installation annex.",
+      "mainRoute": "Arrival → central sculpture shoulder → north commissioned work → east annex.",
+      "safeRoute": "Outer island viewing edge with two explicit protected stops.",
+      "riskRoute": "Direct open-floor crossing when the patrol has passed.",
+      "objective": "Featured commissioned artwork integrated with the sculpture display.",
+      "exit": "East annex via an opaque art-screen corner immediately after the target.",
+      "securityIdentity": "Longer crossing than Museum, but a single interpretable patrol lane; no camera overlap at pickup.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-01",
+        "02-03"
+      ]
+    },
+    {
+      "id": "02-02",
+      "title": "Portrait Hall",
+      "fantasy": "Read a long portrait sightline and use paired art screens to reach a featured painting.",
+      "architecture": "Reception / long portrait spine / opaque screen shoulders / east portrait recess / northwest return.",
+      "mainRoute": "Reception → spine screen → portrait recess → upper collection return.",
+      "safeRoute": "Outer portrait wall and screen-back viewing shoulders.",
+      "riskRoute": "Direct spine crossing trades time for greater exposure.",
+      "objective": "Vertical portrait grouping with featured painting in the eastern recess.",
+      "exit": "Northwest public door via a short upper-wall return and first opaque screen break.",
+      "securityIdentity": "Long LOS/turn timing, not extra guard count; wandering watcher must not seal the safe option.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-02"
+      ]
+    },
+    {
+      "id": "02-03",
+      "title": "Modern Wing",
+      "fantasy": "Pick a public art-screen route or a curator service route through a staggered wing.",
+      "architecture": "North arrival / movable-screen exhibition / west curator recess / south installation / southeast court.",
+      "mainRoute": "Arrival → screen junction → west collection → installation return.",
+      "safeRoute": "Curator workroom shoulders behind opaque exhibition screens.",
+      "riskRoute": "Cross the open movable-screen axis in one observed timing window.",
+      "objective": "Modern artwork in the curator-side collection, anchored to a named screen ensemble.",
+      "exit": "Southeast court on a readable service return with a nearby opaque objective-side screen.",
+      "securityIdentity": "Two successive open-space reads; avoid simultaneous junction cones and long backtracking.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-04",
+        "02-07"
+      ]
+    },
+    {
+      "id": "02-04",
+      "title": "Glass Gallery",
+      "fantasy": "See the treasure through glass and deliberately choose a physical route around it.",
+      "architecture": "West studies / glazed central installation / north study / independent east sculpture gallery.",
+      "mainRoute": "Approach → glass-side viewing shoulder → north study → east art-cell return.",
+      "safeRoute": "Opaque art-screen perimeter; glass itself is never described as concealment.",
+      "riskRoute": "Short glazed-court crossing when the distant guard is facing away.",
+      "objective": "Featured study visible through glazing, with an accessible opaque return shoulder.",
+      "exit": "East sculpture door after art cells interrupt pursuit.",
+      "securityIdentity": "Glass BLOCK movement/PASS LOS; limited sweep watches one exposed crossing, not objective plus escape simultaneously.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-06"
+      ]
+    },
+    {
+      "id": "02-05",
+      "title": "Masterpiece Chamber",
+      "fantasy": "Take a major masterpiece and escape through an alternate public collection.",
+      "architecture": "Atrium introduction / masterpiece recess / opaque first-break screen / portrait inspection / separate exit collection.",
+      "mainRoute": "Atrium shoulder → masterpiece reveal → pickup → screened return.",
+      "safeRoute": "Outer installation arc with a protected wait before the masterpiece.",
+      "riskRoute": "Open atrium axis is shorter and has one clear observation window.",
+      "objective": "Masterpiece in a lit chamber; delayed alarm retained, no instant hidden-player knowledge.",
+      "exit": "Separate west collection door with an escape pocket before its final observed crossing.",
+      "securityIdentity": "Same Easy+ simultaneous-pressure ceiling as the other Gallery missions; no 7-guard finale escalation.",
+      "difficultyTier": "Tier 2 — EASY+",
+      "sourceIds": [
+        "02-08",
+        "02-10"
+      ]
+    },
+    {
+      "id": "03-01",
+      "title": "Teller Access",
+      "fantasy": "Move from the public queue through staffed access to a teller-held valuable.",
+      "architecture": "Public lobby / teller spine / west staff bypass / verification elbow / dispatch bay.",
+      "mainRoute": "Public planning pocket → teller access crossing → staff verification → teller target.",
+      "safeRoute": "West staff-office bypass behind counters, then one observed verification gate.",
+      "riskRoute": "Direct teller-spine crossing is shorter but watched from the public side.",
+      "objective": "Teller-held gem with counter landmark and staff threshold beyond it.",
+      "exit": "Independent dispatch door through the verification elbow; counter return offers first break.",
+      "securityIdentity": "Distinct public/staff security roles and a limited CCTV crossing, separated in time; medium budget shared across Bank.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-01",
+        "03-02"
+      ]
+    },
+    {
+      "id": "03-02",
+      "title": "Staff Records",
+      "fantasy": "Navigate real staff rooms to steal an audited record without retracing the intake.",
+      "architecture": "Staggered offices / ledger spine / secure audit alcove / upper verification return.",
+      "mainRoute": "Staff intake → office corner → records crossing → audit alcove.",
+      "safeRoute": "Filing-cabinet edge and an alternative office sequence with protected door reads.",
+      "riskRoute": "Shared records-bank crossing cuts a room but exposes the player.",
+      "objective": "Sealed valuable in the audit alcove with a visible record-bank landmark.",
+      "exit": "Upper verification dispatch; opaque cabinet corner immediately separates the pickup from search.",
+      "securityIdentity": "Door timing and room/corridor roles; CCTV belongs to one records crossing, not every doorway.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-03",
+        "03-04"
+      ]
+    },
+    {
+      "id": "03-03",
+      "title": "Deposit Boxes",
+      "fantasy": "Choose a monitored deposit lane or service approach to a bank deposit target.",
+      "architecture": "Public deposit reception / twin access lanes / deposit-wall landmark / security seam / service return.",
+      "mainRoute": "Reception → selected lane → restricted box wall → service return.",
+      "safeRoute": "Staff-office shoulder gives a longer but genuinely less exposed approach.",
+      "riskRoute": "Deposit-front lane offers a brief direct crossing during a sweep pause.",
+      "objective": "Valuable within the deposit-wall collection, accompanied by a staffed security seam.",
+      "exit": "Separate service door after a protected deposit-bank break and an observed dispatch crossing.",
+      "securityIdentity": "One CCTV with staffed roles, spatially separate watches; low desks/cash carts are not full LOS cover.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-05"
+      ]
+    },
+    {
+      "id": "03-04",
+      "title": "Checkpoint Command",
+      "fantasy": "Cross credential security or an analyst bypass to steal the monitoring command asset.",
+      "architecture": "Public read bay / staffed gate / west analyst bypass / controlled junction / command room / east audit exit.",
+      "mainRoute": "Planning bay → credential gate → controlled junction → monitoring command.",
+      "safeRoute": "West analyst circuit through protected room corners; comparable task count, reduced exposure.",
+      "riskRoute": "Short gate-and-junction route requires observing two sequential security phases.",
+      "objective": "Command asset among monitoring desks and record cabinets inside a restricted room.",
+      "exit": "Independent east audit door after an opaque command-room return corner.",
+      "securityIdentity": "CCTV plus guard timing with separated checkpoints; never make both options permanently covered.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-06",
+        "03-08"
+      ]
+    },
+    {
+      "id": "03-05",
+      "title": "Main Vault",
+      "fantasy": "Penetrate the actual bank vault and escape through cash operations and records dispatch.",
+      "architecture": "Staff access / credential checkpoint / inner security / visible antechamber / Main Vault / cash-processing return / records evacuation.",
+      "mainRoute": "Staff approach → checkpoint → antechamber read → vault pickup → cash circuit.",
+      "safeRoute": "Protected records shoulders and a side antechamber viewing route.",
+      "riskRoute": "Direct security crossings shorten the approach, never remove all waiting positions.",
+      "objective": "Delayed-alarm vault gem within the actual reinforced Main Vault landmark.",
+      "exit": "Lateral records evacuation separate from staff entry; vault-side opaque break before cash-floor exposure.",
+      "securityIdentity": "Retain old 03-10 manageable-feel benchmark; cash tables PASS LOS, opaque cabinets establish genuine cover. Do not raise speed or detection timing for finale.",
+      "difficultyTier": "Tier 3 — MEDIUM",
+      "sourceIds": [
+        "03-07",
+        "03-09",
+        "03-10"
+      ]
+    }
+  ]
+}

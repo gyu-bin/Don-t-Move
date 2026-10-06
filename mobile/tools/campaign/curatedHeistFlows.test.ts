@@ -9,7 +9,7 @@ import {clearSegment,buildNavigation,findPath} from '../../src/game/world/naviga
 import {PROP_KIT} from '../../src/game/world/propKit';
 import {measureObjectiveInspection} from './measureObjectiveInspection';
 const originals=JSON.parse(fs.readFileSync('tools/campaign/fixtures/v9CoreBefore.json','utf8')) as StageDefinition[];
-const runtime=JSON.parse(fs.readFileSync('src/game/levels/stages/campaignStages.json','utf8')) as StageDefinition[];
+const runtime=JSON.parse(fs.readFileSync('docs/design/v12/phase3/SOURCE_STAGES.json','utf8')) as StageDefinition[];
 const before=runtime.map(q=>originals.find(d=>d.id===q.id)??q);
 const candidate=JSON.parse(JSON.stringify(before.map(composeV9Heist))) as StageDefinition[];
 const core=candidate.filter(q=>V9_CORE_IDS.includes(q.id as typeof V9_CORE_IDS[number]));

@@ -1,7 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {campaignStages} from '../../src/game/levels/campaignStages';
+import phase3Source from '../../docs/design/v12/phase3/SOURCE_STAGES.json';
 import {assertGameplayPreserved} from './museumDressingQA';
+const campaignStages=phase3Source as import('../../src/game/levels/StageDefinition').StageDefinition[]; // Historical authoring contract; runtime is covered separately.
 const fixture=()=>structuredClone(campaignStages.find(d=>d.id==='01-08')!);
 test('dressing contract retains unmodified mission and compiled vision',()=>{
  const def=fixture();delete def.dressing;const r=assertGameplayPreserved(def,structuredClone(def));assert.equal(r.additionalCollisionBoxes,0);

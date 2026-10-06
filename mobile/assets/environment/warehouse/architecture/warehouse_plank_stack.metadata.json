@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/architecture/warehouse_plank_stack.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 224,
+    "w": 482,
+    "h": 273
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_plank_stack.png",
+    "resolution": {
+      "width": 219,
+      "height": 125
+    },
+    "bounds": {
+      "x": 0,
+      "y": 1,
+      "w": 219,
+      "h": 124
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 99571,
+    "transparentFraction": 0.619049072265625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 224,
+      "w": 482,
+      "h": 273
+    }
+  }
+}

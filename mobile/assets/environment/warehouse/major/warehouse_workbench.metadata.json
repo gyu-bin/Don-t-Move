@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_workbench.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 15,
+    "y": 87,
+    "w": 482,
+    "h": 410
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_workbench.png",
+    "resolution": {
+      "width": 206,
+      "height": 175
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 206,
+      "h": 175
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 130898,
+    "transparentFraction": 0.500640869140625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 15,
+      "y": 87,
+      "w": 482,
+      "h": 410
+    }
+  }
+}

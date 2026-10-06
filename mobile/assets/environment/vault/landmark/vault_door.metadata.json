@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/vault/landmark/vault_door.png",
+  "resolution": {
+    "width": 768,
+    "height": 768
+  },
+  "objectBounds": {
+    "x": 31,
+    "y": 93,
+    "w": 706,
+    "h": 644
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/vault/_source/vault_door.png",
+    "resolution": {
+      "width": 281,
+      "height": 258
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 261,
+      "h": 238
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 391755,
+    "transparentFraction": 0.3358103434244792,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 31,
+      "y": 93,
+      "w": 706,
+      "h": 644
+    }
+  }
+}

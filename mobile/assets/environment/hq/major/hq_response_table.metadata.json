@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/major/hq_response_table.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 20,
+    "y": 299,
+    "w": 472,
+    "h": 193
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_response_table.png",
+    "resolution": {
+      "width": 362,
+      "height": 160
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 342,
+      "h": 140
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 56151,
+    "transparentFraction": 0.7858009338378906,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 20,
+      "y": 299,
+      "w": 472,
+      "h": 193
+    }
+  }
+}

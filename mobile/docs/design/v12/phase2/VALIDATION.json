@@ -1,0 +1,215 @@
+{
+  "status": "V12 PHASE 2 — TILT LOCKED, CHAPTER 1–3 REBUILD READY",
+  "device": "physical iPhone 14 Pro",
+  "playerMaxSpeed": 150,
+  "candidates": {
+    "A": {
+      "deadZone": 2,
+      "maxTilt": 12,
+      "smoothing": 0.07
+    },
+    "B": {
+      "deadZone": 1.75,
+      "maxTilt": 10,
+      "smoothing": 0.07
+    },
+    "C": {
+      "deadZone": 1.5,
+      "maxTilt": 9,
+      "smoothing": 0.07
+    }
+  },
+  "testOrder": [
+    "B",
+    "A",
+    "C"
+  ],
+  "testMission": "01-01",
+  "deviceResults": {
+    "A": {
+      "idle": "PENDING",
+      "sneak": "PENDING",
+      "walk": "PENDING",
+      "run": "PENDING",
+      "direction": "PENDING",
+      "wallCorners": "PENDING",
+      "recenter": "PENDING",
+      "fatigue": "PENDING",
+      "overallFeedback": "User: 다 괜찮은데 정확한 차이는 잘 모르겠음",
+      "runtimeEvidence": {
+        "actualInput": "TILT — IOS",
+        "mission": "01-01",
+        "sampleSpanSec": 45.406,
+        "sampledMaxSpeed": 146.99,
+        "sampledMovementStates": [
+          "IDLE",
+          "SNEAK",
+          "WALK",
+          "RUN"
+        ]
+      },
+      "interpretation": "Brief physical comparison; individual criteria and 2–3 minute fatigue/drift assessment not separately confirmed."
+    },
+    "B": {
+      "idle": "PENDING",
+      "sneak": "PENDING",
+      "walk": "PENDING",
+      "run": "PENDING",
+      "direction": "PENDING",
+      "wallCorners": "PENDING",
+      "recenter": "PENDING",
+      "fatigue": "PENDING",
+      "overallFeedback": "User: 어어 B나쁘지 않은데 괜찮음",
+      "runtimeEvidence": {
+        "actualInput": "[INPUT] TILT — IOS",
+        "profile": {
+          "deadZone": 1.75,
+          "maxTilt": 10,
+          "smoothing": 0.07,
+          "sensitivity": 1
+        },
+        "mission": "01-01",
+        "sampledMovementStates": [
+          "IDLE",
+          "SNEAK",
+          "WALK",
+          "RUN"
+        ],
+        "sampledMaxSpeed": 149.98,
+        "manualRecenter": "CENTER RESET -> PLAY observed; subjective jump/comfort confirmation pending",
+        "calibration": "recent-median READY ~2510ms; PLAY ~2861ms observed",
+        "fullHeist": "01-01 OBJECTIVE_PICKUP -> recordMissionClear -> next mission 01-02 prepared observed. Theft alert not confirmed in this clear segment."
+      },
+      "interpretation": "Positive general feel only; per-item stability/fatigue/wall-slide not independently confirmed"
+    },
+    "C": {
+      "idle": "PENDING",
+      "sneak": "PENDING",
+      "walk": "PENDING",
+      "run": "PENDING",
+      "direction": "PENDING",
+      "wallCorners": "PENDING",
+      "recenter": "PENDING",
+      "fatigue": "PENDING",
+      "overallFeedback": "User: 다 괜찮은데 정확한 차이는 잘 모르겠음",
+      "runtimeEvidence": {
+        "actualInput": "TILT — IOS",
+        "mission": "01-01 / 01-02",
+        "sampleSpanSec": 34.144,
+        "sampledMaxSpeed": 150,
+        "sampledMovementStates": [
+          "IDLE",
+          "SNEAK",
+          "WALK",
+          "RUN"
+        ]
+      },
+      "interpretation": "Brief physical comparison; individual criteria and 2–3 minute fatigue/drift assessment not separately confirmed."
+    }
+  },
+  "finalProfile": {
+    "candidate": "B",
+    "deadZone": 1.75,
+    "maxTilt": 10,
+    "smoothing": 0.07,
+    "sensitivity": 1,
+    "reason": "User reported B comfortable and all candidates acceptable without a clear perceived difference; choose balanced middle profile."
+  },
+  "runtimeRebuild": "NOT_STARTED_PREPARATION_READY_AFTER_B_SELECTION",
+  "migration": "PLAN_ONLY_NOT_IMPLEMENTED",
+  "protectedHashes": {
+    "src/game/levels/stages/campaignStages.json": "bd7a3a4de9e0cb63f3627a0cd03e5cfbb1fa43561e94f224926fbbd7e9895202",
+    "src/game/levels/campaignCatalog.ts": "4d03b291c8842ffed7e2f224a8db7d1091de7a1774b469273c25ae320b512beb",
+    "src/game/input/tilt.ts": "1648d229ada65176884a545b4ed1bd9d6bce3fcf55dac969ddda8c1bd4c663b6",
+    "src/game/input/tiltMovement.ts": "756a695b4b6af2382dae4465f362153f2a1c060d977e63cea754caf6696ad82d",
+    "src/game/input/iosTiltSession.ts": "03f5baa2d285eaa0913fe61c4fe2520690d4d3bc5b01591152c1019a11932f86",
+    "src/game/input/androidTiltSession.ts": "aa2966cef8a778ae0fd2eb566284f79eee5855765e9ca235330e1ed686b6dc16",
+    "src/game/guards/guardPhase.ts": "1ac5efe8d990d8edc3da321ea356be8caef6986f8fb750078071c2d921d75083",
+    "src/game/levels/chapterDifficulty.ts": "aea39c38ac7053656484d3e6a75459b4643ada9ddeaadeaa8b4ecc5b0b3ce8e9",
+    "src/game/progress/campaignProgress.ts": "86864d4d9c0ffdb9efd517a03b8ee3715f7569d86438aa5bab98522397530624"
+  },
+  "devCandidateImplemented": true,
+  "devFlag": "EXPO_PUBLIC_DM_TILT_COMPARE=1",
+  "productionDefaultChanged": true,
+  "deviceConnection": "Actual iPhone 14 Pro requested RN bundle from Metro8084 and emitted A/B/C Tilt samples; user performed physical play.",
+  "deviceLog": "Reports/V12Phase2/device-console.log",
+  "metroLog": "Reports/V12Phase2/metro.log",
+  "newUITest": "Physical profile switching observed in logs; no simulator sensitivity evidence claimed.",
+  "regression": {
+    "tilt": {
+      "pass": 54,
+      "fail": 0
+    },
+    "stability": {
+      "pass": 23,
+      "fail": 0
+    },
+    "typecheck": "PASS",
+    "lint": {
+      "errors": 0,
+      "existingWarnings": 2
+    },
+    "fullCampaign": "NOT_RERUN — map source unchanged"
+  },
+  "previousDefaultTilt": {
+    "deadZone": 2,
+    "maxTilt": 16,
+    "smoothing": 0.06,
+    "sensitivity": 1,
+    "stableCalibrationSec": 0.5,
+    "readySec": 0.35,
+    "fallbackCalibrationMs": 2500,
+    "recenter": "manual current fused attitude; no adaptive neutral; existing feedback450ms"
+  },
+  "currentTilt": {
+    "deadZone": 1.75,
+    "maxTilt": 10,
+    "smoothing": 0.07,
+    "sensitivity": 1,
+    "stableCalibrationSec": 0.5,
+    "readySec": 0.35,
+    "fallbackCalibrationMs": 2500,
+    "recenter": "manual current fused attitude; no adaptive neutral; existing feedback450ms"
+  },
+  "physicalComparison": "BRIEF_COMPARISON_COMPLETE; long fatigue/drift and itemized criteria remain pending",
+  "android": "Shared B mapping applied; physical Android validation pending",
+  "protectedComparison": {
+    "src/game/levels/stages/campaignStages.json": {
+      "status": "UNCHANGED",
+      "currentHash": "bd7a3a4de9e0cb63f3627a0cd03e5cfbb1fa43561e94f224926fbbd7e9895202"
+    },
+    "src/game/levels/campaignCatalog.ts": {
+      "status": "UNCHANGED",
+      "currentHash": "4d03b291c8842ffed7e2f224a8db7d1091de7a1774b469273c25ae320b512beb"
+    },
+    "src/game/input/tilt.ts": {
+      "status": "INTENTIONAL_B_DEFAULT_CHANGE",
+      "currentHash": "75a322fa12b747fd6196751153f8d67e208d0d25baaacd1beeda0eb66f71435e"
+    },
+    "src/game/input/tiltMovement.ts": {
+      "status": "UNCHANGED",
+      "currentHash": "756a695b4b6af2382dae4465f362153f2a1c060d977e63cea754caf6696ad82d"
+    },
+    "src/game/input/iosTiltSession.ts": {
+      "status": "UNCHANGED",
+      "currentHash": "03f5baa2d285eaa0913fe61c4fe2520690d4d3bc5b01591152c1019a11932f86"
+    },
+    "src/game/input/androidTiltSession.ts": {
+      "status": "UNCHANGED",
+      "currentHash": "aa2966cef8a778ae0fd2eb566284f79eee5855765e9ca235330e1ed686b6dc16"
+    },
+    "src/game/guards/guardPhase.ts": {
+      "status": "UNCHANGED",
+      "currentHash": "1ac5efe8d990d8edc3da321ea356be8caef6986f8fb750078071c2d921d75083"
+    },
+    "src/game/levels/chapterDifficulty.ts": {
+      "status": "UNCHANGED",
+      "currentHash": "aea39c38ac7053656484d3e6a75459b4643ada9ddeaadeaa8b4ecc5b0b3ce8e9"
+    },
+    "src/game/progress/campaignProgress.ts": {
+      "status": "UNCHANGED",
+      "currentHash": "86864d4d9c0ffdb9efd517a03b8ee3715f7569d86438aa5bab98522397530624"
+    }
+  },
+  "finalCodeReview": "PASS; default values and anchor comments only in tilt.ts, algorithms unchanged"
+}

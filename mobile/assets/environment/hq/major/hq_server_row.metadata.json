@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/hq/major/hq_server_row.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 41,
+    "y": 25,
+    "w": 430,
+    "h": 462
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/hq/_source/hq_server_row.png",
+    "resolution": {
+      "width": 151,
+      "height": 163
+    },
+    "bounds": {
+      "x": 10,
+      "y": 10,
+      "w": 133,
+      "h": 143
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 196259,
+    "transparentFraction": 0.2513313293457031,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 41,
+      "y": 25,
+      "w": 430,
+      "h": 462
+    }
+  }
+}

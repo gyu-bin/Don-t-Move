@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/warehouse/major/warehouse_forklift.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 38,
+    "y": 15,
+    "w": 436,
+    "h": 482
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/warehouse/_source/warehouse_forklift.png",
+    "resolution": {
+      "width": 209,
+      "height": 231
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 209,
+      "h": 231
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 110843,
+    "transparentFraction": 0.5771675109863281,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 38,
+      "y": 15,
+      "w": 436,
+      "h": 482
+    }
+  }
+}

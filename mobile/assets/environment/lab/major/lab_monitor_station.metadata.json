@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_monitor_station.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 29,
+    "y": 15,
+    "w": 454,
+    "h": 482
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_monitor_station.png",
+    "resolution": {
+      "width": 329,
+      "height": 350
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 329,
+      "h": 350
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 184723,
+    "transparentFraction": 0.2945709228515625,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 29,
+      "y": 15,
+      "w": 454,
+      "h": 482
+    }
+  }
+}

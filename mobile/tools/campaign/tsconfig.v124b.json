@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "noEmit": true
+  },
+  "include": [
+    "v124b*.ts",
+    "../environment/renderV124b.ts",
+    "../environment/v124bBoard.ts",
+    "v124c*.ts",
+    "../environment/renderV124c.ts",
+    "../environment/v124cBoard.ts",
+    "../environment/phase4c*.ts",
+    "v124d*.ts"
+  ],
+  "exclude": [
+    "../../node_modules"
+  ]
+}

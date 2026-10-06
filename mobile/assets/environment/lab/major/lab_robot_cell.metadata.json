@@ -1,0 +1,48 @@
+{
+  "path": "assets/environment/lab/major/lab_robot_cell.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 27,
+    "y": 15,
+    "w": 458,
+    "h": 482
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_robot_cell.png",
+    "resolution": {
+      "width": 459,
+      "height": 483
+    },
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "w": 459,
+      "h": 483
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 201305,
+    "transparentFraction": 0.23206710815429688,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 27,
+      "y": 15,
+      "w": 458,
+      "h": 482
+    }
+  }
+}
