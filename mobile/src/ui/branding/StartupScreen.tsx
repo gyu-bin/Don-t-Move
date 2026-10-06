@@ -18,7 +18,7 @@ import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgre
 import {missionId,missionIndex} from '../../game/levels/campaignCatalog';
 import StageSelectScreen from '../menu/StageSelectScreen';
 type GameProps = { initialMissionIndex?: number; initialProgress?: StageProgress; onProgressChange?: (progress:StageProgress)=>void };
-export function StartupScreen({ holdSplash = false }: { holdSplash?: boolean }) {
+export function StartupScreen({ holdSplash = false, applying = false, onGameplayChange }: { holdSplash?: boolean; applying?: boolean; onGameplayChange?: (playing: boolean) => void }) {
  const audio=useAppAudio();
  const [phase,setPhase]=useState<'BOOT'|'INTRO'|'HOME'>('BOOT');
  const homeVisible=phase==='HOME', splashDone=phase!=='BOOT';
@@ -30,6 +30,8 @@ export function StartupScreen({ holdSplash = false }: { holdSplash?: boolean }) 
  const [progress, setProgress] = useState<StageProgress>();
  const [Game, setGame] = useState<ComponentType<GameProps>>();
  const [started, setStarted] = useState(false);
+ const gameplayRef=useRef(onGameplayChange);
+ useEffect(()=>{gameplayRef.current=onGameplayChange;},[onGameplayChange]);
  const [initialMissionIndex,setInitialMissionIndex]=useState<number>();
  const [route,setRoute]=useState<'home'|'stages'|'settings'>('home');
  const [introVersion,setIntroVersion]=useState(0);
@@ -46,7 +48,7 @@ export function StartupScreen({ holdSplash = false }: { holdSplash?: boolean }) 
   else setSaveError(true);
  },[]);
  const startLobbyAudio=useCallback(()=>setLobbyAudioReady(true),[]);
- const home=useCallback(()=>{setStarted(false);setRoute('home');setSkipIntro(true);setLobbyAudioReady(false);setPhase('HOME');},[]);
+ const home=useCallback(()=>{setStarted(false);gameplayRef.current?.(false);setRoute('home');setSkipIntro(true);setLobbyAudioReady(false);setPhase('HOME');},[]);
  const [error, setError] = useState<string>();
  const mounted = useRef(true), generation = useRef(0);
  useEffect(() => {
@@ -60,15 +62,15 @@ export function StartupScreen({ holdSplash = false }: { holdSplash?: boolean }) 
  useEffect(() => {
   markStartup('splash-start');
   let alive=true,minimum=false,art=false;
-  const reveal=()=>{if(alive&&minimum&&art&&!holdSplash){markStartup('splash-end');setPhase('INTRO');}};
+  const reveal=()=>{if(alive&&minimum&&art&&!holdSplash&&!applying){markStartup('splash-end');setPhase('INTRO');}};
   void preloadOpeningArt().then(()=>{art=true;reveal();}).catch(reason=>{
    console.error('Museum background unavailable',reason);
    if(alive)setBackgroundError(true);
   });
-  if(holdSplash)return ()=>{alive=false;};
+  if(holdSplash||applying)return ()=>{alive=false;};
   const timer=setTimeout(()=>{minimum=true;reveal();},SPLASH_MS);
   return ()=>{alive=false;clearTimeout(timer);};
- },[backgroundAttempt,holdSplash]);
+ },[applying,backgroundAttempt,holdSplash]);
  const storageAttempt=useRef(0);
  const restoreProgress=useCallback(()=>{
   const attempt=++storageAttempt.current;
@@ -90,7 +92,7 @@ export function StartupScreen({ holdSplash = false }: { holdSplash?: boolean }) 
   const campaign=migrateCampaign(current);
   if(!canPlayMission(campaign,index,__DEV__))return;
   updateProgress({...current,campaign:{...campaign,lastMission:missionId(index)},hasStarted:true});
-  setInitialMissionIndex(index);setGame(()=>screen);setSkipIntro(true);setLobbyAudioReady(false);setStarted(true);setError(undefined);
+  setInitialMissionIndex(index);setGame(()=>screen);setSkipIntro(true);setLobbyAudioReady(false);setStarted(true);gameplayRef.current?.(true);setError(undefined);
  };
  const play=async(index:number)=>{
   if(!progress||pendingGame.current)return;
@@ -157,6 +159,7 @@ export function StartupScreen({ holdSplash = false }: { holdSplash?: boolean }) 
      {translate(progress?.language??'en','artError')} {translate(progress?.language??'en','retry')}
     </Text>}
    </View>}
+  {applying&&<View style={[StyleSheet.absoluteFill,{zIndex:30}]}><SplashScreen animateIn/></View>}
   {saveError&&<Text onPress={retrySave} style={{position:'absolute',bottom:30,left:20,right:20,color:'#FFF4D6',backgroundColor:'#102331',padding:12}}>{translate(progress?.language??'en','saveError')}</Text>}
  </MenuContext.Provider></MonetizationProvider></GameAudioContext.Provider>;
 }

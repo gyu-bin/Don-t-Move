@@ -51,8 +51,11 @@ export async function consumeFreshOtaNotice(): Promise<boolean> {
 
 type UpdatesModule = NonNullable<ReturnType<typeof updatesModule>>;
 
+/** Keep the splash and "적용중" on screen long enough to paint before the runtime is replaced. */
+const APPLY_VISIBLE_MS = 1800;
+
 let reloadInProgress = false;
-let checkInFlight: Promise<'reloading' | 'current'> | null = null;
+let checkInFlight: Promise<'reloading' | 'current' | 'deferred'> | null = null;
 const reloadTried = new Set<string>();
 
 export function isOtaReloadInProgress(): boolean {
@@ -69,6 +72,7 @@ export async function reloadOntoUpdate(Updates: UpdatesModule, downloadedId: str
   reloadInProgress = true;
   reloadTried.add(key);
   try {
+    await new Promise((resolve) => setTimeout(resolve, APPLY_VISIBLE_MS));
     try {
       await Updates.reloadAsync();
     } catch (error) {
@@ -92,22 +96,40 @@ export async function reloadOntoUpdate(Updates: UpdatesModule, downloadedId: str
  * An update that is already on disk still restarts: a zero launch wait has already
  * booted the previous bundle, and killing the app does not switch it.
  */
-export function downloadAndReload(Updates: UpdatesModule): Promise<'reloading' | 'current'> {
+export function downloadAndReload(
+  Updates: UpdatesModule,
+  onApplying?: () => void,
+  allowApply: () => boolean = () => true,
+): Promise<'reloading' | 'current' | 'deferred'> {
   if (reloadInProgress) return Promise.resolve('reloading');
-  if (!checkInFlight) checkInFlight = fetchAndReload(Updates).finally(() => { checkInFlight = null; });
+  if (!checkInFlight) checkInFlight = fetchAndReload(Updates, onApplying, allowApply).finally(() => { checkInFlight = null; });
   return checkInFlight;
 }
 
-async function fetchAndReload(Updates: UpdatesModule): Promise<'reloading' | 'current'> {
+async function fetchAndReload(
+  Updates: UpdatesModule,
+  onApplying?: () => void,
+  allowApply: () => boolean = () => true,
+): Promise<'reloading' | 'current' | 'deferred'> {
+  let announced = false;
+  const announce = () => {
+    if (announced) return;
+    announced = true;
+    onApplying?.();
+  };
   for (let attempt = 0; attempt < 8; attempt++) {
     try {
       const check = await Updates.checkForUpdateAsync();
       if (check.isRollBackToEmbedded) {
+        announce();
         await reloadOntoUpdate(Updates, null);
         return isOtaReloadInProgress() ? 'reloading' : 'current';
       }
       if (!check.isAvailable) return 'current';
+      if (!allowApply()) return 'deferred';
+      announce();
       const fetched = await Updates.fetchUpdateAsync();
+      if (!allowApply()) return 'deferred';
       if (!fetched.isNew && !fetched.isRollBackToEmbedded) return 'current';
       const manifest = fetched.manifest as { id?: string } | undefined;
       await reloadOntoUpdate(Updates, manifest?.id ?? null);

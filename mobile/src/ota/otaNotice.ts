@@ -47,3 +47,12 @@ export function coldStartGate(input: {
   if ((input.pending || downloaded != null) && downloaded !== running) return 'reload';
   return 'fetch';
 }
+
+/** True when a newer bundle is already downloading or waiting to replace this launch. */
+export function shouldAnnounceApplying(input: {
+  downloading: boolean;
+  pending: boolean;
+  decision: ColdStartGate;
+}): boolean {
+  return input.downloading || input.pending || input.decision === 'reload';
+}

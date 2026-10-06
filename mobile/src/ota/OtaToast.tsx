@@ -15,6 +15,7 @@ export function OtaToast({ message }: { message: string }) {
 const styles = StyleSheet.create({
   wrap: {
     position: 'absolute',
+    zIndex: 40,
     left: 24,
     right: 24,
     alignItems: 'center',

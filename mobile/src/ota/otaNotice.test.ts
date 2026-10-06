@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { coldStartGate, nextSeenUpdateId, shouldReloadPending, shouldShowOtaToast } from './otaNotice';
+import { coldStartGate, nextSeenUpdateId, shouldAnnounceApplying, shouldReloadPending, shouldShowOtaToast } from './otaNotice';
 
 test('toast only on a newly applied downloaded update', () => {
   assert.equal(shouldShowOtaToast({
@@ -45,6 +45,13 @@ test('cold start stays on the splash until a downloaded bundle is running', () =
   assert.equal(coldStartGate({
     startupRunning: false, checking: false, downloading: false, pending: false, runningId: 'old', downloadedId: null,
   }), 'fetch');
+});
+
+test('applying is announced only when a newer bundle is in flight', () => {
+  assert.equal(shouldAnnounceApplying({ downloading: true, pending: false, decision: 'wait' }), true);
+  assert.equal(shouldAnnounceApplying({ downloading: false, pending: true, decision: 'wait' }), true);
+  assert.equal(shouldAnnounceApplying({ downloading: false, pending: false, decision: 'reload' }), true);
+  assert.equal(shouldAnnounceApplying({ downloading: false, pending: false, decision: 'fetch' }), false);
 });
 
 test('seen id tracks the running bundle', () => {

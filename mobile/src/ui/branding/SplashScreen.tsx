@@ -11,9 +11,13 @@ export const SPLASH_FADE_MS = 420;
  * Brand-only splash (no thief/guard/diamond/buttons). Same navy as the native splash, so the
  * native → brand hand-off has no colour flash. When `leaving`, it fades over the museum intro.
  */
-export function SplashScreen({ leaving = false, onGone }: { leaving?: boolean; onGone?: () => void }) {
+export function SplashScreen({ leaving = false, onGone, animateIn = false }: { leaving?: boolean; onGone?: () => void; animateIn?: boolean }) {
   const insets = useSafeAreaInsets();
-  const opacity = useSharedValue(1);
+  const opacity = useSharedValue(animateIn ? 0 : 1);
+  useEffect(() => {
+    if (!animateIn || leaving) return;
+    opacity.set(withTiming(1, { duration: 680, easing: Easing.out(Easing.cubic) }));
+  }, [animateIn, leaving, opacity]);
   useEffect(() => {
     if (!leaving) return;
     const completion = completionDeadline(() => onGone?.(), SPLASH_FADE_MS + 500);
