@@ -8,14 +8,13 @@ import { showApplyingThenReload, type OtaStatus } from './startupFlow';
 /**
  * DEVELOPMENT ONLY. Plays the startup update statuses in a development bundle, where expo-updates is off, so the
  * sequence can be looked at in the Simulator. Start Metro with EXPO_PUBLIC_DM_OTA_QA set to:
- *   latest | offline | failed   checking, then that result, then Home
- *   update                      checking → downloading → applying → the JS runtime reloads → Home → applied toast (once)
+ *   latest | offline | failed   that result of the check (nothing is shown), then Home
+ *   update                      check → "Applying update" → the JS runtime reloads → Home → applied toast (once)
  *   reset                       forgets that the simulated update was applied, then behaves as `latest`
  * It never runs in a release build: OtaRefresh only loads this file under __DEV__.
  */
 const QA_FLAG = 'dont-move.ota.qa-applied';
 const STEP_MS = 1400;
-export const QA_UPDATE_GROUP = 'a21a7422-0000-4000-8000-000000000000';
 
 /** True once, on the launch after the simulated update was applied. */
 export async function consumeQaFreshNotice(): Promise<boolean> {

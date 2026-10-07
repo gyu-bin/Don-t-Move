@@ -4,17 +4,17 @@ import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { loadProgress } from './src/game/progress/stageProgress';
-import { consumeFreshOtaNotice, runningBundleText, runningUpdateIds } from './src/ota/applyUpdate';
+import { consumeFreshOtaNotice } from './src/ota/applyUpdate';
 import { OtaRefresh } from './src/ota/OtaRefresh';
 import { OtaToast } from './src/ota/OtaToast';
-import { appliedToastText, type OtaStatus } from './src/ota/startupFlow';
+import type { OtaStatus } from './src/ota/startupFlow';
 import { StartupScreen } from './src/ui/branding/StartupScreen';
 import { translate } from './src/ui/menu/strings';
 
 const TOAST_MS = 4500;
 
 /**
- * Startup order: native splash → startup screen (update status) → Home intro → Home.
+ * Startup order: native splash → startup screen → Home intro → Home.
  * `holdSplash` is the startup-ready signal turned round: while it is true the startup screen stays and the
  * Home intro has not started. An update found on the way keeps the startup screen up until the runtime is replaced.
  */
@@ -22,7 +22,6 @@ export default function App() {
   const [holdSplash, setHoldSplash] = useState(true);
   const [applying, setApplying] = useState(false);
   const [otaStatus, setOtaStatus] = useState<OtaStatus | null>('checking');
-  const [buildLabel] = useState(runningBundleText);
   const [splashRun, setSplashRun] = useState(0);
   const [inGame, setInGame] = useState(false);
   const inGameRef = useRef(false);
@@ -67,9 +66,8 @@ export default function App() {
   const showAppliedToast = useCallback(() => {
     if (!freshUpdate.current || !homeSeen.current) return;
     freshUpdate.current = false;
-    const ids = runningUpdateIds();
     void loadProgress().then((progress) => progress.language).catch(() => 'ko' as const).then((language) => {
-      setToast(appliedToastText(translate(language, 'updateApplied'), ids.updateGroup, ids.updateId));
+      setToast(translate(language, 'updateApplied'));
       toastTimer.current = setTimeout(() => setToast(null), TOAST_MS);
     });
   }, []);
@@ -93,7 +91,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <View style={{ flex: 1 }}>
-        <StartupScreen key={splashRun} holdSplash={holdSplash} applying={applying} otaStatus={otaStatus} buildLabel={buildLabel}
+        <StartupScreen key={splashRun} holdSplash={holdSplash} applying={applying} otaStatus={otaStatus}
           onApplyingShown={markApplyingShown} onHomeVisible={homeVisible} onGameplayChange={setGameplay} />
       </View>
       <OtaRefresh onReady={releaseSplash} onStatus={setOtaStatus} onApplying={showApplying} onApplyingDone={hideApplying}

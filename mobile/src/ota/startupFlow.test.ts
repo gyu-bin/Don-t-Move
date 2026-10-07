@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import {
-  alreadyTriedUpdate, appliedToastText, APPLY_RETRY_QUIET_MS, checkDownloadApply, introEndsOnAppState, isOfflineError, isStartupReady, nextSeenUpdateId,
-  OTA_STATUS_TEXT, runningBundleLabel, shortUpdateId, shouldShowOtaToast, shouldStartHomeIntro, showApplyingThenReload,
+  alreadyTriedUpdate, APPLY_RETRY_QUIET_MS, checkDownloadApply, introEndsOnAppState, isOfflineError, isStartupReady, nextSeenUpdateId,
+  shouldShowOtaToast, shouldStartHomeIntro, showApplyingThenReload, showsApplyingText,
   statusAfterCheck, type OtaStatus, type UpdatesDriver,
 } from './startupFlow';
 
@@ -183,10 +183,10 @@ test('offline is recognised from the error, in English or Korean, and other erro
     assert.equal(isOfflineError(new Error(message)), false, message);
 });
 
-test('every status has its own text key', () => {
-  const keys = Object.values(OTA_STATUS_TEXT);
-  assert.equal(new Set(keys).size, 6);
-  assert.notEqual(OTA_STATUS_TEXT.applying, 'updateApplied');
+test('the startup screen only ever says "applying", and only while an update is in flight', () => {
+  assert.equal(showsApplyingText('downloading'), true);
+  assert.equal(showsApplyingText('applying'), true);
+  for (const quiet of ['checking', 'latest', 'offline', 'failed', null] as (OtaStatus | null)[]) assert.equal(showsApplyingText(quiet), false, String(quiet));
 });
 
 test('first install: no "update applied" toast', () => {
@@ -215,17 +215,6 @@ test('new OTA: the toast shows once', () => {
   assert.equal(launch(false, 'b'), true);   // next update
   assert.equal(launch(false, 'b'), false);
   assert.equal(shouldShowOtaToast({ dev: true, enabled: true, embedded: false, updateId: 'c', seenId: 'b' }), false);
-});
-
-test('what is running is shown short: version, build, Embedded or the update group', () => {
-  assert.equal(runningBundleLabel({ version: '1.0.0', build: '2', dev: false, embedded: true }), 'v1.0.0 (2) · Embedded');
-  assert.equal(runningBundleLabel({ version: '1.0.0', build: '2', dev: false, embedded: false, updateGroup: 'a21a7422-332b-4104-aaf7-8770a0c03f85', updateId: '01a10f54-2764-7338-a161-be14ec4939a4' }), 'v1.0.0 (2) · OTA a21a7422');
-  assert.equal(runningBundleLabel({ version: '1.0.0', build: '2', dev: false, embedded: false, updateId: '01A10F54-2764-7338-a161-be14ec4939a4' }), 'v1.0.0 (2) · OTA 01a10f54');
-  assert.equal(runningBundleLabel({ version: '1.0.0', build: null, dev: true, embedded: true }), 'v1.0.0 · DEV');
-  assert.equal(shortUpdateId('a21a7422-332b-4104-aaf7-8770a0c03f85'), 'a21a7422');
-  assert.equal(shortUpdateId(null), null);
-  assert.equal(appliedToastText('업데이트 적용 완료', 'a21a7422-332b-4104-aaf7-8770a0c03f85', null), '업데이트 적용 완료 · OTA a21a7422');
-  assert.equal(appliedToastText('Update applied', null, null), 'Update applied');
 });
 
 test('reload loop guard: an update that was restarted onto and is not running is not restarted onto again', () => {

@@ -5,7 +5,7 @@ import { TurboModuleRegistry } from 'react-native';
 
 import {
   alreadyTriedUpdate, checkDownloadApply, isOfflineError, nextSeenUpdateId, OTA_APPLY_ATTEMPT_KEY, OTA_SEEN_UPDATE_KEY,
-  runningBundleLabel, shouldShowOtaToast, showApplyingThenReload, type CheckOutcome,
+  shouldShowOtaToast, showApplyingThenReload, type CheckOutcome,
 } from './startupFlow';
 
 export const OTA_RELOAD_SCREEN = {
@@ -44,39 +44,6 @@ export function updatesModule(): typeof import('expo-updates') | null {
 function qaRunner(): typeof import('./OtaQaRunner') {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   return require('./OtaQaRunner') as typeof import('./OtaQaRunner');
-}
-
-/** EAS update group of the running bundle (what `eas update` prints), when it is an update. */
-function runningUpdateGroup(Updates: NonNullable<ReturnType<typeof updatesModule>>): string | null {
-  const metadata = (Updates.manifest as { metadata?: { updateGroup?: unknown } } | undefined)?.metadata;
-  return typeof metadata?.updateGroup === 'string' ? metadata.updateGroup : null;
-}
-
-/** Ids of the update this launch runs, for the applied toast. */
-export function runningUpdateIds(): { updateGroup: string | null; updateId: string | null } {
-  const Updates = updatesModule();
-  if (!Updates && __DEV__ && process.env.EXPO_PUBLIC_DM_OTA_QA) {
-    return { updateGroup: qaRunner().QA_UPDATE_GROUP, updateId: null };
-  }
-  return Updates ? { updateGroup: runningUpdateGroup(Updates), updateId: Updates.updateId } : { updateGroup: null, updateId: null };
-}
-
-/**
- * "v1.0.0 (2) · Embedded" / "v1.0.0 (2) · OTA a21a7422" — which binary and which bundle are running.
- * The build number is the binary's own (Info.plist / versionCode), not the one in the update's manifest.
- */
-export function runningBundleText(): string {
-  const Updates = updatesModule();
-  const platform = Constants.platform;
-  const build = platform?.ios?.buildNumber ?? (platform?.android?.versionCode != null ? String(platform.android.versionCode) : null);
-  return runningBundleLabel({
-    version: Updates?.runtimeVersion ?? Constants.expoConfig?.version,
-    build,
-    dev: __DEV__,
-    embedded: !Updates || Updates.isEmbeddedLaunch,
-    updateGroup: Updates ? runningUpdateGroup(Updates) : null,
-    updateId: Updates?.updateId,
-  });
 }
 
 /** True once, on the launch that is running a newly applied OTA bundle. */

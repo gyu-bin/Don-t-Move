@@ -3,18 +3,16 @@
  * can be tested as they are. OtaRefresh / applyUpdate / StartupScreen / BrandingScreen only wire these to the app.
  */
 
-/** What the startup screen says about the update check. null: nothing to say (development bundle). */
+/** Where the update check is. null: nothing to check (development bundle). */
 export type OtaStatus = 'checking' | 'downloading' | 'applying' | 'latest' | 'offline' | 'failed';
 
-/** Text key of each status (keys of src/ui/menu/strings.ts). */
-export const OTA_STATUS_TEXT = {
-  checking: 'updateChecking',
-  downloading: 'updateDownloading',
-  applying: 'updateApplying',
-  latest: 'updateLatest',
-  offline: 'updateOffline',
-  failed: 'updateFailed',
-} as const satisfies Record<OtaStatus, string>;
+/**
+ * The startup screen says one thing only, "Applying update", while an update is being downloaded or applied.
+ * Checking, up to date, offline and a failed check are silent: the screen simply hands over to Home.
+ */
+export function showsApplyingText(status: OtaStatus | null): boolean {
+  return status === 'downloading' || status === 'applying';
+}
 
 /**
  * Startup is ready when the running bundle is the one to play this launch: the check is over (whatever its result)
@@ -178,32 +176,4 @@ export function shouldShowOtaToast(input: {
 export function nextSeenUpdateId(embedded: boolean, updateId: string | null): string | null {
   if (updateId) return updateId;
   return embedded ? 'embedded' : null;
-}
-
-/** First eight characters of an update id: enough to tell updates apart, short enough to read. */
-export function shortUpdateId(id: string | null | undefined): string | null {
-  const text = (id ?? '').replace(/[^0-9a-f]/gi, '');
-  return text.length >= 8 ? text.slice(0, 8).toLowerCase() : null;
-}
-
-/** What is running, for the startup screen and the applied toast: "v1.0.0 (2) · Embedded" or "v1.0.0 (2) · OTA a21a7422". */
-export function runningBundleLabel(input: {
-  version: string | null | undefined;
-  build: string | null | undefined;
-  dev: boolean;
-  embedded: boolean;
-  /** EAS update group (what `eas update` prints); the per-platform update id is the fallback. */
-  updateGroup?: string | null;
-  updateId?: string | null;
-}): string {
-  const app = `v${input.version || '?'}${input.build ? ` (${input.build})` : ''}`;
-  if (input.dev) return `${app} · DEV`;
-  const short = shortUpdateId(input.updateGroup) ?? shortUpdateId(input.updateId);
-  return input.embedded || !short ? `${app} · Embedded` : `${app} · OTA ${short}`;
-}
-
-/** "Update applied · OTA a21a7422" */
-export function appliedToastText(applied: string, updateGroup: string | null | undefined, updateId: string | null | undefined): string {
-  const short = shortUpdateId(updateGroup) ?? shortUpdateId(updateId);
-  return short ? `${applied} · OTA ${short}` : applied;
 }

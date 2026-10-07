@@ -10,19 +10,17 @@ export const SPLASH_FADE_MS = 420;
 const SPLASH_IN_MS = 680;
 type Props = {
   leaving?: boolean; onGone?: () => void; animateIn?: boolean;
-  /** Startup status line ("Checking for updates…"). */
+  /** Shown at the foot while an update is being applied ("Applying update"). */
   status?: string | null;
-  /** Which binary and bundle are running ("v1.0.0 (2) · Embedded"). */
-  label?: string | null;
 };
 /**
  * Brand-only splash (no thief/guard/diamond/buttons). Same navy as the native splash, so the
  * native → brand hand-off has no colour flash. When `leaving`, it fades over the museum intro.
- * It is the startup screen: the update status and the running build are written at its foot.
+ * It is the startup screen: while an update is being applied, that is written at its foot.
  * Its fades are part of the startup sequence and play even when the system asks for reduced motion
  * (a fade that jumps would cut straight from the splash to a finished Home).
  */
-export function SplashScreen({ leaving = false, onGone, animateIn = false, status, label }: Props) {
+export function SplashScreen({ leaving = false, onGone, animateIn = false, status }: Props) {
   const insets = useSafeAreaInsets();
   const opacity = useSharedValue(animateIn ? 0 : 1);
   useEffect(() => {
@@ -48,8 +46,7 @@ export function SplashScreen({ leaving = false, onGone, animateIn = false, statu
         <View style={styles.accent} />
         <Text style={styles.tagline}>A STEALTH GAME{ '\n' }IN YOUR HANDS</Text>
       </View>
-      {!!status && <Text accessibilityLiveRegion="polite" style={[styles.status, { bottom: Math.max(insets.bottom, 12) + 58 }]}>{status}</Text>}
-      {!!label && <Text style={[styles.label, { bottom: Math.max(insets.bottom, 12) + 34 }]}>{label}</Text>}
+      {!!status && <Text accessibilityLiveRegion="polite" style={[styles.status, { bottom: Math.max(insets.bottom, 12) + 44 }]}>{status}</Text>}
       <Text style={[styles.footer, { bottom: Math.max(insets.bottom, 12) + 14 }]}>SILENCE IS A SKILL</Text>
     </Animated.View>
   );
@@ -99,12 +96,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.2,
     textAlign: 'center',
-  },
-  label: {
-    position: 'absolute',
-    color: '#7B929D',
-    fontSize: 10,
-    letterSpacing: 0.6,
   },
   footer: {
     position: 'absolute',

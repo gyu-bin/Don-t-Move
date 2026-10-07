@@ -13,7 +13,7 @@ import { MenuContext } from '../menu/MenuContext';
 import { HomeMenu, SettingsScreen } from '../menu/MenuScreens';
 import { translate } from '../menu/strings';
 import { MonetizationProvider } from '../../game/monetization/MonetizationContext';
-import { OTA_STATUS_TEXT, type OtaStatus } from '../../ota/startupFlow';
+import { showsApplyingText, type OtaStatus } from '../../ota/startupFlow';
 
 import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgress';
 import {missionId,missionIndex} from '../../game/levels/campaignCatalog';
@@ -24,17 +24,15 @@ type StartupProps = {
  holdSplash?: boolean;
  /** An update is being downloaded or applied: the startup screen stays in front until the runtime is replaced. */
  applying?: boolean;
- /** What the startup screen says about the update check. */
+ /** Where the update check is. Only an update in flight is shown, as "Applying update". */
  otaStatus?: OtaStatus | null;
- /** Which binary and bundle are running. */
- buildLabel?: string | null;
  /** The applying status has been drawn. The reload waits for this. */
  onApplyingShown?: () => void;
  /** Home is on screen (its intro has finished), once per mount. */
  onHomeVisible?: () => void;
  onGameplayChange?: (playing: boolean) => void;
 };
-export function StartupScreen({ holdSplash = false, applying = false, otaStatus = null, buildLabel = null, onApplyingShown, onHomeVisible, onGameplayChange }: StartupProps) {
+export function StartupScreen({ holdSplash = false, applying = false, otaStatus = null, onApplyingShown, onHomeVisible, onGameplayChange }: StartupProps) {
  const audio=useAppAudio();
  const [phase,setPhase]=useState<'BOOT'|'INTRO'|'HOME'>('BOOT');
  const homeVisible=phase==='HOME', splashDone=phase!=='BOOT';
@@ -90,7 +88,7 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
   return ()=>{alive=false;clearTimeout(timer);};
  },[applying,backgroundAttempt,holdSplash]);
  // The status is written in the player's language, so it waits for the saved settings (a few milliseconds).
- const statusText=progress&&otaStatus?translate(progress.language,OTA_STATUS_TEXT[otaStatus]):null;
+ const statusText=progress&&showsApplyingText(otaStatus)?translate(progress.language,'updateApplying'):null;
  const applyingDrawn=applying&&otaStatus==='applying'&&!!statusText;
  const shownRef=useRef(onApplyingShown),homeRef=useRef(onHomeVisible);
  useEffect(()=>{shownRef.current=onApplyingShown;homeRef.current=onHomeVisible;});
@@ -187,14 +185,14 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
         <StageSelectScreen onBack={()=>setRoute('home')} onSelect={play}/>}
      </View>}
     </>}
-    {!splashGone && <SplashScreen leaving={splashDone} onGone={hideSplash} status={statusText} label={buildLabel}/>}
+    {!splashGone && <SplashScreen leaving={splashDone} onGone={hideSplash} status={statusText}/>}
     {backgroundError && phase==='BOOT' && <Text accessibilityRole="button"
      onPress={()=>{setBackgroundError(false);setBackgroundAttempt(value=>value+1);}}
      style={{position:'absolute',bottom:80,left:24,right:24,textAlign:'center',color:'#FFF4D6',backgroundColor:'#102331',padding:16}}>
      {translate(progress?.language??'en','artError')} {translate(progress?.language??'en','retry')}
     </Text>}
    </View>}
-  {applying&&<View style={[StyleSheet.absoluteFill,{zIndex:30}]}><SplashScreen animateIn status={statusText} label={buildLabel}/></View>}
+  {applying&&<View style={[StyleSheet.absoluteFill,{zIndex:30}]}><SplashScreen animateIn status={statusText}/></View>}
   {saveError&&<Text onPress={retrySave} style={{position:'absolute',bottom:30,left:20,right:20,color:'#FFF4D6',backgroundColor:'#102331',padding:12}}>{translate(progress?.language??'en','saveError')}</Text>}
  </MenuContext.Provider></MonetizationProvider></GameAudioContext.Provider>;
 }
