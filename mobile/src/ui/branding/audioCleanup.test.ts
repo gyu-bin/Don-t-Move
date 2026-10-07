@@ -39,18 +39,26 @@ test('all generated placeholder audio is removed', () => {
   }
 });
 
-test('BGM credits are shown in-app and match the current user-supplied BGM', async () => {
+test('BGM credits preserve Lobby and identify the replacement gameplay tracks as CC0', async () => {
   const { MUSIC_CREDIT } = await import('../../game/audio/audioCredits');
   const licenses = readFileSync(new URL('../assets/audio/LICENSES.md', root), 'utf8');
   const current = licenses.split('## REPLACED')[0];
   const tracks: [string, string][] = [
-    ['로비.mp3', 'Matthew Pablo'], ['Covert Affair', 'Kevin MacLeod'], ['chase.mp3', 'chase.mp3']];
+    ['로비.mp3', 'Matthew Pablo'], ['Crouch jumping in your walls', 'Fupi'], ['Chase', 'Adiutorium']];
   for (const [title, author] of tracks) {
     assert(MUSIC_CREDIT.includes(title), `${title} credited in app`);
     assert(MUSIC_CREDIT.includes(author), `${author} credited in app`);
     assert(current.includes(title), `${title} documented as current`);
   }
-  assert.match(MUSIC_CREDIT, /License confirmation pending/);
+  assert(MUSIC_CREDIT.includes('Lobby — user supplied: 로비.mp3 (Matthew Pablo metadata)'), 'Lobby credit remains unchanged');
+  const gameplayCredits = MUSIC_CREDIT.split('\n').filter(line => /^(Stealth|Chase) —/.test(line));
+  assert.equal(gameplayCredits.length, 2);
+  for (const line of gameplayCredits) {
+    assert.match(line, /CC0/);
+    assert.doesNotMatch(line, /user supplied|License confirmation pending/);
+  }
+  assert.doesNotMatch(MUSIC_CREDIT, /Covert Affair|Kevin MacLeod/);
+  assert.doesNotMatch(current, /Covert Affair|Kevin MacLeod/);
   const settings = readFileSync(new URL('ui/menu/MenuScreens.tsx', root), 'utf8');
   assert.match(settings, /\{MUSIC_CREDIT\}/, 'Settings renders the credit');
 });

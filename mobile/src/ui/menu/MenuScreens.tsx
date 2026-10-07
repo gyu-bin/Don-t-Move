@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useUIAudio } from '../../game/audio/useGameAudio';
 import { MUSIC_CREDIT } from '../../game/audio/audioCredits';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, View, useWindowDimensions } from 'react-native';
@@ -8,6 +9,7 @@ import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { openingLayout } from '../branding/openingLayout';
 import { buttonReveal, useLobbyReveal } from '../branding/lobbyReveal';
 import { useMonetization } from '../../game/monetization/MonetizationContext';
+import { RemoveAdsCard } from './RemoveAdsCard';
 import { QA_UNLOCK_ALL } from '../../game/progress/qaUnlock';
 import { normalizeControlMode } from '../../game/input/controlMode';
 import { tiltSensorMissing } from '../../game/input/sensorPresence';
@@ -85,14 +87,11 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
  const playUI=useUIAudio();
  const insets=useSafeAreaInsets();
  const monetization=useMonetization();
- const owned=monetization.adState.removeAdsOwned || monetization.purchaseStatus==='owned';
- const busy=monetization.purchaseStatus==='purchasing'||monetization.purchaseStatus==='restoring';
- const purchaseDisabled=busy||!monetization.ready||monetization.productStatus!=='ready'||!monetization.product;
- const restoreDisabled=busy||!monetization.ready||monetization.productStatus==='pending';
+ // Clear only the previous visit's feedback. The provider callback identity may
+ // change as a purchase progresses, so it must not re-trigger this entry effect.
+ const clearEntryPurchaseMessage=useRef(monetization.clearPurchaseMessage);
+ useEffect(()=>{clearEntryPurchaseMessage.current();},[]);
  const control=normalizeControlMode(progress.controlMode);
- const priceLabel=owned?t('removeAdsOwned')
-  :monetization.purchaseStatus==='purchasing'?t('purchasing')
-  :monetization.product?.displayPrice??t(monetization.productStatus==='loading'?'storeLoading':monetization.productStatus==='pending'?'storePending':'storeUnavailable');
  return <View style={[menuStyles.screen,{paddingTop:insets.top}]}>
   <MenuHeading title={t('settings')} onBack={onBack}/>
   <ScrollView contentContainerStyle={menuStyles.settingsBody}>
@@ -113,36 +112,14 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
     </Pressable>)}</View>
     {control==='tilt'&&SENSOR_MISSING&&<Text style={[menuStyles.detail,{marginTop:-8}]}>{t('controlFallback')}</Text>}
    </View>
+   <View style={menuStyles.setting}><RemoveAdsCard/></View>
    <View style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('sfx')}</Text>
     <Switch accessibilityLabel={t('sfx')} value={progress.soundEnabled} onValueChange={soundEnabled=>preferences({soundEnabled})} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>
    <View style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('music')}</Text>
     <Switch accessibilityLabel={t('music')} value={progress.musicEnabled} onValueChange={musicEnabled=>preferences({musicEnabled})} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>
-   <View style={menuStyles.setting}>
-    <Text style={[menuStyles.label,{marginBottom:4}]}>{t('adsSection')}</Text>
-    {owned
-      ? <View style={menuStyles.row}><Text style={menuStyles.label}>{t('removeAds')}</Text><Text style={menuStyles.owned}>{t('removeAdsOwned')}</Text></View>
-      : <Pressable accessibilityRole="button" accessibilityState={{disabled:purchaseDisabled}} disabled={purchaseDisabled}
-         onPress={()=>{playUI('ui_select');void monetization.purchaseRemoveAds();}}
-         style={[menuStyles.row,{opacity:purchaseDisabled?0.55:1}]}>
-         <View style={{flex:1,paddingRight:12}}>
-          <Text style={menuStyles.label}>{t('removeAds')}</Text>
-          <Text style={menuStyles.detail}>{t('removeAdsDetail')}</Text>
-         </View>
-         <Text style={[menuStyles.price,{maxWidth:'45%',textAlign:'right'}]}>{priceLabel}</Text>
-        </Pressable>}
-    <Pressable accessibilityRole="button" accessibilityState={{disabled:restoreDisabled}} disabled={restoreDisabled}
-     onPress={()=>{playUI('ui_select');void monetization.restorePurchases();}}
-     style={[menuStyles.row,{marginTop:18,opacity:restoreDisabled?0.45:1}]}>
-     <Text style={menuStyles.label}>{monetization.purchaseStatus==='restoring'?t('restoring'):t('restorePurchases')}</Text>
-     <Text style={menuStyles.backText}>›</Text>
-    </Pressable>
-    {monetization.productStatus==='unavailable'&&<MenuButton label={t('storeRetry')} disabled={busy}
-     onPress={()=>{void monetization.refreshProducts();}} compact/>}
-    {!!monetization.purchaseMessage&&<Text accessibilityLiveRegion="polite" style={menuStyles.detail}>{t(monetization.purchaseMessage)}</Text>}
-   </View>
    <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');onIntro();}} style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('intro')}</Text><Text style={menuStyles.backText}>›</Text></Pressable>
    <Text accessibilityLabel="Music credits" style={menuStyles.credit}>{MUSIC_CREDIT}</Text>
-   {QA_UNLOCK_ALL&&<Text style={menuStyles.qaNote}>{t('qaUnlockAll')}</Text>}
+   {__DEV__&&QA_UNLOCK_ALL&&<Text style={menuStyles.qaNote}>{t('qaUnlockAll')}</Text>}
   </ScrollView>
  </View>;
 }

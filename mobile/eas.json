@@ -20,7 +20,10 @@
     },
     "production": {
       "autoIncrement": false,
-      "channel": "production"
+      "channel": "production",
+      "env": {
+        "EXPO_PUBLIC_DM_QA_UNLOCK_ALL": "0"
+      }
     }
   },
   "submit": {

@@ -1,16 +1,44 @@
 # DON'T MOVE — bundled audio provenance
 
-## Current BGM — user supplied three-state set (2026-09-29)
+## Current BGM — CC0 gameplay replacement (2026-10-07)
 
-The current runtime uses exactly the three files supplied in this task. They were loudness-normalized to 44.1 kHz stereo MP3 for mobile playback; no pitch or arrangement changes were made. The source files did not include license documentation, so commercial distribution approval remains pending until the user confirms the rights.
+Official author pages and their CC0 links verified on 2026-10-07 before downloading. License: https://creativecommons.org/publicdomain/zero/1.0/ . Both gameplay tracks permit commercial use; attribution is not required. Voluntary in-app credits retain provenance. Lobby is unchanged and its license remains unconfirmed: this is a mixed-rights set, not an all-CC0 set.
 
-| Runtime file | Supplied file | Metadata observed | Rights status |
-|---|---|---|---|
-| `bgm/lobby.mp3` | `로비.mp3` | Matthew Pablo metadata, 92.76 s | User supplied; license not provided |
-| `bgm/stealth.mp3` | `stealth.mp3` | “Covert Affair”, Kevin MacLeod metadata, 194.19 s | User supplied; license not provided |
-| `bgm/chase.mp3` | `chase.mp3` | No author/license metadata, 112.74 s | User supplied; license not provided |
+Lobby: `bgm/lobby.mp3`, user-supplied `로비.mp3`, Matthew Pablo metadata. No new rights claim or audio change.
 
-`bgm/theft-alert.m4a` remains only as historical unused content and is not loaded by the runtime registry. Current state mapping is Lobby → `lobby.mp3`, Stealth → `stealth.mp3`, and Theft Alert / Player Spotted / Search / Return → `chase.mp3`. UI and whistle assets are unchanged.
+### Stealth
+- Work: Crouch jumping in your walls
+- Author: Fupi
+- Source: https://opengameart.org/content/crouch-jumping-in-your-walls
+- Original download: https://opengameart.org/sites/default/files/crouch-jumping-in-your-walls.flac
+- License: CC0 1.0 Universal
+- Commercial use: allowed; attribution: not required
+- Original SHA-256: `f4ce4f6b97b75616ca789e219e5ca2c51d88370e3748599948c7a3e708c94d79`
+- Runtime file: `bgm/stealth.mp3`
+- Processing: 2-pass loudness normalization target -16 LUFS, -2 dBTP; 44.1 kHz stereo MP3 192 kbps with Xing gapless metadata; only endpoint silence below -60 dB for >=0.5 sec removed with 20ms margin; 3 ms edge fades; no pitch/tempo changes.
+- Retained source range: 0.000000–68.502917 seconds (original duration 69.176479).
+- Final decoded loudness: -16.37 LUFS integrated; true peak -2.18 dBTP; clipped samples: 0.
+- Decoded end→start sample discontinuity: -61.52 dBFS. This is a signal check, not a listening approval or proof of native gapless playback.
+- Final SHA-256: `6718023990d7fe671e1ed2a6b8526cd54a2fb7e5193b7410b80906070603c224`
+
+### Chase
+- Work: Chase
+- Author: Adiutorium
+- Source: https://opengameart.org/content/chase-2
+- Original download: https://opengameart.org/sites/default/files/chase.mp3
+- License: CC0 1.0 Universal
+- Commercial use: allowed; attribution: not required
+- Original SHA-256: `f033d26bb2bb2e6b3fb7db60e491b4dbea0c32f3ac92e8c9b18718759410a601`
+- Runtime file: `bgm/chase.mp3`
+- Processing: 2-pass loudness normalization target -16 LUFS, -2 dBTP; 44.1 kHz stereo MP3 192 kbps with Xing gapless metadata; only endpoint silence below -60 dB for >=0.5 sec removed with 20ms margin; 3 ms edge fades; no pitch/tempo changes.
+- Retained source range: 0.000000–261.936000 seconds (original duration 261.936000).
+- Final decoded loudness: -16.25 LUFS integrated; true peak -1.95 dBTP; clipped samples: 0.
+- Decoded end→start sample discontinuity: -240.00 dBFS. This is a signal check, not a listening approval or proof of native gapless playback.
+- Final SHA-256: `2a262055237328367307d494453aab30cb50e7b3bebe4d2d3fad90e02019a1a7`
+
+Runtime mapping: Lobby → `lobby.mp3`; Stealth → `stealth.mp3`; Theft Alert / Player Spotted / Search / Return → `chase.mp3`. Paths, state machine, player lifecycle, track gains and SFX unchanged. Former gameplay MP3 content replaced, no longer referenced by runtime. Historical entries below are provenance only.
+
+Physical-device listening (iOS/Android), musical seam quality and native MP3 loop scheduling remain PENDING. Original files and processing measurements are in local `Reports/AudioCC0/`; no download occurs at runtime.
 
 ## Historical — previous licensed shortlist V4 (not bundled)
 

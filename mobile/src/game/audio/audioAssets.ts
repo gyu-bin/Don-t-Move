@@ -16,5 +16,10 @@ export const AUDIO_SOURCES: Record<AudioEvent, AudioSource | null> = {
 };
 export const AUDIO_ASSET_STATUS = {
   whistle: 'BUNDLED_CC0_AUDITION_PENDING',
-  music: 'BUNDLED_CC0_AUDITION_PENDING',
+  music: 'BUNDLED_MIXED_RIGHTS',
+  musicLicenses: {
+    lobby: 'USER_SUPPLIED_LICENSE_PENDING',
+    stealth: 'CC0_1_0',
+    chase: 'CC0_1_0',
+  },
 } as const;
