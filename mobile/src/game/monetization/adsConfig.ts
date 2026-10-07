@@ -1,5 +1,12 @@
-/** Permanent non-consumable product. STORE PRODUCT SETUP REQUIRED in App Store Connect / Play Console. */
-export const REMOVE_ADS_PRODUCT_ID = 'remove_ads';
+/** Non-consumable SKU confirmed by the owner in App Store Connect. */
+export const REMOVE_ADS_PRODUCT_IDS = {
+  ios: 'com.dontmove.removeads',
+  android: null, // PENDING — PLAY CONSOLE PRODUCT ID. Never reuse the iOS SKU.
+} as const;
+
+export function removeAdsProductId(platform: string): string | null {
+  return platform === 'ios' ? REMOVE_ADS_PRODUCT_IDS.ios : null;
+}
 
 export const ADMOB_APP_IDS = {
   ios: 'ca-app-pub-2202662035854210~4428994235',
@@ -16,7 +23,7 @@ export const CLEARS_PER_INTERSTITIAL = 2;
 
 /** Production Ad Unit IDs only when not in a development JS bundle. */
 export function isProductionAdUnits(): boolean {
-  return !__DEV__;
+  return !__DEV__ && process.env.EXPO_PUBLIC_ADS_TEST_MODE !== 'true';
 }
 
 export function adsLog(...args: unknown[]): void {

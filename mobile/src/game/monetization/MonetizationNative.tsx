@@ -6,23 +6,32 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { ErrorCode, finishTransaction, useIAP, isUserCancelledError } from 'expo-iap';
+import { AppState, Platform } from 'react-native';
 import {
-  markRemoveAdsOwned,
+  fetchProducts as fetchStoreProducts,
+  finishTransaction,
+  getAvailablePurchases,
+  restorePurchases as restoreStorePurchases,
+  useIAP,
+} from 'expo-iap';
+import {
   recordSuccessfulClear,
   resetClearsAfterShown,
   shouldShowInterstitial,
   type AdClearState,
 } from './adState';
-import { adsLog, CLEARS_PER_INTERSTITIAL, REMOVE_ADS_PRODUCT_ID } from './adsConfig';
+import { adsLog, CLEARS_PER_INTERSTITIAL, removeAdsProductId } from './adsConfig';
 import { interstitialController } from './ads';
 import {
   MonetizationContext,
   type MonetizationApi,
   type PurchaseUiStatus,
+  type PurchaseMessage,
+  type ProductStatus,
+  type MonetizationProduct,
 } from './MonetizationContext';
 import { DEFAULT_AD_STATE, loadAdState, saveAdState } from './monetizationStorage';
-import { purchaseGrantsRemoveAds, purchasesIncludeRemoveAds } from './purchases';
+import { createEntitlementService, purchaseErrorKind, purchaseIsRevoked } from './purchases';
 
 /** Full AdMob + StoreKit/Play Billing path — only loaded when native modules exist. */
 export function MonetizationNativeProvider({ children }: { children: ReactNode }) {
@@ -30,7 +39,15 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
   const [ready, setReady] = useState(false);
   const [adPresenting, setAdPresenting] = useState(false);
   const [purchaseStatus, setPurchaseStatus] = useState<PurchaseUiStatus>('idle');
-  const [purchaseMessage, setPurchaseMessage] = useState<string | null>(null);
+  const [purchaseMessage, setPurchaseMessage] = useState<PurchaseMessage | null>(null);
+  const productId = removeAdsProductId(Platform.OS);
+  const [product, setProduct] = useState<MonetizationProduct | null>(null);
+  const [productStatus, setProductStatus] = useState<ProductStatus>(productId ? 'loading' : 'pending');
+  const operationLock = useRef(false);
+  const operationToken = useRef(0);
+  const purchaseToken = useRef<number | null>(null);
+  const purchaseErrorWork = useRef<{ token: number; promise: Promise<void> } | null>(null);
+  const productRequest = useRef(0);
   const adStateRef = useRef(adState);
   const presentingLock = useRef(false);
   useEffect(() => {
@@ -42,82 +59,141 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     setAdState(next);
     interstitialController.setRemoveAdsOwned(next.removeAdsOwned);
     void saveAdState(next).catch(() => {});
-    if (next.removeAdsOwned) setPurchaseStatus('owned');
+    setPurchaseStatus((status) => status === 'purchasing' || status === 'restoring'
+      ? status : next.removeAdsOwned ? 'owned' : 'idle');
   }, []);
 
-  const grantRemoveAds = useCallback(() => {
-    persist(markRemoveAdsOwned(adStateRef.current));
-    interstitialController.dispose();
-    adsLog('remove ads owned');
+  const applyOwnership = useCallback((owned: boolean) => {
+    persist({ ...adStateRef.current, removeAdsOwned: owned });
+    adsLog('store entitlement synchronized', owned);
   }, [persist]);
 
-  const {
-    connected,
-    products,
-    fetchProducts,
-    requestPurchase,
-    getAvailablePurchases,
-    restorePurchases: restoreIap,
-    availablePurchases,
-  } = useIAP({
+  // Factory only captures callbacks; all ref reads occur in queued async operations.
+  // eslint-disable-next-line react-hooks/refs
+  const entitlement = useMemo(() => createEntitlementService({
+    productId,
+    hydrate: async () => {
+      persist(await loadAdState());
+      setReady(true); // Optional store connectivity never blocks gameplay.
+    },
+    getPurchases: () => getAvailablePurchases({
+      alsoPublishToEventListenerIOS: false,
+      onlyIncludeActiveItemsIOS: true,
+    }),
+    restore: restoreStorePurchases,
+    finish: (purchase) => finishTransaction({ purchase, isConsumable: false }),
+    applyOwnership,
+  }), [applyOwnership, persist, productId]);
+
+  const handlePurchaseError = useCallback((error: unknown, token = purchaseToken.current ?? operationToken.current) => {
+    if (token !== operationToken.current) return Promise.resolve();
+    if (purchaseErrorWork.current?.token === token) return purchaseErrorWork.current.promise;
+    // Native StoreKit emits an error event AND rejects requestPurchase for the
+    // same failure. Both paths share this operation's single reconciliation.
+    if (operationLock.current && purchaseToken.current === null) return Promise.resolve();
+    const promise = Promise.resolve().then(async () => {
+      const kind = purchaseErrorKind(error);
+      adsLog('purchase result', kind);
+      let message: PurchaseMessage = kind;
+      if (kind === 'alreadyOwned') {
+        try {
+          const owned = await entitlement.sync();
+          message = owned ? 'alreadyOwned' : 'purchaseFailed';
+        } catch (syncError) {
+          adsLog('already-owned reconciliation failed', syncError);
+          message = 'restoreFailed';
+        }
+      }
+      if (token !== operationToken.current) return;
+      setPurchaseMessage(message);
+      operationLock.current = false;
+      purchaseToken.current = null;
+      setPurchaseStatus(adStateRef.current.removeAdsOwned ? 'owned' : 'idle');
+    });
+    purchaseErrorWork.current = { token, promise };
+    return promise;
+  }, [entitlement]);
+
+  const { connected, requestPurchase, reconnect } = useIAP({
     onPurchaseSuccess: (purchase) => {
+      if (!productId || purchase.productId !== productId) return;
+      if (purchaseIsRevoked(purchase)) {
+        void entitlement.sync()
+          .catch((error) => adsLog('revocation sync failed; cache retained', error))
+          .finally(() => {
+            operationLock.current = false;
+            setPurchaseStatus(adStateRef.current.removeAdsOwned ? 'owned' : 'idle');
+          });
+        return;
+      }
+      const token = operationToken.current;
       void (async () => {
         try {
-          if (purchaseGrantsRemoveAds(purchase)) grantRemoveAds();
-          await finishTransaction({ purchase, isConsumable: false });
+          const granted = await entitlement.complete(purchase);
+          if (token === operationToken.current) setPurchaseMessage(granted ? 'purchased' : 'pendingApproval');
         } catch (error) {
-          adsLog('finishTransaction failed', error);
+          adsLog('finishTransaction failed; entitlement not granted', error);
+          if (token === operationToken.current) setPurchaseMessage('finishFailed');
         } finally {
-          setPurchaseStatus((status) => (status === 'purchasing' ? 'idle' : status));
+          if (token !== operationToken.current) return;
+          operationLock.current = false;
+          purchaseToken.current = null;
+          setPurchaseStatus(adStateRef.current.removeAdsOwned ? 'owned' : 'idle');
         }
       })();
     },
-    onPurchaseError: (error) => {
-      setPurchaseStatus('idle');
-      if (isUserCancelledError(error) || error.code === ErrorCode.UserCancelled) {
-        setPurchaseMessage(null);
-        return;
-      }
-      setPurchaseMessage(error.message || 'Purchase failed');
-    },
+    onPurchaseError: (error) => { void handlePurchaseError(error); },
   });
+
+  const loadProducts = useCallback(async (retryConnection: boolean) => {
+    const request = ++productRequest.current;
+    setProduct(null);
+    if (!productId) { setProductStatus('pending'); return; }
+    setProductStatus('loading');
+    try {
+      const connectionReady = connected || (retryConnection && await reconnect());
+      if (request !== productRequest.current) return;
+      if (!connectionReady) { setProductStatus('unavailable'); return; }
+      const products = await fetchStoreProducts({ skus: [productId], type: 'in-app' });
+      if (request !== productRequest.current) return;
+      const found = products?.find((item) => item.id === productId && item.type === 'in-app') ?? null;
+      setProduct(found);
+      setProductStatus(found ? 'ready' : 'unavailable');
+    } catch (error) {
+      if (request !== productRequest.current) return;
+      adsLog('fetchProducts failed', error);
+      setProductStatus('unavailable');
+    }
+  }, [connected, productId, reconnect]);
+
+  const refreshProducts = useCallback(() => loadProducts(true), [loadProducts]);
 
   useEffect(() => {
     let alive = true;
-    void (async () => {
-      const stored = await loadAdState();
+    void entitlement.hydrate().then(async () => {
       if (!alive) return;
-      persist(stored);
-      setReady(true); // Storage/UI readiness never waits on optional SDK initialization.
       try {
         await interstitialController.initialize();
-        if (alive && !stored.removeAdsOwned) interstitialController.preload();
-      } catch (error) {
-        adsLog('sdk bootstrap failed', error);
-      }
-      if (alive) setReady(true);
-    })();
-    return () => {
-      alive = false;
-      interstitialController.dispose();
+        if (alive && !adStateRef.current.removeAdsOwned) interstitialController.preload();
+      } catch (error) { adsLog('sdk bootstrap failed', error); }
+    });
+    return () => { alive = false; interstitialController.dispose(); };
+  }, [entitlement]);
+
+  useEffect(() => {
+    void Promise.resolve().then(() => loadProducts(false));
+    if (!connected || !productId) return;
+    const sync = () => {
+      // Avoid a stale store query racing an open purchase sheet.
+      if (operationLock.current) return;
+      void entitlement.sync().catch((error) => adsLog('entitlement sync failed; cache retained', error));
     };
-  }, [persist]);
-
-  useEffect(() => {
-    if (!connected) return;
-    void fetchProducts({ skus: [REMOVE_ADS_PRODUCT_ID], type: 'in-app' }).catch((error) => {
-      adsLog('fetchProducts failed', error);
+    sync();
+    const subscription = AppState.addEventListener('change', (state) => {
+      if (state === 'active') sync();
     });
-    void getAvailablePurchases().catch((error) => {
-      adsLog('getAvailablePurchases failed', error);
-    });
-  }, [connected, fetchProducts, getAvailablePurchases]);
-
-  useEffect(() => {
-    if (purchasesIncludeRemoveAds(availablePurchases)) grantRemoveAds();
-  }, [availablePurchases, grantRemoveAds]);
-
-  const product = products.find((item) => item.id === REMOVE_ADS_PRODUCT_ID) ?? null;
+    return () => subscription.remove();
+  }, [connected, entitlement, productId, loadProducts]);
 
   const recordMissionClear = useCallback(() => {
     const next = recordSuccessfulClear(adStateRef.current);
@@ -151,50 +227,58 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
   }, []);
 
   const purchaseRemoveAds = useCallback(async () => {
-    if (adStateRef.current.removeAdsOwned || purchaseStatus === 'purchasing') return;
+    if (operationLock.current) return;
+    if (adStateRef.current.removeAdsOwned) { setPurchaseMessage('alreadyOwned'); return; }
+    if (!ready || !connected || !productId || !product || productStatus !== 'ready') {
+      setPurchaseMessage('productUnavailable');
+      return;
+    }
+    operationLock.current = true;
+    const token = ++operationToken.current;
+    purchaseToken.current = token;
     setPurchaseMessage(null);
     setPurchaseStatus('purchasing');
     try {
       await requestPurchase({
-        request: {
-          apple: { sku: REMOVE_ADS_PRODUCT_ID },
-          google: { skus: [REMOVE_ADS_PRODUCT_ID] },
-        },
+        request: Platform.OS === 'ios'
+          ? { apple: { sku: productId } }
+          : { google: { skus: [productId] } },
         type: 'in-app',
       });
-    } catch (error) {
-      setPurchaseStatus(adStateRef.current.removeAdsOwned ? 'owned' : 'idle');
-      if (error && typeof error === 'object' && 'code' in error
-        && (error as { code?: string }).code === ErrorCode.UserCancelled) {
-        setPurchaseMessage(null);
-        return;
-      }
-      setPurchaseMessage(error instanceof Error ? error.message : 'Purchase failed');
-    }
-  }, [purchaseStatus, requestPurchase]);
+      // Resolving requestPurchase only dispatches the request. The event callback
+      // owns completion, transaction finishing and entitlement/UI changes.
+    } catch (error) { await handlePurchaseError(error, token); }
+  }, [connected, handlePurchaseError, product, productId, productStatus, ready, requestPurchase]);
 
   const restorePurchases = useCallback(async () => {
-    if (purchaseStatus === 'restoring') return;
+    if (operationLock.current) return;
+    if (!connected || !productId) { setPurchaseMessage('productUnavailable'); return; }
+    operationLock.current = true;
+    ++operationToken.current;
+    purchaseToken.current = null;
     setPurchaseMessage(null);
     setPurchaseStatus('restoring');
     try {
-      await restoreIap();
-      await getAvailablePurchases();
-      if (adStateRef.current.removeAdsOwned) setPurchaseMessage(null);
-      else setPurchaseMessage('No purchases to restore');
+      const owned = await entitlement.sync(true);
+      setPurchaseMessage(owned ? 'restored' : 'restoreEmpty');
     } catch (error) {
-      setPurchaseMessage(error instanceof Error ? error.message : 'Restore failed');
+      adsLog('restore failed; cache retained', error);
+      setPurchaseMessage('restoreFailed');
     } finally {
+      operationLock.current = false;
       setPurchaseStatus(adStateRef.current.removeAdsOwned ? 'owned' : 'idle');
     }
-  }, [getAvailablePurchases, purchaseStatus, restoreIap]);
+  }, [connected, entitlement, productId]);
 
   const value = useMemo<MonetizationApi>(() => ({
     ready,
     adState,
     adPresenting,
     product,
-    purchaseStatus: adState.removeAdsOwned ? 'owned' : purchaseStatus,
+    productStatus,
+    refreshProducts,
+    purchaseStatus: purchaseStatus === 'purchasing' || purchaseStatus === 'restoring'
+      ? purchaseStatus : adState.removeAdsOwned ? 'owned' : 'idle',
     purchaseMessage,
     recordMissionClear,
     presentInterstitialIfNeeded,
@@ -203,7 +287,7 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     restorePurchases,
     clearPurchaseMessage: () => setPurchaseMessage(null),
   }), [
-    ready, adState, adPresenting, product, purchaseStatus, purchaseMessage,
+    ready, adState, adPresenting, product, productStatus, refreshProducts, purchaseStatus, purchaseMessage,
     recordMissionClear, presentInterstitialIfNeeded, confirmAdDismissed, purchaseRemoveAds, restorePurchases,
   ]);
 

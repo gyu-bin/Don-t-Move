@@ -19,6 +19,9 @@ import { adsLog, CLEARS_PER_INTERSTITIAL } from './adsConfig';
 import { DEFAULT_AD_STATE, loadAdState, saveAdState } from './monetizationStorage';
 import { monetizationNativeReady } from './nativeGate';
 
+export type PurchaseMessage = 'purchased' | 'restored' | 'restoreEmpty' | 'cancelled' | 'alreadyOwned' | 'purchaseFailed' | 'restoreFailed' | 'productUnavailable' | 'pendingApproval' | 'finishFailed';
+export type ProductStatus = 'loading' | 'ready' | 'unavailable' | 'pending';
+
 export type PurchaseUiStatus = 'idle' | 'purchasing' | 'restoring' | 'owned';
 
 /** Store-localized price shape — avoids importing expo-iap in the stub path. */
@@ -33,7 +36,9 @@ export type MonetizationApi = {
   adPresenting: boolean;
   product: MonetizationProduct | null;
   purchaseStatus: PurchaseUiStatus;
-  purchaseMessage: string | null;
+  purchaseMessage: PurchaseMessage | null;
+  productStatus: ProductStatus;
+  refreshProducts: () => Promise<void>;
   recordMissionClear: () => void;
   /** Call from Mission Complete → Next. Never blocks forever. */
   presentInterstitialIfNeeded: () => Promise<void>;
@@ -97,6 +102,8 @@ function MonetizationStubProvider({ children }: { children: ReactNode }) {
     product: null,
     purchaseStatus: adState.removeAdsOwned ? 'owned' : 'idle',
     purchaseMessage: null,
+    productStatus: 'unavailable',
+    refreshProducts: unavailablePurchase,
     recordMissionClear,
     presentInterstitialIfNeeded,
     confirmAdDismissed: () => {},
@@ -146,6 +153,8 @@ export function useMonetization(): MonetizationApi {
       product: null,
       purchaseStatus: 'idle',
       purchaseMessage: null,
+      productStatus: 'unavailable',
+      refreshProducts: unavailablePurchase,
       recordMissionClear: () => {},
       presentInterstitialIfNeeded: async () => {},
       confirmAdDismissed: () => {},

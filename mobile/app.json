@@ -36,7 +36,7 @@
         "foregroundImage": "./assets/branding/adaptive-foreground.png"
       },
       "package": "com.dontmove.prototype",
-      "versionCode": 1,
+      "versionCode": 2,
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.MODIFY_AUDIO_SETTINGS",
@@ -44,7 +44,8 @@
         "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
       ],
       "blockedPermissions": [
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACTIVITY_RECOGNITION"
       ]
     },
     "web": {

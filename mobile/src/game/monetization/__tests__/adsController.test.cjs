@@ -59,3 +59,23 @@ test('controller touch confirmation is inert when idle and before OPENED', async
  await new Promise(resolve=>setTimeout(resolve,5));assert.equal(settled,false);
  ads[0].emit('opened');ads[0].emit('closed');assert.equal(await show,'shown');controller.dispose();
 });
+
+test('owned entitlement suppresses preload, loaded ads and delayed clear requests', async () => {
+ const {controller,ads}=harness();
+ controller.preload();ads[0].emit('loaded');
+ const delayed=Promise.resolve().then(()=>controller.showIfReady());
+ controller.setRemoveAdsOwned(true);
+ assert.equal(await delayed,'skipped');
+ ads[0].stale('loaded');
+ for(let clear=0;clear<8;clear++) {
+  controller.preload();assert.equal(await controller.showIfReady(),'skipped');
+ }
+ assert.equal(ads.length,1);assert.equal(ads[0].shows,0);
+ controller.dispose();
+});
+test('cached ownership blocks first preload; confirmed store revocation enables normal loading', async () => {
+ const {controller,ads}=harness();controller.setRemoveAdsOwned(true);
+ controller.preload();assert.equal(ads.length,0);assert.equal(await controller.showIfReady(),'skipped');
+ controller.setRemoveAdsOwned(false);controller.preload();assert.equal(ads.length,1);
+ controller.dispose();
+});

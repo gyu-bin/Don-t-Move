@@ -87,10 +87,12 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
  const monetization=useMonetization();
  const owned=monetization.adState.removeAdsOwned || monetization.purchaseStatus==='owned';
  const busy=monetization.purchaseStatus==='purchasing'||monetization.purchaseStatus==='restoring';
+ const purchaseDisabled=busy||!monetization.ready||monetization.productStatus!=='ready'||!monetization.product;
+ const restoreDisabled=busy||!monetization.ready||monetization.productStatus==='pending';
  const control=normalizeControlMode(progress.controlMode);
  const priceLabel=owned?t('removeAdsOwned')
   :monetization.purchaseStatus==='purchasing'?t('purchasing')
-  :monetization.product?.displayPrice??'—';
+  :monetization.product?.displayPrice??t(monetization.productStatus==='loading'?'storeLoading':monetization.productStatus==='pending'?'storePending':'storeUnavailable');
  return <View style={[menuStyles.screen,{paddingTop:insets.top}]}>
   <MenuHeading title={t('settings')} onBack={onBack}/>
   <ScrollView contentContainerStyle={menuStyles.settingsBody}>
@@ -119,22 +121,24 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
     <Text style={[menuStyles.label,{marginBottom:4}]}>{t('adsSection')}</Text>
     {owned
       ? <View style={menuStyles.row}><Text style={menuStyles.label}>{t('removeAds')}</Text><Text style={menuStyles.owned}>{t('removeAdsOwned')}</Text></View>
-      : <Pressable accessibilityRole="button" disabled={busy}
+      : <Pressable accessibilityRole="button" accessibilityState={{disabled:purchaseDisabled}} disabled={purchaseDisabled}
          onPress={()=>{playUI('ui_select');void monetization.purchaseRemoveAds();}}
-         style={[menuStyles.row,{opacity:busy?0.55:1}]}>
+         style={[menuStyles.row,{opacity:purchaseDisabled?0.55:1}]}>
          <View style={{flex:1,paddingRight:12}}>
           <Text style={menuStyles.label}>{t('removeAds')}</Text>
           <Text style={menuStyles.detail}>{t('removeAdsDetail')}</Text>
          </View>
-         <Text style={menuStyles.price}>{priceLabel}</Text>
+         <Text style={[menuStyles.price,{maxWidth:'45%',textAlign:'right'}]}>{priceLabel}</Text>
         </Pressable>}
-    <Pressable accessibilityRole="button" disabled={busy||owned}
+    <Pressable accessibilityRole="button" accessibilityState={{disabled:restoreDisabled}} disabled={restoreDisabled}
      onPress={()=>{playUI('ui_select');void monetization.restorePurchases();}}
-     style={[menuStyles.row,{marginTop:18,opacity:(busy||owned)?0.45:1}]}>
+     style={[menuStyles.row,{marginTop:18,opacity:restoreDisabled?0.45:1}]}>
      <Text style={menuStyles.label}>{monetization.purchaseStatus==='restoring'?t('restoring'):t('restorePurchases')}</Text>
      <Text style={menuStyles.backText}>›</Text>
     </Pressable>
-    {!!monetization.purchaseMessage&&<Text style={menuStyles.detail}>{monetization.purchaseMessage}</Text>}
+    {monetization.productStatus==='unavailable'&&<MenuButton label={t('storeRetry')} disabled={busy}
+     onPress={()=>{void monetization.refreshProducts();}} compact/>}
+    {!!monetization.purchaseMessage&&<Text accessibilityLiveRegion="polite" style={menuStyles.detail}>{t(monetization.purchaseMessage)}</Text>}
    </View>
    <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');onIntro();}} style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('intro')}</Text><Text style={menuStyles.backText}>›</Text></Pressable>
    <Text accessibilityLabel="Music credits" style={menuStyles.credit}>{MUSIC_CREDIT}</Text>

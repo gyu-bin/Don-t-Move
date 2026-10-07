@@ -168,6 +168,7 @@ class InterstitialController {
 
   /** Clear/Next never waits for an ad load. Only an already loaded ad can hold navigation. */
   showIfReady(): Promise<ShowResult> {
+    if (this.disabled) return Promise.resolve('skipped');
     if (this.presenting) return this.presenting;
     const mobileAds = loadSdk();
     if (!mobileAds || !this.isReady() || !this.ad) {
