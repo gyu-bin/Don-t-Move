@@ -4,69 +4,101 @@ import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { loadProgress } from './src/game/progress/stageProgress';
-import { consumeFreshOtaNotice } from './src/ota/applyUpdate';
+import { consumeFreshOtaNotice, runningBundleText, runningUpdateIds } from './src/ota/applyUpdate';
 import { OtaRefresh } from './src/ota/OtaRefresh';
 import { OtaToast } from './src/ota/OtaToast';
+import { appliedToastText, type OtaStatus } from './src/ota/startupFlow';
 import { StartupScreen } from './src/ui/branding/StartupScreen';
 import { translate } from './src/ui/menu/strings';
 
 const TOAST_MS = 4500;
 
-/** Playable five-stage V1. Native tilt is used on iPhone; Simulator keeps touch fallback. */
+/**
+ * Startup order: native splash → startup screen (update status) → Home intro → Home.
+ * `holdSplash` is the startup-ready signal turned round: while it is true the startup screen stays and the
+ * Home intro has not started. An update found on the way keeps the startup screen up until the runtime is replaced.
+ */
 export default function App() {
   const [holdSplash, setHoldSplash] = useState(true);
   const [applying, setApplying] = useState(false);
+  const [otaStatus, setOtaStatus] = useState<OtaStatus | null>('checking');
+  const [buildLabel] = useState(runningBundleText);
   const [splashRun, setSplashRun] = useState(0);
   const [inGame, setInGame] = useState(false);
   const inGameRef = useRef(false);
   const applyingRef = useRef(false);
-  const [applyingLabel, setApplyingLabel] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
   const releaseSplash = useCallback(() => setHoldSplash(false), []);
   const setGameplay = useCallback((playing: boolean) => {
     inGameRef.current = playing;
     setInGame(playing);
   }, []);
+
+  // The reload waits until "Applying update…" has been drawn. One promise per time the startup screen is put in front.
+  const shown = useRef<{ promise: Promise<void>; resolve: () => void } | null>(null);
+  const armShown = useCallback(() => {
+    let resolve = () => {};
+    const promise = new Promise<void>((done) => { resolve = done; });
+    shown.current = { promise, resolve };
+  }, []);
+  const applyingShown = useCallback(() => {
+    if (!shown.current) armShown();
+    return shown.current!.promise;
+  }, [armShown]);
+  const markApplyingShown = useCallback(() => shown.current?.resolve(), []);
+
   const showApplying = useCallback(() => {
     if (inGameRef.current || applyingRef.current) return;
     applyingRef.current = true;
+    armShown();
     setApplying(true);
     setSplashRun((run) => run + 1);
-    void loadProgress().then((progress) => {
-      setApplyingLabel(translate(progress.language, 'updateApplying'));
-    }).catch(() => {
-      setApplyingLabel(translate('ko', 'updateApplying'));
-    });
-  }, []);
+  }, [armShown]);
   const hideApplying = useCallback(() => {
-    const wasApplying = applyingRef.current;
     applyingRef.current = false;
+    shown.current = null;
     setApplying(false);
-    if (wasApplying) setApplyingLabel(null);
   }, []);
 
+  // "Update applied" belongs to the launch that first runs a new bundle, and is shown once Home is on screen.
+  const freshUpdate = useRef(false);
+  const homeSeen = useRef(false);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const showAppliedToast = useCallback(() => {
+    if (!freshUpdate.current || !homeSeen.current) return;
+    freshUpdate.current = false;
+    const ids = runningUpdateIds();
+    void loadProgress().then((progress) => progress.language).catch(() => 'ko' as const).then((language) => {
+      setToast(appliedToastText(translate(language, 'updateApplied'), ids.updateGroup, ids.updateId));
+      toastTimer.current = setTimeout(() => setToast(null), TOAST_MS);
+    });
+  }, []);
+  const homeVisible = useCallback(() => {
+    homeSeen.current = true;
+    showAppliedToast();
+  }, [showAppliedToast]);
   useEffect(() => {
     let alive = true;
-    let hide: ReturnType<typeof setTimeout> | undefined;
-    void consumeFreshOtaNotice().then(async (fresh) => {
+    void consumeFreshOtaNotice().then((fresh) => {
       if (!alive || !fresh) return;
-      const progress = await loadProgress();
-      if (!alive) return;
-      setApplyingLabel(translate(progress.language, 'updateApplying'));
-      hide = setTimeout(() => setApplyingLabel(null), TOAST_MS);
+      freshUpdate.current = true;
+      showAppliedToast();
     });
     return () => {
       alive = false;
-      if (hide) clearTimeout(hide);
+      if (toastTimer.current) clearTimeout(toastTimer.current);
     };
-  }, []);
+  }, [showAppliedToast]);
 
   return (
     <SafeAreaProvider>
       <View style={{ flex: 1 }}>
-        <StartupScreen key={splashRun} holdSplash={holdSplash} applying={applying} onGameplayChange={setGameplay} />
+        <StartupScreen key={splashRun} holdSplash={holdSplash} applying={applying} otaStatus={otaStatus} buildLabel={buildLabel}
+          onApplyingShown={markApplyingShown} onHomeVisible={homeVisible} onGameplayChange={setGameplay} />
       </View>
-      <OtaRefresh onReady={releaseSplash} onApplying={showApplying} onApplyingDone={hideApplying} inGame={inGame} />
-      {applyingLabel ? <OtaToast message={applyingLabel} /> : null}
+      <OtaRefresh onReady={releaseSplash} onStatus={setOtaStatus} onApplying={showApplying} onApplyingDone={hideApplying}
+        applyingShown={applyingShown} inGame={inGame} />
+      {toast ? <OtaToast message={toast} /> : null}
       <StatusBar style="light" hidden={false} />
     </SafeAreaProvider>
   );

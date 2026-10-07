@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { Canvas, Picture, Skia, loadData } from '@shopify/react-native-skia';
 import type { SkImage } from '@shopify/react-native-skia';
-import Animated, { Easing, cancelAnimation, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, ReduceMotion, cancelAnimation, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BRAND, INTRO_MS, LOBBY_AUDIO_LEAD_MS, introFrame } from './introTimeline';
@@ -14,6 +14,7 @@ import { useBrandAudio } from './useBrandAudio';
 import { markStartup } from './startupMetrics';
 import { createOpeningArtLoader, type OpeningArt } from './openingArtLoader';
 import { useMenu } from '../menu/MenuContext';
+import { introEndsOnAppState, shouldStartHomeIntro } from '../../ota/startupFlow';
 
 const SOURCES: Record<SceneImageKey, number> = {
  bg: require('../../../assets/branding/opening/bg_museum.png'),
@@ -45,12 +46,14 @@ type Props = {
  children?: import('react').ReactNode; skipInitial?: boolean; musicEnabled?: boolean; onFinished?: () => void;
  soundEnabled: boolean; onStart: () => void; onReplayDone?: () => void;
  onSceneReady?: () => void; onLobbyAudioStart?: () => void; ready?: boolean; loadingError?: string; onRetry?: () => void;
+ /** Startup-ready signal. The intro waits for it: being mounted does not start the animation. */
+ startReady?: boolean;
 };
 /**
  * Spotlight Freeze Intro and Lobby are ONE scene: the intro animates introFrame(0→4500) and the
  * Lobby simply stays on introFrame(4500). Only the menu (children) fades in afterwards.
  */
-export function BrandingScreen({ children, skipInitial = false, soundEnabled, musicEnabled = soundEnabled, onFinished, onStart, onReplayDone, onSceneReady, onLobbyAudioStart, ready = true, loadingError, onRetry }: Props) {
+export function BrandingScreen({ children, skipInitial = false, soundEnabled, musicEnabled = soundEnabled, onFinished, onStart, onReplayDone, onSceneReady, onLobbyAudioStart, ready = true, loadingError, onRetry, startReady = true }: Props) {
  const { t } = useMenu();
  const { width, height } = useWindowDimensions();
  const insets = useSafeAreaInsets();
@@ -61,7 +64,8 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
  const [attempt, setAttempt] = useState(0);
  const [intro, setIntro] = useState(!skipInitial);
  const [started, setStarted] = useState(skipInitial);
- const [active, setActive] = useState(AppState.currentState === 'active');
+ const [appState, setAppState] = useState<string>(AppState.currentState);
+ const active = appState === 'active';
  const time = useSharedValue(skipInitial ? INTRO_MS : 0);
  const reveal = useSharedValue(skipInitial ? 0 : 0);
  const done = useRef(skipInitial), mounted = useRef(true);
@@ -73,7 +77,9 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
   done.current = true; cancelAnimation(time); time.set(INTRO_MS); setIntro(false);
   markStartup('intro-end');
  }, [time]);
- useEffect(() => { if (!intro) { finishedRef.current?.(); reveal.set(withTiming(LOBBY_REVEAL_MS, { duration: LOBBY_REVEAL_MS, easing: Easing.linear })); } }, [intro, reveal]);
+ // The intro, the logo and the menu reveal are the Home entrance. They play even when the system asks for reduced
+ // motion: honouring it would jump every one of them to its last frame, a cut from the splash to a finished Home.
+ useEffect(() => { if (!intro) { finishedRef.current?.(); reveal.set(withTiming(LOBBY_REVEAL_MS, { duration: LOBBY_REVEAL_MS, easing: Easing.linear, reduceMotion: ReduceMotion.Never })); } }, [intro, reveal]);
 
  useEffect(() => {
   let alive = true;
@@ -84,30 +90,44 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
  }, [attempt, finish]);
  useEffect(() => {
   mounted.current = true;
-  const sub = AppState.addEventListener('change', state => { setActive(state === 'active'); if (state !== 'active') finish(); });
+  // Leaving the app ends the intro (Home is there on return, and it is not played again).
+  // A passing system overlay only makes the app inactive: it does not cut the intro.
+  const sub = AppState.addEventListener('change', state => { setAppState(state); if (introEndsOnAppState(state)) finish(); });
   return () => { mounted.current = false; sub.remove(); cancelAnimation(time); };
  }, [finish, time]);
 
  // Independent of RAF/worklet completion: a lost timeline callback cannot hide Home forever.
+ // Counted from the moment the intro starts, not from mount: waiting for startup must not use it up.
  useEffect(() => {
-  if (!intro || !hasBackground) return;
+  if (!intro || !started) return;
   const deadline = setTimeout(() => { markStartup('intro-timeout-fallback'); finish(); }, INTRO_MS + 2000);
   return () => clearTimeout(deadline);
- }, [intro, hasBackground, finish]);
+ }, [intro, started, finish]);
 
- // The timeline starts once the artwork can be drawn, so no frame of the intro is ever blank.
+ // The timeline starts once startup is ready, the artwork can be drawn and the app is in front, and only once:
+ // no frame of the intro is blank, and none of it plays behind the startup screen or while the app is away.
+ // "In front" is anything but the background: an alert over the app at launch must not hold the intro back.
+ const introStarted = useRef(skipInitial);
+ const shouldStart = shouldStartHomeIntro({ startupReady: startReady, artReady: hasBackground, appActive: appState !== 'background', started, finished: !intro });
  useEffect(() => {
-  if (!hasBackground || done.current) return;
-  let second = 0, handoff: ReturnType<typeof setTimeout> | undefined;
+  if (!shouldStart) return;
+  let second = 0;
   const first = requestAnimationFrame(() => {
    second = requestAnimationFrame(() => {
+    if (introStarted.current || done.current) return;
+    introStarted.current = true;
     markStartup('intro-start'); sceneReady.current?.(); setStarted(true);
-    time.set(withTiming(INTRO_MS, { duration: INTRO_MS, easing: Easing.linear }, finished => { if (finished) scheduleOnRN(finish); }));
-    handoff = setTimeout(() => { if (!done.current) lobbyAudio.current?.(); }, INTRO_MS - LOBBY_AUDIO_LEAD_MS);
+    time.set(withTiming(INTRO_MS, { duration: INTRO_MS, easing: Easing.linear, reduceMotion: ReduceMotion.Never }, finished => { if (finished) scheduleOnRN(finish); }));
    });
   });
-  return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); if (handoff) clearTimeout(handoff); };
- }, [hasBackground, finish, time]);
+  return () => { cancelAnimationFrame(first); cancelAnimationFrame(second); };
+ }, [shouldStart, finish, time]);
+ // Lobby music leads the end of the intro; scheduled from its real start.
+ useEffect(() => {
+  if (!intro || !started || skipInitial) return;
+  const handoff = setTimeout(() => { if (!done.current) lobbyAudio.current?.(); }, INTRO_MS - LOBBY_AUDIO_LEAD_MS);
+  return () => clearTimeout(handoff);
+ }, [intro, started, skipInitial]);
 
  useBrandAudio(intro && started, hasBackground && active && soundEnabled);
  useEffect(() => { if (!intro && ready) { markStartup('start-interactive'); if (__DEV__) console.info('[HOME] mounted'); } }, [intro, ready]);
