@@ -100,13 +100,17 @@ test('Response curve has Sneak/Walk/Run anchors and precision near neutral', () 
   assert.equal(tiltVisualGait(1),1); assert.equal(tiltVisualGait(0),0);
 });
 test('Locked B default gives precision just outside neutral and unchanged speed anchors at 3.625/6.25/10 degrees', () => {
-  assert.deepEqual(DEFAULT_TILT,{deadZone:1.75,maxTilt:10,sensitivity:1,smoothing:0.07});
-  const speeds = [2, 3.625, 6.25, 10, 16].map((angle) => {
+  assert.deepEqual(DEFAULT_TILT,{deadZone:1.75,moveStart:2.25,maxTilt:10,sensitivity:1,smoothing:0.07});
+  // RC UX hotfix: from rest nothing moves below the 2.25° start threshold (see tiltStop.test.ts).
+  const rest=calibrated();
+  stepTilt(rest,sample(rotation(0,1,0,2),1),1000,1,{...DEFAULT_TILT,smoothing:0});
+  near(Math.hypot(rest.x,rest.y),0);
+  const speeds = [2.3, 3.625, 6.25, 10, 16].map((angle) => {
     const s=calibrated();
     stepTilt(s,sample(rotation(0,1,0,angle),1),1000,1,{...DEFAULT_TILT,smoothing:0});
     return Math.hypot(s.x,s.y)*150;
   });
-  assert(speeds[0] > 1 && speeds[0] < 4, 'small tilt retains precise slow input');
+  assert(speeds[0] > 1 && speeds[0] < 10, 'small tilt retains precise slow input');
   near(speeds[1],38); near(speeds[2],72); near(speeds[3],150); near(speeds[4],150);
 });
 test('Player animation retains phase across gait changes and stops without advancing', () => {

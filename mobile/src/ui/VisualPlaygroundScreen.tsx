@@ -15,7 +15,7 @@ import * as Haptics from 'expo-haptics';
 
 import {campaignStages as playableStages} from '../game/levels/campaignStages';
 import {CHAPTER_MISSION_COUNTS,MISSION_COUNT,missionId,missionIndex,missionName} from '../game/levels/campaignCatalog';
-import {migrateCampaign,completeMission} from '../game/progress/campaignProgress';
+import {canPlayMission,migrateCampaign,completeMission} from '../game/progress/campaignProgress';
 import type { StageDefinition } from '../game/levels/StageDefinition';
 import { compileStage, TILE, WALL_HEIGHT } from '../game/world/compileStage';
 import { createPlaygroundState, stepPlayground } from '../game/playground/playgroundState';
@@ -41,6 +41,13 @@ import { useTiltControl } from '../game/input/useTiltControl';
 import { recenterTilt, stepTilt } from '../game/input/tilt';
 import { stopPlayer } from '../game/input/tiltMovement';
 import { syncInputMode } from '../game/input/inputTransition';
+import { normalizeControlMode, resolveInput } from '../game/input/controlMode';
+import { STICK_IDLE, stickDown, stickMove } from '../game/input/touchStick';
+import type { StickState } from '../game/input/touchStick';
+import { TouchStickHud } from './hud/TouchStickHud';
+import { MissionResult } from './hud/MissionResult';
+import { resultActions } from './resultNavigation';
+import type { ResultAction } from './resultNavigation';
 import { DEFAULT_PROGRESS, loadProgress, saveProgress } from '../game/progress/stageProgress';
 import type { StageProgress } from '../game/progress/stageProgress';
 import { useGameAudio, useUIAudio } from '../game/audio/useGameAudio';
@@ -136,7 +143,7 @@ function GameRun({ initialMissionIndex, progress, onProgress }: { initialMission
   const transition=useSharedValue(0);
   const startedTransition=useRef(false);
   const nextLock=useRef(false);
-  const tilt=useTiltControl();
+  const tilt=useTiltControl(normalizeControlMode(progress.controlMode)==='tilt');
   const definition=playableStages[index];
   const direction=transitionVector(definition.exitEdge);
   const nameStyle=useAnimatedStyle(()=>({opacity:Math.sin(transition.value*Math.PI)}));
@@ -155,7 +162,9 @@ function GameRun({ initialMissionIndex, progress, onProgress }: { initialMission
   const stageCleared=(seconds:number,alerts:number)=>{
     onProgress({...progress,campaign:completeMission(migrateCampaign(progress),index,seconds,alerts)});
     monetization.recordMissionClear();
-    const next=(index+1)%playableStages.length;
+    // After the last mission there is no next one: the result screen leads to the chapter list.
+    if(index>=playableStages.length-1)return;
+    const next=index+1;
     // Shared images are already decoded; compile static art/navigation while
     // the result screen is visible. Keep the outgoing scene until next is ready.
     // The compile blocks the JS thread, so start it only after the result
@@ -171,7 +180,7 @@ function GameRun({ initialMissionIndex, progress, onProgress }: { initialMission
     },MISSION_FINISH_HOLD_MS+200);
   };
   const nextStage=()=>{
-    if(pending!==null||nextLock.current)return;
+    if(pending!==null||nextLock.current||index>=playableStages.length-1)return;
     nextLock.current=true;
     void (async()=>{
       try {
@@ -180,7 +189,7 @@ function GameRun({ initialMissionIndex, progress, onProgress }: { initialMission
         if (__DEV__) console.warn('[ADS] optional presentation failed', error);
       } finally {
         if (__DEV__) console.info('[NAV] mission complete continue');
-        const next=(index+1)%playableStages.length;
+        const next=index+1;
         onProgress({...progress,campaign:{...migrateCampaign(progress),lastMission:missionId(next)}});
         startedTransition.current=false;transition.set(0);setPending(next);
         nextLock.current=false;
@@ -235,10 +244,11 @@ function StageGame({
   transitioning?:boolean;
   onTransitionReady?:()=>void;
 }) {
-  const {t,home:menuHome}=useMenu();
+  const {t,home:menuHome,chapters:menuChapters}=useMenu();
   const playUI=useUIAudio();
   const monetization=useMonetization();
   const home=()=>{playUI('ui_back');menuHome();};
+  const chapterSelect=()=>{playUI('ui_back');menuChapters();};
   const { width, height } = useWindowDimensions();
   const [replayIntro,setReplayIntro]=useState(false);
   const insets = useSafeAreaInsets();
@@ -334,9 +344,12 @@ function StageGame({
   const { movementBlockers, visionBlockers } = stage;
   const { enabled: tiltEnabled, controller, sample, tuning, active, reset: inputReset } = tilt;
   const previousTiltEnabled = useSharedValue(tiltEnabled);
-  // DEV simulator QA: EXPO_PUBLIC_DM_QA_VIRTUAL_TILT=1 drives the real tilt movement path from touch.
-  const virtualTilt = __DEV__ && !tiltEnabled && process.env.EXPO_PUBLIC_DM_QA_VIRTUAL_TILT === '1';
-  const virtualVector = useSharedValue({ x: 0, y: 0 });
+  // Touch control (Settings, or the sensor cannot be used): a drag stick on the tilt movement path.
+  // The tap-to-move harness stays a development tool; EXPO_PUBLIC_DM_QA_VIRTUAL_TILT=1 gives a simulator the stick.
+  const input = resolveInput({ preferred: normalizeControlMode(progress.controlMode), sensorUsable: tilt.usable,
+    dev: __DEV__, devStick: process.env.EXPO_PUBLIC_DM_QA_VIRTUAL_TILT === '1' });
+  const stickEnabled = !tiltEnabled && input.kind === 'stick';
+  const stick = useSharedValue<StickState>(STICK_IDLE);
 
   useGameAudio({sessionKey:`${definition.id}:${audioSession}`,phase:replayIntro?'INTRO':phaseInfo.phase,
     objectiveRevision:pickupRevision,theftRevision:phaseInfo.theft,spottedRevision:phaseInfo.spotted,
@@ -423,8 +436,24 @@ function StageGame({
     onStageCleared(snapshot.t, snapshot.events.whistleCount);
   }, [completed, onStageCleared, state]);
 
+  const index = missionIndex(definition.id);
+  const chapterFinal = definition.mission === CHAPTER_MISSION_COUNTS[(definition.chapter ?? 1)-1];
+  // The clear has been recorded (this render already holds the progress after it): only then is "next" offered.
+  const actions = resultActions({ index, missionCount: MISSION_COUNT, chapterFinal,
+    nextPlayable: canPlayMission(migrateCampaign(progress), index+1, QA_UNLOCK_ALL) });
+  const onResultAction = (action: ResultAction) => {
+    // Buttons exist only after the clear was reported and stored in the session.
+    if (!clearReported.current) return;
+    if (action === 'home') { home(); return; }
+    if (action === 'chapters') { chapterSelect(); return; }
+    if (action === 'retry') { playUI('ui_select'); retry(); return; }
+    if (monetization.adPresenting) { monetization.confirmAdDismissed(); return; }
+    playUI('ui_select'); onNextStage();
+  };
+
   const stopAndPause = () => {
     pausedValue.set(true);
+    stick.set(STICK_IDLE);
     state.modify((s) => { 'worklet'; stopPlayer(s.player); return s; });
     setPaused(true);
     setPauseFeedback('');
@@ -502,7 +531,7 @@ function StageGame({
       y: controller.value.y,
       paused: !active.value || (controller.value.status !== 'PLAY' && controller.value.status !== 'CENTER RESET'),
       reset: inputReset.value,
-    } : virtualTilt ? { x: virtualVector.value.x, y: virtualVector.value.y, paused: false, reset: inputReset.value } : undefined;
+    } : stickEnabled ? { x: stick.value.x, y: stick.value.y, paused: false, reset: inputReset.value } : undefined;
     const elapsed = accumulated.value + dt;
     const steps = Math.floor(elapsed * 60);
     accumulated.value = elapsed - steps / 60;
@@ -512,9 +541,9 @@ function StageGame({
     state.modify((s) => {
       'worklet';
       syncInputMode(s, previousTilt, tiltEnabled, tch.seq);
-      s.playerMode = tiltEnabled || virtualTilt ? -2 : playerMode.value;
+      s.playerMode = tiltEnabled || stickEnabled ? -2 : playerMode.value;
       s.patrol = true;
-      if (!tiltEnabled && !virtualTilt && tch.seq !== s.touchSeq) {
+      if (!tiltEnabled && !stickEnabled && tch.seq !== s.touchSeq) {
         s.touchSeq = tch.seq;
         s.player.tx = tch.x / zoom + s.cam.x;
         s.player.ty = tch.y / zoom + s.cam.y;
@@ -527,17 +556,18 @@ function StageGame({
     });
   });
 
-  const onTouch = (x: number, y: number) => {
+  const onTouch = (x: number, y: number, down: boolean) => {
     if (tiltEnabled || pausedValue.value || caught || completed) return;
-    if (virtualTilt) {
-      // Direction and distance from the player on screen stand in for device tilt.
-      const s = state.value, dx = x-(s.player.x-s.cam.x)*zoom, dy = y-(s.player.y-s.cam.y)*zoom;
-      const k = Math.min(1, Math.hypot(dx, dy)/120)/Math.max(1, Math.hypot(dx, dy));
-      virtualVector.set({ x: dx*k, y: dy*k });
+    if (stickEnabled) {
+      // The thumb steers: direction and speed follow the drag from where it landed. Nothing moves by itself.
+      stick.set(down ? stickDown(x, y) : stickMove(stick.value, x, y));
       return;
     }
     touch.set({ x, y, seq: touch.value.seq + 1 });
   };
+  const releaseStick = () => stick.set(STICK_IDLE);
+  // A pause, a capture or a clear with the thumb still down must not leave a direction behind.
+  useEffect(() => { if (paused || caught || completed || !stickEnabled) stick.set(STICK_IDLE); }, [paused, caught, completed, stickEnabled, stick]);
 
   const empty = useMemo(() => {
     const rec = Skia.PictureRecorder();
@@ -577,9 +607,10 @@ function StageGame({
         pointerEvents={paused || caught || completed || calibrationVisible ? 'none' : 'auto'}
         onStartShouldSetResponder={() => !tiltEnabled}
         onMoveShouldSetResponder={() => !tiltEnabled}
-        onResponderGrant={(event) => onTouch(event.nativeEvent.locationX, event.nativeEvent.locationY)}
-        onResponderRelease={() => { if (virtualTilt) virtualVector.set({ x: 0, y: 0 }); }}
-        onResponderMove={(event) => onTouch(event.nativeEvent.locationX, event.nativeEvent.locationY)}
+        onResponderGrant={(event) => onTouch(event.nativeEvent.pageX, event.nativeEvent.pageY, true)}
+        onResponderRelease={releaseStick}
+        onResponderTerminate={releaseStick}
+        onResponderMove={(event) => onTouch(event.nativeEvent.pageX, event.nativeEvent.pageY, false)}
       />
 
       {!inspection && <>
@@ -625,24 +656,22 @@ function StageGame({
         <Text style={[styles.modalTitle, styles.caught]}>{t('caught')}</Text>
         {__DEV__&&<Pressable accessibilityRole="button" onPress={()=>setMotionDebug(true)} style={styles.button}><Text style={styles.buttonText}>CAPTURE DIAGNOSTICS</Text></Pressable>}
         <Pressable onPress={()=>{playUI('ui_select');retry();}} style={styles.primaryButton}><Text style={styles.primaryText}>{t('retry')}</Text></Pressable>
+        <Pressable onPress={chapterSelect} style={styles.button}><Text style={styles.buttonText}>{t('chapters')}</Text></Pressable>
         <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
       </View>}
 
       {completed&&!transitioning&&<Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill,{backgroundColor:'#000'},finishDimStyle]}/>}
-      {resultVisible && !transitioning && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+      {resultVisible && !transitioning && <>
         {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
-        <Text style={[styles.modalTitle, styles.complete]}>{definition.mission === CHAPTER_MISSION_COUNTS[(definition.chapter ?? 1)-1] ? t('chapter') : t('mission')}</Text>
-        <Text style={styles.modalBody}>{missionName(missionIndex(definition.id),progress.language)}</Text>
-        <Text style={styles.modalBody}>{t('time')} {result.seconds.toFixed(1)}s</Text>
-        <Text style={styles.modalBody}>{t('alerts')} {result.alerts}</Text>
-        <Text style={styles.modalBody}>{t('best')} {(migrateCampaign(progress).records[definition.id]?.bestTime ?? result.seconds).toFixed(1)}s</Text>
-        <Text style={styles.nextMissionName}>{missionName((missionIndex(definition.id)+1)%MISSION_COUNT,progress.language)}</Text>
-        <Pressable onPress={()=>{if(monetization.adPresenting){monetization.confirmAdDismissed();return;}playUI('ui_select');onNextStage();}} style={styles.primaryButton}><Text style={styles.primaryText}>{missionIndex(definition.id) === MISSION_COUNT-1 ? t('again') : t('next')}</Text></Pressable>
-        <Pressable onPress={()=>{playUI('ui_select');retry();}} style={styles.button}><Text style={styles.buttonText}>{t('retry')}</Text></Pressable>
-        <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
-      </View>}
+        <MissionResult title={chapterFinal ? t('chapter') : t('mission')} name={missionName(index,progress.language)}
+          seconds={result.seconds} alerts={result.alerts} best={migrateCampaign(progress).records[definition.id]?.bestTime ?? result.seconds}
+          nextName={actions.primary==='chapters'?undefined:missionName(index+1,progress.language)}
+          primary={actions.primary} secondary={actions.secondary} onAction={onResultAction}/>
+      </>}
       {flash && <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: flash === 'cyan' ? 'rgba(70,225,255,0.24)' : 'rgba(255,40,40,0.30)' }]} />}
-      {__DEV__ && !tiltEnabled && !paused && !caught && !completed && !motionDebug && <View style={[styles.touchControls, { bottom: insets.bottom + 8 }]}>
+      {stickEnabled && !paused && !caught && !completed && !inspection && <TouchStickHud stick={stick} hint={t('touchHint')} bottom={insets.bottom + 10}
+        note={input.fallback ? t('controlFallback') : undefined} retryLabel={t('sensorRetry')} onRetry={input.fallback && tilt.canRetry ? tilt.restart : undefined}/>}
+      {__DEV__ && input.kind === 'tap' && !tiltEnabled && !paused && !caught && !completed && !motionDebug && <View style={[styles.touchControls, { bottom: insets.bottom + 8 }]}>
         <Text style={styles.feedback}>TOUCH · TAP TO MOVE</Text>
         {tilt.canRetry && !!tilt.error && <Pressable accessibilityRole="button" onPress={tilt.restart} style={styles.touchMode}><Text style={styles.buttonText}>{t('sensorRetry')}</Text></Pressable>}
         <View style={{ flexDirection: 'row', gap: 6 }}>{['IDLE', 'SNEAK', 'WALK', 'RUN'].map((label, mode) => <Pressable key={label} accessibilityRole="button" accessibilityState={{ selected: touchMode === mode }} onPress={() => selectTouchMode(mode)} style={[styles.touchMode, touchMode === mode && { borderColor: '#54DDF7' }]}><Text style={styles.buttonText}>{label}</Text></Pressable>)}</View>

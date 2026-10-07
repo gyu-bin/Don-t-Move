@@ -33,6 +33,8 @@ export function stepTiltPlayer(p: PlayerState, input: TiltMovement, dt: number, 
   if (input.paused || p.inputReset !== input.reset) {
     p.inputReset = input.reset; stopPlayer(p); return;
   }
+  // No input is a stop, not a deceleration: the body, its speed and its gait are zero in this same frame.
+  if (input.x === 0 && input.y === 0) { stopPlayer(p); p.contactX = p.contactY = 0; return; }
   const length = Math.max(1, Math.hypot(input.x, input.y));
   const tx = input.x/length*150, ty = input.y/length*150;
   // Wall slide: a component still pressed into the surface that blocked it last

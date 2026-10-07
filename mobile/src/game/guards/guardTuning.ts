@@ -19,8 +19,12 @@ export const GUARD_TUNING = {
 
   // --- suspicion gain = base × movement × distance × cone × visibility (per second)
   baseGain: 0.62,
-  /** Indexed by player gait 0 Idle, 1 Sneak, 2 Walk, 3 Run (interpolated). */
-  movementFactor: [0.08, 0.35, 0.8, 1.6],
+  /**
+   * Indexed by player gait 0 Idle, 1 Sneak, 2 Walk, 3 Run (interpolated).
+   * Standing still in plain view is the base rate, not an exemption: a guard who can see the thief becomes
+   * suspicious in seconds, and every faster gait is quicker still (Still < Sneak < Walk < Run).
+   */
+  movementFactor: [0.28, 0.35, 0.8, 1.6],
   /** Inside this distance even a motionless player is noticed. */
   closeDetectionRadius: 60,
   closeMovementFloor: 0.7,

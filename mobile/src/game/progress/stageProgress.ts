@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { migrateCampaign,normalizeCampaign } from './campaignProgress';
 import type {CampaignProgress} from './campaignProgress';
+import { DEFAULT_CONTROL_MODE, normalizeControlMode } from '../input/controlMode';
+import type { ControlMode } from '../input/controlMode';
 
 export const STAGE_COUNT = 10;
 const STORAGE_KEY = 'dont-move.playable-v1.progress';
@@ -13,6 +15,8 @@ export interface StageProgress {
   soundEnabled: boolean;
   musicEnabled: boolean;
   language: 'ko' | 'en';
+  /** Settings → Controls. Saved with the other settings; absent in older saves, which read as Tilt. */
+  controlMode: ControlMode;
   hasStarted: boolean;
   clearedStages: number[];
   bestTimes: Record<string, number>;
@@ -27,6 +31,7 @@ export const DEFAULT_PROGRESS: StageProgress = {
   soundEnabled: true,
   musicEnabled: true,
   language: 'en',
+  controlMode: DEFAULT_CONTROL_MODE,
   hasStarted: false,
   clearedStages: [],
   bestTimes: {},
@@ -50,6 +55,7 @@ export function normalizeProgress(value: unknown): StageProgress {
     soundEnabled: row.soundEnabled !== false,
     musicEnabled: typeof row.musicEnabled === 'boolean' ? row.musicEnabled : row.soundEnabled !== false,
     language: row.language === 'ko' ? 'ko' : 'en',
+    controlMode: normalizeControlMode(row.controlMode),
     hasStarted: row.hasStarted === true || highestUnlocked > 0 || (row.clearedStages?.length ?? 0) > 0 || !!(campaign && (campaign.highestUnlocked > 0 || Object.values(campaign.records).some(record => record.cleared))),
     clearedStages: Array.isArray(row.clearedStages)
       ? [...new Set(row.clearedStages.filter((n) => Number.isInteger(n) && n >= 0 && n < STAGE_COUNT))]

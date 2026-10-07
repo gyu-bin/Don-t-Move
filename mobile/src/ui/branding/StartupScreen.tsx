@@ -65,7 +65,10 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
   else setSaveError(true);
  },[]);
  const startLobbyAudio=useCallback(()=>setLobbyAudioReady(true),[]);
- const home=useCallback(()=>{setStarted(false);gameplayRef.current?.(false);setRoute('home');setSkipIntro(true);setLobbyAudioReady(false);setPhase('HOME');},[]);
+ // Leaving a mission lands on the finished Home (or the chapter list over it); the Home intro is not replayed.
+ const leaveGame=useCallback((next:'home'|'stages')=>{setStarted(false);gameplayRef.current?.(false);setRoute(next);setSkipIntro(true);setLobbyAudioReady(false);setPhase('HOME');},[]);
+ const home=useCallback(()=>leaveGame('home'),[leaveGame]);
+ const chapters=useCallback(()=>leaveGame('stages'),[leaveGame]);
  const [error, setError] = useState<string>();
  const mounted = useRef(true), generation = useRef(0);
  useEffect(() => {
@@ -167,7 +170,7 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
   if(!started)audio.update({sessionKey:'menu',phase:(homeVisible||lobbyAudioReady)?'LOBBY':'INTRO',theftRevision:0,spottedRevision:0,
    sfxEnabled:progress?.soundEnabled??false,bgmEnabled:progress?.musicEnabled??false,active:true,paused:false});
  },[started,homeVisible,lobbyAudioReady,progress?.soundEnabled,progress?.musicEnabled,audio]);
- return <GameAudioContext.Provider value={audio}><MonetizationProvider><MenuContext.Provider value={{progress:progress??DEFAULT_PROGRESS,home,
+ return <GameAudioContext.Provider value={audio}><MonetizationProvider><MenuContext.Provider value={{progress:progress??DEFAULT_PROGRESS,home,chapters,
   preferences:patch=>updateProgress({...progressRef.current,...patch})}}>
   {started&&Game&&progress?<Game initialMissionIndex={initialMissionIndex} initialProgress={progress} onProgressChange={updateProgress}/>:
    <View style={{flex:1}}>

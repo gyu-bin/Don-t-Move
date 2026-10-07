@@ -9,6 +9,10 @@ import { openingLayout } from '../branding/openingLayout';
 import { buttonReveal, useLobbyReveal } from '../branding/lobbyReveal';
 import { useMonetization } from '../../game/monetization/MonetizationContext';
 import { QA_UNLOCK_ALL } from '../../game/progress/qaUnlock';
+import { normalizeControlMode } from '../../game/input/controlMode';
+import { tiltSensorMissing } from '../../game/input/sensorPresence';
+
+const SENSOR_MISSING = tiltSensorMissing();
 
 export function MenuButton({label,detail,onPress,primary=false,disabled=false,compact=false}:{label:string;detail?:string;onPress:()=>void;primary?:boolean;disabled?:boolean;compact?:boolean}) {
  const playUI=useUIAudio();
@@ -83,6 +87,7 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
  const monetization=useMonetization();
  const owned=monetization.adState.removeAdsOwned || monetization.purchaseStatus==='owned';
  const busy=monetization.purchaseStatus==='purchasing'||monetization.purchaseStatus==='restoring';
+ const control=normalizeControlMode(progress.controlMode);
  const priceLabel=owned?t('removeAdsOwned')
   :monetization.purchaseStatus==='purchasing'?t('purchasing')
   :monetization.product?.displayPrice??'—';
@@ -96,6 +101,15 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
      onPress={()=>preferences({language})} style={[menuStyles.language,progress.language===language&&menuStyles.selected]}>
      <Text style={[menuStyles.label,progress.language===language&&{color:'#03111B'}]}>{language==='ko'?'한국어':'English'}</Text>
     </Pressable>)}</View>
+   </View>
+   <View style={menuStyles.setting}>
+    <Text style={menuStyles.label}>{t('controlMode')}</Text>
+    <View accessibilityRole="radiogroup" style={menuStyles.languages}>{(['tilt','touch'] as const).map(mode=><Pressable key={mode}
+     accessibilityRole="radio" accessibilityState={{checked:control===mode}}
+     onPress={()=>{playUI('ui_select');preferences({controlMode:mode});}} style={[menuStyles.language,control===mode&&menuStyles.selected]}>
+     <Text style={[menuStyles.label,control===mode&&{color:'#03111B'}]}>{t(mode==='tilt'?'controlTilt':'controlTouch')}</Text>
+    </Pressable>)}</View>
+    {control==='tilt'&&SENSOR_MISSING&&<Text style={[menuStyles.detail,{marginTop:-8}]}>{t('controlFallback')}</Text>}
    </View>
    <View style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('sfx')}</Text>
     <Switch accessibilityLabel={t('sfx')} value={progress.soundEnabled} onValueChange={soundEnabled=>preferences({soundEnabled})} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>

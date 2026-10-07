@@ -59,7 +59,7 @@
     "test:branding": "node --import tsx --test src/ui/branding/*.test.ts",
     "test:ota": "node --import tsx --test src/ota/*.test.ts",
     "test:maps": "node --import tsx --test src/game/levels/__tests__/tiltTestMaps.test.ts",
-    "test:tilt": "node --import tsx --test src/game/input/__tests__/tilt.test.ts src/game/input/__tests__/androidTilt.test.ts src/game/input/__tests__/calibrationHotfix.test.ts src/game/input/__tests__/tiltProfiles.test.ts",
+    "test:tilt": "node --import tsx --test src/game/input/__tests__/tilt.test.ts src/game/input/__tests__/androidTilt.test.ts src/game/input/__tests__/calibrationHotfix.test.ts src/game/input/__tests__/tiltProfiles.test.ts src/game/input/__tests__/tiltStop.test.ts src/game/input/__tests__/controlMode.test.ts src/ui/__tests__/resultNavigation.test.ts",
     "test:global": "tsx src/game/guards/__tests__/globalAlert.test.ts && node --import tsx --test src/game/guards/__tests__/stealthV2.test.ts src/game/guards/__tests__/theftV3.test.ts src/game/guards/__tests__/alertPriority.test.ts src/game/guards/__tests__/chaseBalance.test.ts src/game/guards/__tests__/highSecurityAlarm.test.ts",
     "sprites:views": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/extractViews.ts",
     "sprites:identity": "tsx --tsconfig tools/sprites/tsconfig.runtime.json tools/sprites/makeIdentityRefs.ts",

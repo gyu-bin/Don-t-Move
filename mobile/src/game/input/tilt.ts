@@ -7,9 +7,15 @@ export interface AttitudeSample {
   acceleration: number;
   receivedAt: number;
 }
-export interface TiltTuning { deadZone: number; maxTilt: number; sensitivity: number; smoothing: number }
+/**
+ * deadZone is the stop threshold and the anchor of the speed curve; moveStart is where a resting thief starts.
+ * Between the two the thief keeps the state it is in (hysteresis), so a hand resting near the edge cannot creep.
+ */
+export interface TiltTuning { deadZone: number; moveStart: number; maxTilt: number; sensitivity: number; smoothing: number }
 // V12 Phase 2: candidate B selected after physical iPhone feel comparison.
-export const DEFAULT_TILT: TiltTuning = { deadZone: 1.75, maxTilt: 10, sensitivity: 1, smoothing: 0.07 };
+export const DEFAULT_TILT: TiltTuning = { deadZone: 1.75, moveStart: 2.25, maxTilt: 10, sensitivity: 1, smoothing: 0.07 };
+/** A moving thief held between the two thresholds this long is at rest: it stops and needs moveStart again. */
+export const BAND_SETTLE_SECONDS = 0.25;
 export const CALIBRATION_TIMEOUT_MS = 2500;
 /** Background ends a reference session; foreground alone must never recalibrate. */
 export function sensorLifecycleAction(state: string, running: boolean, started: boolean) {
@@ -28,6 +34,10 @@ export interface TiltState {
   deadX: number; deadY: number;
   smoothX: number; smoothY: number;
   x: number; y: number;
+  /** Moving (true) or at rest (false): which of the two thresholds applies. */
+  engaged: boolean;
+  /** Seconds a moving thief has been held below moveStart. */
+  bandT: number;
   progress: number;
   calibrationStartedAt: number;
   calibrationSamples: {q:Quaternion;receivedAt:number}[];
@@ -37,7 +47,7 @@ export interface TiltState {
 export function createTiltState(): TiltState {
   return { neutral: null, candidate: null, stableSince: 0, lastTimestamp: -1, readyAt: 0,
     pitch: 0, roll: 0, magnitude: 0, deadX: 0, deadY: 0, smoothX: 0, smoothY: 0,
-    x: 0, y: 0, progress: 0, calibrationStartedAt:-1,calibrationSamples:[],calibrationMethod:'pending',status: 'HOLD COMFORTABLY' };
+    x: 0, y: 0, engaged: false, bandT: 0, progress: 0, calibrationStartedAt:-1,calibrationSamples:[],calibrationMethod:'pending',status: 'HOLD COMFORTABLY' };
 }
 export function multiply(a: Quaternion, b: Quaternion): Quaternion {
   'worklet';
@@ -55,6 +65,7 @@ function normalized(q: Quaternion): Quaternion | null {
 export function zeroTilt(s: TiltState): void {
   'worklet';
   s.x = s.y = s.deadX = s.deadY = s.smoothX = s.smoothY = 0;
+  s.engaged = false; s.bandT = 0;
 }
 export function freshSample(sample: AttitudeSample | null, now: number): boolean {
   'worklet';
@@ -158,8 +169,15 @@ export function stepTilt(s: TiltState, sample: AttitudeSample | null, now: numbe
   const tilt = relativeTilt(s.neutral, q);
   s.pitch = tilt.pitch; s.roll = tilt.roll; s.magnitude = tilt.magnitude;
   const angle = tilt.magnitude*tuning.sensitivity;
-  const radial = Math.min(1, Math.max(0, (angle-tuning.deadZone)/(tuning.maxTilt-tuning.deadZone)));
-  if (!radial || tilt.magnitude < 1e-8) { zeroTilt(s); return; }
+  // Hard stop: at or below the stop threshold, or at rest and not yet at the start threshold, every stage of the
+  // filter is zero. Nothing is left to decay into movement.
+  if (angle <= tuning.deadZone || tilt.magnitude < 1e-8 || (!s.engaged && angle < tuning.moveStart)) { zeroTilt(s); return; }
+  if (angle < tuning.moveStart) {
+    s.bandT += dt > 0 ? dt : 0;
+    if (s.bandT >= BAND_SETTLE_SECONDS) { zeroTilt(s); return; }
+  } else s.bandT = 0;
+  s.engaged = true;
+  const radial = Math.min(1, (angle-tuning.deadZone)/(tuning.maxTilt-tuning.deadZone));
   s.deadX = tilt.roll/tilt.magnitude*radial;
   s.deadY = tilt.pitch/tilt.magnitude*radial;
   const k = tuning.smoothing <= 0 ? 1 : 1-Math.exp(-dt/tuning.smoothing);

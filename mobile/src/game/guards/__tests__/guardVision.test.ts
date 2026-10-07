@@ -143,13 +143,39 @@ test('F: front + run → fast rise (≤ 1.5 s to 100 %)', () => {
   assert(ev.alertCount === 1, `alerts=${ev.alertCount} suspicion=${g.suspicion.toFixed(3)}`);
 });
 
-test('G: right in front + idle → eventually detected; far + idle → barely', () => {
+test('G: right in front + idle → eventually detected; far + idle → rises slowly, never zero', () => {
   const close = guard('open');
   const ev = run(close, polar(close, 40, 0, 0), 3);
   assert(ev.alertCount === 1, `close idle suspicion=${close.suspicion.toFixed(3)}`);
   const far = guard('open');
-  run(far, polar(far, 180, 0, 0), 3);
-  assert(far.suspicion < 0.1, `far idle suspicion=${far.suspicion.toFixed(3)}`);
+  const farEv = run(far, polar(far, 180, 0, 0), 3);
+  // RC UX hotfix: standing still in view is the base rate, not an exemption. Slow at range, but it rises.
+  assert(far.suspicion > 0.15 && far.suspicion < 0.35, `far idle suspicion=${far.suspicion.toFixed(3)}`);
+  assert(farEv.alertCount === 0, 'three seconds at range is not an alert');
+});
+
+test('G2: in view, suspicion rises Still < Sneak < Walk < Run, at every distance', () => {
+  for (const distance of [70, 120, 170]) {
+    const rise = [0, 1, 2, 3].map((gait) => {
+      const g = guard('open');
+      run(g, polar(g, distance, 0, gait), 0.4);
+      return g.suspicion;
+    });
+    assert(rise[0] > 0, `still at ${distance} must rise: ${rise[0]}`);
+    assert(rise[0] < rise[1] && rise[1] < rise[2] && rise[2] < rise[3], `order at ${distance}: ${rise.map(v => v.toFixed(3))}`);
+  }
+  // Distance still matters for a motionless thief: nearer is faster.
+  const near = guard('open'), far = guard('open');
+  run(near, polar(near, 80, 0, 0), 1); run(far, polar(far, 165, 0, 0), 1);
+  assert(near.suspicion > far.suspicion, `${near.suspicion} <= ${far.suspicion}`);
+});
+
+test('G3: out of sight, a motionless or moving thief does not raise suspicion', () => {
+  for (const gait of [0, 3]) {
+    const g = guard('wall');
+    run(g, polar(g, 180, 0, gait), 2);
+    assert(g.suspicion === 0, `gait ${gait}: ${g.suspicion}`);
+  }
 });
 
 // ------------------------------------------------------------- H–I facing

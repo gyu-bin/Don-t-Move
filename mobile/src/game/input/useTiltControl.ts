@@ -28,7 +28,8 @@ const native = Platform.OS === 'ios' ? requireOptionalNativeModule<AttitudeModul
 // Release iPhone retains its sensor requirement; developer builds can play without Core Motion.
 export const TILT_DEVICE = Platform.OS === 'android' || usesTiltInput(Platform.OS, __DEV__, native);
 
-export function useTiltControl() {
+/** `wanted`: the player's control mode is Tilt. With Touch chosen the sensor is not started or asked for. */
+export function useTiltControl(wanted = true) {
   const sample = useSharedValue<AttitudeSample | null>(null);
   const controller = useSharedValue(createTiltState());
   const compareEnabled = tiltCompareEnabled(__DEV__, process.env.EXPO_PUBLIC_DM_TILT_COMPARE);
@@ -51,7 +52,12 @@ export function useTiltControl() {
   // DEV device QA: EXPO_PUBLIC_DM_FORCE_TOUCH=1 at Metro start plays a real iPhone by touch.
   const [sensorFailed, setSensorFailed] = useState(__DEV__ && process.env.EXPO_PUBLIC_DM_FORCE_TOUCH === '1');
   const [androidAvailable, setAndroidAvailable] = useState<boolean | null>(null);
-  const enabled = usesTiltInput(Platform.OS, __DEV__, native, sensorFailed, androidAvailable !== false);
+  // The sensor cannot be used at all: no Core Motion on this device, or the player refused motion access.
+  // The game is then played by touch (with a note) instead of stopping on a sensor error.
+  const [denied, setDenied] = useState(false);
+  const usable = usesTiltInput(Platform.OS, __DEV__, native, sensorFailed, androidAvailable !== false) &&
+    !(Platform.OS === 'ios' && (!native?.available || denied));
+  const enabled = wanted && usable;
   const reportCalibration=useCallback((status:string,method:string,sensorActive:boolean,startedAt:number)=>{
     if(__DEV__)console.info('[CAL] transition',JSON.stringify({status,method,sensorActive,elapsedMs:startedAt<0?0:Math.max(0,Date.now()-startedAt)}));
   },[]);
@@ -141,6 +147,7 @@ export function useTiltControl() {
       if(permission.status==='error'){session.fail(permission.message??'Motion permission request failed');return;}
       if(permission.status==='denied'){
         setError('Motion permission denied · enable in Settings');
+        setDenied(true);
         if(__DEV__)setSensorFailed(true);
         return;
       }
@@ -151,11 +158,11 @@ export function useTiltControl() {
       active.set(false);sample.set(null);
     };
   }, [active, controller, enabled, reset, restart, sample]);
-  return { compareEnabled, profile, selectProfile, enabled, available: Platform.OS === 'android' ? androidAvailable === true : native?.available ?? false,
+  return { compareEnabled, profile, selectProfile, enabled, usable, available: Platform.OS === 'android' ? androidAvailable === true : native?.available ?? false,
     canRetry: Platform.OS === 'android' || !!native?.available,
     referenceFrame: Platform.OS === 'android' ? ANDROID_REFERENCE_FRAME : native?.referenceFrame ?? 'none', sample, controller, tuning, active, reset,
     error, restart: () => {
       if (Platform.OS === 'android') { setAndroidAvailable(null); setError(''); }
-      setSensorFailed(false); setRestart((n) => n+1);
+      setSensorFailed(false); setDenied(false); setRestart((n) => n+1);
     } };
 }

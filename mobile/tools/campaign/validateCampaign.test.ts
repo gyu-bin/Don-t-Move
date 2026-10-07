@@ -105,7 +105,11 @@ test('Historical01-02 NORMAL suspicion uses the shared runtime model and meets d
  const walk=measure(source.visionRange*.55,0,2);
  const close=measure(40,0,2);
  const run=measure(20,0,3);
- assert(far>20,`far edge idle ${far.toFixed(2)}s`);
+ // RC UX hotfix: a motionless thief in view is the base rate, not an exemption. At the far edge it is slow
+ // (longer than any guard pauses to look), but it ends in an alert; moving benchmarks below are unchanged.
+ assert(far>10&&far<20,`far edge idle ${far.toFixed(2)}s`);
+ const still=measure(source.visionRange*.55,0,0);
+ assert(still>sneak&&still<=7,`medium still ${still.toFixed(2)}s vs sneak ${sneak.toFixed(2)}s`);
  assert(sneak>=3&&sneak<=5,`medium sneak ${sneak.toFixed(2)}s`);
  assert(walk>=2&&walk<=3,`medium walk ${walk.toFixed(2)}s`);
  assert(close>=1&&close<=1.5,`close walk ${close.toFixed(2)}s`);
