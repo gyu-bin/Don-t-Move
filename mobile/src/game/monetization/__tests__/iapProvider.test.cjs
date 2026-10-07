@@ -37,7 +37,7 @@ function harness({connected=true,cached=false,items=[],products=[{id:sku,type:'i
     const module={exports:{}};
     const source=ts.transpileModule(fs.readFileSync(file,'utf8'),{fileName:file,compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
     vm.runInNewContext(source,{module,exports:module.exports,console,__DEV__:false,
-      require:name=>name==='react'?hooks:name==='react/jsx-runtime'?{jsx:(type,props)=>props}:name==='react-native'?{Platform:{OS:'ios'},AppState:{addEventListener:()=>({remove(){}})}}:name==='expo-iap'?iap:name==='./MonetizationContext'?{MonetizationContext:{Provider:{}}}:name==='./ads'?{interstitialController:controller}:name==='./monetizationStorage'?{DEFAULT_AD_STATE:{removeAdsOwned:false,clearsSinceLastInterstitial:0},loadAdState:async()=>state.cache,saveAdState:async next=>{state.cache=next;}}:execute(path.resolve(path.dirname(file),name+'.ts'))});
+      require:name=>name==='react'?hooks:name==='react/jsx-runtime'?{jsx:(type,props)=>props}:name==='react-native'?{Platform:{OS:'ios'},AppState:{addEventListener:()=>({remove(){}})}}:name==='expo-iap'?iap:name==='./MonetizationContext'?{MonetizationContext:{Provider:{}}}:name==='./ads'?{interstitialController:controller}:name==='./monetizationStorage'?{DEFAULT_AD_STATE:{removeAdsOwned:false,clearsSinceLastInterstitial:0},loadAdState:async()=>state.cache,saveAdState:async next=>{state.cache=next;}}:name==='../analytics/track'?{track(){}}:execute(path.resolve(path.dirname(file),name.endsWith('.ts')||name.endsWith('.tsx')?name:name+'.ts'))});
     cache.set(file,module.exports);return module.exports;
   };
   const Provider=execute(path.resolve(__dirname,'../MonetizationNative.tsx')).MonetizationNativeProvider;

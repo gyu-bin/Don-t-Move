@@ -22,7 +22,7 @@ function harness() {
   const out = {exports:{}};cache.set(filename,out.exports);
   const source = ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
   vm.runInNewContext(source,{module:out,exports:out.exports,setTimeout,clearTimeout,setInterval,clearInterval,console,
-   require: name => name==='react-native'?{Platform:{OS:'ios'}}:name==='./adsConfig'?{adsLog(){},isProductionAdUnits:()=>false,PRODUCTION_INTERSTITIAL:{}}:
+   require: name => name==='react-native'?{Platform:{OS:'ios'}}:name==='./adsConfig'?{adsLog(){},isProductionAdUnits:()=>false,PRODUCTION_INTERSTITIAL:{},INTERSTITIAL_LOAD_WAIT_MS:12_000}:
     name==='./nativeGate'?{hasGoogleMobileAdsNative:()=>true}:name==='react-native-google-mobile-ads'?sdk:
      name==='../../ui/branding/initialization'?{}:execute(path.resolve(path.dirname(filename),name+'.ts'))});
   return out.exports;
@@ -34,6 +34,24 @@ test('not-loaded ad skips immediately without starting load at navigation', asyn
  assert.equal(await controller.showIfReady(),'skipped'); assert.equal(ads.length,0);
  controller.preload(); assert.equal(ads.length,1);
  assert.equal(await controller.showIfReady(),'skipped');assert.equal(ads[0].shows,0);
+ controller.dispose();
+});
+test('showWhenDue waits for load then presents instead of skipping cold', async () => {
+ const {controller,ads}=harness();
+ const show=controller.showWhenDue(500);
+ await new Promise(resolve=>setTimeout(resolve,20));
+ assert.equal(ads.length,1); assert.equal(ads[0].shows,0);
+ ads[0].emit('loaded');
+ await new Promise(resolve=>setTimeout(resolve,150));
+ assert.equal(ads[0].shows,1);
+ ads[0].emit('opened'); ads[0].emit('closed');
+ assert.equal(await show,'shown');
+ controller.dispose();
+});
+test('showWhenDue times out without a fill and leaves counter for the next clear', async () => {
+ const {controller,ads}=harness();
+ assert.equal(await controller.showWhenDue(80),'skipped');
+ assert.equal(ads.length,1); assert.equal(ads[0].shows,0);
  controller.dispose();
 });
 test('presentation ERROR resolves navigation, concurrent requests show exactly once', async () => {

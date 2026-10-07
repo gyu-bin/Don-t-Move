@@ -32,6 +32,7 @@ import {
 } from './MonetizationContext';
 import { DEFAULT_AD_STATE, loadAdState, saveAdState } from './monetizationStorage';
 import { createEntitlementService, purchaseErrorKind, purchaseIsRevoked } from './purchases';
+import { track } from '../analytics/track';
 
 /** Full AdMob + StoreKit/Play Billing path — only loaded when native modules exist. */
 export function MonetizationNativeProvider({ children }: { children: ReactNode }) {
@@ -130,10 +131,16 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
       void (async () => {
         try {
           const granted = await entitlement.complete(purchase);
-          if (token === operationToken.current) setPurchaseMessage(granted ? 'purchased' : 'pendingApproval');
+          if (token === operationToken.current) {
+            if (granted) track('remove_ads_purchased');
+            setPurchaseMessage(granted ? 'purchased' : 'pendingApproval');
+          }
         } catch (error) {
           adsLog('finishTransaction failed; entitlement not granted', error);
-          if (token === operationToken.current) setPurchaseMessage('finishFailed');
+          if (token === operationToken.current) {
+            track('remove_ads_failed', { kind: 'finishFailed' });
+            setPurchaseMessage('finishFailed');
+          }
         } finally {
           if (token !== operationToken.current) return;
           operationLock.current = false;
@@ -204,17 +211,23 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
 
   const presentInterstitialIfNeeded = useCallback(async () => {
     if (presentingLock.current) return;
-    const current = adStateRef.current;
-    if (!shouldShowInterstitial(current) || !interstitialController.isReady()) {
-      adsLog('continue immediately — ineligible or ad not loaded');
+    if (!shouldShowInterstitial(adStateRef.current)) {
+      adsLog('continue immediately — interstitial not due');
       return;
     }
+    track('interstitial_due');
     presentingLock.current = true;
     setAdPresenting(true);
     try {
-      const result = await interstitialController.showIfReady();
-      if (result === 'shown') persist(resetClearsAfterShown(adStateRef.current));
+      const result = await interstitialController.showWhenDue();
+      if (result === 'shown') {
+        track('interstitial_shown');
+        persist(resetClearsAfterShown(adStateRef.current));
+      } else {
+        track('interstitial_skipped', { reason: result });
+      }
     } catch (error) {
+      track('interstitial_skipped', { reason: 'error' });
       adsLog('interstitial failed', error);
     } finally {
       setAdPresenting(false);
@@ -260,9 +273,12 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     setPurchaseStatus('restoring');
     try {
       const owned = await entitlement.sync(true);
+      if (owned) track('remove_ads_restored');
+      else track('remove_ads_restore_empty');
       setPurchaseMessage(owned ? 'restored' : 'restoreEmpty');
     } catch (error) {
       adsLog('restore failed; cache retained', error);
+      track('remove_ads_failed', { kind: 'restoreFailed' });
       setPurchaseMessage('restoreFailed');
     } finally {
       operationLock.current = false;

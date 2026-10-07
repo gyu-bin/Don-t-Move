@@ -19,6 +19,8 @@ import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgre
 import {QA_UNLOCK_ALL} from '../../game/progress/qaUnlock';
 import {missionId,missionIndex} from '../../game/levels/campaignCatalog';
 import StageSelectScreen from '../menu/StageSelectScreen';
+import { AdminAnalyticsScreen } from '../admin/AdminAnalyticsScreen';
+import { track } from '../../game/analytics/track';
 type GameProps = { initialMissionIndex?: number; initialProgress?: StageProgress; onProgressChange?: (progress:StageProgress)=>void };
 type StartupProps = {
  /** Startup is not ready yet (update check still running): stay on the startup screen. */
@@ -50,7 +52,8 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
  const gameplayRef=useRef(onGameplayChange);
  useEffect(()=>{gameplayRef.current=onGameplayChange;},[onGameplayChange]);
  const [initialMissionIndex,setInitialMissionIndex]=useState<number>();
- const [route,setRoute]=useState<'home'|'stages'|'settings'>('home');
+ const [route,setRoute]=useState<'home'|'stages'|'settings'|'admin'>('home');
+ const sessionTracked=useRef(false);
  const [introVersion,setIntroVersion]=useState(0);
  const [skipIntro,setSkipIntro]=useState(false);
  const [saveError,setSaveError]=useState(false);
@@ -107,6 +110,7 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
  useEffect(()=>{
   if(!homeVisible||started||homeAnnounced.current)return;
   homeAnnounced.current=true;homeRef.current?.();
+  if(!sessionTracked.current){sessionTracked.current=true;track('session_start');}
  },[homeVisible,started]);
  const storageAttempt=useRef(0);
  const restoreProgress=useCallback(()=>{
@@ -179,13 +183,15 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
       <BrandingScreen key={introVersion} skipInitial={skipIntro} onFinished={()=>setPhase('HOME')}
        onLobbyAudioStart={startLobbyAudio} soundEnabled={progress?.soundEnabled??false}
        musicEnabled={progress?.musicEnabled??false} ready={!!progress&&!preparing} startReady={startupReady}
-       loadingError={error} onRetry={retryPrepare} onStart={()=>play(continueIndex)}>
+       loadingError={error} onRetry={retryPrepare} onStart={()=>play(continueIndex)}
+       onSecretUnlock={()=>setRoute('admin')}>
        <HomeMenu ready={!!progress&&!preparing} error={error} onRetry={retryPrepare}
         onPlay={()=>play(continueIndex)} onStages={()=>setRoute('stages')} onSettings={()=>setRoute('settings')}/>
       </BrandingScreen>
      </View>
      {route!=='home'&&<View style={StyleSheet.absoluteFill}>
-      {route==='settings'?<SettingsScreen onBack={()=>setRoute('home')} onIntro={replay}/>:
+      {route==='admin'?<AdminAnalyticsScreen onBack={()=>setRoute('home')}/>:
+       route==='settings'?<SettingsScreen onBack={()=>setRoute('home')} onIntro={replay}/>:
         <StageSelectScreen onBack={()=>setRoute('home')} onSelect={play}/>}
      </View>}
     </>}

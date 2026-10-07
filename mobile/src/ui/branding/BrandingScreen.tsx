@@ -15,6 +15,7 @@ import { markStartup } from './startupMetrics';
 import { createOpeningArtLoader, type OpeningArt } from './openingArtLoader';
 import { useMenu } from '../menu/MenuContext';
 import { introEndsOnAppState, shouldStartHomeIntro } from '../../ota/startupFlow';
+import { SECRET_TAP_COUNT, SECRET_TAP_WINDOW_MS } from '../../game/analytics/secretTap';
 
 const SOURCES: Record<SceneImageKey, number> = {
  bg: require('../../../assets/branding/opening/bg_museum.png'),
@@ -48,16 +49,36 @@ type Props = {
  onSceneReady?: () => void; onLobbyAudioStart?: () => void; ready?: boolean; loadingError?: string; onRetry?: () => void;
  /** Startup-ready signal. The intro waits for it: being mounted does not start the animation. */
  startReady?: boolean;
+ /** Home logo/character rapid-tap unlock for local analytics. */
+ onSecretUnlock?: () => void;
 };
 /**
  * Spotlight Freeze Intro and Lobby are ONE scene: the intro animates introFrame(0→4500) and the
  * Lobby simply stays on introFrame(4500). Only the menu (children) fades in afterwards.
  */
-export function BrandingScreen({ children, skipInitial = false, soundEnabled, musicEnabled = soundEnabled, onFinished, onStart, onReplayDone, onSceneReady, onLobbyAudioStart, ready = true, loadingError, onRetry, startReady = true }: Props) {
+export function BrandingScreen({ children, skipInitial = false, soundEnabled, musicEnabled = soundEnabled, onFinished, onStart, onReplayDone, onSceneReady, onLobbyAudioStart, ready = true, loadingError, onRetry, startReady = true, onSecretUnlock }: Props) {
  const { t } = useMenu();
  const { width, height } = useWindowDimensions();
  const insets = useSafeAreaInsets();
  const L = useMemo(() => openingLayout(width, height, insets), [width, height, insets]);
+ const secretTaps = useRef<number[]>([]);
+ const onSecretTap = () => {
+  if (!onSecretUnlock) return;
+  const now = Date.now();
+  const taps = secretTaps.current;
+  taps.push(now);
+  while (taps.length && now - taps[0]! > SECRET_TAP_WINDOW_MS) taps.shift();
+  if (taps.length >= SECRET_TAP_COUNT) {
+   taps.length = 0;
+   onSecretUnlock();
+  }
+ };
+ const thiefHit = useMemo(() => ({
+  left: Math.max(0, L.thief.peekX - L.thief.size.w * 0.35),
+  top: L.thief.ground - L.thief.size.h * 0.92,
+  width: L.thief.size.w * 0.7,
+  height: L.thief.size.h * 0.85,
+ }), [L]);
  const [art, setArt] = useState<Art>(() => openingArt.snapshot());
  const hasBackground = !!art.bg;
  const [artError, setArtError] = useState<string>();
@@ -160,6 +181,12 @@ export function BrandingScreen({ children, skipInitial = false, soundEnabled, mu
    <Animated.View style={[styles.accent, { width: logoSize * 1.24, marginTop: logoSize * 0.2 }, underlineStyle]} />
    <Animated.Text allowFontScaling={false} style={[styles.tagline, taglineStyle]}>A STEALTH GAME{'\n'}IN YOUR HANDS</Animated.Text>
   </View>
+  {!intro && !!onSecretUnlock && <>
+   <Pressable accessibilityRole="button" accessibilityLabel="Brand mark" onPress={onSecretTap}
+    style={[styles.secretHit, { top: L.logoTop, height: logoSize * 2.6, left: width * 0.18, width: width * 0.64 }]} />
+   <Pressable accessibilityRole="button" accessibilityLabel="Character" onPress={onSecretTap}
+    style={[styles.secretHit, thiefHit]} />
+  </>}
   <LobbyRevealContext.Provider value={reveal}>
    <Animated.View style={[StyleSheet.absoluteFill, menuStyle]} pointerEvents={intro ? 'none' : 'box-none'}
     accessibilityElementsHidden={intro} importantForAccessibility={intro ? 'no-hide-descendants' : 'auto'}>
@@ -188,4 +215,5 @@ const styles = StyleSheet.create({
  start: { position: 'absolute', minHeight: 56, justifyContent: 'center', alignItems: 'center', borderColor: BRAND.cyan, borderWidth: 1.5, borderRadius: 16, backgroundColor: '#030C14CC' },
  startText: { color: BRAND.ivory, fontSize: 15, letterSpacing: 2, fontWeight: '700' },
  error: { position: 'absolute', top: '45%', alignSelf: 'center', maxWidth: '80%', color: BRAND.ivory, textAlign: 'center' },
+ secretHit: { position: 'absolute', backgroundColor: 'transparent' },
 });

@@ -42,6 +42,7 @@ import { recenterTilt, stepTilt } from '../game/input/tilt';
 import { stopPlayer } from '../game/input/tiltMovement';
 import { syncInputMode } from '../game/input/inputTransition';
 import { normalizeControlMode, resolveInput } from '../game/input/controlMode';
+import { track } from '../game/analytics/track';
 import { STICK_IDLE, stickDown, stickMove } from '../game/input/touchStick';
 import type { StickState } from '../game/input/touchStick';
 import { TouchStickHud } from './hud/TouchStickHud';
@@ -160,6 +161,12 @@ function GameRun({ initialMissionIndex, progress, onProgress }: { initialMission
   },[transition,finishTransition]);
   useEffect(()=>()=>cancelAnimation(transition),[transition]);
   const stageCleared=(seconds:number,alerts:number)=>{
+    const stage=playableStages[index];
+    const controlMode=normalizeControlMode(progress.controlMode);
+    track('mission_clear',{missionId:stage?.id??missionId(index),chapter:stage?.chapter??0,seconds,alerts,controlMode});
+    if(stage && stage.mission===CHAPTER_MISSION_COUNTS[(stage.chapter??1)-1]) {
+      track('chapter_complete',{chapter:stage.chapter??0,missionId:stage.id});
+    }
     onProgress({...progress,campaign:completeMission(migrateCampaign(progress),index,seconds,alerts)});
     monetization.recordMissionClear();
     // After the last mission there is no next one: the result screen leads to the chapter list.
@@ -247,8 +254,8 @@ function StageGame({
   const {t,home:menuHome,chapters:menuChapters}=useMenu();
   const playUI=useUIAudio();
   const monetization=useMonetization();
-  const home=()=>{playUI('ui_back');menuHome();};
-  const chapterSelect=()=>{playUI('ui_back');menuChapters();};
+  const controlMode=normalizeControlMode(progress.controlMode);
+  const missionProps=()=>({missionId:definition.id,chapter:definition.chapter??0,controlMode});
   const { width, height } = useWindowDimensions();
   const [replayIntro,setReplayIntro]=useState(false);
   const insets = useSafeAreaInsets();
@@ -318,6 +325,16 @@ function StageGame({
   const [caught, setCaught] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [paused, setPaused] = useState(false);
+  const leaveMission=(reason:'home'|'chapters')=>{
+    if(!completed) track('mission_quit',{...missionProps(),reason});
+    playUI('ui_back');
+    if(reason==='home') menuHome(); else menuChapters();
+  };
+  const home=()=>leaveMission('home');
+  const chapterSelect=()=>leaveMission('chapters');
+  useEffect(()=>{
+    track('mission_start',{missionId:definition.id,chapter:definition.chapter??0,controlMode});
+  },[definition.id,definition.chapter,controlMode]);
   const qaCadence=useNativeQACadence(paused||caught||completed,transitioning);
   const [inspection, setInspection] = useState<InspectionView | null>(null);
   const [qaLockdown, setQaLockdown] = useState(false);
@@ -364,6 +381,17 @@ function StageGame({
   const showCaught = (value: boolean) => {
     setCaught(value);
     if (value) {
+      const snapshot = state.get();
+      const catchSource = snapshot.events.caughtBy
+        ? 'guard'
+        : (snapshot.events.cameraAlertRevision ?? 0) > 0 ? 'cctv' : 'other';
+      track('mission_caught', {
+        ...missionProps(),
+        catchSource,
+        seconds: snapshot.t,
+        alerts: snapshot.events.whistleCount,
+        cameraAlertRevision: snapshot.events.cameraAlertRevision ?? 0,
+      });
       showFlash('red');
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error).catch(() => {});
     }
@@ -490,6 +518,8 @@ function StageGame({
     void Haptics.selectionAsync().catch(() => {});
   };
   const retry = () => {
+    track('mission_retry', missionProps());
+    track('mission_start', missionProps());
     const fresh = freshViewState();
     fresh.touchSeq = touch.value.seq;
     state.set(fresh);
