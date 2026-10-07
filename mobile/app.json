@@ -1,4 +1,9 @@
 {
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-2202662035854210~9781589386",
+    "ios_app_id": "ca-app-pub-2202662035854210~4428994235",
+    "android_sdk": "classic"
+  },
   "expo": {
     "name": "Don't Move",
     "slug": "dont-move",
@@ -57,7 +62,8 @@
         "react-native-google-mobile-ads",
         {
           "androidAppId": "ca-app-pub-2202662035854210~9781589386",
-          "iosAppId": "ca-app-pub-2202662035854210~4428994235"
+          "iosAppId": "ca-app-pub-2202662035854210~4428994235",
+          "androidSdk": "classic"
         }
       ],
       [
@@ -70,9 +76,15 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#081824"
+          "backgroundColor": "#081824",
+          "android": {
+            "image": "./assets/branding/splash-mark.png",
+            "imageWidth": 120,
+            "resizeMode": "contain"
+          }
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "extra": {
       "eas": {
