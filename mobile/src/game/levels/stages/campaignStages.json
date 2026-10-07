@@ -40923,8 +40923,8 @@
             "y": 4
           },
           {
-            "x": 23.5,
-            "y": 8
+            "x": 19.5,
+            "y": 4.5
           }
         ],
         "theftSearchSectors": [
@@ -40936,8 +40936,8 @@
                 "y": 4
               },
               {
-                "x": 23.5,
-                "y": 8
+                "x": 19.5,
+                "y": 4.5
               }
             ]
           }
@@ -41031,52 +41031,24 @@
             "turnDuration": 0.4
           },
           {
-            "x": 16.25,
-            "y": 4.75,
+            "x": 11.25,
+            "y": 4.25,
             "waitDuration": 0,
             "lookDirection": 0.09966865249116204,
             "turnDuration": 0.4
           },
           {
-            "x": 21.25,
-            "y": 4.75,
-            "waitDuration": 0,
-            "lookDirection": 0,
-            "turnDuration": 0.4
-          },
-          {
-            "x": 22.75,
-            "y": 7.25,
-            "waitDuration": 0,
-            "lookDirection": 1.0303768265243125,
-            "turnDuration": 0.4
-          },
-          {
-            "x": 23.5,
-            "y": 8,
-            "waitDuration": 6,
-            "lookDirection": 1.5707963267948966,
-            "turnDuration": 0.4
-          },
-          {
-            "x": 21.25,
-            "y": 5.25,
-            "waitDuration": 0,
-            "lookDirection": -2.256525837701183,
-            "turnDuration": 0.4
-          },
-          {
-            "x": 21.25,
-            "y": 4.75,
-            "waitDuration": 0,
-            "lookDirection": -1.5707963267948966,
+            "x": 19.5,
+            "y": 4.5,
+            "waitDuration": 3,
+            "lookDirection": -0.09966865249116204,
             "turnDuration": 0.4
           },
           {
             "x": 9.75,
             "y": 4.25,
             "waitDuration": 0,
-            "lookDirection": -3.0981417581982624,
+            "lookDirection": -3.115957245068116,
             "turnDuration": 0.4
           }
         ]
@@ -42146,8 +42118,8 @@
               "y": 4
             },
             {
-              "x": 23.5,
-              "y": 8
+              "x": 19.5,
+              "y": 4.5
             }
           ],
           "role": "objective"
@@ -42159,8 +42131,8 @@
           "y": 4
         },
         {
-          "x": 23.5,
-          "y": 8
+          "x": 19.5,
+          "y": 4.5
         }
       ],
       "cameras": [

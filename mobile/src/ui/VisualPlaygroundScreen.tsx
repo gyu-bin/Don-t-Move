@@ -2,6 +2,7 @@ import { LiveVisualQA, type InspectionView } from './debug/LiveVisualQA';
 import { stepDoors } from '../game/doors/doorSystem';
 import type { DoorRuntime } from '../game/doors/doorTypes';
 import {resolveInitialMissionIndex} from './branding/missionLaunch';
+import {QA_UNLOCK_ALL} from '../game/progress/qaUnlock';
 import {createDoorArt} from '../rendering/environment/doorArt';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -129,7 +130,7 @@ export function VisualPlaygroundScreen({ initialMissionIndex, initialProgress, o
 
 function GameRun({ initialMissionIndex, progress, onProgress }: { initialMissionIndex?: number; progress: StageProgress; onProgress: (next: StageProgress) => void }) {
   const monetization=useMonetization();
-  const [index,setIndex]=useState(()=>resolveInitialMissionIndex(progress,initialMissionIndex,__DEV__));
+  const [index,setIndex]=useState(()=>resolveInitialMissionIndex(progress,initialMissionIndex,QA_UNLOCK_ALL));
   const [pending,setPending]=useState<number|null>(null);
   const {width,height}=useWindowDimensions();
   const transition=useSharedValue(0);

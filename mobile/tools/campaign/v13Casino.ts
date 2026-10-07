@@ -50,6 +50,14 @@ export const EXTRA_CAMERA:Record<string,V13Mission['cameras'][number]>={
 export const MOVED:Record<string,Record<string,{x:number;y:number;why:string}>>={
  '05-05':{'Exit Plant':{x:1.35,y:16.915,why:'Phase 9: 0.6 tile south, out from under the exit-lobby camera — at gameplay zoom the camera read as standing in the planter. 0.6 is the smallest move that leaves no fake gap: up to 0.55 the strip between the wall and the planter is floor the thief cannot stand on.'}},
 };
+/** A Casino guard whose patrol is not the mirror of the Bank one (Casino coordinates). Only the stops and the note
+ *  change: the guard, his role, his zone and his place in the guard list stay, and no guard is added. */
+export const PATROL:Record<string,Partial<Record<V13Mission['guards'][number]['role'],{stops:V13Mission['guards'][number]['stops'];watches:string;why:string}>>>={
+ '05-05':{objective:{
+  stops:[{x:8.75,y:4,look:{x:9.5,y:2.2},wait:2},{x:19.5,y:4.5,look:{x:22,y:4.25},wait:3}],
+  watches:'The count room jewel; between inspections walks the length of the count room to its east end and looks into the chip room',
+  why:'RC hotfix (iPhone QA): the mirrored Bank patrol left the count room for the chip room and waited there, so the jewel could be walked up to about half the time without watching anyone. He now turns round inside the count room: the same inspection post, the same two seconds at it, and one crossing to time from the corridor door.'}},
+};
 function casino(base:V13Mission,id:string,title:string):V13Mission{
  const W=base.map[0].length,mx=<T extends {x:number;y:number}>(p:T):T=>({...p,x:+(W-p.x).toFixed(3)});
  const objectiveZone=Object.values(base.zones).find(z=>z.role==='objective')!.id;
@@ -67,7 +75,8 @@ function casino(base:V13Mission,id:string,title:string):V13Mission{
   edges:base.edges.map(e=>({...e,...(e.via?{via:e.via.map(mx)}:{}),...(e.door?{door:{...e.door,at:mx(e.door.at),style:e.role==='approach'&&(e.to===objectiveZone||e.from===objectiveZone)&&!e.door.lockdown?'casinoVip4d' as const:'casinoSecurity4d' as const}}:{})})),
   cover:{safe:lane(base.cover.safe),risk:lane(base.cover.risk),escape:lane(base.cover.escape)},structures,
   walls:base.walls.map(w=>({...w,name:say(w.name),at:say(w.at)})),
-  guards:base.guards.map(g=>({...g,watches:say(g.watches),stops:g.stops.map(s=>({...mx(s),look:mx(s.look)}))})),
+  guards:base.guards.map(g=>({...g,watches:say(g.watches),stops:g.stops.map(s=>({...mx(s),look:mx(s.look)}))}))
+   .map(g=>{const own=PATROL[id]?.[g.role];return own?{...g,stops:own.stops,watches:own.watches}:g;}),
   cameras:[...base.cameras,EXTRA_CAMERA[base.id]].map(c=>({...c,at:mx(c.at),facing:+(Math.PI-c.facing).toFixed(4),watches:say(c.watches)})),
   objectiveAsset:'museum_diamond_case',objectiveScale:1.15,secureDoorStyle:'casinoVip4d',highSecurity:undefined};
 }

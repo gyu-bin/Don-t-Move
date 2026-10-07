@@ -16,6 +16,7 @@ import { MonetizationProvider } from '../../game/monetization/MonetizationContex
 import { showsApplyingText, type OtaStatus } from '../../ota/startupFlow';
 
 import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgress';
+import {QA_UNLOCK_ALL} from '../../game/progress/qaUnlock';
 import {missionId,missionIndex} from '../../game/levels/campaignCatalog';
 import StageSelectScreen from '../menu/StageSelectScreen';
 type GameProps = { initialMissionIndex?: number; initialProgress?: StageProgress; onProgressChange?: (progress:StageProgress)=>void };
@@ -123,7 +124,7 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
  const launch=(screen:ComponentType<GameProps>,index:number)=>{
   const current=progressRef.current;
   const campaign=migrateCampaign(current);
-  if(!canPlayMission(campaign,index,__DEV__))return;
+  if(!canPlayMission(campaign,index,QA_UNLOCK_ALL))return;
   updateProgress({...current,campaign:{...campaign,lastMission:missionId(index)},hasStarted:true});
   setInitialMissionIndex(index);setGame(()=>screen);setSkipIntro(true);setLobbyAudioReady(false);setStarted(true);gameplayRef.current?.(true);setError(undefined);
  };
@@ -159,7 +160,7 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
  };
  const campaign=migrateCampaign(progress??DEFAULT_PROGRESS);
  const lastIndex=missionIndex(campaign.lastMission);
- const continueIndex=canPlayMission(campaign,lastIndex,__DEV__)?lastIndex:campaign.highestUnlocked;
+ const continueIndex=canPlayMission(campaign,lastIndex,QA_UNLOCK_ALL)?lastIndex:campaign.highestUnlocked;
  const replay=()=>{setPhase('INTRO');setLobbyAudioReady(false);setRoute('home');setSkipIntro(false);setIntroVersion(version=>version+1);};
  const retryPrepare=()=>{void play(pendingMission.current??continueIndex);};
  useEffect(()=>{

@@ -7,6 +7,7 @@ import {MenuHeading,menuStyles} from './MenuScreens';
 import {MissionSelect} from './MissionSelect';
 import {CHAPTERS,chapterMissionIndices,missionId} from '../../game/levels/campaignCatalog';
 import {canPlayMission,migrateCampaign} from '../../game/progress/campaignProgress';
+import {QA_UNLOCK_ALL} from '../../game/progress/qaUnlock';
 
 // Reuse optimized venue artwork. Black Site is now a mission in Security HQ.
 const thumbnails=[
@@ -31,7 +32,7 @@ export default function StageSelectScreen({onBack,onSelect}:{onBack:()=>void;onS
   <ScrollView contentContainerStyle={[styles.list,{paddingBottom:insets.bottom+28}]} showsVerticalScrollIndicator={false}>
    {indices.map(index=>{
     const missions=chapterMissionIndices(index);
-    const unlocked=missions.some(m=>canPlayMission(campaign,m,__DEV__));
+    const unlocked=missions.some(m=>canPlayMission(campaign,m,QA_UNLOCK_ALL));
     const current=campaign.lastMission.startsWith(String(index+1).padStart(2,'0')+'-');
     const clears=missions.filter(m=>campaign.records[missionId(m)]?.cleared).length;
     return <Pressable key={index} accessibilityRole="button" disabled={!unlocked} accessibilityLabel={String(index+1).padStart(2,'0')+' '+chapterName(index)}

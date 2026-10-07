@@ -12,6 +12,7 @@ import {MenuHeading} from './MenuScreens';
 import {formatTime} from './stageCard';
 import {chapterIntroKey} from './strings';
 import type {TextKey} from './strings';
+import {QA_UNLOCK_ALL} from '../../game/progress/qaUnlock';
 import {artCrop,CHAPTER_HERO,chapterRoute,HERO_ZOOM,initialRouteScroll,missionFocus,missionSelectLayout,VENUE_ART} from './missionRoute';
 import type {ChapterRoute,RouteMission,RouteState} from './missionRoute';
 
@@ -31,7 +32,7 @@ export function MissionSelect({chapter,art,onBack,onSelect}:{chapter:number;art:
  const playUI=useUIAudio();
  const insets=useSafeAreaInsets();
  const {width,height}=useWindowDimensions();
- const route=chapterRoute(migrateCampaign(progress),chapter,__DEV__);
+ const route=chapterRoute(migrateCampaign(progress),chapter,QA_UNLOCK_ALL);
  const L=missionSelectLayout(width,height,insets,route.total);
  const language=progress.language;
  const chapterName=language==='ko'?CHAPTERS[chapter].ko:CHAPTERS[chapter].name;
@@ -79,17 +80,18 @@ function Hero({art,chapter,route,L,t}:{art:ImageSourcePropType;chapter:number;ro
 
 function RouteRow({m,L,t,name,art,chapter,first,last,prevCleared,onPress}:{m:RouteMission;L:Layout;t:T;name:string;art:ImageSourcePropType;chapter:number;
  first:boolean;last:boolean;prevCleared:boolean;onPress:()=>void}) {
- const current=m.state==='current',locked=m.state==='locked',cleared=m.state==='cleared';
+ // Opened only by the QA override: drawn as an open mission with a QA tag. The save still has it locked.
+ const current=m.state==='current',locked=m.state==='locked'&&!m.playable,cleared=m.state==='cleared',qaOpen=m.devUnlocked;
  const cardH=current?L.currentH:L.cardH,rowH=cardH+L.gap;
  const best=cleared&&m.record?.bestTime!==undefined?formatTime(m.record.bestTime):undefined;
- const status=current?t('currentMission'):cleared?t('clearedCount'):locked?t('locked'):'';
+ const status=current?t('currentMission'):cleared?t('clearedCount'):locked?t('locked'):qaOpen?t('devUnlocked'):'';
  const label=[m.id,name,status,`${t('guards')} ${m.guards}`,`${t('goals')} ${m.objectives}`,
   best?`${t('best')} ${best}${m.record?.legacy?' ('+t('legacy')+')':''}`:''].filter(Boolean).join(', ');
  return <View style={{flexDirection:'row',height:rowH}}>
   <View style={{width:L.nodeCol}}>
    {!first&&<View style={[styles.line,{top:0,height:rowH/2},prevCleared&&styles.lineDone]}/>}
    {!last&&<View style={[styles.line,{top:rowH/2,bottom:0},cleared&&styles.lineDone]}/>}
-   <View style={[styles.nodeBox,{top:rowH/2-17}]}><RouteNode state={m.state}/></View>
+   <View style={[styles.nodeBox,{top:rowH/2-17}]}><RouteNode state={qaOpen?'available':m.state}/></View>
   </View>
   <Pressable accessibilityRole="button" accessibilityLabel={label} accessibilityHint={locked&&!m.playable?t('lockedHint'):undefined}
    accessibilityState={{disabled:!m.playable,selected:current}} disabled={!m.playable} onPress={onPress}
@@ -108,7 +110,7 @@ function RouteRow({m,L,t,name,art,chapter,first,last,prevCleared,onPress}:{m:Rou
      <Text maxFontSizeMultiplier={1.2} style={[styles.metaText,locked&&styles.metaLocked]}>{t('goals')} {m.objectives}</Text>
     </View>
    </View>
-   <Thumb art={art} chapter={chapter} order={m.order} w={current?L.currentThumbW:L.thumbW} h={current?L.currentThumbH:L.thumbH} state={m.state}/>
+   <Thumb art={art} chapter={chapter} order={m.order} w={current?L.currentThumbW:L.thumbW} h={current?L.currentThumbH:L.thumbH} state={qaOpen?'available':m.state}/>
    <View style={styles.affordance}>{current?<PlayIcon/>:locked?<LockIcon size={12} color={C.muted}/>:<Text allowFontScaling={false} style={styles.chevron}>›</Text>}</View>
   </Pressable>
  </View>;
@@ -119,8 +121,9 @@ function Status({m,best,t}:{m:RouteMission;best?:string;t:T}) {
  if(m.state==='cleared')return best
   ?<View style={styles.best}><Text allowFontScaling={false} style={styles.bestLabel}>{t('bestShort')}</Text><Text maxFontSizeMultiplier={1.2} style={styles.bestTime}>{best}</Text></View>
   :<Text maxFontSizeMultiplier={1.2} style={styles.clearedText}>{t('clearedCount')}</Text>;
+ if(m.devUnlocked)return <View style={styles.lockedStatus}><Text maxFontSizeMultiplier={1.2} style={styles.lockedText}>{t('devUnlocked')}</Text></View>;
  if(m.state==='locked')return <View style={styles.lockedStatus}><LockIcon size={9} color={C.muted}/>
-  <Text maxFontSizeMultiplier={1.2} style={styles.lockedText}>{t('locked')}{m.devUnlocked?' · '+t('devUnlocked'):''}</Text></View>;
+  <Text maxFontSizeMultiplier={1.2} style={styles.lockedText}>{t('locked')}</Text></View>;
  return null;
 }
 

@@ -24,7 +24,7 @@ plan (v13Museum / v13Gallery / v13Bank / v13Lab / v13Vault)       Chapter 1–4,
   → derived chapter     base plans chosen in v13Sources.ts
         Chapter 5 ← Bank, Chapter 6 ← Gallery     AFTER phase7(): a fix on 03-0x / 02-0x reaches its twin
         Chapter 7 ← Museum, Chapter 8 ← Lab       FROZEN plans, before phase7(); own patches in LATE
-        v13Casino.ts   mirror, SWAP, ROTATE, EXTRA_CAMERA, MOVED
+        v13Casino.ts   mirror, SWAP, ROTATE, EXTRA_CAMERA, MOVED, PATROL
         v13Late.ts     mirror, refit, secure(), PINNED, then phase7Late() (LATE)
   → composeV13()        v13Builder.ts
   → campaignStages.json

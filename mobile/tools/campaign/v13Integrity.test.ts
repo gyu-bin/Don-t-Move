@@ -18,7 +18,7 @@ import {V13_GALLERY} from './v13Gallery';
 import {V13_BANK} from './v13Bank';
 import {PHASE7,REPLACED,LANES,LATE} from './v13Phase7';
 import {PINNED} from './v13Late';
-import {EXTRA_CAMERA,MOVED} from './v13Casino';
+import {EXTRA_CAMERA,MOVED,PATROL} from './v13Casino';
 import {AUTHORED_IN_PLAN,missionOverrideIndex,missionOverrides,STAGES} from './v13Overrides';
 
 const live=current as unknown as StageDefinition[];
@@ -91,7 +91,7 @@ test('Campaign: chapter sources — nine chapters in bake order, and each derive
 
 test('Campaign: the override index reads every table, names real missions and keeps the stage order',()=>{
  const ids=live.map(d=>d.id),index=missionOverrideIndex(ids);
- for(const [table,keys] of Object.entries({PHASE7:Object.keys(PHASE7),REPLACED:Object.keys(REPLACED),LANES:Object.keys(LANES),LATE:Object.keys(LATE),PINNED:Object.keys(PINNED),MOVED:Object.keys(MOVED)}))for(const id of keys){
+ for(const [table,keys] of Object.entries({PHASE7:Object.keys(PHASE7),REPLACED:Object.keys(REPLACED),LANES:Object.keys(LANES),LATE:Object.keys(LATE),PINNED:Object.keys(PINNED),MOVED:Object.keys(MOVED),PATROL:Object.keys(PATROL)}))for(const id of keys){
   assert(ids.includes(id),`${table} names unknown mission ${id}`);assert(index[id]?.some(e=>e.table===table&&!e.inheritedFrom),`${id}: ${table} entry missing from the index`);
  }
  // The Phase 7 layer belongs to Chapter 1–4 plans, the late layer to Chapter 7–8: the stage each table runs at depends on it.
@@ -99,6 +99,10 @@ test('Campaign: the override index reads every table, names real missions and ke
  for(const id of [...Object.keys(LATE),...Object.keys(PINNED)])assert(['07','08'].includes(id.slice(0,2)),`${id}: late layer outside Chapter 7–8`);
  // A moved Casino piece exists in that mission, stands where the table says, and the table names Chapter 5 only.
  for(const [id,pieces] of Object.entries(MOVED)){assert(id.startsWith('05-'),`MOVED outside Chapter 5: ${id}`);for(const [name,to] of Object.entries(pieces)){const s=V13_MISSIONS.find(m=>m.id===id)!.structures.find(s=>s.name===name);assert(s&&s.x===to.x&&s.y===to.y,`${id}: ${name} is not at ${to.x},${to.y}`);}}
+ // A replaced Casino patrol names Chapter 5 only, an existing guard of that role, and leaves the guard count alone.
+ for(const [id,roles] of Object.entries(PATROL)){assert(id.startsWith('05-'),`PATROL outside Chapter 5: ${id}`);const m=V13_MISSIONS.find(q=>q.id===id)!,bank=V13_BANK.find(q=>q.id===baseMissionOf(id))!;
+  assert.equal(m.guards.length,bank.guards.length,`${id}: guard count`);assert.deepEqual(m.guards.map(g=>g.role),bank.guards.map(g=>g.role),`${id}: guard roles and order`);
+  for(const [role,own] of Object.entries(roles)){const g=m.guards.filter(q=>q.role===role);assert.equal(g.length,1,`${id}: one ${role} guard`);assert.deepEqual(g[0].stops,own.stops);}}
  for(const base of Object.keys(EXTRA_CAMERA))assert(base.startsWith('03-'),`EXTRA_CAMERA is keyed by the Bank plan, got ${base}`);
  for(const list of Object.values(index))assert.deepEqual(list.map(e=>STAGES.indexOf(e.stage)),[...list.map(e=>STAGES.indexOf(e.stage))].sort((a,b)=>a-b));
  // Edits listed as authored in a plan are really there.

@@ -8,7 +8,7 @@
  *
  *   Chapter 1–4, 9   1 plan → 2 Phase 7 lane ops → 3 Phase 7 replacements → 4 Phase 7 added cover
  *   Chapter 5, 6     the base plan with stages 1–4 already applied → 5 derive (mirror, re-furnish; Ch5 second
- *                    camera, table rotation and moved pieces; Ch6 secure())
+ *                    camera, table rotation, moved pieces and replaced patrols; Ch6 secure())
  *   Chapter 7, 8     the base plan at stage 1 only (frozen) → 5 derive (mirror, re-furnish, secure())
  *                    → 6 camera pins → 7 late lane ops
  *
@@ -20,12 +20,12 @@
  */
 import {PHASE7,REPLACED,LANES,LATE,type LaneOp} from './v13Phase7';
 import {PINNED} from './v13Late';
-import {EXTRA_CAMERA,ROTATE,MOVED} from './v13Casino';
+import {EXTRA_CAMERA,ROTATE,MOVED,PATROL} from './v13Casino';
 import {DERIVED_FROM,baseMissionOf,type DerivedChapter} from './v13Sources';
 
 export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late'] as const;
 export type OverrideStage=typeof STAGES[number];
-export type OverrideCategory='authored in plan'|'wall cell'|'route anchor'|'patrol stop'|'structure added'|'structure replaced'|'structure moved'|'camera added'|'camera pinned'|'art rotation'|'refit exception';
+export type OverrideCategory='authored in plan'|'wall cell'|'route anchor'|'patrol stop'|'structure added'|'structure replaced'|'structure moved'|'patrol replaced'|'camera added'|'camera pinned'|'art rotation'|'refit exception';
 export interface OverrideEntry {mission:string;stage:OverrideStage;category:OverrideCategory;file:string;table:string;detail:string;why?:string;
  /** Set when the entry belongs to the base plan this mission is derived from. Coordinates are the base plan's: the derived mission is mirrored. */
  inheritedFrom?:string;}
@@ -60,6 +60,7 @@ function own(id:string):OverrideEntry[]{
   for(const [kind,starts] of Object.entries(ROTATE))if(starts[floor])out.push({mission:id,stage:'5 derive',category:'art rotation',file:'v13Casino.ts',table:'ROTATE',detail:`${kind} slots start on option ${starts[floor]} of the SWAP list`});
  }
  for(const [name,to] of Object.entries(MOVED[id]??{}))out.push({mission:id,stage:'5 derive',category:'structure moved',file:'v13Casino.ts',table:'MOVED',detail:`${name} stands at ${p(to)} instead of its Bank counterpart's place`,why:to.why});
+ for(const [role,own] of Object.entries(PATROL[id]??{}))out.push({mission:id,stage:'5 derive',category:'patrol replaced',file:'v13Casino.ts',table:'PATROL',detail:`${role} guard walks ${own.stops.map(s=>p(s)).join(' ↔ ')} instead of the mirrored Bank patrol`,why:own.why});
  if(id==='07-05')out.push({mission:id,stage:'5 derive',category:'refit exception',file:'v13Late.ts',table:'WAREHOUSE (mission===4)',detail:'desk slots become conveyors instead of workbenches',why:'both desks stand beside a waiting pocket, where the deeper workbench does not fit'});
  for(const [zone,at] of Object.entries(PINNED[id]??{}))out.push({mission:id,stage:'6 pin',category:'camera pinned',file:'v13Late.ts',table:'PINNED',detail:`generated camera of zone ${zone} held at ${p(at)}`,why:'secure() would re-seat it after the furniture change'});
  if(LATE[id])out.push(...laneEntries(id,LATE[id].ops,LATE[id].why,'7 late','LATE'));

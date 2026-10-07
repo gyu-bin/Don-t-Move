@@ -8,6 +8,7 @@ import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { openingLayout } from '../branding/openingLayout';
 import { buttonReveal, useLobbyReveal } from '../branding/lobbyReveal';
 import { useMonetization } from '../../game/monetization/MonetizationContext';
+import { QA_UNLOCK_ALL } from '../../game/progress/qaUnlock';
 
 export function MenuButton({label,detail,onPress,primary=false,disabled=false,compact=false}:{label:string;detail?:string;onPress:()=>void;primary?:boolean;disabled?:boolean;compact?:boolean}) {
  const playUI=useUIAudio();
@@ -123,6 +124,7 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
    </View>
    <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');onIntro();}} style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('intro')}</Text><Text style={menuStyles.backText}>›</Text></Pressable>
    <Text accessibilityLabel="Music credits" style={menuStyles.credit}>{MUSIC_CREDIT}</Text>
+   {QA_UNLOCK_ALL&&<Text style={menuStyles.qaNote}>{t('qaUnlockAll')}</Text>}
   </ScrollView>
  </View>;
 }
@@ -137,7 +139,7 @@ export const menuStyles=StyleSheet.create({
  heading:{height:82,justifyContent:'center',alignItems:'center'},title:{color:'#F7F5EC',fontSize:18,letterSpacing:3,fontWeight:'600'},
  back:{position:'absolute',left:16,padding:12,minWidth:44,minHeight:44},backText:{color:'#D7E6EB',fontSize:30,lineHeight:30},
  settingsBody:{paddingHorizontal:28,paddingTop:25,paddingBottom:48},setting:{paddingVertical:26,borderBottomWidth:StyleSheet.hairlineWidth,borderColor:'#24404E',gap:20},
- label:{color:'#EFF5F6',fontSize:15},credit:{color:'#7F95A1',fontSize:10,lineHeight:15,marginTop:28},row:{flexDirection:'row',alignItems:'center',justifyContent:'space-between'},
+ label:{color:'#EFF5F6',fontSize:15},credit:{color:'#7F95A1',fontSize:10,lineHeight:15,marginTop:28},qaNote:{color:'#FFD23F',fontSize:11,letterSpacing:1,marginTop:14},row:{flexDirection:'row',alignItems:'center',justifyContent:'space-between'},
  price:{color:'#3EC5FF',fontSize:14,fontWeight:'700'},owned:{color:'#8FDB9A',fontSize:13,fontWeight:'700'},
  languages:{flexDirection:'row',borderWidth:1,borderColor:'#526975',borderRadius:5,overflow:'hidden'},language:{flex:1,alignItems:'center',padding:13},selected:{backgroundColor:'#38C9ED'},
 });
