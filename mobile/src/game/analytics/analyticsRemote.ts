@@ -1,6 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import {
-  ANALYTICS_ADMIN_TOKEN,
   SUPABASE_ANON_KEY,
   SUPABASE_URL,
   analyticsRemoteConfigured,
@@ -75,14 +74,26 @@ export function mapRemoteRows(rows: RemoteRow[]): AnalyticsEvent[] {
   }));
 }
 
-/** All-user events for the admin screen. Falls back to empty on auth/network failure. */
-export async function fetchRemoteAnalyticsEvents(limit = 8000): Promise<AnalyticsEvent[]> {
-  const sb = getClient();
-  if (!sb) throw new Error('Supabase is not configured');
-  const { data, error } = await sb.rpc('admin_analytics_events', {
-    p_token: ANALYTICS_ADMIN_TOKEN,
-    p_limit: limit,
-  });
-  if (error) throw error;
-  return mapRemoteRows((data ?? []) as RemoteRow[]);
+/** All-user events. The password is typed in the admin screen and is not stored in the app. */
+export async function fetchRemoteAnalyticsEvents(password: string): Promise<AnalyticsEvent[]> {
+  if (!analyticsRemoteConfigured()) throw new Error('network');
+  let response: Response;
+  try {
+    response = await fetch(`${SUPABASE_URL}/functions/v1/admin-analytics`, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password }),
+    });
+  } catch {
+    throw new Error('network');
+  }
+  if (response.status === 401) throw new Error('unauthorized');
+  if (!response.ok) throw new Error('network');
+  const data: unknown = await response.json();
+  if (!Array.isArray(data)) throw new Error('network');
+  return mapRemoteRows(data as RemoteRow[]);
 }

@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,9 +21,7 @@ import {
   pct,
   type AdminTab,
 } from '../../game/analytics/analyticsAggregate';
-import { analyticsRemoteConfigured } from '../../game/analytics/analyticsConfig';
 import { fetchRemoteAnalyticsEvents } from '../../game/analytics/analyticsRemote';
-import { readAnalyticsEvents } from '../../game/analytics/analyticsStorage';
 import type { AnalyticsEvent } from '../../game/analytics/analyticsTypes';
 import { MISSION_COLORS } from '../menu/MissionSelect';
 import { MenuHeading } from '../menu/MenuScreens';
@@ -34,7 +35,10 @@ const COPY = {
   ko: {
     title: '통계',
     all: '전체 유저',
-    device: '이 기기만',
+    prompt: '전체 기록을 보려면 비밀번호를 입력하세요',
+    enter: '들어가기',
+    wrong: '비밀번호가 올바르지 않습니다',
+    network: '기록을 불러오지 못했습니다',
     overview: '요약',
     missions: '미션',
     failures: '잡힘',
@@ -70,14 +74,16 @@ const COPY = {
     failed: '실패',
     emptyMissions: '아직 미션 기록이 없습니다',
     emptyCaught: '아직 잡힌 기록이 없습니다',
-    fetchFailed: '전체 기록을 못 불러와 이 기기만 보여 줍니다',
-    readFailed: '기록을 읽지 못했습니다',
+    readFailed: '기록을 불러오지 못했습니다',
     sec: '초',
   },
   en: {
     title: 'Analytics',
     all: 'All users',
-    device: 'This device',
+    prompt: 'Enter the password to see every player’s record',
+    enter: 'Enter',
+    wrong: 'That password is wrong',
+    network: 'Could not load the records',
     overview: 'Summary',
     missions: 'Missions',
     failures: 'Caught',
@@ -113,14 +119,12 @@ const COPY = {
     failed: 'Failed',
     emptyMissions: 'No mission events yet',
     emptyCaught: 'No caught events yet',
-    fetchFailed: 'All-user fetch failed — showing this device.',
-    readFailed: 'Failed to read analytics.',
+    readFailed: 'Could not load the records',
     sec: 's',
   },
 } as const;
 
 type Copy = { [K in keyof (typeof COPY)['en']]: string };
-type Source = 'all-users' | 'this-device';
 
 export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
   const insets = useSafeAreaInsets();
@@ -128,70 +132,31 @@ export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
   const t: Copy = progress.language === 'ko' ? COPY.ko : COPY.en;
   const [tab, setTab] = useState<AdminTab>('overview');
   const [events, setEvents] = useState<AnalyticsEvent[] | null>(null);
-  const [source, setSource] = useState<Source>('this-device');
+  const [password, setPassword] = useState<string | null>(null);
+  const [draft, setDraft] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const unlocked = password !== null && events !== null;
   const loading = events === null;
 
-  const load = useCallback(async (pull = false) => {
+  const load = useCallback(async (secret: string, pull = false) => {
     if (pull) setRefreshing(true);
+    else setSubmitting(true);
     try {
-      if (analyticsRemoteConfigured()) {
-        try {
-          const remote = await fetchRemoteAnalyticsEvents();
-          setEvents(remote);
-          setSource('all-users');
-          setError(null);
-          return;
-        } catch {
-          const local = await readAnalyticsEvents();
-          setEvents(local);
-          setSource('this-device');
-          setError('fetch');
-          return;
-        }
-      }
-      setEvents(await readAnalyticsEvents());
-      setSource('this-device');
+      const remote = await fetchRemoteAnalyticsEvents(secret);
+      setEvents(remote);
+      setPassword(secret);
+      setDraft('');
       setError(null);
-    } catch {
-      setError('read');
-      setEvents((current) => current ?? []);
-      setSource('this-device');
+    } catch (reason) {
+      const code = reason instanceof Error && reason.message === 'unauthorized' ? 'wrong' : 'network';
+      setError(code);
+      if (pull) setEvents((current) => current ?? []);
     } finally {
+      setSubmitting(false);
       setRefreshing(false);
     }
-  }, []);
-
-  useEffect(() => {
-    let alive = true;
-    void (async () => {
-      try {
-        if (analyticsRemoteConfigured()) {
-          try {
-            const remote = await fetchRemoteAnalyticsEvents();
-            if (!alive) return;
-            setEvents(remote);
-            setSource('all-users');
-            setError(null);
-            return;
-          } catch {
-            /* fall through to local */
-          }
-        }
-        const local = await readAnalyticsEvents();
-        if (!alive) return;
-        setEvents(local);
-        setSource('this-device');
-        setError(analyticsRemoteConfigured() ? 'fetch' : null);
-      } catch {
-        if (!alive) return;
-        setError('read');
-        setEvents([]);
-        setSource('this-device');
-      }
-    })();
-    return () => { alive = false; };
   }, []);
 
   const list = events ?? [];
@@ -200,7 +165,41 @@ export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
   const failures = aggregateFailures(list);
   const controls = aggregateControls(list);
   const monetization = aggregateMonetization(list);
-  const errorText = error === 'fetch' ? t.fetchFailed : error === 'read' ? t.readFailed : null;
+  const errorText = error === 'wrong' ? t.wrong : error === 'network' || error === 'read' ? t.network : null;
+
+  if (!unlocked) {
+    return (
+      <View style={[styles.root, { paddingTop: insets.top }]}>
+        <MenuHeading title={t.title} onBack={onBack} />
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.gate}>
+          <Text maxFontSizeMultiplier={1.2} style={styles.prompt}>{t.prompt}</Text>
+          <TextInput
+            value={draft}
+            onChangeText={setDraft}
+            secureTextEntry
+            autoCapitalize="none"
+            autoCorrect={false}
+            spellCheck={false}
+            textContentType="password"
+            returnKeyType="go"
+            onSubmitEditing={() => { if (draft.trim()) void load(draft); }}
+            placeholder={t.enter}
+            placeholderTextColor={C.muted}
+            style={styles.input}
+          />
+          {!!errorText && <Text maxFontSizeMultiplier={1.2} style={styles.error}>{errorText}</Text>}
+          <Pressable
+            accessibilityRole="button"
+            disabled={submitting || draft.trim().length === 0}
+            onPress={() => { void load(draft); }}
+            style={[styles.enter, (submitting || draft.trim().length === 0) && styles.enterOff]}
+          >
+            {submitting ? <ActivityIndicator color="#03111B" /> : <Text style={styles.enterText}>{t.enter}</Text>}
+          </Pressable>
+        </KeyboardAvoidingView>
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
@@ -225,9 +224,9 @@ export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
       </View>
       <ScrollView
         contentContainerStyle={[styles.body, { paddingBottom: insets.bottom + 28 }]}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { void load(true); }} tintColor={C.cyan} />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { if (password) void load(password, true); }} tintColor={C.cyan} />}
       >
-        <Text maxFontSizeMultiplier={1.2} style={styles.source}>{source === 'all-users' ? t.all : t.device}</Text>
+        <Text maxFontSizeMultiplier={1.2} style={styles.source}>{t.all}</Text>
         {loading ? <ActivityIndicator color={C.cyan} style={styles.spinner} /> : null}
         {!!errorText && <Text maxFontSizeMultiplier={1.2} style={styles.error}>{errorText}</Text>}
         {!loading && tab === 'overview' && (
@@ -407,6 +406,20 @@ const styles = StyleSheet.create({
   tabOn: { backgroundColor: '#38C9ED' },
   tabText: { color: C.sub, fontSize: 12, fontWeight: '600' },
   tabTextOn: { color: '#03111B' },
+  gate: { flex: 1, paddingHorizontal: 20, paddingTop: 12, gap: 16 },
+  prompt: { color: C.sub, fontSize: 15, lineHeight: 22 },
+  input: {
+    minHeight: 48,
+    borderWidth: 1,
+    borderColor: C.border,
+    backgroundColor: C.card,
+    color: C.ivory,
+    fontSize: 16,
+    paddingHorizontal: 14,
+  },
+  enter: { minHeight: 48, alignItems: 'center', justifyContent: 'center', backgroundColor: '#38C9ED' },
+  enterOff: { opacity: 0.45 },
+  enterText: { color: '#03111B', fontSize: 16, fontWeight: '700' },
   body: { paddingHorizontal: 20, paddingTop: 16 },
   source: { color: C.muted, fontSize: 12, marginBottom: 18 },
   spinner: { marginTop: 28 },

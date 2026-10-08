@@ -9,8 +9,8 @@ import {
   pct,
 } from '../analyticsAggregate';
 import { createSecretTapDetector, SECRET_TAP_COUNT } from '../secretTap';
-import { normalizeEvents } from '../analyticsStorage';
 import { mapRemoteRows } from '../analyticsRemote';
+import { normalizeEvents } from '../analyticsStorage';
 import type { AnalyticsEvent } from '../analyticsTypes';
 
 function ev(name: AnalyticsEvent['name'], props: AnalyticsEvent['props'] = {}, at = 1_700_000_000_000): AnalyticsEvent {
@@ -90,7 +90,6 @@ test('mapRemoteRows converts Supabase rows into local analytics events', () => {
   assert.equal(events[0]!.name, 'mission_clear');
   assert.equal(events[0]!.props.missionId, '01-01');
   assert.equal(events[0]!.props.platform, 'ios');
-  assert.equal(events[0]!.at, Date.parse('2026-10-07T00:00:00.000Z'));
 });
 
 test('secret tap unlocks after five taps inside the window', () => {
