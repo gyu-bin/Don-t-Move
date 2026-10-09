@@ -22,7 +22,7 @@ function harness() {
   const out = {exports:{}};cache.set(filename,out.exports);
   const source = ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
   vm.runInNewContext(source,{module:out,exports:out.exports,setTimeout,clearTimeout,setInterval,clearInterval,console,
-   require: name => name==='react-native'?{Platform:{OS:'ios'}}:name==='./adsConfig'?{adsLog(){},isProductionAdUnits:()=>false,PRODUCTION_INTERSTITIAL:{},INTERSTITIAL_LOAD_WAIT_MS:12_000}:
+   require: name => name==='react-native'?{Platform:{OS:'ios'}}:name==='./adsConfig'?{adsLog(){},isProductionAdUnits:()=>false,PRODUCTION_INTERSTITIAL:{}}:
     name==='./nativeGate'?{hasGoogleMobileAdsNative:()=>true}:name==='react-native-google-mobile-ads'?sdk:
      name==='../../ui/branding/initialization'?{}:execute(path.resolve(path.dirname(filename),name+'.ts'))});
   return out.exports;
@@ -36,23 +36,24 @@ test('not-loaded ad skips immediately without starting load at navigation', asyn
  assert.equal(await controller.showIfReady(),'skipped');assert.equal(ads[0].shows,0);
  controller.dispose();
 });
-test('showWhenDue waits for load then presents instead of skipping cold', async () => {
+test('the controller has no load-waiting entry point; an unloaded or failed ad is skipped in the same tick', async () => {
  const {controller,ads}=harness();
- const show=controller.showWhenDue(500);
- await new Promise(resolve=>setTimeout(resolve,20));
- assert.equal(ads.length,1); assert.equal(ads[0].shows,0);
- ads[0].emit('loaded');
- await new Promise(resolve=>setTimeout(resolve,150));
- assert.equal(ads[0].shows,1);
- ads[0].emit('opened'); ads[0].emit('closed');
- assert.equal(await show,'shown');
+ assert.equal(typeof controller.showWhenDue,'undefined');assert.equal(typeof controller.waitUntilReady,'undefined');
+ controller.preload();
+ let settled=false;const pending=controller.showIfReady().then(result=>{settled=true;return result;});
+ await Promise.resolve();await Promise.resolve();
+ assert.equal(settled,true,'resolved without waiting for LOADED');assert.equal(await pending,'skipped');
+ // A load that fails leaves nothing ready: the next Mission Complete skips at once as well.
+ ads[0].emit('error');assert.equal(controller.isReady(),false);
+ assert.equal(await controller.showIfReady(),'skipped');assert.equal(ads[0].shows,0);
  controller.dispose();
 });
-test('showWhenDue times out without a fill and leaves counter for the next clear', async () => {
- const {controller,ads}=harness();
- assert.equal(await controller.showWhenDue(80),'skipped');
- assert.equal(ads.length,1); assert.equal(ads[0].shows,0);
- controller.dispose();
+test('an ad that finishes loading later is shown at the next clear, not waited for at this one', async () => {
+ const {controller,ads}=harness();controller.preload();
+ assert.equal(await controller.showIfReady(),'skipped');
+ ads[0].emit('loaded');assert.equal(controller.isReady(),true);
+ const show=controller.showIfReady();assert.equal(ads[0].shows,1);
+ ads[0].emit('opened');ads[0].emit('closed');assert.equal(await show,'shown');controller.dispose();
 });
 test('presentation ERROR resolves navigation, concurrent requests show exactly once', async () => {
  const {controller,ads}=harness();controller.preload();ads[0].emit('loaded');

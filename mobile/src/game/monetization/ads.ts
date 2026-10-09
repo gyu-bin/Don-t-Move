@@ -1,7 +1,6 @@
 import { Platform } from 'react-native';
 import {
   adsLog,
-  INTERSTITIAL_LOAD_WAIT_MS,
   isProductionAdUnits,
   PRODUCTION_INTERSTITIAL,
 } from './adsConfig';
@@ -168,53 +167,9 @@ class InterstitialController {
   }
 
   /**
-   * When an interstitial is due, wait for a load (or timeout) then show.
-   * Navigation stays blocked via adPresenting until this settles.
+   * Present only if an ad is already loaded; otherwise resolve 'skipped' at once.
+   * Mission Complete never waits for a load: loading happens in the background for a later clear.
    */
-  async showWhenDue(timeoutMs = INTERSTITIAL_LOAD_WAIT_MS): Promise<ShowResult> {
-    if (this.disabled) return 'skipped';
-    if (this.presenting) return this.presenting;
-    const ready = await this.waitUntilReady(timeoutMs);
-    if (!ready) {
-      adsLog('interstitial skipped — load wait timed out or unavailable');
-      return 'skipped';
-    }
-    return this.showIfReady();
-  }
-
-  private waitUntilReady(timeoutMs: number): Promise<boolean> {
-    if (this.disabled || this.unavailable || qaMode() === 'unloaded') {
-      return Promise.resolve(false);
-    }
-    if (this.isReady()) return Promise.resolve(true);
-    this.preload();
-    if (this.isReady()) return Promise.resolve(true);
-    const deadline = Date.now() + timeoutMs;
-    return new Promise((resolve) => {
-      const tick = () => {
-        if (this.disabled || this.unavailable || qaMode() === 'unloaded') {
-          clearInterval(timer);
-          resolve(false);
-          return;
-        }
-        if (this.isReady()) {
-          clearInterval(timer);
-          resolve(true);
-          return;
-        }
-        if (Date.now() >= deadline) {
-          clearInterval(timer);
-          resolve(false);
-          return;
-        }
-        if (!this.loading && !this.loaded && !this.presenting) this.preload();
-      };
-      const timer = setInterval(tick, 100);
-      tick();
-    });
-  }
-
-  /** Present only if an ad is already loaded. Prefer showWhenDue at Mission Complete. */
   showIfReady(): Promise<ShowResult> {
     if (this.disabled) return Promise.resolve('skipped');
     if (this.presenting) return this.presenting;

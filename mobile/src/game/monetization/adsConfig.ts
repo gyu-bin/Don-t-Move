@@ -21,9 +21,6 @@ export const PRODUCTION_INTERSTITIAL = {
 /** Google official test interstitial unit (shared across platforms via TestIds). */
 export const CLEARS_PER_INTERSTITIAL = 2;
 
-/** How long Mission Complete may wait for an interstitial before continuing. */
-export const INTERSTITIAL_LOAD_WAIT_MS = 12_000;
-
 /** Production Ad Unit IDs only when not in a development JS bundle. */
 export function isProductionAdUnits(): boolean {
   return !__DEV__ && process.env.EXPO_PUBLIC_ADS_TEST_MODE !== 'true';

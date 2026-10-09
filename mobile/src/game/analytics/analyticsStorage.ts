@@ -46,12 +46,43 @@ async function ensureMemory(): Promise<AnalyticsEvent[]> {
   return memory;
 }
 
+/** Events recorded within this window are written to storage together. */
+export const ANALYTICS_FLUSH_DELAY_MS = 1500;
+let flushTimer: ReturnType<typeof setTimeout> | null = null;
+
+/**
+ * One storage write for a burst of events. The whole log (up to ANALYTICS_MAX_EVENTS rows) is one JSON value, so
+ * encoding and writing it once per event put that cost on the JS thread several times in a row exactly where
+ * events cluster: mission clear and the transition to the next mission.
+ */
+function scheduleFlush(): void {
+  if (flushTimer) return;
+  flushTimer = setTimeout(() => {
+    flushTimer = null;
+    void flushAnalyticsEvents();
+  }, ANALYTICS_FLUSH_DELAY_MS);
+  // Node (tests): a pending flush must not keep the process alive.
+  (flushTimer as { unref?: () => void }).unref?.();
+}
+
+/** Write what is in memory now. Never throws. */
+export function flushAnalyticsEvents(): Promise<void> {
+  if (flushTimer) { clearTimeout(flushTimer); flushTimer = null; }
+  const snapshot = memory;
+  if (!snapshot) return saving.catch(() => {});
+  let encoded: string;
+  try { encoded = JSON.stringify(snapshot); } catch { return saving.catch(() => {}); }
+  saving = saving.catch(() => {}).then(() => AsyncStorage.setItem(ANALYTICS_STORAGE_KEY, encoded));
+  return saving.catch(() => {});
+}
+
 export function appendAnalyticsEvent(name: AnalyticsEventName, props: AnalyticsProps = {}): void {
   const event: AnalyticsEvent = { id: newId(), at: Date.now(), name, props };
-  void ensureMemory().then((events) => {
-    memory = [...events, event].slice(-ANALYTICS_MAX_EVENTS);
-    const encoded = JSON.stringify(memory);
-    saving = saving.catch(() => {}).then(() => AsyncStorage.setItem(ANALYTICS_STORAGE_KEY, encoded));
+  void ensureMemory().then((loaded) => {
+    // Append to what is in memory now, not to what it was when this event was recorded: several events recorded
+    // in the same tick would otherwise each start from the same list and only the last would survive.
+    memory = [...(memory ?? loaded), event].slice(-ANALYTICS_MAX_EVENTS);
+    scheduleFlush();
   }).catch(() => {});
 }
 
