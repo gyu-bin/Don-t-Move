@@ -23,6 +23,20 @@ export function resetClearsAfterShown(state: AdClearState): AdClearState {
   return { ...state, clearsSinceLastInterstitial: 0 };
 }
 
+/**
+ * QA only (admin screen): the owner of Remove Ads asks to see ads on this device for this run of the app.
+ * The purchase is not touched: this is the state the ad code looks at, never the state that is saved.
+ */
+export function adsViewOf(state: AdClearState, qaShowAds: boolean): AdClearState {
+  return qaShowAds && state.removeAdsOwned ? { ...state, removeAdsOwned: false } : state;
+}
+
+/** Count a clear. With the QA switch on an owner's clears are counted too; ownership is saved as it is. */
+export function countClear(state: AdClearState, qaShowAds: boolean): AdClearState {
+  const counted = recordSuccessfulClear(adsViewOf(state, qaShowAds));
+  return { ...state, clearsSinceLastInterstitial: counted.clearsSinceLastInterstitial };
+}
+
 export function markRemoveAdsOwned(state: AdClearState): AdClearState {
   return { ...state, removeAdsOwned: true, clearsSinceLastInterstitial: 0 };
 }

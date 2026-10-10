@@ -15,10 +15,11 @@ import {
   useIAP,
 } from 'expo-iap';
 import {
-  recordSuccessfulClear,
   resetClearsAfterShown,
   shouldShowInterstitial,
   type AdClearState,
+  adsViewOf,
+  countClear,
 } from './adState';
 import { adsLog, CLEARS_PER_INTERSTITIAL, removeAdsProductId } from './adsConfig';
 import { interstitialController } from './ads';
@@ -56,10 +57,15 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     adStateRef.current = adState;
   }, [adState]);
 
+  // QA switch from the admin screen: ads for an owner, this run only. Kept out of what is saved.
+  const [qaShowAds, setQaShowAdsState] = useState(false);
+  const qaShowAdsRef = useRef(false);
+  const adsView = useCallback(() => adsViewOf(adStateRef.current, qaShowAdsRef.current), []);
+
   const persist = useCallback((next: AdClearState) => {
     adStateRef.current = next;
     setAdState(next);
-    interstitialController.setRemoveAdsOwned(next.removeAdsOwned);
+    interstitialController.setRemoveAdsOwned(adsViewOf(next, qaShowAdsRef.current).removeAdsOwned);
     void saveAdState(next).catch(() => {});
     setPurchaseStatus((status) => status === 'purchasing' || status === 'restoring'
       ? status : next.removeAdsOwned ? 'owned' : 'idle');
@@ -204,11 +210,19 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
   }, [connected, entitlement, productId, loadProducts]);
 
   const recordMissionClear = useCallback(() => {
-    const next = recordSuccessfulClear(adStateRef.current);
+    const next = countClear(adStateRef.current, qaShowAdsRef.current);
     adsLog(`clear count ${next.clearsSinceLastInterstitial}/${CLEARS_PER_INTERSTITIAL}`);
     persist(next);
-    if (!next.removeAdsOwned) interstitialController.preload();
-  }, [persist]);
+    if (!adsView().removeAdsOwned) interstitialController.preload();
+  }, [adsView, persist]);
+
+  const setQaShowAds = useCallback((enabled: boolean) => {
+    qaShowAdsRef.current = enabled;
+    setQaShowAdsState(enabled);
+    const view = adsView();
+    interstitialController.setRemoveAdsOwned(view.removeAdsOwned);
+    if (!view.removeAdsOwned) interstitialController.preload();
+  }, [adsView]);
 
   const presentInterstitialIfNeeded = useCallback(async () => {
     if (presentingLock.current) return;
@@ -216,7 +230,7 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     try {
       // Already-loaded ads only. Nothing here waits for a load, so a slow ad network cannot hold "Next Stage".
       const outcome = await presentIfAlreadyLoaded({
-        due: () => shouldShowInterstitial(adStateRef.current),
+        due: () => shouldShowInterstitial(adsView()),
         ready: () => interstitialController.isReady(),
         show: () => interstitialController.showIfReady(),
         preload: () => interstitialController.preload(),
@@ -228,7 +242,7 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     } finally {
       presentingLock.current = false;
     }
-  }, [persist]);
+  }, [adsView, persist]);
 
   const confirmAdDismissed = useCallback(() => {
     if (presentingLock.current) interstitialController.confirmPresentationDismissed();
@@ -297,7 +311,10 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
     purchaseRemoveAds,
     restorePurchases,
     clearPurchaseMessage: () => setPurchaseMessage(null),
+    qaShowAds,
+    setQaShowAds,
   }), [
+    qaShowAds, setQaShowAds,
     ready, adState, adPresenting, product, productStatus, refreshProducts, purchaseStatus, purchaseMessage,
     recordMissionClear, presentInterstitialIfNeeded, confirmAdDismissed, purchaseRemoveAds, restorePurchases,
   ]);

@@ -7,6 +7,7 @@ import {
   RefreshControl,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   View,
@@ -27,6 +28,7 @@ import type { AnalyticsEvent } from '../../game/analytics/analyticsTypes';
 import { MISSION_COLORS } from '../menu/MissionSelect';
 import { MenuHeading } from '../menu/MenuScreens';
 import { useMenu } from '../menu/MenuContext';
+import { useMonetization } from '../../game/monetization/MonetizationContext';
 
 const C = MISSION_COLORS;
 
@@ -73,6 +75,8 @@ const COPY = {
     restored: '복원',
     restoreEmpty: '복원 없음',
     failed: '실패',
+    qaShowAds: '광고 표시 (QA)',
+    qaShowAdsNote: '광고 제거를 구매한 이 기기에서 광고를 다시 표시합니다. 구매는 그대로이며, 앱을 다시 켜면 꺼집니다.',
     emptyMissions: '아직 미션 기록이 없습니다',
     emptyCaught: '아직 잡힌 기록이 없습니다',
     readFailed: '기록을 불러오지 못했습니다',
@@ -118,6 +122,8 @@ const COPY = {
     restored: 'Restored',
     restoreEmpty: 'Nothing to restore',
     failed: 'Failed',
+    qaShowAds: 'Show ads (QA)',
+    qaShowAdsNote: 'Shows ads on this device although Remove Ads is owned. The purchase is untouched; restarting the app turns this off.',
     emptyMissions: 'No mission events yet',
     emptyCaught: 'No caught events yet',
     readFailed: 'Could not load the records',
@@ -166,6 +172,7 @@ export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
   const failures = aggregateFailures(list);
   const controls = aggregateControls(list);
   const monetization = aggregateMonetization(list);
+  const ads = useMonetization();
   const errorText = error === 'wrong' ? t.wrong : error === 'network' || error === 'read' ? t.network : null;
 
   if (!unlocked) {
@@ -321,6 +328,13 @@ export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
               <Line label={t.restoreEmpty} value={String(monetization.removeAdsRestoreEmpty)} />
               <Line label={t.failed} value={String(monetization.removeAdsFailed)} last />
             </View>
+            {ads.adState.removeAdsOwned && <View style={styles.panel}>
+              <View style={styles.qaRow}>
+                <Text maxFontSizeMultiplier={1.2} style={styles.lineLabel}>{t.qaShowAds}</Text>
+                <Switch accessibilityLabel={t.qaShowAds} value={ads.qaShowAds} onValueChange={ads.setQaShowAds} trackColor={{ false: '#293B48', true: '#35BFE8' }} />
+              </View>
+              <Text maxFontSizeMultiplier={1.2} style={styles.qaNote}>{t.qaShowAdsNote}</Text>
+            </View>}
           </View>
         )}
       </ScrollView>
@@ -447,6 +461,8 @@ const styles = StyleSheet.create({
   },
   last: { borderBottomWidth: 0 },
   lineLabel: { color: C.sub, fontSize: 14, flex: 1 },
+  qaRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 12 },
+  qaNote: { color: C.sub, fontSize: 12, lineHeight: 17, paddingTop: 6, paddingBottom: 12 },
   lineValue: { color: C.text, fontSize: 16, fontWeight: '700', fontVariant: ['tabular-nums'] },
   ledgerHead: { flexDirection: 'row', alignItems: 'center', minHeight: 36 },
   ledgerLabel: { flex: 1.4, color: C.sub, fontSize: 14 },

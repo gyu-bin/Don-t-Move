@@ -47,6 +47,9 @@ export type MonetizationApi = {
   purchaseRemoveAds: () => Promise<void>;
   restorePurchases: () => Promise<void>;
   clearPurchaseMessage: () => void;
+  /** QA (admin screen): show ads although Remove Ads is owned. This run of the app only; nothing is saved. */
+  qaShowAds: boolean;
+  setQaShowAds: (enabled: boolean) => void;
 };
 
 export const MonetizationContext = createContext<MonetizationApi | null>(null);
@@ -110,6 +113,8 @@ function MonetizationStubProvider({ children }: { children: ReactNode }) {
     purchaseRemoveAds: unavailablePurchase,
     restorePurchases: unavailablePurchase,
     clearPurchaseMessage: () => {},
+    qaShowAds: false,
+    setQaShowAds: () => {},
   }), [ready, adState, recordMissionClear, presentInterstitialIfNeeded]);
 
   return <MonetizationContext.Provider value={value}>{children}</MonetizationContext.Provider>;
@@ -161,6 +166,8 @@ export function useMonetization(): MonetizationApi {
       purchaseRemoveAds: async () => {},
       restorePurchases: async () => {},
       clearPurchaseMessage: () => {},
+      qaShowAds: false,
+      setQaShowAds: () => {},
     };
   }
   return value;

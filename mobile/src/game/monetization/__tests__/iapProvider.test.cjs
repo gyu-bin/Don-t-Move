@@ -148,3 +148,17 @@ test('Android: the Play product remove_ads is fetched, bought through the google
   await restored.value.restorePurchases();await restored.flush();
   assert.equal(restored.value.adState.removeAdsOwned,true);
 });
+test('QA show-ads switch: an owner gets ads this run, storage keeps the purchase, switching off restores',async()=>{
+  const app=harness({cached:true,items:[bought]});await app.flush();
+  assert.equal(app.value.adState.removeAdsOwned,true);assert.equal(app.value.qaShowAds,false);
+  app.value.recordMissionClear();app.value.recordMissionClear();await app.flush();
+  assert.equal(app.value.adState.clearsSinceLastInterstitial,1,'an owner\'s clears are not counted');
+  app.value.setQaShowAds(true);await app.flush();
+  assert.equal(app.value.qaShowAds,true);
+  app.value.recordMissionClear();await app.flush();
+  assert.equal(app.value.adState.clearsSinceLastInterstitial,2,'counted with the switch on');
+  assert.equal(app.value.adState.removeAdsOwned,true,'still owned in state');assert.equal(app.value.purchaseStatus,'owned');
+  assert.equal(app.state.cache.removeAdsOwned,true,'and in what is saved');
+  app.value.setQaShowAds(false);await app.flush();assert.equal(app.value.qaShowAds,false);
+  assert.equal(app.value.adState.removeAdsOwned,true);
+});
