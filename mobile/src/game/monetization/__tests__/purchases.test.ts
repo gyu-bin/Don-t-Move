@@ -27,11 +27,15 @@ function harness(cached = false) {
   return { state, service };
 }
 
-test('platform SKU contract: exact ASC ID, no invented Android/web product', () => {
+test('platform SKU contract: the exact App Store and Play Console ids, nothing invented for other platforms', () => {
   assert.equal(removeAdsProductId('ios'), sku);
-  assert.equal(removeAdsProductId('android'), null);
+  assert.equal(removeAdsProductId('android'), 'remove_ads');
   assert.equal(removeAdsProductId('web'), null);
+  assert.equal(removeAdsProductId('windows'), null);
+  // A purchase of one store's product never counts as the other's.
   assert.equal(purchaseGrantsRemoveAds(purchase('remove_ads'), sku), false);
+  assert.equal(purchaseGrantsRemoveAds(purchase(sku), 'remove_ads'), false);
+  assert.equal(purchaseGrantsRemoveAds(purchase('remove_ads'), 'remove_ads'), true);
   assert.equal(purchaseGrantsRemoveAds(purchase(), null), false);
 });
 test('pending/unknown purchase cannot finish or grant entitlement', async () => {
@@ -109,7 +113,7 @@ test('cancel/error handling does not touch entitlement; cached and unowned state
     assert.equal(state.owned, cached);
   }
 });
-test('unconfigured Android makes no store requests or entitlement changes', async () => {
+test('a platform without a product makes no store requests or entitlement changes', async () => {
   let calls = 0;
   const service = createEntitlementService({ productId: null, hydrate: async () => {}, getPurchases: async () => { calls++; return []; }, restore: async () => { calls++; }, finish: async () => { calls++; }, applyOwnership: () => { calls++; } });
   assert.equal(await service.sync(true), null);

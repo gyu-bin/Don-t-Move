@@ -54,6 +54,11 @@ tilt itself on an iPad, an iPad held in landscape.
 - **Android `FOREGROUND_SERVICE` / `FOREGROUND_SERVICE_MEDIA_PLAYBACK`** (`app.json:43-44`): nothing in the app
   needs them with background playback off; Play review may ask. Decide before the first Play submission.
   (`app.json` cannot hold comments, so the note lives here.)
+- **Android Remove Ads** (added after the build 3 tag): the Play Console one-time product `remove_ads` is wired
+  in `adsConfig.ts`; purchase goes through the `google` request, is acknowledged (`isConsumable: false`) and is
+  found again by restore — covered by tests with a mocked store only. Still to do on the Play side and on a
+  device: product set to active, the app on a testing track, a licence tester account, then a real purchase,
+  a restore on a fresh install, and a pending (slow) payment.
 - **Android device check**: no Android build exists and none was run. `screenOrientation=portrait`,
   `resizeableActivity` not declared, targetSdk 36 — behaviour on tablets / foldables is unknown.
 - **Vertical field of view differs by device** (#11): width is fixed at 9.4 tiles, height follows the aspect —

@@ -10,7 +10,7 @@ const bought = {productId:sku,purchaseState:'purchased',id:'test-transaction'};
 
 /** Runs the production provider with deterministic hook/native boundaries.
  * No copied purchase or restore logic; effect/state rerenders use the same TSX. */
-function harness({connected=true,cached=false,items=[],products=[{id:sku,type:'in-app',displayPrice:'₩4,900'}]}={}) {
+function harness({connected=true,cached=false,items=[],products=[{id:sku,type:'in-app',displayPrice:'₩4,900'}],platform='ios'}={}) {
   let cursor=0, dirty=true, output, options;
   const slots=[], effects=[], messages=[], requests=[];
   const state={connected,items,products,cache:{removeAdsOwned:cached,clearsSinceLastInterstitial:1},failQuery:false,finish:async()=>{},reconnects:0,queries:0,request:async()=>{},query:null};
@@ -37,7 +37,7 @@ function harness({connected=true,cached=false,items=[],products=[{id:sku,type:'i
     const module={exports:{}};
     const source=ts.transpileModule(fs.readFileSync(file,'utf8'),{fileName:file,compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
     vm.runInNewContext(source,{module,exports:module.exports,console,__DEV__:false,
-      require:name=>name==='react'?hooks:name==='react/jsx-runtime'?{jsx:(type,props)=>props}:name==='react-native'?{Platform:{OS:'ios'},AppState:{addEventListener:()=>({remove(){}})}}:name==='expo-iap'?iap:name==='./MonetizationContext'?{MonetizationContext:{Provider:{}}}:name==='./ads'?{interstitialController:controller}:name==='./monetizationStorage'?{DEFAULT_AD_STATE:{removeAdsOwned:false,clearsSinceLastInterstitial:0},loadAdState:async()=>state.cache,saveAdState:async next=>{state.cache=next;}}:name==='../analytics/track'?{track(){}}:execute(path.resolve(path.dirname(file),name.endsWith('.ts')||name.endsWith('.tsx')?name:name+'.ts'))});
+      require:name=>name==='react'?hooks:name==='react/jsx-runtime'?{jsx:(type,props)=>props}:name==='react-native'?{Platform:{OS:platform},AppState:{addEventListener:()=>({remove(){}})}}:name==='expo-iap'?iap:name==='./MonetizationContext'?{MonetizationContext:{Provider:{}}}:name==='./ads'?{interstitialController:controller}:name==='./monetizationStorage'?{DEFAULT_AD_STATE:{removeAdsOwned:false,clearsSinceLastInterstitial:0},loadAdState:async()=>state.cache,saveAdState:async next=>{state.cache=next;}}:name==='../analytics/track'?{track(){}}:execute(path.resolve(path.dirname(file),name.endsWith('.ts')||name.endsWith('.tsx')?name:name+'.ts'))});
     cache.set(file,module.exports);return module.exports;
   };
   const Provider=execute(path.resolve(__dirname,'../MonetizationNative.tsx')).MonetizationNativeProvider;
@@ -124,4 +124,27 @@ test('simultaneous emitted and thrown already-owned error shares one Store query
   app.state.request=async()=>{app.events.onPurchaseError({code:'already-owned'});throw {code:'already-owned'};};
   await app.value.purchaseRemoveAds();await app.flush();
   assert.equal(app.state.queries,before+1);assert.equal(app.value.purchaseMessage,'alreadyOwned');
+});
+test('Android: the Play product remove_ads is fetched, bought through the google request, acknowledged and restored',async()=>{
+  const play='remove_ads';
+  const playBought={productId:play,purchaseState:'purchased',id:'GPA.test'};
+  const finished=[];
+  const app=harness({platform:'android',products:[{id:play,type:'in-app',displayPrice:'₩4,900'}]});
+  app.state.finish=async args=>{finished.push(args);};
+  await app.flush();
+  assert.equal(app.value.productStatus,'ready');assert.equal(app.value.product.id,play);assert.equal(app.value.product.displayPrice,'₩4,900');
+  await app.value.purchaseRemoveAds();await app.flush();
+  assert.equal(app.requests.length,1);
+  assert.equal(JSON.stringify(app.requests[0].request.google.skus),JSON.stringify([play]));assert.equal(app.requests[0].request.apple,undefined);assert.equal(app.requests[0].type,'in-app');
+  app.events.onPurchaseSuccess(playBought);await app.flush();
+  assert.equal(app.value.adState.removeAdsOwned,true);assert.equal(app.value.purchaseMessage,'purchased');
+  assert.equal(finished.length,1);assert.equal(finished[0].isConsumable,false,'a one-time product is acknowledged, never consumed');
+  // The App Store id is not a Play product: a purchase event carrying it is ignored.
+  const other=harness({platform:'android',products:[{id:play,type:'in-app',displayPrice:'₩4,900'}]});await other.flush();
+  other.events.onPurchaseSuccess({productId:sku,purchaseState:'purchased',id:'x'});await other.flush();
+  assert.equal(other.value.adState.removeAdsOwned,false);
+  // Restore on a new install finds the Play purchase.
+  const restored=harness({platform:'android',items:[playBought],products:[{id:play,type:'in-app',displayPrice:'₩4,900'}]});await restored.flush();
+  await restored.value.restorePurchases();await restored.flush();
+  assert.equal(restored.value.adState.removeAdsOwned,true);
 });

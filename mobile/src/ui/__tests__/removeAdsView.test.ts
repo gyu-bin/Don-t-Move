@@ -15,9 +15,10 @@ const base: Input = { ready: true, adState: { clearsSinceLastInterstitial: 0, re
 const view = (patch: Partial<Input> = {}) => removeAdsView({ ...base, ...patch });
 const ko = (key: TextKey | null) => (key ? translate('ko', key) : null);
 
-test('The product is the App Store non-consumable com.dontmove.removeads; Android has no product and invents none', () => {
+test('The product is com.dontmove.removeads on the App Store and remove_ads on Google Play; other platforms have none', () => {
   assert.equal(removeAdsProductId('ios'), 'com.dontmove.removeads');
-  assert.equal(removeAdsProductId('android'), null);
+  assert.equal(removeAdsProductId('android'), 'remove_ads');
+  assert.equal(removeAdsProductId('web'), null);
 });
 
 test('Available: title, what it is, the store price as given, a buy button and a restore button', () => {
@@ -102,7 +103,7 @@ test('Purchased: "구매 완료", no buy button and no price; restore remains', 
   assert.equal(translate('ko', 'removeAdsOwnedDetail'), '이 기기에서 광고가 표시되지 않습니다.');
 });
 
-test('Android without a registered product: not for sale, purchase and restore both disabled', () => {
+test('A platform without a store product: not for sale, purchase and restore both disabled', () => {
   const v = view({ productStatus: 'pending', product: null });
   assert.equal(v.state, 'pending'); assert.equal(v.buyDisabled, true); assert.equal(v.restoreDisabled, true);
   assert.equal(v.price, null); assert.equal(ko(v.priceNote), '아직 구매할 수 없는 상품입니다.'); assert.equal(v.primaryAction, 'purchase');

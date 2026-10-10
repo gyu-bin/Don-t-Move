@@ -1,11 +1,16 @@
-/** Non-consumable SKU confirmed by the owner in App Store Connect. */
+/**
+ * "Remove Ads", bought once and kept. Each store has its own product, with its own id as the owner entered it:
+ * App Store Connect (non-consumable) and Play Console (one-time product). The two ids are different on purpose;
+ * neither is derived from the other.
+ */
 export const REMOVE_ADS_PRODUCT_IDS = {
   ios: 'com.dontmove.removeads',
-  android: null, // PENDING — PLAY CONSOLE PRODUCT ID. Never reuse the iOS SKU.
+  android: 'remove_ads',
 } as const;
 
+/** The product of the store this build talks to. Platforms without a store product (web) get none. */
 export function removeAdsProductId(platform: string): string | null {
-  return platform === 'ios' ? REMOVE_ADS_PRODUCT_IDS.ios : null;
+  return platform === 'ios' ? REMOVE_ADS_PRODUCT_IDS.ios : platform === 'android' ? REMOVE_ADS_PRODUCT_IDS.android : null;
 }
 
 export const ADMOB_APP_IDS = {
