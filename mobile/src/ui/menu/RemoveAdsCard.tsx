@@ -26,7 +26,10 @@ export function RemoveAdsCard() {
         : !!view.priceNote && <Text accessibilityLiveRegion="polite" style={styles.priceNote}>{t(view.priceNote)}</Text>}
     </>}
     {view.showBuy && <Pressable accessibilityRole="button" accessibilityState={{ disabled: view.buyDisabled, busy: view.state === 'purchasing' }}
-      disabled={view.buyDisabled} onPress={() => { playUI('ui_select'); void monetization.purchaseRemoveAds(); }}
+      disabled={view.buyDisabled} onPress={() => {
+        playUI('ui_select');
+        void (view.primaryAction === 'retryStore' ? monetization.refreshProducts() : monetization.purchaseRemoveAds());
+      }}
       style={({ pressed }) => [styles.button, styles.primary, pressed && styles.pressed, view.buyDisabled && styles.disabled]}>
       <Text style={[styles.buttonText, styles.primaryText]}>{t(view.buyLabel)}</Text>
     </Pressable>}
@@ -35,10 +38,6 @@ export function RemoveAdsCard() {
       style={({ pressed }) => [styles.button, pressed && styles.pressed, view.restoreDisabled && styles.disabled]}>
       <Text style={styles.buttonText}>{t(view.restoreLabel)}</Text>
     </Pressable>
-    {view.showRetry && <Pressable accessibilityRole="button" disabled={view.state === 'purchasing' || view.state === 'restoring'}
-      onPress={() => { playUI('ui_select'); void monetization.refreshProducts(); }} hitSlop={8} style={styles.retry}>
-      <Text style={styles.retryText}>{t('storeRetry')}</Text>
-    </Pressable>}
     {!!view.message && <Text accessibilityLiveRegion="polite" style={styles.message}>{t(view.message)}</Text>}
   </View>;
 }
@@ -56,7 +55,5 @@ const styles = StyleSheet.create({
   disabled: { opacity: 0.5 },
   buttonText: { color: '#F7F5EC', fontSize: 14, fontWeight: '600', letterSpacing: 0.8, textAlign: 'center' },
   primaryText: { color: '#54DDF7', fontWeight: '800' },
-  retry: { alignSelf: 'center', paddingVertical: 6, paddingHorizontal: 10 },
-  retryText: { color: '#3EC5FF', fontSize: 13, fontWeight: '600' },
   message: { color: '#EFF5F6', fontSize: 13, lineHeight: 19, textAlign: 'center' },
 });

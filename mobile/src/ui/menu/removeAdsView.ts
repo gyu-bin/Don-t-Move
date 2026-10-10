@@ -10,14 +10,17 @@ export interface RemoveAdsView {
   price: string | null;
   /** Shown where the price goes while there is none: loading, store unreachable, not on sale on this platform. */
   priceNote: TextKey | null;
-  /** The purchase button is drawn at all. A product that is already owned is not offered again. */
+  /** The main button is drawn at all. A product that is already owned is not offered again. */
   showBuy: boolean;
+  /**
+   * What the main button does. When the product could not be loaded from the store it does not sit there
+   * disabled: it becomes "try again" and reloads the product, so a tap always does something visible.
+   */
+  primaryAction: 'purchase' | 'retryStore';
   buyLabel: TextKey;
   buyDisabled: boolean;
   restoreLabel: TextKey;
   restoreDisabled: boolean;
-  /** Offer "retry store connection" (the price could not be loaded). */
-  showRetry: boolean;
   /** Result of the last purchase / restore, in the player's words. Never an error code. */
   message: TextKey | null;
 }
@@ -40,17 +43,18 @@ export function removeAdsView(m: Input): RemoveAdsView {
   // The price stays up while a purchase or a restore runs; a note replaces it only when there is no price.
   const priceNote: TextKey | null = owned || priceReady ? null
     : m.productStatus === 'pending' ? 'storePending' : m.productStatus === 'unavailable' ? 'storeUnavailable' : 'storeLoading';
+  const retry = state === 'error';
   return {
     state,
     price: owned ? null : priceReady ? price : null,
     priceNote,
     showBuy: !owned,
-    buyLabel: purchasing ? 'purchasing' : 'removeAdsBuy',
-    buyDisabled: owned || busy || !priceReady,
+    primaryAction: retry ? 'retryStore' : 'purchase',
+    buyLabel: retry ? 'storeTryAgain' : purchasing ? 'purchasing' : 'removeAdsBuy',
+    buyDisabled: retry ? false : owned || busy || !priceReady,
     restoreLabel: restoring ? 'restoring' : 'restorePurchases',
     // Restore asks the store, so it needs one; on a platform without the product there is nothing to restore.
     restoreDisabled: busy || !m.ready || m.productStatus === 'pending',
-    showRetry: !owned && m.productStatus === 'unavailable',
     message: m.purchaseMessage,
   };
 }

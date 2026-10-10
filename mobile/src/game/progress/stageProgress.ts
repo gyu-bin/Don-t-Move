@@ -41,8 +41,9 @@ export const DEFAULT_PROGRESS: StageProgress = {
 const stageIndex = (value: unknown) =>
   Math.max(0, Math.min(STAGE_COUNT - 1, Number.isFinite(value) ? Math.floor(value as number) : 0));
 
-export function normalizeProgress(value: unknown): StageProgress {
-  if (!value || typeof value !== 'object') return { ...DEFAULT_PROGRESS };
+/** `firstRunControlMode` applies only where no control mode has been saved; a saved one is never replaced. */
+export function normalizeProgress(value: unknown, firstRunControlMode: ControlMode = DEFAULT_CONTROL_MODE): StageProgress {
+  if (!value || typeof value !== 'object') return { ...DEFAULT_PROGRESS, controlMode: firstRunControlMode };
   const row = value as Partial<StageProgress>;
   const legacyFinale = !Array.isArray(row.clearedStages) && row.heistComplete === true && row.highestUnlocked === 4;
   const highestUnlocked = legacyFinale ? 5 : stageIndex(row.highestUnlocked);
@@ -55,7 +56,7 @@ export function normalizeProgress(value: unknown): StageProgress {
     soundEnabled: row.soundEnabled !== false,
     musicEnabled: typeof row.musicEnabled === 'boolean' ? row.musicEnabled : row.soundEnabled !== false,
     language: row.language === 'ko' ? 'ko' : 'en',
-    controlMode: normalizeControlMode(row.controlMode),
+    controlMode: normalizeControlMode(row.controlMode, firstRunControlMode),
     hasStarted: row.hasStarted === true || highestUnlocked > 0 || (row.clearedStages?.length ?? 0) > 0 || !!(campaign && (campaign.highestUnlocked > 0 || Object.values(campaign.records).some(record => record.cleared))),
     clearedStages: Array.isArray(row.clearedStages)
       ? [...new Set(row.clearedStages.filter((n) => Number.isInteger(n) && n >= 0 && n < STAGE_COUNT))]
@@ -93,15 +94,15 @@ export function canSelectStage(progress: StageProgress, stage: number, devUnlock
     (devUnlock || stage <= progress.highestUnlocked || progress.clearedStages.includes(stage));
 }
 
-export async function loadProgress(throwOnError = false): Promise<StageProgress> {
+export async function loadProgress(throwOnError = false, firstRunControlMode: ControlMode = DEFAULT_CONTROL_MODE): Promise<StageProgress> {
   try {
     const value = await AsyncStorage.getItem(STORAGE_KEY);
-    const progress=value ? normalizeProgress(JSON.parse(value)) : { ...DEFAULT_PROGRESS };
+    const progress=normalizeProgress(value ? JSON.parse(value) : null, firstRunControlMode);
     return {...progress,campaign:migrateCampaign(progress)};
   } catch (error) {
     console.error('Settings/progress read failed', error);
     if (throwOnError) throw error;
-    return { ...DEFAULT_PROGRESS };
+    return { ...DEFAULT_PROGRESS, controlMode: firstRunControlMode };
   }
 }
 

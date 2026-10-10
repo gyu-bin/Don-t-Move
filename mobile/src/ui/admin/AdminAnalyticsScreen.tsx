@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { topInset } from '../device';
 import {
   aggregateControls,
   aggregateFailures,
@@ -169,7 +170,7 @@ export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
 
   if (!unlocked) {
     return (
-      <View style={[styles.root, { paddingTop: insets.top }]}>
+      <View style={[styles.root, { paddingTop: topInset(insets.top) }]}>
         <MenuHeading title={t.title} onBack={onBack} />
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.gate}>
           <Text maxFontSizeMultiplier={1.2} style={styles.prompt}>{t.prompt}</Text>
@@ -202,7 +203,7 @@ export function AdminAnalyticsScreen({ onBack }: { onBack: () => void }) {
   }
 
   return (
-    <View style={[styles.root, { paddingTop: insets.top }]}>
+    <View style={[styles.root, { paddingTop: topInset(insets.top) }]}>
       <MenuHeading title={t.title} onBack={onBack} />
       <View style={styles.tabs}>
         {TABS.map((id) => {

@@ -62,6 +62,7 @@ import { BrandingScreen } from './branding/BrandingScreen';
 import * as SplashScreen from 'expo-splash-screen';
 import { markStartup } from './branding/startupMetrics';
 import { useMenu } from './menu/MenuContext';
+import { FIRST_RUN_CONTROL_MODE, topInset } from './device';
 import { SettingsScreen } from './menu/MenuScreens';
 import { feedbackKey,valuableKey } from './menu/strings';
 import { CharacterMotionDebug } from './CharacterMotionDebug';
@@ -110,7 +111,7 @@ export function VisualPlaygroundScreen({ initialMissionIndex, initialProgress, o
     if (initialProgress) return;
     let mounted = true;
     markStartup('storage-start');
-    void loadProgress().then((value) => {
+    void loadProgress(false,FIRST_RUN_CONTROL_MODE).then((value) => {
       if (!mounted) return;
       markStartup('storage-ready');
       setProgress(value);
@@ -257,7 +258,9 @@ function StageGame({
   const missionProps=()=>({missionId:definition.id,chapter:definition.chapter??0,controlMode});
   const { width, height } = useWindowDimensions();
   const [replayIntro,setReplayIntro]=useState(false);
-  const insets = useSafeAreaInsets();
+  // On an iPad the HUD starts below the system window controls; on an iPhone this is the safe area unchanged.
+  const safeArea = useSafeAreaInsets();
+  const insets = useMemo(() => ({ ...safeArea, top: topInset(safeArea.top) }), [safeArea]);
   const assets = useGameAssets(PLAYTEST_MANIFEST);
   const prepared=useMemo(()=>assets?prepareMission(definition,assets):null,[definition,assets]);
   const stage = useMemo(() => prepared?.stage ?? compileStage(definition), [definition,prepared]);

@@ -5,6 +5,7 @@ import { Pressable, ScrollView, StyleSheet, Switch, Text, View, useWindowDimensi
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {migrateCampaign} from '../../game/progress/campaignProgress';
 import { useMenu } from './MenuContext';
+import { topInset } from '../device';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { openingLayout } from '../branding/openingLayout';
 import { buttonReveal, useLobbyReveal } from '../branding/lobbyReveal';
@@ -93,7 +94,7 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
  const clearEntryPurchaseMessage=useRef(monetization.clearPurchaseMessage);
  useEffect(()=>{clearEntryPurchaseMessage.current();},[]);
  const control=normalizeControlMode(progress.controlMode);
- return <View style={[menuStyles.screen,{paddingTop:insets.top}]}>
+ return <View style={[menuStyles.screen,{paddingTop:topInset(insets.top)}]}>
   <MenuHeading title={t('settings')} onBack={onBack}/>
   <ScrollView contentContainerStyle={menuStyles.settingsBody}>
    <View style={menuStyles.setting}>

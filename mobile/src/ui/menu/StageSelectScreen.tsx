@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {Image,Pressable,ScrollView,StyleSheet,Text,View,useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useMenu} from './MenuContext';
+import {topInset} from '../device';
 import {MenuHeading,menuStyles} from './MenuScreens';
 import {MissionSelect} from './MissionSelect';
 import {CHAPTERS,chapterMissionIndices,missionId} from '../../game/levels/campaignCatalog';
@@ -26,7 +27,7 @@ export default function StageSelectScreen({onBack,onSelect}:{onBack:()=>void;onS
  const cardImageHeight=Math.min(190,Math.max(118,width*0.27));
  const chapterName=(index:number)=>progress.language==='ko'?CHAPTERS[index].ko:CHAPTERS[index].name;
  if(chapter!==null)return <MissionSelect chapter={chapter} art={thumbnails[chapter]} onBack={()=>setChapter(null)} onSelect={onSelect}/>;
- return <View style={[menuStyles.screen,{paddingTop:insets.top}]}>
+ return <View style={[menuStyles.screen,{paddingTop:topInset(insets.top)}]}>
   <MenuHeading title={t('chapters')} onBack={onBack}/>
   <Text style={styles.subtitle}>{t('choose')}</Text>
   <ScrollView contentContainerStyle={[styles.list,{paddingBottom:insets.bottom+28}]} showsVerticalScrollIndicator={false}>

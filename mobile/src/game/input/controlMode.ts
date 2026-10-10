@@ -1,9 +1,12 @@
 /** How the thief is steered. A saved preference; Tilt is the game's intended control and the default. */
 export type ControlMode = 'tilt' | 'touch';
 export const DEFAULT_CONTROL_MODE: ControlMode = 'tilt';
-/** Anything that is not exactly "touch" — a missing field in an older save, a damaged value — is Tilt. */
-export function normalizeControlMode(value: unknown): ControlMode {
-  return value === 'touch' ? 'touch' : DEFAULT_CONTROL_MODE;
+/**
+ * A saved choice is kept as it is. Anything else — no save yet, a save from before the setting existed, a damaged
+ * value — is `fallback`: Tilt, unless the caller knows a better start for this device (see firstRunControlModeFor).
+ */
+export function normalizeControlMode(value: unknown, fallback: ControlMode = DEFAULT_CONTROL_MODE): ControlMode {
+  return value === 'touch' || value === 'tilt' ? value : fallback;
 }
 
 /** tilt: the phone. stick: drag on the screen, direction and speed under the thumb. tap: developer harness only. */

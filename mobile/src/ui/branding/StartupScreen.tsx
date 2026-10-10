@@ -10,6 +10,7 @@ import { withDeadline } from './initialization';
 import { DEFAULT_PROGRESS, loadProgress, saveProgress } from '../../game/progress/stageProgress';
 import type { StageProgress } from '../../game/progress/stageProgress';
 import { MenuContext } from '../menu/MenuContext';
+import { FIRST_RUN_CONTROL_MODE } from '../device';
 import { HomeMenu, SettingsScreen } from '../menu/MenuScreens';
 import { translate } from '../menu/strings';
 import { MonetizationProvider } from '../../game/monetization/MonetizationContext';
@@ -115,12 +116,12 @@ export function StartupScreen({ holdSplash = false, applying = false, otaStatus 
  const storageAttempt=useRef(0);
  const restoreProgress=useCallback(()=>{
   const attempt=++storageAttempt.current;
-  return withDeadline(loadProgress(true),4000,'Settings/progress').then(value=>{
+  return withDeadline(loadProgress(true,FIRST_RUN_CONTROL_MODE),4000,'Settings/progress').then(value=>{
    if(!mounted.current||attempt!==storageAttempt.current)return;
    storageWritable.current=true;progressRef.current=value;setProgress(value);setSaveError(false);
   }).catch(reason=>{
    console.error('Home initialization failed',reason);
-   if(mounted.current&&attempt===storageAttempt.current){setProgress(DEFAULT_PROGRESS);setSaveError(true);}
+   if(mounted.current&&attempt===storageAttempt.current){setProgress({...DEFAULT_PROGRESS,controlMode:FIRST_RUN_CONTROL_MODE});setSaveError(true);}
   });
  },[]);
  useEffect(()=>{void restoreProgress();},[restoreProgress]);

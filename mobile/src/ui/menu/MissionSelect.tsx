@@ -8,6 +8,7 @@ import {useUIAudio} from '../../game/audio/useGameAudio';
 import {CHAPTERS,missionName} from '../../game/levels/campaignCatalog';
 import {migrateCampaign} from '../../game/progress/campaignProgress';
 import {useMenu} from './MenuContext';
+import {topInset} from '../device';
 import {MenuHeading} from './MenuScreens';
 import {formatTime} from './stageCard';
 import {chapterIntroKey} from './strings';
@@ -37,7 +38,7 @@ export function MissionSelect({chapter,art,onBack,onSelect}:{chapter:number;art:
  const language=progress.language;
  const chapterName=language==='ko'?CHAPTERS[chapter].ko:CHAPTERS[chapter].name;
  const start=(m:RouteMission)=>{if(!m.playable)return;playUI('ui_select');onSelect(m.index);};
- return <View style={[styles.screen,{paddingTop:insets.top}]}>
+ return <View style={[styles.screen,{paddingTop:topInset(insets.top)}]}>
   <MenuHeading title={t('missions')} onBack={onBack} height={L.header}/>
   <ScrollView bounces={!L.fits} showsVerticalScrollIndicator={false} contentOffset={{x:0,y:initialRouteScroll(L,route,height,insets)}}
    contentContainerStyle={{paddingHorizontal:L.side,paddingBottom:insets.bottom+12,alignItems:'center'}}>
