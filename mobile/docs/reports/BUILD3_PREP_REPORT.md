@@ -25,6 +25,12 @@ Branch `release/build-3`. No build, no submission.
 The safe-area inset does not include the window controls: they are drawn at y 45–65 and a tap at y 72 on the back
 button never reached the app (y 86 did). So the fix cannot be inset-only; iPad is recognised by `systemName`.
 
+The decision is one function, `isIPad()` in `src/ui/deviceKind.ts`, used for both the top inset and the first-run
+control mode: iOS and (`systemName` is "iPadOS" **or** the app window is narrower than the screen). Read at module
+load: iPhone SE 3 window 375 = screen 375, iPhone 18 Pro Max 440 = 440 (both `false`); iPad Air 11 window 410,
+screen 820, `systemName` "iPadOS" (`true`). The width sign is not applied on Android, where a window narrower than
+the screen is ordinary split-screen.
+
 After the fix (`topInset = max(safe top, 72)` on iPad only): back button frame 16, 86, 44 × 54, tap at its centre
 (38, 113) returns to Home. iPhone SE 3: back button 16, 34 and Settings / Home screenshots identical to before
 (0 differing samples). iPhone 18 Pro Max: back button 16, 76 (= 62 + 14, unchanged); Settings differs only in the

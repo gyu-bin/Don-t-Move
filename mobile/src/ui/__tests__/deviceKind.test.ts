@@ -3,21 +3,44 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { test } from 'node:test';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firstRunControlModeFor, IPAD_WINDOW_CONTROLS_BOTTOM, isIPadSystem, topInsetFor } from '../deviceKind';
+import { firstRunControlModeFor, IPAD_WINDOW_CONTROLS_BOTTOM, isIPad, topInsetFor } from '../deviceKind';
 import { normalizeControlMode } from '../../game/input/controlMode';
 import { DEFAULT_PROGRESS, loadProgress, normalizeProgress, saveProgress } from '../../game/progress/stageProgress';
 import { completeMission, freshCampaign } from '../../game/progress/campaignProgress';
 
-test('iPad is recognised by the measured value, not by isPad (false for this iPhone-only app on an iPad)', () => {
-  // Simulator, iPadOS 27, iPad Air 11: {isPad:false, systemName:"iPadOS", interfaceIdiom:"phone"}.
-  assert.equal(isIPadSystem('ios', 'iPadOS'), true);
-  // iPhone 18 Pro Max, iOS 27: {systemName:"iOS"}.
-  assert.equal(isIPadSystem('ios', 'iOS'), false);
-  for (const [os, name] of [['android', 'iPadOS'], ['ios', undefined], ['ios', 'ipados'], ['ios', null], ['web', 'iPadOS']] as const)
-    assert.equal(isIPadSystem(os, name), false, `${os}/${name}`);
+const phone = (width: number, systemName: unknown = 'iOS') => ({ os: 'ios', systemName, windowWidth: width, screenWidth: width });
+
+test('iPad is recognised by either measured sign, never by isPad (false for this iPhone-only app on an iPad)', () => {
+  // Simulator, iPadOS 27, iPad Air 11: {isPad:false, systemName:"iPadOS", interfaceIdiom:"phone", window 410, screen 820}.
+  assert.equal(isIPad({ os: 'ios', systemName: 'iPadOS', windowWidth: 410, screenWidth: 820 }), true, 'both signs');
+  assert.equal(isIPad({ os: 'ios', systemName: 'iPadOS', windowWidth: 820, screenWidth: 820 }), true, 'name alone (a full-width window)');
+  assert.equal(isIPad({ os: 'ios', systemName: 'iOS', windowWidth: 410, screenWidth: 820 }), true, 'width alone (should the name ever read "iOS")');
+  assert.equal(isIPad({ os: 'ios', systemName: undefined, windowWidth: 410, screenWidth: 820 }), true);
+  // iPhones, measured: SE 3 375 = 375, 18 Pro Max 440 = 440, systemName "iOS".
+  for (const width of [320, 375, 390, 393, 402, 430, 440]) assert.equal(isIPad(phone(width)), false, `iPhone ${width}`);
+  assert.equal(isIPad(phone(375.0000001)), false); assert.equal(isIPad({ ...phone(375), screenWidth: 375.4 }), false, 'sub-point rounding is not a window');
+  // Sizes not known yet never make an iPhone an iPad.
+  for (const [windowWidth, screenWidth] of [[0, 0], [0, 375], [375, 0], [NaN, 375], [375, Infinity]])
+    assert.equal(isIPad({ os: 'ios', systemName: 'iOS', windowWidth, screenWidth }), false, `${windowWidth}/${screenWidth}`);
+  // Android split-screen and other platforms are not iPads, whatever their widths or names.
+  assert.equal(isIPad({ os: 'android', systemName: 'Android', windowWidth: 400, screenWidth: 800 }), false);
+  assert.equal(isIPad({ os: 'android', systemName: 'iPadOS', windowWidth: 400, screenWidth: 800 }), false);
+  assert.equal(isIPad({ os: 'web', systemName: 'iPadOS', windowWidth: 400, screenWidth: 800 }), false);
+});
+
+test('one decision feeds both consequences: the top inset and the first-run control mode', () => {
   const device = fs.readFileSync('src/ui/device.ts', 'utf8');
-  assert(device.includes('systemName'), 'device.ts reads systemName');
+  assert.equal((device.match(/\bisIPad\(/g) ?? []).length, 1, 'decided once');
+  assert(/topInsetFor\(safeTop, ON_IPAD\)/.test(device)); assert(/firstRunControlModeFor\(ON_IPAD\)/.test(device));
+  assert(device.includes('systemName') && device.includes("Dimensions.get('window').width") && device.includes("Dimensions.get('screen').width"));
   assert.equal(/\bisPad\b/.test(device), false, 'Platform.isPad is not used: it is false on the review device');
+  // Nothing else in the app makes its own guess.
+  for (const file of ['src/ui/menu/MenuScreens.tsx', 'src/ui/menu/StageSelectScreen.tsx', 'src/ui/menu/MissionSelect.tsx', 'src/ui/admin/AdminAnalyticsScreen.tsx',
+    'src/ui/VisualPlaygroundScreen.tsx', 'src/ui/branding/StartupScreen.tsx'])
+    assert.equal(/iPadOS|\bisPad\b|isIPad\(/.test(fs.readFileSync(file, 'utf8')), false, file);
+  for (const onIPad of [true, false]) {
+    assert.equal(topInsetFor(32, onIPad) > 32, onIPad); assert.equal(firstRunControlModeFor(onIPad) === 'touch', onIPad);
+  }
 });
 
 test('top inset: unchanged on every iPhone, pushed below the window controls on an iPad', () => {

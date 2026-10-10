@@ -1,12 +1,33 @@
 import type { ControlMode } from '../game/input/controlMode';
 
+/** What the app can read about the device it runs on. */
+export interface DeviceFacts {
+  os: string;
+  /** `Platform.constants.systemName`. */
+  systemName: unknown;
+  /** Width of the app's own window, and of the whole screen, in points. */
+  windowWidth: number;
+  screenWidth: number;
+}
+
 /**
+ * The one place that decides "this is an iPad". The top-inset correction and the first-run control mode both ask
+ * here, so they can never disagree.
+ *
  * This is an iPhone-only app, so on an iPad it runs as an iPhone app in a window and the usual checks say "phone":
- * measured on iPadOS 27 (iPad Air 11), `Platform.isPad` is false and `interfaceIdiom` is "phone".
- * `Platform.constants.systemName` is the one value that differs: "iPadOS" there, "iOS" on an iPhone.
+ * measured on iPadOS 27 (iPad Air 11), `Platform.isPad` is false and `interfaceIdiom` is "phone". Two things do
+ * differ there, and either one is enough:
+ *  - `systemName` is "iPadOS" ("iOS" on an iPhone);
+ *  - the app's window is narrower than the screen (410 of 820 pt). On an iPhone the window is the screen
+ *    (measured: SE 375 = 375, Pro Max 440 = 440).
+ * The width sign is iOS only: on Android a window narrower than the screen is ordinary split-screen.
  */
-export function isIPadSystem(os: string, systemName: unknown): boolean {
-  return os === 'ios' && systemName === 'iPadOS';
+export function isIPad(device: DeviceFacts): boolean {
+  if (device.os !== 'ios') return false;
+  if (device.systemName === 'iPadOS') return true;
+  const { windowWidth, screenWidth } = device;
+  return Number.isFinite(windowWidth) && Number.isFinite(screenWidth) && windowWidth > 0 && screenWidth > 0
+    && Math.abs(screenWidth - windowWidth) >= 1;
 }
 
 /**
