@@ -53,8 +53,10 @@ import { DEFAULT_PROGRESS, loadProgress, saveProgress } from '../game/progress/s
 import type { StageProgress } from '../game/progress/stageProgress';
 import { useGameAudio, useUIAudio } from '../game/audio/useGameAudio';
 import type { GuardEvents } from '../game/guards/guardBrain';
-import { prepareMission } from './preparedMission';
-import { MISSION_FINISH_HOLD_MS, MISSION_SLIDE_MS, missionSlide, transitionVector } from './missionTransition';
+import { prepareMission, prepareMissionInSteps } from './preparedMission';
+import { createMissionSwap, SWAP_TIMING } from './missionSwap';
+import type { SwapPhase } from './missionSwap';
+import { MISSION_COVER_OPACITY, MISSION_FINISH_HOLD_MS } from './missionTransition';
 import { VALUABLES } from '../game/levels/stagePresentation';
 import { BrandingScreen } from './branding/BrandingScreen';
 import * as SplashScreen from 'expo-splash-screen';
@@ -70,6 +72,8 @@ import { useMonetization } from '../game/monetization/MonetizationContext';
 type GamePhase = GuardEvents['phase'];
 
 const VIEW_TILES_WIDE = 9.4;
+/** UI-thread frames an incoming mission must have run before it is revealed. */
+const READY_FRAMES = 3;
 // Runtime gate only. Production visual approval (visualReviewPending) never blocks play.
 const releaseAssetIssues = characterReleaseStatus(ASSET_MANIFEST).issues;
 
@@ -139,27 +143,47 @@ export function VisualPlaygroundScreen({ initialMissionIndex, initialProgress, o
 function GameRun({ initialMissionIndex, progress, onProgress }: { initialMissionIndex?: number; progress: StageProgress; onProgress: (next: StageProgress) => void }) {
   const monetization=useMonetization();
   const [index,setIndex]=useState(()=>resolveInitialMissionIndex(progress,initialMissionIndex,QA_UNLOCK_ALL));
-  const [pending,setPending]=useState<number|null>(null);
-  const {width,height}=useWindowDimensions();
-  const transition=useSharedValue(0);
-  const startedTransition=useRef(false);
-  const nextLock=useRef(false);
+  // Exactly one mission is mounted, or none: between two missions there is only the black cover.
+  const [stageMounted,setStageMounted]=useState(true);
+  const [swap,setSwap]=useState<{phase:SwapPhase;to:number}>({phase:'idle',to:-1});
+  const cover=useSharedValue(0);
+  const coverStyle=useAnimatedStyle(()=>({opacity:cover.value}));
   const tilt=useTiltControl(normalizeControlMode(progress.controlMode)==='tilt');
   const definition=playableStages[index];
-  const direction=transitionVector(definition.exitEdge);
-  const nameStyle=useAnimatedStyle(()=>({opacity:Math.sin(transition.value*Math.PI)}));
-  const finishTransition=useCallback(()=>{
-    if(pending===null)return;
-    setIndex(pending);setPending(null);
-  },[pending]);
-  const beginTransition=useCallback(()=>{
-    if(startedTransition.current)return;
-    startedTransition.current=true;
-    transition.set(withTiming(1,{duration:MISSION_SLIDE_MS},finished=>{
-      if(finished)scheduleOnRN(finishTransition);
-    }));
-  },[transition,finishTransition]);
-  useEffect(()=>()=>cancelAnimation(transition),[transition]);
+  // The transition outlives the render that started it (an ad may be on screen in between): read these when used.
+  const live=useRef({progress,onProgress,presentAd:monetization.presentInterstitialIfNeeded});
+  useEffect(()=>{live.current={progress,onProgress,presentAd:monetization.presentInterstitialIfNeeded};});
+  const fade=useRef<{token:number;done:(()=>void)|null}>({token:0,done:null});
+  const onFadeEnd=useCallback((token:number)=>{
+    if(token!==fade.current.token)return; // the end of an earlier fade that this one replaced
+    const done=fade.current.done;fade.current.done=null;done?.();
+  },[]);
+  const missionSwap=useRef<ReturnType<typeof createMissionSwap<ReturnType<typeof setTimeout>>>|null>(null);
+  useEffect(()=>{
+   const controller=createMissionSwap<ReturnType<typeof setTimeout>>({
+    presentAd:()=>live.current.presentAd(),
+    commit:to=>{
+      const current=live.current.progress;
+      live.current.onProgress({...current,campaign:{...migrateCampaign(current),lastMission:missionId(to)}});
+    },
+    fade:(to,done)=>{
+      const token=++fade.current.token;fade.current.done=done;
+      cover.set(withTiming(to?MISSION_COVER_OPACITY:0,{duration:SWAP_TIMING.fadeMs},()=>{'worklet';scheduleOnRN(onFadeEnd,token);}));
+    },
+    setMounted:next=>{
+      if(next===null){setStageMounted(false);return;}
+      setIndex(next);setStageMounted(true);
+    },
+    afterFrames:done=>{requestAnimationFrame(()=>requestAnimationFrame(done));},
+    setTimer:(run,ms)=>setTimeout(run,ms),
+    clearTimer:timer=>clearTimeout(timer),
+    onPhase:(phase,to)=>setSwap({phase,to}),
+    breadcrumb:(name,props)=>track(name,{...props,from:missionId(Number(props.from)),to:missionId(Number(props.to))}),
+   });
+   missionSwap.current=controller;
+   // Leaving for Home or the chapter list mid-transition: late fade/frame signals of that run are ignored.
+   return ()=>{controller.cancel();missionSwap.current=null;cancelAnimation(cover);};
+  },[cover,onFadeEnd]);
   const stageCleared=(seconds:number,alerts:number)=>{
     const stage=playableStages[index];
     const controlMode=normalizeControlMode(progress.controlMode);
@@ -167,67 +191,42 @@ function GameRun({ initialMissionIndex, progress, onProgress }: { initialMission
     if(stage && stage.mission===CHAPTER_MISSION_COUNTS[(stage.chapter??1)-1]) {
       track('chapter_complete',{chapter:stage.chapter??0,missionId:stage.id});
     }
+    // The clear, the best time and the unlock are stored here, before any navigation is possible.
     onProgress({...progress,campaign:completeMission(migrateCampaign(progress),index,seconds,alerts)});
     monetization.recordMissionClear();
     // After the last mission there is no next one: the result screen leads to the chapter list.
     if(index>=playableStages.length-1)return;
     const next=index+1;
-    // Shared images are already decoded; compile static art/navigation while
-    // the result screen is visible. Keep the outgoing scene until next is ready.
-    // The compile blocks the JS thread, so start it only after the result
-    // popup has been committed; starting at clear time delayed the popup itself.
+    // Shared images are already decoded; compile the next floor plan, navigation and static art while the result
+    // screen is up. It runs after the result popup has been committed, and in three separate tasks, so the popup
+    // and its buttons are not held behind it. Nothing is mounted or drawn for the next mission yet.
     setTimeout(()=>{
       const prepareStarted=Date.now();
-      void preloadGameAssets(PLAYTEST_MANIFEST).then(assets=>{
-        const compileStarted=Date.now();
-        const prepared=prepareMission(playableStages[next],assets);
-        if(__DEV__)console.info('[NAV] next mission prepared',JSON.stringify({assetsMs:compileStarted-prepareStarted,compileMs:Date.now()-compileStarted}));
-        return prepared;
+      void preloadGameAssets(PLAYTEST_MANIFEST).then(assets=>prepareMissionInSteps(playableStages[next],assets)).then(()=>{
+        if(__DEV__)console.info('[NAV] next mission prepared',JSON.stringify({totalMs:Date.now()-prepareStarted}));
       }).catch(()=>{});
     },MISSION_FINISH_HOLD_MS+200);
   };
+  // Pressing again while a transition runs does nothing: one ad at most, one mission launched.
   const nextStage=()=>{
-    if(pending!==null||nextLock.current||index>=playableStages.length-1)return;
-    nextLock.current=true;
-    void (async()=>{
-      try {
-        await monetization.presentInterstitialIfNeeded();
-      } catch (error) {
-        if (__DEV__) console.warn('[ADS] optional presentation failed', error);
-      } finally {
-        if (__DEV__) console.info('[NAV] mission complete continue');
-        const next=index+1;
-        onProgress({...progress,campaign:{...migrateCampaign(progress),lastMission:missionId(next)}});
-        startedTransition.current=false;transition.set(0);setPending(next);
-        nextLock.current=false;
-      }
-    })();
+    if(index>=playableStages.length-1)return;
+    missionSwap.current?.start(index,index+1);
   };
-  const visible=pending===null?[index]:[index,pending];
+  const onStageReady=useCallback(()=>{missionSwap.current?.newStageReady(index);},[index]);
+  const covering=swap.phase!=='idle'&&swap.phase!=='ad';
+  // The incoming mission is frozen under the cover and starts when the cover is gone.
+  const incoming=swap.phase==='mounting'||swap.phase==='fadeIn';
   return <View style={{flex:1,overflow:'hidden',backgroundColor:'#05070b'}}>
-    {visible.map(i=><MissionLayer key={playableStages[i].id} progress={transition} moving={pending!==null} incoming={i!==index} dx={width*direction.x} dy={height*direction.y}>
-      <StageGame definition={playableStages[i]} tilt={tilt} soundEnabled={progress.soundEnabled}
-        onStageCleared={stageCleared} onNextStage={nextStage} progress={progress}
-        transitioning={pending!==null} onTransitionReady={i===pending?beginTransition:undefined}/>
-    </MissionLayer>)}
-    {pending!==null&&<Animated.View pointerEvents="none" style={[styles.transitionName,nameStyle]}>
-      <Text style={styles.transitionCode}>{missionId(pending)}</Text>
-      <Text style={styles.transitionTitle}>{missionName(pending,progress.language)}</Text>
-    </Animated.View>}
+    {stageMounted&&<StageGame key={definition.id} definition={definition} tilt={tilt} soundEnabled={progress.soundEnabled}
+      onStageCleared={stageCleared} onNextStage={nextStage} progress={progress}
+      transitioning={incoming} onTransitionReady={swap.phase==='mounting'?onStageReady:undefined}/>}
+    <Animated.View pointerEvents={covering?'auto':'none'} style={[StyleSheet.absoluteFill,styles.transitionCover,coverStyle]}>
+      {covering&&swap.to>=0&&<View pointerEvents="none" style={styles.transitionName}>
+        <Text style={styles.transitionCode}>{missionId(swap.to)}</Text>
+        <Text style={styles.transitionTitle}>{missionName(swap.to,progress.language)}</Text>
+      </View>}
+    </Animated.View>
   </View>;
-}
-
-/** Keep each scene attached to one animated style throughout settlement. Swapping
- * incoming/outgoing style objects at commit can expose one empty native frame. */
-function MissionLayer({progress,moving,incoming,dx,dy,children}:{
-  progress:import('react-native-reanimated').SharedValue<number>;
-  moving:boolean;incoming:boolean;dx:number;dy:number;children:import('react').ReactNode;
-}) {
-  const style=useAnimatedStyle(()=>({transform:[
-    {translateX:moving?missionSlide(progress.value,incoming,dx):0},
-    {translateY:moving?missionSlide(progress.value,incoming,dy):0},
-  ]}));
-  return <Animated.View collapsable={false} style={[StyleSheet.absoluteFill,style]}>{children}</Animated.View>;
 }
 
 type TiltControl = ReturnType<typeof useTiltControl>;
@@ -299,15 +298,19 @@ function StageGame({
       zoom,
     };
   }, [assets, stage, prepared, definition, width, height, zoom,insets]);
-  useEffect(()=>{
-    if(!resources||!onTransitionReady)return;
-    let second=0;const first=requestAnimationFrame(()=>{second=requestAnimationFrame(onTransitionReady);});
-    return ()=>{cancelAnimationFrame(first);cancelAnimationFrame(second);};
-  },[resources,onTransitionReady]);
+  // "Ready" is reported from the UI thread, after this mission's own frame callback has run for a few frames with
+  // its resources in place. Mounting a mission makes the UI thread take in the whole scene (state, navigation,
+  // art) in one go; a report from the JS side arrives before that is over, and the reveal would then stutter.
+  const readyTarget=useRef(onTransitionReady);
+  useEffect(()=>{readyTarget.current=onTransitionReady;});
+  const reportReady=useCallback(()=>{readyTarget.current?.();},[]);
+  const awaitingReady=!!onTransitionReady;
+  const adCovering=monetization.adPresenting;
+  const readyFrames=useSharedValue(0);
 
   const freshViewState = () => {
     const fresh=createPlaygroundState(stage,guardStrideContract(PLAYTEST_MANIFEST.characters.guard));
-    // Incoming scenes are frozen during the slide: center the entry before the
+    // An incoming scene is frozen under the cover: center the entry before the
     // first rendered frame instead of waiting for camera-follow simulation.
     fresh.cam.x=bounds.w<=viewW ? bounds.x+(bounds.w-viewW)/2
       : Math.max(bounds.x,Math.min(bounds.x+bounds.w-viewW,fresh.player.x-viewW/2));
@@ -555,7 +558,13 @@ function StageGame({
       });
       return;
     }
-    if (pausedValue.value || transitioning || !resources) return;
+    if (awaitingReady && resources && readyFrames.value >= 0) {
+      readyFrames.value += 1;
+      if (readyFrames.value >= READY_FRAMES) { readyFrames.value = -1; scheduleOnRN(reportReady); }
+    }
+    // Behind a full-screen ad the finished scene stands still: nothing is simulated, so nothing is redrawn into a
+    // canvas that is completely covered (see MISSION_COVER_OPACITY for what a covered canvas costs).
+    if (pausedValue.value || transitioning || adCovering || !resources) return;
     const tiltInput = tiltEnabled ? {
       x: controller.value.x,
       y: controller.value.y,
@@ -715,6 +724,7 @@ function StageGame({
 }
 
 const styles = StyleSheet.create({
+  transitionCover:{backgroundColor:'#000',zIndex:200,elevation:200},
   transitionName:{position:'absolute',alignSelf:'center',top:'43%',padding:22,borderRadius:12,backgroundColor:'#071219E8',alignItems:'center',gap:8},
   transitionCode:{color:'#93E5ED',fontSize:13,fontWeight:'800',letterSpacing:3},
   transitionTitle:{color:'#EDF2F3',fontSize:20,fontWeight:'700'},

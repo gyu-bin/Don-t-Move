@@ -22,6 +22,7 @@ import {
 } from './adState';
 import { adsLog, CLEARS_PER_INTERSTITIAL, removeAdsProductId } from './adsConfig';
 import { interstitialController } from './ads';
+import { presentIfAlreadyLoaded } from './interstitialNavigation';
 import {
   MonetizationContext,
   type MonetizationApi,
@@ -211,26 +212,20 @@ export function MonetizationNativeProvider({ children }: { children: ReactNode }
 
   const presentInterstitialIfNeeded = useCallback(async () => {
     if (presentingLock.current) return;
-    if (!shouldShowInterstitial(adStateRef.current)) {
-      adsLog('continue immediately — interstitial not due');
-      return;
-    }
-    track('interstitial_due');
     presentingLock.current = true;
-    setAdPresenting(true);
     try {
-      const result = await interstitialController.showWhenDue();
-      if (result === 'shown') {
-        track('interstitial_shown');
-        persist(resetClearsAfterShown(adStateRef.current));
-      } else {
-        track('interstitial_skipped', { reason: result });
-      }
-    } catch (error) {
-      track('interstitial_skipped', { reason: 'error' });
-      adsLog('interstitial failed', error);
+      // Already-loaded ads only. Nothing here waits for a load, so a slow ad network cannot hold "Next Stage".
+      const outcome = await presentIfAlreadyLoaded({
+        due: () => shouldShowInterstitial(adStateRef.current),
+        ready: () => interstitialController.isReady(),
+        show: () => interstitialController.showIfReady(),
+        preload: () => interstitialController.preload(),
+        onShown: () => persist(resetClearsAfterShown(adStateRef.current)),
+        setPresenting: setAdPresenting,
+        breadcrumb: (name, props) => track(name, props),
+      });
+      adsLog(`mission complete continue — interstitial ${outcome}`);
     } finally {
-      setAdPresenting(false);
       presentingLock.current = false;
     }
   }, [persist]);
