@@ -36,7 +36,7 @@
         "foregroundImage": "./assets/branding/adaptive-foreground.png"
       },
       "package": "com.dontmove.prototype",
-      "versionCode": 3,
+      "versionCode": 4,
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.MODIFY_AUDIO_SETTINGS",
