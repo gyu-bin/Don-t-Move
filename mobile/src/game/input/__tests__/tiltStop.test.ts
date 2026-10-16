@@ -36,8 +36,8 @@ function rig() {
 }
 const allZero = (s: TiltState) => s.x === 0 && s.y === 0 && s.smoothX === 0 && s.smoothY === 0 && s.deadX === 0 && s.deadY === 0;
 
-test('Tuning: start 2.25°, stop 1.75°, max 10°, smoothing 0.07 s', () => {
-  assert.deepEqual(DEFAULT_TILT, { deadZone: 1.75, moveStart: 2.25, maxTilt: 10, sensitivity: 1, smoothing: 0.07 });
+test('Tuning: start 2.25°, stop 1.75°, max 8°, smoothing 0.07 s', () => {
+  assert.deepEqual(DEFAULT_TILT, { deadZone: 1.75, moveStart: 2.25, maxTilt: 8, sensitivity: 1, smoothing: 0.07 });
   assert(DEFAULT_TILT.moveStart >= 2.2 && DEFAULT_TILT.moveStart <= 2.3);
   assert(DEFAULT_TILT.deadZone >= 1.7 && DEFAULT_TILT.deadZone <= 1.8);
 });

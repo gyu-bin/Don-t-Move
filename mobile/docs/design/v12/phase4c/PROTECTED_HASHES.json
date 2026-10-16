@@ -1,6 +1,6 @@
 {
-  "src/game/input/tilt.ts": "9bca33ce6b05d721b8d84b3970db5cf9f1c3bc46b359f656df8285b356983c2f",
-  "src/game/input/tiltProfiles.ts": "76dad3e6037496d6ba3357ae09bb964d7b4d1baa038989cd7defd2a33a49fb89",
+  "src/game/input/tilt.ts": "4381435a9e45790630f4c6d34091304da9cf27a15de9a731b224845f3b0d333c",
+  "src/game/input/tiltProfiles.ts": "f97353ae6c8bcde9203e82db84138c0068fe584269bc84665fc880c093555f95",
   "src/game/input/tiltMovement.ts": "63e90c3a92984ed6d00fc8c0bf8a689c8d8f09d3f0a1dc6262d8ceea829a7446",
   "src/game/guards/guardTuning.ts": "ddf459bbc7ce589eead6f3dbaf941563e11f77a3d8033401bfc5d5f351914677",
   "src/game/guards/guardSystem.ts": "58acc0f96ae392bf7bdf9c0086d6c97f04ec76c669f18dac872b73480a8e90e9",

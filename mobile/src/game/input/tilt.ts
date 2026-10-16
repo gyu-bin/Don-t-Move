@@ -13,7 +13,9 @@ export interface AttitudeSample {
  */
 export interface TiltTuning { deadZone: number; moveStart: number; maxTilt: number; sensitivity: number; smoothing: number }
 // V12 Phase 2: candidate B selected after physical iPhone feel comparison.
-export const DEFAULT_TILT: TiltTuning = { deadZone: 1.75, moveStart: 2.25, maxTilt: 10, sensitivity: 1, smoothing: 0.07 };
+// 2026-10-16 (iPhone playtest: running needed too much tilt): full speed at 8° instead of 10°. The curve scales with
+// it, so sneak and walk also come about 20 % earlier; start and stop thresholds are unchanged.
+export const DEFAULT_TILT: TiltTuning = { deadZone: 1.75, moveStart: 2.25, maxTilt: 8, sensitivity: 1, smoothing: 0.07 };
 /** A moving thief held between the two thresholds this long is at rest: it stops and needs moveStart again. */
 export const BAND_SETTLE_SECONDS = 0.25;
 export const CALIBRATION_TIMEOUT_MS = 2500;
@@ -102,8 +104,8 @@ export function relativeTilt(neutral: Quaternion, current: Quaternion) {
   return { roll: radial > 1e-8 ? nx/radial*angle : 0,
     pitch: radial > 1e-8 ? -ny/radial*angle : 0, magnitude: angle };
 }
-/** Continuous nonlinear curve: default anchors 3.625° = 38, 6.25° = 72,
- * 10° = 150 world units/sec. Gait thresholds use actual player velocity. */
+/** Continuous nonlinear curve: default anchors 3.17° = 38, 5.16° = 72,
+ * 8° = 150 world units/sec. Gait thresholds use actual player velocity. */
 export function response(magnitude: number, tuning: TiltTuning): number {
   'worklet';
   const a = tuning.deadZone + magnitude*(tuning.maxTilt-tuning.deadZone);

@@ -4,7 +4,7 @@ import type { TiltState, TiltTuning } from './tilt';
 export type TiltProfileId = 'A' | 'B' | 'C';
 export const TILT_PROFILES: Record<TiltProfileId, TiltTuning> = {
   A: { deadZone: 2, moveStart: 2.5, maxTilt: 12, smoothing: 0.07, sensitivity: 1 },
-  B: { deadZone: 1.75, moveStart: 2.25, maxTilt: 10, smoothing: 0.07, sensitivity: 1 },
+  B: { deadZone: 1.75, moveStart: 2.25, maxTilt: 8, smoothing: 0.07, sensitivity: 1 },
   C: { deadZone: 1.5, moveStart: 2, maxTilt: 9, smoothing: 0.07, sensitivity: 1 },
 };
 export function tiltCompareEnabled(dev: boolean, flag: string | undefined): boolean {
