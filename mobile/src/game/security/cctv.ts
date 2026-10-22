@@ -35,7 +35,9 @@ export function stepSecurityCameras(cameras:SecurityCameraState[],player:PlayerV
    if(Math.abs(camera.sweepOffset)>=camera.sweepAngle){camera.sweepOffset=clamp(camera.sweepOffset,-camera.sweepAngle,camera.sweepAngle);camera.sweepDirection*=-1;camera.pauseRemaining=camera.pauseAtEnds;}
   }
   camera.facing=wrapAngle(camera.centerFacing+camera.sweepOffset);
-  buildVisionFan(camera,blockers);
+  // A sweeping camera has a different cone every tick. Cache snapshots only
+  // while holding still; otherwise snapshot bookkeeping costs more than it saves.
+  buildVisionFan(camera,blockers,camera.pauseRemaining>0||camera.sweepAngle<=0||camera.sweepSpeed<=0);
   camera.canSee=pointVisible(camera,player.x,player.y,blockers);
   camera.detectionGain=0;
   if(camera.canSee){

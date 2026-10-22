@@ -20,6 +20,7 @@ function load(file) {
 }
 const travelModule = load(path.join(root, 'game/guards/guardTravel.ts'));
 const systemModule = load(path.join(root, 'game/guards/guardSystem.ts'));
+const visionModule = load(path.join(root, 'game/guards/guardVision.ts'));
 function onUI(fn, cache = new Map()) {
   if (cache.has(fn)) return cache.get(fn);
   assert(fn.__initData, 'worklet must have serialized code');
@@ -39,6 +40,17 @@ function guard() {
 function nav(blockers = []) {
   return { blockers, radius: 1, cols: 0, rows: 0, cell: 20, walkable: [], neighbors: [], components: [] };
 }
+
+test('serialized vision reuses exact geometry and invalidates a closed door without stale captures', () => {
+  const build=onUI(visionModule.buildVisionFan);
+  const g={x:0,y:0,facing:0,visionRange:200,visionHalfAngle:.6,fanCount:0,...visionModule.createFanBuffers()};
+  const blockers=[40,100,50,140];
+  assert.equal(build(g,blockers),true);
+  assert.equal(build(g,blockers),false);
+  blockers[1]=-40;blockers[3]=40;
+  assert.equal(build(g,blockers),true);
+  assert.equal(onUI(visionModule.pointVisible)(g,100,0,blockers),false);
+});
 
 test('serialized Chase captures a finite body contact distance before its first tick', () => {
   const move = systemModule.stepGuards.__closure.moveAlertGuard;

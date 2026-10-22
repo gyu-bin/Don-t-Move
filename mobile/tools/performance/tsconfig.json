@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["*.ts", "../../src/game/guards/__tests__/visionCache.test.ts"],
+  "exclude": ["../../node_modules"],
+  "compilerOptions": {"types": ["node"], "noEmit": true}
+}

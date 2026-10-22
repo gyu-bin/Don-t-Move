@@ -568,6 +568,9 @@ function StageGame({
     // Behind a full-screen ad the finished scene stands still: nothing is simulated, so nothing is redrawn into a
     // canvas that is completely covered (see MISSION_COVER_OPACITY for what a covered canvas costs).
     if (pausedValue.value || transitioning || adCovering || !resources) return;
+    // The last simulation step already recorded the terminal scene. Reassigning
+    // it every display callback would keep rebuilding Skia pictures under results.
+    if (state.value.events.caught || state.value.mission.complete) return;
     const tiltInput = tiltEnabled ? {
       x: controller.value.x,
       y: controller.value.y,
@@ -577,6 +580,9 @@ function StageGame({
     const elapsed = accumulated.value + dt;
     const steps = Math.floor(elapsed * 60);
     accumulated.value = elapsed - steps / 60;
+    // 90/120Hz displays can tick without a 60Hz simulation step. Retain the
+    // current picture on those callbacks; Tilt sampling above still runs normally.
+    if (steps === 0) return;
     const tch = touch.value;
     const previousTilt = previousTiltEnabled.value;
     previousTiltEnabled.value = tiltEnabled;

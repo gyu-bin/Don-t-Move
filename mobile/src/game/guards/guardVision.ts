@@ -23,6 +23,13 @@ export interface VisionFan {
   /** Endpoints [x0,y0,x1,y1,...] matching fanAng. */
   fan: number[];
   fanCount: number;
+  /** Geometry only: player visibility/suspicion must still be evaluated every tick. */
+  fanCache?: {
+    x: number; y: number; facing: number; range: number; half: number;
+    blockers: number[];
+    rayBlockers: number[];
+    reusable: boolean;
+  };
 }
 
 export function createFanBuffers(): { fanAng: number[]; fan: number[] } {
@@ -32,11 +39,43 @@ export function createFanBuffers(): { fanAng: number[]; fan: number[] } {
 
 const EPS = 1e-4;
 
-export function buildVisionFan(g: VisionFan, blockers: number[]): void {
+export function buildVisionFan(g: VisionFan, blockers: number[], cacheGeometry = true): boolean {
   'worklet';
+  const cached = g.fanCache;
+  // Compare coordinates, not array identity: closing doors or tools can mutate
+  // an existing array. A stale cone must never allow seeing through a solid door.
+  const samePose = cacheGeometry && cached?.reusable && g.fanCount >= 2 && cached.x === g.x && cached.y === g.y &&
+    cached.facing === g.facing && cached.range === g.visionRange && cached.half === g.visionHalfAngle;
+  let sameBlockers = !!samePose && cached.blockers.length === blockers.length;
+  if (sameBlockers && cached) {
+    for (let i = 0; i < blockers.length; i++) {
+      if (cached.blockers[i] !== blockers[i]) { sameBlockers = false; break; }
+    }
+  }
+  if (sameBlockers) return false;
   const max = GUARD_TUNING.maxFanPoints;
   const half = g.visionHalfAngle;
   const range = g.visionRange;
+  const cache = cached ?? {x: g.x, y: g.y, facing: g.facing, range, half, blockers: [], rayBlockers: [], reusable: false};
+  // A rectangle farther than the ray's maximum travel cannot occlude it. Keep
+  // original blocker order and the full corner-ray construction below, so the
+  // exact polygon and direct LOS rules are unchanged. A small outward margin
+  // makes the broad phase conservative around tangencies/roundoff.
+  const rayBlockers = cache.rayBlockers ?? [];
+  cache.rayBlockers = rayBlockers;
+  if (cacheGeometry) cache.blockers.length = blockers.length;
+  let nearCount = 0;
+  const broadRange = range + 1;
+  for (let i = 0; i < blockers.length; i += 4) {
+    // Capture current geometry during the already-needed broad phase. Moving
+    // observers must not perform a separate full snapshot scan on every tick.
+    if (cacheGeometry) for (let j = 0; j < 4; j++) cache.blockers[i + j] = blockers[i + j];
+    const dx = Math.max(blockers[i] - g.x, 0, g.x - blockers[i + 2]);
+    const dy = Math.max(blockers[i + 1] - g.y, 0, g.y - blockers[i + 3]);
+    if (dx * dx + dy * dy > broadRange * broadRange) continue;
+    for (let j = 0; j < 4; j++) rayBlockers[nearCount++] = blockers[i + j];
+  }
+  rayBlockers.length = nearCount;
   const ang = g.fanAng;
   let n = 0;
 
@@ -77,11 +116,17 @@ export function buildVisionFan(g: VisionFan, blockers: number[]): void {
     const a = g.facing + ang[i];
     const dx = Math.cos(a);
     const dy = Math.sin(a);
-    const d = castRay(g.x, g.y, dx, dy, range, blockers);
+    const d = castRay(g.x, g.y, dx, dy, range, rayBlockers);
     fan[i * 2] = g.x + dx * d;
     fan[i * 2 + 1] = g.y + dy * d;
   }
   g.fanCount = m;
+  // Retain one snapshot per observer. Moving guards overwrite it in place rather
+  // than allocating a new blocker array on every simulation step.
+  cache.x = g.x; cache.y = g.y; cache.facing = g.facing; cache.range = range; cache.half = half;
+  cache.reusable = cacheGeometry;
+  g.fanCache = cache;
+  return true;
 }
 
 /** Is (px, py) inside the polygon that is drawn on screen? */
