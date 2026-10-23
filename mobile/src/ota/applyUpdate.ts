@@ -33,6 +33,8 @@ function hasExpoUpdatesNative(): boolean {
 export function updatesModule(): typeof import('expo-updates') | null {
   if (__DEV__ || !hasExpoUpdatesNative()) return null;
   try {
+    // Load only after the native-module check; a static import also evaluates on unsupported builds.
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Updates = require('expo-updates') as typeof import('expo-updates');
     return Updates.isEnabled ? Updates : null;
   } catch {

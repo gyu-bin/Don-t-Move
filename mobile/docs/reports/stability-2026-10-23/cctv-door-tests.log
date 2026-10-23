@@ -1,0 +1,26 @@
+✔ compile converts tile door transforms to world pixels and rejects invalid lockdown IDs (0.895667ms)
+✔ confirmed theft starts the escape-timer closure; phase changes do not reset and only designated door closes (9.276417ms)
+✔ post-player-movement occupancy pauses closure and retry restores all doors (4.057583ms)
+✔ closed quick door forces reachable alternate route and leaves static graph unchanged (3.07175ms)
+✔ initially CLOSED glass door has effective movement collision before first player step but passes LOS (0.817083ms)
+✔ door-free missions keep the original static fast path (1.252584ms)
+✔ A avoiding sweep remains invisible, endpoint pause and bounded sweep remain deterministic (5.89425ms)
+✔ B brief cone entry produces partial suspicion then memory delay and decay without alert (0.548375ms)
+✔ C full detection publishes real Global LKP once, with separate silent audio asset slot (0.974834ms)
+✔ D wall occlusion halts current-player updates and retains only the last observed location (0.340208ms)
+✔ E actual playground theft escalation makes guards investigate camera LKP, never unseen live target (28.86725ms)
+✔ Camera authoring rejects malformed angles/range before entering a worklet (0.460958ms)
+✔ Full playground camera alert → LOS break → investigation/search/return clears global pursuit and resumes theft sectors (40.926291ms)
+✔ Multiple cameras publish one consistent visible-player location and no hidden-source overwrite (0.792833ms)
+✔ Camera-only stage maintains alert during real sight and clears pursuit after sight is lost without phantom guards (1.633541ms)
+✔ V9 CCTV detects every gait within its near/general/far-edge timing band (4.543ms)
+✔ V9 edge detection converges across gaits, without removing authored camera rate (2.284083ms)
+✔ V9 fractional gait stays continuous and monotonic for real locomotion transitions (3.27575ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 355.16175

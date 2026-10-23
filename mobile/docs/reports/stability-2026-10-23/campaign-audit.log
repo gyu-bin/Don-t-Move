@@ -1,0 +1,51 @@
+npm notice run mobile@1.0.0 campaign:audit
+npm notice run node --import tsx tools/campaign/v13FullAudit.ts
+generation: 45 missions, bake reproduces the campaign file
+01-01  ok    gap 4.0 | guards 2 | cams 0 | doors 2 | props 11
+01-02  ok    gap 7.9 | guards 2 | cams 0 | doors 2 | props 13
+01-03  ok    gap 6.6 | guards 2 | cams 0 | doors 2 | props 13
+01-04  ok    gap 5.8 | guards 2 | cams 1 (min sees 70%, ahead 2.3) | doors 2 | props 9
+01-05  ok    gap 4.5 | guards 3 | cams 0 | doors 2 | props 10
+02-01  ok    gap 6.9 | guards 2 | cams 0 | doors 3 | props 14
+02-02  ok    gap 6.0 | guards 2 | cams 0 | doors 3 | props 12
+02-03  ok    gap 6.6 | guards 2 | cams 1 (min sees 97%, ahead 5.0) | doors 3 | props 16
+02-04  ok    gap 6.8 | guards 2 | cams 1 (min sees 63%, ahead 2.0) | doors 2 | props 12
+02-05  ok    gap 6.3 | guards 3 | cams 1 (min sees 77%, ahead 5.0) | doors 3 | props 12
+03-01  ok    gap 6.7 | guards 4 | cams 1 (min sees 98%, ahead 5.0) | doors 2 | props 24
+03-02  ok    gap 5.3 | guards 4 | cams 1 (min sees 95%, ahead 5.0) | doors 3 | props 21
+03-03  ok    gap 5.5 | guards 4 | cams 1 (min sees 67%, ahead 5.0) | doors 2 | props 17
+03-04  ok    gap 5.2 | guards 4 | cams 1 (min sees 94%, ahead 3.0) | doors 2 | props 20
+03-05  ok    gap 7.2 | guards 4 | cams 1 (min sees 94%, ahead 5.0) | doors 3 | props 23
+04-01  ok    gap 7.2 | guards 4 | cams 1 (min sees 74%, ahead 2.0) | doors 3 | props 18
+04-02  ok    gap 6.5 | guards 4 | cams 1 (min sees 87%, ahead 5.0) | doors 4 | props 21
+04-03  ok    gap 6.7 | guards 4 | cams 1 (min sees 84%, ahead 5.0) | doors 4 | props 25
+04-04  ok    gap 6.0 | guards 4 | cams 1 (min sees 90%, ahead 5.0) | doors 3 | props 24
+04-05  ok    gap 6.3 | guards 4 | cams 1 (min sees 94%, ahead 2.8) | doors 5 | props 25
+05-01  ok    gap 7.0 | guards 4 | cams 2 (min sees 84%, ahead 5.0) | doors 2 | props 24
+05-02  ok    gap 5.8 | guards 4 | cams 2 (min sees 88%, ahead 5.0) | doors 3 | props 21
+       - known: patrol: 05-02-g4 touches collision at 3.94,16.06 t=26.3s
+05-03  ok    gap 6.6 | guards 4 | cams 2 (min sees 87%, ahead 3.0) | doors 2 | props 20
+05-04  ok    gap 5.8 | guards 4 | cams 2 (min sees 67%, ahead 4.8) | doors 2 | props 17
+05-05  ok    gap 7.2 | guards 4 | cams 2 (min sees 84%, ahead 5.0) | doors 3 | props 23
+06-01  ok    gap 6.9 | guards 4 | cams 2 (min sees 74%, ahead 5.0) | doors 3 | props 14
+06-02  ok    gap 7.7 | guards 4 | cams 2 (min sees 73%, ahead 4.8) | doors 3 | props 12
+06-03  ok    gap 7.8 | guards 4 | cams 2 (min sees 81%, ahead 4.8) | doors 3 | props 16
+06-04  ok    gap 6.8 | guards 4 | cams 2 (min sees 74%, ahead 2.3) | doors 2 | props 12
+06-05  ok    gap 6.5 | guards 4 | cams 2 (min sees 77%, ahead 4.8) | doors 3 | props 12
+07-01  ok    gap 3.8 | guards 4 | cams 2 (min sees 83%, ahead 4.8) | doors 2 | props 11
+07-02  ok    gap 7.3 | guards 4 | cams 2 (min sees 81%, ahead 4.8) | doors 2 | props 13
+07-03  ok    gap 6.6 | guards 4 | cams 2 (min sees 86%, ahead 4.8) | doors 2 | props 13
+07-04  ok    gap 5.8 | guards 4 | cams 1 (min sees 65%, ahead 2.3) | doors 2 | props 9
+07-05  ok    gap 4.5 | guards 4 | cams 2 (min sees 79%, ahead 5.0) | doors 2 | props 10
+08-01  ok    gap 7.2 | guards 4 | cams 3 (min sees 74%, ahead 2.0) | doors 3 | props 18
+08-02  ok    gap 6.5 | guards 5 | cams 3 (min sees 87%, ahead 5.0) | doors 4 | props 21
+08-03  ok    gap 6.7 | guards 5 | cams 3 (min sees 72%, ahead 5.0) | doors 4 | props 25
+08-04  ok    gap 7.7 | guards 4 | cams 3 (min sees 74%, ahead 4.8) | doors 3 | props 24
+08-05  ok    gap 6.3 | guards 5 | cams 3 (min sees 88%, ahead 2.8) | doors 5 | props 25
+09-01  ok    gap 7.3 | guards 6 | cams 3 (min sees 91%, ahead 4.8) | doors 3 | props 15
+09-02  ok    gap 5.7 | guards 6 | cams 3 (min sees 63%, ahead 4.8) | doors 3 | props 13
+09-03  ok    gap 7.1 | guards 6 | cams 3 (min sees 80%, ahead 4.0) | doors 4 | props 18
+09-04  ok    gap 5.0 | guards 6 | cams 3 (min sees 76%, ahead 5.0) | doors 4 | props 14
+09-05  ok    gap 7.9 | guards 6 | cams 3 (min sees 85%, ahead 3.8) | doors 3 | props 16
+
+45 / 45 clean; 1 known existing finding kept as they are

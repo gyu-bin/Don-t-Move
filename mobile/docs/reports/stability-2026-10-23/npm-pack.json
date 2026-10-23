@@ -1,0 +1,571 @@
+{
+  "babel-preset-expo": {
+    "id": "babel-preset-expo@57.0.12",
+    "name": "babel-preset-expo",
+    "version": "57.0.12",
+    "size": 70831,
+    "unpackedSize": 310874,
+    "shasum": "7d5d780a6229b77293f2e721d69051c5668dc8cd",
+    "integrity": "sha512-rrZqJPYbVevy7rqibJZQFd3AsleGslJ63vmB3Qs8b5poOO5AHaehUGbZHjb0HoOZO59d86BEifYbq0/ncoM2UQ==",
+    "filename": "babel-preset-expo-57.0.12.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1106,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 8436,
+        "mode": 420
+      },
+      {
+        "path": "build/common.d.ts",
+        "size": 1833,
+        "mode": 420
+      },
+      {
+        "path": "build/common.js",
+        "size": 8109,
+        "mode": 420
+      },
+      {
+        "path": "build/common.js.map",
+        "size": 6069,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/expo.d.ts",
+        "size": 1141,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/expo.js",
+        "size": 11560,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/expo.js.map",
+        "size": 6207,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/flow.d.ts",
+        "size": 451,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/flow.js",
+        "size": 641,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/flow.js.map",
+        "size": 395,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/hermes-v0.d.ts",
+        "size": 62,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/hermes-v0.js",
+        "size": 1737,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/hermes-v0.js.map",
+        "size": 1043,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/hermes-v1.d.ts",
+        "size": 606,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/hermes-v1.js",
+        "size": 1834,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/hermes-v1.js.map",
+        "size": 617,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/module-transforms.d.ts",
+        "size": 192,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/module-transforms.js",
+        "size": 2924,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/module-transforms.js.map",
+        "size": 1560,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/react.d.ts",
+        "size": 164,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/react.js",
+        "size": 1032,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/react.js.map",
+        "size": 851,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/syntax.d.ts",
+        "size": 147,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/syntax.js",
+        "size": 539,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/syntax.js.map",
+        "size": 382,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/typescript.d.ts",
+        "size": 281,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/typescript.js",
+        "size": 1153,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/typescript.js.map",
+        "size": 716,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/utils/expo-lazy-imports.d.ts",
+        "size": 134,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/utils/expo-lazy-imports.js",
+        "size": 315,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/utils/expo-lazy-imports.js.map",
+        "size": 243,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/utils/rn-lazy-imports.d.ts",
+        "size": 620,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/utils/rn-lazy-imports.js",
+        "size": 2196,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/utils/rn-lazy-imports.js.map",
+        "size": 1011,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/web.d.ts",
+        "size": 57,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/web.js",
+        "size": 633,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/web.js.map",
+        "size": 484,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/webview.d.ts",
+        "size": 61,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/webview.js",
+        "size": 2219,
+        "mode": 420
+      },
+      {
+        "path": "build/configs/webview.js.map",
+        "size": 1342,
+        "mode": 420
+      },
+      {
+        "path": "build/index.d.ts",
+        "size": 2818,
+        "mode": 420
+      },
+      {
+        "path": "build/index.js",
+        "size": 7765,
+        "mode": 420
+      },
+      {
+        "path": "build/index.js.map",
+        "size": 4358,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/babel-plugin-transform-export-namespace-from.d.ts",
+        "size": 447,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/babel-plugin-transform-export-namespace-from.js",
+        "size": 2504,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/babel-plugin-transform-export-namespace-from.js.map",
+        "size": 2026,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/client-module-proxy-plugin.d.ts",
+        "size": 213,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/client-module-proxy-plugin.js",
+        "size": 14155,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/client-module-proxy-plugin.js.map",
+        "size": 7499,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/define-plugin.d.ts",
+        "size": 473,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/define-plugin.js",
+        "size": 5985,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/define-plugin.js.map",
+        "size": 3986,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/detect-dynamic-exports.d.ts",
+        "size": 206,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/detect-dynamic-exports.js",
+        "size": 4686,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/detect-dynamic-exports.js.map",
+        "size": 3612,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/environment-restricted-imports.d.ts",
+        "size": 375,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/environment-restricted-imports.js",
+        "size": 2914,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/environment-restricted-imports.js.map",
+        "size": 2269,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/expo-inline-manifest-plugin.d.ts",
+        "size": 486,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/expo-inline-manifest-plugin.js",
+        "size": 7714,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/expo-inline-manifest-plugin.js.map",
+        "size": 5334,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/expo-router-plugin.d.ts",
+        "size": 377,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/expo-router-plugin.js",
+        "size": 4465,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/expo-router-plugin.js.map",
+        "size": 2635,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-async-arrow-non-simple-params.d.ts",
+        "size": 187,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-async-arrow-non-simple-params.js",
+        "size": 2892,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-async-arrow-non-simple-params.js.map",
+        "size": 2532,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-class-in-finally.d.ts",
+        "size": 176,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-class-in-finally.js",
+        "size": 2395,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-class-in-finally.js.map",
+        "size": 2010,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-super-in-object-accessor.d.ts",
+        "size": 183,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-super-in-object-accessor.js",
+        "size": 2360,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/fix-hermes-v1-super-in-object-accessor.js.map",
+        "size": 1572,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/import-meta-transform-plugin.d.ts",
+        "size": 205,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/import-meta-transform-plugin.js",
+        "size": 1403,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/import-meta-transform-plugin.js.map",
+        "size": 958,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/inline-env-vars.d.ts",
+        "size": 158,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/inline-env-vars.js",
+        "size": 2919,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/inline-env-vars.js.map",
+        "size": 2726,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/lazy-decorators-plugin.d.ts",
+        "size": 692,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/lazy-decorators-plugin.js",
+        "size": 4774,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/lazy-decorators-plugin.js.map",
+        "size": 3831,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/minify-platform-select-plugin.d.ts",
+        "size": 405,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/minify-platform-select-plugin.js",
+        "size": 2953,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/minify-platform-select-plugin.js.map",
+        "size": 2795,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/restricted-react-api-plugin.d.ts",
+        "size": 222,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/restricted-react-api-plugin.js",
+        "size": 6607,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/restricted-react-api-plugin.js.map",
+        "size": 3778,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-actions-plugin.d.ts",
+        "size": 546,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-actions-plugin.js",
+        "size": 31242,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-actions-plugin.js.map",
+        "size": 21112,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-data-loaders-plugin.d.ts",
+        "size": 338,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-data-loaders-plugin.js",
+        "size": 7074,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-data-loaders-plugin.js.map",
+        "size": 4556,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-metadata-plugin.d.ts",
+        "size": 335,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-metadata-plugin.js",
+        "size": 3157,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/server-metadata-plugin.js.map",
+        "size": 2500,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/use-dom-directive-plugin.d.ts",
+        "size": 211,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/use-dom-directive-plugin.js",
+        "size": 7071,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/use-dom-directive-plugin.js.map",
+        "size": 3881,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/warn-on-deep-rn-imports.d.ts",
+        "size": 775,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/warn-on-deep-rn-imports.js",
+        "size": 2804,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/warn-on-deep-rn-imports.js.map",
+        "size": 2504,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/widgets-plugin.d.ts",
+        "size": 574,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/widgets-plugin.js",
+        "size": 5007,
+        "mode": 420
+      },
+      {
+        "path": "build/plugins/widgets-plugin.js.map",
+        "size": 3186,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/resolveModule.d.ts",
+        "size": 200,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/resolveModule.js",
+        "size": 1273,
+        "mode": 420
+      },
+      {
+        "path": "build/utils/resolveModule.js.map",
+        "size": 1234,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 4156,
+        "mode": 420
+      }
+    ],
+    "entryCount": 111,
+    "bundled": []
+  }
+}

@@ -1,0 +1,2 @@
+android/app/build/outputs/apk/release/app-release.apk: 185787149 bytes SHA256 5a85788b788eca3714c295454da67e6be577f18251e3cc5c821a0c4c7aad3fb4
+android/app/build/outputs/bundle/release/app-release.aab: 154611300 bytes SHA256 87bac0560a507d3dd928994b6b462bba3828ae3ce145c4e86996da89542ad0bf

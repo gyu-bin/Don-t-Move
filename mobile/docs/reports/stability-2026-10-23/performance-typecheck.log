@@ -1,0 +1,2 @@
+npm notice run mobile@1.0.0 typecheck:performance
+npm notice run tsc -p tools/performance --noEmit

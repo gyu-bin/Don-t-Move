@@ -1,0 +1,6 @@
+npm notice run mobile@1.0.0 typecheck
+npm notice run tsc --noEmit && npm run typecheck:campaign
+npm notice run mobile@1.0.0 typecheck:campaign
+npm notice run tsc -p tools/campaign/tsconfig.v13.json --noEmit
+npm notice run mobile@1.0.0 typecheck:performance
+npm notice run tsc -p tools/performance --noEmit

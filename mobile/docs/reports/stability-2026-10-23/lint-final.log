@@ -1,0 +1,5 @@
+npm notice run mobile@1.0.0 lint
+npm notice run expo lint
+npm warn install-scripts .npmrc allow-scripts setting is being ignored because --allow-scripts was passed on the command line
+npm notice run mobile@1.0.0 npx
+npm notice run 'eslint' <LOCAL_PATH_REDACTED>

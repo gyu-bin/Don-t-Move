@@ -1,0 +1,1467 @@
+npm notice run mobile@1.0.0 test
+npm notice run npm run test:locomotion && npm run test:guards && npm run test:rules && npm run test:global && npm run test:tilt && npm run test:maps && npm run test:playable && npm run test:sprite-contract && npm run test:branding && npm run test:campaign && npm run test:theft-support && npm run test:monetization && npm run test:analytics && npm run test:transition && npm run test:crash-hotfix && npm run test:environment && npm run test:doors && npm run test:ota && npm run test:performance
+npm notice run mobile@1.0.0 test:locomotion
+npm notice run tsx src/game/core/__tests__/footPlanting.test.ts
+Foot planting (shared gait model)
+  ✓ sneak: grounded foot is fixed in world space through the stance
+  ✓ walk: grounded foot is fixed in world space through the stance
+  ✓ run: grounded foot is fixed in world space through the stance
+  ✓ walk: Contact at frame 1, Opposite Contact at frame 5 (8 frames)
+  ✓ walk: body Down after Contact, Up before the next Contact
+  ✓ run: flight phase exists (both feet off the ground)
+
+6 passed, 0 failed
+npm notice run mobile@1.0.0 test:guards
+npm notice run tsx src/game/guards/__tests__/guardVision.test.ts
+Guard vision tests (range 200, half-angle 34°)
+  ✓ A: player behind guard → no detection
+  ✓ B: player outside cone angle → no detection
+  ✓ B2: player beyond vision range → no detection
+  ✓ C: player inside cone → "?" immediately, not "!"
+  ✓ D: inside cone angle/range but behind a wall → no detection
+  ✓ E: cone edge + sneak → slow rise
+  ✓ F: front + run → fast rise (≤ 1.5 s to 100 %)
+  ✓ G: right in front + idle → eventually detected; far + idle → rises slowly, never zero
+  ✓ G2: in view, suspicion rises Still < Sneak < Walk < Run, at every distance
+  ✓ G3: out of sight, a motionless or moving thief does not raise suspicion
+  ✓ H: walking right → facing = velocity = right; sprite dir Right; cone centred on facing
+  ✓ I: turning at patrol points is smooth and the cone turns with it
+  ✓ J: 100 % → guard faces player → "!" → whistle → global alert
+  ✓ Suspicion stops rising out of sight, holds ~0.5 s, then decays
+  ✓ Last known position updates only while seen
+  ✓ Drawn cone polygon == detection region (20k random points × 16 facings)
+
+16 passed, 0 failed
+npm notice run mobile@1.0.0 test:rules
+npm notice run tsx src/game/__tests__/coreRules.test.ts
+Core Game Rules V1 — added coverage
+  ✓ §11 movement risk: Idle < Sneak < Walk < Run (same spot, outside close radius)
+  ✓ §12 distance: right in front ≫ near > mid > vision edge (clearly felt)
+  ✓ §14 cone position: centre > middle > edge
+  ✓ §15 body partly behind a wall gains slower than the same spot unoccluded
+  ✓ §33 difficulty: Easy < Normal < Hard (×0.65 / ×1.0 / ×1.4)
+  ✓ §13/§34 close detection: even on Easy, standing still right in front is found
+  ✓ §9 suspicion is per guard: an unseeing guard stays at 0
+  ✓ §16 25–60 %: patrol slows and glances toward the player (cone turns with it)
+  ✓ §16 60–99 %: patrol stops and the guard turns to the player
+  ✓ §17 out of sight: decays to 0, "?" removed, back to PATROL
+  ✓ Invariant C: no "!" before 100 % (slow edge sneak, 10 s)
+  ✓ §19 whistle fires exactly once per alert (player stays visible 6 s)
+
+Physical acceptance still pending
+  ○ PENDING §2/§3 Tilt physical iPhone acceptance
+      implementation covered by test:tilt; physical direction, drift and feel verification pending
+
+12 passed, 0 failed, 1 pending
+npm notice run mobile@1.0.0 test:global
+npm notice run tsx src/game/guards/__tests__/globalAlert.test.ts && node --import tsx --test src/game/guards/__tests__/stealthV2.test.ts src/game/guards/__tests__/theftV3.test.ts src/game/guards/__tests__/alertPriority.test.ts src/game/guards/__tests__/chaseBalance.test.ts src/game/guards/__tests__/highSecurityAlarm.test.ts
+  ✓ A/B/E/F: one whistle → all four react in the same frame; no ?; visible CHASE, unseen INVESTIGATE
+  ✓ C: any guard can publish a new LKP; every unseen guard gets that target immediately
+  ✓ D/G: occluded player stops updating global/personal LKP and CHASE becomes INVESTIGATE
+  ✓ navigation: deterministic wall/cover detour with body clearance and no corner cutting
+  ✓ H/J/K/L: actual travel → moving SEARCH → RETURN → PATROL; OFF only after last return; suspicion resumes
+  ✓ I: SEARCH reacquires → immediate CHASE, no new whistle; other guards redirected
+  ✓ M/N: true contact only; no old 24-unit capture, and never capture through a wall
+  ✓ CAUGHT freezes playground time/player too; fresh state resets game
+  ✓ moving targets replan at a bounded rate, not every frame; difficulty does not change chase speed
+  ✓ hidden during whistle: publish last seen position, never the hidden current position
+  ✓ visibility flicker cannot force an A* replan every frame
+  ✓ unreachable LKP resolves to reachable floor and eventually releases alert
+  ✓ guard array order does not delay initial group reaction
+  ✓ museum acceptance replay: close-range whistle → direct chase runs through to body contact
+
+14 passed, 0 failed
+✔ empty-case fact merges during CHASE without touching pursuit (65.360209ms)
+✔ empty-case fact merges during SEARCH without touching pursuit (6.77ms)
+✔ higher-priority alert still requires actual empty-case range, facing and LOS (44.876208ms)
+✔ pending theft cannot hijack a local player whistle before global alert publication (1.918375ms)
+✔ Scenario A: player-first Chase survives later empty-case discovery across frames (5.362166ms)
+✔ Scenario B: theft-first discovery still escalates with distinct whistles (1.357417ms)
+✔ Scenario C: player lost into Search retains memory and search timing after theft discovery (25.980875ms)
+✔ advanced theft whistle cannot publish fake player intelligence before the real witness finishes (1.6105ms)
+✔ a genuine player witness that also discovers the case remains the player whistle owner (1.413042ms)
+✔ final displacement: direct witness outruns max Run; support and theft do not stack (309.378625ms)
+✔ continuous straight Run loses distance at both five and ten seconds (13.059375ms)
+✔ continuous wall-corner escape cuts sight, freezes LKP, reaches Search without capture (32.524917ms)
+✔ theft plus actual sight uses the direct final speed once, despite patrol pace (9.0165ms)
+✔ 01-10 actual corridor: fleeing player loses gap under ordinary sight, then corner breaks LOS (96.272167ms)
+✔ direct chase never brakes near the player: gap closes steadily down to contact, then CAUGHT (37.973334ms)
+✔ fair escape: breaking LOS at a corner goes Chase → LKP → Search → Return → Patrol, uncaught (86.12875ms)
+✔ 01-10 Grand Heist: in-sight gap shrinks, a corner breaks LOS, then LKP → Search → Return uncaught (164.142541ms)
+✔ high-security pickup trips Theft Alert after the delay with no witness (148.72375ms)
+✔ standard objectives still need a guard to see the empty case (18.509167ms)
+✔ renumbered Masterpiece retains its historical four-second Search, ordinary Gallery remains nine (12.985959ms)
+✔ visible exposure lures guard; hidden player never updates personal LKP; look/decay/return completes (71.585458ms)
+✔ roaming is deterministic, avoids walls, mixes near/far stops and pauses (154.398125ms)
+✔ all venues compact actual floor area and provide themed structures/objective guard (0.426792ms)
+✔ 1: objective watcher offers observable unguarded timing windows (131.521542ms)
+✔ 2: objective watcher offers observable unguarded timing windows (58.141417ms)
+✔ 3: objective watcher offers observable unguarded timing windows (150.755292ms)
+✔ 4: objective watcher offers observable unguarded timing windows (56.260709ms)
+✔ 5: objective watcher offers observable unguarded timing windows (30.127042ms)
+✔ 6: objective watcher offers observable unguarded timing windows (165.304416ms)
+✔ 7: objective watcher offers observable unguarded timing windows (115.539916ms)
+✔ 8: objective watcher offers observable unguarded timing windows (92.333584ms)
+✔ 9: objective watcher offers observable unguarded timing windows (164.384625ms)
+✔ 10: objective watcher offers observable unguarded timing windows (159.393042ms)
+✔ all authored roaming destination pairs have body-clear navigation paths (16.025292ms)
+✔ full case, cone back, range and occluding wall do not trigger theft (58.717ms)
+✔ visible empty case: stop/! -> whistle -> one theft alert; never publishes hidden player LKP (116.560542ms)
+✔ actual sight during theft promotes immediately to Chase with one distinct spotted whistle (5.621417ms)
+✔ Exit completes before any empty-case detection, including during active alert; retry resets theft (2.777375ms)
+✔ 1: distributed role zones and theft movement remain collision-safe (61.69775ms)
+✔ 2: distributed role zones and theft movement remain collision-safe (17.018291ms)
+✔ 3: distributed role zones and theft movement remain collision-safe (58.825875ms)
+✔ 4: distributed role zones and theft movement remain collision-safe (31.034375ms)
+✔ 5: distributed role zones and theft movement remain collision-safe (15.336791ms)
+✔ 6: distributed role zones and theft movement remain collision-safe (12.650042ms)
+✔ 7: distributed role zones and theft movement remain collision-safe (22.629083ms)
+✔ 8: distributed role zones and theft movement remain collision-safe (86.132709ms)
+✔ 9: distributed role zones and theft movement remain collision-safe (136.249333ms)
+✔ 10: distributed role zones and theft movement remain collision-safe (84.407209ms)
+✔ simultaneous case witnesses elect one whistle regardless of guard array order (5.895666ms)
+✔ ten deployed patrols keep non-objective guards outside the case zone over time (541.599834ms)
+✔ Museum whistle completion broadcasts every assigned post in the same frame (17.601625ms)
+✔ Museum theft sighting keeps the unseen exit guard at its assigned interception post (0.66425ms)
+✔ Common phase/lockdown configuration never uses hidden coordinates or causes a timeout failure (175.226542ms)
+✔ spotted episode publishes one whistle, retains frozen LKP through Search/Return, and can re-arm (43.1445ms)
+✔ all ten actual Museum missions: natural empty-case discovery, independent signals, no hidden LKP and correct lockdown (226.534875ms)
+✔ exit-role witness follows last sight to Search while uninformed colleague intercepts (2.410166ms)
+✔ Security Core holds semantic assignments for 0.85s without publishing a hidden player (2.061292ms)
+✔ Security Core sighting interrupts reaction hold in the very same frame (2.284875ms)
+✔ Grand Heist does not inherit Security Core reaction timing (1.489917ms)
+✔ Security Core own-zone search retains authored posts after lockdown (6.741625ms)
+ℹ tests 60
+ℹ suites 0
+ℹ pass 60
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2013.9385
+npm notice run mobile@1.0.0 test:tilt
+npm notice run node --import tsx --test src/game/input/__tests__/tilt.test.ts src/game/input/__tests__/androidTilt.test.ts src/game/input/__tests__/calibrationHotfix.test.ts src/game/input/__tests__/tiltProfiles.test.ts src/game/input/__tests__/tiltStop.test.ts src/game/input/__tests__/controlMode.test.ts src/ui/__tests__/resultNavigation.test.ts
+✔ Android Tilt follows actual availability/failure; release iOS contract stays strict (0.964667ms)
+✔ Android native orientation matrix reconstructs active quaternion for arbitrary comfortable pose (0.896583ms)
+✔ Android unit conversion matches shared radians/sec and g calibration contract (0.1945ms)
+✔ Android relative left/right/forward/back remains stable at reclined and inverted Neutral (0.684875ms)
+✔ Android yaw crossing +/-180 and screen-normal twist do not cause movement (0.182708ms)
+✔ Android samples use shared calibration, radial response, smoothing and manual recenter (2.461625ms)
+✔ Android partial/invalid/unsynchronized native events do not fabricate samples (0.579458ms)
+✔ Android startup waits for delayed availability and a valid first sample (0.587625ms)
+✔ Android absent sensors fall back after bounded startup and disposal stops retry (0.261375ms)
+✔ Android stale availability promise cannot subscribe after background or disposal (0.130167ms)
+✔ Android unsubscribe/resubscribe drops old listener and cached timestamp (0.129458ms)
+✔ Android duplicate cached updates cannot keep a stalled stream alive (0.096709ms)
+✔ Android changed display axes end session instead of silently moving Neutral (0.066209ms)
+✔ Android resume rejects increasing but bridge-delayed samples until clock catches up (0.076542ms)
+✔ Android available API without complete sensor samples expires safely (0.065417ms)
+✔ Android natural-landscape display remapping preserves portrait forward tilt axes (0.061667ms)
+✔ Shaking calibration reaches READY once at 2.5 seconds with recent sign-aligned median (17.504917ms)
+✔ Missing/stale/duplicate/invalid samples never fabricate a neutral at deadline (0.310041ms)
+✔ Manual recenter clears calibration history and smoothing without later fallback replacing it (3.803792ms)
+✔ READY survives temporary missing samples and cannot enter PLAY before its feedback deadline (0.963875ms)
+✔ Missing stream or hung native start reconnects once and ends waiting by 3 seconds (1.725667ms)
+✔ Background during calibration restarts safely; background after PLAY waits for explicit Retry (0.743375ms)
+✔ Temporary inactivity retains neutral and stale PLAY stream fails without automatic recalibration (0.447208ms)
+✔ Background remembers unfinished READY transition even when pause changes current UI status (0.107709ms)
+✔ Real JS watchdog expires absent stream even without UI frames or resolved native promise (3002.420125ms)
+✔ Hung permission ends with timeout; late grant cannot start that stale attempt (11.114917ms)
+✔ Cancel/disposal invalidates old permission generation while explicit Retry accepts its own grant (0.575833ms)
+✔ Denied or rejected permission never fabricates approval (0.453875ms)
+✔ Tilt is the default control mode, also for a save written before the setting existed (0.437875ms)
+✔ The control mode is saved with the settings and survives a restart, without touching progress or OTA records (0.910917ms)
+✔ What steers the thief: Tilt when chosen and usable, the stick when Touch is chosen, a stated fallback otherwise (0.115666ms)
+✔ The stick gives direction and speed continuously; resting on it or letting go is zero (0.21075ms)
+✔ Touch control moves the thief only while the thumb drags: no target, no walking by itself, stop on release (3.137041ms)
+✔ Detection does not know the control mode: the same movement is seen the same by tilt and by touch (4.415583ms)
+✔ Foreground never silently replaces Neutral; temporary inactivity preserves the session (0.429625ms)
+✔ Calibration requires 0.5 seconds of stable, distinct sensor samples, then READY (0.680667ms)
+✔ Moving, shaking, sparse or duplicate samples cannot complete calibration before deadline (0.494667ms)
+✔ All comfortable poses, including vertical and upside-down, give identical relative directions (14.299375ms)
+✔ Yaw-only twist never moves; quaternion sign and angle wrap do not change input (0.143375ms)
+✔ Radial deadzone has an exact zero and diagonal speed is never boosted (0.704292ms)
+✔ Response curve has Sneak/Walk/Run anchors and precision near neutral (0.113291ms)
+✔ Default gives precision just outside neutral and speed anchors at 3.17/5.16/8 degrees (0.226042ms)
+✔ Player animation retains phase across gait changes and stops without advancing (0.087416ms)
+✔ Smoothing is time-based; entering deadzone clears the filter immediately (0.182917ms)
+✔ Neutral is immutable over five minutes of changing input (no adaptive calibration) (31.669833ms)
+✔ Recenter resets input/filter immediately and accepts a changed posture, never stale data (0.193625ms)
+✔ Missing, invalid and stale sensors stop input without moving neutral (0.118208ms)
+✔ Acceleration, diagonal cap and fast deceleration use actual movement (7.67825ms)
+✔ Wall stops movement, foot distance and movement risk; sliding reports only actual speed (1.361875ms)
+✔ Recenter and lifecycle pause stop player instantly even at full speed (0.567042ms)
+✔ Tilt excludes old touch/demo targets; calibration pauses guards and game clock (11.816709ms)
+✔ Development sensor fallback is automatic while release iPhone remains Tilt (0.318542ms)
+✔ Tilt-to-touch fallback stops velocity and consumes stale target before the first touch frame (3.2ms)
+✔ Candidate mapping needs development plus explicit flag; release retains runtime default (0.626625ms)
+✔ A: quaternion pipeline reaches curve anchors and unchanged actual player speeds (24.854458ms)
+✔ A: diagonal cap and switching preserve neutral; recenter stays explicit (0.388708ms)
+✔ B: quaternion pipeline reaches curve anchors and unchanged actual player speeds (3.66175ms)
+✔ B: diagonal cap and switching preserve neutral; recenter stays explicit (0.360458ms)
+✔ C: quaternion pipeline reaches curve anchors and unchanged actual player speeds (2.368125ms)
+✔ C: diagonal cap and switching preserve neutral; recenter stays explicit (0.147042ms)
+✔ Tuning: start 2.25°, stop 1.75°, max 8°, smoothing 0.07 s (0.65275ms)
+✔ At rest, a phone held anywhere below the start threshold does not move the thief at all (18.004708ms)
+✔ Hand tremor across the old dead-zone edge produces no movement (1.250333ms)
+✔ Movement starts at the start threshold and is not dulled: 2.3° moves, 3° and 4° are the same speed as before (5.292125ms)
+✔ Hysteresis: a moving thief keeps moving below the start threshold and stops at the stop threshold (0.965042ms)
+✔ Stop is complete in one frame from full speed: no smoothing tail, no residual velocity (52.395667ms)
+✔ A moving thief held inside the band comes to rest instead of creeping (6.106166ms)
+✔ The neutral is not re-learned from a phone resting off-centre (6.738958ms)
+✔ Recenter and a lost sensor end the moving state; the next start needs the start threshold again (0.5645ms)
+✔ Wall slide and collision are unchanged by the stop rule (0.649417ms)
+✔ Inside a chapter the main button is "다음 스테이지" and the next mission is the one after it (2.093417ms)
+✔ On a chapter's last mission the main button is "다음 챕터" and starts the first mission of the next chapter (0.38025ms)
+✔ 09-05 has no next chapter: the main button is the chapter list, never "다음 챕터" or "다음 스테이지" (0.181875ms)
+✔ A next mission that is still locked is never offered, whatever the screen is (0.059291ms)
+✔ Every clear screen offers the chapter list, play again and home, each once, in Korean and English (3.18125ms)
+✔ The clear is on disk before any button can act: record, unlock and best time survive Result → Home → restart (1.14ms)
+ℹ tests 76
+ℹ suites 0
+ℹ pass 76
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3145.190625
+npm notice run mobile@1.0.0 test:maps
+npm notice run node --import tsx --test src/game/levels/__tests__/tiltTestMaps.test.ts
+✔ 1: playable spawn / diamond / exit / guards are valid (0.79025ms)
+✔ 1: spawn -> diamond -> exit paths reach exact targets (4.90075ms)
+✔ 1: every patrol segment and spawn connector is valid (0.503458ms)
+✔ 1: sealed perimeter and authored approach routes (13.769541ms)
+✔ 1: authored waiting zones and initial vision coverage stay playable (0.704583ms)
+✔ 1: real locomotion completes diamond then exit (66.191333ms)
+✔ 1: patrol-time samples retain an unobserved waiting pocket (102.659208ms)
+✔ 2: playable spawn / diamond / exit / guards are valid (0.194959ms)
+✔ 2: spawn -> diamond -> exit paths reach exact targets (3.310375ms)
+✔ 2: every patrol segment and spawn connector is valid (0.189833ms)
+✔ 2: sealed perimeter and authored approach routes (0.203292ms)
+✔ 2: authored waiting zones and initial vision coverage stay playable (0.10875ms)
+✔ 2: real locomotion completes diamond then exit (2.636709ms)
+✔ 2: patrol-time samples retain an unobserved waiting pocket (173.575542ms)
+✔ 3: playable spawn / diamond / exit / guards are valid (5.033167ms)
+✔ 3: spawn -> diamond -> exit paths reach exact targets (0.555375ms)
+✔ 3: every patrol segment and spawn connector is valid (0.097458ms)
+✔ 3: sealed perimeter and authored approach routes (2.261959ms)
+✔ 3: authored waiting zones and initial vision coverage stay playable (0.331458ms)
+✔ 3: real locomotion completes diamond then exit (2.004167ms)
+✔ 3: patrol-time samples retain an unobserved waiting pocket (345.710625ms)
+✔ 4: playable spawn / diamond / exit / guards are valid (0.092166ms)
+✔ 4: spawn -> diamond -> exit paths reach exact targets (0.997042ms)
+✔ 4: every patrol segment and spawn connector is valid (0.094542ms)
+✔ 4: sealed perimeter and authored approach routes (0.613042ms)
+✔ 4: authored waiting zones and initial vision coverage stay playable (0.196459ms)
+✔ 4: real locomotion completes diamond then exit (4.62325ms)
+✔ 4: patrol-time samples retain an unobserved waiting pocket (293.04875ms)
+✔ 5: playable spawn / diamond / exit / guards are valid (0.182417ms)
+✔ 5: spawn -> diamond -> exit paths reach exact targets (2.601042ms)
+✔ 5: every patrol segment and spawn connector is valid (0.275709ms)
+✔ 5: sealed perimeter and authored approach routes (0.517625ms)
+✔ 5: authored waiting zones and initial vision coverage stay playable (0.258459ms)
+✔ 5: real locomotion completes diamond then exit (5.246583ms)
+✔ 5: patrol-time samples retain an unobserved waiting pocket (247.940083ms)
+✔ 6: playable spawn / diamond / exit / guards are valid (0.096334ms)
+✔ 6: spawn -> diamond -> exit paths reach exact targets (0.356708ms)
+✔ 6: every patrol segment and spawn connector is valid (0.121ms)
+✔ 6: sealed perimeter and authored approach routes (0.16125ms)
+✔ 6: authored waiting zones and initial vision coverage stay playable (0.06ms)
+✔ 6: real locomotion completes diamond then exit (0.727958ms)
+✔ 6: patrol-time samples retain an unobserved waiting pocket (403.153833ms)
+✔ 7: playable spawn / diamond / exit / guards are valid (0.160333ms)
+✔ 7: spawn -> diamond -> exit paths reach exact targets (32.680333ms)
+✔ 7: every patrol segment and spawn connector is valid (0.128375ms)
+✔ 7: sealed perimeter and authored approach routes (0.184125ms)
+✔ 7: authored waiting zones and initial vision coverage stay playable (0.075042ms)
+✔ 7: real locomotion completes diamond then exit (2.980958ms)
+✔ 7: patrol-time samples retain an unobserved waiting pocket (369.508875ms)
+✔ 8: playable spawn / diamond / exit / guards are valid (0.090333ms)
+✔ 8: spawn -> diamond -> exit paths reach exact targets (0.327542ms)
+✔ 8: every patrol segment and spawn connector is valid (0.1135ms)
+✔ 8: sealed perimeter and authored approach routes (0.179333ms)
+✔ 8: authored waiting zones and initial vision coverage stay playable (0.083917ms)
+✔ 8: real locomotion completes diamond then exit (4.723375ms)
+✔ 8: patrol-time samples retain an unobserved waiting pocket (376.326ms)
+✔ 9: playable spawn / diamond / exit / guards are valid (0.075583ms)
+✔ 9: spawn -> diamond -> exit paths reach exact targets (3.652792ms)
+✔ 9: every patrol segment and spawn connector is valid (0.157083ms)
+✔ 9: sealed perimeter and authored approach routes (0.228333ms)
+✔ 9: authored waiting zones and initial vision coverage stay playable (0.089917ms)
+✔ 9: real locomotion completes diamond then exit (5.647334ms)
+✔ 9: patrol-time samples retain an unobserved waiting pocket (292.694458ms)
+✔ 10: playable spawn / diamond / exit / guards are valid (0.14725ms)
+✔ 10: spawn -> diamond -> exit paths reach exact targets (2.631833ms)
+✔ 10: every patrol segment and spawn connector is valid (0.181416ms)
+✔ 10: sealed perimeter and authored approach routes (0.0895ms)
+✔ 10: authored waiting zones and initial vision coverage stay playable (0.089333ms)
+✔ 10: real locomotion completes diamond then exit (5.166834ms)
+✔ 10: patrol-time samples retain an unobserved waiting pocket (392.483084ms)
+✔ Ten distinct Chapter geometries use the authored difficulty progression (1.46875ms)
+✔ Stage 1: all guards enter Global Alert after one whistle (24.444334ms)
+✔ Stage 2: all guards enter Global Alert after one whistle (1.710042ms)
+✔ Stage 3: all guards enter Global Alert after one whistle (2.432583ms)
+✔ Stage 4: all guards enter Global Alert after one whistle (2.880167ms)
+✔ Stage 5: all guards enter Global Alert after one whistle (1.110833ms)
+✔ Stage 6: all guards enter Global Alert after one whistle (2.323958ms)
+✔ Stage 7: all guards enter Global Alert after one whistle (3.498084ms)
+✔ Stage 8: all guards enter Global Alert after one whistle (3.597166ms)
+✔ Stage 9: all guards enter Global Alert after one whistle (1.695666ms)
+✔ Stage 10: all guards enter Global Alert after one whistle (8.92825ms)
+ℹ tests 81
+ℹ suites 0
+ℹ pass 81
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3822.550875
+npm notice run mobile@1.0.0 test:playable
+npm notice run node --import tsx --test src/game/__tests__/playableV1.test.ts src/game/__tests__/chapter1.test.ts src/game/__tests__/characterAnimation.test.ts src/game/__tests__/rightWalkTrial.test.ts src/game/__tests__/polishV52.test.ts src/game/__tests__/motionV61.test.ts
+✔ Active Exit wins during guard state 2, including contact on arrival (117.520958ms)
+✔ Active Exit wins during guard state 4, including contact on arrival (9.466334ms)
+✔ Active Exit wins during guard state 3, including contact on arrival (3.40425ms)
+✔ Locked Exit cannot save a player from contact; Retry resets treasure, clock and alerts (28.889333ms)
+✔ V3 pickup leaves patrol pressure unchanged until a guard sees the empty case (13.567167ms)
+✔ Progress migration, stage locks, best time and chapter completion survive serialization (4.965208ms)
+✔ Venue 1: locked Exit, contact CAUGHT, alert escape and retry remain correct (4.206ms)
+✔ Venue 2: locked Exit, contact CAUGHT, alert escape and retry remain correct (113.577583ms)
+✔ Venue 3: locked Exit, contact CAUGHT, alert escape and retry remain correct (2.495083ms)
+✔ Venue 4: locked Exit, contact CAUGHT, alert escape and retry remain correct (17.675166ms)
+✔ Venue 5: locked Exit, contact CAUGHT, alert escape and retry remain correct (3.350541ms)
+✔ Venue 6: locked Exit, contact CAUGHT, alert escape and retry remain correct (1.524625ms)
+✔ Venue 7: locked Exit, contact CAUGHT, alert escape and retry remain correct (2.230166ms)
+✔ Venue 8: locked Exit, contact CAUGHT, alert escape and retry remain correct (3.142458ms)
+✔ Venue 9: locked Exit, contact CAUGHT, alert escape and retry remain correct (6.699125ms)
+✔ Venue 10: locked Exit, contact CAUGHT, alert escape and retry remain correct (6.486041ms)
+✔ loop: stop, timed look, then travel with canonical facing and no turning drift (64.812709ms)
+✔ pingpong: stop, timed look, then travel with canonical facing and no turning drift (26.625958ms)
+✔ waitAndLook: stop, timed look, then travel with canonical facing and no turning drift (1.969167ms)
+✔ All authored patrols stay collision-clear through repeated stops and turns (1415.316667ms)
+✔ Guard animation reads AI state without changing facing or behavior (2.175416ms)
+✔ Guard playback uses actual distance, preserves phase and aligns whistle to its event clock (0.503166ms)
+✔ Release detects missing, reused and unvalidated sheets (1.348542ms)
+✔ Locomotion V2 is runtime-ready while production visual review stays pending (143.66225ms)
+✔ Guard uses registry artwork stride per direction, not a fixed runtime cadence (3.189625ms)
+✔ V6.1 capture is body contact, not idle, visibility, full suspicion or global alert (12.90425ms)
+✔ Touch phase and velocity use collision-resolved distance during diagonal wall sliding (130.7645ms)
+✔ Motion diagnostics reports actual fallback/frame rather than requested guard animation (0.384916ms)
+✔ Roundoff at WALK speed cannot flicker to RUN or change the planted stride (0.097958ms)
+✔ Visual gait resists threshold jitter but stops on actual zero velocity (0.079708ms)
+✔ Whole-body lift is subtle and disappears at rest without moving the ground anchor (0.098916ms)
+✔ Production Locomotion Atlas registry: every Player/Guard state × direction, row order DOWN/LEFT/RIGHT/UP (25.363333ms)
+✔ Developer touch modes sustain actual-distance animation for ten seconds and stop against a wall (146.460875ms)
+✔ Treasure is required before Exit and an already-caught mission stays terminal (0.40575ms)
+✔ Stage clear unlocks the next Stage; retry state and stored progress stay on the current Stage (0.457708ms)
+✔ Whistle audio fires once per revision and Sound OFF mutes it (0.060542ms)
+✔ Player sprite cadence is distance-based and naturally ordered (0.068667ms)
+✔ Release gameplay uses the Production Locomotion Atlas, never the procedural look (0.345584ms)
+✔ Ordinary gameplay source exposes no test selector, telemetry, or debug controls (0.966875ms)
+✔ exit guidance: locked/completed absent, acquired visible, four edges and camera movement (1.224917ms)
+✔ Lobby scene and centred menu stay inside safe areas on every portrait iPhone ratio (0.363416ms)
+✔ Current Museum/Gallery patrols physically visit every authored anchor for 120 seconds (1720.014417ms)
+✔ Museum anchors are exact reachable subjects in assigned zones, not arbitrary floor samples (1.685458ms)
+✔ 120 seconds: full Museum tours, pauses, no orbit, no repeated anchor, collision/facing invariant (243.909959ms)
+✔ no-progress recovery changes anchor without teleport; investigation suspends anchors and returns (59.888625ms)
+✔ global pursuit returns to reachable assigned patrol anchors (2.346875ms)
+✔ controlled roaming remains inside assigned anchor set, avoids immediate reversal and repeats deterministically (476.131459ms)
+✔ compiled UI worklet resolves default switch without module globals (1197.488083ms)
+✔ trial stride fits artwork, does not alter speed (0.238333ms)
+✔ trial stride follows the rendered gait while hysteresis holds a clip (0.680292ms)
+✔ only enabled right WALK selects trial; rollback and other clips unchanged (0.120458ms)
+✔ distance phase freezes when blocked, preserves phase at clip switch (0.094792ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 52
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2720.342125
+npm notice run mobile@1.0.0 test:sprite-contract
+npm notice run node --import tsx --test tools/sprites/footTracks.test.ts tools/locomotion/atlas.test.ts
+✔ Production Locomotion Atlas: exact grid, clean alpha, no clipping, consistent scale, planted feet (593.46875ms)
+✔ locomotion-manifest.json matches the runtime stride contract (0.667792ms)
+✔ generated SPEC stays synchronized with the runtime contract (1.302ms)
+✔ Player Walk authoring contract is derived from actual sprite runtime (0.135208ms)
+✔ labelled synthetic cycle passes all eight same-foot transitions and both boundaries (1.045042ms)
+✔ same contact pixels with swapped foot labels cannot pass (0.331333ms)
+✔ grounded swing, root jitter, missing anatomy and wrong phase are errors (1.577459ms)
+✔ 4→5 and 8→1 must each pass even when other transitions meet 75 percent (1.548708ms)
+✔ old 40-unit artwork is not silently accepted against the 60-unit contract (0.313792ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 743.612625
+npm notice run mobile@1.0.0 test:branding
+npm notice run node --import tsx --test src/ui/branding/*.test.ts
+✔ only the licensed gameplay registry may load bundled audio (30.438583ms)
+✔ all generated placeholder audio is removed (0.202959ms)
+✔ BGM credits preserve Lobby and identify the replacement gameplay tracks as CC0 (6.12875ms)
+✔ unmount/skip releases owned players after pause, once; late seeks cannot play (0.870834ms)
+✔ Start ambience cleanup cancels stale fades and mute allocates nothing (0.120375ms)
+✔ replay / Strict Mode setup-cleanup-setup uses fresh native objects (0.105042ms)
+✔ partial initialization failure releases earlier players without failing render (0.080166ms)
+✔ lost splash animation callback still removes overlay (27.879875ms)
+✔ normal animation callback is not delayed and duplicate completion is ignored (26.17ms)
+✔ unmounted splash invalidates timer and late worklet completion (24.9765ms)
+✔ initialization resolves and forwards explicit failure (25.115042ms)
+✔ never-settling initialization rejects and retry can complete (4.644834ms)
+✔ completion after timeout cannot overwrite fallback (7.894584ms)
+✔ Spotlight Freeze Intro lasts 4.5 s after a 1.0–1.3 s splash and clamps after the final frame (0.843ms)
+✔ beats: museum → diamond → peek → sneak → guard_turn + freeze startle → dive → peek, light on the column → logo (0.364416ms)
+✔ FREEZE: once hidden and holding still, every thief channel is constant (1.384333ms)
+✔ intro final frame IS the lobby frame; old branding art and white diamond overlay are gone (0.549042ms)
+✔ native splash keeps iOS plain and supplies the required Android drawable (0.757583ms)
+✔ skip/unmount cancels every cue, mute schedules none, replay has fresh cues (0.157583ms)
+✔ packaged icon is 1024px opaque RGB and uses the supplied source (0.670208ms)
+✔ effect order and palette are bounded (7.40275ms)
+✔ Existing progress, records and sound-off migrate without resetting; preferences round-trip independently (1.012416ms)
+✔ Legacy ten-stage archive retains clear/current/locked state and highest unlock for migration (0.381916ms)
+✔ KO/EN keys cover every stage and menu/result action (0.171583ms)
+✔ Ten distinct optimized thumbnails exist; no eager image preload in HOME (4.916791ms)
+✔ campaign-only migration retains Continue and unrelated preferences (0.442458ms)
+✔ dev launch retains selected 04-05 after save normalization clamps to 04-01 (1.277166ms)
+✔ release launch rejects locked selections and accepts unlocked replay selections (0.160708ms)
+✔ missing and invalid launch selections fall back to normalized progress (0.118959ms)
+✔ Guard / objective counts come from the mission config (derived index matches campaignStages.json) (30.736917ms)
+✔ Route states: none cleared, partial, current and locked follow release progression (0.34775ms)
+✔ All cleared: full progress, no current, every mission replayable (0.123ms)
+✔ Current mission prefers the Continue mission when it is open in this chapter (0.081167ms)
+✔ Dev/test unlock keeps the release visuals but lets locked missions start (0.1ms)
+✔ Five missions fit without scrolling on current iPhones; small phones use the compact layout (0.187084ms)
+✔ Thumbnails frame a different area per mission and always cover their box (0.258208ms)
+✔ Chapter intro copy exists for every chapter in KO and EN (0.074083ms)
+✔ Mission Select: card tap starts the mission directly; no PLAY text, detail screen, tab bar or red (0.351042ms)
+✔ V12 five-mission chapters show every row without a ghost06–10 item (0.233542ms)
+✔ ten cold loader instances expose background before all six optional decodes finish (8.353ms)
+✔ each optional decode can reject independently without rejecting Home readiness (1.887333ms)
+✔ optional timeout is bounded and late completion does not replace a published snapshot (26.892417ms)
+✔ critical background failure does not claim readiness and can retry without re-decoding good optional layers (0.540709ms)
+✔ critical timeout is retryable; original late response cannot publish obsolete artwork (8.781167ms)
+✔ intro final and Home retain identical scene with reduced veil (0.661416ms)
+✔ opening assets exist with the measured sizes; characters and column carry real alpha (3.614584ms)
+✔ background is never stretched, covers the screen and keeps the diamond on the centre axis (0.429875ms)
+✔ thief LEFT (hidden behind the column) / diamond CENTRE / guard RIGHT, flashlight on the lens (0.188166ms)
+✔ lobby bands: logo top, centred 72–82 % buttons, tagline clear of the home indicator (0.099375ms)
+✔ baked startup data exactly preserves all ten existing stages and patrols (906.158708ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 50
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1179.239917
+npm notice run mobile@1.0.0 test:campaign
+npm notice run node --import tsx --test tools/campaign/validateCampaign.test.ts tools/campaign/museumQA.test.ts tools/campaign/museumFinalDesign.test.ts tools/campaign/museumDressingQA.test.ts tools/campaign/museumCentralCoverQA.test.ts tools/campaign/museumSecurityCleanupQA.test.ts tools/campaign/galleryEnvironmentDesign.test.ts tools/campaign/v3Audit.test.ts tools/campaign/v5Geometry.test.ts tools/campaign/v5MuseumGallery.test.ts tools/campaign/v5Bank.test.ts tools/campaign/curatedHeistFlows.test.ts tools/campaign/navigationRegression.test.ts tools/campaign/museumRuntimeCctvQA.test.ts tools/campaign/chapterDifficulty.test.ts tools/campaign/v101PressureAudit.test.ts tools/campaign/v11Museum.test.ts tools/campaign/v11GalleryBank.test.ts tools/campaign/v11ScopeRegression.test.ts tools/campaign/v12Runtime.test.ts src/game/progress/__tests__/campaignMigration.test.ts src/game/progress/__tests__/qaUnlock.test.ts tools/campaign/v124aRuntimeQA.test.ts tools/campaign/v124aSpatial.test.ts tools/campaign/v124bTopologyQA.test.ts tools/campaign/v124bRuntimeQA.test.ts tools/campaign/v124cTopologyQA.test.ts tools/campaign/v124cScope.test.ts tools/campaign/v124dScope.test.ts tools/campaign/v125Scope.test.ts tools/campaign/v13Scope.test.ts tools/campaign/v13Integrity.test.ts
+✔ V12 catalog has exactly 45 stable round-trip IDs without ghost 06–10 missions (0.972042ms)
+✔ partial Museum maps entire old unlocked prefix rather than its non-monotonic last ID (0.299959ms)
+✔ completed old Museum unlocks Gallery and preserves every merged entitlement (0.144459ms)
+✔ partial Gallery respects 60-map ordinal and explicit glass redirect (0.090792ms)
+✔ completed Bank preserves Lab entitlement without carrying rebuilt benchmark (0.098792ms)
+✔ all six later chapters retain IDs, reached unlocks and comparable unchanged-map times (0.390416ms)
+✔ invalid or locked Continue IDs fall back to mapped highest unlock, archived original survives (0.077542ms)
+✔ all 60 original records including invalid extras survive archive while only valid entitlements enter campaign (0.252542ms)
+✔ v1 historical expansions precede compression and v5 normalization is byte-stable (0.164375ms)
+✔ v2 historical expansions precede compression (6.621791ms)
+✔ v3 historical Bank insertion retains Lab unlock exactly once (0.599167ms)
+✔ new clears replace legacy benchmark with new result and preserve recovery archive (0.285917ms)
+✔ v5 never reinterprets stable IDs as old source IDs (0.402417ms)
+✔ fresh and malformed data are safe without unintended chapter unlock (0.182125ms)
+✔ pre-campaign ten-stage progress keeps stage8+9 destinations after compression (0.239125ms)
+✔ runtime redirects match all60 approved migration-plan destinations (0.126083ms)
+✔ future numeric save preserves current IDs and benchmark without old-campaign remapping (0.155875ms)
+✔ malformed records and unknown version preserve original for recovery (0.204209ms)
+✔ actual save/load pipeline persists archive and preferences through AsyncStorage JSON boundary (0.5415ms)
+✔ QA unlock is on only for a development bundle or the explicit flag (1.0755ms)
+✔ flag OFF: progression is exactly the normal one (2.675875ms)
+✔ flag ON: 45 of 45 missions can be selected and started, in all nine chapters (0.570417ms)
+✔ flag ON: 07-01, 08-01 and 09-05 start from a save that has them locked (0.1925ms)
+✔ the override forges nothing: the save and what it shows as cleared stay as they are (1.081917ms)
+✔ All 45 missions resolve the same single chapter profile regardless of mission index (0.764583ms)
+✔ Reviewed tuning is immutable, idempotent and changes only the explicit mission fields (189.279083ms)
+✔ Generator security budget comes from chapter, not mission ordinal (0.4475ms)
+✔ Outlier audit identifies a high axis without converting it into automatic difficulty tuning (374.326333ms)
+✔ Chapter ordering acceptance rejects reversed/missing evidence and accepts independently ordered axes (77.564334ms)
+✔ V9 candidate changes exactly four core maps and leaves other56 complete objects byte-equivalent (58.3425ms)
+✔ Four heists have staged named places, purposeful major structures, clear alternate-in and alternate-out (0.697541ms)
+✔ Actual compiled radius18 routes, guard routes/search, objectives and exits are accessible (754.278875ms)
+✔ 02-06 glass is sealed movement architecture transmitting LOS with opaque cover outside it (19.97575ms)
+✔ Finales retain delayed-alarm flags and actual secure chamber ownership, not a remote landmark (0.265375ms)
+✔ Four-map composition is reproducible and does not require runtime navigation generation (20098.63525ms)
+✔ 03-10 secure layers are physical articulation crossings, service side cannot bypass approach (12.779042ms)
+✔ Curated Gallery walls contain no duplicate commissioned artwork and portraits fit architecture scale (0.220625ms)
+✔ Navigation-expanded patrol nodes cannot acquire authored observation pauses (0.179583ms)
+✔ 02-10 actual45s Guard AI has a genuine southern objective inspection and a blind window (68.2165ms)
+✔ historical Gallery central islands retain shoulders at their original9px Tilt margin (224.801042ms)
+✔ Gallery zone and guard counts, glazing physics and opposite-side finale remain explicit (226.079834ms)
+✔ 02-06 closed glass bay blocks player traversal while transmitting vision (29.154625ms)
+✔ Studio collection escape returns across the sculpture zone, with three readable large works (5.812166ms)
+✔ Finale has exactly six distributed guards, with objective confirmer separate from roaming escape response (57.84875ms)
+✔ Gallery revised entry/mid-mission escapes leave the stolen-work room through a real second zone (87.282042ms)
+✔ 02-01 V3 authored circulation remains accessible, separated and repeatable (1.762541ms)
+✔ 02-02 V3 authored circulation remains accessible, separated and repeatable (1.30875ms)
+✔ 02-03 V3 authored circulation remains accessible, separated and repeatable (3.759208ms)
+✔ 02-04 V3 authored circulation remains accessible, separated and repeatable (15.313917ms)
+✔ 02-05 V3 authored circulation remains accessible, separated and repeatable (12.766167ms)
+✔ 02-06 V3 authored circulation remains accessible, separated and repeatable (14.406791ms)
+✔ 02-07 V3 authored circulation remains accessible, separated and repeatable (137.111125ms)
+✔ 02-08 V3 authored circulation remains accessible, separated and repeatable (77.342541ms)
+✔ 02-09 V3 authored circulation remains accessible, separated and repeatable (145.757708ms)
+✔ 02-10 V3 authored circulation remains accessible, separated and repeatable (133.316125ms)
+✔ V3 coverage axes execute through the semantic plan used by compileStage (118.581167ms)
+✔ V3 unknown guardless rooms cannot acquire an automatic safety exemption or invented features (18.097ms)
+✔ current profile gap threshold uses18 diameter plus10.5 smoothing travel per side (0.525834ms)
+✔ closed/overlap/corner-only boxes are not fake openings (0.07825ms)
+✔ axis symmetric and thin visible slots retained (0.05625ms)
+✔ protected objective and guard tuning cannot silently change (3.202459ms)
+✔ 01-01 historical authored gap zero, island bypasses, protected fields and real120sec patrol (634.231333ms)
+✔ 01-02 historical authored gap zero, island bypasses, protected fields and real120sec patrol (228.976458ms)
+✔ 01-03 historical authored gap zero, island bypasses, protected fields and real120sec patrol (258.653666ms)
+✔ 01-04 historical authored gap zero, island bypasses, protected fields and real120sec patrol (219.436625ms)
+✔ 01-05 historical authored gap zero, island bypasses, protected fields and real120sec patrol (410.079625ms)
+✔ 01-06 historical authored gap zero, island bypasses, protected fields and real120sec patrol (531.007083ms)
+✔ 01-07 historical authored gap zero, island bypasses, protected fields and real120sec patrol (532.09875ms)
+✔ 01-08 historical authored gap zero, island bypasses, protected fields and real120sec patrol (675.347041ms)
+✔ 01-09 historical authored gap zero, island bypasses, protected fields and real120sec patrol (1020.582ms)
+✔ 01-10 historical authored gap zero, island bypasses, protected fields and real120sec patrol (1795.790375ms)
+✔ dressing contract retains unmodified mission and compiled vision (10.901583ms)
+✔ dressing QA rejects changed cover (10.608541ms)
+✔ dressing QA rejects changed guard (8.708333ms)
+✔ dressing QA rejects changed route (34.272667ms)
+✔ dressing QA rejects changed objective (0.370334ms)
+✔ dressing QA rejects changed exit (0.255042ms)
+✔ low dressing adds only its physical box and wall art adds no collision or LOS (2.304167ms)
+✔ Historical V3 Museum authoring and measured hide witnesses remain reproducible (1091.243166ms)
+✔ Historical01-05 retains architecture/routes and has two independent restricted-gallery prop hides (58.221542ms)
+✔ Historical01-08 improves measured hiding and keeps four non-player semantic investigation roles (112.109292ms)
+✔ Historical01-10 retains authored architecture, routes, objective and guards through central gap refinements (33.652167ms)
+✔ guard-generation gate rejects an unreachable destination; decoration does not count as cover (10.460167ms)
+✔ authored Museum landmarks refer to real props and the rotunda accent follows its approved sculpture (0.30325ms)
+✔ 01-01 V3 preserves Museum architecture/security while certifying18px route envelope (9.000417ms)
+✔ 01-02 V3 preserves Museum architecture/security while certifying18px route envelope (1.435833ms)
+✔ 01-03 V3 preserves Museum architecture/security while certifying18px route envelope (1.062625ms)
+✔ 01-04 V3 preserves Museum architecture/security while certifying18px route envelope (1.422041ms)
+✔ 01-05 V3 preserves Museum architecture/security while certifying18px route envelope (2.50725ms)
+✔ 01-06 V3 preserves Museum architecture/security while certifying18px route envelope (2.054917ms)
+✔ 01-07 V3 preserves Museum architecture/security while certifying18px route envelope (26.168333ms)
+✔ 01-08 V3 preserves Museum architecture/security while certifying18px route envelope (8.098125ms)
+✔ 01-09 V3 preserves Museum architecture/security while certifying18px route envelope (10.925583ms)
+✔ 01-10 V3 preserves Museum architecture/security while certifying18px route envelope (49.640625ms)
+✔ Museum V2 contains ten consecutively selectable missions (0.68875ms)
+✔ 01-01: real body traversal, initial facing, global theft and continuous AI clear (521.511ms)
+✔ 01-02: real body traversal, initial facing, global theft and continuous AI clear (511.840875ms)
+✔ 01-03: real body traversal, initial facing, global theft and continuous AI clear (607.320333ms)
+✔ 01-04: real body traversal, initial facing, global theft and continuous AI clear (4633.615291ms)
+✔ 01-05: real body traversal, initial facing, global theft and continuous AI clear (46804.049583ms)
+✔ 01-06: real body traversal, initial facing, global theft and continuous AI clear (6479.316875ms)
+✔ 01-07: real body traversal, initial facing, global theft and continuous AI clear (5472.010459ms)
+✔ 01-08: real body traversal, initial facing, global theft and continuous AI clear (27356.723166ms)
+✔ 01-09: real body traversal, initial facing, global theft and continuous AI clear (3670.049084ms)
+✔ 01-10: real body traversal, initial facing, global theft and continuous AI clear (64167.766542ms)
+✔ 01-01: three-minute semantic patrol and route geometry (689.163667ms)
+✔ 01-02: three-minute semantic patrol and route geometry (1331.633625ms)
+✔ 01-03: three-minute semantic patrol and route geometry (1555.300292ms)
+✔ 01-04: three-minute semantic patrol and route geometry (11719.596959ms)
+✔ 01-05: three-minute semantic patrol and route geometry (63890.5345ms)
+✔ 01-06: three-minute semantic patrol and route geometry (12178.59275ms)
+✔ 01-07: three-minute semantic patrol and route geometry (9964.1975ms)
+✔ 01-08: three-minute semantic patrol and route geometry (25216.753792ms)
+✔ 01-09: three-minute semantic patrol and route geometry (6332.645417ms)
+✔ 01-10: three-minute semantic patrol and route geometry (46959.163667ms)
+✔ Security Wing safe approach leaves a usable body margin past the desk (25.527708ms)
+✔ Mid-chapter Restricted Collection and ten-mission Grand Heist stay distinct (0.091167ms)
+✔ Historical Museum density QA: later missions are not emptier than the opening ones (29.085708ms)
+✔ 01-04 runtime camera source parity and actual geometry A/B/C/D (2667.67525ms)
+✔ 02-03 runtime camera source parity and actual geometry A/B/C/D (4421.373083ms)
+✔ 02-04 runtime camera source parity and actual geometry A/B/C/D (13334.558583ms)
+✔ 02-05 runtime camera source parity and actual geometry A/B/C/D (10231.940958ms)
+✔ 03-01 runtime camera source parity and actual geometry A/B/C/D (4230.237875ms)
+✔ 03-02 runtime camera source parity and actual geometry A/B/C/D (2601.695584ms)
+✔ 03-03 runtime camera source parity and actual geometry A/B/C/D (2339.9685ms)
+✔ 03-04 runtime camera source parity and actual geometry A/B/C/D (5450.469375ms)
+✔ 03-05 runtime camera source parity and actual geometry A/B/C/D (6675.049584ms)
+✔ Historical V9.2 Museum safe/main pickup → escape and meaningful risk pressure (659.491834ms)
+✔ Changing any authored CCTV field flows through production compiler and state (no stale QA constants) (1.718541ms)
+✔ Historical Security cleanup preserves Museum other9 / Chapter04–09, allowing the authorized Gallery expansion (93.472416ms)
+✔ Security sprite extents use actual procedural monitor height, not collider height (0.275041ms)
+✔ Security cleanup reduces conservative rendered-bound stacking pairs (0.214666ms)
+✔ all campaign optimized navigation nodes, neighbors and components match full-blocker oracle for guard/player radii (1312.973666ms)
+✔ V10.1 post-theft audit exercises real alarm/search without supplying player LKP (3499.236542ms)
+✔ Missing authored routes remain missing evidence rather than a safe escape route (574.881292ms)
+✔ V11 Gallery/Bank pure overlay leaves KEEP maps and later chapters untouched (87.430917ms)
+✔ Every edited mission retains Guard/CCTV counts, velocity and sensing contracts (0.359708ms)
+✔ All eleven compiled player radius18 legs and real Guard search anchors are navigable (237.189666ms)
+✔ 02-02 effective semantic patrol mirrors the intended spine observation (0.687ms)
+✔ 02-10 first escape shoulder uses approved opaque art screen, preserving high-security pickup alarm (0.62675ms)
+✔ 03-01 cannot leave directly from teller; staff verification is a physical articulation (4.558875ms)
+✔ 02-06 glass remains BLOCK for movement and PASS for vision (0.195875ms)
+✔ 02-10 live patrol naturally inspects empty case and also leaves blind windows within45seconds (242.103334ms)
+✔ V11 Museum authoring is pure, idempotent and protects every unlisted mission (80.750541ms)
+✔ V11 Museum preserves entry/objective/exit, guard count and sensor/AI pressure parameters (1.5475ms)
+✔ V11 Museum validates actual compiled radius18 reference legs and every guard search anchor (92.578917ms)
+✔ 01-01 inspector wait is effective through semantic patrol compilation (0.322083ms)
+✔ Museum relief bays are real opaque LOS breaks rather than soft dressing or safe-zone immunity (0.650541ms)
+✔ V11 Museum shared-runtime full heist witnesses reach CLEAR without teleporting or event mutation (1231.897666ms)
+✔ V11 Museum every patrol and empty-case search stays outside blockers over 180 seconds (15663.157667ms)
+✔ V11 Phase B retains exactly the current 60 mission IDs and chapter sizes (0.699834ms)
+✔ V11 scope matches the approved Phase A 13 KEEP, 12 TUNE and 5 PARTIAL classifications (1.476708ms)
+✔ V11 bake leaves all 13 KEEP definitions and all 30 Chapter 4–9 definitions unchanged (6.1535ms)
+✔ Every V11 map change is confined to one of the 17 approved IDs (11.750625ms)
+✔ Phase4A actual 45-mission campaign preserves all35 Chapter3–9 definitions exactly (3.021625ms)
+✔ 01-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (23.435709ms)
+✔ 01-01: closed runtime door graph matches independent full-blocker oracle (30.703959ms)
+✔ 01-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.928334ms)
+✔ 01-02: closed runtime door graph matches independent full-blocker oracle (97.2235ms)
+✔ 01-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (0.977875ms)
+✔ 01-03: closed runtime door graph matches independent full-blocker oracle (8.995667ms)
+✔ 01-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (0.929667ms)
+✔ 01-04: closed runtime door graph matches independent full-blocker oracle (62.355458ms)
+✔ 01-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (6.186042ms)
+✔ 01-05: closed runtime door graph matches independent full-blocker oracle (14.153084ms)
+✔ 02-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (45.5205ms)
+✔ 02-01: closed runtime door graph matches independent full-blocker oracle (17.890583ms)
+✔ 02-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.489333ms)
+✔ 02-02: closed runtime door graph matches independent full-blocker oracle (40.6005ms)
+✔ 02-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.018041ms)
+✔ 02-03: closed runtime door graph matches independent full-blocker oracle (26.499791ms)
+✔ 02-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (9.868542ms)
+✔ 02-04: closed runtime door graph matches independent full-blocker oracle (35.074709ms)
+✔ 02-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (0.9685ms)
+✔ 02-05: closed runtime door graph matches independent full-blocker oracle (17.646041ms)
+✔ Phase4A is deterministic/pure; exact35Chapter3–9 maps remain unchanged (662.585833ms)
+✔ Chapter1: five individually authored semantic building floors (0.968584ms)
+✔ Chapter2: five individually authored semantic building floors (0.161167ms)
+✔ All10: exact OPEN main/safe/risk path endpoint and20px comfort (0.538791ms)
+✔ All10: designated CLOSED quick-return physically changes route, alternate remains longer and reachable (53.44575ms)
+✔ All10: real nearby opaque first break and full waiting-pocket footprint (0.442916ms)
+✔ All10: natural objective inspection plus usable blind windows; not a scripted omniscient alarm (433.284917ms)
+✔ Gallery uses its six-portrait family, transparent glass and physically different installation clusters (0.175416ms)
+✔ Phase4B actual baked campaign has45 unique individually authored floors (1.483083ms)
+✔ 01-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (18.975541ms)
+✔ 01-01: closed runtime door graph matches independent full-blocker oracle (72.391125ms)
+✔ 01-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (4.596875ms)
+✔ 01-02: closed runtime door graph matches independent full-blocker oracle (33.174834ms)
+✔ 01-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (4.049458ms)
+✔ 01-03: closed runtime door graph matches independent full-blocker oracle (21.099708ms)
+✔ 01-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.496ms)
+✔ 01-04: closed runtime door graph matches independent full-blocker oracle (80.789916ms)
+✔ 01-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.074375ms)
+✔ 01-05: closed runtime door graph matches independent full-blocker oracle (18.349333ms)
+✔ 02-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.734041ms)
+✔ 02-01: closed runtime door graph matches independent full-blocker oracle (50.295417ms)
+✔ 02-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.043375ms)
+✔ 02-02: closed runtime door graph matches independent full-blocker oracle (34.154958ms)
+✔ 02-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (10.250833ms)
+✔ 02-03: closed runtime door graph matches independent full-blocker oracle (49.322333ms)
+✔ 02-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.260167ms)
+✔ 02-04: closed runtime door graph matches independent full-blocker oracle (64.06075ms)
+✔ 02-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (7.361417ms)
+✔ 02-05: closed runtime door graph matches independent full-blocker oracle (44.568208ms)
+✔ 03-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.754417ms)
+✔ 03-01: closed runtime door graph matches independent full-blocker oracle (21.217792ms)
+✔ 03-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.30025ms)
+✔ 03-02: closed runtime door graph matches independent full-blocker oracle (34.435333ms)
+✔ 03-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (0.929917ms)
+✔ 03-03: closed runtime door graph matches independent full-blocker oracle (8.926083ms)
+✔ 03-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (19.274542ms)
+✔ 03-04: closed runtime door graph matches independent full-blocker oracle (23.642875ms)
+✔ 03-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.728625ms)
+✔ 03-05: closed runtime door graph matches independent full-blocker oracle (22.134083ms)
+✔ 04-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (5.38375ms)
+✔ 04-01: closed runtime door graph matches independent full-blocker oracle (51.911083ms)
+✔ 04-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (5.822375ms)
+✔ 04-02: closed runtime door graph matches independent full-blocker oracle (55.964041ms)
+✔ 04-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (11.058333ms)
+✔ 04-03: closed runtime door graph matches independent full-blocker oracle (16.767ms)
+✔ 04-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.711708ms)
+✔ 04-04: closed runtime door graph matches independent full-blocker oracle (16.195167ms)
+✔ 04-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.021584ms)
+✔ 04-05: closed runtime door graph matches independent full-blocker oracle (50.7685ms)
+✔ 05-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.141ms)
+✔ 05-01: closed runtime door graph matches independent full-blocker oracle (11.948667ms)
+✔ 05-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (3.594792ms)
+✔ 05-02: closed runtime door graph matches independent full-blocker oracle (44.063708ms)
+✔ 05-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (17.423792ms)
+✔ 05-03: closed runtime door graph matches independent full-blocker oracle (32.070709ms)
+✔ 05-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.305708ms)
+✔ 05-04: closed runtime door graph matches independent full-blocker oracle (43.732125ms)
+✔ 05-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.675333ms)
+✔ 05-05: closed runtime door graph matches independent full-blocker oracle (35.188458ms)
+✔ 06-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.281ms)
+✔ 06-01: closed runtime door graph matches independent full-blocker oracle (44.48675ms)
+✔ 06-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (0.98225ms)
+✔ 06-02: closed runtime door graph matches independent full-blocker oracle (34.107917ms)
+✔ 06-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.7105ms)
+✔ 06-03: closed runtime door graph matches independent full-blocker oracle (71.69175ms)
+✔ 06-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (3.379666ms)
+✔ 06-04: closed runtime door graph matches independent full-blocker oracle (69.779541ms)
+✔ 06-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (4.663375ms)
+✔ 06-05: closed runtime door graph matches independent full-blocker oracle (56.999667ms)
+✔ 07-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.332375ms)
+✔ 07-01: closed runtime door graph matches independent full-blocker oracle (16.964625ms)
+✔ 07-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (0.931333ms)
+✔ 07-02: closed runtime door graph matches independent full-blocker oracle (9.765583ms)
+✔ 07-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (67.270875ms)
+✔ 07-03: closed runtime door graph matches independent full-blocker oracle (33.270542ms)
+✔ 07-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.905ms)
+✔ 07-04: closed runtime door graph matches independent full-blocker oracle (48.58ms)
+✔ 07-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (3.575209ms)
+✔ 07-05: closed runtime door graph matches independent full-blocker oracle (10.123042ms)
+✔ 08-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.125416ms)
+✔ 08-01: closed runtime door graph matches independent full-blocker oracle (56.761167ms)
+✔ 08-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.22325ms)
+✔ 08-02: closed runtime door graph matches independent full-blocker oracle (17.312709ms)
+✔ 08-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (29.389334ms)
+✔ 08-03: closed runtime door graph matches independent full-blocker oracle (16.307958ms)
+✔ 08-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.193625ms)
+✔ 08-04: closed runtime door graph matches independent full-blocker oracle (11.108708ms)
+✔ 08-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (2.164583ms)
+✔ 08-05: closed runtime door graph matches independent full-blocker oracle (48.886791ms)
+✔ 09-01: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (3.675333ms)
+✔ 09-01: closed runtime door graph matches independent full-blocker oracle (73.102375ms)
+✔ 09-02: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (1.4125ms)
+✔ 09-02: closed runtime door graph matches independent full-blocker oracle (8.613959ms)
+✔ 09-03: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (6.117584ms)
+✔ 09-03: closed runtime door graph matches independent full-blocker oracle (44.7865ms)
+✔ 09-04: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (3.15425ms)
+✔ 09-04: closed runtime door graph matches independent full-blocker oracle (31.5005ms)
+✔ 09-05: physical lockdown removes a quick route but retains a 20px alternate to the actual Exit (9.061958ms)
+✔ 09-05: closed runtime door graph matches independent full-blocker oracle (50.049916ms)
+✔ 45 individually authored mission plans, stable campaign ids (3.824917ms)
+✔ 01-01: physical topology, open infiltration and CLOSED independent escape (143.186ms)
+✔ 01-02: physical topology, open infiltration and CLOSED independent escape (44.322333ms)
+✔ 01-03: physical topology, open infiltration and CLOSED independent escape (91.229708ms)
+✔ 01-04: physical topology, open infiltration and CLOSED independent escape (119.574333ms)
+✔ 01-05: physical topology, open infiltration and CLOSED independent escape (60.554375ms)
+✔ 02-01: physical topology, open infiltration and CLOSED independent escape (66.232583ms)
+✔ 02-02: physical topology, open infiltration and CLOSED independent escape (63.837167ms)
+✔ 02-03: physical topology, open infiltration and CLOSED independent escape (114.835083ms)
+✔ 02-04: physical topology, open infiltration and CLOSED independent escape (149.419958ms)
+✔ 02-05: physical topology, open infiltration and CLOSED independent escape (81.885542ms)
+✔ 03-01: physical topology, open infiltration and CLOSED independent escape (95.089916ms)
+✔ 03-02: physical topology, open infiltration and CLOSED independent escape (91.547125ms)
+✔ 03-03: physical topology, open infiltration and CLOSED independent escape (86.82525ms)
+✔ 03-04: physical topology, open infiltration and CLOSED independent escape (50.689959ms)
+✔ 03-05: physical topology, open infiltration and CLOSED independent escape (194.304ms)
+✔ 04-01: physical topology, open infiltration and CLOSED independent escape (108.363334ms)
+✔ 04-02: physical topology, open infiltration and CLOSED independent escape (76.353625ms)
+✔ 04-03: physical topology, open infiltration and CLOSED independent escape (68.56725ms)
+✔ 04-04: physical topology, open infiltration and CLOSED independent escape (52.160917ms)
+✔ 04-05: physical topology, open infiltration and CLOSED independent escape (148.094458ms)
+✔ 05-01: physical topology, open infiltration and CLOSED independent escape (91.787375ms)
+✔ 05-02: physical topology, open infiltration and CLOSED independent escape (80.387584ms)
+✔ 05-03: physical topology, open infiltration and CLOSED independent escape (101.534167ms)
+✔ 05-04: physical topology, open infiltration and CLOSED independent escape (125.701792ms)
+✔ 05-05: physical topology, open infiltration and CLOSED independent escape (52.994125ms)
+✔ 06-01: physical topology, open infiltration and CLOSED independent escape (59.686167ms)
+✔ 06-02: physical topology, open infiltration and CLOSED independent escape (114.726583ms)
+✔ 06-03: physical topology, open infiltration and CLOSED independent escape (58.873209ms)
+✔ 06-04: physical topology, open infiltration and CLOSED independent escape (127.322542ms)
+✔ 06-05: physical topology, open infiltration and CLOSED independent escape (81.005375ms)
+✔ 07-01: physical topology, open infiltration and CLOSED independent escape (101.05275ms)
+✔ 07-02: physical topology, open infiltration and CLOSED independent escape (95.647583ms)
+✔ 07-03: physical topology, open infiltration and CLOSED independent escape (110.02375ms)
+✔ 07-04: physical topology, open infiltration and CLOSED independent escape (89.174584ms)
+✔ 07-05: physical topology, open infiltration and CLOSED independent escape (131.392ms)
+✔ 08-01: physical topology, open infiltration and CLOSED independent escape (72.326541ms)
+✔ 08-02: physical topology, open infiltration and CLOSED independent escape (214.684792ms)
+✔ 08-03: physical topology, open infiltration and CLOSED independent escape (131.975333ms)
+✔ 08-04: physical topology, open infiltration and CLOSED independent escape (67.566416ms)
+✔ 08-05: physical topology, open infiltration and CLOSED independent escape (146.143542ms)
+✔ 09-01: physical topology, open infiltration and CLOSED independent escape (124.64875ms)
+✔ 09-02: physical topology, open infiltration and CLOSED independent escape (112.445625ms)
+✔ 09-03: physical topology, open infiltration and CLOSED independent escape (128.501666ms)
+✔ 09-04: physical topology, open infiltration and CLOSED independent escape (118.286542ms)
+✔ 09-05: physical topology, open infiltration and CLOSED independent escape (102.921292ms)
+✔ negative: same-zone and adjacent entry/exit cannot pass semantic labels (93.3105ms)
+✔ negative: arbitrary room labels cannot disguise a direct open-floor shortcut (60.334667ms)
+✔ negative: closed escape does not accept findPath nearest fallback endpoint (28.459583ms)
+✔ negative: floating gate, missing designated closure and colliding guard are rejected (107.403917ms)
+✔ 01-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (53.503125ms)
+✔ 01-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (210.436042ms)
+✔ 01-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (112.161834ms)
+✔ 01-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (309.221459ms)
+✔ 01-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (109.3425ms)
+✔ 02-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (62.070083ms)
+✔ 02-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (97.454792ms)
+✔ 02-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (180.46175ms)
+✔ 02-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (266.230667ms)
+✔ 02-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (204.643834ms)
+✔ 03-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (355.530959ms)
+✔ 03-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (222.641334ms)
+✔ 03-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (133.403042ms)
+✔ 03-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (319.753917ms)
+✔ 03-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (341.986167ms)
+✔ 04-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (253.184542ms)
+✔ 04-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (332.945375ms)
+✔ 04-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (223.172458ms)
+✔ 04-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (361.799292ms)
+✔ 04-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (219.325625ms)
+✔ 05-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (679.952167ms)
+✔ 05-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (550.790417ms)
+✔ 05-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (458.74325ms)
+✔ 05-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (600.489958ms)
+✔ 05-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (490.993291ms)
+✔ 06-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (614.257917ms)
+✔ 06-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (582.177375ms)
+✔ 06-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (660.980333ms)
+✔ 06-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (105.90225ms)
+✔ 06-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (961.208125ms)
+✔ 07-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (969.642958ms)
+✔ 07-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (1352.163333ms)
+✔ 07-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (535.417083ms)
+✔ 07-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (650.986583ms)
+✔ 07-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (712.891125ms)
+✔ 08-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (567.47175ms)
+✔ 08-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (625.798125ms)
+✔ 08-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (415.679917ms)
+✔ 08-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (564.391458ms)
+✔ 08-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (499.914833ms)
+✔ 09-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (571.570208ms)
+✔ 09-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (521.772458ms)
+✔ 09-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (412.159875ms)
+✔ 09-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (547.834625ms)
+✔ 09-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (511.486583ms)
+✔ negative: visible firstBreak label and solid waiting pocket fail geometric certification (114.274959ms)
+✔ negative: sealed risk corridor cannot silently reroute through the public approach (7.997625ms)
+✔ negative: CCTV inside an opaque structure cannot masquerade as safe coverage (100.196875ms)
+✔ negative: blocking a labeled quick route is insufficient when best escape is unchanged (79.287125ms)
+✔ negative: alternate already shorter than labeled quick escape is rejected (24.964ms)
+✔ Phase4C: all25 Chapter5–9 definitions remain byte-equivalent serialized data (5.451667ms)
+✔ Phase4C: Tilt, Guard AI, CCTV and save logic unchanged (0.882208ms)
+✔ 01-01: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.866334ms)
+✔ 01-02: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.194125ms)
+✔ 01-03: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.160875ms)
+✔ 01-04: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.216708ms)
+✔ 01-05: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.169833ms)
+✔ 02-01: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.128833ms)
+✔ 02-02: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.107625ms)
+✔ 02-03: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.147167ms)
+✔ 02-04: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.140792ms)
+✔ 02-05: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.095ms)
+✔ 03-01: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.0955ms)
+✔ 03-02: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.080834ms)
+✔ 03-03: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.098ms)
+✔ 03-04: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.104166ms)
+✔ 03-05: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.163458ms)
+✔ 04-01: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.101583ms)
+✔ 04-02: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.074875ms)
+✔ 04-03: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.069542ms)
+✔ 04-04: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.071166ms)
+✔ 04-05: secure objective is inside actual chamber, behind threshold; all enlarged bodies match (0.09ms)
+✔ Phase4C: all13 chapter-specific door profiles actually used (0.085459ms)
+✔ 45 individually authored mission plans, stable campaign ids (53.679125ms)
+✔ 01-01: physical topology, open infiltration and CLOSED independent escape (69.081ms)
+✔ 01-02: physical topology, open infiltration and CLOSED independent escape (161.067584ms)
+✔ 01-03: physical topology, open infiltration and CLOSED independent escape (23.559ms)
+✔ 01-04: physical topology, open infiltration and CLOSED independent escape (28.22075ms)
+✔ 01-05: physical topology, open infiltration and CLOSED independent escape (21.592708ms)
+✔ 02-01: physical topology, open infiltration and CLOSED independent escape (34.90975ms)
+✔ 02-02: physical topology, open infiltration and CLOSED independent escape (118.398916ms)
+✔ 02-03: physical topology, open infiltration and CLOSED independent escape (44.181125ms)
+✔ 02-04: physical topology, open infiltration and CLOSED independent escape (62.098291ms)
+✔ 02-05: physical topology, open infiltration and CLOSED independent escape (28.390542ms)
+✔ 03-01: physical topology, open infiltration and CLOSED independent escape (22.910833ms)
+✔ 03-02: physical topology, open infiltration and CLOSED independent escape (80.093958ms)
+✔ 03-03: physical topology, open infiltration and CLOSED independent escape (28.110209ms)
+✔ 03-04: physical topology, open infiltration and CLOSED independent escape (138.719458ms)
+✔ 03-05: physical topology, open infiltration and CLOSED independent escape (33.193416ms)
+✔ 04-01: physical topology, open infiltration and CLOSED independent escape (20.820459ms)
+✔ 04-02: physical topology, open infiltration and CLOSED independent escape (84.926875ms)
+✔ 04-03: physical topology, open infiltration and CLOSED independent escape (24.963375ms)
+✔ 04-04: physical topology, open infiltration and CLOSED independent escape (75.817584ms)
+✔ 04-05: physical topology, open infiltration and CLOSED independent escape (41.601208ms)
+✔ 05-01: physical topology, open infiltration and CLOSED independent escape (48.993292ms)
+✔ 05-02: physical topology, open infiltration and CLOSED independent escape (50.678542ms)
+✔ 05-03: physical topology, open infiltration and CLOSED independent escape (28.906083ms)
+✔ 05-04: physical topology, open infiltration and CLOSED independent escape (43.869ms)
+✔ 05-05: physical topology, open infiltration and CLOSED independent escape (16.558ms)
+✔ 06-01: physical topology, open infiltration and CLOSED independent escape (114.335375ms)
+✔ 06-02: physical topology, open infiltration and CLOSED independent escape (40.025042ms)
+✔ 06-03: physical topology, open infiltration and CLOSED independent escape (129.408208ms)
+✔ 06-04: physical topology, open infiltration and CLOSED independent escape (38.08425ms)
+✔ 06-05: physical topology, open infiltration and CLOSED independent escape (25.546792ms)
+✔ 07-01: physical topology, open infiltration and CLOSED independent escape (29.552958ms)
+✔ 07-02: physical topology, open infiltration and CLOSED independent escape (99.8245ms)
+✔ 07-03: physical topology, open infiltration and CLOSED independent escape (27.8ms)
+✔ 07-04: physical topology, open infiltration and CLOSED independent escape (100.180209ms)
+✔ 07-05: physical topology, open infiltration and CLOSED independent escape (50.460792ms)
+✔ 08-01: physical topology, open infiltration and CLOSED independent escape (37.740708ms)
+✔ 08-02: physical topology, open infiltration and CLOSED independent escape (77.187042ms)
+✔ 08-03: physical topology, open infiltration and CLOSED independent escape (87.978916ms)
+✔ 08-04: physical topology, open infiltration and CLOSED independent escape (24.992541ms)
+✔ 08-05: physical topology, open infiltration and CLOSED independent escape (81.9975ms)
+✔ 09-01: physical topology, open infiltration and CLOSED independent escape (77.501417ms)
+✔ 09-02: physical topology, open infiltration and CLOSED independent escape (24.379958ms)
+✔ 09-03: physical topology, open infiltration and CLOSED independent escape (40.171041ms)
+✔ 09-04: physical topology, open infiltration and CLOSED independent escape (98.537958ms)
+✔ 09-05: physical topology, open infiltration and CLOSED independent escape (95.218667ms)
+✔ negative: same-zone and adjacent entry/exit cannot pass semantic labels (18.311959ms)
+✔ negative: arbitrary room labels cannot disguise a direct open-floor shortcut (115.819708ms)
+✔ negative: closed escape does not accept findPath nearest fallback endpoint (43.478167ms)
+✔ negative: floating gate, missing designated closure and colliding guard are rejected (25.299833ms)
+✔ 01-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (101.550458ms)
+✔ 01-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (79.103208ms)
+✔ 01-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (94.889042ms)
+✔ 01-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (196.855459ms)
+✔ 01-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (91.370208ms)
+✔ 02-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (80.259833ms)
+✔ 02-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (40.346292ms)
+✔ 02-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (214.494875ms)
+✔ 02-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (81.895625ms)
+✔ 02-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (183.004875ms)
+✔ 03-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (163.1645ms)
+✔ 03-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (208.560542ms)
+✔ 03-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (227.933ms)
+✔ 03-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (226.729041ms)
+✔ 03-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (261.5505ms)
+✔ 04-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (152.35025ms)
+✔ 04-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (117.054083ms)
+✔ 04-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (238.057417ms)
+✔ 04-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (166.268833ms)
+✔ 04-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (185.236834ms)
+✔ 05-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (316.48775ms)
+✔ 05-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (282.818416ms)
+✔ 05-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (292.375042ms)
+✔ 05-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (248.903792ms)
+✔ 05-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (216.432625ms)
+✔ 06-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (255.65425ms)
+✔ 06-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (478.818291ms)
+✔ 06-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (263.367125ms)
+✔ 06-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (418.691875ms)
+✔ 06-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (295.481833ms)
+✔ 07-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (363.311708ms)
+✔ 07-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (408.335458ms)
+✔ 07-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (483.503791ms)
+✔ 07-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (336.156584ms)
+✔ 07-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (316.468542ms)
+✔ 08-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (673.77025ms)
+✔ 08-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (591.631666ms)
+✔ 08-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (552.936833ms)
+✔ 08-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (695.98275ms)
+✔ 08-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (753.289958ms)
+✔ 09-01: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (1176.200459ms)
+✔ 09-02: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (567.300292ms)
+✔ 09-03: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (788.159708ms)
+✔ 09-04: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (580.756167ms)
+✔ 09-05: actual Guard/CCTV 45s, inspection, blind window, patrol collision and protected entry (521.920084ms)
+✔ negative: visible firstBreak label and solid waiting pocket fail geometric certification (197.142791ms)
+✔ negative: sealed risk corridor cannot silently reroute through the public approach (161.735416ms)
+✔ negative: CCTV inside an opaque structure cannot masquerade as safe coverage (41.86625ms)
+✔ negative: blocking a labeled quick route is insufficient when best escape is unchanged (109.570041ms)
+✔ negative: alternate already shorter than labeled quick escape is rejected (158.95625ms)
+✔ Phase4D: bake is reproducible and the live campaign keeps its mission order (1327.781125ms)
+✔ Phase4D: all20 Chapter6–9 definitions remain byte-equivalent serialized data (3.513458ms)
+✔ Phase4D: guard counts and perception/movement rules remain unchanged for every mission (1.053125ms)
+✔ Phase4D map composition: authored patrol and CCTV configurations are preserved (0.419125ms)
+✔ Phase4D: Casino physical fixtures select shipped Casino art with matching collider scales (0.885959ms)
+✔ Phase4D: protected Tilt, Guard AI, CCTV and saves remain unchanged; the escape timer is the shortened 10 seconds (1.249583ms)
+✔ Phase5: bake is reproducible and matches the live campaign data (2047.197ms)
+✔ Phase5: geometry, structures, doors, entry/exit/objective, routes and art selection are exactly the Phase 4D map (0.082542ms)
+✔ Phase5: Chapter 6–9 and untuned missions are untouched (0.091167ms)
+✔ Phase5: guard count, perception and speed are unchanged; patrols move only where the mission declares it (0.079375ms)
+✔ Phase5: CCTV detection constants are inherited unchanged; at most one camera added or removed per mission (0.067417ms)
+✔ Phase5: Museum keeps the easy-chapter rule — no camera shares a room with a patrolling guard (0.076125ms)
+✔ V12 rebuild is pure, deterministic and compacts only30earlymissions into15 (765.373667ms)
+✔ everyChapter4–9stage preserves reference and byte/dataidentity (1.186708ms)
+✔ KEEPEntrance/Portrait preserve authoredfloor, portals andapprovedartwork (0.147167ms)
+✔ 15realcompiledmaps pass radius9body/radius18Tiltmargin andguard/searchnavigation (83.9535ms)
+✔ safe/riskpaths are physically distinct andriskshortcut isshorter for everymission (0.929291ms)
+✔ everypickup has nearby actualopaqueLOSbreak, no safezoneimmunity assumption (2.295334ms)
+✔ chapterencounterbudgetisflat, objectivehasonecustodian andexitnoguardcluster (0.3475ms)
+✔ securitycopiesexistingchapterperception/patrolarchetypes, nevermission-numberstatramps (0.712917ms)
+✔ GlassGalleryphysicalBLOCK andLOS PASS survivecounterpartopaquewalls (0.308208ms)
+✔ finaledelayedalarmsandactualBankvaultidentityarepreservedwithoutstatincrease (0.288208ms)
+✔ all15actualpatrolsinspectemptycasewithoutomniscienceandprovideblindtimingwindows (834.555125ms)
+✔ all15actualemptycasestriggeroneTheftAlertwithoutgrantinghiddenPlayerLKP (94.276667ms)
+✔ everyauthoredwaitingpocketcontainsitsentirenominaldiskplusplayerbody (0.471083ms)
+✔ eachguardhasanauthoredsemanticcoveragesectorataphysicallyvalidpatrolanchor (0.358958ms)
+✔ all15authoredroutescontain20pxnewTiltcomfortmargin (3.689334ms)
+✔ Campaign: 9 chapters × 5 missions = 45, counted in one place (1.853583ms)
+✔ Campaign: the old 10-mission chapter counts exist only in the save migration (66.436375ms)
+✔ Campaign: `npm run campaign:bake` is the V13 bake and no historical builder writes the production file (0.738584ms)
+✔ Campaign: entry, prize and exit are apart; patrol points, cameras and route anchors stand on open floor (4.7475ms)
+✔ Campaign: chapter sources — nine chapters in bake order, and each derived chapter branches off where v13Sources says (6.231625ms)
+✔ Campaign: the override index reads every table, names real missions and keeps the stage order (2.793375ms)
+✔ Campaign: secure() and the reuse helpers are frozen (Chapter 6–8 guard and camera placement depends on them) (0.715083ms)
+✔ V13: bake is reproducible and is the live campaign (4931.216542ms)
+✔ V13: every mission it has not rebuilt is byte-equal to the Phase 5 build (5359.2635ms)
+✔ V13: every rebuilt mission passes the physical topology audit (4104.522833ms)
+✔ V13: entry, objective and exit stand where the blueprint puts them, in three different zones (0.577ms)
+✔ V13: no fake gap, no sub-tile squeeze and no empty plaza (3648.7135ms)
+✔ V13: every solid structure states its role and the cover graph names real structures (0.735791ms)
+✔ V13: guards and CCTV are authored by role with the chapter archetypes unchanged (0.671542ms)
+✔ V13: the thief alone can walk in by either lane and out by the quick route (1027.392625ms)
+✔ V3 traversal audit rejects a blocked semantic anchor even when raw patrolRoutes remain clear (75.602334ms)
+✔ V3 actual compiled patrol and search targets are reachable in all fifteen runtime missions (73.762792ms)
+✔ all ten Bank mission routes retain body and Tilt-margin clearance (3.32775ms)
+✔ Bank objectives have physical visual support from their own chapter family (0.291833ms)
+✔ Main Vault target is inside a real secure chamber and alternate escape crosses staffed cells (0.255917ms)
+✔ compiled guard patrol and map-wide search targets are reachable without invalid fallback (593.91175ms)
+✔ V5 geometry rejects an objective in an actual wall (79.189417ms)
+✔ V5 geometry rejects a foreign Chapter4 major asset in Museum (4.113708ms)
+✔ V5 geometry rejects visible reference route segments through a wall (1.591583ms)
+✔ V5 geometry rejects foreign physical kinds even without explicit artwork (36.238292ms)
+✔ All current V12 runtime maps satisfy actual compiled navigation, approved art family and radius18 route clearance (156.934166ms)
+✔ V5 Museum/Gallery actual compiled patrol, search and radius18 routes are navigable (745.310625ms)
+✔ V5 goal draws after its case; approved chapter props never introduce Lab/Casino major assets (0.915083ms)
+✔ V5 redesign means real silhouette plus a portal/objective/central composition change (0.67675ms)
+✔ V5 closed glass island cannot become a reachable search or player path target (5.984833ms)
+✔ Museum safe and timed risk routes clear with continuous real movement from spawn (578.656416ms)
+✔ historical Museum 01-01 path-first design retains authored semantic approaches before V3 clearance expansion (38.291584ms)
+✔ Historical compact Museum 01-01 has a gallery fork, off-axis reveal, localized light and assigned inspection subjects (13.753708ms)
+✔ Historical Security/Bank pass preserved Chapter04–09 mission definitions (0.992917ms)
+✔ Historical01-02 NORMAL suspicion uses the shared runtime model and meets distance/action benchmarks (19.124084ms)
+✔ 45 baked StageDefinitions equal reviewed authoring data; no duplicate layouts even after rotation (6960.3255ms)
+✔ V12 all fifteen authored safe pockets fit their stated body-and-pose margin (2.2605ms)
+✔ 01-01: spawn/approach/escape/props/patrol/zones and alert rules (371.455041ms)
+ℹ 01-01: primary-route silent escape witness at 4s
+✔ 01-02: spawn/approach/escape/props/patrol/zones and alert rules (272.705625ms)
+ℹ 01-02: primary-route silent escape witness at 4s
+✔ 01-03: spawn/approach/escape/props/patrol/zones and alert rules (178.11825ms)
+ℹ 01-03: primary-route silent escape witness at 4s
+✔ 01-04: spawn/approach/escape/props/patrol/zones and alert rules (349.051625ms)
+ℹ 01-04: primary-route silent escape witness at 4s
+✔ 01-05: spawn/approach/escape/props/patrol/zones and alert rules (218.802542ms)
+ℹ 01-05: primary-route silent escape witness at 4s
+✔ 02-01: spawn/approach/escape/props/patrol/zones and alert rules (349.062834ms)
+ℹ 02-01: silent escape witness at 4s
+✔ 02-02: spawn/approach/escape/props/patrol/zones and alert rules (175.244292ms)
+ℹ 02-02: silent escape witness at 6s
+✔ 02-03: spawn/approach/escape/props/patrol/zones and alert rules (18.012083ms)
+ℹ 02-03: silent escape witness at 6s
+✔ 02-04: spawn/approach/escape/props/patrol/zones and alert rules (239.860667ms)
+ℹ 02-04: silent escape witness at 6s
+✔ 02-05: spawn/approach/escape/props/patrol/zones and alert rules (133.0045ms)
+ℹ 02-05: silent escape witness at 4s
+✔ 03-01: spawn/approach/escape/props/patrol/zones and alert rules (307.340625ms)
+ℹ 03-01: primary-route silent escape witness at 6s
+✔ 03-02: spawn/approach/escape/props/patrol/zones and alert rules (331.696708ms)
+ℹ 03-02: primary-route silent escape witness at 4s
+✔ 03-03: spawn/approach/escape/props/patrol/zones and alert rules (370.314541ms)
+ℹ 03-03: primary-route silent escape witness at 4s
+✔ 03-04: spawn/approach/escape/props/patrol/zones and alert rules (452.876958ms)
+ℹ 03-04: primary-route silent escape witness at 4s
+✔ 03-05: spawn/approach/escape/props/patrol/zones and alert rules (484.685042ms)
+ℹ 03-05: primary-route silent escape witness at 4s
+✔ 04-01: spawn/approach/escape/props/patrol/zones and alert rules (590.519375ms)
+ℹ 04-01: silent escape witness at 10s
+✔ 04-02: spawn/approach/escape/props/patrol/zones and alert rules (284.362167ms)
+ℹ 04-02: silent escape witness at 4s
+✔ 04-03: spawn/approach/escape/props/patrol/zones and alert rules (349.94675ms)
+ℹ 04-03: silent escape witness at 6s
+✔ 04-04: spawn/approach/escape/props/patrol/zones and alert rules (767.416625ms)
+ℹ 04-04: silent escape witness at 22s
+✔ 04-05: spawn/approach/escape/props/patrol/zones and alert rules (329.5465ms)
+ℹ 04-05: silent escape witness at 6s
+✔ 05-01: spawn/approach/escape/props/patrol/zones and alert rules (354.403459ms)
+ℹ 05-01: silent escape witness at 4s
+✔ 05-02: spawn/approach/escape/props/patrol/zones and alert rules (337.589458ms)
+ℹ 05-02: silent escape witness at 4s
+✔ 05-03: spawn/approach/escape/props/patrol/zones and alert rules (250.9195ms)
+ℹ 05-03: silent escape witness at 4s
+✔ 05-04: spawn/approach/escape/props/patrol/zones and alert rules (280.533792ms)
+ℹ 05-04: silent escape witness at 4s
+✔ 05-05: spawn/approach/escape/props/patrol/zones and alert rules (392.837541ms)
+ℹ 05-05: silent escape witness at 4s
+✔ 06-01: spawn/approach/escape/props/patrol/zones and alert rules (300.814125ms)
+ℹ 06-01: silent escape witness at 4s
+✔ 06-02: spawn/approach/escape/props/patrol/zones and alert rules (313.763708ms)
+ℹ 06-02: silent escape witness at 6s
+✔ 06-03: spawn/approach/escape/props/patrol/zones and alert rules (260.14625ms)
+ℹ 06-03: silent escape witness at 6s
+✔ 06-04: spawn/approach/escape/props/patrol/zones and alert rules (249.891083ms)
+ℹ 06-04: silent escape witness at 6s
+✔ 06-05: spawn/approach/escape/props/patrol/zones and alert rules (236.959583ms)
+ℹ 06-05: silent escape witness at 4s
+✔ 07-01: spawn/approach/escape/props/patrol/zones and alert rules (506.05125ms)
+ℹ 07-01: silent escape witness at 4s
+✔ 07-02: spawn/approach/escape/props/patrol/zones and alert rules (460.46575ms)
+ℹ 07-02: silent escape witness at 6s
+✔ 07-03: spawn/approach/escape/props/patrol/zones and alert rules (932.691541ms)
+ℹ 07-03: silent escape witness at 18s
+✔ 07-04: spawn/approach/escape/props/patrol/zones and alert rules (383.640209ms)
+ℹ 07-04: silent escape witness at 4s
+✔ 07-05: spawn/approach/escape/props/patrol/zones and alert rules (288.7235ms)
+ℹ 07-05: silent escape witness at 4s
+✔ 08-01: spawn/approach/escape/props/patrol/zones and alert rules (619.954208ms)
+ℹ 08-01: silent escape witness at 10s
+✔ 08-02: spawn/approach/escape/props/patrol/zones and alert rules (341.040041ms)
+ℹ 08-02: silent escape witness at 4s
+✔ 08-03: spawn/approach/escape/props/patrol/zones and alert rules (347.228667ms)
+ℹ 08-03: silent escape witness at 6s
+✔ 08-04: spawn/approach/escape/props/patrol/zones and alert rules (667.672458ms)
+ℹ 08-04: silent escape witness at 22s
+✔ 08-05: spawn/approach/escape/props/patrol/zones and alert rules (428.406333ms)
+ℹ 08-05: silent escape witness at 6s
+✔ 09-01: spawn/approach/escape/props/patrol/zones and alert rules (392.866958ms)
+ℹ 09-01: silent escape witness at 4s
+✔ 09-02: spawn/approach/escape/props/patrol/zones and alert rules (283.026541ms)
+ℹ 09-02: silent escape witness at 4s
+✔ 09-03: spawn/approach/escape/props/patrol/zones and alert rules (424.175208ms)
+ℹ 09-03: silent escape witness at 4s
+✔ 09-04: spawn/approach/escape/props/patrol/zones and alert rules (348.609708ms)
+ℹ 09-04: silent escape witness at 6s
+✔ 09-05: spawn/approach/escape/props/patrol/zones and alert rules (7498.55725ms)
+ℹ 09-05: silent escape unproven by bounded primary-route sampling; V5 continuous TheftEscape witnesses are separate
+✔ Historical V3 portals use all four edges and connect opposite sides within each chapter (1.135083ms)
+✔ Chapter/Mission migration preserves legacy records, new bests are not compared with different old layouts (0.839125ms)
+✔ all campaign names and Chapter themes are localized; final mission is Vault, not Black Site (0.103917ms)
+✔ campaign and old archive/preferences round-trip; replay remembers last mission without losing unlocks (0.246209ms)
+✔ Historical Museum V2 chapter has ten distinct authored missions with real routes and semantic patrol responsibilities (0.257458ms)
+✔ Museum v1 expansion precedes V12 compression exactly once (0.208667ms)
+✔ Gallery v2 expansion precedes V12 compression and archives benchmark records (0.13875ms)
+✔ Bank v3 expansion retains Lab unlock and archives old Bank bests (0.1405ms)
+ℹ tests 614
+ℹ suites 0
+ℹ pass 614
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 340618.466833
+npm notice run mobile@1.0.0 test:theft-support
+npm notice run node --import tsx --test src/game/audio/__tests__/audioState.test.ts src/game/world/museumBoundary.test.ts src/ui/hud/alertHud.test.ts
+✔ separate theft and spotted events emit once each (1.74775ms)
+✔ muted events are consumed rather than replayed when enabling SFX (0.209167ms)
+✔ SFX and BGM settings are independent (0.232958ms)
+✔ SEARCH and RETURN retain chase tension until every alert ends (0.141708ms)
+✔ theft investigation retains theft tension; silent objective changes no audio (0.139417ms)
+✔ retry/mount snapshot never replays history and resets music memory (0.157834ms)
+✔ pause/background/mission-end suppress sounds and consume pending revisions (0.167125ms)
+✔ crossfade is gradual, bounded, and returns cleanly to stealth (0.998667ms)
+✔ late theft revisions cannot sound over player alert/search/return (0.212958ms)
+✔ simultaneous theft and spotted events prefer the spotted whistle only (3.593542ms)
+✔ diagnostics expose missing sources and persisted OFF without pretending playback or spamming (44.48375ms)
+✔ stable BGM phase and SEARCH/RETURN do not emit repeated music transition requests (0.696667ms)
+✔ three-state crossfade reaches exact endpoints in 0.9 seconds (0.232625ms)
+✔ interrupted three-track blend preserves aggregate gain and converges (0.434625ms)
+✔ native manager queues the first loading whistle, cancels suspended work, and releases voices (1517.733667ms)
+✔ intro is silent; Home/Chapter/Mission Select/Settings preserve one lobby decision (0.088834ms)
+✔ lobby/gameplay crossfades finish in 0.9 seconds and direct next mission never selects lobby (0.087166ms)
+✔ paused/result UI retains BGM but consumes unheard alert events (0.033625ms)
+✔ cold-launch diagnostics distinguish silent Intro from audible Home intent (0.280375ms)
+✔ mix priority: Whistle > Chase ≥ Stealth; Stealth raised without touching Chase or Lobby (0.0555ms)
+✔ objective pickup emits once and retains stealth until theft or spotted (0.042292ms)
+✔ pickup mount/retry/mute/pause/background never replay historical acquisition (0.053916ms)
+✔ Museum boundaries reject huge movement through walls/void and preserve body radius at all corners (1.907875ms)
+✔ Boundary preserves valid movement, slides along walls, and recovers invalid saved positions (0.501208ms)
+✔ 01-01: boundaries keep spawn, objective, exit and all authored routes playable (6.886542ms)
+✔ 01-02: boundaries keep spawn, objective, exit and all authored routes playable (4.321875ms)
+✔ 01-03: boundaries keep spawn, objective, exit and all authored routes playable (0.681833ms)
+✔ 01-04: boundaries keep spawn, objective, exit and all authored routes playable (0.610166ms)
+✔ 01-05: boundaries keep spawn, objective, exit and all authored routes playable (0.535875ms)
+✔ Playground boundary keeps actual speed and animation distance synchronized (160.228ms)
+✔ pickup, sighting, confirmed theft and high-security confirmation share one timer contract across all chapters (3.525208ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2115.525084
+npm notice run mobile@1.0.0 test:monetization
+npm notice run node --import tsx --test src/game/monetization/__tests__/adState.test.ts src/game/monetization/__tests__/purchases.test.ts src/game/monetization/__tests__/iapProvider.test.cjs src/ui/__tests__/removeAdsView.test.ts src/game/monetization/__tests__/adsController.test.cjs src/game/monetization/__tests__/interstitialPresentation.test.ts src/game/monetization/__tests__/interstitialNavigation.test.ts src/game/security/__tests__/cctv.test.ts
+✔ clear #1 no ad; #2 eligible; shown resets; #3 no ad; #4 eligible (1.301459ms)
+✔ failed load keeps counter so next clear transition can retry (0.068291ms)
+✔ removeAdsOwned disables ads immediately and ignores clears (0.056917ms)
+✔ QA "show ads" for an owner: clears count and ads become due, and the purchase is never unsaved (0.36875ms)
+[ADS] interstitial failed undefined
+✔ not-loaded ad skips immediately without starting load at navigation (151.880916ms)
+✔ the controller has no load-waiting entry point; an unloaded or failed ad is skipped in the same tick (80.647625ms)
+✔ an ad that finishes loading later is shown at the next clear, not waited for at this one (12.864041ms)
+✔ presentation ERROR resolves navigation, concurrent requests show exactly once (99.167875ms)
+✔ disposed request stale load event cannot make replacement ad ready (8.734666ms)
+✔ remove ads cancels optional presentation and never preloads replacement (6.728334ms)
+✔ controller touch confirmation is inert when idle and before OPENED (79.206459ms)
+✔ owned entitlement suppresses preload, loaded ads and delayed clear requests (65.090834ms)
+✔ cached ownership blocks first preload; confirmed store revocation enables normal loading (44.673833ms)
+✔ provider restore success only displays restored, never empty flash (258.776625ms)
+✔ provider empty restore clears cached entitlement, store failure retains it (157.471792ms)
+✔ provider cannot request unloaded product; retry reconnects and fetches real price (129.775042ms)
+✔ provider missing SKU blocks purchase, cancellation preserves ownership (83.051291ms)
+✔ provider completes nonconsumable before ownership and enables retry on finish failure (108.087334ms)
+✔ provider already-owned response reconciles Store ownership as normal success (46.895583ms)
+✔ provider cached startup survives store outage and failed purchase leaves entitlement unchanged (101.386375ms)
+✔ revoked purchase event reconciles active ownership instead of granting (46.903625ms)
+✔ native error event + request rejection reconcile once; late catch cannot unlock a newer restore (54.11925ms)
+✔ simultaneous emitted and thrown already-owned error shares one Store query (87.654084ms)
+✔ Android: the Play product remove_ads is fetched, bought through the google request, acknowledged and restored (221.697625ms)
+✔ QA show-ads switch: an owner gets ads this run, storage keeps the purchase, switching off restores (24.449333ms)
+✔ due + already loaded: the ad is shown, navigation continues when it closes, the cadence restarts (0.857083ms)
+✔ due + NOT loaded: navigation continues in the same task — no wait, no timer, no show (1.217291ms)
+✔ ad load error and no network are "not loaded": immediate, even if starting a new load throws (3.456917ms)
+✔ a loaded ad that fails to present, rejects or throws lets navigation continue and clears "presenting" (1.332ms)
+✔ not due, or ads removed: nothing is asked of the ad at all (2.972125ms)
+✔ a lost close callback does not stop the game for good: native state or a touch on the app ends it (1032.173833ms)
+✔ there is no code path that waits for an ad to load at Mission Complete (1.22925ms)
+✔ closed/error duplicate events settle once and invoke native show once (1.364875ms)
+✔ show rejection and synchronous throw continue without hanging (0.481083ms)
+✔ ERROR cleans listeners and settles before any CLOSED event (0.244042ms)
+✔ missing presentation start callback has bounded fallback (47.666458ms)
+✔ normal visible ad is not ended by start watchdog (73.027ms)
+✔ dispose cancels pending continuation exactly once (0.69775ms)
+✔ missing consumer close callback recovers only after SDK confirms ad ended (1001.544875ms)
+✔ touch confirmation recovers a lost close only after OPENED and its grace (32.835208ms)
+✔ platform SKU contract: the exact App Store and Play Console ids, nothing invented for other platforms (0.437708ms)
+✔ pending/unknown purchase cannot finish or grant entitlement (0.163583ms)
+✔ purchase grants only after non-consumable finish resolves (47.086958ms)
+✔ finish failure never grants; next retry can succeed (0.66625ms)
+✔ restore found/none returns authoritative result directly, independent of React updates (1.350959ms)
+✔ restart hydrates cache; failed store query preserves it; successful empty sync revokes it (0.301625ms)
+✔ late startup query cannot overwrite a subsequent completed purchase (0.891042ms)
+✔ already-owned recovery queries store and grants valid active ownership (0.106875ms)
+✔ cancel/error handling does not touch entitlement; cached and unowned states preserved (0.632917ms)
+✔ a platform without a product makes no store requests or entitlement changes (0.121083ms)
+✔ revoked matching StoreKit transaction never grants ownership (0.054084ms)
+✔ A avoiding sweep remains invisible, endpoint pause and bounded sweep remain deterministic (5.564083ms)
+✔ B brief cone entry produces partial suspicion then memory delay and decay without alert (1.215917ms)
+✔ C full detection publishes real Global LKP once, with separate silent audio asset slot (0.881042ms)
+✔ D wall occlusion halts current-player updates and retains only the last observed location (0.324209ms)
+✔ E actual playground theft escalation makes guards investigate camera LKP, never unseen live target (74.109209ms)
+✔ Camera authoring rejects malformed angles/range before entering a worklet (0.476416ms)
+✔ Full playground camera alert → LOS break → investigation/search/return clears global pursuit and resumes theft sectors (250.296959ms)
+✔ Multiple cameras publish one consistent visible-player location and no hidden-source overwrite (14.016833ms)
+✔ Camera-only stage maintains alert during real sight and clears pursuit after sight is lost without phantom guards (7.9965ms)
+✔ V9 CCTV detects every gait within its near/general/far-edge timing band (10.605084ms)
+✔ V9 edge detection converges across gaits, without removing authored camera rate (2.278125ms)
+✔ V9 fractional gait stays continuous and monotonic for real locomotion transitions (4.288833ms)
+✔ The product is com.dontmove.removeads on the App Store and remove_ads on Google Play; other platforms have none (0.459583ms)
+✔ Available: title, what it is, the store price as given, a buy button and a restore button (6.9955ms)
+✔ No price is ever written in the app: the screen and its strings hold no currency amount (1.889ms)
+✔ Loading: "가격 불러오는 중..." where the price goes, and nothing can be bought yet (0.355209ms)
+✔ Product lookup failed: the error stays up and the main button becomes an enabled "다시 시도" (0.676958ms)
+✔ No state leaves a silent dead button: every disabled main button has a visible reason beside it (0.231ms)
+✔ Purchasing and restoring: the working button says so and both buttons are disabled (0.185916ms)
+✔ Purchased: "구매 완료", no buy button and no price; restore remains (0.171417ms)
+✔ A platform without a store product: not for sale, purchase and restore both disabled (1.19025ms)
+✔ Every purchase / restore result has its own sentence, in Korean and English, with no code in it (0.661208ms)
+✔ The card keeps to the monetization API: it defines no purchase or store call of its own (0.473458ms)
+ℹ tests 74
+ℹ suites 0
+ℹ pass 74
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2768.547875
+npm notice run mobile@1.0.0 test:analytics
+npm notice run node --import tsx --test src/game/analytics/__tests__/analytics.test.ts src/game/analytics/__tests__/analyticsFlush.test.ts
+✔ normalizeEvents drops malformed rows and keeps valid ones (0.96ms)
+✔ aggregates overview clear rate and mission rows (64.778167ms)
+✔ failures and controls and monetization aggregates (0.745875ms)
+✔ mapRemoteRows converts Supabase rows into local analytics events (0.115917ms)
+✔ secret tap unlocks after five taps inside the window (0.2755ms)
+✔ a burst of events (mission clear + transition) is one storage write, not one per event (1.066834ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 421.610125
+npm notice run mobile@1.0.0 test:transition
+npm notice run node --import tsx --test src/ui/__tests__/missionSwap.test.ts src/ui/__tests__/deviceKind.test.ts
+✔ iPad is recognised by either measured sign, never by isPad (false for this iPhone-only app on an iPad) (0.451791ms)
+✔ one decision feeds both consequences: the top inset and the first-run control mode (2.400166ms)
+✔ top inset: unchanged on every iPhone, pushed below the window controls on an iPad (0.252625ms)
+✔ first-run control mode: touch on an iPad, tilt elsewhere — and only when nothing was chosen (0.43725ms)
+✔ iPad: the default is not written over a choice — switch to Tilt in Settings, restart, still Tilt (2.107666ms)
+✔ every screen with a top-left control uses the iPad-aware inset (1.047208ms)
+✔ all 44 consecutive transitions 01-01 → … → 09-05: one mission at a time, right mission, progress kept (25.776417ms)
+✔ pressing Next again at any point of a transition does nothing: one ad, one transition, one mission (1.085792ms)
+✔ an ad that rejects, throws or closes badly is the same as no ad (1.508541ms)
+✔ a lost fade end, lost frames or a mission that never reports ready cannot leave a black screen or a locked button (7.231167ms)
+✔ if a step throws, the game recovers into the next mission with the lock released (0.409042ms)
+✔ Home or chapter select during a transition: the run is dropped, late signals do nothing, a new run works (0.178083ms)
+✔ the clear is on disk before navigation: a crash during the transition keeps record, best time and unlock (1.787167ms)
+✔ every mission starts clean: thief at rest at the entry, nothing carried over from the mission before (6.261875ms)
+✔ audio: the new mission is a new session — stealth music, no whistle or pickup replayed from the last one (0.168708ms)
+✔ prepared missions: only the one being played and the next are kept, across the whole campaign (0.270167ms)
+✔ the game screen mounts one StageGame and has no two-layer slide (1.323625ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 422.741125
+npm notice run mobile@1.0.0 test:crash-hotfix
+npm notice run node --test src/game/guards/__tests__/workletChase.test.cjs && node --import tsx --test src/game/guards/__tests__/theftSpottedCrash.test.ts src/game/guards/__tests__/animationBounds.test.ts
+✔ serialized vision reuses exact geometry and invalidates a closed door without stale captures (10.150375ms)
+✔ serialized Chase captures a finite body contact distance before its first tick (69.955292ms)
+✔ serialized pursuit cooldown with an empty blocked path invokes initialized fallback (7.298791ms)
+✔ serialized pursuit safely waits when no path or partial step can be traversed (5.622917ms)
+✔ serialized pursuit applies the same turn limit to path fallback and direct Chase (27.782875ms)
+✔ serialized guard update has no uninitialized worklet dependencies (0.23175ms)
+✔ invalid contact distance safely stops without poisoning the position (7.233625ms)
+✔ missing live target uses known finite LKP or stops safely (1.912834ms)
+✔ malformed path and invalid timing cannot produce nonfinite travel (28.783292ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4158.233833
+✔ every shipped player/guard state stays inside its own atlas across transitions (126.622291ms)
+✔ missing and empty clips fall back safely; invalid clocks use a valid frame (0.100625ms)
+✔ 01-03 A: stolen objective → spotted before theft dispatch → direct chase (60.50825ms)
+✔ 01-03 B: theft → spotted → direct chase (11.037041ms)
+✔ 01-03 C: theft → spotted → LOS break/search (9.252458ms)
+✔ 01-03 D: theft → spotted → capture (5.536ms)
+✔ 01-04 A: stolen objective → spotted before theft dispatch → direct chase (96.377209ms)
+✔ 01-04 B: theft → spotted → direct chase (1.410209ms)
+✔ 01-04 C: theft → spotted → LOS break/search (10.035375ms)
+✔ 01-04 D: theft → spotted → capture (18.0535ms)
+✔ 01-05 A: stolen objective → spotted before theft dispatch → direct chase (20.512583ms)
+✔ 01-05 B: theft → spotted → direct chase (1.536458ms)
+✔ 01-05 C: theft → spotted → LOS break/search (6.945375ms)
+✔ 01-05 D: theft → spotted → capture (5.127292ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 900.1735
+npm notice run mobile@1.0.0 test:environment
+npm notice run node --import tsx --test src/assets/environmentKit.test.ts src/game/levels/__tests__/galleryGlass.test.ts tools/environment/contract.test.ts tools/environment/catalogKit.test.ts
+✔ production PNG decoding preserves cropped pixels and normalized ground anchor (0.714375ms)
+✔ optional frame fallback and required production PNG errors are explicit (0.203084ms)
+✔ artwork selection is independent from collision and sight blockers (0.451292ms)
+✔ galleryGlassPanel: visible continuous glazing blocks bodies and passes sight (3.179083ms)
+✔ galleryGlassPanelVertical: visible continuous glazing blocks bodies and passes sight (0.396666ms)
+✔ Environment: catalog, kit image table and files name the same pictures, once each (1.31175ms)
+✔ Environment: every catalog entry carries footprint, collision and sight metadata (0.289292ms)
+✔ Environment: catalog metadata equals the runtime PROP_KIT entry of its physical kind (0.408125ms)
+✔ Environment: every campaign prop is a known kind with complete physics, and names a known picture (1.768625ms)
+✔ Valid tile40 independent PNG contract (2.826833ms)
+✔ Rejects escaping path, empty collision footprint and NaN scale (0.149375ms)
+✔ Pixel bounds ignore transparent margin and detect edge clipping (0.191667ms)
+✔ Opaque presentation/checkerboard image has no transparent background (0.104583ms)
+✔ Crop bounds cannot escape the actual PNG canvas (0.056917ms)
+✔ Phase4E pixel gate rejects empty, clipped and contaminated cutouts (0.203042ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 259.361792
+npm notice run mobile@1.0.0 test:doors
+npm notice run node --import tsx --test src/game/doors/__tests__/doors.test.ts src/game/doors/__tests__/doorIntegration.test.ts && node --test src/game/doors/__tests__/doorWorklet.test.cjs && node --test tools/campaign/v124aDoorArtWorklet.test.cjs
+✔ compile converts tile door transforms to world pixels and rejects invalid lockdown IDs (0.806917ms)
+✔ confirmed theft starts the escape-timer closure; phase changes do not reset and only designated door closes (83.749ms)
+✔ post-player-movement occupancy pauses closure and retry restores all doors (5.37475ms)
+✔ closed quick door forces reachable alternate route and leaves static graph unchanged (4.147792ms)
+✔ initially CLOSED glass door has effective movement collision before first player step but passes LOS (2.751ms)
+✔ door-free missions keep the original static fast path (0.791125ms)
+✔ open and closing doors allow actual player movement and LOS; closed solid door blocks both (1.961666ms)
+✔ closed glass door blocks movement but preserves CCTV/guard LOS (0.212791ms)
+✔ horizontal door pauses for full player/guard body contact without teleport (2.005875ms)
+✔ vertical door pauses for full player/guard body contact without teleport (0.172375ms)
+✔ actor entering near the final closing tick pauses and keeps aperture open (0.222458ms)
+✔ invalid timestep does not latch request or mutate state; repeated closure is idempotent (0.163375ms)
+✔ explicit ID requests close only intended doors; base geometry and other doors remain unchanged (0.234042ms)
+✔ circle clearance handles corners and fails safe for invalid actor data (0.170292ms)
+✔ invalid authored door geometry is rejected before worklet initialization (0.58125ms)
+✔ invalid style is rejected before native rendering (0.240291ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 275.201584
+✔ serialized door closures pause for actor occupancy then commit collision once (1.772458ms)
+✔ serialized actual simulation closes designated door and rebuilds effective nav at 28 seconds (17.555667ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4744.764584
+✔ all thirty-three chapter door styles prepare paints once and serialized leaves render all orientations/states (3.025542ms)
+✔ serialized closing panels change their drawn span with physical progress (0.176375ms)
+✔ Casino 4D profiles retain distinct open architecture and animate their own closure (0.213959ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1346.894792
+npm notice run mobile@1.0.0 test:ota
+npm notice run node --import tsx --test src/ota/*.test.ts
+✔ toast only on a newly applied downloaded update (1.868125ms)
+✔ a downloaded update that is not running reloads immediately (0.234875ms)
+✔ cold start stays on the splash until a downloaded bundle is running (0.21575ms)
+✔ applying is announced only when a newer bundle is in flight (0.154667ms)
+✔ seen id tracks the running bundle (0.15875ms)
+✔ cold launch: the Home intro does not start before startup is ready (0.491708ms)
+✔ startup ready: the Home intro starts exactly once (0.086375ms)
+✔ background resume: the Home intro is not played again (0.092291ms)
+✔ OTA reload: the new bundle is a new launch, so its Home intro plays (0.049667ms)
+✔ no update: checking → latest, and the app starts (0.409542ms)
+✔ update found: checking → downloading → applying, in that order (0.388084ms)
+✔ update found during a mission: nothing is downloaded or applied (0.253375ms)
+✔ apply: the applying screen is drawn before reload is called (29.721ms)
+✔ apply: a lost paint signal cannot block the update (11.26125ms)
+✔ offline or failing check: the app still starts on the bundle it has (0.685291ms)
+✔ offline is recognised from the error, in English or Korean, and other errors are not (0.243209ms)
+✔ the startup screen only ever says "applying", and only while an update is in flight (0.065916ms)
+✔ first install: no "update applied" toast (0.063792ms)
+✔ same OTA on the next launch: no toast (0.027084ms)
+✔ new OTA: the toast shows once (0.055209ms)
+✔ reload loop guard: an update that was restarted onto and is not running is not restarted onto again (0.070083ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60217.863625
+npm notice run mobile@1.0.0 test:performance
+npm notice run node --import tsx --test src/game/guards/__tests__/visionCache.test.ts && node --test src/ui/__tests__/frameScheduling.test.cjs
+✔ same geometry reuses fan while newly moving player is perceived every time (6.138125ms)
+✔ solid door coordinate changes invalidate fan even when array identity/length stays the same (0.181625ms)
+✔ uncached sweeping geometry cannot reuse an old snapshot when a camera starts waiting (0.10375ms)
+✔ cached and freshly rebuilt fans match through movement, turns, range and dynamic occlusion (7.926917ms)
+✔ near-blocker broad phase matches full blocker ray casts, including tangencies and distant structures (6.309958ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 599.136458
+✔ 90/120Hz callbacks keep the same 60Hz simulation budget without recording empty frames (146.058917ms)
+✔ caught/complete result scenes and paused/covered scenes do not keep modifying game state (6.942833ms)
+✔ Tilt input processing remains at callback cadence even when no simulation step is due (7.621333ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2487.560083

@@ -1,0 +1,11 @@
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "react-native-google-mobile-ads"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+The following packages should be updated for best compatibility with the installed expo version:
+  expo@57.0.27 - expected version: ~57.0.31
+  expo-asset@57.0.19 - expected version: ~57.0.20
+  expo-constants@57.0.21 - expected version: ~57.0.22
+  expo-dev-client@57.0.19 - expected version: ~57.0.20
+  expo-splash-screen@57.0.9 - expected version: ~57.0.10
+  expo-updates@57.0.25 - expected version: ~57.0.26
+Your project may not work correctly until you install the expected versions of the packages.
+Found outdated dependencies

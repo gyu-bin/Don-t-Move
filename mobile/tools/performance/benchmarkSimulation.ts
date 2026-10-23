@@ -80,7 +80,7 @@ for(const id of ['01-02','05-03','08-03'])for(const phase of ['patrol','theft','
   skipped:b.requests-b.rebuilds,stateIdentical:true,digest:b.digest};
  rows.push(row);console.log(JSON.stringify(row));
 }
-const out='docs/reports/performance/simulation-benchmark.json';
+const out=process.argv[3]??'docs/reports/performance/simulation-benchmark.json';
 fs.mkdirSync(path.dirname(out),{recursive:true});
 fs.writeFileSync(out,JSON.stringify({baselineRef,node:process.version,method:'Two private module loaders, same TypeScript compiler/dependencies/simulation code and maps; only old/new guardVision differs. 120s at60Hz, one warmup and5 interleaved A/B rounds. Full guard/CCTV/events snapshots excluding cache compared every10s.',
  scope:'Security simulation CPU on desktop Node only. Excludes render/GPU, Tilt, player movement and native energy/temperature. Patrol, empty-case theft and repeated hidden-LKP alert scenarios. No battery or gameplay-difficulty claim.',rows},null,2)+'\n');

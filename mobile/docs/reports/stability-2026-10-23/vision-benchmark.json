@@ -1,0 +1,118 @@
+{
+  "baselineRef": "6e867ba58948258cf1c1835f858088a7f4dd9b01",
+  "node": "v24.18.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "method": "12,000 equivalent vision-kernel queries, 1 warmup + 7 interleaved A/B rounds. Identical compiler and dependencies. Stationary, continuously moving and paired same-pose query scenarios. Geometry arrays compared exactly.",
+  "limitation": "Desktop Node CPU-kernel microbenchmark only. Not actual gameplay timings, phone battery drain, thermal improvement, GPU time, or human difficulty.",
+  "results": [
+    {
+      "id": "01-02",
+      "mode": "stationary",
+      "queries": 12000,
+      "blockers": 28,
+      "fanPoints": 45,
+      "beforeMedianMs": 1.46,
+      "afterMedianMs": 0.84,
+      "cpuKernelChangePercent": -42.75,
+      "rebuilt": 1,
+      "hits": 11999
+    },
+    {
+      "id": "01-02",
+      "mode": "moving",
+      "queries": 12000,
+      "blockers": 28,
+      "fanPoints": 45,
+      "beforeMedianMs": 19.11,
+      "afterMedianMs": 18.97,
+      "cpuKernelChangePercent": -0.71,
+      "rebuilt": 12000,
+      "hits": 0
+    },
+    {
+      "id": "01-02",
+      "mode": "repeat-observation",
+      "queries": 12000,
+      "blockers": 28,
+      "fanPoints": 45,
+      "beforeMedianMs": 10.15,
+      "afterMedianMs": 10.23,
+      "cpuKernelChangePercent": 0.75,
+      "rebuilt": 6000,
+      "hits": 6000
+    },
+    {
+      "id": "05-03",
+      "mode": "stationary",
+      "queries": 12000,
+      "blockers": 40,
+      "fanPoints": 43,
+      "beforeMedianMs": 1.14,
+      "afterMedianMs": 1.12,
+      "cpuKernelChangePercent": -1.92,
+      "rebuilt": 1,
+      "hits": 11999
+    },
+    {
+      "id": "05-03",
+      "mode": "moving",
+      "queries": 12000,
+      "blockers": 40,
+      "fanPoints": 43,
+      "beforeMedianMs": 20.92,
+      "afterMedianMs": 21.23,
+      "cpuKernelChangePercent": 1.45,
+      "rebuilt": 12000,
+      "hits": 0
+    },
+    {
+      "id": "05-03",
+      "mode": "repeat-observation",
+      "queries": 12000,
+      "blockers": 40,
+      "fanPoints": 43,
+      "beforeMedianMs": 11.23,
+      "afterMedianMs": 11.43,
+      "cpuKernelChangePercent": 1.72,
+      "rebuilt": 6000,
+      "hits": 6000
+    },
+    {
+      "id": "08-03",
+      "mode": "stationary",
+      "queries": 12000,
+      "blockers": 34,
+      "fanPoints": 39,
+      "beforeMedianMs": 1.03,
+      "afterMedianMs": 1.06,
+      "cpuKernelChangePercent": 2.57,
+      "rebuilt": 1,
+      "hits": 11999
+    },
+    {
+      "id": "08-03",
+      "mode": "moving",
+      "queries": 12000,
+      "blockers": 34,
+      "fanPoints": 39,
+      "beforeMedianMs": 21.73,
+      "afterMedianMs": 21.75,
+      "cpuKernelChangePercent": 0.09,
+      "rebuilt": 12000,
+      "hits": 0
+    },
+    {
+      "id": "08-03",
+      "mode": "repeat-observation",
+      "queries": 12000,
+      "blockers": 34,
+      "fanPoints": 39,
+      "beforeMedianMs": 11.48,
+      "afterMedianMs": 11.51,
+      "cpuKernelChangePercent": 0.24,
+      "rebuilt": 6000,
+      "hits": 6000
+    }
+  ]
+}

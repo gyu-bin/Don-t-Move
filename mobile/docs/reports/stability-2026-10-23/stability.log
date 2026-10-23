@@ -1,0 +1,60 @@
+npm notice run mobile@1.0.0 test:stability
+npm notice run node --test src/game/world/__tests__/collisionWorklet.test.cjs && node --import tsx --test src/game/world/__tests__/collisionStability.test.ts src/game/world/__tests__/wallSlide.test.ts src/game/playground/__tests__/tapToMove.test.ts src/game/monetization/__tests__/interstitialPresentation.test.ts src/game/monetization/__tests__/adsController.test.cjs
+✔ serialized collision and simulation captures have no undefined dependency (0.439959ms)
+✔ serialized collision cancels bad vectors without invoking an RN-only helper (0.463292ms)
+✔ serialized Tilt zero-delta frame does not poison velocity or gait (2.447291ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1547.548041
+[ADS] interstitial failed undefined
+✔ not-loaded ad skips immediately without starting load at navigation (42.040125ms)
+✔ the controller has no load-waiting entry point; an unloaded or failed ad is skipped in the same tick (11.210416ms)
+✔ an ad that finishes loading later is shown at the next clear, not waited for at this one (9.306ms)
+✔ presentation ERROR resolves navigation, concurrent requests show exactly once (9.70625ms)
+✔ disposed request stale load event cannot make replacement ad ready (8.006334ms)
+✔ remove ads cancels optional presentation and never preloads replacement (7.89075ms)
+✔ controller touch confirmation is inert when idle and before OPENED (13.449292ms)
+✔ owned entitlement suppresses preload, loaded ads and delayed clear requests (6.770667ms)
+✔ cached ownership blocks first preload; confirmed store revocation enables normal loading (7.144958ms)
+✔ closed/error duplicate events settle once and invoke native show once (1.6325ms)
+✔ show rejection and synchronous throw continue without hanging (0.204375ms)
+✔ ERROR cleans listeners and settles before any CLOSED event (0.086708ms)
+✔ missing presentation start callback has bounded fallback (14.166417ms)
+✔ normal visible ad is not ended by start watchdog (26.190042ms)
+✔ dispose cancels pending continuation exactly once (0.316459ms)
+✔ missing consumer close callback recovers only after SDK confirms ad ended (1002.00175ms)
+✔ touch confirmation recovers a lost close only after OPENED and its grace (32.735875ms)
+✔ tap-to-move walks round a structure that stands between the thief and the tapped point (43.399541ms)
+✔ tap-to-move keeps its pace past a corner instead of grinding along the wall (11.757ms)
+✔ invalid collision inputs cancel the whole frame without leaking NaN (1.047708ms)
+✔ invalid and zero delta cannot poison collision velocity or animation (5.490792ms)
+✔ simulation rejects invalid time and restores previously valid coordinates (1.242792ms)
+✔ boundary recovery cancels pathological traversal instead of unbounded iteration (1.934459ms)
+✔ repeated diagonal Run wall contact remains finite and movement drives animation (11.441083ms)
+✔ diagonal push into a wall slides along it at intended speed (1.110291ms)
+✔ shallow push still glides instead of crawling (0.2325ms)
+✔ pushing straight into a wall stops without drift or NaN (0.822125ms)
+✔ inside corner settles without vibration (0.792959ms)
+✔ leaving the wall does not jump above intended speed (0.350291ms)
+✔ clipping a structure corner by a hair no longer crawls down its long side (0.63725ms)
+✔ clipping a corner by most of the body radius is carried round without losing pace (0.7725ms)
+✔ rounding a corner is not reported as wall contact (0.58675ms)
+✔ an exact diagonal hit on a corner does not stall (1.182292ms)
+✔ pushing square into the middle of a face still stops (1.83ms)
+✔ rounding a corner is no faster than leaving a wall already was (6.396333ms)
+✔ corner assist never carries the body into a neighbouring blocker (1.464542ms)
+✔ hugging a structure keeps walking pace until the input is nearly square to it (3.525333ms)
+✔ from a standstill against the surface the slide is at pace within a fifth of a second (0.117041ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1220.228458

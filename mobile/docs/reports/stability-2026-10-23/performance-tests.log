@@ -1,0 +1,26 @@
+npm notice run mobile@1.0.0 test:performance
+npm notice run node --import tsx --test src/game/guards/__tests__/visionCache.test.ts && node --test src/ui/__tests__/frameScheduling.test.cjs
+✔ same geometry reuses fan while newly moving player is perceived every time (0.733083ms)
+✔ solid door coordinate changes invalidate fan even when array identity/length stays the same (0.130041ms)
+✔ uncached sweeping geometry cannot reuse an old snapshot when a camera starts waiting (0.074875ms)
+✔ cached and freshly rebuilt fans match through movement, turns, range and dynamic occlusion (2.839625ms)
+✔ near-blocker broad phase matches full blocker ray casts, including tangencies and distant structures (3.215375ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.243875
+✔ 90/120Hz callbacks keep the same 60Hz simulation budget without recording empty frames (4.099709ms)
+✔ caught/complete result scenes and paused/covered scenes do not keep modifying game state (1.166ms)
+✔ Tilt input processing remains at callback cadence even when no simulation step is due (0.516166ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 295.189875

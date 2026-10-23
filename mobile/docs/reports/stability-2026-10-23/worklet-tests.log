@@ -1,0 +1,17 @@
+✔ serialized vision reuses exact geometry and invalidates a closed door without stale captures (1.864458ms)
+✔ serialized Chase captures a finite body contact distance before its first tick (3.640333ms)
+✔ serialized pursuit cooldown with an empty blocked path invokes initialized fallback (1.9735ms)
+✔ serialized pursuit safely waits when no path or partial step can be traversed (1.723ms)
+✔ serialized pursuit applies the same turn limit to path fallback and direct Chase (1.692375ms)
+✔ serialized guard update has no uninitialized worklet dependencies (0.158042ms)
+✔ invalid contact distance safely stops without poisoning the position (6.567875ms)
+✔ missing live target uses known finite LKP or stops safely (1.791916ms)
+✔ malformed path and invalid timing cannot produce nonfinite travel (1.759583ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 612.075542

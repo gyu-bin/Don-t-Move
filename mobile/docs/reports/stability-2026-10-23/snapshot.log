@@ -1,0 +1,3 @@
+npm notice run mobile@1.0.0 campaign:snapshot
+npm notice run node --import tsx tools/campaign/v13Snapshot.ts check docs/design/v13/PHASE8_SNAPSHOT_HASHES.json
+45 / 45 SAME

@@ -46,7 +46,26 @@ test('intro final frame IS the lobby frame; old branding art and white diamond o
  assert(!/room-v2|player-v2|guard-v2|wall-v2|homeComposition/.test(src),'no legacy branding art or separate Home composition');
  for(const n of ['bg_museum','thief_peek','thief_sneak','thief_freeze','guard_away','guard_turn','fg_column_left'])assert(src.includes(`opening/${n}.png`),n);
  assert(!/M 195 452 L 219 478 L 195 516 L 171 478 Z/.test(src),'no white diamond overlay');
- assert(!readFileSync('app.json','utf8').includes('splash-mark'),'native splash has no diamond mark');
+});
+test('native splash keeps iOS plain and supplies the required Android drawable',()=>{
+ const {expo}=JSON.parse(readFileSync('app.json','utf8'));
+ const splash=expo.plugins.find((plugin:unknown)=>Array.isArray(plugin)&&plugin[0]==='expo-splash-screen')?.[1];
+ assert(splash,'native splash plugin must be configured');
+ assert.equal(splash.backgroundColor,BRAND.navy,'native splash matches the intro background');
+ // Android Release resource linking requires this drawable. Keep it platform-specific:
+ // moving it to the shared config would restore the unwanted diamond on iOS.
+ assert.equal(splash.image,undefined,'no shared splash image');
+ assert.equal(splash.dark?.image,undefined,'no shared dark-mode splash image');
+ assert.equal(splash.ios?.image,undefined,'iOS has no diamond mark');
+ assert.equal(splash.ios?.dark?.image,undefined,'iOS dark mode has no diamond mark');
+ assert.equal(expo.splash?.image,undefined,'legacy shared config cannot restore the mark');
+ assert.equal(expo.ios?.splash?.image,undefined,'legacy iOS config cannot restore the mark');
+ assert.equal(splash.android?.image,'./assets/branding/splash-mark.png');
+ assert.equal(splash.android.imageWidth,120);
+ assert.equal(splash.android.resizeMode,'contain');
+ const image=readFileSync(splash.android.image);
+ assert.equal(image.subarray(0,8).toString('hex'),'89504e470d0a1a0a','Android drawable is a real PNG');
+ assert(image.readUInt32BE(16)>0&&image.readUInt32BE(20)>0,'Android drawable has nonzero dimensions');
 });
 test('skip/unmount cancels every cue, mute schedules none, replay has fresh cues',()=>{
  const pending:(()=>void)[]=[],emitted:string[]=[];
