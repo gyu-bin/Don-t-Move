@@ -133,6 +133,68 @@ not the current manifest. Visual acceptance remains listed in
 with actual gait readability and pre-baked lighting/materials before adding costly
 live effects. No image generation was performed.
 
+## Follow-up: sprint exposure experiment (2026-10-30)
+
+The Run movement factor of 1.95 was evaluated against the existing 1.6, with
+all other gait factors, movement speeds, difficulty multipliers and maps held
+constant. For the constant-visibility, equal-distance comparison above, the
+candidate accumulates 1.17 times Walk's suspicion instead of 0.96 times.
+**The candidate was not applied:** the existing 01-05 full-heist witness is
+caught at 22.6s instead of clearing. All production tuning remains unchanged.
+
+Re-running the same fixed-route Run approach matrix (12 runs per mission) gave
+01-02: 2→1 clears and 0→1 spotted; 05-03: 2→1 clears and 2→3 spotted;
+08-03: 3→2 clears and 2→6 spotted. Escape is always Run in these simulations,
+including when the approach uses another gait. These fixed routes do not model
+human observation and waiting, so the numbers neither establish fairness nor
+prove Chapter 8 is hard enough. No candidate mission layouts were applied.
+
+A 2.2 trial failed the existing close-range Global Alert replay; 2.0 failed
+the close-range detection-time requirement. At 1.95 those two tests passed, but
+the campaign suite had 611 passes and 3 failures: the 01-05 witness above and
+two historical checks which pin the unchanged guard tuning file. Values from
+1.75 to 1.90 also failed that witness; 1.70 passed. A global change cannot be
+accepted solely on the representative route bots. Future work should examine
+01-05 and late-chapter observation/waiting choices and require real play.
+
+With production tuning restored, the campaign suite passed 612/614. The two
+remaining historical scope checks pin `src/game/security/cctv.ts` to its older
+hash and also fail on the previously committed performance optimization;
+the 01-05 witness passes again. These hash checks were not modified.
+
+Reproduce the offline candidate without changing game tuning or overwriting the
+baseline report: `npm run perf:gameplay -- /tmp/run-risk-195.json 1.95`.
+
+## Applied follow-up: 08-03 connector patrol (2026-10-30)
+
+Only 08-03 changes. The North Lane guard now inspects the actual upper
+connector at (15.25, 8.8) from its existing post and waits 4s instead of 3s.
+The authored target determines initial facing, sprite direction and the visible
+cone through the existing runtime. Guard pace, perception, CCTV, geometry,
+objective, escape routes and all other 44 mission snapshots are unchanged.
+The source is `HQ_PATROL` in `tools/campaign/v13Late.ts`, recorded in the
+mission override index; the game data is rebuilt from that source.
+
+[`hq-patrol-trial.json`](hq-patrol-trial.json) records 28 full-heist runs per
+variant: both approaches, both escapes and seven departure delays. Fixed Run
+departures produced 5→4 clears and 6→8 spotted runs. On the safe approach with
+the quick escape, departure delays 2/4/6s still clear. On the risk approach,
+delay 8s formerly cleared blindly and now attracts attention; delay 0s still
+clears. This is a small timing-window adjustment, not certification of overall
+Chapter 8 difficulty. All clears use the actual objective/exit/AI runtime.
+
+`v13Integrity.test.ts` now retains these safe witnesses and the risk-window
+comparison. Topology/security audit: 45/45 clean with its one existing known
+finding. Original/current snapshots differ only for 08-03, and its expected
+snapshot was refreshed after that comparison. Human Tilt difficulty, phone
+temperature and battery testing are pending. No release was published.
+
+Final campaign result: 613/615 PASS, with only the two pre-existing CCTV hash
+checks described above failing. Focused V13 tests: 16/16 PASS. Campaign and
+performance TypeScript and changed-tool lint pass. `npm test` reaches the
+existing native-splash assertion and stops; full app lint/typecheck still
+report the previously listed missing dependencies and require warning.
+
 ## Reproduce
 
 From `mobile/`:

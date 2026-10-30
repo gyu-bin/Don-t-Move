@@ -63053,12 +63053,12 @@
         "id": "08-03-g2",
         "role": "corridor",
         "routeId": "08-03-g2",
-        "facing": -0.17219081452293913,
+        "facing": -0.8760580505981933,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.8,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": -0.17219081452293913,
+        "initialFacing": -0.8760580505981933,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -63240,8 +63240,8 @@
           {
             "x": 13.5,
             "y": 10.9,
-            "waitDuration": 3,
-            "lookDirection": -0.17219081452293913,
+            "waitDuration": 4,
+            "lookDirection": -0.8760580505981933,
             "turnDuration": 0.4
           },
           {

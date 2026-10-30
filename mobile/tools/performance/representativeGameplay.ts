@@ -7,10 +7,17 @@ import {auditDifficulty} from '../campaign/chapterDifficultyAudit';
 import {heistRun,HEIST_MATRIX} from '../campaign/v12Phase5Bot';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
 import {clearSegment} from '../../src/game/world/navigation';
-import {BODY} from '../../src/game/guards/guardTuning';
-import {GUARD_TUNING} from '../../src/game/guards/guardTuning';
+import {BODY,GUARD_TUNING} from '../../src/game/guards/guardTuning';
 import {GAIT_SPEED} from '../../src/game/core/locomotion';
 import {exposureRun} from '../campaign/cameraExposure';
+
+// Optional experiment affects only this offline process, never the game or baked maps.
+// Usage: npm run perf:gameplay -- /tmp/result.json 1.95
+const trialRunFactor = process.argv[3] === undefined ? undefined : Number(process.argv[3]);
+if (trialRunFactor !== undefined) {
+ if (!Number.isFinite(trialRunFactor) || trialRunFactor <= 0) throw new Error('Run factor must be a positive number');
+ (GUARD_TUNING.movementFactor as unknown as number[])[3] = trialRunFactor;
+}
 
 function candidate(source:StageDefinition):StageDefinition {
  const s=structuredClone(source);
@@ -83,6 +90,7 @@ for(const id of ['01-02','05-03','08-03']){
 const out=process.argv[2]??'docs/reports/performance/representative-gameplay.json';
 fs.mkdirSync(path.dirname(out),{recursive:true});
 fs.writeFileSync(out,JSON.stringify({method:'60s actual patrol/CCTV sampled2Hz plus 24 cone-aware full-heist runs and36 fixed-route/gait runs per variant (3 gaits ×2 approaches ×2 escapes ×3 delays). Keep-distance bot option is off; replays are proxies, not human success rates. Escape always runs in the fixed-gait runner, so its gait comparison applies to approach only. Existing timer/collision retained.',
+ trialRunFactor:trialRunFactor??null,
  sameDistanceRisk:{assumptions:'Constant gait, equal path, same observer/distance/cone/body visibility and no saturation/decay. Algebraic exposure comparison, not a complete detection-time model.',
   speedWalk:GAIT_SPEED[2],speedRun:GAIT_SPEED[3],walkGain:GUARD_TUNING.movementFactor[2],runGain:GUARD_TUNING.movementFactor[3],
   runToWalkGainPerDistance:(GUARD_TUNING.movementFactor[3]/GAIT_SPEED[3])/(GUARD_TUNING.movementFactor[2]/GAIT_SPEED[2])},

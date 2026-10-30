@@ -17,11 +17,35 @@ import {V13_LAB,V13_LAB_FROZEN} from './v13Lab';
 import {V13_GALLERY} from './v13Gallery';
 import {V13_BANK} from './v13Bank';
 import {PHASE7,REPLACED,LANES,LATE} from './v13Phase7';
-import {PINNED} from './v13Late';
+import {PINNED,HQ_PATROL} from './v13Late';
+import {exposureRun} from './cameraExposure';
 import {EXTRA_CAMERA,MOVED,PATROL} from './v13Casino';
 import {AUTHORED_IN_PLAN,missionOverrideIndex,missionOverrides,STAGES} from './v13Overrides';
 
 const live=current as unknown as StageDefinition[];
+
+test('08-03: authored connector inspection preserves safe timing while closing one blind sprint departure',()=>{
+ const mission=live.find(s=>s.id==='08-03')!,g=mission.guards.find(g=>g.id==='08-03-g2')!;
+ const route=mission.patrolRoutes!.find(r=>r.id===g.routeId)!;
+ const stop=route.points[0],own=HQ_PATROL[mission.id];
+ assert.equal(stop.waitDuration,own.wait);
+ assert.equal(stop.lookDirection,Math.atan2(own.look.y-stop.y,own.look.x-stop.x));
+ assert.equal(g.initialFacing,stop.lookDirection);
+ assert(missionOverrides(mission.id).some(e=>e.table==='HQ_PATROL'));
+ // Same physical routes/AI: only restore the previous watch target and duration for A/B.
+ const before=structuredClone(mission),oldGuard=before.guards.find(q=>q.id===g.id)!;
+ const oldStop=before.patrolRoutes!.find(r=>r.id===oldGuard.routeId)!.points[0];
+ oldStop.waitDuration=3;oldStop.lookDirection=Math.atan2(10.5-oldStop.y,15.8-oldStop.x);
+ oldGuard.facing=oldGuard.initialFacing=oldStop.lookDirection;
+ for(const delay of [2,4,6]){
+  assert(exposureRun(before,0,0,3,delay).clear,`baseline safe ${delay}`);
+  assert(exposureRun(mission,0,0,3,delay).clear,`safe ${delay} must remain playable`);
+ }
+ assert(exposureRun(before,1,0,3,8).clear,'baseline blind sprint');
+ const careless=exposureRun(mission,1,0,3,8);
+ assert(!careless.clear&&careless.spottedBy,'later blind sprint now draws attention');
+ assert(exposureRun(mission,1,0,3,0).clear,'risk route retains a timed opening');
+});
 
 test('Campaign: 9 chapters × 5 missions = 45, counted in one place',()=>{
  assert.equal(CHAPTER_COUNT,9);assert.deepEqual([...CHAPTER_MISSION_COUNTS],[5,5,5,5,5,5,5,5,5]);assert.equal(MISSION_COUNT,45);

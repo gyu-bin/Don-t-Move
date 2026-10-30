@@ -19,7 +19,7 @@
  *   npm run campaign:overrides -- 04-05     one mission
  */
 import {PHASE7,REPLACED,LANES,LATE,type LaneOp} from './v13Phase7';
-import {PINNED} from './v13Late';
+import {PINNED,HQ_PATROL} from './v13Late';
 import {EXTRA_CAMERA,ROTATE,MOVED,PATROL} from './v13Casino';
 import {DERIVED_FROM,baseMissionOf,type DerivedChapter} from './v13Sources';
 
@@ -64,6 +64,8 @@ function own(id:string):OverrideEntry[]{
  if(id==='07-05')out.push({mission:id,stage:'5 derive',category:'refit exception',file:'v13Late.ts',table:'WAREHOUSE (mission===4)',detail:'desk slots become conveyors instead of workbenches',why:'both desks stand beside a waiting pocket, where the deeper workbench does not fit'});
  for(const [zone,at] of Object.entries(PINNED[id]??{}))out.push({mission:id,stage:'6 pin',category:'camera pinned',file:'v13Late.ts',table:'PINNED',detail:`generated camera of zone ${zone} held at ${p(at)}`,why:'secure() would re-seat it after the furniture change'});
  if(LATE[id])out.push(...laneEntries(id,LATE[id].ops,LATE[id].why,'7 late','LATE'));
+ const patrol=HQ_PATROL[id];
+ if(patrol)out.push({mission:id,stage:'7 late',category:'patrol stop',file:'v13Late.ts',table:'HQ_PATROL',detail:`${patrol.zone} first stop looks at ${p(patrol.look)}, waits ${patrol.wait}s`,why:'Watch the real upper connector, with a longer inspection and a walking blind window'});
  return out;
 }
 /** Every override that reaches a mission: inherited ones first (they are applied first), then its own, in stage order. */
