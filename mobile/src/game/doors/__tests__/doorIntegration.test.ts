@@ -69,6 +69,8 @@ test('closed quick door forces reachable alternate route and leaves static graph
  let x=sx,y=sy;
  for(let i=0;i<path.length;i+=2){assert.ok(clearSegment(x,y,path[i],path[i+1],effective.blockers,BODY.guardRadius));x=path[i];y=path[i+1];}
  assert.equal(JSON.stringify(nav),before);
+ assert.equal(navigationWithDoors(nav,[]),nav,'reopening reuses the immutable base graph');
+ assert(clearSegment(sx,sy,tx,ty,navigationWithDoors(nav,[]).blockers,BODY.guardRadius),'reopened shortcut is available again');
 });
 
 test('initially CLOSED glass door has effective movement collision before first player step but passes LOS',()=>{

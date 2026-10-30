@@ -62,23 +62,23 @@
         "kind": "counter",
         "visualAssetId": "museum_security_desk",
         "x": 6.2,
-        "y": 16.805,
+        "y": 17.405,
         "scale": 2.2,
         "collisionScale": 2.2
       },
       {
         "kind": "pillar",
         "visualAssetId": "museum_column",
-        "x": 12.2,
-        "y": 17.42,
+        "x": 11.4,
+        "y": 17.52,
         "scale": 1.8,
         "collisionScale": 1.8
       },
       {
         "kind": "displayCase",
         "visualAssetId": "museum_display_case_large",
-        "x": 16,
-        "y": 17.69,
+        "x": 15.4,
+        "y": 17.59,
         "scale": 2.2,
         "collisionScale": 2.2
       },
@@ -101,7 +101,7 @@
       {
         "kind": "partition",
         "visualAssetId": "museum_partition",
-        "x": 17.5,
+        "x": 18.6,
         "y": 10.055,
         "scale": 2.6,
         "collisionScale": 2.6
@@ -181,7 +181,7 @@
         "intensity": 0.3
       },
       {
-        "x": 17.5,
+        "x": 15.5,
         "y": 7,
         "radius": 4.8999999999999995,
         "kind": "warm",
@@ -246,15 +246,15 @@
             "y": 11.75
           },
           {
-            "x": 13.5,
-            "y": 15
+            "x": 9,
+            "y": 16
           }
         ],
-        "initialFacing": -0.06656816377582381,
+        "initialFacing": 1.837048375945822,
         "x": 10.25,
         "y": 11.75,
         "routeId": "01-01-g1",
-        "facing": -0.06656816377582381,
+        "facing": 1.837048375945822,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 3.5,
@@ -268,8 +268,16 @@
                 "y": 11.75
               },
               {
-                "x": 13.5,
-                "y": 15
+                "x": 9,
+                "y": 16
+              },
+              {
+                "x": 13.1,
+                "y": 15.1
+              },
+              {
+                "x": 17.5,
+                "y": 15.3
               }
             ]
           }
@@ -315,7 +323,7 @@
                 "y": 8.25
               },
               {
-                "x": 14.75,
+                "x": 15.5,
                 "y": 8.5
               },
               {
@@ -335,29 +343,43 @@
           {
             "x": 10.25,
             "y": 11.75,
-            "waitDuration": 3,
-            "lookDirection": -0.06656816377582381,
+            "waitDuration": 2.5,
+            "lookDirection": 1.837048375945822,
             "turnDuration": 0.4
           },
           {
-            "x": 10.75,
-            "y": 14.25,
-            "waitDuration": 0,
-            "lookDirection": 1.373400766945016,
+            "x": 9,
+            "y": 16,
+            "waitDuration": 2,
+            "lookDirection": 2.356194490192345,
             "turnDuration": 0.4
           },
           {
-            "x": 13.5,
-            "y": 15,
-            "waitDuration": 3,
-            "lookDirection": 0,
+            "x": 13.1,
+            "y": 15.1,
+            "waitDuration": 2.5,
+            "lookDirection": 1.8490959858000082,
             "turnDuration": 0.4
           },
           {
-            "x": 10.75,
-            "y": 14.25,
-            "waitDuration": 0,
-            "lookDirection": -2.875340604438868,
+            "x": 17.5,
+            "y": 15.3,
+            "waitDuration": 2.5,
+            "lookDirection": 2.0481417091685685,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 13.1,
+            "y": 15.1,
+            "waitDuration": 2.5,
+            "lookDirection": 1.8490959858000082,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 9,
+            "y": 16,
+            "waitDuration": 2,
+            "lookDirection": 2.356194490192345,
             "turnDuration": 0.4
           }
         ]
@@ -388,24 +410,24 @@
             "turnDuration": 0.4
           },
           {
-            "x": 14.75,
+            "x": 15.5,
             "y": 8.5,
-            "waitDuration": 0,
-            "lookDirection": 1.5707963267948966,
+            "waitDuration": 3,
+            "lookDirection": 1.0563450137358688,
             "turnDuration": 0.4
           },
           {
             "x": 14.75,
             "y": 11,
-            "waitDuration": 7,
+            "waitDuration": 3,
             "lookDirection": 3.050932766389048,
             "turnDuration": 0.4
           },
           {
-            "x": 14.75,
+            "x": 15.5,
             "y": 8.5,
-            "waitDuration": 0,
-            "lookDirection": 1.5707963267948966,
+            "waitDuration": 3,
+            "lookDirection": 1.0563450137358688,
             "turnDuration": 0.4
           },
           {
@@ -467,55 +489,79 @@
           },
           {
             "x": 4.25,
-            "y": 14.75
-          },
-          {
-            "x": 8.25,
-            "y": 14.75
+            "y": 18.25
           },
           {
             "x": 9.5,
-            "y": 16.5
+            "y": 18
           },
           {
             "x": 9.5,
             "y": 18.25
           },
           {
-            "x": 17.5,
+            "x": 11.5,
             "y": 18.25
+          },
+          {
+            "x": 11.5,
+            "y": 18.15
+          },
+          {
+            "x": 15.9,
+            "y": 18.15
+          },
+          {
+            "x": 15.9,
+            "y": 18.4
+          },
+          {
+            "x": 18.25,
+            "y": 18.4
           },
           {
             "x": 18.25,
             "y": 18.25
           },
           {
-            "x": 17.75,
-            "y": 14.25
+            "x": 17.5,
+            "y": 18.25
           },
           {
             "x": 17.5,
             "y": 13.5
           },
           {
-            "x": 17.5,
+            "x": 18,
+            "y": 13.5
+          },
+          {
+            "x": 18,
+            "y": 10.8
+          },
+          {
+            "x": 15.6,
+            "y": 10.8
+          },
+          {
+            "x": 15.6,
+            "y": 11.2
+          },
+          {
+            "x": 15.5,
+            "y": 11.2
+          },
+          {
+            "x": 15.5,
             "y": 11.5
           },
           {
-            "x": 15.25,
-            "y": 10.75
+            "x": 15.5,
+            "y": 8
           },
           {
-            "x": 14.75,
-            "y": 9.75
-          },
-          {
-            "x": 15.25,
-            "y": 8.25
-          },
-          {
-            "x": 16.75,
-            "y": 7.75
+            "x": 17.5,
+            "y": 8
           },
           {
             "x": 17.5,
@@ -544,15 +590,11 @@
           },
           {
             "x": 4.25,
-            "y": 14.75
-          },
-          {
-            "x": 8.25,
-            "y": 14.75
+            "y": 18.25
           },
           {
             "x": 9.5,
-            "y": 16.5
+            "y": 18
           },
           {
             "x": 9.5,
@@ -575,24 +617,16 @@
             "y": 11.5
           },
           {
-            "x": 17.5,
+            "x": 15.5,
             "y": 11.5
           },
           {
-            "x": 15.25,
-            "y": 10.75
+            "x": 15.5,
+            "y": 8
           },
           {
-            "x": 14.75,
-            "y": 9.75
-          },
-          {
-            "x": 15.25,
-            "y": 8.25
-          },
-          {
-            "x": 16.75,
-            "y": 7.75
+            "x": 17.5,
+            "y": 8
           },
           {
             "x": 17.5,
@@ -671,19 +705,15 @@
             "y": 8.25
           },
           {
-            "x": 14.75,
-            "y": 8.75
-          },
-          {
-            "x": 14.75,
-            "y": 10.25
-          },
-          {
-            "x": 15.25,
+            "x": 16.25,
             "y": 10.75
           },
           {
             "x": 17.5,
+            "y": 11.5
+          },
+          {
+            "x": 15.5,
             "y": 11.5
           },
           {
@@ -793,9 +823,9 @@
         "id": "wallGallery",
         "name": "Collection Wall Gallery",
         "role": "restricted",
-        "purpose": "Last cover before the Collection Room door",
+        "purpose": "Wait below the exhibition partition; peek through its west opening before the collection door",
         "hub": {
-          "x": 17.5,
+          "x": 15.5,
           "y": 11.5
         },
         "x": 13,
@@ -821,7 +851,7 @@
         "id": "hall",
         "name": "Entrance Hall",
         "role": "public",
-        "purpose": "Safe lane east along the south wall, covered by the column and the long case",
+        "purpose": "Desk → column → case: short exposed moves between solid hiding places",
         "hub": {
           "x": 9.5,
           "y": 18.25
@@ -835,15 +865,15 @@
         "id": "lobby",
         "name": "Entrance Lobby",
         "role": "public",
-        "purpose": "Arrival behind the security desk; first look at the hall guard",
+        "purpose": "Observe behind the desk, then cross when the hall guard walks away",
+        "hub": {
+          "x": 3.5,
+          "y": 18
+        },
         "x": 1,
         "y": 14,
         "w": 7,
-        "h": 5,
-        "hub": {
-          "x": 3.5,
-          "y": 16.5
-        }
+        "h": 5
       }
     ],
     "doors": [
@@ -943,9 +973,9 @@
           "id": "wallGallery",
           "name": "Collection Wall Gallery",
           "role": "restricted",
-          "purpose": "Last cover before the Collection Room door",
+          "purpose": "Wait below the exhibition partition; peek through its west opening before the collection door",
           "hub": {
-            "x": 17.5,
+            "x": 15.5,
             "y": 11.5
           },
           "x": 13,
@@ -971,7 +1001,7 @@
           "id": "hall",
           "name": "Entrance Hall",
           "role": "public",
-          "purpose": "Safe lane east along the south wall, covered by the column and the long case",
+          "purpose": "Desk → column → case: short exposed moves between solid hiding places",
           "hub": {
             "x": 9.5,
             "y": 18.25
@@ -985,15 +1015,15 @@
           "id": "lobby",
           "name": "Entrance Lobby",
           "role": "public",
-          "purpose": "Arrival behind the security desk; first look at the hall guard",
+          "purpose": "Observe behind the desk, then cross when the hall guard walks away",
+          "hub": {
+            "x": 3.5,
+            "y": 18
+          },
           "x": 1,
           "y": 14,
           "w": 7,
-          "h": 5,
-          "hub": {
-            "x": 3.5,
-            "y": 16.5
-          }
+          "h": 5
         }
       ],
       "edges": [
@@ -1004,7 +1034,7 @@
           "via": [
             {
               "x": 9.5,
-              "y": 16.5
+              "y": 18
             }
           ]
         },
@@ -1014,12 +1044,56 @@
           "role": "approach",
           "via": [
             {
+              "x": 11.5,
+              "y": 18.25
+            },
+            {
+              "x": 11.5,
+              "y": 18.15
+            },
+            {
+              "x": 15.9,
+              "y": 18.15
+            },
+            {
+              "x": 15.9,
+              "y": 18.4
+            },
+            {
+              "x": 18.25,
+              "y": 18.4
+            },
+            {
+              "x": 18.25,
+              "y": 18.25
+            },
+            {
               "x": 17.5,
               "y": 18.25
             },
             {
               "x": 17.5,
               "y": 13.5
+            },
+            {
+              "x": 18,
+              "y": 13.5
+            },
+            {
+              "x": 18,
+              "y": 10.8
+            },
+            {
+              "x": 15.6,
+              "y": 10.8
+            },
+            {
+              "x": 15.6,
+              "y": 11.2
+            },
+            {
+              "x": 15.5,
+              "y": 11.2
             }
           ]
         },
@@ -1035,6 +1109,14 @@
             "orientation": "horizontal"
           },
           "via": [
+            {
+              "x": 15.5,
+              "y": 8
+            },
+            {
+              "x": 17.5,
+              "y": 8
+            },
             {
               "x": 17.5,
               "y": 6.5
@@ -1106,6 +1188,10 @@
             {
               "x": 17.5,
               "y": 6.5
+            },
+            {
+              "x": 17.5,
+              "y": 11.5
             }
           ]
         },
@@ -1204,23 +1290,23 @@
           "kind": "counter",
           "visualAssetId": "museum_security_desk",
           "x": 6.2,
-          "y": 16.805,
+          "y": 17.405,
           "scale": 2.2,
           "collisionScale": 2.2
         },
         {
           "kind": "pillar",
           "visualAssetId": "museum_column",
-          "x": 12.2,
-          "y": 17.42,
+          "x": 11.4,
+          "y": 17.52,
           "scale": 1.8,
           "collisionScale": 1.8
         },
         {
           "kind": "displayCase",
           "visualAssetId": "museum_display_case_large",
-          "x": 16,
-          "y": 17.69,
+          "x": 15.4,
+          "y": 17.59,
           "scale": 2.2,
           "collisionScale": 2.2
         },
@@ -1243,7 +1329,7 @@
         {
           "kind": "partition",
           "visualAssetId": "museum_partition",
-          "x": 17.5,
+          "x": 18.6,
           "y": 10.055,
           "scale": 2.6,
           "collisionScale": 2.6
@@ -1394,8 +1480,16 @@
               "y": 11.75
             },
             {
-              "x": 13.5,
-              "y": 15
+              "x": 9,
+              "y": 16
+            },
+            {
+              "x": 13.1,
+              "y": 15.1
+            },
+            {
+              "x": 17.5,
+              "y": 15.3
             }
           ],
           "role": "room"
@@ -1416,7 +1510,7 @@
               "y": 8.25
             },
             {
-              "x": 14.75,
+              "x": 15.5,
               "y": 8.5
             },
             {
@@ -1441,7 +1535,7 @@
           "y": 8.25
         },
         {
-          "x": 14.75,
+          "x": 15.5,
           "y": 8.5
         },
         {
@@ -1716,10 +1810,10 @@
     "guards": [
       {
         "id": "01-02-g1",
-        "x": 9.75,
-        "y": 12.25,
-        "facing": 3.141592653589793,
-        "initialFacing": 3.141592653589793,
+        "x": 9.7,
+        "y": 13.98,
+        "facing": 0.5571087457224128,
+        "initialFacing": 0.5571087457224128,
         "routeId": "01-02-g1",
         "role": "corridor",
         "theftRole": "zone",
@@ -1729,8 +1823,8 @@
         "startDelay": 0,
         "theftPosts": [
           {
-            "x": 9.75,
-            "y": 12.25
+            "x": 9.7,
+            "y": 13.98
           },
           {
             "x": 12.5,
@@ -1742,8 +1836,8 @@
             "id": "01-02-g1: Rotunda Floor",
             "anchors": [
               {
-                "x": 9.75,
-                "y": 12.25
+                "x": 9.7,
+                "y": 13.98
               },
               {
                 "x": 12.5,
@@ -1776,8 +1870,8 @@
             "y": 2.75
           },
           {
-            "x": 6.5,
-            "y": 8.25
+            "x": 7.1,
+            "y": 9.8
           }
         ],
         "theftSearchSectors": [
@@ -1789,8 +1883,8 @@
                 "y": 2.75
               },
               {
-                "x": 6.5,
-                "y": 8.25
+                "x": 7.1,
+                "y": 9.8
               }
             ]
           }
@@ -1803,24 +1897,24 @@
         "mode": "loop",
         "points": [
           {
-            "x": 9.75,
-            "y": 12.25,
+            "x": 9.7,
+            "y": 13.98,
             "waitDuration": 2.5,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 0.5571087457224128,
             "turnDuration": 0.4
           },
           {
             "x": 10.75,
             "y": 10.75,
             "waitDuration": 0,
-            "lookDirection": -0.982793723247329,
+            "lookDirection": -1.2564944242104974,
             "turnDuration": 0.4
           },
           {
             "x": 12.5,
             "y": 10.25,
             "waitDuration": 2,
-            "lookDirection": -2.79856871316909,
+            "lookDirection": -2.438733292811391,
             "turnDuration": 0.4
           },
           {
@@ -1848,7 +1942,7 @@
             "x": 12.5,
             "y": 10.25,
             "waitDuration": 2,
-            "lookDirection": -2.79856871316909,
+            "lookDirection": -2.438733292811391,
             "turnDuration": 0.4
           },
           {
@@ -1879,17 +1973,17 @@
             "turnDuration": 0.4
           },
           {
-            "x": 6.5,
-            "y": 8.25,
+            "x": 7.1,
+            "y": 9.8,
             "waitDuration": 4,
-            "lookDirection": 1.9513027039072617,
+            "lookDirection": 2.612483325882535,
             "turnDuration": 0.4
           },
           {
             "x": 5.25,
             "y": 2.75,
             "waitDuration": 0,
-            "lookDirection": -1.7942729279355298,
+            "lookDirection": -1.827421717857153,
             "turnDuration": 0.4
           }
         ]
@@ -2869,8 +2963,8 @@
           "room": "rotunda",
           "points": [
             {
-              "x": 9.75,
-              "y": 12.25
+              "x": 9.7,
+              "y": 13.98
             },
             {
               "x": 12.5,
@@ -2891,8 +2985,8 @@
               "y": 2.75
             },
             {
-              "x": 6.5,
-              "y": 8.25
+              "x": 7.1,
+              "y": 9.8
             }
           ],
           "role": "objective"
@@ -2904,8 +2998,8 @@
           "y": 2.75
         },
         {
-          "x": 6.5,
-          "y": 8.25
+          "x": 7.1,
+          "y": 9.8
         }
       ],
       "cameras": [],
@@ -3158,10 +3252,10 @@
     "guards": [
       {
         "id": "01-03-g1",
-        "x": 7.25,
-        "y": 9,
-        "facing": -2.988943325194528,
-        "initialFacing": -2.988943325194528,
+        "x": 6.84,
+        "y": 7.72,
+        "facing": 0.5392761190033238,
+        "initialFacing": 0.5392761190033238,
         "routeId": "01-03-g1",
         "role": "room",
         "theftRole": "zone",
@@ -3171,12 +3265,12 @@
         "startDelay": 0,
         "theftPosts": [
           {
-            "x": 7.25,
-            "y": 9
+            "x": 6.84,
+            "y": 7.72
           },
           {
-            "x": 7.5,
-            "y": 12.5
+            "x": 7.556,
+            "y": 13.164
           }
         ],
         "theftSearchSectors": [
@@ -3184,12 +3278,12 @@
             "id": "01-03-g1: Conservation Workspace",
             "anchors": [
               {
-                "x": 7.25,
-                "y": 9
+                "x": 6.84,
+                "y": 7.72
               },
               {
-                "x": 7.5,
-                "y": 12.5
+                "x": 7.556,
+                "y": 13.164
               }
             ]
           }
@@ -3241,38 +3335,38 @@
         "mode": "loop",
         "points": [
           {
-            "x": 7.25,
-            "y": 9,
+            "x": 6.84,
+            "y": 7.72,
             "waitDuration": 3,
-            "lookDirection": -2.988943325194528,
+            "lookDirection": 0.5392761190033238,
             "turnDuration": 0.4
           },
           {
             "x": 8.75,
             "y": 10.25,
             "waitDuration": 0,
-            "lookDirection": 0.6947382761967033,
+            "lookDirection": 0.9241406543331354,
             "turnDuration": 0.4
           },
           {
-            "x": 8.75,
-            "y": 11.75,
+            "x": 8.25,
+            "y": 12.25,
             "waitDuration": 0,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 1.8157749899217608,
             "turnDuration": 0.4
           },
           {
-            "x": 7.5,
-            "y": 12.5,
+            "x": 7.556,
+            "y": 13.164,
             "waitDuration": 3,
-            "lookDirection": 1.2924966677897853,
+            "lookDirection": 1.9662594721206748,
             "turnDuration": 0.4
           },
           {
             "x": 8.75,
-            "y": 11.75,
+            "y": 11.25,
             "waitDuration": 0,
-            "lookDirection": -0.5404195002705842,
+            "lookDirection": -1.0130427964202227,
             "turnDuration": 0.4
           },
           {
@@ -4288,12 +4382,12 @@
           "room": "workspace",
           "points": [
             {
-              "x": 7.25,
-              "y": 9
+              "x": 6.84,
+              "y": 7.72
             },
             {
-              "x": 7.5,
-              "y": 12.5
+              "x": 7.556,
+              "y": 13.164
             }
           ],
           "role": "room"
@@ -4647,7 +4741,7 @@
             "x": 16.75,
             "y": 15.25,
             "waitDuration": 4,
-            "lookDirection": 2.709184878019255,
+            "lookDirection": -2.1275786636525833,
             "turnDuration": 0.4
           },
           {
@@ -4674,7 +4768,7 @@
             "x": 20.5,
             "y": 13.5,
             "waitDuration": 4,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 1.1987562729044325,
             "turnDuration": 0.4
           }
         ]
@@ -5857,8 +5951,8 @@
         "id": "01-05-g1",
         "x": 16.5,
         "y": 5.75,
-        "facing": -0.6435011087932844,
-        "initialFacing": -0.6435011087932844,
+        "facing": -1.634654391628261,
+        "initialFacing": -1.634654391628261,
         "routeId": "01-05-g1",
         "role": "corridor",
         "theftRole": "zone",
@@ -5950,8 +6044,8 @@
             "y": 13.75
           },
           {
-            "x": 13.75,
-            "y": 13.5
+            "x": 15.5,
+            "y": 12.11
           }
         ],
         "theftSearchSectors": [
@@ -5963,8 +6057,8 @@
                 "y": 13.75
               },
               {
-                "x": 13.75,
-                "y": 13.5
+                "x": 15.5,
+                "y": 12.11
               }
             ]
           }
@@ -5980,14 +6074,14 @@
             "x": 16.5,
             "y": 5.75,
             "waitDuration": 3,
-            "lookDirection": -0.6435011087932844,
+            "lookDirection": -1.634654391628261,
             "turnDuration": 0.4
           },
           {
             "x": 7,
             "y": 5.75,
             "waitDuration": 3,
-            "lookDirection": -2.1587989303424644,
+            "lookDirection": -1.191445717698271,
             "turnDuration": 0.4
           }
         ]
@@ -6031,24 +6125,24 @@
             "turnDuration": 0.4
           },
           {
-            "x": 11.75,
+            "x": 11.25,
             "y": 14.25,
             "waitDuration": 0,
             "lookDirection": 0,
             "turnDuration": 0.4
           },
           {
-            "x": 13.75,
-            "y": 13.5,
+            "x": 15.5,
+            "y": 12.11,
             "waitDuration": 4,
-            "lookDirection": 0,
+            "lookDirection": 1.2124223090014459,
             "turnDuration": 0.4
           },
           {
             "x": 10.25,
             "y": 14.25,
             "waitDuration": 0,
-            "lookDirection": 2.930499320367047,
+            "lookDirection": 2.7545354366775046,
             "turnDuration": 0.4
           },
           {
@@ -7144,8 +7238,8 @@
               "y": 13.75
             },
             {
-              "x": 13.75,
-              "y": 13.5
+              "x": 15.5,
+              "y": 12.11
             }
           ],
           "role": "objective"
@@ -7157,8 +7251,8 @@
           "y": 13.75
         },
         {
-          "x": 13.75,
-          "y": 13.5
+          "x": 15.5,
+          "y": 12.11
         }
       ],
       "cameras": [],
@@ -7425,10 +7519,10 @@
     "guards": [
       {
         "id": "02-01-g1",
-        "x": 15.25,
-        "y": 4.75,
-        "facing": 3.141592653589793,
-        "initialFacing": 3.141592653589793,
+        "x": 13.5,
+        "y": 5.2,
+        "facing": 2.191245526232363,
+        "initialFacing": 2.191245526232363,
         "routeId": "02-01-g1",
         "role": "corridor",
         "theftRole": "zone",
@@ -7438,8 +7532,8 @@
         "startDelay": 0,
         "theftPosts": [
           {
-            "x": 15.25,
-            "y": 4.75
+            "x": 13.5,
+            "y": 5.2
           },
           {
             "x": 15.25,
@@ -7451,8 +7545,8 @@
             "id": "02-01-g1: Viewing Island",
             "anchors": [
               {
-                "x": 15.25,
-                "y": 4.75
+                "x": 13.5,
+                "y": 5.2
               },
               {
                 "x": 15.25,
@@ -7481,8 +7575,8 @@
             "y": 3.5
           },
           {
-            "x": 18.5,
-            "y": 10.5
+            "x": 19.325,
+            "y": 8.035
           }
         ],
         "theftSearchSectors": [
@@ -7494,8 +7588,8 @@
                 "y": 3.5
               },
               {
-                "x": 18.5,
-                "y": 10.5
+                "x": 19.325,
+                "y": 8.035
               }
             ]
           }
@@ -7508,10 +7602,17 @@
         "mode": "loop",
         "points": [
           {
-            "x": 15.25,
-            "y": 4.75,
+            "x": 13.5,
+            "y": 5.2,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 2.191245526232363,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 14.75,
+            "y": 6.25,
+            "waitDuration": 0,
+            "lookDirection": 0.6986598247214632,
             "turnDuration": 0.4
           },
           {
@@ -7519,6 +7620,13 @@
             "y": 12.25,
             "waitDuration": 3,
             "lookDirection": 3.141592653589793,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 14.75,
+            "y": 6.25,
+            "waitDuration": 0,
+            "lookDirection": -1.653937558683338,
             "turnDuration": 0.4
           }
         ]
@@ -7556,17 +7664,31 @@
             "turnDuration": 0.4
           },
           {
-            "x": 18.5,
-            "y": 10.5,
-            "waitDuration": 5,
+            "x": 18.25,
+            "y": 6.75,
+            "waitDuration": 0,
             "lookDirection": 1.5707963267948966,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 19.325,
+            "y": 8.035,
+            "waitDuration": 5,
+            "lookDirection": -1.8836628735948806,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 18.25,
+            "y": 6.25,
+            "waitDuration": 0,
+            "lookDirection": -2.1128619161137054,
             "turnDuration": 0.4
           },
           {
             "x": 18.25,
             "y": 5.25,
             "waitDuration": 0,
-            "lookDirection": -1.6183794300718801,
+            "lookDirection": -1.5707963267948966,
             "turnDuration": 0.4
           },
           {
@@ -8702,8 +8824,8 @@
           "room": "viewingIsland",
           "points": [
             {
-              "x": 15.25,
-              "y": 4.75
+              "x": 13.5,
+              "y": 5.2
             },
             {
               "x": 15.25,
@@ -8720,8 +8842,8 @@
               "y": 3.5
             },
             {
-              "x": 18.5,
-              "y": 10.5
+              "x": 19.325,
+              "y": 8.035
             }
           ],
           "role": "objective"
@@ -8733,8 +8855,8 @@
           "y": 3.5
         },
         {
-          "x": 18.5,
-          "y": 10.5
+          "x": 19.325,
+          "y": 8.035
         }
       ],
       "cameras": [],
@@ -9025,8 +9147,8 @@
                 "y": 17.25
               },
               {
-                "x": 17.75,
-                "y": 12.5
+                "x": 16.77,
+                "y": 13.545
               },
               {
                 "x": 13,
@@ -9100,7 +9222,7 @@
             "x": 12.5,
             "y": 17.75,
             "waitDuration": 1.5,
-            "lookDirection": 0.042830932668726916,
+            "lookDirection": -0.7411924220966001,
             "turnDuration": 0.4
           },
           {
@@ -9111,17 +9233,31 @@
             "turnDuration": 0.4
           },
           {
-            "x": 17.75,
-            "y": 12.5,
+            "x": 16.77,
+            "y": 13.545,
             "waitDuration": 1.5,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -2.0031528143076978,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 16.25,
+            "y": 11.75,
+            "waitDuration": 0,
+            "lookDirection": -1.85277108869552,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 13.25,
+            "y": 9.75,
+            "waitDuration": 0,
+            "lookDirection": -2.5535900500422257,
             "turnDuration": 0.4
           },
           {
             "x": 13,
             "y": 10,
             "waitDuration": 1.5,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": -2.0598251429289416,
             "turnDuration": 0.4
           },
           {
@@ -10224,8 +10360,8 @@
               "y": 17.25
             },
             {
-              "x": 17.75,
-              "y": 12.5
+              "x": 16.77,
+              "y": 13.545
             },
             {
               "x": 13,
@@ -10552,10 +10688,10 @@
     "guards": [
       {
         "id": "02-03-g1",
-        "x": 14.25,
-        "y": 7.5,
-        "facing": 1.5707963267948966,
-        "initialFacing": 1.5707963267948966,
+        "x": 15.044,
+        "y": 8.744,
+        "facing": 1.5235601002733254,
+        "initialFacing": 1.5235601002733254,
         "routeId": "02-03-g1",
         "role": "corridor",
         "theftRole": "zone",
@@ -10565,12 +10701,12 @@
         "startDelay": 0,
         "theftPosts": [
           {
-            "x": 14.25,
-            "y": 7.5
+            "x": 15.044,
+            "y": 8.744
           },
           {
-            "x": 14.25,
-            "y": 3
+            "x": 16.7,
+            "y": 1.98
           }
         ],
         "theftSearchSectors": [
@@ -10578,12 +10714,12 @@
             "id": "02-03-g1: Glass Hall West Column",
             "anchors": [
               {
-                "x": 14.25,
-                "y": 7.5
+                "x": 15.044,
+                "y": 8.744
               },
               {
-                "x": 14.25,
-                "y": 3
+                "x": 16.7,
+                "y": 1.98
               }
             ]
           }
@@ -10635,17 +10771,45 @@
         "mode": "loop",
         "points": [
           {
-            "x": 14.25,
-            "y": 7.5,
+            "x": 15.044,
+            "y": 8.744,
             "waitDuration": 3,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 1.5235601002733254,
             "turnDuration": 0.4
           },
           {
-            "x": 14.25,
-            "y": 3,
+            "x": 14.75,
+            "y": 5.25,
+            "waitDuration": 0,
+            "lookDirection": -1.6547428259054222,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 14.75,
+            "y": 4.75,
+            "waitDuration": 0,
+            "lookDirection": -1.5707963267948966,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 16.7,
+            "y": 1.98,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": 0.5571087457224126,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 14.75,
+            "y": 4.75,
+            "waitDuration": 0,
+            "lookDirection": 2.184182502563065,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 14.75,
+            "y": 8.25,
+            "waitDuration": 0,
+            "lookDirection": 1.5707963267948966,
             "turnDuration": 0.4
           }
         ]
@@ -11863,12 +12027,12 @@
           "room": "westColumn",
           "points": [
             {
-              "x": 14.25,
-              "y": 7.5
+              "x": 15.044,
+              "y": 8.744
             },
             {
-              "x": 14.25,
-              "y": 3
+              "x": 16.7,
+              "y": 1.98
             }
           ],
           "role": "corridor"
@@ -12169,8 +12333,8 @@
         "id": "02-04-g1",
         "x": 2.25,
         "y": 12.1,
-        "facing": -1.5707963267948966,
-        "initialFacing": -1.5707963267948966,
+        "facing": 1.3073929662737374,
+        "initialFacing": 1.3073929662737374,
         "routeId": "02-04-g1",
         "role": "corridor",
         "theftRole": "zone",
@@ -12184,8 +12348,8 @@
             "y": 12.1
           },
           {
-            "x": 20.75,
-            "y": 12.1
+            "x": 20.7,
+            "y": 13.5
           }
         ],
         "theftSearchSectors": [
@@ -12197,8 +12361,8 @@
                 "y": 12.1
               },
               {
-                "x": 20.75,
-                "y": 12.1
+                "x": 20.7,
+                "y": 13.5
               }
             ]
           }
@@ -12253,14 +12417,28 @@
             "x": 2.25,
             "y": 12.1,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": 1.3073929662737374,
             "turnDuration": 0.4
           },
           {
-            "x": 20.75,
-            "y": 12.1,
+            "x": 19.75,
+            "y": 12.25,
+            "waitDuration": 0,
+            "lookDirection": 0.00857121866814495,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 20.7,
+            "y": 13.5,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -2.5844642978232044,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 19.75,
+            "y": 12.25,
+            "waitDuration": 0,
+            "lookDirection": -2.2206667762068437,
             "turnDuration": 0.4
           }
         ]
@@ -13342,8 +13520,8 @@
               "y": 12.1
             },
             {
-              "x": 20.75,
-              "y": 12.1
+              "x": 20.7,
+              "y": 13.5
             }
           ],
           "role": "corridor"
@@ -13634,10 +13812,10 @@
     "guards": [
       {
         "id": "02-05-g1",
-        "x": 11.25,
-        "y": 3,
-        "facing": -0.06656816377582381,
-        "initialFacing": -0.06656816377582381,
+        "x": 11.7,
+        "y": 5.2,
+        "facing": -0.9116549132790257,
+        "initialFacing": -0.9116549132790257,
         "routeId": "02-05-g1",
         "role": "corridor",
         "theftRole": "zone",
@@ -13647,12 +13825,12 @@
         "startDelay": 0,
         "theftPosts": [
           {
-            "x": 11.25,
-            "y": 3
+            "x": 11.7,
+            "y": 5.2
           },
           {
-            "x": 11.25,
-            "y": 10.75
+            "x": 14.5,
+            "y": 8
           }
         ],
         "theftSearchSectors": [
@@ -13660,12 +13838,12 @@
             "id": "02-05-g1: Main Installation",
             "anchors": [
               {
-                "x": 11.25,
-                "y": 3
+                "x": 11.7,
+                "y": 5.2
               },
               {
-                "x": 11.25,
-                "y": 10.75
+                "x": 14.5,
+                "y": 8
               }
             ]
           }
@@ -13756,17 +13934,31 @@
         "mode": "loop",
         "points": [
           {
-            "x": 11.25,
-            "y": 3,
+            "x": 11.7,
+            "y": 5.2,
             "waitDuration": 3,
-            "lookDirection": -0.06656816377582381,
+            "lookDirection": -0.9116549132790257,
             "turnDuration": 0.4
           },
           {
-            "x": 11.25,
-            "y": 10.75,
+            "x": 12.75,
+            "y": 7.25,
+            "waitDuration": 0,
+            "lookDirection": 1.0974402849599814,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 14.5,
+            "y": 8,
             "waitDuration": 3,
-            "lookDirection": 0.03997868712329014,
+            "lookDirection": 0.6955530177458599,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 12.25,
+            "y": 6.75,
+            "waitDuration": 0,
+            "lookDirection": -2.6344941491974563,
             "turnDuration": 0.4
           }
         ]
@@ -14856,12 +15048,12 @@
           "room": "mainHall",
           "points": [
             {
-              "x": 11.25,
-              "y": 3
+              "x": 11.7,
+              "y": 5.2
             },
             {
-              "x": 11.25,
-              "y": 10.75
+              "x": 14.5,
+              "y": 8
             }
           ],
           "role": "corridor"
@@ -15290,8 +15482,8 @@
         "id": "03-01-g1",
         "x": 6.5,
         "y": 15.25,
-        "facing": -1.5707963267948966,
-        "initialFacing": -1.5707963267948966,
+        "facing": 1.089229254512069,
+        "initialFacing": 1.089229254512069,
         "routeId": "03-01-g1",
         "role": "room",
         "theftRole": "zone",
@@ -15329,8 +15521,8 @@
         "id": "03-01-g2",
         "x": 3,
         "y": 10.75,
-        "facing": -0.7483780475235183,
-        "initialFacing": -0.7483780475235183,
+        "facing": -0.2381888268175922,
+        "initialFacing": -0.2381888268175922,
         "routeId": "03-01-g2",
         "role": "room",
         "theftRole": "zone",
@@ -15368,8 +15560,8 @@
         "id": "03-01-g3",
         "x": 19.5,
         "y": 10.6,
-        "facing": -2.6954871046463897,
-        "initialFacing": -2.6954871046463897,
+        "facing": -0.8744734657381796,
+        "initialFacing": -0.8744734657381796,
         "routeId": "03-01-g3",
         "role": "exit",
         "theftRole": "exit",
@@ -15456,7 +15648,7 @@
             "x": 6.5,
             "y": 15.25,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": 1.089229254512069,
             "turnDuration": 0.4
           },
           {
@@ -15476,7 +15668,7 @@
             "x": 3,
             "y": 10.75,
             "waitDuration": 3,
-            "lookDirection": -0.7483780475235183,
+            "lookDirection": -0.2381888268175922,
             "turnDuration": 0.4
           },
           {
@@ -15496,7 +15688,7 @@
             "x": 19.5,
             "y": 10.6,
             "waitDuration": 2,
-            "lookDirection": -2.6954871046463897,
+            "lookDirection": -0.8744734657381796,
             "turnDuration": 0.4
           },
           {
@@ -16935,8 +17127,8 @@
         "id": "03-02-g1",
         "x": 8.5,
         "y": 6.25,
-        "facing": 0.844153986113171,
-        "initialFacing": 0.844153986113171,
+        "facing": -0.5837162373198677,
+        "initialFacing": -0.5837162373198677,
         "routeId": "03-02-g1",
         "role": "room",
         "theftRole": "zone",
@@ -16974,8 +17166,8 @@
         "id": "03-02-g2",
         "x": 12.75,
         "y": 9.25,
-        "facing": -2.922923707715851,
-        "initialFacing": -2.922923707715851,
+        "facing": 1.8155981005952067,
+        "initialFacing": 1.8155981005952067,
         "routeId": "03-02-g2",
         "role": "corridor",
         "theftRole": "zone",
@@ -17013,8 +17205,8 @@
         "id": "03-02-g3",
         "x": 2.5,
         "y": 16,
-        "facing": 0.638319808009046,
-        "initialFacing": 0.638319808009046,
+        "facing": 0.8130528660908067,
+        "initialFacing": 0.8130528660908067,
         "routeId": "03-02-g3",
         "role": "exit",
         "theftRole": "exit",
@@ -17097,7 +17289,7 @@
             "x": 8.5,
             "y": 6.25,
             "waitDuration": 3,
-            "lookDirection": 0.844153986113171,
+            "lookDirection": -0.5837162373198677,
             "turnDuration": 0.4
           },
           {
@@ -17117,7 +17309,7 @@
             "x": 12.75,
             "y": 9.25,
             "waitDuration": 3,
-            "lookDirection": -2.922923707715851,
+            "lookDirection": 1.8155981005952067,
             "turnDuration": 0.4
           },
           {
@@ -17137,7 +17329,7 @@
             "x": 2.5,
             "y": 16,
             "waitDuration": 3,
-            "lookDirection": 0.638319808009046,
+            "lookDirection": 0.8130528660908067,
             "turnDuration": 0.4
           },
           {
@@ -18784,8 +18976,8 @@
         "id": "03-03-g1",
         "x": 7.5,
         "y": 4.25,
-        "facing": 1.869295258381076,
-        "initialFacing": 1.869295258381076,
+        "facing": -1.5236038126693523,
+        "initialFacing": -1.5236038126693523,
         "routeId": "03-03-g1",
         "role": "room",
         "theftRole": "zone",
@@ -18823,8 +19015,8 @@
         "id": "03-03-g2",
         "x": 8.5,
         "y": 13.75,
-        "facing": 3.141592653589793,
-        "initialFacing": 3.141592653589793,
+        "facing": 2.0375225595746627,
+        "initialFacing": 2.0375225595746627,
         "routeId": "03-03-g2",
         "role": "corridor",
         "theftRole": "zone",
@@ -18950,14 +19142,14 @@
             "x": 7.5,
             "y": 4.25,
             "waitDuration": 3,
-            "lookDirection": 1.869295258381076,
+            "lookDirection": -1.5236038126693523,
             "turnDuration": 0.4
           },
           {
             "x": 14.5,
             "y": 4.25,
             "waitDuration": 3,
-            "lookDirection": 0.16514867741462683,
+            "lookDirection": -0.703455820155883,
             "turnDuration": 0.4
           }
         ]
@@ -18970,7 +19162,7 @@
             "x": 8.5,
             "y": 13.75,
             "waitDuration": 2,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 2.0375225595746627,
             "turnDuration": 0.4
           },
           {
@@ -20594,8 +20786,8 @@
         "id": "03-04-g1",
         "x": 8.5,
         "y": 14.75,
-        "facing": 2.498091544796509,
-        "initialFacing": 2.498091544796509,
+        "facing": 1.206996376624894,
+        "initialFacing": 1.206996376624894,
         "routeId": "03-04-g1",
         "role": "room",
         "theftRole": "zone",
@@ -20633,8 +20825,8 @@
         "id": "03-04-g2",
         "x": 21.2,
         "y": 7.75,
-        "facing": 2.757775030301224,
-        "initialFacing": 2.757775030301224,
+        "facing": 2.2988969190317787,
+        "initialFacing": 2.2988969190317787,
         "routeId": "03-04-g2",
         "role": "room",
         "theftRole": "zone",
@@ -20672,8 +20864,8 @@
         "id": "03-04-g3",
         "x": 3.6,
         "y": 4.3,
-        "facing": -0.5028432109278608,
-        "initialFacing": -0.5028432109278608,
+        "facing": -1.591894560950492,
+        "initialFacing": -1.591894560950492,
         "routeId": "03-04-g3",
         "role": "exit",
         "theftRole": "exit",
@@ -20760,7 +20952,7 @@
             "x": 8.5,
             "y": 14.75,
             "waitDuration": 3,
-            "lookDirection": 2.498091544796509,
+            "lookDirection": 1.206996376624894,
             "turnDuration": 0.4
           },
           {
@@ -20780,7 +20972,7 @@
             "x": 21.2,
             "y": 7.75,
             "waitDuration": 2,
-            "lookDirection": 2.757775030301224,
+            "lookDirection": 2.2988969190317787,
             "turnDuration": 0.4
           },
           {
@@ -20800,7 +20992,7 @@
             "x": 3.6,
             "y": 4.3,
             "waitDuration": 2,
-            "lookDirection": -0.5028432109278608,
+            "lookDirection": -1.591894560950492,
             "turnDuration": 0.4
           },
           {
@@ -22569,8 +22761,8 @@
         "id": "03-05-g1",
         "x": 9.5,
         "y": 13,
-        "facing": -1.5707963267948966,
-        "initialFacing": -1.5707963267948966,
+        "facing": 0.8473622041349326,
+        "initialFacing": 0.8473622041349326,
         "routeId": "03-05-g1",
         "role": "room",
         "theftRole": "zone",
@@ -22608,8 +22800,8 @@
         "id": "03-05-g2",
         "x": 12.75,
         "y": 7.75,
-        "facing": -2.723368324010564,
-        "initialFacing": -2.723368324010564,
+        "facing": 2.1318327919647597,
+        "initialFacing": 2.1318327919647597,
         "routeId": "03-05-g2",
         "role": "room",
         "theftRole": "zone",
@@ -22731,7 +22923,7 @@
             "x": 9.5,
             "y": 13,
             "waitDuration": 4,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": 0.8473622041349326,
             "turnDuration": 0.4
           },
           {
@@ -22765,7 +22957,7 @@
             "x": 12.75,
             "y": 7.75,
             "waitDuration": 3,
-            "lookDirection": -2.723368324010564,
+            "lookDirection": 2.1318327919647597,
             "turnDuration": 0.4
           },
           {
@@ -22833,7 +23025,7 @@
             "x": 3.5,
             "y": 8,
             "waitDuration": 6,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": -2.1075028169776577,
             "turnDuration": 0.4
           },
           {
@@ -24324,12 +24516,12 @@
         "id": "04-01-g1",
         "role": "room",
         "routeId": "04-01-g1",
-        "facing": 1.5707963267948966,
+        "facing": -1.2510557173937524,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": 1.5707963267948966,
+        "initialFacing": -1.2510557173937524,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -24363,12 +24555,12 @@
         "id": "04-01-g2",
         "role": "room",
         "routeId": "04-01-g2",
-        "facing": -0.44872334401072134,
+        "facing": 1.1635297302481382,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": -0.44872334401072134,
+        "initialFacing": 1.1635297302481382,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -24496,7 +24688,7 @@
             "x": 8.9,
             "y": 12.3,
             "waitDuration": 4,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": -1.2510557173937524,
             "turnDuration": 0.4
           },
           {
@@ -24516,7 +24708,7 @@
             "x": 1.8,
             "y": 8.9,
             "waitDuration": 3,
-            "lookDirection": -0.44872334401072134,
+            "lookDirection": 1.1635297302481382,
             "turnDuration": 0.4
           },
           {
@@ -24550,7 +24742,7 @@
             "x": 22,
             "y": 9.3,
             "waitDuration": 4,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 2.089120669586637,
             "turnDuration": 0.4
           },
           {
@@ -26090,12 +26282,12 @@
         "id": "04-02-g1",
         "role": "room",
         "routeId": "04-02-g1",
-        "facing": 1.5707963267948966,
+        "facing": 0.30162930920898573,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": 1.5707963267948966,
+        "initialFacing": 0.30162930920898573,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -26266,7 +26458,7 @@
             "x": 1.75,
             "y": 8.25,
             "waitDuration": 3,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 0.30162930920898573,
             "turnDuration": 0.4
           },
           {
@@ -26287,7 +26479,7 @@
             "x": 4.75,
             "y": 8.25,
             "waitDuration": 2,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 2.7491246127098723,
             "turnDuration": 0.4
           }
         ]
@@ -27897,12 +28089,12 @@
         "id": "04-03-g1",
         "role": "room",
         "routeId": "04-03-g1",
-        "facing": -2.739722006149336,
+        "facing": 0.751729047983075,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": -2.739722006149336,
+        "initialFacing": 0.751729047983075,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -27936,12 +28128,12 @@
         "id": "04-03-g2",
         "role": "corridor",
         "routeId": "04-03-g2",
-        "facing": -2.969401839066854,
+        "facing": -2.356840785805035,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": -2.969401839066854,
+        "initialFacing": -2.356840785805035,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -28065,7 +28257,7 @@
             "x": 9,
             "y": 17.75,
             "waitDuration": 3,
-            "lookDirection": -2.739722006149336,
+            "lookDirection": 0.751729047983075,
             "turnDuration": 0.4
           },
           {
@@ -28085,14 +28277,14 @@
             "x": 12.5,
             "y": 10.9,
             "waitDuration": 3,
-            "lookDirection": -2.969401839066854,
+            "lookDirection": -2.356840785805035,
             "turnDuration": 0.4
           },
           {
             "x": 18,
             "y": 10.9,
             "waitDuration": 3,
-            "lookDirection": 0.43662715981354094,
+            "lookDirection": 1.2569941366764943,
             "turnDuration": 0.4
           }
         ]
@@ -29675,22 +29867,22 @@
     ],
     "guards": [
       {
-        "x": 3,
-        "y": 10.6,
+        "x": 4.45,
+        "y": 8.635,
         "id": "04-04-g1",
         "role": "corridor",
         "routeId": "04-04-g1",
-        "facing": -1.5707963267948966,
+        "facing": 0.9375390624493045,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": -1.5707963267948966,
+        "initialFacing": 0.9375390624493045,
         "theftRole": "zone",
         "theftPosts": [
           {
-            "x": 3,
-            "y": 10.6
+            "x": 4.45,
+            "y": 8.635
           },
           {
             "x": 20.5,
@@ -29702,8 +29894,8 @@
             "id": "04-04-g1: Cryo Storage",
             "anchors": [
               {
-                "x": 3,
-                "y": 10.6
+                "x": 4.45,
+                "y": 8.635
               },
               {
                 "x": 20.5,
@@ -29849,10 +30041,17 @@
         "mode": "loop",
         "points": [
           {
-            "x": 3,
-            "y": 10.6,
+            "x": 4.45,
+            "y": 8.635,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": 0.9375390624493045,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 4.75,
+            "y": 9.75,
+            "waitDuration": 0,
+            "lookDirection": 1.3079624185284802,
             "turnDuration": 0.4
           },
           {
@@ -29860,6 +30059,13 @@
             "y": 10.6,
             "waitDuration": 4,
             "lookDirection": -2.5383628006651087,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 4.75,
+            "y": 9.75,
+            "waitDuration": 0,
+            "lookDirection": -3.087676703731197,
             "turnDuration": 0.4
           }
         ]
@@ -29879,7 +30085,7 @@
             "x": 16.25,
             "y": 16.25,
             "waitDuration": 3,
-            "lookDirection": -0.3356385503276095,
+            "lookDirection": -2.4870305204228047,
             "turnDuration": 0.4
           }
         ]
@@ -29947,7 +30153,7 @@
             "x": 12,
             "y": 19.5,
             "waitDuration": 8,
-            "lookDirection": 0,
+            "lookDirection": -2.9528924687717275,
             "turnDuration": 0.4
           },
           {
@@ -30802,8 +31008,8 @@
           "room": "storage",
           "points": [
             {
-              "x": 3,
-              "y": 10.6
+              "x": 4.45,
+              "y": 8.635
             },
             {
               "x": 20.5,
@@ -31470,12 +31676,12 @@
         "id": "04-05-g3",
         "role": "exit",
         "routeId": "04-05-g3",
-        "facing": 1.3633001003596932,
+        "facing": 1.8659553195188785,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
-        "initialFacing": 1.3633001003596932,
+        "initialFacing": 1.8659553195188785,
         "theftRole": "exit",
         "theftPosts": [
           {
@@ -31547,8 +31753,8 @@
                 "y": 11.6
               },
               {
-                "x": 22.5,
-                "y": 4.9
+                "x": 20.5,
+                "y": 3.5
               }
             ]
           }
@@ -31604,7 +31810,7 @@
             "x": 16.2,
             "y": 17.9,
             "waitDuration": 3,
-            "lookDirection": 1.3633001003596932,
+            "lookDirection": 1.8659553195188785,
             "turnDuration": 0.4
           },
           {
@@ -31625,7 +31831,7 @@
             "x": 9.5,
             "y": 20.9,
             "waitDuration": 3,
-            "lookDirection": -2.587285157388243,
+            "lookDirection": -2.465966414105604,
             "turnDuration": 0.4
           },
           {
@@ -31663,10 +31869,24 @@
             "turnDuration": 0.4
           },
           {
-            "x": 22.5,
-            "y": 4.9,
+            "x": 21.25,
+            "y": 5.25,
+            "waitDuration": 0,
+            "lookDirection": -1.7651615928899147,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 20.5,
+            "y": 3.5,
             "waitDuration": 7.5,
-            "lookDirection": 3.123412838516815,
+            "lookDirection": 2.638900984191695,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 21.25,
+            "y": 5.75,
+            "waitDuration": 0,
+            "lookDirection": 1.2490457723982544,
             "turnDuration": 0.4
           },
           {
@@ -32882,8 +33102,8 @@
               "y": 11.6
             },
             {
-              "x": 22.5,
-              "y": 4.9
+              "x": 20.5,
+              "y": 3.5
             }
           ],
           "role": "objective"
@@ -32899,8 +33119,8 @@
           "y": 11.6
         },
         {
-          "x": 22.5,
-          "y": 4.9
+          "x": 20.5,
+          "y": 3.5
         }
       ],
       "cameras": [
@@ -33442,12 +33662,12 @@
         "id": "05-01-g1",
         "role": "room",
         "routeId": "05-01-g1",
-        "facing": -1.5707963267948966,
+        "facing": 2.0523633990777244,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": -1.5707963267948966,
+        "initialFacing": 2.0523633990777244,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -33481,12 +33701,12 @@
         "id": "05-01-g2",
         "role": "room",
         "routeId": "05-01-g2",
-        "facing": -2.393214606066275,
+        "facing": -2.903403826772201,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": -2.393214606066275,
+        "initialFacing": -2.903403826772201,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -33520,12 +33740,12 @@
         "id": "05-01-g3",
         "role": "exit",
         "routeId": "05-01-g3",
-        "facing": -0.4461055489434034,
+        "facing": -2.274207205105605,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": -0.4461055489434034,
+        "initialFacing": -2.274207205105605,
         "theftRole": "exit",
         "theftPosts": [
           {
@@ -33606,7 +33826,7 @@
             "x": 19.5,
             "y": 15.25,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": 2.0523633990777244,
             "turnDuration": 0.4
           },
           {
@@ -33626,7 +33846,7 @@
             "x": 23,
             "y": 10.75,
             "waitDuration": 3,
-            "lookDirection": -2.393214606066275,
+            "lookDirection": -2.903403826772201,
             "turnDuration": 0.4
           },
           {
@@ -33646,7 +33866,7 @@
             "x": 6.5,
             "y": 10.6,
             "waitDuration": 2,
-            "lookDirection": -0.4461055489434034,
+            "lookDirection": -2.274207205105605,
             "turnDuration": 0.4
           },
           {
@@ -35107,12 +35327,12 @@
         "id": "05-02-g1",
         "role": "room",
         "routeId": "05-02-g1",
-        "facing": 2.297438667476622,
+        "facing": -2.598359886421787,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": 2.297438667476622,
+        "initialFacing": -2.598359886421787,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -35146,12 +35366,12 @@
         "id": "05-02-g2",
         "role": "corridor",
         "routeId": "05-02-g2",
-        "facing": -0.21866894587394195,
+        "facing": 1.291883810657985,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": -0.21866894587394195,
+        "initialFacing": 1.291883810657985,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -35185,12 +35405,12 @@
         "id": "05-02-g3",
         "role": "exit",
         "routeId": "05-02-g3",
-        "facing": 2.5032728455807476,
+        "facing": 2.328539787498986,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": 2.5032728455807476,
+        "initialFacing": 2.328539787498986,
         "theftRole": "exit",
         "theftPosts": [
           {
@@ -35267,7 +35487,7 @@
             "x": 15.5,
             "y": 6.25,
             "waitDuration": 3,
-            "lookDirection": 2.297438667476622,
+            "lookDirection": -2.598359886421787,
             "turnDuration": 0.4
           },
           {
@@ -35287,7 +35507,7 @@
             "x": 11.25,
             "y": 9.25,
             "waitDuration": 3,
-            "lookDirection": -0.21866894587394195,
+            "lookDirection": 1.291883810657985,
             "turnDuration": 0.4
           },
           {
@@ -35307,7 +35527,7 @@
             "x": 21.5,
             "y": 16,
             "waitDuration": 3,
-            "lookDirection": 2.5032728455807476,
+            "lookDirection": 2.328539787498986,
             "turnDuration": 0.4
           },
           {
@@ -37003,12 +37223,12 @@
         "id": "05-03-g1",
         "role": "room",
         "routeId": "05-03-g1",
-        "facing": 0.6435011087932844,
+        "facing": 1.9899872997748342,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": 0.6435011087932844,
+        "initialFacing": 1.9899872997748342,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -37042,12 +37262,12 @@
         "id": "05-03-g2",
         "role": "room",
         "routeId": "05-03-g2",
-        "facing": 0.38381762328856894,
+        "facing": 0.8434403762138337,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": 0.38381762328856894,
+        "initialFacing": 0.8434403762138337,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -37081,12 +37301,12 @@
         "id": "05-03-g3",
         "role": "exit",
         "routeId": "05-03-g3",
-        "facing": -2.6387494426619327,
+        "facing": -1.5496980926393007,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": -2.6387494426619327,
+        "initialFacing": -1.5496980926393007,
         "theftRole": "exit",
         "theftPosts": [
           {
@@ -37167,7 +37387,7 @@
             "x": 16.5,
             "y": 14.75,
             "waitDuration": 3,
-            "lookDirection": 0.6435011087932844,
+            "lookDirection": 1.9899872997748342,
             "turnDuration": 0.4
           },
           {
@@ -37187,7 +37407,7 @@
             "x": 3.8,
             "y": 7.75,
             "waitDuration": 2,
-            "lookDirection": 0.38381762328856894,
+            "lookDirection": 0.8434403762138337,
             "turnDuration": 0.4
           },
           {
@@ -37207,7 +37427,7 @@
             "x": 21.4,
             "y": 4.3,
             "waitDuration": 2,
-            "lookDirection": -2.6387494426619327,
+            "lookDirection": -1.5496980926393007,
             "turnDuration": 0.4
           },
           {
@@ -38955,12 +39175,12 @@
         "id": "05-04-g1",
         "role": "room",
         "routeId": "05-04-g1",
-        "facing": 1.2722973952087173,
+        "facing": -1.6179888409204417,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": 1.2722973952087173,
+        "initialFacing": -1.6179888409204417,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -38994,12 +39214,12 @@
         "id": "05-04-g2",
         "role": "corridor",
         "routeId": "05-04-g2",
-        "facing": 0,
+        "facing": 1.178074234346218,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": 0,
+        "initialFacing": 1.178074234346218,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -39119,14 +39339,14 @@
             "x": 17.5,
             "y": 4.25,
             "waitDuration": 3,
-            "lookDirection": 1.2722973952087173,
+            "lookDirection": -1.6179888409204417,
             "turnDuration": 0.4
           },
           {
             "x": 10.5,
             "y": 4.25,
             "waitDuration": 3,
-            "lookDirection": 2.976443976175166,
+            "lookDirection": -2.443974269296705,
             "turnDuration": 0.4
           }
         ]
@@ -39139,7 +39359,7 @@
             "x": 16.5,
             "y": 13.75,
             "waitDuration": 2,
-            "lookDirection": 0,
+            "lookDirection": 1.178074234346218,
             "turnDuration": 0.4
           },
           {
@@ -40832,12 +41052,12 @@
         "id": "05-05-g2",
         "role": "room",
         "routeId": "05-05-g2",
-        "facing": -0.41822432957922906,
+        "facing": 1.0046444549655118,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": -0.41822432957922906,
+        "initialFacing": 1.0046444549655118,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -40871,12 +41091,12 @@
         "id": "05-05-g3",
         "role": "exit",
         "routeId": "05-05-g3",
-        "facing": -1.5707963267948966,
+        "facing": -2.55686297191071,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": -1.5707963267948966,
+        "initialFacing": -2.55686297191071,
         "theftRole": "exit",
         "theftPosts": [
           {
@@ -40967,7 +41187,7 @@
             "x": 9.5,
             "y": 15.5,
             "waitDuration": 3,
-            "lookDirection": 0.3587706702705722,
+            "lookDirection": -0.6908839722944743,
             "turnDuration": 0.4
           },
           {
@@ -40987,7 +41207,7 @@
             "x": 14.25,
             "y": 7.75,
             "waitDuration": 3,
-            "lookDirection": -0.41822432957922906,
+            "lookDirection": 1.0046444549655118,
             "turnDuration": 0.4
           },
           {
@@ -41007,7 +41227,7 @@
             "x": 5,
             "y": 13.3,
             "waitDuration": 5,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -2.55686297191071,
             "turnDuration": 0.4
           },
           {
@@ -42592,12 +42812,12 @@
         "id": "06-01-g1",
         "role": "corridor",
         "routeId": "06-01-g1",
-        "facing": 0,
+        "facing": 0.714022082041562,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.928000000000001,
         "visionHalfAngle": 0.5550147021341968,
-        "initialFacing": 0,
+        "initialFacing": 0.714022082041562,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -42722,8 +42942,8 @@
             "y": 3.5
           },
           {
-            "x": 8.5,
-            "y": 10.5
+            "x": 7.675,
+            "y": 8.635
           }
         ],
         "theftSearchSectors": [
@@ -42735,8 +42955,8 @@
                 "y": 3.5
               },
               {
-                "x": 8.5,
-                "y": 10.5
+                "x": 7.675,
+                "y": 8.635
               }
             ]
           }
@@ -42752,7 +42972,7 @@
             "x": 11.75,
             "y": 4.75,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": 0.714022082041562,
             "turnDuration": 0.4
           },
           {
@@ -42837,31 +43057,31 @@
             "turnDuration": 0.4
           },
           {
-            "x": 8.5,
-            "y": 10.5,
+            "x": 7.675,
+            "y": 8.635,
             "waitDuration": 5,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": -1.3438912701032226,
             "turnDuration": 0.4
           },
           {
             "x": 8.75,
-            "y": 5.25,
+            "y": 5.75,
             "waitDuration": 0,
-            "lookDirection": -1.5232132235179132,
+            "lookDirection": -1.2141165107289495,
             "turnDuration": 0.4
           },
           {
-            "x": 7.25,
+            "x": 8.25,
             "y": 4.75,
             "waitDuration": 0,
-            "lookDirection": -2.819842099193151,
+            "lookDirection": -2.0344439357957027,
             "turnDuration": 0.4
           },
           {
             "x": 2.75,
             "y": 4.25,
             "waitDuration": 0,
-            "lookDirection": -3.0309354324158977,
+            "lookDirection": -3.050932766389048,
             "turnDuration": 0.4
           }
         ]
@@ -43893,8 +44113,8 @@
               "y": 3.5
             },
             {
-              "x": 8.5,
-              "y": 10.5
+              "x": 7.675,
+              "y": 8.635
             }
           ],
           "role": "objective"
@@ -43906,8 +44126,8 @@
           "y": 3.5
         },
         {
-          "x": 8.5,
-          "y": 10.5
+          "x": 7.675,
+          "y": 8.635
         }
       ],
       "cameras": [
@@ -44372,8 +44592,8 @@
             "y": 12.5
           },
           {
-            "x": 12.5,
-            "y": 17.75
+            "x": 13.62,
+            "y": 16.62
           }
         ],
         "theftSearchSectors": [
@@ -44385,8 +44605,8 @@
                 "y": 12.5
               },
               {
-                "x": 12.5,
-                "y": 17.75
+                "x": 13.62,
+                "y": 16.62
               },
               {
                 "x": 9.25,
@@ -44543,16 +44763,16 @@
           },
           {
             "x": 13.75,
-            "y": 16.25,
+            "y": 16.75,
             "waitDuration": 0,
             "lookDirection": 1.5707963267948966,
             "turnDuration": 0.4
           },
           {
-            "x": 12.5,
-            "y": 17.75,
+            "x": 13.62,
+            "y": 16.62,
             "waitDuration": 1.5,
-            "lookDirection": 3.0987617209210665,
+            "lookDirection": 0.7469845705099741,
             "turnDuration": 0.4
           },
           {
@@ -44573,7 +44793,7 @@
             "x": 12,
             "y": 10,
             "waitDuration": 1.5,
-            "lookDirection": 0,
+            "lookDirection": -1.0817675106608517,
             "turnDuration": 0.4
           },
           {
@@ -44620,7 +44840,7 @@
             "x": 4,
             "y": 18,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -0.6589979268805819,
             "turnDuration": 0.4
           }
         ]
@@ -45581,8 +45801,8 @@
               "y": 12.5
             },
             {
-              "x": 12.5,
-              "y": 17.75
+              "x": 13.62,
+              "y": 16.62
             },
             {
               "x": 9.25,
@@ -46138,12 +46358,12 @@
         "id": "06-03-g1",
         "role": "corridor",
         "routeId": "06-03-g1",
-        "facing": 1.5707963267948966,
+        "facing": 1.805644507674284,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.928000000000001,
         "visionHalfAngle": 0.5550147021341968,
-        "initialFacing": 1.5707963267948966,
+        "initialFacing": 1.805644507674284,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -46151,8 +46371,8 @@
             "y": 7.5
           },
           {
-            "x": 10.75,
-            "y": 3
+            "x": 8.3,
+            "y": 1.98
           }
         ],
         "theftSearchSectors": [
@@ -46164,8 +46384,8 @@
                 "y": 7.5
               },
               {
-                "x": 10.75,
-                "y": 3
+                "x": 8.3,
+                "y": 1.98
               }
             ]
           }
@@ -46298,14 +46518,28 @@
             "x": 10.75,
             "y": 7.5,
             "waitDuration": 3,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 1.805644507674284,
             "turnDuration": 0.4
           },
           {
-            "x": 10.75,
-            "y": 3,
+            "x": 10.25,
+            "y": 4.75,
+            "waitDuration": 0,
+            "lookDirection": -1.750649826587375,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 8.3,
+            "y": 1.98,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 2.761197569885886,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 10.25,
+            "y": 4.75,
+            "waitDuration": 0,
+            "lookDirection": 0.9574101510267287,
             "turnDuration": 0.4
           }
         ]
@@ -46325,7 +46559,7 @@
             "x": 15,
             "y": 12.5,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": 1.3267204622932858,
             "turnDuration": 0.4
           }
         ]
@@ -47386,8 +47620,8 @@
               "y": 7.5
             },
             {
-              "x": 10.75,
-              "y": 3
+              "x": 8.3,
+              "y": 1.98
             }
           ],
           "role": "corridor"
@@ -47935,12 +48169,12 @@
         "id": "06-04-g1",
         "role": "corridor",
         "routeId": "06-04-g1",
-        "facing": -1.5707963267948966,
+        "facing": 1.8341996873160558,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.928000000000001,
         "visionHalfAngle": 0.5550147021341968,
-        "initialFacing": -1.5707963267948966,
+        "initialFacing": 1.8341996873160558,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -47974,12 +48208,12 @@
         "id": "06-04-g2",
         "role": "corridor",
         "routeId": "06-04-g2",
-        "facing": 0,
+        "facing": 0.7544919730289178,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.928000000000001,
         "visionHalfAngle": 0.5550147021341968,
-        "initialFacing": 0,
+        "initialFacing": 0.7544919730289178,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -48095,14 +48329,14 @@
             "x": 24.75,
             "y": 12.1,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": 1.8341996873160558,
             "turnDuration": 0.4
           },
           {
             "x": 6.25,
             "y": 12.1,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -1.4593585019766582,
             "turnDuration": 0.4
           }
         ]
@@ -48115,7 +48349,7 @@
             "x": 12.5,
             "y": 12,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": 0.7544919730289178,
             "turnDuration": 0.4
           },
           {
@@ -49582,26 +49816,26 @@
     ],
     "guards": [
       {
-        "x": 14.75,
-        "y": 3,
+        "x": 14.3,
+        "y": 5.2,
         "id": "06-05-g1",
         "role": "corridor",
         "routeId": "06-05-g1",
-        "facing": -3.0750244898139694,
+        "facing": -2.4364287430552674,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.928000000000001,
         "visionHalfAngle": 0.5550147021341968,
-        "initialFacing": -3.0750244898139694,
+        "initialFacing": -2.4364287430552674,
         "theftRole": "zone",
         "theftPosts": [
           {
-            "x": 14.75,
-            "y": 3
+            "x": 14.3,
+            "y": 5.2
           },
           {
-            "x": 14.75,
-            "y": 10.75
+            "x": 13.056,
+            "y": 8.344
           }
         ],
         "theftSearchSectors": [
@@ -49609,12 +49843,12 @@
             "id": "06-05-g1: Main Installation",
             "anchors": [
               {
-                "x": 14.75,
-                "y": 3
+                "x": 14.3,
+                "y": 5.2
               },
               {
-                "x": 14.75,
-                "y": 10.75
+                "x": 13.056,
+                "y": 8.344
               }
             ]
           }
@@ -49744,17 +49978,17 @@
         "mode": "loop",
         "points": [
           {
-            "x": 14.75,
-            "y": 3,
+            "x": 14.3,
+            "y": 5.2,
             "waitDuration": 3,
-            "lookDirection": -3.0750244898139694,
+            "lookDirection": -2.4364287430552674,
             "turnDuration": 0.4
           },
           {
-            "x": 14.75,
-            "y": 10.75,
+            "x": 13.056,
+            "y": 8.344,
             "waitDuration": 3,
-            "lookDirection": 3.1016139664665032,
+            "lookDirection": 2.8698401951501884,
             "turnDuration": 0.4
           }
         ]
@@ -50692,12 +50926,12 @@
           "room": "mainHall",
           "points": [
             {
-              "x": 14.75,
-              "y": 3
+              "x": 14.3,
+              "y": 5.2
             },
             {
-              "x": 14.75,
-              "y": 10.75
+              "x": 13.056,
+              "y": 8.344
             }
           ],
           "role": "corridor"
@@ -51375,7 +51609,7 @@
             "x": 8.5,
             "y": 15,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 2.003670933186751,
             "turnDuration": 0.4
           },
           {
@@ -51422,7 +51656,7 @@
             "x": 20,
             "y": 11,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": -2.760591150773652,
             "turnDuration": 0.4
           }
         ]
@@ -51463,7 +51697,7 @@
             "x": 7.25,
             "y": 11,
             "waitDuration": 7,
-            "lookDirection": 0.09065988720074511,
+            "lookDirection": -2.969638189914949,
             "turnDuration": 0.4
           },
           {
@@ -52883,12 +53117,12 @@
         "id": "07-02-g1",
         "role": "corridor",
         "routeId": "07-02-g1",
-        "facing": 0,
+        "facing": 2.0734445797161163,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.427999999999999,
         "visionHalfAngle": 0.5654866776461628,
-        "initialFacing": 0,
+        "initialFacing": 2.0734445797161163,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -53047,7 +53281,7 @@
             "x": 14.25,
             "y": 12.25,
             "waitDuration": 2.5,
-            "lookDirection": 0,
+            "lookDirection": 2.0734445797161163,
             "turnDuration": 0.4
           },
           {
@@ -53116,7 +53350,7 @@
             "x": 15.5,
             "y": 9.5,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 0.47585162448598617,
             "turnDuration": 0.4
           }
         ]
@@ -53163,7 +53397,7 @@
             "x": 17.5,
             "y": 8.25,
             "waitDuration": 4,
-            "lookDirection": 1.1902899496825317,
+            "lookDirection": 1.965822113157018,
             "turnDuration": 0.4
           },
           {
@@ -54524,12 +54758,12 @@
         "id": "07-03-g1",
         "role": "room",
         "routeId": "07-03-g1",
-        "facing": -0.15264932839526518,
+        "facing": 2.175311352399956,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.427999999999999,
         "visionHalfAngle": 0.5654866776461628,
-        "initialFacing": -0.15264932839526518,
+        "initialFacing": 2.175311352399956,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -54563,12 +54797,12 @@
         "id": "07-03-g2",
         "role": "corridor",
         "routeId": "07-03-g2",
-        "facing": 0,
+        "facing": -0.11790030526597677,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.427999999999999,
         "visionHalfAngle": 0.5654866776461628,
-        "initialFacing": 0,
+        "initialFacing": -0.11790030526597677,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -54684,7 +54918,7 @@
             "x": 15.75,
             "y": 9,
             "waitDuration": 3,
-            "lookDirection": -0.15264932839526518,
+            "lookDirection": 2.175311352399956,
             "turnDuration": 0.4
           },
           {
@@ -54732,14 +54966,14 @@
             "x": 2,
             "y": 5,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": -0.11790030526597677,
             "turnDuration": 0.4
           },
           {
             "x": 11.5,
             "y": 5,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": -1.110623126919493,
             "turnDuration": 0.4
           }
         ]
@@ -56151,12 +56385,12 @@
         "id": "07-04-g2",
         "role": "corridor",
         "routeId": "07-04-g2",
-        "facing": 0,
+        "facing": -0.30323900032295203,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.427999999999999,
         "visionHalfAngle": 0.5654866776461628,
-        "initialFacing": 0,
+        "initialFacing": -0.30323900032295203,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -56286,7 +56520,7 @@
             "x": 7.25,
             "y": 15.25,
             "waitDuration": 4,
-            "lookDirection": 0.4324077755705379,
+            "lookDirection": -0.939907152392934,
             "turnDuration": 0.4
           },
           {
@@ -56306,7 +56540,7 @@
             "x": 5.5,
             "y": 19,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": -0.30323900032295203,
             "turnDuration": 0.4
           },
           {
@@ -56353,7 +56587,7 @@
             "x": 3.5,
             "y": 13.5,
             "waitDuration": 4,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 1.9428363806853608,
             "turnDuration": 0.4
           }
         ]
@@ -57585,12 +57819,12 @@
         "id": "07-05-g1",
         "role": "corridor",
         "routeId": "07-05-g1",
-        "facing": -2.498091544796509,
+        "facing": -0.39951900839531956,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.427999999999999,
         "visionHalfAngle": 0.5654866776461628,
-        "initialFacing": -2.498091544796509,
+        "initialFacing": -0.39951900839531956,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -57715,8 +57949,8 @@
             "y": 13.75
           },
           {
-            "x": 11.25,
-            "y": 13.5
+            "x": 9.5,
+            "y": 12.11
           }
         ],
         "theftSearchSectors": [
@@ -57728,8 +57962,8 @@
                 "y": 13.75
               },
               {
-                "x": 11.25,
-                "y": 13.5
+                "x": 9.5,
+                "y": 12.11
               }
             ]
           }
@@ -57745,14 +57979,14 @@
             "x": 8.5,
             "y": 5.75,
             "waitDuration": 3,
-            "lookDirection": -2.498091544796509,
+            "lookDirection": -0.39951900839531956,
             "turnDuration": 0.4
           },
           {
             "x": 18,
             "y": 5.75,
             "waitDuration": 3,
-            "lookDirection": -0.982793723247329,
+            "lookDirection": -2.6459496491237493,
             "turnDuration": 0.4
           }
         ]
@@ -57823,17 +58057,17 @@
             "turnDuration": 0.4
           },
           {
-            "x": 11.25,
-            "y": 13.5,
+            "x": 9.5,
+            "y": 12.11,
             "waitDuration": 4,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 1.9291703445883475,
             "turnDuration": 0.4
           },
           {
             "x": 14.75,
             "y": 14.25,
             "waitDuration": 0,
-            "lookDirection": 0.21109333322274654,
+            "lookDirection": 0.38705721691228884,
             "turnDuration": 0.4
           },
           {
@@ -58795,8 +59029,8 @@
               "y": 13.75
             },
             {
-              "x": 11.25,
-              "y": 13.5
+              "x": 9.5,
+              "y": 12.11
             }
           ],
           "role": "objective"
@@ -58808,8 +59042,8 @@
           "y": 13.75
         },
         {
-          "x": 11.25,
-          "y": 13.5
+          "x": 9.5,
+          "y": 12.11
         }
       ],
       "cameras": [
@@ -59274,12 +59508,12 @@
         "id": "08-01-g1",
         "role": "room",
         "routeId": "08-01-g1",
-        "facing": 1.5707963267948966,
+        "facing": 1.3153468036475677,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.952,
         "visionHalfAngle": 0.5759586531581288,
-        "initialFacing": 1.5707963267948966,
+        "initialFacing": 1.3153468036475677,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -59446,14 +59680,14 @@
             "x": 17.1,
             "y": 12.3,
             "waitDuration": 4,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 1.3153468036475677,
             "turnDuration": 0.4
           },
           {
             "x": 12.4,
             "y": 12.3,
             "waitDuration": 3,
-            "lookDirection": 1.6951513213416582,
+            "lookDirection": -1.0082930994952668,
             "turnDuration": 0.4
           }
         ]
@@ -59500,7 +59734,7 @@
             "x": 4,
             "y": 9.3,
             "waitDuration": 4,
-            "lookDirection": 0,
+            "lookDirection": 1.051203232716587,
             "turnDuration": 0.4
           },
           {
@@ -61083,12 +61317,12 @@
         "id": "08-02-g1",
         "role": "room",
         "routeId": "08-02-g1",
-        "facing": 1.5707963267948966,
+        "facing": 2.8399633443808074,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.952,
         "visionHalfAngle": 0.5759586531581288,
-        "initialFacing": 1.5707963267948966,
+        "initialFacing": 2.8399633443808074,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -61298,7 +61532,7 @@
             "x": 23.25,
             "y": 8.25,
             "waitDuration": 3,
-            "lookDirection": 1.5707963267948966,
+            "lookDirection": 2.8399633443808074,
             "turnDuration": 0.4
           },
           {
@@ -61319,7 +61553,7 @@
             "x": 20.25,
             "y": 8.25,
             "waitDuration": 2,
-            "lookDirection": 0,
+            "lookDirection": 0.3924680408799212,
             "turnDuration": 0.4
           }
         ]
@@ -61393,7 +61627,7 @@
             "x": 7.5,
             "y": 14,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": -2.820568052758695,
             "turnDuration": 0.4
           }
         ]
@@ -63014,12 +63248,12 @@
         "id": "08-03-g1",
         "role": "room",
         "routeId": "08-03-g1",
-        "facing": -0.4018706474404571,
+        "facing": 2.389863605606718,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.952,
         "visionHalfAngle": 0.5759586531581288,
-        "initialFacing": -0.4018706474404571,
+        "initialFacing": 2.389863605606718,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -63053,12 +63287,12 @@
         "id": "08-03-g2",
         "role": "corridor",
         "routeId": "08-03-g2",
-        "facing": -0.8760580505981933,
+        "facing": -0.7847518677847583,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.952,
         "visionHalfAngle": 0.5759586531581288,
-        "initialFacing": -0.8760580505981933,
+        "initialFacing": -0.7847518677847583,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -63221,7 +63455,7 @@
             "x": 17,
             "y": 17.75,
             "waitDuration": 3,
-            "lookDirection": -0.4018706474404571,
+            "lookDirection": 2.389863605606718,
             "turnDuration": 0.4
           },
           {
@@ -63241,7 +63475,7 @@
             "x": 13.5,
             "y": 10.9,
             "waitDuration": 4,
-            "lookDirection": -0.8760580505981933,
+            "lookDirection": -0.7847518677847583,
             "turnDuration": 0.4
           },
           {
@@ -63288,7 +63522,7 @@
             "x": 7,
             "y": 13,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": -1.6685171261817282,
             "turnDuration": 0.4
           }
         ]
@@ -64921,12 +65155,12 @@
         "id": "08-04-g1",
         "role": "corridor",
         "routeId": "08-04-g1",
-        "facing": -1.5707963267948966,
+        "facing": -2.9274445906203956,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.952,
         "visionHalfAngle": 0.5759586531581288,
-        "initialFacing": -1.5707963267948966,
+        "initialFacing": -2.9274445906203956,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -64960,12 +65194,12 @@
         "id": "08-04-g2",
         "role": "room",
         "routeId": "08-04-g2",
-        "facing": -0.42662749312687603,
+        "facing": -2.3391865733500903,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.952,
         "visionHalfAngle": 0.5759586531581288,
-        "initialFacing": -0.42662749312687603,
+        "initialFacing": -2.3391865733500903,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -65093,7 +65327,7 @@
             "x": 21,
             "y": 10.6,
             "waitDuration": 3,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -2.9274445906203956,
             "turnDuration": 0.4
           },
           {
@@ -65113,7 +65347,7 @@
             "x": 13.75,
             "y": 16.25,
             "waitDuration": 3,
-            "lookDirection": -0.42662749312687603,
+            "lookDirection": -2.3391865733500903,
             "turnDuration": 0.4
           },
           {
@@ -65188,7 +65422,7 @@
             "x": 12,
             "y": 19.5,
             "waitDuration": 8,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": -0.18870018481806575,
             "turnDuration": 0.4
           },
           {
@@ -66754,12 +66988,12 @@
         "id": "08-05-g3",
         "role": "exit",
         "routeId": "08-05-g3",
-        "facing": 1.7782925532300993,
+        "facing": 1.2756373340709148,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.952,
         "visionHalfAngle": 0.5759586531581288,
-        "initialFacing": 1.7782925532300993,
+        "initialFacing": 1.2756373340709148,
         "theftRole": "exit",
         "theftPosts": [
           {
@@ -66927,7 +67161,7 @@
             "x": 11.8,
             "y": 17.9,
             "waitDuration": 3,
-            "lookDirection": 1.7782925532300993,
+            "lookDirection": 1.2756373340709148,
             "turnDuration": 0.4
           },
           {
@@ -66948,7 +67182,7 @@
             "x": 18.5,
             "y": 20.9,
             "waitDuration": 3,
-            "lookDirection": -0.55430749620155,
+            "lookDirection": -0.6756262394841895,
             "turnDuration": 0.4
           },
           {
@@ -66982,7 +67216,7 @@
             "x": 9,
             "y": 18,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 0.4716577370416831,
             "turnDuration": 0.4
           }
         ]
@@ -68908,12 +69142,12 @@
         "id": "09-01-g4",
         "role": "corridor",
         "routeId": "09-01-g4",
-        "facing": 3.141592653589793,
+        "facing": 2.6287130227409494,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": 3.141592653589793,
+        "initialFacing": 2.6287130227409494,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -69040,7 +69274,7 @@
             "x": 13,
             "y": 17.9,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": 2.6514771900483725,
             "turnDuration": 0.4
           }
         ]
@@ -69093,7 +69327,7 @@
             "x": 15.5,
             "y": 2.2,
             "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "lookDirection": 2.6287130227409494,
             "turnDuration": 0.4
           },
           {
@@ -69147,7 +69381,7 @@
             "x": 18.5,
             "y": 15.25,
             "waitDuration": 5,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -2.139990802541128,
             "turnDuration": 0.4
           },
           {
@@ -70658,12 +70892,12 @@
         "id": "09-02-g1",
         "role": "room",
         "routeId": "09-02-g1",
-        "facing": 0.5516549825285467,
+        "facing": -0.37755239310406796,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": 0.5516549825285467,
+        "initialFacing": -0.37755239310406796,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -70900,14 +71134,14 @@
             "x": 1.9,
             "y": 9.8,
             "waitDuration": 3,
-            "lookDirection": 0.5516549825285467,
+            "lookDirection": -0.37755239310406796,
             "turnDuration": 0.4
           },
           {
             "x": 1.9,
             "y": 2.2,
             "waitDuration": 3,
-            "lookDirection": 0.23210383807515564,
+            "lookDirection": 0.680303411071355,
             "turnDuration": 0.4
           }
         ]
@@ -70987,7 +71221,7 @@
             "x": 14.5,
             "y": 19.9,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": -1.221527745327654,
             "turnDuration": 0.4
           }
         ]
@@ -72567,12 +72801,12 @@
         "id": "09-03-g1",
         "role": "room",
         "routeId": "09-03-g1",
-        "facing": -0.6327488350021829,
+        "facing": 2.0729170685584766,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": -0.6327488350021829,
+        "initialFacing": 2.0729170685584766,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -72723,12 +72957,12 @@
         "id": "09-03-g5",
         "role": "corridor",
         "routeId": "09-03-g5",
-        "facing": 2.2896263264165206,
+        "facing": 1.1745058733859688,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": 2.2896263264165206,
+        "initialFacing": 1.1745058733859688,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -72809,7 +73043,7 @@
             "x": 19.9,
             "y": 12.6,
             "waitDuration": 3,
-            "lookDirection": -0.6327488350021829,
+            "lookDirection": 2.0729170685584766,
             "turnDuration": 0.4
           },
           {
@@ -72917,14 +73151,14 @@
             "x": 16.5,
             "y": 17.9,
             "waitDuration": 3,
-            "lookDirection": 2.2896263264165206,
+            "lookDirection": 1.1745058733859688,
             "turnDuration": 0.4
           },
           {
             "x": 22,
             "y": 17.9,
             "waitDuration": 3,
-            "lookDirection": -0.4795192919925953,
+            "lookDirection": 1.3575845830176754,
             "turnDuration": 0.4
           }
         ]
@@ -74696,12 +74930,12 @@
         "id": "09-04-g1",
         "role": "room",
         "routeId": "09-04-g1",
-        "facing": 2.2974386674766225,
+        "facing": -2.373821927503304,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": 2.2974386674766225,
+        "initialFacing": -2.373821927503304,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -74735,12 +74969,12 @@
         "id": "09-04-g2",
         "role": "room",
         "routeId": "09-04-g2",
-        "facing": 0.6350267353903141,
+        "facing": 1.4241877086652819,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": 0.6350267353903141,
+        "initialFacing": 1.4241877086652819,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -74852,12 +75086,12 @@
         "id": "09-04-g5",
         "role": "corridor",
         "routeId": "09-04-g5",
-        "facing": 2.1587989303424644,
+        "facing": 1.11648234975515,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": 2.1587989303424644,
+        "initialFacing": 1.11648234975515,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -74938,7 +75172,7 @@
             "x": 24.1,
             "y": 12.6,
             "waitDuration": 3,
-            "lookDirection": 2.2974386674766225,
+            "lookDirection": -2.373821927503304,
             "turnDuration": 0.4
           },
           {
@@ -74958,7 +75192,7 @@
             "x": 17.5,
             "y": 2.1,
             "waitDuration": 3,
-            "lookDirection": 0.6350267353903141,
+            "lookDirection": 1.4241877086652819,
             "turnDuration": 0.4
           },
           {
@@ -75018,7 +75252,7 @@
             "x": 8,
             "y": 16.1,
             "waitDuration": 3,
-            "lookDirection": 2.1587989303424644,
+            "lookDirection": 1.11648234975515,
             "turnDuration": 0.4
           },
           {
@@ -76618,12 +76852,12 @@
         "id": "09-05-g1",
         "role": "room",
         "routeId": "09-05-g1",
-        "facing": -0.7853981633974488,
+        "facing": 0.7634914232512571,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": -0.7853981633974488,
+        "initialFacing": 0.7634914232512571,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -76735,12 +76969,12 @@
         "id": "09-05-g4",
         "role": "corridor",
         "routeId": "09-05-g4",
-        "facing": -0.41822432957922906,
+        "facing": 0.8367007519262275,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": -0.41822432957922906,
+        "initialFacing": 0.8367007519262275,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -76774,12 +77008,12 @@
         "id": "09-05-g5",
         "role": "corridor",
         "routeId": "09-05-g5",
-        "facing": -0.7853981633974487,
+        "facing": 0.5315366726451192,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 6.4,
         "visionHalfAngle": 0.5864306286700948,
-        "initialFacing": -0.7853981633974487,
+        "initialFacing": 0.5315366726451192,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -76860,7 +77094,7 @@
             "x": 9,
             "y": 17.1,
             "waitDuration": 3,
-            "lookDirection": -0.7853981633974488,
+            "lookDirection": 0.7634914232512571,
             "turnDuration": 0.4
           },
           {
@@ -76920,7 +77154,7 @@
             "x": 1.9,
             "y": 6.5,
             "waitDuration": 3,
-            "lookDirection": -0.41822432957922906,
+            "lookDirection": 0.8367007519262275,
             "turnDuration": 0.4
           },
           {
@@ -76940,7 +77174,7 @@
             "x": 1.9,
             "y": 17.8,
             "waitDuration": 3,
-            "lookDirection": -0.7853981633974487,
+            "lookDirection": 0.5315366726451192,
             "turnDuration": 0.4
           },
           {

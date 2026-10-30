@@ -26,12 +26,28 @@ plan (v13Museum / v13Gallery / v13Bank / v13Lab / v13Vault)       Chapter 1–4,
         Chapter 7 ← Museum, Chapter 8 ← Lab       FROZEN plans, before phase7(); own patches in LATE
         v13Casino.ts   mirror, SWAP, ROTATE, EXTRA_CAMERA, MOVED, PATROL
         v13Late.ts     mirror, refit, secure(), PINNED, then phase7Late() (LATE)
+  → authorCoverCheckpoints() v13CoverCheckpoints.json: individual cover inspections, AFTER derivation (44 missions)
   → composeV13()        v13Builder.ts
   → campaignStages.json
 ```
 
 `CHAPTER_SOURCE` in `v13Build.ts` lists the nine chapters in bake order; `DERIVED_FROM` in `v13Sources.ts` is the
 only place that decides which plans a derived chapter is built from.
+
+The current 01-01 has its own `entranceStealth()` pass after the frozen Museum
+export. `COVER_CHECKPOINTS` deliberately excludes it. The other44 missions use
+123 fixed inspection/hidden/peek triples, each naming an existing structure
+and an existing semantic guard stop. `post` and `look` affect patrol; `hidden`
+and `exposed` are QA probes only and never give the AI a player target. This
+pass runs after derivation, so an inspection in Bank does not silently change
+its Casino twin. It keeps the architecture, props, lighting, guard count,
+speed and chapter security; it is not a scatter or random-point generator.
+
+`v13CoverCheckpoints.test.ts` checks all44 against actual body-sample vision,
+walkable peeks, 180s real patrol visits, windows clear of all guards/CCTV, and
+continuous full-heist witnesses in `v13CoverWitnesses.json`. Those witnesses
+are test inputs, not human play times or production approval. The explanatory
+overlay builder `tools/environment/campaignCoverBoard.ts` is offline only.
 
 ## Rules that keep the output stable
 

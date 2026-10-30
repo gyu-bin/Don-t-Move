@@ -14,6 +14,7 @@ import {V13_VAULT_CH9} from './v13Vault';
 import {previewStage} from './v13Preview';
 import {DERIVED_FROM} from './v13Sources';
 import type {V13Mission} from './v13Types';
+import {authorCoverCheckpoints} from './v13CoverCheckpoints';
 /** The campaign, chapter by chapter, in bake order. `plans` is where the missions are authored; a derived chapter's
  *  base plans (and whether it inherits the Phase 7 layer) are set in v13Sources.ts. */
 export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string;derivedFrom?:number}[]=[
@@ -26,7 +27,7 @@ export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string;d
  {chapter:7,missions:V13_WAREHOUSE,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[7].chapter},
  {chapter:8,missions:V13_HQ,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[8].chapter},
  {chapter:9,missions:V13_VAULT_CH9,plans:'v13Vault.ts'},
-];
+].map(c=>({...c,missions:c.missions.map(authorCoverCheckpoints)}));
 export const V13_MISSIONS:V13Mission[]=CHAPTER_SOURCE.flatMap(c=>c.missions);
 /** Every mission is composed from its V13 plan; SOURCE_STAGES only supplies the approved guard and camera constants. */
 export function buildV13Campaign():StageDefinition[]{

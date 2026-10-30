@@ -20,6 +20,8 @@ import { drawDressingFloor, drawDressingItem } from './museumDressingArt';
 import {MATERIALS} from '../../game/levels/chapterArt';
 import { northBoundaryColumns } from './northBoundary';
 import {ENTRANCE_LOOK,isMuseumEntrance} from './museumEntranceLook';
+import {VENUE_FINISH} from './venueMaterials';
+import {propRenderWidth} from './propRenderWidth';
 
 /**
  * Bakes everything static in a stage into SkPictures once at load:
@@ -194,7 +196,7 @@ function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: Sprite
       if(r === -1 ? !north.includes(x) : stage.grid[r*stage.cols+x]!==Cell.Wall)continue;any=true;
       const xx=x*TILE,yy=(r+1)*TILE-WALL_HEIGHT;
       if(stage.grid[(r+1)*stage.cols+x]!==Cell.Wall){
-        fillRect(c,xx,yy,TILE,WALL_HEIGHT,linear(0,yy,0,yy+WALL_HEIGHT,entrance?[...ENTRANCE_LOOK.wallFace]:stage.def.theme==='gallery'?['#d4d0bb','#989d91']:[m.inlay,m.seam]));
+        fillRect(c,xx,yy,TILE,WALL_HEIGHT,linear(0,yy,0,yy+WALL_HEIGHT,entrance?[...ENTRANCE_LOOK.wallFace]:[VENUE_FINISH[stage.def.theme].face,m.seam]));
         c.drawLine(xx,yy+WALL_HEIGHT-4,xx+TILE,yy+WALL_HEIGHT-4,stroke(entrance?ENTRANCE_LOOK.trim:m.trim,2,0.6));
         c.drawLine(xx+2,yy+3,xx+2,yy+WALL_HEIGHT-5,stroke(entrance?ENTRANCE_LOOK.trim:m.trim,1,entrance?.1:.22));
         if(stage.def.theme==='gallery'){
@@ -204,7 +206,7 @@ function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: Sprite
           if(x%3===0)c.drawLine(xx+1,yy+5,xx+1,yy+WALL_HEIGHT-8,stroke('#8b9487',.7,.35));
         }
       }
-      fillRect(c,xx,r*TILE-WALL_HEIGHT,TILE,TILE,fill(entrance?ENTRANCE_LOOK.wallTop:stage.def.theme==='gallery'?'#b5b6a9':m.seam));
+      fillRect(c,xx,r*TILE-WALL_HEIGHT,TILE,TILE,fill(entrance?ENTRANCE_LOOK.wallTop:VENUE_FINISH[stage.def.theme].cap));
       c.drawLine(xx,r*TILE-WALL_HEIGHT,xx+TILE,r*TILE-WALL_HEIGHT,stroke(m.trim,1,0.5));
     }
     return any;
@@ -245,7 +247,8 @@ function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:
   const productionId=environmentAssetForProp(stage.def,p),production=productionId?atlas?.[productionId]:null;
   if(production){
     // Glass panes are translucent in the PNG itself (frame opaque): see tools/environment/labTune.cjs.
-    const spec=PROP_KIT[p.kind];drawFrame(c,production,p.x,p.y-spec.mountHeight,spec.drawWidth*TILE*p.scale,p.flip);
+    const spec=PROP_KIT[p.kind],definition=stage.def.props[stage.props.indexOf(p)];
+    drawFrame(c,production,p.x,p.y-spec.mountHeight,propRenderWidth(definition,production),p.flip);
     // Wall-face exhibit attachment: reuse the approved frame inside the panel,
     // never as a floating independent prop or a new movement/LOS blocker.
     if(stage.def.theme==='gallery'&&productionId==='gallery_movable_art_wall'){
@@ -366,7 +369,7 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
     c.drawRect(Skia.XYWHRect(pad.x, pad.y, pad.w, pad.h), fill('#03050a', ambient));
     for (const l of stage.lights) {
       const a = Math.min(0.97, 0.6 + l.intensity * 0.4);
-      const r = l.radius * (entrance?ENTRANCE_LOOK.lightRadius:1.15);
+      const r = l.radius * (entrance?ENTRANCE_LOOK.lightRadius:1.02);
       c.drawCircle(
         l.x,
         l.y,
@@ -394,9 +397,9 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
       c.restore();
     }
     for (const l of stage.lights) {
-      const [r, g, b, a0] = entrance&&l.kind==='warm'?ENTRANCE_LOOK.warm:LIGHT_RGB[l.kind];
+      const [r, g, b, a0] = entrance&&l.kind==='warm'?ENTRANCE_LOOK.warm:l.kind==='warm'?VENUE_FINISH[stage.def.theme].warm:LIGHT_RGB[l.kind];
       const a = a0 * l.intensity;
-      const radius=l.radius*(entrance&&l.kind==='warm'?ENTRANCE_LOOK.glowRadius:1);
+      const radius=l.radius*(entrance&&l.kind==='warm'?ENTRANCE_LOOK.glowRadius:l.kind==='warm'?.82:1);
       c.drawCircle(
         l.x,
         l.y,

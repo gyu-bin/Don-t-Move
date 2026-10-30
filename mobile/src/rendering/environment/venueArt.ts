@@ -5,6 +5,7 @@ import {Cell,TILE} from '../../game/world/compileStage';
 import {MATERIALS} from '../../game/levels/chapterArt';
 import {fill,stroke} from '../paints';
 import {drawEntranceStone,isMuseumEntrance} from './museumEntranceLook';
+import {drawVenueMaterial} from './venueMaterials';
 
 // Static, theme-specific architectural drawing. Baked once, never on the UI frame.
 const rect=(c:SkCanvas,x:number,y:number,w:number,h:number,color:string)=>c.drawRect(Skia.XYWHRect(x,y,w,h),fill(color));
@@ -19,47 +20,7 @@ function bolts(c:SkCanvas,w:number,h:number){for(const x of [-w/2+4,w/2-4])for(c
 
 export function drawVenueFloor(c:SkCanvas,s:CompiledStage){
  if(isMuseumEntrance(s.def.id)){drawEntranceStone(c,s);return;}
- const theme=s.def.theme,m=MATERIALS[theme],variant=(s.def.mission??1)-1;
- const galleryBase=theme==='gallery'?fill(m.floor):null;
- // Adjacent anti-aliased tile fills leave fractional-zoom fringes over VOID.
- // Only the opaque Gallery substrate disables AA; intentional panel seams retain AA.
- if(galleryBase)galleryBase.setAntiAlias(false);
- for(let y=0;y<s.rows;y++)for(let x=0;x<s.cols;x++){
-  if(s.grid[y*s.cols+x]!==Cell.Floor)continue;
-  c.save();c.translate(x*TILE,y*TILE);
-  if(galleryBase)c.drawRect(Skia.XYWHRect(0,0,TILE,TILE),galleryBase);
-  else rect(c,0,0,TILE,TILE,m.floor);
-  if(theme==='gallery'){
-   // Large matte stone panels; restrained seams leave the red vision overlay legible.
-   // The 2×2 panel rhythm differs from Museum's contrasting small marble checks.
-   if(x%2===0)line(c,0,0,0,TILE,m.seam+'66',.7);
-   if(y%2===0)line(c,0,0,TILE,0,m.seam+'66',.7);
-   const gx=(x*17+y*11)%31+4,gy=(x*7+y*19)%31+4;
-   rect(c,gx,gy,1,1,'#c7c8ba16');
-  }else if(theme==='mansion'){
-   for(let i=0;i<4;i++){const yy=i*10;line(c,0,yy,40,yy,m.seam);line(c,(x%2?10:28),yy,(x%2?10:28),yy+10,m.seam);line(c,3,yy+4,33,yy+5,'#81614344');}
-  }else if(theme==='casino'){
-   for(let i=0;i<2;i++)for(let j=0;j<2;j++){const xx=i*20+10,yy=j*20+10;line(c,xx,yy-5,xx+5,yy,m.inlay);line(c,xx+5,yy,xx,yy+5,m.inlay);line(c,xx,yy+5,xx-5,yy,m.inlay);line(c,xx-5,yy,xx,yy-5,m.inlay);}
-  }else if(theme==='warehouse'){
-   line(c,0,0,40,0,m.seam);line(c,0,0,0,40,m.seam);
-   for(let n=0;n<5;n++){const xx=(x*13+y*7+n*11)%39,yy=(y*17+x*3+n*7)%39;rect(c,xx,yy,1,1,'#87908430');}
-  }else if(theme==='security'||theme==='vault'||theme==='blacksite'){
-   rect(c,2,2,36,36,(x+y+variant)%3===0?m.inlay:m.floor);
-   line(c,1,1,39,1,m.trim+'55');line(c,1,1,1,39,m.trim+'33');line(c,39,1,39,39,m.seam,2);line(c,1,39,39,39,m.seam,2);
-   if(theme==='vault')for(const a of [5,35])for(const b of [5,35])c.drawCircle(a,b,0.8,fill('#9ca6b288'));
-  }else if(theme==='lab'){
-   line(c,0,0,40,0,m.seam,2);line(c,0,0,0,40,m.seam,2);
-   if((x+y+variant)%4===0){rect(c,3,3,34,2,'#92c8d055');rect(c,3,5,2,30,'#92c8d022');}
-  }else{
-   const dark=(Math.floor(x/(variant%2+1))+Math.floor(y/(variant%2+1)))%2===0;
-   if(dark)rect(c,0,0,40,40,m.inlay+'55');line(c,0,0,40,0,m.seam);line(c,0,0,0,40,m.seam);
-   if(theme==='museum'||theme==='bank'){line(c,3,11,19,15,'#b3babb18');line(c,19,15,35,12,'#b3babb18');}
-  }
-  c.restore();
- }
- // A room medallion, not a debug/pathfinding line across the playfield.
- const {x,y}=s.objective;c.drawCircle(x,y,42,stroke(m.trim+'77',1.5));c.drawCircle(x,y,37,stroke(m.trim+'33',1));
- if(s.def.landmark){const p=s.def.landmark; c.drawOval(Skia.XYWHRect(p.x*TILE-29,p.y*TILE-12,58,27),stroke(m.trim+'99',1));}
+ drawVenueMaterial(c,s);
 }
 
 export function drawVenueProp(c:SkCanvas,p:CompiledProp,s:CompiledStage):boolean{

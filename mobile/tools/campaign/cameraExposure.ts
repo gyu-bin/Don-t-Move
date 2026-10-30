@@ -6,7 +6,8 @@ import {compileStage,TILE} from '../../src/game/world/compileStage';
 import {buildNavigation} from '../../src/game/world/navigation';
 import {createPlaygroundState,stepPlayground} from '../../src/game/playground/playgroundState';
 import {BODY} from '../../src/game/guards/guardTuning';
-export function exposureRun(def:StageDefinition,route:number,escape:number,mode:number,delay:number){
+import type {PlaygroundState} from '../../src/game/playground/playgroundState';
+export function exposureRun(def:StageDefinition,route:number,escape:number,mode:number,delay:number,onFrame?:(state:PlaygroundState)=>void){
  const stage=compileStage(def),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);s.playerMode=0;
  const entry=def.testRoutes![route].points,points=[...entry,...def.escapeRoutes![escape].points.slice(1)];
  let leg=1;const run=s.securityCameras.map(()=>0),longest=s.securityCameras.map(()=>0),peak=s.securityCameras.map(()=>0);
@@ -15,6 +16,7 @@ export function exposureRun(def:StageDefinition,route:number,escape:number,mode:
   const issued=s.t>=delay;
   if(issued){s.playerMode=leg>=entry.length?3:mode;s.player.tx=points[leg].x*TILE;s.player.ty=points[leg].y*TILE;s.player.hasTarget=true;}
   stepPlayground(s,1/60,TILE,400,800,{x:0,y:0,w:stage.width,h:stage.height},stage.movementBlockers,stage.visionBlockers,nav);
+  onFrame?.(s);
   s.securityCameras.forEach((c,i)=>{run[i]=c.canSee?run[i]+1/60:0;longest[i]=Math.max(longest[i],run[i]);peak[i]=Math.max(peak[i],c.suspicion);});
   if(cameraAlertAt===null&&(s.events.cameraAlertRevision??0)>0)cameraAlertAt=s.t;
   if(!spottedBy&&s.events.spottedSource)spottedBy=s.events.spottedSource;

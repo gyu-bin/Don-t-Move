@@ -325,6 +325,124 @@ Human Tilt balance and phone thermal/energy measurements remain pending. No
 new dynamic effects, guards, ray count or simulation rate were introduced.
 Reproduce: `node --import tsx tools/performance/chapterPressure.ts`.
 
+## Museum 01-01 functional cover pass (2026-10-30)
+
+`v13EntranceStealth.ts` refines only the current Entrance Hall after the frozen
+Museum export. The architecture, spawn, objective, entry/exit, two guards,
+11 props, speeds, detection settings and existing lighting/art are retained.
+Other44 baked mission objects are byte-identical. The frozen plan reused by
+Warehouse and its override lineage are explicitly checked separately.
+
+The existing desk, column and long case form the south approach; the existing
+partition provides the final hidden waiting place. The lobby hub no longer
+routes the player in front of the desk and back down. The safe route actually
+passes the column/case/partition waiting positions; the court shortcut skips
+that detour (42.0 vs33.6 tiles). South passage clearance stays about1.4–1.6
+tiles, rather than squeezing the player between the props and the wall.
+
+The public guard checks the court shortcut, desk gap, column shoulder and case
+gap, with actual walking/looking pauses. The objective guard inspects the
+partition approach between case inspections. This supplies observation windows
+and exposed crossings instead of security that looks away from the playable
+space. No new omniscient AI or runtime cover mechanic is used.
+
+All four named hidden/peek pairs are checked through the real three-sample
+perception model: hidden0/3, adjacent exposed2–3/3. Removing props while keeping
+the walls gives3/3 at the hidden positions, proving that the actual structure
+provides cover rather than just distance or an out-of-cone spot. A120s patrol
+replay visits and faces every associated inspection post. The service escape
+has a continuous Run witness that is genuinely chased, loses LOS, freezes
+global LKP while hidden, and clears without capture.
+
+[`entrance-cover.json`](entrance-cover.json) records full-heist proxies before
+and after. Fixed-route clears27→21/96; cone-aware observing clears9→11/24.
+These mixed results are not human difficulty or time evidence. Safe Walk,
+timed risk Sneak, both escapes and an observe/wait heist all retain continuous
+live-AI clears. The production-benchmark approval remains pending human Tilt
+play; no automatic timing is called a real play time.
+
+Generated review images are in `Reports/MuseumCover/`: `*-compare.png` uses
+the same camera/state at t0 (guard facing changes intentionally); `cover-routes.png`
+marks the real routes, four waiting points and patrol posts on an actual
+offline game-renderer capture. These are not device screenshots or game UI.
+No new images/effects/guards were added to the game.
+
+Validation: entire `npm test` PASS; the final5 entrance-specific tests and
+override integrity tests PASS; app/campaign/performance TypeScript and changed
+source lint PASS. Campaign audit45/45 clean with its same known historical
+finding. Snapshot baseline changed only01-01, then matches45/45. No iPhone
+play or thermal approval, no release publication or Git push in this pass.
+
+Reproduce evidence:
+`git show e9073b3:mobile/src/game/levels/stages/campaignStages.json > /tmp/entrance-before.json`,
+then `node --import tsx tools/performance/entranceCover.ts /tmp/entrance-before.json`.
+
+## Remaining44 missions — functional cover inspections
+
+The subsequent user request expands the Entrance-only pass to the remaining44
+missions. The completed01-01 object is unchanged from the Entrance pass. All44
+keep their architecture, prop positions/art, lights, entry/prize/exit, doors,
+CCTV, guard counts, speeds, roles and chapter vision pressure. Most already
+had opaque geometry; the missing relationship was between playable cover and
+the guard's inspection direction. This pass updates those authored patrol
+posts/look targets, including their generated navigation legs and corresponding
+theft-search anchors. It does not replace the AI, scatter furniture or add
+render effects.
+
+`v13CoverCheckpoints.json` names123 individual inspection/hidden/peek triples,
+2–3 per mission. Museum uses columns/statues/cases, Gallery and Mansion use
+art walls/sculptures, Bank/Casino use counters/screens, Lab/HQ use equipment
+and real wall corners (glass remains transparent), Warehouse uses crates,
+and Vault uses armoured screens/cargo. Each guard checks an exposed shoulder
+beside actual cover, then walks on and leaves a timing window. Probe positions
+are offline QA data; they are never baked into player tracking.
+
+All123 probes pass full-body hiding0/3 and adjacent exposure>=2/3. Removing
+opaque props while keeping walls restores3/3 visibility in the prop probes;
+the four glass-gallery corner probes use architecture and remain hidden by
+the actual walls. All inspection posts are visited/faced during180s of the
+real patrol. Every hidden position has a window of at least2.2s unwatched
+by *all* guards and actual sweeping CCTV during that observation period.
+A180s result is capped by the test length, not a claim of permanent safety.
+
+[`campaign-cover.json`](campaign-cover.json) records the identical comparison
+matrix on all44:32 fixed-route +8 observing runs before and after,3520 heists
+in total. Fixed clears262→272/1408; observing clears149→146/352. These mixed
+numbers do not certify improved difficulty, fun, or human success rates.
+There is a separate continuous live-AI full-heist witness for every mission
+(44/44): guards, CCTV, pickup, theft, lockdown and contact capture stay active.
+08-05,09-03 and09-05 need departures outside the coarse matrix; their extra
+witnesses are explicit and excluded from the comparison counts. The HQ03/05
+regression tests use the new patrol timing windows and still check careless
+departures being spotted and timed complete escapes.
+
+Validation: whole `npm test` PASS (campaign668/668), expanded cover/window/
+heist checks45/45 PASS, app/campaign/performance typecheck PASS, source lint
+0 errors/0 warnings. Environment tool typecheck and contract6/6 also PASS:
+the manifest contract now declares its existing optional provenance field,
+fixing a stale metadata-sync type error without changing pixels or validation
+thresholds. Campaign audit45/45 clean apart from the same historical
+05-02 cashier-corner tangent finding. The reviewed44 hashes were refreshed;
+the Entrance hash stayed unchanged, then snapshot45/45 SAME. Nine chapter
+examples were inspected through the actual Skia renderer, debug OFF, with
+the review overlay separate from the captures. These are offline renders,
+not Simulator or iPhone screenshots. No device Tilt/thermal/battery result
+is claimed. Guard locomotion remains **ASSET REQUIRED**, unchanged.
+
+Reproduce the comparison from `mobile/`:
+
+```sh
+git show e9073b3:mobile/src/game/levels/stages/campaignStages.json > /tmp/cover-before.json
+node --import tsx tools/performance/campaignCover.ts /tmp/cover-before.json
+node --import tsx --test tools/campaign/v13CoverCheckpoints.test.ts
+```
+
+The full raw matrix stays in ignored `Reports/CampaignCover/matrix.json`;
+only the40KB summary and small authored inspection/witness tables are tracked.
+`museumPolishPreview.ts` now loads only a mission's referenced environment
+images and renders the correct CCTV/valuable slots for these offline captures.
+This tool change does not affect the app's asset loading or rendering.
+
 ## Reproduce
 
 From `mobile/`:
@@ -340,3 +458,103 @@ npm run campaign:snapshot
 
 Benchmark commands overwrite only their own reports; gameplay candidates never
 write StageDefinitions into the game. The baseline commit must be available in Git.
+
+
+## 2026-10-30 continuation — static materials, placement and current-state audit
+
+The 45-mission cover/patrol pass above is retained. This continuation does not
+change map data, difficulty coefficients, movement speed, missions, sensors or
+character textures. Static art now uses theme-specific floor/wall finishes and
+more restrained existing warm lights. No extra light, layer, full-screen pass,
+shader, texture, realtime shadow or animated decoration was introduced.
+
+`venueMaterials.test.ts` compares all remaining44 floor command budgets with
+same-map historical formulas; every one decreases. Museum01-01 retains its
+previous pilot floor/light treatment. [`venue-art.json`](venue-art.json) records
+those counts and9 representative before/after static-picture sizes. The before
+renderer is loaded from `e9073b3`, while **both** sides use today's map, assets,
+initial game state and camera. State digests and layer counts match. These are
+actual offline Skia game renders, debug OFF, not Simulator/iPhone captures.
+The decrease is in recorded floor commands/bytes, not a battery or FPS promise.
+Local comparison boards: `Reports/VenuePolish/comparison-{1,2,3}.png` (ignored).
+
+[`placement-audit.json`](placement-audit.json) checks593 solid props across45
+missions. Previously55 placements had collision envelopes outside the artwork
+projection. `propRenderWidth` increases only necessary draw widths, preserving
+aspect ratio, pivot and existing footprint. All593 now fit their bitmap bounds;
+transparent glass stays on its technical renderer. **This is a bounds test, not
+an alpha-silhouette or wall-height occlusion certification.** Nine representative
+maps were visually inspected; closer full-footprint art review remains useful.
+Nothing changes collision, LOS, props' world positions or player paths.
+
+Door navigation now returns the immutable static graph when there are no closed
+door blockers. The existing closed-door/alternate-route test also verifies that
+reopening restores the direct route without mutating that graph. This saves
+work on graph refresh, not on every simulation tick.
+
+The security CPU comparison now includes09-05 (6 guards +3 CCTV), with120s each
+of patrol/theft/alert. All12 cases retain matching sampled simulation-state
+hashes. Vault CPU times are187.94/249.67/231.81ms per7200 ticks, versus
+343.48/580.25/589.72ms with the old vision code:45.28/56.97/60.69% lower.
+These gains belong to the **already implemented vision cache/broad phase**;
+this run expands its coverage, and does not attribute them to today's door or
+art changes. Desktop CPU only; GPU, heat and battery remain unmeasured.
+
+### Difficulty findings — not a blanket approval
+
+[`difficulty-current.json`](difficulty-current.json) samples actual patrol/CCTV
+for60s over all45 missions. Chapter means, rounded to percent:
+
+| Chapter | Guard coverage | Safe-route exposure | Exit pressure |
+|---|---:|---:|---:|
+| 1 Museum | 4.1 | 5.9 | 1.0 |
+| 2 Gallery | 3.3 | 5.7 | 0.0 |
+| 3 Bank | 8.3 | 11.1 | 7.5 |
+| 4 Lab | 6.9 | 9.0 | 5.5 |
+| 5 Casino | 9.2 | 13.0 | 18.3 |
+| 6 Mansion | 10.9 | 10.9 | 10.3 |
+| 7 Warehouse | 13.4 | 15.0 | 16.8 |
+| 8 HQ | 13.7 | 16.5 | 26.5 |
+| 9 Vault | 17.2 | 18.0 | 14.3 |
+
+The exact report is authoritative. These axes measure different exposures, not
+player win rates. Late guard coverage increases, but Mansion safe-route pressure
+and Vault exit pressure dip versus their preceding chapters. The report's
+`orderingAcceptance` gate still covers chapters1–3 only and remains
+`REVIEW_REQUIRED`; it must not be presented as an all-nine difficulty PASS.
+The separate44-mission full-heist witnesses still clear with live AI and CCTV.
+
+A06-01 guard1 first-wait trial (3→4→5 seconds) was rejected: the same32 fixed
+runs cleared12→13→13 times, while8 observing runs cleared0 in all three. Longer
+waiting alone provided no demonstrated improvement. It was never written to
+StageDefinition. Mixed route matrix outcomes above remain disclosed, with no
+claim that every cover change improved difficulty or fun. Further balance
+changes need a specific route/timing problem and preserved complete-escape
+witness, rather than forcing every exposure axis to rise monotonically.
+
+### Character status correction
+
+Code inspection found the earlier LEGACY-static description was stale. Current
+`ASSET_MANIFEST.characters` uses the existing V2 cutout atlases: Player Walk14
+frames, Guard Walk/Run12 frames, distance-driven playback. `locomotion:validate`
+passes, but `finalApproved=false` is retained. Guard Whistle/Search are idle
+stand-ins. No new generation, frame repair, rebake or speed change was done.
+**Guard locomotion final asset required** remains the final-art blocker; the
+current cutout animation is not being declared a final approved solution.
+Historical production records are retained and labelled in `ASSET_TODO.md`.
+
+Validation: `npm test` PASS (campaign668 tests); app/campaign, performance and
+all environment-tool TypeScript checks PASS; app lint0 errors/0 warnings and
+changed environment-tool lint PASS. Campaign snapshot45/45 SAME. Campaign audit
+has no new findings; the pre-existing05-02 guard4 cashier-corner tangent remains
+explicitly recorded. No iPhone, Simulator playthrough, thermal/battery or human
+animation approval is claimed for this continuation.
+
+Reproduce the visual comparison without modifying working app code:
+
+```sh
+BASELINE_ART_REF=e9073b3 SKIP_REPLAY=1 MAP_ONLY=1 TSX_TSCONFIG_PATH=tools/sprites/tsconfig.runtime.json node --import tsx tools/environment/museumPolishPreview.ts Reports/VenuePolish/06-04/before 06-04
+SKIP_REPLAY=1 MAP_ONLY=1 TSX_TSCONFIG_PATH=tools/sprites/tsconfig.runtime.json node --import tsx tools/environment/museumPolishPreview.ts Reports/VenuePolish/06-04/after 06-04
+node --import tsx tools/environment/placementAudit.ts
+npm run test:museum-look
+```

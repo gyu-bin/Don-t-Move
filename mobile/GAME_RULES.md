@@ -1,5 +1,13 @@
 # DON'T MOVE — Core Game Rules V1
 
+> Character implementation status (2026-10-30): current Player/Guard rendering uses
+> the existing V2 cutout atlases selected by `ASSET_MANIFEST.characters`, with
+> distance-driven Walk/Run. These are temporary (`finalApproved=false`), not final
+> approved artwork. Guard Whistle/Search remain idle stand-ins. Later paragraphs
+> about LEGACY still sprites and the old RIGHT-only trial are historical V1 notes;
+> see `art/characters/ASSET_TODO.md` for the current status. No gameplay rule changes.
+
+
 이 문서가 게임 규칙의 **Source of Truth**다.
 - 코드와 이 문서가 충돌하면 **문서를 기준으로 판단**한다.
 - 규칙을 바꾸려면 먼저 이 문서를 고친 뒤 구현한다.

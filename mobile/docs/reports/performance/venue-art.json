@@ -1,0 +1,376 @@
+{
+  "method": "Actual offline Skia renderer; historical static art at e9073b3 vs current static art, both with current map/simulation/assets. Equal t=0 state digest and camera, equal layer count. Serialized floor picture bytes measure static command storage, NOT FPS, GPU work or energy. No new textures or animated effects. All 9 representative captures visually reviewed. Alpha silhouette/height occlusion and human visual approval remain separate.",
+  "captures": [
+    {
+      "id": "01-02",
+      "simulationDigest": "415181bee8b9cada8f0fecedeeed4d86131a1ac7333b2a5d12bca03babb2969c",
+      "before": {
+        "floor": 161538,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 36
+      },
+      "after": {
+        "floor": 78890,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 36
+      }
+    },
+    {
+      "id": "02-05",
+      "simulationDigest": "6500736b0bd04de03c13143ba47ef2ee2af60147f5a744fe606fca40781232e9",
+      "before": {
+        "floor": 138858,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 36
+      },
+      "after": {
+        "floor": 97734,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 36
+      }
+    },
+    {
+      "id": "03-05",
+      "simulationDigest": "df3b7e452bc5af4067049161aacf8b3e2f2604f3e0824c18f0b1c798c94a64c0",
+      "before": {
+        "floor": 296318,
+        "darkness": 3185,
+        "glow": 4034,
+        "layers": 46
+      },
+      "after": {
+        "floor": 187434,
+        "darkness": 3185,
+        "glow": 4034,
+        "layers": 46
+      }
+    },
+    {
+      "id": "04-02",
+      "simulationDigest": "2b967b3f813729397840cf2bc89419e0534fddc46fbf3d122b61a40997229d62",
+      "before": {
+        "floor": 243226,
+        "darkness": 3185,
+        "glow": 4034,
+        "layers": 41
+      },
+      "after": {
+        "floor": 194682,
+        "darkness": 3185,
+        "glow": 4034,
+        "layers": 41
+      }
+    },
+    {
+      "id": "05-05",
+      "simulationDigest": "234e5aed35e6da077245f536330ff519c55f2749713787cb0d966168b126df74",
+      "before": {
+        "floor": 588362,
+        "darkness": 3185,
+        "glow": 4034,
+        "layers": 46
+      },
+      "after": {
+        "floor": 146954,
+        "darkness": 3185,
+        "glow": 4034,
+        "layers": 46
+      }
+    },
+    {
+      "id": "06-04",
+      "simulationDigest": "de2b9197f27f14075bec428fc98527ced2dd5e4ff8c9ea840f3a67f5d635fb4a",
+      "before": {
+        "floor": 328978,
+        "darkness": 3729,
+        "glow": 4610,
+        "layers": 36
+      },
+      "after": {
+        "floor": 112086,
+        "darkness": 3729,
+        "glow": 4610,
+        "layers": 36
+      }
+    },
+    {
+      "id": "07-02",
+      "simulationDigest": "30e89a2067182b19478a2da8534f820b51acf7e26d84ab0714242305b5936767",
+      "before": {
+        "floor": 199982,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 36
+      },
+      "after": {
+        "floor": 79430,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 36
+      }
+    },
+    {
+      "id": "08-05",
+      "simulationDigest": "49b6f321ae7ecdd83d0a132d2fffd2cb4b3150d32542ee9369d365cce2f9ad3e",
+      "before": {
+        "floor": 344874,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 47
+      },
+      "after": {
+        "floor": 217758,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 47
+      }
+    },
+    {
+      "id": "09-03",
+      "simulationDigest": "f8e7eea83c32d5d27696d835606d82f89245dc52fbc6bddd84e7a0150a67e784",
+      "before": {
+        "floor": 344090,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 43
+      },
+      "after": {
+        "floor": 116942,
+        "darkness": 3457,
+        "glow": 4322,
+        "layers": 43
+      }
+    }
+  ],
+  "floorCommands": {
+    "method": "Counted real drawVenueFloor commands; historical budget evaluated on the same floor cells. Excludes walls/props/lights and GPU replay. Museum 01-01 remains the prior measured pilot.",
+    "missions": [
+      {
+        "id": "01-02",
+        "before": 1856,
+        "after": 883
+      },
+      {
+        "id": "01-03",
+        "before": 1726,
+        "after": 814
+      },
+      {
+        "id": "01-04",
+        "before": 1587,
+        "after": 752
+      },
+      {
+        "id": "01-05",
+        "before": 1758,
+        "after": 829
+      },
+      {
+        "id": "02-01",
+        "before": 996,
+        "after": 810
+      },
+      {
+        "id": "02-02",
+        "before": 928,
+        "after": 784
+      },
+      {
+        "id": "02-03",
+        "before": 1104,
+        "after": 899
+      },
+      {
+        "id": "02-04",
+        "before": 1049,
+        "after": 865
+      },
+      {
+        "id": "02-05",
+        "before": 1279,
+        "after": 1073
+      },
+      {
+        "id": "03-01",
+        "before": 2272,
+        "after": 1056
+      },
+      {
+        "id": "03-02",
+        "before": 2118,
+        "after": 993
+      },
+      {
+        "id": "03-03",
+        "before": 1667,
+        "after": 790
+      },
+      {
+        "id": "03-04",
+        "before": 1903,
+        "after": 870
+      },
+      {
+        "id": "03-05",
+        "before": 2411,
+        "after": 1122
+      },
+      {
+        "id": "04-01",
+        "before": 1322,
+        "after": 1089
+      },
+      {
+        "id": "04-02",
+        "before": 1355,
+        "after": 1009
+      },
+      {
+        "id": "04-03",
+        "before": 1500,
+        "after": 1173
+      },
+      {
+        "id": "04-04",
+        "before": 1317,
+        "after": 1035
+      },
+      {
+        "id": "04-05",
+        "before": 1674,
+        "after": 1254
+      },
+      {
+        "id": "05-01",
+        "before": 7007,
+        "after": 593
+      },
+      {
+        "id": "05-02",
+        "before": 6531,
+        "after": 571
+      },
+      {
+        "id": "05-03",
+        "before": 5868,
+        "after": 496
+      },
+      {
+        "id": "05-04",
+        "before": 5154,
+        "after": 442
+      },
+      {
+        "id": "05-05",
+        "before": 7449,
+        "after": 647
+      },
+      {
+        "id": "06-01",
+        "before": 4397,
+        "after": 1354
+      },
+      {
+        "id": "06-02",
+        "before": 3942,
+        "after": 1215
+      },
+      {
+        "id": "06-03",
+        "before": 4826,
+        "after": 1482
+      },
+      {
+        "id": "06-04",
+        "before": 4579,
+        "after": 1410
+      },
+      {
+        "id": "06-05",
+        "before": 5502,
+        "after": 1697
+      },
+      {
+        "id": "07-01",
+        "before": 2563,
+        "after": 849
+      },
+      {
+        "id": "07-02",
+        "before": 2699,
+        "after": 892
+      },
+      {
+        "id": "07-03",
+        "before": 2507,
+        "after": 817
+      },
+      {
+        "id": "07-04",
+        "before": 2307,
+        "after": 765
+      },
+      {
+        "id": "07-05",
+        "before": 2555,
+        "after": 837
+      },
+      {
+        "id": "08-01",
+        "before": 2265,
+        "after": 1025
+      },
+      {
+        "id": "08-02",
+        "before": 2319,
+        "after": 1009
+      },
+      {
+        "id": "08-03",
+        "before": 2565,
+        "after": 1174
+      },
+      {
+        "id": "08-04",
+        "before": 2259,
+        "after": 1024
+      },
+      {
+        "id": "08-05",
+        "before": 2865,
+        "after": 1287
+      },
+      {
+        "id": "09-01",
+        "before": 4673,
+        "after": 1219
+      },
+      {
+        "id": "09-02",
+        "before": 4243,
+        "after": 1173
+      },
+      {
+        "id": "09-03",
+        "before": 4783,
+        "after": 1284
+      },
+      {
+        "id": "09-04",
+        "before": 4233,
+        "after": 1160
+      },
+      {
+        "id": "09-05",
+        "before": 5713,
+        "after": 1536
+      }
+    ],
+    "totalBefore": 133626,
+    "totalAfter": 44058
+  }
+}
