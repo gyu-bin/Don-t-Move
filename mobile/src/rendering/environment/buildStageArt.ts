@@ -19,6 +19,7 @@ import { DRESSING_KIT } from '../../game/world/dressingKit';
 import { drawDressingFloor, drawDressingItem } from './museumDressingArt';
 import {MATERIALS} from '../../game/levels/chapterArt';
 import { northBoundaryColumns } from './northBoundary';
+import {ENTRANCE_LOOK,isMuseumEntrance} from './museumEntranceLook';
 
 /**
  * Bakes everything static in a stage into SkPictures once at load:
@@ -188,14 +189,14 @@ function drawFloorShading(c: SkCanvas, stage: CompiledStage): void {
 function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: SpriteAtlas | null): boolean {
   const north = r === -1 ? northBoundaryColumns(stage.def) : [];
   if(stage.def.chapter){
-    const m=MATERIALS[stage.def.theme];let any=false;
+    const m=MATERIALS[stage.def.theme],entrance=isMuseumEntrance(stage.def.id);let any=false;
     for(let x=0;x<stage.cols;x++){
       if(r === -1 ? !north.includes(x) : stage.grid[r*stage.cols+x]!==Cell.Wall)continue;any=true;
       const xx=x*TILE,yy=(r+1)*TILE-WALL_HEIGHT;
       if(stage.grid[(r+1)*stage.cols+x]!==Cell.Wall){
-        fillRect(c,xx,yy,TILE,WALL_HEIGHT,linear(0,yy,0,yy+WALL_HEIGHT,stage.def.theme==='gallery'?['#d4d0bb','#989d91']:[m.inlay,m.seam]));
-        c.drawLine(xx,yy+WALL_HEIGHT-4,xx+TILE,yy+WALL_HEIGHT-4,stroke(m.trim,2,0.6));
-        c.drawLine(xx+2,yy+3,xx+2,yy+WALL_HEIGHT-5,stroke(m.trim,1,0.22));
+        fillRect(c,xx,yy,TILE,WALL_HEIGHT,linear(0,yy,0,yy+WALL_HEIGHT,entrance?[...ENTRANCE_LOOK.wallFace]:stage.def.theme==='gallery'?['#d4d0bb','#989d91']:[m.inlay,m.seam]));
+        c.drawLine(xx,yy+WALL_HEIGHT-4,xx+TILE,yy+WALL_HEIGHT-4,stroke(entrance?ENTRANCE_LOOK.trim:m.trim,2,0.6));
+        c.drawLine(xx+2,yy+3,xx+2,yy+WALL_HEIGHT-5,stroke(entrance?ENTRANCE_LOOK.trim:m.trim,1,entrance?.1:.22));
         if(stage.def.theme==='gallery'){
           // Quiet plaster panel rhythm and a grounded metal baseboard, not a Museum cornice.
           fillRect(c,xx,yy+WALL_HEIGHT-6,TILE,5,fill('#c3c4b6'));
@@ -203,7 +204,7 @@ function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: Sprite
           if(x%3===0)c.drawLine(xx+1,yy+5,xx+1,yy+WALL_HEIGHT-8,stroke('#8b9487',.7,.35));
         }
       }
-      fillRect(c,xx,r*TILE-WALL_HEIGHT,TILE,TILE,fill(stage.def.theme==='gallery'?'#b5b6a9':m.seam));
+      fillRect(c,xx,r*TILE-WALL_HEIGHT,TILE,TILE,fill(entrance?ENTRANCE_LOOK.wallTop:stage.def.theme==='gallery'?'#b5b6a9':m.seam));
       c.drawLine(xx,r*TILE-WALL_HEIGHT,xx+TILE,r*TILE-WALL_HEIGHT,stroke(m.trim,1,0.5));
     }
     return any;
@@ -359,12 +360,13 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
   }
   layers.sort((a, b) => a.sortY - b.sortY);
 
-  const ambient = stage.def.ambientDarkness ?? 0.6;
+  const entrance=isMuseumEntrance(stage.def.id);
+  const ambient = entrance?ENTRANCE_LOOK.ambient:stage.def.ambientDarkness ?? 0.6;
   const darkness = record(pad, (c) => {
     c.drawRect(Skia.XYWHRect(pad.x, pad.y, pad.w, pad.h), fill('#03050a', ambient));
     for (const l of stage.lights) {
       const a = Math.min(0.97, 0.6 + l.intensity * 0.4);
-      const r = l.radius * 1.15;
+      const r = l.radius * (entrance?ENTRANCE_LOOK.lightRadius:1.15);
       c.drawCircle(
         l.x,
         l.y,
@@ -392,16 +394,17 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
       c.restore();
     }
     for (const l of stage.lights) {
-      const [r, g, b, a0] = LIGHT_RGB[l.kind];
+      const [r, g, b, a0] = entrance&&l.kind==='warm'?ENTRANCE_LOOK.warm:LIGHT_RGB[l.kind];
       const a = a0 * l.intensity;
+      const radius=l.radius*(entrance&&l.kind==='warm'?ENTRANCE_LOOK.glowRadius:1);
       c.drawCircle(
         l.x,
         l.y,
-        l.radius,
+        radius,
         radial(
           l.x,
           l.y,
-          l.radius,
+          radius,
           [`rgba(${r},${g},${b},${a})`, `rgba(${r},${g},${b},${a * 0.4})`, `rgba(${r},${g},${b},0)`],
           [0, 0.45, 1],
           BlendMode.Screen,

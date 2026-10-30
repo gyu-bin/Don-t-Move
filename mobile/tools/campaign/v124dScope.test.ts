@@ -64,7 +64,8 @@ test('Phase4D: Casino physical fixtures select shipped Casino art with matching 
  }
 });
 
-test('Phase4D: protected Tilt, Guard AI, CCTV and saves remain unchanged; the escape timer is the shortened 10 seconds',()=>{
+test('Phase4D: protected logic matches its reviewed baseline; the escape timer is the shortened 10 seconds',()=>{
+ // CCTV baseline refreshed after the behavior-equivalent vision optimization in 6e867ba.
  // Shortened from 28 s after the V13 playtest: at 28 s the lockdown door never closed on a thief who kept moving.
  assert.equal(ESCAPE_TIMER_SECONDS,10);
  for(const [file,hash] of Object.entries(protectedHashes))

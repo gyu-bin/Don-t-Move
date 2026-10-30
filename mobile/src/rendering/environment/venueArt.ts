@@ -4,6 +4,7 @@ import type {CompiledProp,CompiledStage} from '../../game/world/compileStage';
 import {Cell,TILE} from '../../game/world/compileStage';
 import {MATERIALS} from '../../game/levels/chapterArt';
 import {fill,stroke} from '../paints';
+import {drawEntranceStone,isMuseumEntrance} from './museumEntranceLook';
 
 // Static, theme-specific architectural drawing. Baked once, never on the UI frame.
 const rect=(c:SkCanvas,x:number,y:number,w:number,h:number,color:string)=>c.drawRect(Skia.XYWHRect(x,y,w,h),fill(color));
@@ -17,6 +18,7 @@ function box(c:SkCanvas,w:number,h:number,top:string,front:string,trim:string){
 function bolts(c:SkCanvas,w:number,h:number){for(const x of [-w/2+4,w/2-4])for(const y of [-h+4,-4])c.drawCircle(x,y,1.2,fill('#a1acb6'));}
 
 export function drawVenueFloor(c:SkCanvas,s:CompiledStage){
+ if(isMuseumEntrance(s.def.id)){drawEntranceStone(c,s);return;}
  const theme=s.def.theme,m=MATERIALS[theme],variant=(s.def.mission??1)-1;
  const galleryBase=theme==='gallery'?fill(m.floor):null;
  // Adjacent anti-aliased tile fills leave fractional-zoom fringes over VOID.

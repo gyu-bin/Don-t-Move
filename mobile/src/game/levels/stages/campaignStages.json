@@ -33445,8 +33445,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -33484,8 +33484,8 @@
         "facing": -2.393214606066275,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -2.393214606066275,
         "theftRole": "zone",
         "theftPosts": [
@@ -33523,8 +33523,8 @@
         "facing": -0.4461055489434034,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -0.4461055489434034,
         "theftRole": "exit",
         "theftPosts": [
@@ -33566,8 +33566,8 @@
         "facing": -1.1441688336680205,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -1.1441688336680205,
         "theftRole": "objective",
         "theftPosts": [
@@ -34801,9 +34801,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       },
       {
         "id": "05-01-cam2",
@@ -34813,9 +34813,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       }
     ],
     "visualRevision": "v12-4c",
@@ -35110,8 +35110,8 @@
         "facing": 2.297438667476622,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 2.297438667476622,
         "theftRole": "zone",
         "theftPosts": [
@@ -35149,8 +35149,8 @@
         "facing": -0.21866894587394195,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -0.21866894587394195,
         "theftRole": "zone",
         "theftPosts": [
@@ -35188,8 +35188,8 @@
         "facing": 2.5032728455807476,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 2.5032728455807476,
         "theftRole": "exit",
         "theftPosts": [
@@ -35227,8 +35227,8 @@
         "facing": 1.6921483273656603,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 1.6921483273656603,
         "theftRole": "objective",
         "theftPosts": [
@@ -36702,9 +36702,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       },
       {
         "id": "05-02-cam2",
@@ -36714,9 +36714,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       }
     ],
     "visualRevision": "v12-4c",
@@ -37006,8 +37006,8 @@
         "facing": 0.6435011087932844,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 0.6435011087932844,
         "theftRole": "zone",
         "theftPosts": [
@@ -37045,8 +37045,8 @@
         "facing": 0.38381762328856894,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 0.38381762328856894,
         "theftRole": "zone",
         "theftPosts": [
@@ -37084,8 +37084,8 @@
         "facing": -2.6387494426619327,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -2.6387494426619327,
         "theftRole": "exit",
         "theftPosts": [
@@ -37127,8 +37127,8 @@
         "facing": -1.4327903031373772,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -1.4327903031373772,
         "theftRole": "objective",
         "theftPosts": [
@@ -38677,9 +38677,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       },
       {
         "id": "05-03-cam2",
@@ -38689,9 +38689,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       }
     ],
     "visualRevision": "v12-4c",
@@ -38958,8 +38958,8 @@
         "facing": 1.2722973952087173,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 1.2722973952087173,
         "theftRole": "zone",
         "theftPosts": [
@@ -38997,8 +38997,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -39036,8 +39036,8 @@
         "facing": 0.507098504392337,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": 0.507098504392337,
         "theftRole": "exit",
         "theftPosts": [
@@ -39079,8 +39079,8 @@
         "facing": -1.9756881130799802,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -1.9756881130799802,
         "theftRole": "objective",
         "theftPosts": [
@@ -40472,9 +40472,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       },
       {
         "id": "05-04-cam2",
@@ -40484,9 +40484,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       }
     ],
     "visualRevision": "v12-4c",
@@ -40796,8 +40796,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -40835,8 +40835,8 @@
         "facing": -0.41822432957922906,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -0.41822432957922906,
         "theftRole": "zone",
         "theftPosts": [
@@ -40874,8 +40874,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -1.5707963267948966,
         "theftRole": "exit",
         "theftPosts": [
@@ -40913,8 +40913,8 @@
         "facing": -1.1760052070951352,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.3,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.644,
+        "visionHalfAngle": 0.5445427266222308,
         "initialFacing": -1.1760052070951352,
         "theftRole": "objective",
         "theftPosts": [
@@ -42339,9 +42339,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       },
       {
         "id": "05-05-cam2",
@@ -42351,9 +42351,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.2,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.45999999999999996
       }
     ],
     "visualRevision": "v12-4c",
@@ -42595,8 +42595,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -42634,8 +42634,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -42673,8 +42673,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -42712,8 +42712,8 @@
         "facing": -1.4940244355251184,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": -1.4940244355251184,
         "theftRole": "objective",
         "theftPosts": [
@@ -44119,9 +44119,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       },
       {
         "id": "06-01-cam2",
@@ -44131,9 +44131,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       }
     ],
     "visualRevision": "v12-4c",
@@ -44362,8 +44362,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -44413,8 +44413,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -44452,8 +44452,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -44491,8 +44491,8 @@
         "facing": -1.0636978224025597,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": -1.0636978224025597,
         "theftRole": "objective",
         "theftPosts": [
@@ -45857,9 +45857,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       },
       {
         "id": "06-02-cam2",
@@ -45869,9 +45869,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       }
     ],
     "visualRevision": "v12-4c",
@@ -46141,8 +46141,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -46180,8 +46180,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -46219,8 +46219,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -46258,8 +46258,8 @@
         "facing": 1.1659045405098123,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.1659045405098123,
         "theftRole": "objective",
         "theftPosts": [
@@ -47686,9 +47686,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       },
       {
         "id": "06-03-cam2",
@@ -47698,9 +47698,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       }
     ],
     "visualRevision": "v12-4c",
@@ -47938,8 +47938,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": -1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -47977,8 +47977,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -48016,8 +48016,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -48055,8 +48055,8 @@
         "facing": -1.3876855095324128,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": -1.3876855095324128,
         "theftRole": "objective",
         "theftPosts": [
@@ -49346,9 +49346,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       },
       {
         "id": "06-04-cam2",
@@ -49358,9 +49358,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       }
     ],
     "visualRevision": "v12-4c",
@@ -49590,8 +49590,8 @@
         "facing": -3.0750244898139694,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": -3.0750244898139694,
         "theftRole": "zone",
         "theftPosts": [
@@ -49629,8 +49629,8 @@
         "facing": 0.12246105741734153,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 0.12246105741734153,
         "theftRole": "zone",
         "theftPosts": [
@@ -49668,8 +49668,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -49707,8 +49707,8 @@
         "facing": -3.022163727571456,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.4,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 4.928000000000001,
+        "visionHalfAngle": 0.5550147021341968,
         "initialFacing": -3.022163727571456,
         "theftRole": "objective",
         "theftPosts": [
@@ -50964,9 +50964,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       },
       {
         "id": "06-05-cam2",
@@ -50976,9 +50976,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.300000000000001,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5
       }
     ],
     "visualRevision": "v12-4c",
@@ -51192,8 +51192,8 @@
         "facing": -3.0750244898139694,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": -3.0750244898139694,
         "theftRole": "zone",
         "theftPosts": [
@@ -51231,8 +51231,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -51270,8 +51270,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -51309,8 +51309,8 @@
         "facing": -1.6951513213416582,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": -1.6951513213416582,
         "theftRole": "objective",
         "theftPosts": [
@@ -52634,9 +52634,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       },
       {
         "id": "07-01-cam2",
@@ -52646,9 +52646,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       }
     ],
     "visualRevision": "v12-4c",
@@ -52886,8 +52886,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -52929,8 +52929,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -52968,8 +52968,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -53007,8 +53007,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -54291,9 +54291,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       },
       {
         "id": "07-02-cam2",
@@ -54303,9 +54303,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       }
     ],
     "visualRevision": "v12-4c",
@@ -54527,8 +54527,8 @@
         "facing": -0.15264932839526518,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": -0.15264932839526518,
         "theftRole": "zone",
         "theftPosts": [
@@ -54566,8 +54566,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -54605,8 +54605,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -54644,8 +54644,8 @@
         "facing": 0.9075933340888033,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0.9075933340888033,
         "theftRole": "objective",
         "theftPosts": [
@@ -55905,9 +55905,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       },
       {
         "id": "07-03-cam2",
@@ -55917,9 +55917,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       }
     ],
     "visualRevision": "v12-4c",
@@ -56111,8 +56111,8 @@
         "facing": 0.09065988720074511,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0.09065988720074511,
         "theftRole": "zone",
         "theftPosts": [
@@ -56154,8 +56154,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -56193,8 +56193,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -56232,8 +56232,8 @@
         "facing": 2.0344439357957027,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 2.0344439357957027,
         "theftRole": "objective",
         "theftPosts": [
@@ -57372,9 +57372,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       }
     ],
     "visualRevision": "v12-4c",
@@ -57588,8 +57588,8 @@
         "facing": -2.498091544796509,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": -2.498091544796509,
         "theftRole": "zone",
         "theftPosts": [
@@ -57627,8 +57627,8 @@
         "facing": -0.7853981633974483,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": -0.7853981633974483,
         "theftRole": "exit",
         "theftPosts": [
@@ -57666,8 +57666,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -57705,8 +57705,8 @@
         "facing": -0.5880026035475675,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.6,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.427999999999999,
+        "visionHalfAngle": 0.5654866776461628,
         "initialFacing": -0.5880026035475675,
         "theftRole": "objective",
         "theftPosts": [
@@ -59007,9 +59007,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       },
       {
         "id": "07-05-cam2",
@@ -59019,9 +59019,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.5599999999999999
       }
     ],
     "visualRevision": "v12-4c",
@@ -59277,8 +59277,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -59316,8 +59316,8 @@
         "facing": -2.6928693095790717,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -2.6928693095790717,
         "theftRole": "zone",
         "theftPosts": [
@@ -59355,8 +59355,8 @@
         "facing": -0.2837941092083279,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -0.2837941092083279,
         "theftRole": "exit",
         "theftPosts": [
@@ -59398,8 +59398,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -60778,9 +60778,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-01-cam2",
@@ -60790,9 +60790,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-01-cam3",
@@ -60802,9 +60802,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       }
     ],
     "visualRevision": "v12-4c",
@@ -61086,8 +61086,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -61133,8 +61133,8 @@
         "facing": -0.7752974968121262,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -0.7752974968121262,
         "theftRole": "zone",
         "theftPosts": [
@@ -61172,8 +61172,8 @@
         "facing": 0.43467021514924475,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 0.43467021514924475,
         "theftRole": "exit",
         "theftPosts": [
@@ -61215,8 +61215,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -61254,8 +61254,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -62669,9 +62669,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-02-cam2",
@@ -62681,9 +62681,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-02-cam3",
@@ -62693,9 +62693,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       }
     ],
     "visualRevision": "v12-4c",
@@ -63017,8 +63017,8 @@
         "facing": -0.4018706474404571,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -0.4018706474404571,
         "theftRole": "zone",
         "theftPosts": [
@@ -63056,8 +63056,8 @@
         "facing": -0.8760580505981933,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -0.8760580505981933,
         "theftRole": "zone",
         "theftPosts": [
@@ -63095,8 +63095,8 @@
         "facing": -2.8724251608040925,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -2.8724251608040925,
         "theftRole": "exit",
         "theftPosts": [
@@ -63134,8 +63134,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -63173,8 +63173,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -64590,9 +64590,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-03-cam2",
@@ -64602,9 +64602,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-03-cam3",
@@ -64614,9 +64614,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       }
     ],
     "visualRevision": "v12-4c",
@@ -64924,8 +64924,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -64963,8 +64963,8 @@
         "facing": -0.42662749312687603,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -0.42662749312687603,
         "theftRole": "zone",
         "theftPosts": [
@@ -65002,8 +65002,8 @@
         "facing": 0.4939413689195819,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 0.4939413689195819,
         "theftRole": "exit",
         "theftPosts": [
@@ -65045,8 +65045,8 @@
         "facing": 1.5707963267948966,
         "pace": 0.8,
         "startDelay": 18,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -66326,9 +66326,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-04-cam2",
@@ -66338,9 +66338,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-04-cam3",
@@ -66350,9 +66350,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       }
     ],
     "visualRevision": "v12-4c",
@@ -66679,8 +66679,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -66718,8 +66718,8 @@
         "facing": 0.17670885607003656,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 0.17670885607003656,
         "theftRole": "zone",
         "theftPosts": [
@@ -66757,8 +66757,8 @@
         "facing": 1.7782925532300993,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 1.7782925532300993,
         "theftRole": "exit",
         "theftPosts": [
@@ -66804,8 +66804,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -66843,8 +66843,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 4.8,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 5.952,
+        "visionHalfAngle": 0.5759586531581288,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -66886,7 +66886,7 @@
           {
             "x": 14.75,
             "y": 9.5,
-            "waitDuration": 4,
+            "waitDuration": 5,
             "lookDirection": 0,
             "turnDuration": 0.4
           },
@@ -68526,9 +68526,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-05-cam2",
@@ -68538,9 +68538,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       },
       {
         "id": "08-05-cam3",
@@ -68550,9 +68550,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.5,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.6200000000000001
       }
     ],
     "visualRevision": "v12-4c",
@@ -68794,8 +68794,8 @@
         "facing": -2.226491953036434,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -2.226491953036434,
         "theftRole": "zone",
         "theftPosts": [
@@ -68833,8 +68833,8 @@
         "facing": 2.569132839771742,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 2.569132839771742,
         "theftRole": "zone",
         "theftPosts": [
@@ -68872,8 +68872,8 @@
         "facing": -0.3625442372645074,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -0.3625442372645074,
         "theftRole": "exit",
         "theftPosts": [
@@ -68911,8 +68911,8 @@
         "facing": 3.141592653589793,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 3.141592653589793,
         "theftRole": "zone",
         "theftPosts": [
@@ -68950,8 +68950,8 @@
         "facing": -2.3561944901923453,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -2.3561944901923453,
         "theftRole": "zone",
         "theftPosts": [
@@ -68989,8 +68989,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -70410,9 +70410,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-01-cam2",
@@ -70422,9 +70422,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-01-cam3",
@@ -70434,9 +70434,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       }
     ],
     "visualRevision": "v12-4c",
@@ -70661,8 +70661,8 @@
         "facing": 0.5516549825285467,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 0.5516549825285467,
         "theftRole": "zone",
         "theftPosts": [
@@ -70700,8 +70700,8 @@
         "facing": 2.4733032347592094,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 2.4733032347592094,
         "theftRole": "zone",
         "theftPosts": [
@@ -70739,8 +70739,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 0,
         "theftRole": "exit",
         "theftPosts": [
@@ -70778,8 +70778,8 @@
         "facing": 0,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 0,
         "theftRole": "zone",
         "theftPosts": [
@@ -70817,8 +70817,8 @@
         "facing": -1.0516502125483738,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -1.0516502125483738,
         "theftRole": "zone",
         "theftPosts": [
@@ -70856,8 +70856,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -72264,9 +72264,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-02-cam2",
@@ -72276,9 +72276,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-02-cam3",
@@ -72288,9 +72288,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       }
     ],
     "visualRevision": "v12-4c",
@@ -72570,8 +72570,8 @@
         "facing": -0.6327488350021829,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -0.6327488350021829,
         "theftRole": "zone",
         "theftPosts": [
@@ -72609,8 +72609,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -1.5707963267948966,
         "theftRole": "zone",
         "theftPosts": [
@@ -72648,8 +72648,8 @@
         "facing": -2.8119682461690507,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -2.8119682461690507,
         "theftRole": "exit",
         "theftPosts": [
@@ -72687,8 +72687,8 @@
         "facing": 0.9025069079643125,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 0.9025069079643125,
         "theftRole": "zone",
         "theftPosts": [
@@ -72726,8 +72726,8 @@
         "facing": 2.2896263264165206,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 2.2896263264165206,
         "theftRole": "zone",
         "theftPosts": [
@@ -72765,8 +72765,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -74433,9 +74433,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-03-cam2",
@@ -74445,9 +74445,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-03-cam3",
@@ -74457,9 +74457,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       }
     ],
     "visualRevision": "v12-4c",
@@ -74699,8 +74699,8 @@
         "facing": 2.2974386674766225,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 2.2974386674766225,
         "theftRole": "zone",
         "theftPosts": [
@@ -74738,8 +74738,8 @@
         "facing": 0.6350267353903141,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 0.6350267353903141,
         "theftRole": "zone",
         "theftPosts": [
@@ -74777,8 +74777,8 @@
         "facing": -0.6823165548747482,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -0.6823165548747482,
         "theftRole": "exit",
         "theftPosts": [
@@ -74816,8 +74816,8 @@
         "facing": 0.24497866312686414,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 0.24497866312686414,
         "theftRole": "zone",
         "theftPosts": [
@@ -74855,8 +74855,8 @@
         "facing": 2.1587989303424644,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": 2.1587989303424644,
         "theftRole": "zone",
         "theftPosts": [
@@ -74894,8 +74894,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -76334,9 +76334,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-04-cam2",
@@ -76346,9 +76346,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-04-cam3",
@@ -76358,9 +76358,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       }
     ],
     "visualRevision": "v12-4c",
@@ -76621,8 +76621,8 @@
         "facing": -0.7853981633974488,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -0.7853981633974488,
         "theftRole": "zone",
         "theftPosts": [
@@ -76660,8 +76660,8 @@
         "facing": -2.601173153319209,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -2.601173153319209,
         "theftRole": "zone",
         "theftPosts": [
@@ -76699,8 +76699,8 @@
         "facing": -2.7569879387675797,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -2.7569879387675797,
         "theftRole": "exit",
         "theftPosts": [
@@ -76738,8 +76738,8 @@
         "facing": -0.41822432957922906,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -0.41822432957922906,
         "theftRole": "zone",
         "theftPosts": [
@@ -76777,8 +76777,8 @@
         "facing": -0.7853981633974487,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -0.7853981633974487,
         "theftRole": "zone",
         "theftPosts": [
@@ -76816,8 +76816,8 @@
         "facing": -1.5707963267948966,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5,
-        "visionHalfAngle": 0.5235987755982988,
+        "visionRange": 6.4,
+        "visionHalfAngle": 0.5864306286700948,
         "initialFacing": -1.5707963267948966,
         "theftRole": "objective",
         "theftPosts": [
@@ -78406,9 +78406,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-05-cam2",
@@ -78418,9 +78418,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       },
       {
         "id": "09-05-cam3",
@@ -78430,9 +78430,9 @@
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,
-        "range": 5,
+        "range": 5.6000000000000005,
         "visionAngle": 0.65,
-        "suspicionRate": 0.4
+        "suspicionRate": 0.68
       }
     ],
     "visualRevision": "v12-4c",

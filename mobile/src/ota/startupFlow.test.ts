@@ -132,6 +132,22 @@ test('apply: the applying screen is drawn before reload is called', async () => 
   assert.deepEqual(log, ['show', 'painted', 'reload']);
 });
 
+test('apply: a successful paint releases the unused deadline timer', async (t) => {
+  const timers: ReturnType<typeof setTimeout>[] = [];
+  const cleared: ReturnType<typeof setTimeout>[] = [];
+  const originalSet = globalThis.setTimeout, originalClear = globalThis.clearTimeout;
+  t.mock.method(globalThis, 'setTimeout', (fn: () => void, ms: number) => {
+    const timer = originalSet(fn, ms); timers.push(timer); return timer;
+  });
+  t.mock.method(globalThis, 'clearTimeout', (timer: ReturnType<typeof setTimeout>) => {
+    cleared.push(timer); originalClear(timer);
+  });
+  t.after(() => timers.forEach(originalClear));
+  await showApplyingThenReload({ painted: async () => {}, reload: async () => {}, paintDeadlineMs: 60_000, readMs: 0 });
+  assert.equal(timers.length, 1);
+  assert(cleared.includes(timers[0]), 'deadline must not keep a completed test or old runtime alive');
+});
+
 test('apply: a lost paint signal cannot block the update', async () => {
   const log: string[] = [];
   await showApplyingThenReload({

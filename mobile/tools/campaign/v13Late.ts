@@ -73,13 +73,16 @@ export const V13_MANSION=chapter(6,['Reception Wing','Library Passage','Private 
 export const V13_WAREHOUSE=chapter(7,['Loading Aisles','Restricted Freight','Machinery Cross','Container Spine','Secure Container'],derivedBases(7).map(mirrorX),'Warehouse',WAREHOUSE,{normal:'warehouseIndustrial',secure:'warehouseIndustrial'},4,2);
 /** Inspection of the upper connector, with a readable four-second stop before walking away.
  * Keep this after secure(): it is an authored assignment, not a new placement rule. */
-export const HQ_PATROL:Record<string,{zone:string;look:{x:number;y:number};wait:number}>={
- '08-03':{zone:'northLane',look:{x:15.25,y:8.8},wait:4},
+export const HQ_PATROL:Record<string,{zone:string;look:{x:number;y:number};wait:number;watches:string}>={
+ '08-03':{zone:'northLane',look:{x:15.25,y:8.8},wait:4,
+  watches:'The upper connector from the eastern post, then the western lane opening; leave an observation window while walking between posts'},
+ '08-05':{zone:'glassLab',look:{x:19,y:9.5},wait:5,
+  watches:'The glass-lab crossing from the north post for five seconds, then the southern lane; the thief can wait for the walking window'},
 };
 const hqPatrol=(m:V13Mission):V13Mission=>{
  const own=HQ_PATROL[m.id];if(!own)return m;
  return {...m,guards:m.guards.map(g=>g.zone!==own.zone?g:{...g,
-  watches:'The upper connector from the eastern post, then the western lane opening; leave an observation window while walking between posts',
+  watches:own.watches,
   stops:g.stops.map((s,i)=>i?s:{...s,look:{...own.look},wait:own.wait})})};
 };
 export const V13_HQ=chapter(8,['Monitoring Spine','Guard Network','Surveillance Junction','Operations Block','Control Core Heist'],derivedBases(8).map(mirrorX),'Security HQ',hqArt,{normal:'hqSteel',secure:'hqSteel'},5,3).map(hqPatrol);

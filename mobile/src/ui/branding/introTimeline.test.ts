@@ -46,7 +46,16 @@ test('intro final frame IS the lobby frame; old branding art and white diamond o
  assert(!/room-v2|player-v2|guard-v2|wall-v2|homeComposition/.test(src),'no legacy branding art or separate Home composition');
  for(const n of ['bg_museum','thief_peek','thief_sneak','thief_freeze','guard_away','guard_turn','fg_column_left'])assert(src.includes(`opening/${n}.png`),n);
  assert(!/M 195 452 L 219 478 L 195 516 L 171 478 Z/.test(src),'no white diamond overlay');
- assert(!readFileSync('app.json','utf8').includes('splash-mark'),'native splash has no diamond mark');
+ const app=JSON.parse(readFileSync('app.json','utf8')).expo;
+ const splash=app.plugins.find((p:unknown)=>Array.isArray(p)&&p[0]==='expo-splash-screen')?.[1];
+ assert(splash,'native splash plugin required');
+ assert.equal(splash.backgroundColor,'#081824');
+ assert.equal(splash.image,undefined,'iOS must not inherit a diamond mark');
+ assert.equal(splash.ios?.image,undefined,'iOS stays plain navy');
+ assert.equal(splash.android.image,'./assets/branding/splash-mark.png','Android-only launch mark');
+ assert.equal(splash.android.imageWidth,120);
+ assert.equal(splash.android.resizeMode,'contain');
+ assert(readFileSync(splash.android.image).length>0,'Android launch artwork exists');
 });
 test('skip/unmount cancels every cue, mute schedules none, replay has fresh cues',()=>{
  const pending:(()=>void)[]=[],emitted:string[]=[];

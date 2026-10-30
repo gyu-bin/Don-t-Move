@@ -195,6 +195,136 @@ performance TypeScript and changed-tool lint pass. `npm test` reaches the
 existing native-splash assertion and stops; full app lint/typecheck still
 report the previously listed missing dependencies and require warning.
 
+## Environment recovery and HQ finale timing (2026-10-30)
+
+The registry is available again. `npm ci` restored all 769 packages at the
+existing lockfile versions; package manifests and lockfile were not changed.
+After invalidating the stale generated ESLint cache, app lint has zero errors
+and warnings and full app/campaign TypeScript passes.
+
+The Phase4C/4D protected-file checks now pin the CCTV hash from commit 6e867ba,
+`a9977b5e04efa6d6d25d32678e876543dd529d7198d2e039d8c6e40fc697ed55`,
+instead of the earlier `be91462c...`. Only that reviewed baseline changed;
+Tilt, guard tuning and save hashes are untouched. The cached/current vision
+and worklet/security tests still run. Splash tests now check the actual
+platform contract: navy/no image on iOS, an existing 120px contained launch
+mark only on Android. The splash config and art did not change.
+
+The guarded synchronous OTA module load has an explicit lint exception because
+an unconditional import requires the native module during evaluation. No
+runtime warning suppression was added. The OTA paint-deadline timer is now
+cancelled after painting, avoiding a leftover 60-second timer in the tests;
+both successful-paint cleanup and lost-paint timeout are tested. OTA suite:
+22/22 PASS, about 0.23s instead of the previous 60s process lifetime.
+
+After the environment recovery, the entire `npm test` command completed
+successfully before applying the following mission change.
+
+**Only 08-05 changes in this pass.** The glass-lab guard's first inspection
+waits 5s instead of 4s; all facing, pace, vision, cameras, architecture and
+routes remain as before. The other 44 snapshots, including 01-05 and the
+previous 08-03 improvement, are unchanged. `HQ_PATROL` is the authoring source.
+
+[`hq-finale-timing.json`](hq-finale-timing.json) compares 28 fixed Run heists
+before/after. Clears change 3→2 and spotted runs 15→11: the dynamics are not
+uniformly harder, and a lower clear count alone is not a quality metric.
+The concrete intended result is that safe-approach departure 8s, formerly an
+unspotted clear, is seen by the glass-lab guard; departures 10s (silent clear)
+and 12s (spotted by the same later guard but successful escape) still clear.
+The test requires these outcomes, including actual visual detection rather
+than failure solely from bumping into a guard.
+
+Other 08-02/04/05 timer trials were rejected when they just shifted body
+contact or failed to improve meaningful pressure. These replays do not make
+decisions or wait between covers. They do not certify overall progression,
+human Tilt difficulty, device performance or battery life. No release update
+was published. Reproduce: `node --import tsx tools/performance/hqFinaleTiming.ts`.
+
+Final checks after the 08-05 change: `npm test` PASS through every script,
+including campaign 616/616 and OTA 22/22. `npm run typecheck`, `npm run lint`,
+`typecheck:performance`, changed-tool lint with zero warnings, snapshot 45/45,
+and the 45-mission topology/security audit all pass (the audit retains its one
+documented historical finding). The older failure descriptions above are
+historical; this recovery supersedes them.
+
+## Museum 01-01 static art pilot (2026-10-30)
+
+Only rendering for 01-01 is styled: larger honed blue-grey stone panels with
+sparse veins, quieter joints, a lighter wall face over a dark navy wall cap,
+and smaller warm-ivory light pools over slightly deeper ambient shade. It uses
+the existing floor/wall/darkness/glow pictures. No new animated effect, blur,
+reflection, offscreen pass, image asset, or per-frame renderer code was added.
+
+`museumEntranceLook.ts` is gated to that single ID. Floor commands replace the
+old small checker/vein pattern: 1,761→1,109 (−37.0%), and the serialized floor
+picture shrinks 155,266→93,090 bytes. Static layer count stays 33; darkness and
+glow picture sizes stay 3,185 and 4,034 bytes. This limits render work but is
+not proof of lower iPhone temperature or battery use.
+
+Local captures live in `Reports/MuseumPolish/` (ignored generated reports).
+Before uses the original rendering source from b39a2fa in a temporary copy;
+after uses the current renderer. Entrance, central exhibition, objective and
+whole-map views share state, camera and scale, verified from capture metadata.
+They are actual offline Skia game renders without the native HUD, not device
+screenshots or generated artwork. `*-compare.png` boards display their pixels
+side by side; `review.json` records the comparison. A control mission 01-02 has
+four byte-identical PNGs before/after.
+
+Validation: 15 environment tests + the new art scope/command-budget/gameplay
+immutability test PASS; app/campaign TypeScript and app/changed-tool lint PASS;
+45/45 gameplay snapshots SAME. The broader environment-tool TypeScript project
+still has its existing `phase4eSyncMetadata.ts` `EnvironmentAsset.source` error,
+independent of these new files. Device thermal/visual acceptance is pending.
+
+Reproduce captures with
+`TSX_TSCONFIG_PATH=tools/sprites/tsconfig.runtime.json node --import tsx tools/environment/museumPolishPreview.ts Reports/MuseumPolish/after`,
+and the board with `node --import tsx tools/environment/museumPolishBoard.ts`.
+`SKIP_REPLAY=1` skips the software timing loop; those timings are not native
+GPU/FPS/energy measurements. `npm run test:museum-look` is also in `npm test`.
+
+## Stronger chapter security (2026-10-30)
+
+`chapterDifficulty.ts.security` is now consumed by the actual V13 compiler,
+not just an authoring budget. The 25 Chapter5–9 missions are baked with these
+scales; Chapter1–4 are byte-identical to the preceding working state.
+
+| Chapter | Guard range | Guard cone angle | CCTV range | CCTV gain |
+|---|---:|---:|---:|---:|
+| 5 | 1.08 | 1.04 | 1.04 | 1.15 |
+| 6 | 1.12 | 1.06 | 1.06 | 1.25 |
+| 7 | 1.18 | 1.08 | 1.08 | 1.40 |
+| 8 | 1.24 | 1.10 | 1.10 | 1.55 |
+| 9 | 1.28 | 1.12 | 1.12 | 1.70 |
+
+Only `visionRange`/`visionHalfAngle` on guards and `range`/`suspicionRate` on
+CCTV change. Geometry, assets, routes, population, guard pace/chase, the
+perception formula and Easy/Normal/Hard gain settings are untouched. Visible
+cones still use exactly the detection geometry. Re-bakes always start from
+the original archetypes, so pressure does not compound. Expected snapshots
+were updated for exactly these 25 missions after that field-level comparison.
+
+[`chapter-pressure.json`](chapter-pressure.json) records the same 28 fixed-Run
+heists per variant on six representative maps. Spotted runs increase on
+06-03 (6→8), 07-03 (8→15), 08-03 (8→14), 08-05 (11→20), 09-03 (17→20).
+05-03 is mixed: spotted runs fall 5→4 and clears rise 5→6, because guards react
+earlier and move. Stronger numbers do not guarantee higher difficulty in every
+heist or certify the overall human difficulty curve.
+
+08-03 still has continuous safe-approach clears at departure2/4/6s; its old
+instant risk departure is now spotted. 08-05 still clears at10/12s, now both
+with a later guard sighting. 09-03 has no clears in the coarse even-second
+matrix, but a separately verified risk departure at7s clears under live AI
+after being spotted. Those production witnesses replace the former easier
+timing expectations; no LOS, capture or geometric validator was relaxed.
+
+Final validation: entire `npm test` PASS; app/campaign TypeScript and lint PASS;
+45/45 topology/security audit clean apart from the same one documented known
+finding; refreshed gameplay snapshots match45/45. New tests check monotonic
+profiles, actual extra-distance perception and the continuous Vault escape.
+Human Tilt balance and phone thermal/energy measurements remain pending. No
+new dynamic effects, guards, ray count or simulation rate were introduced.
+Reproduce: `node --import tsx tools/performance/chapterPressure.ts`.
+
 ## Reproduce
 
 From `mobile/`:

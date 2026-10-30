@@ -7,6 +7,27 @@ import historicalSource from '../../docs/design/v12/phase3/SOURCE_STAGES.json';
 import {campaignStages} from '../../src/game/levels/campaignStages';
 import {applyDifficultyTuning} from './difficultyTuning';
 import {auditDifficulty,summarizeDifficulty,chapterOrderingAcceptance,type DifficultyAudit} from './chapterDifficultyAudit';
+import {compileStage} from '../../src/game/world/compileStage';
+import {createGuardState,observeGuard} from '../../src/game/guards/guardBrain';
+import {exposureRun} from './cameraExposure';
+
+test('Late chapter pressure strictly increases and reaches actual guard perception',()=>{
+ for(const config of CHAPTER_DIFFICULTY.slice(0,4))assert.deepEqual(config.security,{guardRange:1,guardAngle:1,cameraRange:1,cameraGain:1});
+ for(let i=4;i<9;i++)for(const key of ['guardRange','guardAngle','cameraRange','cameraGain'] as const)
+  assert(CHAPTER_DIFFICULTY[i].security[key]>CHAPTER_DIFFICULTY[i-1].security[key],`chapter ${i+1}: ${key}`);
+ const def=campaignStages.find(d=>d.id==='08-03')!,s=compileStage(def),g=createGuardState(s.guards[0]);
+ const old=createGuardState({...s.guards[0],visionRange:g.visionRange/chapterDifficulty(8).security.guardRange});
+ const p={x:g.x+Math.cos(g.facing)*g.visionRange*.95,y:g.y+Math.sin(g.facing)*g.visionRange*.95,gait:3};
+ observeGuard(old,p,[]);observeGuard(g,p,[]);
+ assert(!old.canSee&&g.canSee,'the extra visible cone distance must actually detect a player');
+});
+
+test('Final Vault retains a continuous timed full-heist witness with stronger security',()=>{
+ const s=campaignStages.find(d=>d.id==='09-03')!;
+ const result=exposureRun(s,1,0,3,7);
+ assert(result.clear&&!result.caught,'risk crossing + objective + actual exit must remain possible');
+ assert(result.spottedBy,'stronger security makes this successful escape a spotted heist');
+});
 
 test('All 45 missions resolve the same single chapter profile regardless of mission index',()=>{
  assert.equal(CHAPTER_DIFFICULTY.length,9);assert.equal(campaignStages.length,45);

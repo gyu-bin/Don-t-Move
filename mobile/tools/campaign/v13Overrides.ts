@@ -65,7 +65,7 @@ function own(id:string):OverrideEntry[]{
  for(const [zone,at] of Object.entries(PINNED[id]??{}))out.push({mission:id,stage:'6 pin',category:'camera pinned',file:'v13Late.ts',table:'PINNED',detail:`generated camera of zone ${zone} held at ${p(at)}`,why:'secure() would re-seat it after the furniture change'});
  if(LATE[id])out.push(...laneEntries(id,LATE[id].ops,LATE[id].why,'7 late','LATE'));
  const patrol=HQ_PATROL[id];
- if(patrol)out.push({mission:id,stage:'7 late',category:'patrol stop',file:'v13Late.ts',table:'HQ_PATROL',detail:`${patrol.zone} first stop looks at ${p(patrol.look)}, waits ${patrol.wait}s`,why:'Watch the real upper connector, with a longer inspection and a walking blind window'});
+ if(patrol)out.push({mission:id,stage:'7 late',category:'patrol stop',file:'v13Late.ts',table:'HQ_PATROL',detail:`${patrol.zone} first stop looks at ${p(patrol.look)}, waits ${patrol.wait}s`,why:patrol.watches});
  return out;
 }
 /** Every override that reaches a mission: inherited ones first (they are applied first), then its own, in stage order. */

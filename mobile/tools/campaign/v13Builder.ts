@@ -5,6 +5,7 @@ import type {V13Mission,V13Stop} from './v13Types';
 import {PROP_KIT} from '../../src/game/world/propKit';
 import {composeV124bPlan} from './v124bBuilder';
 import {straightLegs} from './v125Tuning';
+import {chapterDifficulty} from '../../src/game/levels/chapterDifficulty';
 
 const isFloor=(ch:string|undefined)=>!!ch&&ch!=='#'&&ch!==' ';
 /** True when a body of radius r (tiles) centred at x,y touches no drawn wall and no solid structure. */
@@ -120,6 +121,13 @@ export function composeV13(m:V13Mission,source:StageDefinition[]):StageDefinitio
  for(let y=0;y<rows;y++)for(let x=0;x<Math.max(def.layout[y]?.length??0,m.map[y]?.length??0);x++)
   if((def.layout[y]?.[x]==='.')!==isFloor(m.map[y]?.[x]))throw Error(`${m.id}: compiled floor differs from the drawn plan at ${x},${y} (an edge corridor cut through a wall, or a zone box covers undrawn floor)`);
  authorSecurity(def,m);
+ // Always start from SOURCE_STAGES above, so repeated bakes never compound pressure.
+ const pressure=chapterDifficulty(old.chapter!).security;
+ for(const g of def.guards){
+  if(g.visionRange!==undefined)g.visionRange*=pressure.guardRange;
+  if(g.visionHalfAngle!==undefined)g.visionHalfAngle*=pressure.guardAngle;
+ }
+ for(const c of def.cameras??[]){c.range*=pressure.cameraRange;if(c.suspicionRate!==undefined)c.suspicionRate*=pressure.cameraGain;}
  def.testPurpose='V13 Phase 1 architecture rebuild';
  def.structurePlan=`V13 ${m.family} | ${m.topology} | ${def.topologyPlan!.rooms.map(r=>r.name).join(' → ')}`;
  return def;

@@ -185,6 +185,11 @@ V1 난이도는 **최종 Suspicion Gain의 multiplier**만 바꾼다. Guard 속�
 
 Close Detection도 영향을 받지만, Easy에서도 바로 앞에 오래 있으면 반드시 발견된다.
 
+사용자가 고르는 Difficulty와 별개로, 챕터 5–9는 `chapterDifficulty.ts`의 security 설정을
+실제 StageDefinition에 반영한다. 챕터가 깊어질수록 Guard의 실제/표시 시야 범위·각도와 CCTV의
+범위·감지 계수를 강화한다. 챕터 1–4와 Guard 이동속도·추격속도, LOS/LKP 정보 규칙은 유지한다.
+Mission 번호에 따른 숨은 배율은 추가하지 않는다.
+
 ## 35–36. Mission (Chapter 1 · Stage 01–10)
 
 Vertical Slice 장소 확장에서는 아래 Diamond 규칙을 각 Stage의 Valuable/Objective에 동일하게 적용한다.

@@ -24,6 +24,20 @@ import {AUTHORED_IN_PLAN,missionOverrideIndex,missionOverrides,STAGES} from './v
 
 const live=current as unknown as StageDefinition[];
 
+test('08-05: longer glass-lab inspection exposes a blind sprint while preserving later safe departures',()=>{
+ const mission=live.find(s=>s.id==='08-05')!,g=mission.guards.find(g=>g.id==='08-05-g1')!;
+ const route=mission.patrolRoutes!.find(r=>r.id===g.routeId)!;
+ assert.equal(route.points[0].waitDuration,5);
+ assert.equal(route.points[1].waitDuration,2,'retain the other inspection rhythm');
+ const exposed=exposureRun(mission,0,0,3,8);
+ assert(!exposed.clear&&exposed.spottedBy===g.id,'sprint should be visually spotted, not just blocked by a guard body');
+ for(const delay of [10,12]){
+  const clear=exposureRun(mission,0,0,3,delay);
+  assert(clear.clear,`later departure ${delay} still allows a full heist under stronger security`);
+  assert.equal(clear.spottedBy,'08-05-g4','stronger security now notices even these successful escapes');
+ }
+});
+
 test('08-03: authored connector inspection preserves safe timing while closing one blind sprint departure',()=>{
  const mission=live.find(s=>s.id==='08-03')!,g=mission.guards.find(g=>g.id==='08-03-g2')!;
  const route=mission.patrolRoutes!.find(r=>r.id===g.routeId)!;
@@ -32,19 +46,13 @@ test('08-03: authored connector inspection preserves safe timing while closing o
  assert.equal(stop.lookDirection,Math.atan2(own.look.y-stop.y,own.look.x-stop.x));
  assert.equal(g.initialFacing,stop.lookDirection);
  assert(missionOverrides(mission.id).some(e=>e.table==='HQ_PATROL'));
- // Same physical routes/AI: only restore the previous watch target and duration for A/B.
- const before=structuredClone(mission),oldGuard=before.guards.find(q=>q.id===g.id)!;
- const oldStop=before.patrolRoutes!.find(r=>r.id===oldGuard.routeId)!.points[0];
- oldStop.waitDuration=3;oldStop.lookDirection=Math.atan2(10.5-oldStop.y,15.8-oldStop.x);
- oldGuard.facing=oldGuard.initialFacing=oldStop.lookDirection;
  for(const delay of [2,4,6]){
-  assert(exposureRun(before,0,0,3,delay).clear,`baseline safe ${delay}`);
   assert(exposureRun(mission,0,0,3,delay).clear,`safe ${delay} must remain playable`);
  }
- assert(exposureRun(before,1,0,3,8).clear,'baseline blind sprint');
  const careless=exposureRun(mission,1,0,3,8);
  assert(!careless.clear&&careless.spottedBy,'later blind sprint now draws attention');
- assert(exposureRun(mission,1,0,3,0).clear,'risk route retains a timed opening');
+ const direct=exposureRun(mission,1,0,3,0);
+ assert(!direct.clear&&direct.spottedBy,'stronger chapter security also sees the old instant risk departure');
 });
 
 test('Campaign: 9 chapters × 5 missions = 45, counted in one place',()=>{
@@ -115,7 +123,7 @@ test('Campaign: chapter sources — nine chapters in bake order, and each derive
 
 test('Campaign: the override index reads every table, names real missions and keeps the stage order',()=>{
  const ids=live.map(d=>d.id),index=missionOverrideIndex(ids);
- for(const [table,keys] of Object.entries({PHASE7:Object.keys(PHASE7),REPLACED:Object.keys(REPLACED),LANES:Object.keys(LANES),LATE:Object.keys(LATE),PINNED:Object.keys(PINNED),MOVED:Object.keys(MOVED),PATROL:Object.keys(PATROL)}))for(const id of keys){
+ for(const [table,keys] of Object.entries({PHASE7:Object.keys(PHASE7),REPLACED:Object.keys(REPLACED),LANES:Object.keys(LANES),LATE:Object.keys(LATE),PINNED:Object.keys(PINNED),MOVED:Object.keys(MOVED),PATROL:Object.keys(PATROL),HQ_PATROL:Object.keys(HQ_PATROL)}))for(const id of keys){
   assert(ids.includes(id),`${table} names unknown mission ${id}`);assert(index[id]?.some(e=>e.table===table&&!e.inheritedFrom),`${id}: ${table} entry missing from the index`);
  }
  // The Phase 7 layer belongs to Chapter 1–4 plans, the late layer to Chapter 7–8: the stage each table runs at depends on it.
@@ -133,7 +141,7 @@ test('Campaign: the override index reads every table, names real missions and ke
  for(const a of AUTHORED_IN_PLAN){const s=V13_MISSIONS.find(m=>m.id===a.mission)!.structures.find(s=>s.name===a.structure);assert(s&&s.x===a.at[0]&&s.y===a.at[1],`${a.mission}: ${a.structure} is not at ${a.at}`);}
  // 04-05: everything that touches it, and what its twin 08-05 does and does not inherit.
  assert.deepEqual(missionOverrides('04-05').map(e=>`${e.stage}|${e.category}`),['1 plan|authored in plan','1 plan|authored in plan','2 phase7 lanes|wall cell','2 phase7 lanes|route anchor','4 phase7 cover|structure added']);
- assert.deepEqual(missionOverrides('08-05').map(e=>`${e.stage}|${e.category}|${e.inheritedFrom??'own'}`),['1 plan|authored in plan|04-05','1 plan|authored in plan|04-05','7 late|wall cell|own','7 late|route anchor|own','7 late|structure added|own']);
+ assert.deepEqual(missionOverrides('08-05').map(e=>`${e.stage}|${e.category}|${e.inheritedFrom??'own'}`),['1 plan|authored in plan|04-05','1 plan|authored in plan|04-05','7 late|wall cell|own','7 late|route anchor|own','7 late|structure added|own','7 late|patrol stop|own']);
  // 05-03 is built on 03-04 after Phase 7, so it inherits that lane change and adds its own camera.
  assert.deepEqual(missionOverrides('05-03').map(e=>`${e.table}|${e.inheritedFrom??'own'}`),['LANES|03-04','EXTRA_CAMERA|own']);
 });
