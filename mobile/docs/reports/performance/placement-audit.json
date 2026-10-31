@@ -1,0 +1,402 @@
+{
+  "method": "Actual runtime asset selection, crop/pivot, draw width, physical scale and floor footprint; one-world-unit raster allowance. Checks bounds, not alpha silhouettes, occlusion height, or visual approval. Transparent glass retains its technical renderer and PASS LOS.",
+  "rows": [
+    {
+      "id": "01-01",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [
+        "6/museum_display_low"
+      ],
+      "findings": []
+    },
+    {
+      "id": "01-02",
+      "checked": 12,
+      "transparentModules": 0,
+      "corrected": [
+        "7/museum_display_low",
+        "8/museum_display_low"
+      ],
+      "findings": []
+    },
+    {
+      "id": "01-03",
+      "checked": 12,
+      "transparentModules": 0,
+      "corrected": [
+        "5/museum_display_low",
+        "9/museum_display_low",
+        "10/museum_display_low"
+      ],
+      "findings": []
+    },
+    {
+      "id": "01-04",
+      "checked": 8,
+      "transparentModules": 0,
+      "corrected": [
+        "5/museum_display_low"
+      ],
+      "findings": []
+    },
+    {
+      "id": "01-05",
+      "checked": 9,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "02-01",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [
+        "12/gallery_central_plinth"
+      ],
+      "findings": []
+    },
+    {
+      "id": "02-02",
+      "checked": 11,
+      "transparentModules": 0,
+      "corrected": [
+        "5/gallery_central_plinth",
+        "6/gallery_central_plinth",
+        "8/gallery_central_plinth"
+      ],
+      "findings": []
+    },
+    {
+      "id": "02-03",
+      "checked": 10,
+      "transparentModules": 5,
+      "corrected": [
+        "10/gallery_central_plinth",
+        "11/gallery_central_plinth"
+      ],
+      "findings": []
+    },
+    {
+      "id": "02-04",
+      "checked": 11,
+      "transparentModules": 0,
+      "corrected": [
+        "0/gallery_installation_art",
+        "7/gallery_central_plinth",
+        "8/gallery_central_plinth"
+      ],
+      "findings": []
+    },
+    {
+      "id": "02-05",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [
+        "0/gallery_installation_art",
+        "4/gallery_central_plinth",
+        "5/gallery_central_plinth"
+      ],
+      "findings": []
+    },
+    {
+      "id": "03-01",
+      "checked": 20,
+      "transparentModules": 0,
+      "corrected": [
+        "0/bank_teller_counter",
+        "1/bank_teller_counter",
+        "2/bank_teller_counter",
+        "3/bank_teller_counter"
+      ],
+      "findings": []
+    },
+    {
+      "id": "03-02",
+      "checked": 19,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "03-03",
+      "checked": 15,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "03-04",
+      "checked": 16,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "03-05",
+      "checked": 20,
+      "transparentModules": 0,
+      "corrected": [
+        "9/bank_teller_counter"
+      ],
+      "findings": []
+    },
+    {
+      "id": "04-01",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "04-02",
+      "checked": 7,
+      "transparentModules": 6,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "04-03",
+      "checked": 18,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "04-04",
+      "checked": 18,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "04-05",
+      "checked": 15,
+      "transparentModules": 2,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "05-01",
+      "checked": 20,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "05-02",
+      "checked": 19,
+      "transparentModules": 0,
+      "corrected": [
+        "10/casino_high_roller_table",
+        "17/casino_blackjack_table"
+      ],
+      "findings": []
+    },
+    {
+      "id": "05-03",
+      "checked": 16,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "05-04",
+      "checked": 15,
+      "transparentModules": 0,
+      "corrected": [
+        "3/casino_high_roller_table",
+        "5/casino_roulette_table"
+      ],
+      "findings": []
+    },
+    {
+      "id": "05-05",
+      "checked": 20,
+      "transparentModules": 0,
+      "corrected": [
+        "3/casino_high_roller_table",
+        "12/casino_blackjack_table"
+      ],
+      "findings": []
+    },
+    {
+      "id": "06-01",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [
+        "12/mansion_dining_table"
+      ],
+      "findings": []
+    },
+    {
+      "id": "06-02",
+      "checked": 11,
+      "transparentModules": 0,
+      "corrected": [
+        "5/mansion_dining_table"
+      ],
+      "findings": []
+    },
+    {
+      "id": "06-03",
+      "checked": 10,
+      "transparentModules": 5,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "06-04",
+      "checked": 11,
+      "transparentModules": 0,
+      "corrected": [
+        "9/mansion_writing_desk"
+      ],
+      "findings": []
+    },
+    {
+      "id": "06-05",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [
+        "5/mansion_dining_table"
+      ],
+      "findings": []
+    },
+    {
+      "id": "07-01",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "07-02",
+      "checked": 12,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "07-03",
+      "checked": 12,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "07-04",
+      "checked": 8,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "07-05",
+      "checked": 9,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "08-01",
+      "checked": 10,
+      "transparentModules": 0,
+      "corrected": [
+        "5/hq_security_desk",
+        "7/hq_security_desk",
+        "13/hq_security_desk"
+      ],
+      "findings": []
+    },
+    {
+      "id": "08-02",
+      "checked": 7,
+      "transparentModules": 6,
+      "corrected": [
+        "1/hq_security_desk",
+        "2/hq_security_desk"
+      ],
+      "findings": []
+    },
+    {
+      "id": "08-03",
+      "checked": 18,
+      "transparentModules": 0,
+      "corrected": [],
+      "findings": []
+    },
+    {
+      "id": "08-04",
+      "checked": 18,
+      "transparentModules": 0,
+      "corrected": [
+        "0/hq_security_desk",
+        "16/hq_security_desk",
+        "21/hq_security_desk"
+      ],
+      "findings": []
+    },
+    {
+      "id": "08-05",
+      "checked": 15,
+      "transparentModules": 2,
+      "corrected": [
+        "13/hq_security_desk"
+      ],
+      "findings": []
+    },
+    {
+      "id": "09-01",
+      "checked": 14,
+      "transparentModules": 0,
+      "corrected": [
+        "2/vault_gold_strapped",
+        "9/vault_black_cases",
+        "13/vault_black_cases"
+      ],
+      "findings": []
+    },
+    {
+      "id": "09-02",
+      "checked": 12,
+      "transparentModules": 0,
+      "corrected": [
+        "3/vault_gold_strapped",
+        "7/vault_black_cases"
+      ],
+      "findings": []
+    },
+    {
+      "id": "09-03",
+      "checked": 17,
+      "transparentModules": 0,
+      "corrected": [
+        "8/vault_gold_strapped",
+        "9/vault_black_cases"
+      ],
+      "findings": []
+    },
+    {
+      "id": "09-04",
+      "checked": 13,
+      "transparentModules": 0,
+      "corrected": [
+        "6/vault_gold_strapped",
+        "9/vault_black_cases",
+        "10/vault_black_cases"
+      ],
+      "findings": []
+    },
+    {
+      "id": "09-05",
+      "checked": 15,
+      "transparentModules": 0,
+      "corrected": [
+        "5/vault_gold_strapped",
+        "9/vault_black_cases"
+      ],
+      "findings": []
+    }
+  ]
+}

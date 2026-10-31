@@ -8,6 +8,9 @@ import { clearSegment, nodeX, nodeY } from '../world/navigation';
  */
 export function navigationWithDoors(base: Navigation, doorBlockers: number[]): Navigation {
   'worklet';
+  // The immutable base graph already contains every static obstacle.
+  // Open doors add no geometry; reuse it instead of copying every node/edge.
+  if(doorBlockers.length===0)return base;
   const n: Navigation = {
     cols: base.cols, rows: base.rows, cell: base.cell, radius: base.radius,
     blockers: base.blockers.concat(doorBlockers),

@@ -1,0 +1,3254 @@
+{
+  "method": "60s actual patrol/CCTV at60Hz; tile centres and authored safe-route points sampled2Hz with collision+LOS. Eight axes retained separately, including per-route escape exposure with initially open doors (patrol diagnostic, not theft/lockdown simulation); potential coverage is not guaranteed detection. High outliers use per-chapter Tukey fence, never auto-tuning. No human difficulty certification.",
+  "missions": [
+    {
+      "id": "01-01",
+      "chapter": 1,
+      "tier": "EASY",
+      "floor": 269,
+      "guards": 2,
+      "cameras": 0,
+      "safeRouteSampleCount": 55,
+      "escapeRouteSampleCount": 63,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0509,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 14,
+          "exposure": 0.0196
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 49,
+          "exposure": 0.0599
+        }
+      ],
+      "guardCoverage": 0.0363,
+      "cctvCoverage": 0,
+      "overlap": 0,
+      "potentialCoverage": 0.4126,
+      "patrolVisitsPerTileMinute": 1.2379,
+      "safeRouteExposure": 0.0782,
+      "objectivePressure": 0.1,
+      "escapePressure": 0,
+      "unseenFraction": 0.5874,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "01-02",
+      "chapter": 1,
+      "tier": "EASY",
+      "floor": 283,
+      "guards": 2,
+      "cameras": 0,
+      "safeRouteSampleCount": 41,
+      "escapeRouteSampleCount": 70,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0656,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 28,
+          "exposure": 0.036
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 42,
+          "exposure": 0.0853
+        }
+      ],
+      "guardCoverage": 0.0337,
+      "cctvCoverage": 0,
+      "overlap": 0,
+      "potentialCoverage": 0.371,
+      "patrolVisitsPerTileMinute": 1.1979,
+      "safeRouteExposure": 0.0622,
+      "objectivePressure": 0.1,
+      "escapePressure": 0,
+      "unseenFraction": 0.629,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "01-03",
+      "chapter": 1,
+      "tier": "EASY",
+      "floor": 256,
+      "guards": 2,
+      "cameras": 0,
+      "safeRouteSampleCount": 60,
+      "escapeRouteSampleCount": 80,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0322,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 29,
+          "exposure": 0.0167
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 51,
+          "exposure": 0.041
+        }
+      ],
+      "guardCoverage": 0.04,
+      "cctvCoverage": 0,
+      "overlap": 0,
+      "potentialCoverage": 0.2383,
+      "patrolVisitsPerTileMinute": 1.1992,
+      "safeRouteExposure": 0.0467,
+      "objectivePressure": 0.2583,
+      "escapePressure": 0,
+      "unseenFraction": 0.7617,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "01-04",
+      "chapter": 1,
+      "tier": "EASY",
+      "floor": 253,
+      "guards": 2,
+      "cameras": 1,
+      "safeRouteSampleCount": 42,
+      "escapeRouteSampleCount": 49,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0828,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 13,
+          "exposure": 0.1122
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 36,
+          "exposure": 0.0722
+        }
+      ],
+      "guardCoverage": 0.0371,
+      "cctvCoverage": 0.0091,
+      "overlap": 0,
+      "potentialCoverage": 0.3202,
+      "patrolVisitsPerTileMinute": 1.4585,
+      "safeRouteExposure": 0.0635,
+      "objectivePressure": 0.1833,
+      "escapePressure": 0,
+      "unseenFraction": 0.6798,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "01-05",
+      "chapter": 1,
+      "tier": "EASY",
+      "floor": 289,
+      "guards": 3,
+      "cameras": 0,
+      "safeRouteSampleCount": 55,
+      "escapeRouteSampleCount": 53,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1332,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 7,
+          "exposure": 0.106
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 46,
+          "exposure": 0.1373
+        }
+      ],
+      "guardCoverage": 0.0586,
+      "cctvCoverage": 0,
+      "overlap": 0.0002,
+      "potentialCoverage": 0.5882,
+      "patrolVisitsPerTileMinute": 1.7647,
+      "safeRouteExposure": 0.0423,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0.05,
+      "unseenFraction": 0.4118,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 6
+      }
+    },
+    {
+      "id": "02-01",
+      "chapter": 2,
+      "tier": "EASY_PLUS",
+      "floor": 297,
+      "guards": 2,
+      "cameras": 0,
+      "safeRouteSampleCount": 41,
+      "escapeRouteSampleCount": 94,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0733,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 20,
+          "exposure": 0.0204
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 74,
+          "exposure": 0.0876
+        }
+      ],
+      "guardCoverage": 0.0277,
+      "cctvCoverage": 0,
+      "overlap": 0.0001,
+      "potentialCoverage": 0.2963,
+      "patrolVisitsPerTileMinute": 0.9394,
+      "safeRouteExposure": 0.0343,
+      "objectivePressure": 0.075,
+      "escapePressure": 0,
+      "unseenFraction": 0.7037,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "02-02",
+      "chapter": 2,
+      "tier": "EASY_PLUS",
+      "floor": 269,
+      "guards": 2,
+      "cameras": 0,
+      "safeRouteSampleCount": 49,
+      "escapeRouteSampleCount": 74,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0491,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 17,
+          "exposure": 0.0172
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 57,
+          "exposure": 0.0586
+        }
+      ],
+      "guardCoverage": 0.0355,
+      "cctvCoverage": 0,
+      "overlap": 0,
+      "potentialCoverage": 0.4796,
+      "patrolVisitsPerTileMinute": 1.0855,
+      "safeRouteExposure": 0.0667,
+      "objectivePressure": 0.1833,
+      "escapePressure": 0,
+      "unseenFraction": 0.5204,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "02-03",
+      "chapter": 2,
+      "tier": "EASY_PLUS",
+      "floor": 323,
+      "guards": 2,
+      "cameras": 1,
+      "safeRouteSampleCount": 58,
+      "escapeRouteSampleCount": 60,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0593,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 21,
+          "exposure": 0.0472
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 39,
+          "exposure": 0.0658
+        }
+      ],
+      "guardCoverage": 0.0312,
+      "cctvCoverage": 0.0231,
+      "overlap": 0,
+      "potentialCoverage": 0.3189,
+      "patrolVisitsPerTileMinute": 1.5944,
+      "safeRouteExposure": 0.0908,
+      "objectivePressure": 0.2083,
+      "escapePressure": 0,
+      "unseenFraction": 0.6811,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "02-04",
+      "chapter": 2,
+      "tier": "EASY_PLUS",
+      "floor": 312,
+      "guards": 2,
+      "cameras": 1,
+      "safeRouteSampleCount": 53,
+      "escapeRouteSampleCount": 82,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0519,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 36,
+          "exposure": 0.0567
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 46,
+          "exposure": 0.0482
+        }
+      ],
+      "guardCoverage": 0.0295,
+      "cctvCoverage": 0.0073,
+      "overlap": 0,
+      "potentialCoverage": 0.3526,
+      "patrolVisitsPerTileMinute": 1.141,
+      "safeRouteExposure": 0.0352,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0,
+      "unseenFraction": 0.6474,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 4
+      }
+    },
+    {
+      "id": "02-05",
+      "chapter": 2,
+      "tier": "EASY_PLUS",
+      "floor": 377,
+      "guards": 3,
+      "cameras": 1,
+      "safeRouteSampleCount": 44,
+      "escapeRouteSampleCount": 58,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0484,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 29,
+          "exposure": 0.0141
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 29,
+          "exposure": 0.0828
+        }
+      ],
+      "guardCoverage": 0.0408,
+      "cctvCoverage": 0.0154,
+      "overlap": 0.0028,
+      "potentialCoverage": 0.305,
+      "patrolVisitsPerTileMinute": 1.5146,
+      "safeRouteExposure": 0.0598,
+      "objectivePressure": 0.1583,
+      "escapePressure": 0,
+      "unseenFraction": 0.695,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 6
+      }
+    },
+    {
+      "id": "03-01",
+      "chapter": 3,
+      "tier": "MEDIUM",
+      "floor": 344,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 33,
+      "escapeRouteSampleCount": 74,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1414,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 35,
+          "exposure": 0.1007
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 39,
+          "exposure": 0.178
+        }
+      ],
+      "guardCoverage": 0.0886,
+      "cctvCoverage": 0.019,
+      "overlap": 0.003,
+      "potentialCoverage": 0.5843,
+      "patrolVisitsPerTileMinute": 2.564,
+      "safeRouteExposure": 0.1061,
+      "objectivePressure": 0.1583,
+      "escapePressure": 0.1083,
+      "unseenFraction": 0.4157,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "03-02",
+      "chapter": 3,
+      "tier": "MEDIUM",
+      "floor": 327,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 46,
+      "escapeRouteSampleCount": 90,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1427,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 35,
+          "exposure": 0.0655
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 55,
+          "exposure": 0.1918
+        }
+      ],
+      "guardCoverage": 0.0823,
+      "cctvCoverage": 0.0163,
+      "overlap": 0.0016,
+      "potentialCoverage": 0.5719,
+      "patrolVisitsPerTileMinute": 2.6055,
+      "safeRouteExposure": 0.0502,
+      "objectivePressure": 0.1917,
+      "escapePressure": 0.1083,
+      "unseenFraction": 0.4281,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "03-03",
+      "chapter": 3,
+      "tier": "MEDIUM",
+      "floor": 270,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 49,
+      "escapeRouteSampleCount": 88,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1387,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 34,
+          "exposure": 0.1056
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 54,
+          "exposure": 0.1596
+        }
+      ],
+      "guardCoverage": 0.1025,
+      "cctvCoverage": 0.0148,
+      "overlap": 0.001,
+      "potentialCoverage": 0.7074,
+      "patrolVisitsPerTileMinute": 3.0407,
+      "safeRouteExposure": 0.1078,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0.0917,
+      "unseenFraction": 0.2926,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "03-04",
+      "chapter": 3,
+      "tier": "MEDIUM",
+      "floor": 296,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 54,
+      "escapeRouteSampleCount": 89,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1354,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 36,
+          "exposure": 0.041
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 53,
+          "exposure": 0.1995
+        }
+      ],
+      "guardCoverage": 0.0819,
+      "cctvCoverage": 0.0173,
+      "overlap": 0.0005,
+      "potentialCoverage": 0.5743,
+      "patrolVisitsPerTileMinute": 2.6622,
+      "safeRouteExposure": 0.1329,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0.0667,
+      "unseenFraction": 0.4257,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "03-05",
+      "chapter": 3,
+      "tier": "MEDIUM",
+      "floor": 385,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 48,
+      "escapeRouteSampleCount": 102,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0543,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 38,
+          "exposure": 0.0592
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 64,
+          "exposure": 0.0514
+        }
+      ],
+      "guardCoverage": 0.0613,
+      "cctvCoverage": 0.0182,
+      "overlap": 0.0019,
+      "potentialCoverage": 0.5429,
+      "patrolVisitsPerTileMinute": 2.1455,
+      "safeRouteExposure": 0.159,
+      "objectivePressure": 0.075,
+      "escapePressure": 0,
+      "unseenFraction": 0.4571,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "04-01",
+      "chapter": 4,
+      "tier": "MEDIUM_PLUS",
+      "floor": 334,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 46,
+      "escapeRouteSampleCount": 95,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1132,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 39,
+          "exposure": 0.0976
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 56,
+          "exposure": 0.124
+        }
+      ],
+      "guardCoverage": 0.0662,
+      "cctvCoverage": 0.0078,
+      "overlap": 0.0008,
+      "potentialCoverage": 0.515,
+      "patrolVisitsPerTileMinute": 2.2994,
+      "safeRouteExposure": 0.0609,
+      "objectivePressure": 0.075,
+      "escapePressure": 0.075,
+      "unseenFraction": 0.485,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "04-02",
+      "chapter": 4,
+      "tier": "MEDIUM_PLUS",
+      "floor": 353,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 35,
+      "escapeRouteSampleCount": 85,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0968,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 35,
+          "exposure": 0.0498
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 50,
+          "exposure": 0.1297
+        }
+      ],
+      "guardCoverage": 0.0727,
+      "cctvCoverage": 0.0117,
+      "overlap": 0.002,
+      "potentialCoverage": 0.6006,
+      "patrolVisitsPerTileMinute": 2.4306,
+      "safeRouteExposure": 0.1045,
+      "objectivePressure": 0.1,
+      "escapePressure": 0,
+      "unseenFraction": 0.3994,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "04-03",
+      "chapter": 4,
+      "tier": "MEDIUM_PLUS",
+      "floor": 390,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 44,
+      "escapeRouteSampleCount": 75,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1686,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 30,
+          "exposure": 0.1669
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 45,
+          "exposure": 0.1696
+        }
+      ],
+      "guardCoverage": 0.0683,
+      "cctvCoverage": 0.0181,
+      "overlap": 0.0002,
+      "potentialCoverage": 0.5615,
+      "patrolVisitsPerTileMinute": 2.5538,
+      "safeRouteExposure": 0.0716,
+      "objectivePressure": 0.1,
+      "escapePressure": 0.1,
+      "unseenFraction": 0.4385,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "04-04",
+      "chapter": 4,
+      "tier": "MEDIUM_PLUS",
+      "floor": 339,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 43,
+      "escapeRouteSampleCount": 59,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1626,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 29,
+          "exposure": 0.1721
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 30,
+          "exposure": 0.1533
+        }
+      ],
+      "guardCoverage": 0.0778,
+      "cctvCoverage": 0.0169,
+      "overlap": 0.0001,
+      "potentialCoverage": 0.7139,
+      "patrolVisitsPerTileMinute": 2.5959,
+      "safeRouteExposure": 0.1021,
+      "objectivePressure": 0.375,
+      "escapePressure": 0.1,
+      "unseenFraction": 0.2861,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "04-05",
+      "chapter": 4,
+      "tier": "MEDIUM_PLUS",
+      "floor": 428,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 44,
+      "escapeRouteSampleCount": 102,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.0583,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 47,
+          "exposure": 0.0766
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 55,
+          "exposure": 0.0426
+        }
+      ],
+      "guardCoverage": 0.0596,
+      "cctvCoverage": 0.0107,
+      "overlap": 0.0034,
+      "potentialCoverage": 0.4556,
+      "patrolVisitsPerTileMinute": 1.9159,
+      "safeRouteExposure": 0.1087,
+      "objectivePressure": 0.075,
+      "escapePressure": 0,
+      "unseenFraction": 0.5444,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "05-01",
+      "chapter": 5,
+      "tier": "MEDIUM_HIGH",
+      "floor": 344,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 33,
+      "escapeRouteSampleCount": 74,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1615,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 35,
+          "exposure": 0.1443
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 39,
+          "exposure": 0.1769
+        }
+      ],
+      "guardCoverage": 0.0956,
+      "cctvCoverage": 0.044,
+      "overlap": 0.0057,
+      "potentialCoverage": 0.6715,
+      "patrolVisitsPerTileMinute": 3.3488,
+      "safeRouteExposure": 0.1881,
+      "objectivePressure": 0.1583,
+      "escapePressure": 0.1167,
+      "unseenFraction": 0.3285,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "05-02",
+      "chapter": 5,
+      "tier": "MEDIUM_HIGH",
+      "floor": 337,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 46,
+      "escapeRouteSampleCount": 89,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1804,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 35,
+          "exposure": 0.1381
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 54,
+          "exposure": 0.2079
+        }
+      ],
+      "guardCoverage": 0.095,
+      "cctvCoverage": 0.0392,
+      "overlap": 0.004,
+      "potentialCoverage": 0.6677,
+      "patrolVisitsPerTileMinute": 3.5519,
+      "safeRouteExposure": 0.0589,
+      "objectivePressure": 0.15,
+      "escapePressure": 0.1083,
+      "unseenFraction": 0.3323,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "05-03",
+      "chapter": 5,
+      "tier": "MEDIUM_HIGH",
+      "floor": 298,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 54,
+      "escapeRouteSampleCount": 88,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1615,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 36,
+          "exposure": 0.0961
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 52,
+          "exposure": 0.2067
+        }
+      ],
+      "guardCoverage": 0.0896,
+      "cctvCoverage": 0.0376,
+      "overlap": 0.0005,
+      "potentialCoverage": 0.6275,
+      "patrolVisitsPerTileMinute": 3.4161,
+      "safeRouteExposure": 0.1363,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0.0583,
+      "unseenFraction": 0.3725,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "05-04",
+      "chapter": 5,
+      "tier": "MEDIUM_HIGH",
+      "floor": 275,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 48,
+      "escapeRouteSampleCount": 87,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1708,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 33,
+          "exposure": 0.1197
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 54,
+          "exposure": 0.202
+        }
+      ],
+      "guardCoverage": 0.1083,
+      "cctvCoverage": 0.039,
+      "overlap": 0.0025,
+      "potentialCoverage": 0.7455,
+      "patrolVisitsPerTileMinute": 3.5964,
+      "safeRouteExposure": 0.1142,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0.1,
+      "unseenFraction": 0.2545,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "05-05",
+      "chapter": 5,
+      "tier": "MEDIUM_HIGH",
+      "floor": 389,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 48,
+      "escapeRouteSampleCount": 102,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1065,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 38,
+          "exposure": 0.1206
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 64,
+          "exposure": 0.0982
+        }
+      ],
+      "guardCoverage": 0.0739,
+      "cctvCoverage": 0.0331,
+      "overlap": 0.0021,
+      "potentialCoverage": 0.5039,
+      "patrolVisitsPerTileMinute": 2.635,
+      "safeRouteExposure": 0.1542,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0.5333,
+      "unseenFraction": 0.4961,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "06-01",
+      "chapter": 6,
+      "tier": "MEDIUM_HIGH_PLUS",
+      "floor": 305,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 42,
+      "escapeRouteSampleCount": 94,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2324,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 20,
+          "exposure": 0.1733
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 74,
+          "exposure": 0.2483
+        }
+      ],
+      "guardCoverage": 0.1187,
+      "cctvCoverage": 0.0426,
+      "overlap": 0.0062,
+      "potentialCoverage": 0.682,
+      "patrolVisitsPerTileMinute": 3.8361,
+      "safeRouteExposure": 0.0823,
+      "objectivePressure": 0.075,
+      "escapePressure": 0.2167,
+      "unseenFraction": 0.318,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "06-02",
+      "chapter": 6,
+      "tier": "MEDIUM_HIGH_PLUS",
+      "floor": 270,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 49,
+      "escapeRouteSampleCount": 74,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2634,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 17,
+          "exposure": 0.4603
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 57,
+          "exposure": 0.2047
+        }
+      ],
+      "guardCoverage": 0.1298,
+      "cctvCoverage": 0.0437,
+      "overlap": 0.0119,
+      "potentialCoverage": 0.8333,
+      "patrolVisitsPerTileMinute": 3.9556,
+      "safeRouteExposure": 0.1039,
+      "objectivePressure": 0.25,
+      "escapePressure": 0.4417,
+      "unseenFraction": 0.1667,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "06-03",
+      "chapter": 6,
+      "tier": "MEDIUM_HIGH_PLUS",
+      "floor": 324,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 58,
+      "escapeRouteSampleCount": 60,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2417,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 21,
+          "exposure": 0.1278
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 39,
+          "exposure": 0.303
+        }
+      ],
+      "guardCoverage": 0.0989,
+      "cctvCoverage": 0.0391,
+      "overlap": 0.0063,
+      "potentialCoverage": 0.5648,
+      "patrolVisitsPerTileMinute": 3.2593,
+      "safeRouteExposure": 0.1205,
+      "objectivePressure": 0.2583,
+      "escapePressure": 0,
+      "unseenFraction": 0.4352,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "06-04",
+      "chapter": 6,
+      "tier": "MEDIUM_HIGH_PLUS",
+      "floor": 314,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 52,
+      "escapeRouteSampleCount": 83,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1903,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 37,
+          "exposure": 0.1581
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 46,
+          "exposure": 0.2161
+        }
+      ],
+      "guardCoverage": 0.105,
+      "cctvCoverage": 0.0316,
+      "overlap": 0.0044,
+      "potentialCoverage": 0.6401,
+      "patrolVisitsPerTileMinute": 3.0637,
+      "safeRouteExposure": 0.1321,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0,
+      "unseenFraction": 0.3599,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "06-05",
+      "chapter": 6,
+      "tier": "MEDIUM_HIGH_PLUS",
+      "floor": 383,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 43,
+      "escapeRouteSampleCount": 58,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1569,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 29,
+          "exposure": 0.0213
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 29,
+          "exposure": 0.2925
+        }
+      ],
+      "guardCoverage": 0.0956,
+      "cctvCoverage": 0.0324,
+      "overlap": 0.0059,
+      "potentialCoverage": 0.5352,
+      "patrolVisitsPerTileMinute": 3.047,
+      "safeRouteExposure": 0.1186,
+      "objectivePressure": 0.2333,
+      "escapePressure": 0.0667,
+      "unseenFraction": 0.4648,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "07-01",
+      "chapter": 7,
+      "tier": "HARD",
+      "floor": 269,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 49,
+      "escapeRouteSampleCount": 68,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2846,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 14,
+          "exposure": 0.2137
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 54,
+          "exposure": 0.3029
+        }
+      ],
+      "guardCoverage": 0.1354,
+      "cctvCoverage": 0.0538,
+      "overlap": 0.0057,
+      "potentialCoverage": 0.7323,
+      "patrolVisitsPerTileMinute": 4.1338,
+      "safeRouteExposure": 0.0832,
+      "objectivePressure": 0.1417,
+      "escapePressure": 0.1,
+      "unseenFraction": 0.2677,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "07-02",
+      "chapter": 7,
+      "tier": "HARD",
+      "floor": 283,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 41,
+      "escapeRouteSampleCount": 68,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.3397,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 26,
+          "exposure": 0.2971
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 42,
+          "exposure": 0.3661
+        }
+      ],
+      "guardCoverage": 0.1348,
+      "cctvCoverage": 0.0568,
+      "overlap": 0.0178,
+      "potentialCoverage": 0.735,
+      "patrolVisitsPerTileMinute": 4.1625,
+      "safeRouteExposure": 0.1272,
+      "objectivePressure": 0.1,
+      "escapePressure": 0.4917,
+      "unseenFraction": 0.265,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "07-03",
+      "chapter": 7,
+      "tier": "HARD",
+      "floor": 262,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 60,
+      "escapeRouteSampleCount": 79,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2393,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 28,
+          "exposure": 0.2256
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 51,
+          "exposure": 0.2469
+        }
+      ],
+      "guardCoverage": 0.1333,
+      "cctvCoverage": 0.0567,
+      "overlap": 0.0133,
+      "potentialCoverage": 0.687,
+      "patrolVisitsPerTileMinute": 4.1183,
+      "safeRouteExposure": 0.1074,
+      "objectivePressure": 0.4,
+      "escapePressure": 0,
+      "unseenFraction": 0.313,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "07-04",
+      "chapter": 7,
+      "tier": "HARD",
+      "floor": 253,
+      "guards": 4,
+      "cameras": 1,
+      "safeRouteSampleCount": 42,
+      "escapeRouteSampleCount": 48,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2399,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 13,
+          "exposure": 0.2513
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 35,
+          "exposure": 0.2357
+        }
+      ],
+      "guardCoverage": 0.1389,
+      "cctvCoverage": 0.0103,
+      "overlap": 0.0082,
+      "potentialCoverage": 0.6047,
+      "patrolVisitsPerTileMinute": 3.083,
+      "safeRouteExposure": 0.1899,
+      "objectivePressure": 0.275,
+      "escapePressure": 0.1333,
+      "unseenFraction": 0.3953,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "07-05",
+      "chapter": 7,
+      "tier": "HARD",
+      "floor": 292,
+      "guards": 4,
+      "cameras": 2,
+      "safeRouteSampleCount": 51,
+      "escapeRouteSampleCount": 53,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2697,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 7,
+          "exposure": 0.1726
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 46,
+          "exposure": 0.2844
+        }
+      ],
+      "guardCoverage": 0.1271,
+      "cctvCoverage": 0.0477,
+      "overlap": 0.01,
+      "potentialCoverage": 0.7534,
+      "patrolVisitsPerTileMinute": 3.5651,
+      "safeRouteExposure": 0.2438,
+      "objectivePressure": 0.15,
+      "escapePressure": 0.1167,
+      "unseenFraction": 0.2466,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "08-01",
+      "chapter": 8,
+      "tier": "VERY_HARD",
+      "floor": 334,
+      "guards": 4,
+      "cameras": 3,
+      "safeRouteSampleCount": 46,
+      "escapeRouteSampleCount": 95,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2209,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 39,
+          "exposure": 0.228
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 56,
+          "exposure": 0.2159
+        }
+      ],
+      "guardCoverage": 0.1063,
+      "cctvCoverage": 0.0487,
+      "overlap": 0.0059,
+      "potentialCoverage": 0.6796,
+      "patrolVisitsPerTileMinute": 4.1946,
+      "safeRouteExposure": 0.1368,
+      "objectivePressure": 0.075,
+      "escapePressure": 0.175,
+      "unseenFraction": 0.3204,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "08-02",
+      "chapter": 8,
+      "tier": "VERY_HARD",
+      "floor": 353,
+      "guards": 5,
+      "cameras": 3,
+      "safeRouteSampleCount": 35,
+      "escapeRouteSampleCount": 85,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2606,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 35,
+          "exposure": 0.176
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 50,
+          "exposure": 0.3198
+        }
+      ],
+      "guardCoverage": 0.161,
+      "cctvCoverage": 0.0646,
+      "overlap": 0.0151,
+      "potentialCoverage": 0.847,
+      "patrolVisitsPerTileMinute": 4.9603,
+      "safeRouteExposure": 0.1667,
+      "objectivePressure": 0.1,
+      "escapePressure": 0.0667,
+      "unseenFraction": 0.153,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 10
+      }
+    },
+    {
+      "id": "08-03",
+      "chapter": 8,
+      "tier": "VERY_HARD",
+      "floor": 390,
+      "guards": 5,
+      "cameras": 3,
+      "safeRouteSampleCount": 44,
+      "escapeRouteSampleCount": 75,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2419,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 30,
+          "exposure": 0.2047
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 45,
+          "exposure": 0.2667
+        }
+      ],
+      "guardCoverage": 0.1533,
+      "cctvCoverage": 0.0626,
+      "overlap": 0.0152,
+      "potentialCoverage": 0.7718,
+      "patrolVisitsPerTileMinute": 4.6282,
+      "safeRouteExposure": 0.1902,
+      "objectivePressure": 0.1,
+      "escapePressure": 0.1917,
+      "unseenFraction": 0.2282,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 10
+      }
+    },
+    {
+      "id": "08-04",
+      "chapter": 8,
+      "tier": "VERY_HARD",
+      "floor": 341,
+      "guards": 4,
+      "cameras": 3,
+      "safeRouteSampleCount": 43,
+      "escapeRouteSampleCount": 59,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2636,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 29,
+          "exposure": 0.2543
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 30,
+          "exposure": 0.2725
+        }
+      ],
+      "guardCoverage": 0.1375,
+      "cctvCoverage": 0.0585,
+      "overlap": 0.0072,
+      "potentialCoverage": 0.739,
+      "patrolVisitsPerTileMinute": 3.9648,
+      "safeRouteExposure": 0.1477,
+      "objectivePressure": 0.375,
+      "escapePressure": 0.625,
+      "unseenFraction": 0.261,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 8
+      }
+    },
+    {
+      "id": "08-05",
+      "chapter": 8,
+      "tier": "VERY_HARD",
+      "floor": 437,
+      "guards": 5,
+      "cameras": 3,
+      "safeRouteSampleCount": 44,
+      "escapeRouteSampleCount": 102,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1956,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 47,
+          "exposure": 0.2606
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 55,
+          "exposure": 0.14
+        }
+      ],
+      "guardCoverage": 0.128,
+      "cctvCoverage": 0.0473,
+      "overlap": 0.0093,
+      "potentialCoverage": 0.6545,
+      "patrolVisitsPerTileMinute": 3.6957,
+      "safeRouteExposure": 0.1843,
+      "objectivePressure": 0.075,
+      "escapePressure": 0.2667,
+      "unseenFraction": 0.3455,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 10
+      }
+    },
+    {
+      "id": "09-01",
+      "chapter": 9,
+      "tier": "FINAL",
+      "floor": 439,
+      "guards": 6,
+      "cameras": 3,
+      "safeRouteSampleCount": 40,
+      "escapeRouteSampleCount": 106,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2421,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 35,
+          "exposure": 0.1926
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 71,
+          "exposure": 0.2665
+        }
+      ],
+      "guardCoverage": 0.1826,
+      "cctvCoverage": 0.0557,
+      "overlap": 0.0175,
+      "potentialCoverage": 0.918,
+      "patrolVisitsPerTileMinute": 4.8474,
+      "safeRouteExposure": 0.2542,
+      "objectivePressure": 0.125,
+      "escapePressure": 0.1583,
+      "unseenFraction": 0.082,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 12
+      }
+    },
+    {
+      "id": "09-02",
+      "chapter": 9,
+      "tier": "FINAL",
+      "floor": 398,
+      "guards": 6,
+      "cameras": 3,
+      "safeRouteSampleCount": 53,
+      "escapeRouteSampleCount": 65,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2573,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 20,
+          "exposure": 0.1421
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 45,
+          "exposure": 0.3085
+        }
+      ],
+      "guardCoverage": 0.1854,
+      "cctvCoverage": 0.0593,
+      "overlap": 0.0102,
+      "potentialCoverage": 0.8442,
+      "patrolVisitsPerTileMinute": 5.1985,
+      "safeRouteExposure": 0.1832,
+      "objectivePressure": 0.1167,
+      "escapePressure": 0.2833,
+      "unseenFraction": 0.1558,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 12
+      }
+    },
+    {
+      "id": "09-03",
+      "chapter": 9,
+      "tier": "FINAL",
+      "floor": 441,
+      "guards": 6,
+      "cameras": 3,
+      "safeRouteSampleCount": 40,
+      "escapeRouteSampleCount": 110,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2034,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 45,
+          "exposure": 0.2154
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 65,
+          "exposure": 0.1951
+        }
+      ],
+      "guardCoverage": 0.1579,
+      "cctvCoverage": 0.0473,
+      "overlap": 0.0056,
+      "potentialCoverage": 0.8322,
+      "patrolVisitsPerTileMinute": 4.6916,
+      "safeRouteExposure": 0.245,
+      "objectivePressure": 0.1083,
+      "escapePressure": 0.2417,
+      "unseenFraction": 0.1678,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 12
+      }
+    },
+    {
+      "id": "09-04",
+      "chapter": 9,
+      "tier": "FINAL",
+      "floor": 393,
+      "guards": 6,
+      "cameras": 3,
+      "safeRouteSampleCount": 50,
+      "escapeRouteSampleCount": 62,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.2477,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 22,
+          "exposure": 0.2879
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 40,
+          "exposure": 0.2256
+        }
+      ],
+      "guardCoverage": 0.1854,
+      "cctvCoverage": 0.0617,
+      "overlap": 0.0223,
+      "potentialCoverage": 0.8346,
+      "patrolVisitsPerTileMinute": 4.6768,
+      "safeRouteExposure": 0.1013,
+      "objectivePressure": 0.1,
+      "escapePressure": 0.0333,
+      "unseenFraction": 0.1654,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 12
+      }
+    },
+    {
+      "id": "09-05",
+      "chapter": 9,
+      "tier": "FINAL",
+      "floor": 524,
+      "guards": 6,
+      "cameras": 3,
+      "safeRouteSampleCount": 60,
+      "escapeRouteSampleCount": 111,
+      "evidenceComplete": true,
+      "escapeRouteExposure": 0.1903,
+      "escapeRouteReadings": [
+        {
+          "name": "escape: quick return closes at lockdown",
+          "sampleCount": 32,
+          "exposure": 0.325
+        },
+        {
+          "name": "escape: independent service route after lockdown",
+          "sampleCount": 79,
+          "exposure": 0.1358
+        }
+      ],
+      "guardCoverage": 0.1483,
+      "cctvCoverage": 0.036,
+      "overlap": 0.0044,
+      "potentialCoverage": 0.7863,
+      "patrolVisitsPerTileMinute": 3.8607,
+      "safeRouteExposure": 0.1183,
+      "objectivePressure": 0.1,
+      "escapePressure": 0,
+      "unseenFraction": 0.2137,
+      "safePockets": 2,
+      "escapeChoices": 2,
+      "theft": {
+        "highSecurity": false,
+        "roles": [
+          "zone",
+          "exit",
+          "objective"
+        ],
+        "posts": 12
+      }
+    }
+  ],
+  "chapters": [
+    {
+      "chapter": 1,
+      "target": {
+        "chapter": 1,
+        "difficultyTier": "EASY",
+        "pressureBand": "LOW–LOW+",
+        "identity": "Basic vision, corner refuge and readable theft escape",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 3,
+          "roamingCount": 1,
+          "visionRange": 4.2,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1,
+          "guardAngle": 1,
+          "cameraRange": 1,
+          "cameraGain": 1
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.041139999999999996,
+        "cctvCoverage": 0.00182,
+        "overlap": 0.00004,
+        "patrolVisitsPerTileMinute": 1.37164,
+        "safeRouteExposure": 0.05858,
+        "objectivePressure": 0.14997999999999997,
+        "escapePressure": 0.01,
+        "escapeRouteExposure": 0.07294
+      },
+      "medians": {
+        "guardCoverage": 0.0371,
+        "cctvCoverage": 0,
+        "overlap": 0,
+        "patrolVisitsPerTileMinute": 1.2379,
+        "safeRouteExposure": 0.0622,
+        "objectivePressure": 0.1083,
+        "escapePressure": 0,
+        "escapeRouteExposure": 0.0656
+      },
+      "outliers": [
+        {
+          "id": "01-05",
+          "axis": "guardCoverage",
+          "value": 0.0586,
+          "fence": 0.04555000000000001,
+          "status": "REVIEW_REQUIRED"
+        },
+        {
+          "id": "01-04",
+          "axis": "cctvCoverage",
+          "value": 0.0091,
+          "fence": 0,
+          "status": "REVIEW_REQUIRED"
+        },
+        {
+          "id": "01-05",
+          "axis": "escapePressure",
+          "value": 0.05,
+          "fence": 0,
+          "status": "REVIEW_REQUIRED"
+        },
+        {
+          "id": "01-05",
+          "axis": "escapeRouteExposure",
+          "value": 0.1332,
+          "fence": 0.13065,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 2,
+      "target": {
+        "chapter": 2,
+        "difficultyTier": "EASY_PLUS",
+        "pressureBand": "LOW+–MEDIUM−",
+        "identity": "Open gallery LOS with limited CCTV and partitions",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 4,
+          "roamingCount": 1,
+          "visionRange": 3.5,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1,
+          "guardAngle": 1,
+          "cameraRange": 1,
+          "cameraGain": 1
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.03294,
+        "cctvCoverage": 0.00916,
+        "overlap": 0.00058,
+        "patrolVisitsPerTileMinute": 1.25498,
+        "safeRouteExposure": 0.05736,
+        "objectivePressure": 0.14664,
+        "escapePressure": 0,
+        "escapeRouteExposure": 0.056400000000000006
+      },
+      "medians": {
+        "guardCoverage": 0.0312,
+        "cctvCoverage": 0.0073,
+        "overlap": 0,
+        "patrolVisitsPerTileMinute": 1.141,
+        "safeRouteExposure": 0.0598,
+        "objectivePressure": 0.1583,
+        "escapePressure": 0,
+        "escapeRouteExposure": 0.0519
+      },
+      "outliers": [
+        {
+          "id": "02-05",
+          "axis": "overlap",
+          "value": 0.0028,
+          "fence": 0.00025,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 3,
+      "target": {
+        "chapter": 3,
+        "difficultyTier": "MEDIUM",
+        "pressureBand": "MEDIUM",
+        "identity": "Checkpoints, CCTV and vault search sectors",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 4,
+          "roamingCount": 1,
+          "visionRange": 4.4,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1,
+          "guardAngle": 1,
+          "cameraRange": 1,
+          "cameraGain": 1
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.08331999999999999,
+        "cctvCoverage": 0.017120000000000003,
+        "overlap": 0.0016,
+        "patrolVisitsPerTileMinute": 2.60358,
+        "safeRouteExposure": 0.11120000000000001,
+        "objectivePressure": 0.12832,
+        "escapePressure": 0.075,
+        "escapeRouteExposure": 0.12250000000000001
+      },
+      "medians": {
+        "guardCoverage": 0.0823,
+        "cctvCoverage": 0.0173,
+        "overlap": 0.0016,
+        "patrolVisitsPerTileMinute": 2.6055,
+        "safeRouteExposure": 0.1078,
+        "objectivePressure": 0.1083,
+        "escapePressure": 0.0917,
+        "escapeRouteExposure": 0.1387
+      },
+      "outliers": [
+        {
+          "id": "03-03",
+          "axis": "guardCoverage",
+          "value": 0.1025,
+          "fence": 0.09864999999999999,
+          "status": "REVIEW_REQUIRED"
+        },
+        {
+          "id": "03-03",
+          "axis": "patrolVisitsPerTileMinute",
+          "value": 3.0407,
+          "fence": 2.8095,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 4,
+      "target": {
+        "chapter": 4,
+        "difficultyTier": "MEDIUM_PLUS",
+        "pressureBand": "MEDIUM+",
+        "identity": "Glass and complex visibility",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 4,
+          "roamingCount": 1,
+          "visionRange": 4.1,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1,
+          "guardAngle": 1,
+          "cameraRange": 1,
+          "cameraGain": 1
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.06892,
+        "cctvCoverage": 0.01304,
+        "overlap": 0.0013,
+        "patrolVisitsPerTileMinute": 2.35912,
+        "safeRouteExposure": 0.08956,
+        "objectivePressure": 0.145,
+        "escapePressure": 0.05500000000000001,
+        "escapeRouteExposure": 0.1199
+      },
+      "medians": {
+        "guardCoverage": 0.0683,
+        "cctvCoverage": 0.0117,
+        "overlap": 0.0008,
+        "patrolVisitsPerTileMinute": 2.4306,
+        "safeRouteExposure": 0.1021,
+        "objectivePressure": 0.1,
+        "escapePressure": 0.075,
+        "escapeRouteExposure": 0.1132
+      },
+      "outliers": [
+        {
+          "id": "04-04",
+          "axis": "objectivePressure",
+          "value": 0.375,
+          "fence": 0.1375,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 5,
+      "target": {
+        "chapter": 5,
+        "difficultyTier": "MEDIUM_HIGH",
+        "pressureBand": "MEDIUM-HIGH",
+        "identity": "Open rooms and multidirectional security",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 4,
+          "roamingCount": 2,
+          "visionRange": 4.3,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1.08,
+          "guardAngle": 1.04,
+          "cameraRange": 1.04,
+          "cameraGain": 1.15
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.09248,
+        "cctvCoverage": 0.038579999999999996,
+        "overlap": 0.00296,
+        "patrolVisitsPerTileMinute": 3.3096400000000004,
+        "safeRouteExposure": 0.13033999999999998,
+        "objectivePressure": 0.12664,
+        "escapePressure": 0.18331999999999998,
+        "escapeRouteExposure": 0.15614
+      },
+      "medians": {
+        "guardCoverage": 0.095,
+        "cctvCoverage": 0.039,
+        "overlap": 0.0025,
+        "patrolVisitsPerTileMinute": 3.4161,
+        "safeRouteExposure": 0.1363,
+        "objectivePressure": 0.1083,
+        "escapePressure": 0.1083,
+        "escapeRouteExposure": 0.1615
+      },
+      "outliers": [
+        {
+          "id": "05-04",
+          "axis": "guardCoverage",
+          "value": 0.1083,
+          "fence": 0.10460000000000001,
+          "status": "REVIEW_REQUIRED"
+        },
+        {
+          "id": "05-01",
+          "axis": "cctvCoverage",
+          "value": 0.044,
+          "fence": 0.0416,
+          "status": "REVIEW_REQUIRED"
+        },
+        {
+          "id": "05-05",
+          "axis": "escapePressure",
+          "value": 0.5333,
+          "fence": 0.14175,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 6,
+      "target": {
+        "chapter": 6,
+        "difficultyTier": "MEDIUM_HIGH_PLUS",
+        "pressureBand": "MEDIUM-HIGH+",
+        "identity": "Rooms, corners and alternate routes",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 4,
+          "roamingCount": 2,
+          "visionRange": 4.4,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1.12,
+          "guardAngle": 1.06,
+          "cameraRange": 1.06,
+          "cameraGain": 1.25
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.10959999999999999,
+        "cctvCoverage": 0.037880000000000004,
+        "overlap": 0.00694,
+        "patrolVisitsPerTileMinute": 3.43234,
+        "safeRouteExposure": 0.11148,
+        "objectivePressure": 0.18497999999999998,
+        "escapePressure": 0.14501999999999998,
+        "escapeRouteExposure": 0.21694
+      },
+      "medians": {
+        "guardCoverage": 0.105,
+        "cctvCoverage": 0.0391,
+        "overlap": 0.0062,
+        "patrolVisitsPerTileMinute": 3.2593,
+        "safeRouteExposure": 0.1186,
+        "objectivePressure": 0.2333,
+        "escapePressure": 0.0667,
+        "escapeRouteExposure": 0.2324
+      },
+      "outliers": [
+        {
+          "id": "06-02",
+          "axis": "overlap",
+          "value": 0.0119,
+          "fence": 0.0069,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "target": {
+        "chapter": 7,
+        "difficultyTier": "HARD",
+        "pressureBand": "HIGH",
+        "identity": "Long LOS, roaming patrols and large spaces",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 5,
+          "roamingCount": 2,
+          "visionRange": 4.6,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1.18,
+          "guardAngle": 1.08,
+          "cameraRange": 1.08,
+          "cameraGain": 1.4
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.1339,
+        "cctvCoverage": 0.04506,
+        "overlap": 0.011,
+        "patrolVisitsPerTileMinute": 3.81254,
+        "safeRouteExposure": 0.15030000000000002,
+        "objectivePressure": 0.21334,
+        "escapePressure": 0.16834,
+        "escapeRouteExposure": 0.27464000000000005
+      },
+      "medians": {
+        "guardCoverage": 0.1348,
+        "cctvCoverage": 0.0538,
+        "overlap": 0.01,
+        "patrolVisitsPerTileMinute": 4.1183,
+        "safeRouteExposure": 0.1272,
+        "objectivePressure": 0.15,
+        "escapePressure": 0.1167,
+        "escapeRouteExposure": 0.2697
+      },
+      "outliers": [
+        {
+          "id": "07-02",
+          "axis": "escapePressure",
+          "value": 0.4917,
+          "fence": 0.18325,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 8,
+      "target": {
+        "chapter": 8,
+        "difficultyTier": "VERY_HARD",
+        "pressureBand": "VERY HIGH",
+        "identity": "Coordinated guard network and CCTV",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 5,
+          "roamingCount": 2,
+          "visionRange": 4.8,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1.24,
+          "guardAngle": 1.1,
+          "cameraRange": 1.1,
+          "cameraGain": 1.55
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.13722,
+        "cctvCoverage": 0.05634,
+        "overlap": 0.010539999999999999,
+        "patrolVisitsPerTileMinute": 4.28872,
+        "safeRouteExposure": 0.16514,
+        "objectivePressure": 0.145,
+        "escapePressure": 0.26502,
+        "escapeRouteExposure": 0.23652
+      },
+      "medians": {
+        "guardCoverage": 0.1375,
+        "cctvCoverage": 0.0585,
+        "overlap": 0.0093,
+        "patrolVisitsPerTileMinute": 4.1946,
+        "safeRouteExposure": 0.1667,
+        "objectivePressure": 0.1,
+        "escapePressure": 0.1917,
+        "escapeRouteExposure": 0.2419
+      },
+      "outliers": [
+        {
+          "id": "08-04",
+          "axis": "objectivePressure",
+          "value": 0.375,
+          "fence": 0.1375,
+          "status": "REVIEW_REQUIRED"
+        },
+        {
+          "id": "08-04",
+          "axis": "escapePressure",
+          "value": 0.625,
+          "fence": 0.40425,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    },
+    {
+      "chapter": 9,
+      "target": {
+        "chapter": 9,
+        "difficultyTier": "FINAL",
+        "pressureBand": "HIGHEST",
+        "identity": "Combined security systems with readable escape options",
+        "missionModifierBounds": [
+          0.95,
+          1.05
+        ],
+        "authoring": {
+          "guardCount": 5,
+          "roamingCount": 3,
+          "visionRange": 5,
+          "patrolPace": 0.85,
+          "patrolWait": 1.4
+        },
+        "security": {
+          "guardRange": 1.28,
+          "guardAngle": 1.12,
+          "cameraRange": 1.12,
+          "cameraGain": 1.7
+        }
+      },
+      "count": 5,
+      "means": {
+        "guardCoverage": 0.17192000000000002,
+        "cctvCoverage": 0.052000000000000005,
+        "overlap": 0.012,
+        "patrolVisitsPerTileMinute": 4.655,
+        "safeRouteExposure": 0.1804,
+        "objectivePressure": 0.10999999999999999,
+        "escapePressure": 0.14332,
+        "escapeRouteExposure": 0.22816
+      },
+      "medians": {
+        "guardCoverage": 0.1826,
+        "cctvCoverage": 0.0557,
+        "overlap": 0.0102,
+        "patrolVisitsPerTileMinute": 4.6916,
+        "safeRouteExposure": 0.1832,
+        "objectivePressure": 0.1083,
+        "escapePressure": 0.1583,
+        "escapeRouteExposure": 0.2421
+      },
+      "outliers": [
+        {
+          "id": "09-02",
+          "axis": "patrolVisitsPerTileMinute",
+          "value": 5.1985,
+          "fence": 5.103300000000001,
+          "status": "REVIEW_REQUIRED"
+        }
+      ]
+    }
+  ],
+  "orderingAcceptance": {
+    "accepted": false,
+    "status": "REVIEW_REQUIRED",
+    "humanPlaytestVerified": false,
+    "evidence": [
+      {
+        "chapter": 1,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 2,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 3,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 4,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 5,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 6,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 7,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 8,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      },
+      {
+        "chapter": 9,
+        "count": 5,
+        "uniqueCount": 5,
+        "missingMissionIds": [],
+        "complete": true
+      }
+    ],
+    "findings": [
+      {
+        "axis": "guardCoverage",
+        "means": [
+          {
+            "chapter": 1,
+            "count": 5,
+            "value": 0.041139999999999996
+          },
+          {
+            "chapter": 2,
+            "count": 5,
+            "value": 0.03294
+          },
+          {
+            "chapter": 3,
+            "count": 5,
+            "value": 0.08331999999999999
+          },
+          {
+            "chapter": 4,
+            "count": 5,
+            "value": 0.06892
+          },
+          {
+            "chapter": 5,
+            "count": 5,
+            "value": 0.09248
+          },
+          {
+            "chapter": 6,
+            "count": 5,
+            "value": 0.10959999999999999
+          },
+          {
+            "chapter": 7,
+            "count": 5,
+            "value": 0.1339
+          },
+          {
+            "chapter": 8,
+            "count": 5,
+            "value": 0.13722
+          },
+          {
+            "chapter": 9,
+            "count": 5,
+            "value": 0.17192000000000002
+          }
+        ],
+        "comparisons": [
+          {
+            "from": 1,
+            "to": 2,
+            "lower": 0.041139999999999996,
+            "higher": 0.03294,
+            "ordered": false
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "lower": 0.03294,
+            "higher": 0.08331999999999999,
+            "ordered": true
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "lower": 0.08331999999999999,
+            "higher": 0.06892,
+            "ordered": false
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "lower": 0.06892,
+            "higher": 0.09248,
+            "ordered": true
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "lower": 0.09248,
+            "higher": 0.10959999999999999,
+            "ordered": true
+          },
+          {
+            "from": 6,
+            "to": 7,
+            "lower": 0.10959999999999999,
+            "higher": 0.1339,
+            "ordered": true
+          },
+          {
+            "from": 7,
+            "to": 8,
+            "lower": 0.1339,
+            "higher": 0.13722,
+            "ordered": true
+          },
+          {
+            "from": 8,
+            "to": 9,
+            "lower": 0.13722,
+            "higher": 0.17192000000000002,
+            "ordered": true
+          }
+        ],
+        "accepted": false,
+        "status": "REVIEW_REQUIRED"
+      },
+      {
+        "axis": "safeRouteExposure",
+        "means": [
+          {
+            "chapter": 1,
+            "count": 5,
+            "value": 0.05858
+          },
+          {
+            "chapter": 2,
+            "count": 5,
+            "value": 0.05736
+          },
+          {
+            "chapter": 3,
+            "count": 5,
+            "value": 0.11120000000000001
+          },
+          {
+            "chapter": 4,
+            "count": 5,
+            "value": 0.08956
+          },
+          {
+            "chapter": 5,
+            "count": 5,
+            "value": 0.13033999999999998
+          },
+          {
+            "chapter": 6,
+            "count": 5,
+            "value": 0.11148
+          },
+          {
+            "chapter": 7,
+            "count": 5,
+            "value": 0.15030000000000002
+          },
+          {
+            "chapter": 8,
+            "count": 5,
+            "value": 0.16514
+          },
+          {
+            "chapter": 9,
+            "count": 5,
+            "value": 0.1804
+          }
+        ],
+        "comparisons": [
+          {
+            "from": 1,
+            "to": 2,
+            "lower": 0.05858,
+            "higher": 0.05736,
+            "ordered": false
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "lower": 0.05736,
+            "higher": 0.11120000000000001,
+            "ordered": true
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "lower": 0.11120000000000001,
+            "higher": 0.08956,
+            "ordered": false
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "lower": 0.08956,
+            "higher": 0.13033999999999998,
+            "ordered": true
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "lower": 0.13033999999999998,
+            "higher": 0.11148,
+            "ordered": false
+          },
+          {
+            "from": 6,
+            "to": 7,
+            "lower": 0.11148,
+            "higher": 0.15030000000000002,
+            "ordered": true
+          },
+          {
+            "from": 7,
+            "to": 8,
+            "lower": 0.15030000000000002,
+            "higher": 0.16514,
+            "ordered": true
+          },
+          {
+            "from": 8,
+            "to": 9,
+            "lower": 0.16514,
+            "higher": 0.1804,
+            "ordered": true
+          }
+        ],
+        "accepted": false,
+        "status": "REVIEW_REQUIRED"
+      },
+      {
+        "axis": "objectivePressure",
+        "means": [
+          {
+            "chapter": 1,
+            "count": 5,
+            "value": 0.14997999999999997
+          },
+          {
+            "chapter": 2,
+            "count": 5,
+            "value": 0.14664
+          },
+          {
+            "chapter": 3,
+            "count": 5,
+            "value": 0.12832
+          },
+          {
+            "chapter": 4,
+            "count": 5,
+            "value": 0.145
+          },
+          {
+            "chapter": 5,
+            "count": 5,
+            "value": 0.12664
+          },
+          {
+            "chapter": 6,
+            "count": 5,
+            "value": 0.18497999999999998
+          },
+          {
+            "chapter": 7,
+            "count": 5,
+            "value": 0.21334
+          },
+          {
+            "chapter": 8,
+            "count": 5,
+            "value": 0.145
+          },
+          {
+            "chapter": 9,
+            "count": 5,
+            "value": 0.10999999999999999
+          }
+        ],
+        "comparisons": [
+          {
+            "from": 1,
+            "to": 2,
+            "lower": 0.14997999999999997,
+            "higher": 0.14664,
+            "ordered": false
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "lower": 0.14664,
+            "higher": 0.12832,
+            "ordered": false
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "lower": 0.12832,
+            "higher": 0.145,
+            "ordered": true
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "lower": 0.145,
+            "higher": 0.12664,
+            "ordered": false
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "lower": 0.12664,
+            "higher": 0.18497999999999998,
+            "ordered": true
+          },
+          {
+            "from": 6,
+            "to": 7,
+            "lower": 0.18497999999999998,
+            "higher": 0.21334,
+            "ordered": true
+          },
+          {
+            "from": 7,
+            "to": 8,
+            "lower": 0.21334,
+            "higher": 0.145,
+            "ordered": false
+          },
+          {
+            "from": 8,
+            "to": 9,
+            "lower": 0.145,
+            "higher": 0.10999999999999999,
+            "ordered": false
+          }
+        ],
+        "accepted": false,
+        "status": "REVIEW_REQUIRED"
+      },
+      {
+        "axis": "cctvCoverage",
+        "means": [
+          {
+            "chapter": 1,
+            "count": 5,
+            "value": 0.00182
+          },
+          {
+            "chapter": 2,
+            "count": 5,
+            "value": 0.00916
+          },
+          {
+            "chapter": 3,
+            "count": 5,
+            "value": 0.017120000000000003
+          },
+          {
+            "chapter": 4,
+            "count": 5,
+            "value": 0.01304
+          },
+          {
+            "chapter": 5,
+            "count": 5,
+            "value": 0.038579999999999996
+          },
+          {
+            "chapter": 6,
+            "count": 5,
+            "value": 0.037880000000000004
+          },
+          {
+            "chapter": 7,
+            "count": 5,
+            "value": 0.04506
+          },
+          {
+            "chapter": 8,
+            "count": 5,
+            "value": 0.05634
+          },
+          {
+            "chapter": 9,
+            "count": 5,
+            "value": 0.052000000000000005
+          }
+        ],
+        "comparisons": [
+          {
+            "from": 1,
+            "to": 2,
+            "lower": 0.00182,
+            "higher": 0.00916,
+            "ordered": true
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "lower": 0.00916,
+            "higher": 0.017120000000000003,
+            "ordered": true
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "lower": 0.017120000000000003,
+            "higher": 0.01304,
+            "ordered": false
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "lower": 0.01304,
+            "higher": 0.038579999999999996,
+            "ordered": true
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "lower": 0.038579999999999996,
+            "higher": 0.037880000000000004,
+            "ordered": false
+          },
+          {
+            "from": 6,
+            "to": 7,
+            "lower": 0.037880000000000004,
+            "higher": 0.04506,
+            "ordered": true
+          },
+          {
+            "from": 7,
+            "to": 8,
+            "lower": 0.04506,
+            "higher": 0.05634,
+            "ordered": true
+          },
+          {
+            "from": 8,
+            "to": 9,
+            "lower": 0.05634,
+            "higher": 0.052000000000000005,
+            "ordered": false
+          }
+        ],
+        "accepted": false,
+        "status": "REVIEW_REQUIRED"
+      },
+      {
+        "axis": "escapePressure",
+        "means": [
+          {
+            "chapter": 1,
+            "count": 5,
+            "value": 0.01
+          },
+          {
+            "chapter": 2,
+            "count": 5,
+            "value": 0
+          },
+          {
+            "chapter": 3,
+            "count": 5,
+            "value": 0.075
+          },
+          {
+            "chapter": 4,
+            "count": 5,
+            "value": 0.05500000000000001
+          },
+          {
+            "chapter": 5,
+            "count": 5,
+            "value": 0.18331999999999998
+          },
+          {
+            "chapter": 6,
+            "count": 5,
+            "value": 0.14501999999999998
+          },
+          {
+            "chapter": 7,
+            "count": 5,
+            "value": 0.16834
+          },
+          {
+            "chapter": 8,
+            "count": 5,
+            "value": 0.26502
+          },
+          {
+            "chapter": 9,
+            "count": 5,
+            "value": 0.14332
+          }
+        ],
+        "comparisons": [
+          {
+            "from": 1,
+            "to": 2,
+            "lower": 0.01,
+            "higher": 0,
+            "ordered": false
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "lower": 0,
+            "higher": 0.075,
+            "ordered": true
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "lower": 0.075,
+            "higher": 0.05500000000000001,
+            "ordered": false
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "lower": 0.05500000000000001,
+            "higher": 0.18331999999999998,
+            "ordered": true
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "lower": 0.18331999999999998,
+            "higher": 0.14501999999999998,
+            "ordered": false
+          },
+          {
+            "from": 6,
+            "to": 7,
+            "lower": 0.14501999999999998,
+            "higher": 0.16834,
+            "ordered": true
+          },
+          {
+            "from": 7,
+            "to": 8,
+            "lower": 0.16834,
+            "higher": 0.26502,
+            "ordered": true
+          },
+          {
+            "from": 8,
+            "to": 9,
+            "lower": 0.26502,
+            "higher": 0.14332,
+            "ordered": false
+          }
+        ],
+        "accepted": false,
+        "status": "REVIEW_REQUIRED"
+      },
+      {
+        "axis": "escapeRouteExposure",
+        "means": [
+          {
+            "chapter": 1,
+            "count": 5,
+            "value": 0.07294
+          },
+          {
+            "chapter": 2,
+            "count": 5,
+            "value": 0.056400000000000006
+          },
+          {
+            "chapter": 3,
+            "count": 5,
+            "value": 0.12250000000000001
+          },
+          {
+            "chapter": 4,
+            "count": 5,
+            "value": 0.1199
+          },
+          {
+            "chapter": 5,
+            "count": 5,
+            "value": 0.15614
+          },
+          {
+            "chapter": 6,
+            "count": 5,
+            "value": 0.21694
+          },
+          {
+            "chapter": 7,
+            "count": 5,
+            "value": 0.27464000000000005
+          },
+          {
+            "chapter": 8,
+            "count": 5,
+            "value": 0.23652
+          },
+          {
+            "chapter": 9,
+            "count": 5,
+            "value": 0.22816
+          }
+        ],
+        "comparisons": [
+          {
+            "from": 1,
+            "to": 2,
+            "lower": 0.07294,
+            "higher": 0.056400000000000006,
+            "ordered": false
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "lower": 0.056400000000000006,
+            "higher": 0.12250000000000001,
+            "ordered": true
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "lower": 0.12250000000000001,
+            "higher": 0.1199,
+            "ordered": false
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "lower": 0.1199,
+            "higher": 0.15614,
+            "ordered": true
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "lower": 0.15614,
+            "higher": 0.21694,
+            "ordered": true
+          },
+          {
+            "from": 6,
+            "to": 7,
+            "lower": 0.21694,
+            "higher": 0.27464000000000005,
+            "ordered": true
+          },
+          {
+            "from": 7,
+            "to": 8,
+            "lower": 0.27464000000000005,
+            "higher": 0.23652,
+            "ordered": false
+          },
+          {
+            "from": 8,
+            "to": 9,
+            "lower": 0.23652,
+            "higher": 0.22816,
+            "ordered": false
+          }
+        ],
+        "accepted": false,
+        "status": "REVIEW_REQUIRED"
+      }
+    ]
+  }
+}

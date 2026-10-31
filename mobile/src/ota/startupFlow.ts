@@ -127,7 +127,15 @@ export async function showApplyingThenReload(input: {
 }): Promise<void> {
   const sleep = input.sleep ?? ((ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms)));
   input.show?.();
-  await Promise.race([input.painted().catch(() => {}), sleep(input.paintDeadlineMs)]);
+  let deadline: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const timeout = input.sleep ? sleep(input.paintDeadlineMs) : new Promise<void>((resolve) => {
+      deadline = setTimeout(resolve, input.paintDeadlineMs);
+    });
+    await Promise.race([input.painted().catch(() => {}), timeout]);
+  } finally {
+    if (deadline !== undefined) clearTimeout(deadline);
+  }
   if (input.readMs > 0) await sleep(input.readMs);
   await input.reload();
 }

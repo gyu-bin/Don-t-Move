@@ -12,7 +12,8 @@ const defs=current as StageDefinition[];
 test('Phase4C: all25 Chapter5–9 definitions remain byte-equivalent serialized data',()=>{
  assert.deepEqual(current.filter(d=>d.chapter>=5),old.filter(d=>d.chapter>=5));
 });
-test('Phase4C: Tilt, Guard AI, CCTV and save logic unchanged',()=>{
+test('Phase4C: Tilt, Guard AI and saves stay protected; CCTV uses the reviewed performance baseline',()=>{
+ // CCTV baseline refreshed after 6e867ba: same perception/security replay, cached vision geometry.
  const hashes=JSON.parse(fs.readFileSync('docs/design/v12/phase4c/PROTECTED_HASHES.json','utf8'));
  for(const [file,hash] of Object.entries(hashes))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'),hash,file);
 });

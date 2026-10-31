@@ -26,12 +26,28 @@ plan (v13Museum / v13Gallery / v13Bank / v13Lab / v13Vault)       Chapter 1–4,
         Chapter 7 ← Museum, Chapter 8 ← Lab       FROZEN plans, before phase7(); own patches in LATE
         v13Casino.ts   mirror, SWAP, ROTATE, EXTRA_CAMERA, MOVED, PATROL
         v13Late.ts     mirror, refit, secure(), PINNED, then phase7Late() (LATE)
+  → authorCoverCheckpoints() v13CoverCheckpoints.json: individual cover inspections, AFTER derivation (44 missions)
   → composeV13()        v13Builder.ts
   → campaignStages.json
 ```
 
 `CHAPTER_SOURCE` in `v13Build.ts` lists the nine chapters in bake order; `DERIVED_FROM` in `v13Sources.ts` is the
 only place that decides which plans a derived chapter is built from.
+
+The current 01-01 has its own `entranceStealth()` pass after the frozen Museum
+export. `COVER_CHECKPOINTS` deliberately excludes it. The other44 missions use
+123 fixed inspection/hidden/peek triples, each naming an existing structure
+and an existing semantic guard stop. `post` and `look` affect patrol; `hidden`
+and `exposed` are QA probes only and never give the AI a player target. This
+pass runs after derivation, so an inspection in Bank does not silently change
+its Casino twin. It keeps the architecture, props, lighting, guard count,
+speed and chapter security; it is not a scatter or random-point generator.
+
+`v13CoverCheckpoints.test.ts` checks all44 against actual body-sample vision,
+walkable peeks, 180s real patrol visits, windows clear of all guards/CCTV, and
+continuous full-heist witnesses in `v13CoverWitnesses.json`. Those witnesses
+are test inputs, not human play times or production approval. The explanatory
+overlay builder `tools/environment/campaignCoverBoard.ts` is offline only.
 
 ## Rules that keep the output stable
 
@@ -53,3 +69,24 @@ only place that decides which plans a derived chapter is built from.
 `npm run campaign:bake`, `npm run campaign:snapshot` (read the DIFF list: it should name the missions you meant
 to change and no others), `npm run campaign:audit`, `npm test`, then refresh
 `docs/design/v13/PHASE8_SNAPSHOT_HASHES.json` from a `v13Snapshot.ts write`.
+
+### Patrol clearance and crossing follow-up
+
+After `authorCoverCheckpoints`, `polishPatrol` applies the named `PATROL_POLISH`
+repairs to05-02/06-01 only. It is immutable/idempotent and does not feed changes
+back into mirrored base chapters. The final override-index stage records each
+reason. `v13PatrolPolish.test.ts` checks scope, 5-minute Casino clearance at three
+frame rates, active inspection visits, and Mansion contact/timed-clear outcomes.
+`chapterOrderingAcceptance` now defaults to all9 chapters; an explicit chapter
+subset can be requested for focused diagnostics. A `REVIEW_REQUIRED` result must
+not be described as a human difficulty approval.
+
+### Vault exit-camera follow-up
+
+`v13ExitWatch.ts` runs after patrol polish and points09-05's existing lower-stair
+camera at its exit-lobby doorway. It changes no guard patrol/speed or geometry.
+`v13ExitWatchQA.ts` measures camera-only waiting/peek windows; the test also
+checks physical cover, closed-door LOS and complete timed heists. Review data:
+`docs/reports/performance/vault-escape.json`. The difficulty audit now reports
+per-escape-route exposure alongside the original exit-centre pressure and
+rejects missing escape samples. Neither measurement certifies human difficulty.

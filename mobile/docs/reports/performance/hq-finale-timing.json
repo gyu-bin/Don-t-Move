@@ -1,0 +1,1543 @@
+{
+  "mission": "08-05",
+  "method": "60Hz shared-runtime full heist. 2 approaches x 2 escapes x 7 departure delays; Run approach/escape. Only the first glass-lab wait differs (4s to 5s). No in-route decisions or human observation. This is not a human success rate.",
+  "humanPlaytestVerified": false,
+  "rows": [
+    {
+      "variant": "before",
+      "firstStopWait": 4,
+      "summary": {
+        "runs": 28,
+        "clears": 3,
+        "spotted": 15,
+        "caught": 25
+      },
+      "runs": [
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 10.4,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8.3,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 10,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 11.7,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 8,
+          "clear": true,
+          "caught": false,
+          "time": 28.2,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0.32,
+              "peak": 0.17
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 10,
+          "clear": true,
+          "caught": false,
+          "time": 30.1,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0.4,
+              "peak": 0.25
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 12,
+          "clear": true,
+          "caught": false,
+          "time": 32.1,
+          "spottedBy": "08-05-g4",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0.35,
+              "peak": 0.23
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 10.4,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8.3,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 10,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 11.7,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 8,
+          "clear": false,
+          "caught": true,
+          "time": 21.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 10,
+          "clear": false,
+          "caught": true,
+          "time": 22.9,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 12,
+          "clear": false,
+          "caught": true,
+          "time": 24.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 5.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.12,
+              "peak": 0.09
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.2,
+              "peak": 0.15
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 14.5,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.17,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 15.9,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 8,
+          "clear": false,
+          "caught": true,
+          "time": 13.8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.13,
+              "peak": 0.1
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 10,
+          "clear": false,
+          "caught": true,
+          "time": 15.4,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.22,
+              "peak": 0.16
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 12,
+          "clear": false,
+          "caught": true,
+          "time": 17.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 5.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.12,
+              "peak": 0.09
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.2,
+              "peak": 0.15
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 14.5,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.17,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 15.9,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 8,
+          "clear": false,
+          "caught": true,
+          "time": 13.8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.13,
+              "peak": 0.1
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 10,
+          "clear": false,
+          "caught": true,
+          "time": 15.4,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.22,
+              "peak": 0.16
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 12,
+          "clear": false,
+          "caught": true,
+          "time": 17.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "applied",
+      "firstStopWait": 5,
+      "summary": {
+        "runs": 28,
+        "clears": 2,
+        "spotted": 11,
+        "caught": 26
+      },
+      "runs": [
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 10.4,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 10,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 12.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 8,
+          "clear": false,
+          "caught": true,
+          "time": 13.9,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 10,
+          "clear": true,
+          "caught": false,
+          "time": 30.1,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0.4,
+              "peak": 0.25
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 0,
+          "delay": 12,
+          "clear": true,
+          "caught": false,
+          "time": 32.1,
+          "spottedBy": "08-05-g4",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0.35,
+              "peak": 0.23
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 10.4,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 10,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 12.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 8,
+          "clear": false,
+          "caught": true,
+          "time": 13.9,
+          "spottedBy": "08-05-g1",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 10,
+          "clear": false,
+          "caught": true,
+          "time": 22.9,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 0,
+          "escape": 1,
+          "delay": 12,
+          "clear": false,
+          "caught": true,
+          "time": 24.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 5.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.12,
+              "peak": 0.09
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.2,
+              "peak": 0.15
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 14.5,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.17,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 15.9,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 8,
+          "clear": false,
+          "caught": true,
+          "time": 13.8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.13,
+              "peak": 0.1
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 10,
+          "clear": false,
+          "caught": true,
+          "time": 15.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.22,
+              "peak": 0.16
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 0,
+          "delay": 12,
+          "clear": false,
+          "caught": true,
+          "time": 17.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 0,
+          "clear": false,
+          "caught": true,
+          "time": 5.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.12,
+              "peak": 0.09
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 2,
+          "clear": false,
+          "caught": true,
+          "time": 8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.2,
+              "peak": 0.15
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 4,
+          "clear": false,
+          "caught": true,
+          "time": 14.5,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.17,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 6,
+          "clear": false,
+          "caught": true,
+          "time": 15.9,
+          "spottedBy": "08-05-g2",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 8,
+          "clear": false,
+          "caught": true,
+          "time": 13.8,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.13,
+              "peak": 0.1
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 10,
+          "clear": false,
+          "caught": true,
+          "time": 15.4,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.22,
+              "peak": 0.16
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        },
+        {
+          "approach": 1,
+          "escape": 1,
+          "delay": 12,
+          "clear": false,
+          "caught": true,
+          "time": 17.3,
+          "spottedBy": "",
+          "cameraAlertAt": null,
+          "cameras": [
+            {
+              "id": "08-05-cam1",
+              "longest": 0.15,
+              "peak": 0.11
+            },
+            {
+              "id": "08-05-cam2",
+              "longest": 0,
+              "peak": 0
+            },
+            {
+              "id": "08-05-cam3",
+              "longest": 0,
+              "peak": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

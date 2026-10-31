@@ -11,12 +11,23 @@ Final look = the user's Character Design Sheet (`masters/character_design_sheet_
 The eight turnaround figures are keyed to RGBA masters (`masters/*_master.png`) and animated
 with a 2D cutout rig (`tools/locomotion/v2`, see its README): painted body rigid, arms/legs
 on a skinned mesh driven by IK with planted stance feet. Atlases in `assets/characters/`
-(idle 6, sneak 8, walk 12, run 12; 128×128; rows DOWN/LEFT/RIGHT/UP; pivot 64,112).
+(idle 6, player sneak 8, player walk 14, guard walk 12, run 12; 128×128;
+rows DOWN/LEFT/RIGHT/UP; pivot 64,112).
 Guard Whistle/Search are idle stand-ins. V1 procedural atlases are kept in
 `deprecated/locomotion-v1-procedural/` and `tools/locomotion/v1-procedural/` for reference only.
-Open: Simulator/device visual review.
+Open: Simulator/device visual review and authored Guard Whistle/Search cycles.
 
-## Production Locomotion Atlas V1 (2026-09-29) — current runtime asset
+2026-10-30 code audit: `ASSET_MANIFEST.characters` selects `LOCOMOTION_CHARACTERS`;
+Walk/Run are existing distance-driven V2 sheets, **not** the LEGACY still sprite.
+`locomotion:validate` passes; this does not certify a natural gait or final artwork.
+No new image generation, rig rebake, speed change or `finalApproved` change was made.
+**Guard locomotion final asset required** remains the final-art release blocker.
+Do not describe the temporary cutout atlases as approved final animation.
+
+The sections below are historical records. Statements about a static LEGACY
+release sprite or V1 final approval describe those dated builds, not today's runtime.
+
+## Historical: Production Locomotion Atlas V1 (2026-09-29)
 
 Direct frame generation cannot guarantee frame-consistent planted feet, so the
 atlas is baked from a 2D cutout rig (`tools/locomotion`, `npm run locomotion:bake`):
@@ -39,7 +50,7 @@ assets were replaced. Direction inconsistencies and uncertified gait/alpha block
 integration. [Review and previews](candidates/master-integration-v1/REVIEW.md).
 Guard sliding remains **ASSET REQUIRED**; the release blocker below remains open.
 
-## Current decision — Guard image generation closed (2026-09-27)
+## Historical decision — Guard image generation closed (2026-09-27; generation stop remains in force)
 
 **ASSET GENERATION LIMIT REACHED — confirmed by user.** Preserve all failed
 candidates, source images, prompts, measurements and previews; do not regenerate.

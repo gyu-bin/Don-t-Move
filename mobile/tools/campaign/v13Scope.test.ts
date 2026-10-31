@@ -4,6 +4,7 @@ import current from '../../src/game/levels/stages/campaignStages.json';
 import source from '../../docs/design/v12/phase4d/SOURCE_STAGES.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {PROP_KIT} from '../../src/game/world/propKit';
+import {chapterDifficulty} from '../../src/game/levels/chapterDifficulty';
 import {buildV125Campaign} from './v125Build';
 import {buildV13Campaign,V13_MISSIONS} from './v13Build';
 import {auditV124bTopology,measureV124bRoutePressure} from './v124bTopologyQA';
@@ -71,14 +72,17 @@ test('V13: every solid structure states its role and the cover graph names real 
  }
 });
 
-test('V13: guards and CCTV are authored by role with the chapter archetypes unchanged',()=>{
+test('V13: guards and CCTV retain roles and speed with explicit chapter pressure',()=>{
  for(const m of V13_MISSIONS){
   const def=stage(m.id),old=before.find(d=>d.id===m.id)!,[guards,cameras]=SECURITY[m.id];
   assert.equal(def.guards.length,guards,`${m.id} guard count`);
   assert.equal(def.cameras?.length??0,cameras,`${m.id} camera count`);
   assert.equal(def.guards.filter(g=>g.role==='objective').length,1,`${m.id} one objective guard`);
   def.guards.forEach((g,i)=>{
-   for(const key of ['pace','visionRange','visionHalfAngle'] as const)assert.deepEqual(g[key],old.guards[Math.min(i,old.guards.length-1)][key],`${m.id} guard ${i} ${key}`);
+   const pressure=chapterDifficulty(def.chapter!).security,base=old.guards[Math.min(i,old.guards.length-1)];
+   assert.equal(g.pace,base.pace,`${m.id} pace`);
+   assert.equal(g.visionRange,base.visionRange!*pressure.guardRange,`${m.id} range`);
+   assert.equal(g.visionHalfAngle,base.visionHalfAngle!*pressure.guardAngle,`${m.id} cone`);
    const route=def.patrolRoutes.find(r=>r.id===g.routeId)!;
    assert.equal(g.x,route.points[0].x);assert.equal(g.y,route.points[0].y);
    assert.equal(g.facing,route.points[0].lookDirection,`${m.id} guard ${i} starts facing its subject`);
@@ -86,7 +90,7 @@ test('V13: guards and CCTV are authored by role with the chapter archetypes unch
   });
   const template=before.flatMap(s=>s.chapter===def.chapter?s.cameras??[]:[])[0];
   for(const camera of def.cameras??[])for(const key of ['range','visionAngle','sweepAngle','sweepSpeed','pauseAtEnds','suspicionRate'] as const)
-   assert.deepEqual(camera[key],template[key],`${m.id} ${camera.id} ${key}`);
+   assert.deepEqual(camera[key],template[key]===undefined?undefined:template[key]*(key==='range'?chapterDifficulty(def.chapter!).security.cameraRange:key==='suspicionRate'?chapterDifficulty(def.chapter!).security.cameraGain:1),`${m.id} ${camera.id} ${key}`);
  }
  // Museum stays the easy chapter: at most one camera in the whole chapter.
  assert.equal(live.filter(d=>d.chapter===1).reduce((n,d)=>n+(d.cameras?.length??0),0),1);

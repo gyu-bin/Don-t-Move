@@ -7,6 +7,27 @@ import historicalSource from '../../docs/design/v12/phase3/SOURCE_STAGES.json';
 import {campaignStages} from '../../src/game/levels/campaignStages';
 import {applyDifficultyTuning} from './difficultyTuning';
 import {auditDifficulty,summarizeDifficulty,chapterOrderingAcceptance,type DifficultyAudit} from './chapterDifficultyAudit';
+import {compileStage} from '../../src/game/world/compileStage';
+import {createGuardState,observeGuard} from '../../src/game/guards/guardBrain';
+import {exposureRun} from './cameraExposure';
+
+test('Late chapter pressure strictly increases and reaches actual guard perception',()=>{
+ for(const config of CHAPTER_DIFFICULTY.slice(0,4))assert.deepEqual(config.security,{guardRange:1,guardAngle:1,cameraRange:1,cameraGain:1});
+ for(let i=4;i<9;i++)for(const key of ['guardRange','guardAngle','cameraRange','cameraGain'] as const)
+  assert(CHAPTER_DIFFICULTY[i].security[key]>CHAPTER_DIFFICULTY[i-1].security[key],`chapter ${i+1}: ${key}`);
+ const def=campaignStages.find(d=>d.id==='08-03')!,s=compileStage(def),g=createGuardState(s.guards[0]);
+ const old=createGuardState({...s.guards[0],visionRange:g.visionRange/chapterDifficulty(8).security.guardRange});
+ const p={x:g.x+Math.cos(g.facing)*g.visionRange*.95,y:g.y+Math.sin(g.facing)*g.visionRange*.95,gait:3};
+ observeGuard(old,p,[]);observeGuard(g,p,[]);
+ assert(!old.canSee&&g.canSee,'the extra visible cone distance must actually detect a player');
+});
+
+test('Final Vault retains a continuous timed full-heist witness with stronger security',()=>{
+ const s=campaignStages.find(d=>d.id==='09-03')!;
+ const result=exposureRun(s,1,0,3,7);
+ assert(result.clear&&!result.caught,'risk crossing + objective + actual exit must remain possible');
+ assert(result.spottedBy,'stronger security makes this successful escape a spotted heist');
+});
 
 test('All 45 missions resolve the same single chapter profile regardless of mission index',()=>{
  assert.equal(CHAPTER_DIFFICULTY.length,9);assert.equal(campaignStages.length,45);
@@ -71,19 +92,38 @@ test('Outlier audit identifies a high axis without converting it into automatic 
 });
 
 test('Chapter ordering acceptance rejects reversed/missing evidence and accepts independently ordered axes',()=>{
+ const check=(rows:DifficultyAudit[])=>chapterOrderingAcceptance(rows,[1,2,3]);
  const base=auditDifficulty(campaignStages.find(d=>d.id==='01-05')!);
- const fixture=(values:number[])=>values.flatMap((value,i)=>Array.from({length:5},(_,j)=>({...base,id:`0${i+1}-${String(j+1).padStart(2,'0')}`,chapter:i+1,guardCoverage:value,safeRouteExposure:value,objectivePressure:value,cctvCoverage:value,escapePressure:value})));
- const negative=chapterOrderingAcceptance(fixture([.3,.1,.2]));
+ const fixture=(values:number[])=>values.flatMap((value,i)=>Array.from({length:5},(_,j)=>({...base,id:`0${i+1}-${String(j+1).padStart(2,'0')}`,chapter:i+1,guardCoverage:value,safeRouteExposure:value,objectivePressure:value,cctvCoverage:value,escapePressure:value,escapeRouteExposure:value})));
+ const negative=check(fixture([.3,.1,.2]));
  assert.equal(negative.accepted,false);assert.equal(negative.status,'REVIEW_REQUIRED');assert(negative.findings.every(f=>!f.accepted&&!f.comparisons[0].ordered&&f.comparisons[1].ordered));
- const ordered=chapterOrderingAcceptance(fixture([.1,.2,.3]));
+ const ordered=check(fixture([.1,.2,.3]));
  assert.equal(ordered.accepted,true);assert.equal(ordered.status,'MEASURED_ORDERED');assert(ordered.findings.every(f=>f.accepted));assert.equal(ordered.humanPlaytestVerified,false);
  const oneAxisReversed=fixture([.1,.2,.3]);oneAxisReversed.filter(r=>r.chapter===1).forEach(r=>r.cctvCoverage=.4);
- assert.equal(chapterOrderingAcceptance(oneAxisReversed).accepted,false,'One good average cannot hide a reversed axis');
- assert.equal(chapterOrderingAcceptance(fixture([.1,.2])).accepted,false,'Missing chapter is not zero exposure or a pass');
+ assert.equal(check(oneAxisReversed).accepted,false,'One good average cannot hide a reversed axis');
+ assert.equal(check(fixture([.1,.2])).accepted,false,'Missing chapter is not zero exposure or a pass');
  const truncated=fixture([.1,.2,.3]).filter(r=>r.id.endsWith('-01'));
- assert.equal(chapterOrderingAcceptance(truncated).accepted,false,'One mission per chapter is incomplete evidence');
+ assert.equal(check(truncated).accepted,false,'One mission per chapter is incomplete evidence');
  const duplicate=fixture([.1,.2,.3]);duplicate[1].id=duplicate[0].id;
- assert.equal(chapterOrderingAcceptance(duplicate).accepted,false,'Duplicate missions cannot replace missing evidence');
+ assert.equal(check(duplicate).accepted,false,'Duplicate missions cannot replace missing evidence');
  const missingRoute=fixture([.1,.2,.3]);missingRoute[0].safeRouteSampleCount=0;missingRoute[0].evidenceComplete=false;
- assert.equal(chapterOrderingAcceptance(missingRoute).accepted,false,'Missing routes cannot certify zero exposure');
+ assert.equal(check(missingRoute).accepted,false,'Missing routes cannot certify zero exposure');
+ const missingEscape=fixture([.1,.2,.3]);missingEscape[0].escapeRouteSampleCount=0;
+ assert.equal(check(missingEscape).accepted,false,'Missing escape route samples cannot certify safe final tiles');
+ const reversedEscape=fixture([.1,.2,.3]);reversedEscape.filter(r=>r.chapter===3).forEach(r=>r.escapeRouteExposure=.05);
+ assert.equal(check(reversedEscape).accepted,false,'Increasing exit-centre pressure cannot hide a weaker approach');
+});
+
+test('Default difficulty report covers all nine chapters and rejects missing late evidence',()=>{
+ const base=auditDifficulty(campaignStages.find(d=>d.id==='01-05')!);
+ const rows=Array.from({length:9},(_,i)=>Array.from({length:5},(_,j)=>({...base,id:`0${i+1}-0${j+1}`,chapter:i+1,guardCoverage:(i+1)/10,safeRouteExposure:(i+1)/10,objectivePressure:(i+1)/10,cctvCoverage:(i+1)/10,escapePressure:(i+1)/10,escapeRouteExposure:(i+1)/10}))).flat();
+ const result=chapterOrderingAcceptance(rows);
+ assert.equal(result.evidence.length,9);assert(result.accepted);
+ assert(result.findings.every(f=>f.comparisons.length===8));
+ assert(!chapterOrderingAcceptance(rows.filter(r=>r.chapter<=3)).accepted);
+ const reversed=structuredClone(rows);reversed.filter(r=>r.chapter===9).forEach(r=>r.escapePressure=.05);
+ const exit=chapterOrderingAcceptance(reversed).findings.find(f=>f.axis==='escapePressure')!;
+ assert(!exit.accepted&&!exit.comparisons.at(-1)!.ordered,'late exit dip is not hidden by early chapter checks');
+ assert.throws(()=>chapterOrderingAcceptance(rows,[1,1,3]));
+ assert.throws(()=>chapterOrderingAcceptance(rows,[]));
 });

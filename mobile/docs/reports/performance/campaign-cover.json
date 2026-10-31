@@ -1,0 +1,1861 @@
+{
+  "method": "Identical 32 fixed-route + 8 cone-aware continuous heists per mission and version, actual 60Hz production simulation. No forced alerts/teleports/immunity. Scripted proxies, not human success rates or clear times. Additional witnesses are listed separately, not included in the comparison rates.",
+  "humanPlaytestVerified": false,
+  "rows": [
+    {
+      "id": "01-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Arcade Column North",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Ambulatory Case",
+          "longestUnwatchedSeconds": 26.4
+        },
+        {
+          "structure": "Rotunda Statue",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 6,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 6,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 25.6
+      }
+    },
+    {
+      "id": "01-03",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "Workspace Cabinet",
+          "longestUnwatchedSeconds": 12.2
+        },
+        {
+          "structure": "Stacks Column",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 6,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 10,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 33.9
+      }
+    },
+    {
+      "id": "01-04",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "Security Desk",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Lobby Screen",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 18,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 19,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 23.2
+      }
+    },
+    {
+      "id": "01-05",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Exhibition Column East",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Exhibition Column West",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Side Exhibition Wall",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 10,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 11,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 26.6
+      }
+    },
+    {
+      "id": "02-01",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "Island Sculpture",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Curator Plinth",
+          "longestUnwatchedSeconds": 14.8
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 16,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 18,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 23.6
+      }
+    },
+    {
+      "id": "02-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Studio Colossus",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Studio Screen",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Island Sculpture East",
+          "longestUnwatchedSeconds": 38.2
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 10,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 11,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 27.9
+      }
+    },
+    {
+      "id": "02-03",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "Bay Sculpture",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "South Lane Art Wall",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 14,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 21,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 33
+      }
+    },
+    {
+      "id": "02-04",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "West Art Wall",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "East Sculpture",
+          "longestUnwatchedSeconds": 30.5
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 14,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 14,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 41.5
+      }
+    },
+    {
+      "id": "02-05",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "Main Installation",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Hall Art Wall",
+          "longestUnwatchedSeconds": 4
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 10,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 10,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 28.3
+      }
+    },
+    {
+      "id": "03-01",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Staff Exit Column",
+          "longestUnwatchedSeconds": 10.7
+        },
+        {
+          "structure": "Teller Partition West",
+          "longestUnwatchedSeconds": 8.4
+        },
+        {
+          "structure": "Hall Column",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 5,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 4,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 3,
+        "delay": 4,
+        "clear": true,
+        "caught": false,
+        "time": 19.5
+      }
+    },
+    {
+      "id": "03-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Pool Deposit Island",
+          "longestUnwatchedSeconds": 6.3
+        },
+        {
+          "structure": "Stairs Column",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Cubicle Partition West",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 4,
+        "clear": true,
+        "caught": false,
+        "time": 34.9
+      }
+    },
+    {
+      "id": "03-03",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Sorting Column",
+          "longestUnwatchedSeconds": 21.5
+        },
+        {
+          "structure": "Counting Machine",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Sorting Partition",
+          "longestUnwatchedSeconds": 5.3
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 12,
+          "fixedRuns": 32,
+          "observerClears": 7,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 12,
+          "fixedRuns": 32,
+          "observerClears": 7,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 29.7
+      }
+    },
+    {
+      "id": "03-04",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Exit Column",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Hall Scanner",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Anteroom Column",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 3,
+        "delay": 4,
+        "clear": true,
+        "caught": false,
+        "time": 23.4
+      }
+    },
+    {
+      "id": "03-05",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Corridor Wall West",
+          "longestUnwatchedSeconds": 15.8
+        },
+        {
+          "structure": "Hall Scanner",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Deposit Table",
+          "longestUnwatchedSeconds": 42.3
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 15,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 6,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 38.9
+      }
+    },
+    {
+      "id": "04-01",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Lab Centrifuge Bench",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Hall Test Machine",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Corridor Console",
+          "longestUnwatchedSeconds": 12.9
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 5,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 4,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 31.2
+      }
+    },
+    {
+      "id": "04-02",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "West Gallery wall / outer corner",
+          "longestUnwatchedSeconds": 23.6
+        },
+        {
+          "structure": "West Gallery wall / inner corner",
+          "longestUnwatchedSeconds": 2.2
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 6,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 1,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 26.8
+      }
+    },
+    {
+      "id": "04-03",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Lane Mobile Screen",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Reception Screen",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "South Lane Gas Rack",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 5,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 5,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 12,
+        "clear": true,
+        "caught": false,
+        "time": 40.1
+      }
+    },
+    {
+      "id": "04-04",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Prep Centrifuge Bench",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Coolant Passage Monitor Station",
+          "longestUnwatchedSeconds": 27.6
+        },
+        {
+          "structure": "Cryo Bank West 1",
+          "longestUnwatchedSeconds": 28.8
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 36.8
+      }
+    },
+    {
+      "id": "04-05",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Passage Console",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Passage Cryo East",
+          "longestUnwatchedSeconds": 28
+        },
+        {
+          "structure": "Prototype Test Rig",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 5,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 4,
+        "clear": true,
+        "caught": false,
+        "time": 34.4
+      }
+    },
+    {
+      "id": "05-01",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Staff Exit Column",
+          "longestUnwatchedSeconds": 11
+        },
+        {
+          "structure": "Cashier Partition West",
+          "longestUnwatchedSeconds": 8.6
+        },
+        {
+          "structure": "Hall Column",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 4,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 4,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 3,
+        "delay": 4,
+        "clear": true,
+        "caught": false,
+        "time": 19.5
+      }
+    },
+    {
+      "id": "05-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Pool Chip Island",
+          "longestUnwatchedSeconds": 6.4
+        },
+        {
+          "structure": "Stairs Column",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Cubicle Partition West",
+          "longestUnwatchedSeconds": 25.3
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 6,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 38.9
+      }
+    },
+    {
+      "id": "05-03",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Exit Column",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Hall Slot Bank",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Anteroom Column",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 4,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 4,
+          "fixedRuns": 32,
+          "observerClears": 1,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 32.1
+      }
+    },
+    {
+      "id": "05-04",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Sorting Column",
+          "longestUnwatchedSeconds": 19.9
+        },
+        {
+          "structure": "Sorting Partition",
+          "longestUnwatchedSeconds": 5.4
+        },
+        {
+          "structure": "Counting Machine",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 9,
+          "fixedRuns": 32,
+          "observerClears": 5,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 10,
+          "fixedRuns": 32,
+          "observerClears": 7,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 29.4
+      }
+    },
+    {
+      "id": "05-05",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Corridor Wall West",
+          "longestUnwatchedSeconds": 16
+        },
+        {
+          "structure": "Hall Slot Bank",
+          "longestUnwatchedSeconds": 10.2
+        },
+        {
+          "structure": "Stair Wall South",
+          "longestUnwatchedSeconds": 10.3
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 3,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 30.3
+      }
+    },
+    {
+      "id": "06-01",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "Island Sculpture",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Curator Plinth",
+          "longestUnwatchedSeconds": 12.4
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 14,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 12,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 23.7
+      }
+    },
+    {
+      "id": "06-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "South Ring Sculpture",
+          "longestUnwatchedSeconds": 33.8
+        },
+        {
+          "structure": "Studio Screen",
+          "longestUnwatchedSeconds": 30.8
+        },
+        {
+          "structure": "Dock Art Wall",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 27.9
+      }
+    },
+    {
+      "id": "06-03",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Stored Art Wall",
+          "longestUnwatchedSeconds": 6
+        },
+        {
+          "structure": "South Lane Art Wall",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Bay Sculpture",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 6,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 8,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 32.5
+      }
+    },
+    {
+      "id": "06-04",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "West Art Wall",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Forecourt Art Wall",
+          "longestUnwatchedSeconds": 17.8
+        },
+        {
+          "structure": "Movable Wall South",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 5,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 41.1
+      }
+    },
+    {
+      "id": "06-05",
+      "checkpoints": 2,
+      "windows": [
+        {
+          "structure": "Main Installation",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Hall Art Wall",
+          "longestUnwatchedSeconds": 4.5
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 7,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 28.2
+      }
+    },
+    {
+      "id": "07-01",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Long Display Case",
+          "longestUnwatchedSeconds": 19.1
+        },
+        {
+          "structure": "Collection Wall",
+          "longestUnwatchedSeconds": 34
+        },
+        {
+          "structure": "Side Wall",
+          "longestUnwatchedSeconds": 3.7
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 8,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 25.2
+      }
+    },
+    {
+      "id": "07-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Arcade Column North",
+          "longestUnwatchedSeconds": 26
+        },
+        {
+          "structure": "Freight Hall Crate Stack",
+          "longestUnwatchedSeconds": 19.6
+        },
+        {
+          "structure": "Rotunda Statue",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 6,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 0,
+          "fixedRuns": 32,
+          "observerClears": 8,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "delay": 0,
+        "patience": 3,
+        "clear": true,
+        "caught": false,
+        "time": 44.5
+      }
+    },
+    {
+      "id": "07-03",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Reading Table West",
+          "longestUnwatchedSeconds": 11.6
+        },
+        {
+          "structure": "Conservation Workbench",
+          "longestUnwatchedSeconds": 7.7
+        },
+        {
+          "structure": "Reading Table East",
+          "longestUnwatchedSeconds": 11.2
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 41.8
+      }
+    },
+    {
+      "id": "07-04",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Security Desk",
+          "longestUnwatchedSeconds": 21.3
+        },
+        {
+          "structure": "Passage Lockers",
+          "longestUnwatchedSeconds": 13.5
+        },
+        {
+          "structure": "Lobby Screen",
+          "longestUnwatchedSeconds": 16.9
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 9,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 9,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 4,
+        "clear": true,
+        "caught": false,
+        "time": 27.2
+      }
+    },
+    {
+      "id": "07-05",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Exhibition Column West",
+          "longestUnwatchedSeconds": 24.5
+        },
+        {
+          "structure": "Exhibition Column East",
+          "longestUnwatchedSeconds": 21.9
+        },
+        {
+          "structure": "Side Exhibition Wall",
+          "longestUnwatchedSeconds": 26.2
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 3,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 21.2
+      }
+    },
+    {
+      "id": "08-01",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Lab Centrifuge Bench",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Reception Mobile Screen",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Hall Test Machine",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 1,
+        "escape": 0,
+        "mode": 3,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 18.5
+      }
+    },
+    {
+      "id": "08-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "West Gallery wall / outer corner",
+          "longestUnwatchedSeconds": 23.5
+        },
+        {
+          "structure": "West Gallery wall / inner corner",
+          "longestUnwatchedSeconds": 2.2
+        },
+        {
+          "structure": "East Test Machine",
+          "longestUnwatchedSeconds": 13.1
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 1,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 26.8
+      }
+    },
+    {
+      "id": "08-03",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Lane Mobile Screen",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Lane Screen East",
+          "longestUnwatchedSeconds": 12.4
+        },
+        {
+          "structure": "Reception Screen",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 12,
+        "clear": true,
+        "caught": false,
+        "time": 40.1
+      }
+    },
+    {
+      "id": "08-04",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Prep Centrifuge Bench",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Passage Security Desk",
+          "longestUnwatchedSeconds": 22
+        },
+        {
+          "structure": "Cryo Bank West 2",
+          "longestUnwatchedSeconds": 24
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 4,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 8,
+        "clear": true,
+        "caught": false,
+        "time": 36.8
+      }
+    },
+    {
+      "id": "08-05",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Passage Console",
+          "longestUnwatchedSeconds": 27.4
+        },
+        {
+          "structure": "Passage Cryo East",
+          "longestUnwatchedSeconds": 16.1
+        },
+        {
+          "structure": "Passage Cryo East",
+          "longestUnwatchedSeconds": 26.5
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 0,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 3,
+        "delay": 9,
+        "clear": true,
+        "caught": false,
+        "time": 29.1
+      }
+    },
+    {
+      "id": "09-01",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Hall Blast Screen",
+          "longestUnwatchedSeconds": 21.4
+        },
+        {
+          "structure": "North Black Cases",
+          "longestUnwatchedSeconds": 4.7
+        },
+        {
+          "structure": "Core Gold Bars",
+          "longestUnwatchedSeconds": 2.9
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 5,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 7,
+          "fixedRuns": 32,
+          "observerClears": 3,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 2,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 26.7
+      }
+    },
+    {
+      "id": "09-02",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Passage Blast Screen",
+          "longestUnwatchedSeconds": 7.1
+        },
+        {
+          "structure": "Hall Case Stack",
+          "longestUnwatchedSeconds": 21.2
+        },
+        {
+          "structure": "Hall Armoured Crate",
+          "longestUnwatchedSeconds": 15.3
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 1,
+          "fixedRuns": 32,
+          "observerClears": 1,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 2,
+          "fixedRuns": 32,
+          "observerClears": 1,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 3,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 16.6
+      }
+    },
+    {
+      "id": "09-03",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Loading Gold Pallet",
+          "longestUnwatchedSeconds": 17.3
+        },
+        {
+          "structure": "Loading Cash Table",
+          "longestUnwatchedSeconds": 180
+        },
+        {
+          "structure": "Hall Gold Bars",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 0,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 0,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 1,
+        "escape": 0,
+        "mode": 3,
+        "delay": 7,
+        "clear": true,
+        "caught": false,
+        "time": 25.6
+      }
+    },
+    {
+      "id": "09-04",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Pump Armoured Crate",
+          "longestUnwatchedSeconds": 9.9
+        },
+        {
+          "structure": "North Gold Bars",
+          "longestUnwatchedSeconds": 23.3
+        },
+        {
+          "structure": "Gallery Case Stack",
+          "longestUnwatchedSeconds": 180
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 3,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 4,
+          "fixedRuns": 32,
+          "observerClears": 2,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 0,
+        "escape": 0,
+        "mode": 3,
+        "delay": 0,
+        "clear": true,
+        "caught": false,
+        "time": 16
+      }
+    },
+    {
+      "id": "09-05",
+      "checkpoints": 3,
+      "windows": [
+        {
+          "structure": "Stair Armoured Crate",
+          "longestUnwatchedSeconds": 20.3
+        },
+        {
+          "structure": "Wing Case Stack",
+          "longestUnwatchedSeconds": 18.3
+        },
+        {
+          "structure": "Checkpoint Cash Table",
+          "longestUnwatchedSeconds": 26.3
+        }
+      ],
+      "compare": [
+        {
+          "name": "before",
+          "fixedClears": 0,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        },
+        {
+          "name": "after",
+          "fixedClears": 0,
+          "fixedRuns": 32,
+          "observerClears": 0,
+          "observerRuns": 8
+        }
+      ],
+      "witness": {
+        "approach": 1,
+        "escape": 1,
+        "mode": 1,
+        "delay": 9,
+        "clear": true,
+        "caught": false,
+        "time": 75.4
+      }
+    }
+  ]
+}

@@ -7,6 +7,8 @@ export interface EnvironmentAsset {
   losBehavior:'BLOCK'|'BREAKER'|'PASS';
   defaultScale:number;drawWidth:number;drawHeight:number;status:string;
   objectBounds?:{x:number;y:number;w:number;h:number};
+  /** Existing manifest provenance, preserved when authoring metadata is synchronized. */
+  source?:{kind:string;path:string;rect?:{x:number;y:number;w:number;h:number}};
 }
 export interface EnvironmentManifest {
   schemaVersion:number;units:{footprint:string;tileWorldUnits:number};assets:EnvironmentAsset[];

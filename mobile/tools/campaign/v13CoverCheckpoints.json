@@ -1,0 +1,213 @@
+{
+  "01-02": [
+    {"structure":"Arcade Column North","guard":1,"stop":1,"post":{"x":7.1,"y":9.8},"hidden":{"x":4.33,"y":11.8},"exposed":{"x":4.33,"y":11.08},"look":{"x":4.510229,"y":11.314294}},
+    {"structure":"Ambulatory Case","guard":0,"stop":1,"post":{"x":12.5,"y":10.25},"hidden":{"x":10.75,"y":7.9},"exposed":{"x":10.75,"y":9.35},"look":{"x":10.211009,"y":8.310794}},
+    {"structure":"Rotunda Statue","guard":0,"stop":0,"post":{"x":9.7,"y":13.98},"hidden":{"x":12.5,"y":15.51},"exposed":{"x":11.87,"y":15.51},"look":{"x":12.246362,"y":15.566203}}
+  ],
+  "01-03": [
+    {"structure":"Workspace Cabinet","guard":0,"stop":0,"post":{"x":6.84,"y":7.72},"hidden":{"x":9.52,"y":8.99},"exposed":{"x":8.56,"y":8.99},"look":{"x":9.414242,"y":9.260545}},
+    {"structure":"Stacks Column","guard":0,"stop":1,"post":{"x":7.556,"y":13.164},"hidden":{"x":6,"y":15.99},"exposed":{"x":6.72,"y":15.99},"look":{"x":6.400293,"y":15.932455}}
+  ],
+  "01-04": [
+    {"structure":"Security Desk","guard":0,"stop":2,"post":{"x":16.75,"y":15.25},"hidden":{"x":15.06,"y":13.01},"exposed":{"x":15.62,"y":13.01},"look":{"x":15.164628,"y":12.70312}},
+    {"structure":"Lobby Screen","guard":1,"stop":1,"post":{"x":20.5,"y":13.5},"hidden":{"x":21.24,"y":16.43},"exposed":{"x":21.79,"y":15.88},"look":{"x":21.59055,"y":16.294763}}
+  ],
+  "01-05": [
+    {"structure":"Exhibition Column East","guard":0,"stop":0,"post":{"x":16.5,"y":5.75},"hidden":{"x":15.86,"y":2.93},"exposed":{"x":16.77,"y":2.93},"look":{"x":16.308556,"y":2.756115}},
+    {"structure":"Exhibition Column West","guard":0,"stop":1,"post":{"x":7,"y":5.75},"hidden":{"x":8.5,"y":2.93},"exposed":{"x":7.78,"y":2.93},"look":{"x":8.110952,"y":2.963284}},
+    {"structure":"Side Exhibition Wall","guard":2,"stop":1,"post":{"x":15.5,"y":12.11},"hidden":{"x":16.9,"y":14},"exposed":{"x":15.65,"y":14},"look":{"x":16.552256,"y":14.919405}}
+  ],
+  "02-01": [
+    {"structure":"Island Sculpture","guard":0,"stop":0,"post":{"x":13.5,"y":5.2},"hidden":{"x":11.96,"y":7.785},"exposed":{"x":11.96,"y":7.015},"look":{"x":11.755798,"y":7.640852}},
+    {"structure":"Curator Plinth","guard":1,"stop":1,"post":{"x":19.325,"y":8.035},"hidden":{"x":18.65,"y":4.76},"exposed":{"x":18.1,"y":5.31},"look":{"x":18.401638,"y":5.180634}}
+  ],
+  "02-02": [
+    {"structure":"Studio Colossus","guard":0,"stop":1,"post":{"x":12.5,"y":17.75},"hidden":{"x":14.4,"y":15.05},"exposed":{"x":14.4,"y":16.65},"look":{"x":14.712992,"y":15.724496}},
+    {"structure":"Studio Screen","guard":0,"stop":4,"post":{"x":13,"y":10},"hidden":{"x":11.34,"y":7.73},"exposed":{"x":12.18,"y":7.73},"look":{"x":11.590694,"y":7.351632}},
+    {"structure":"Island Sculpture East","guard":0,"stop":3,"post":{"x":16.77,"y":13.545},"hidden":{"x":14.9,"y":11.25},"exposed":{"x":16.35,"y":11.25},"look":{"x":15.512965,"y":10.821057}}
+  ],
+  "02-03": [
+    {"structure":"Bay Sculpture","guard":0,"stop":1,"post":{"x":16.7,"y":1.98},"hidden":{"x":19.5,"y":3.51},"exposed":{"x":18.87,"y":3.51},"look":{"x":19.246362,"y":3.566203}},
+    {"structure":"South Lane Art Wall","guard":0,"stop":0,"post":{"x":15.044,"y":8.744},"hidden":{"x":15.83,"y":11.235},"exposed":{"x":14.51,"y":11.235},"look":{"x":15.185656,"y":11.740654}}
+  ],
+  "02-04": [
+    {"structure":"West Art Wall","guard":0,"stop":0,"post":{"x":2.25,"y":12.1},"hidden":{"x":3.66,"y":14.57},"exposed":{"x":2.27,"y":14.57},"look":{"x":3.031104,"y":14.996528}},
+    {"structure":"East Sculpture","guard":0,"stop":1,"post":{"x":20.7,"y":13.5},"hidden":{"x":18.005,"y":12.18},"exposed":{"x":18.995,"y":12.18},"look":{"x":18.153669,"y":11.913747}}
+  ],
+  "02-05": [
+    {"structure":"Main Installation","guard":0,"stop":0,"post":{"x":11.7,"y":5.2},"hidden":{"x":13.65,"y":3.29},"exposed":{"x":12.8,"y":3.29},"look":{"x":13.537315,"y":2.828445}},
+    {"structure":"Hall Art Wall","guard":0,"stop":1,"post":{"x":14.5,"y":8},"hidden":{"x":16.73,"y":10.32},"exposed":{"x":16.73,"y":9.48},"look":{"x":16.803098,"y":9.92243}}
+  ],
+  "03-01": [
+    {"structure":"Staff Exit Column","guard":2,"stop":0,"post":{"x":19.5,"y":10.6},"hidden":{"x":22.55,"y":8.5},"exposed":{"x":20.45,"y":8.5},"look":{"x":21.424203,"y":8.298382}},
+    {"structure":"Teller Partition West","guard":1,"stop":0,"post":{"x":3,"y":10.75},"hidden":{"x":6.55,"y":9.425},"exposed":{"x":6.55,"y":10.325},"look":{"x":5.915301,"y":10.042171}},
+    {"structure":"Hall Column","guard":0,"stop":0,"post":{"x":6.5,"y":15.25},"hidden":{"x":8.75,"y":18.2},"exposed":{"x":7.45,"y":18.2},"look":{"x":7.889506,"y":17.908811}}
+  ],
+  "03-02": [
+    {"structure":"Pool Deposit Island","guard":1,"stop":0,"post":{"x":12.75,"y":9.25},"hidden":{"x":11.3,"y":12.99},"exposed":{"x":12.3,"y":12.99},"look":{"x":12.022908,"y":12.160556}},
+    {"structure":"Stairs Column","guard":2,"stop":0,"post":{"x":2.5,"y":16},"hidden":{"x":4.95,"y":18.95},"exposed":{"x":4.95,"y":18.275},"look":{"x":4.561852,"y":18.179166}},
+    {"structure":"Cubicle Partition West","guard":0,"stop":0,"post":{"x":8.5,"y":6.25},"hidden":{"x":11.5,"y":3.775},"exposed":{"x":12.05,"y":4.4125},"look":{"x":11.003261,"y":4.596614}}
+  ],
+  "03-03": [
+    {"structure":"Sorting Column","guard":0,"stop":1,"post":{"x":14.5,"y":4.25},"hidden":{"x":17.5,"y":2.05},"exposed":{"x":16.75,"y":2.05},"look":{"x":16.787834,"y":2.309429}},
+    {"structure":"Counting Machine","guard":1,"stop":0,"post":{"x":8.5,"y":13.75},"hidden":{"x":7.25,"y":16.53},"exposed":{"x":7.25,"y":15.98},"look":{"x":7.150105,"y":16.429138}},
+    {"structure":"Sorting Partition","guard":0,"stop":0,"post":{"x":7.5,"y":4.25},"hidden":{"x":8.25,"y":2.355},"exposed":{"x":6.95,"y":2.355},"look":{"x":7.641525,"y":1.25334}}
+  ],
+  "03-04": [
+    {"structure":"Exit Column","guard":2,"stop":0,"post":{"x":3.6,"y":4.3},"hidden":{"x":3.95,"y":2.0},"exposed":{"x":3.15,"y":2},"look":{"x":3.53671,"y":1.300668}},
+    {"structure":"Hall Scanner","guard":0,"stop":0,"post":{"x":8.5,"y":14.75},"hidden":{"x":10.04,"y":17.46},"exposed":{"x":9.08,"y":17.46},"look":{"x":9.567484,"y":17.553654}},
+    {"structure":"Anteroom Column","guard":1,"stop":0,"post":{"x":21.2,"y":7.75},"hidden":{"x":19.25,"y":10.5},"exposed":{"x":19.25,"y":9.5},"look":{"x":19.203641,"y":9.989319}}
+  ],
+  "03-05": [
+    {"structure":"Corridor Wall West","guard":1,"stop":0,"post":{"x":12.75,"y":7.75},"hidden":{"x":10.75,"y":9.75},"exposed":{"x":12.05,"y":9.75},"look":{"x":11.153808,"y":10.290112}},
+    {"structure":"Hall Scanner","guard":0,"stop":0,"post":{"x":9.5,"y":13},"hidden":{"x":12.54,"y":15.46},"exposed":{"x":11.03,"y":15.46},"look":{"x":11.485888,"y":15.248611}},
+    {"structure":"Deposit Table","guard":3,"stop":1,"post":{"x":3.5,"y":8},"hidden":{"x":1.95,"y":4.95},"exposed":{"x":1.95,"y":5.75},"look":{"x":1.966075,"y":5.421808}}
+  ],
+  "04-01": [
+    {"structure":"Lab Centrifuge Bench","guard":0,"stop":0,"post":{"x":8.9,"y":12.3},"hidden":{"x":10.1375,"y":9.85},"exposed":{"x":9.325,"y":9.85},"look":{"x":9.842961,"y":9.452049}},
+    {"structure":"Hall Test Machine","guard":2,"stop":2,"post":{"x":22,"y":9.3},"hidden":{"x":20.125,"y":12.0125},"exposed":{"x":20.75,"y":12.0125},"look":{"x":20.513724,"y":11.905952}},
+    {"structure":"Corridor Console","guard":1,"stop":0,"post":{"x":1.8,"y":8.9},"hidden":{"x":3.275,"y":11.5},"exposed":{"x":2.6,"y":11.5},"look":{"x":2.988303,"y":11.654621}}
+  ],
+  "04-02": [
+    {"structure":"West Gallery wall / outer corner","guard":0,"stop":3,"post":{"x":4.75,"y":8.25},"hidden":{"x":2.4,"y":10.5},"exposed":{"x":2.4,"y":8.3},"look":{"x":1.978096,"y":9.39741},"wall":true},
+    {"structure":"West Gallery wall / inner corner","guard":0,"stop":0,"post":{"x":1.75,"y":8.25},"hidden":{"x":4.6,"y":10},"exposed":{"x":4.6,"y":8.4},"look":{"x":4.614561,"y":9.141229},"wall":true}
+  ],
+  "04-03": [
+    {"structure":"Lane Mobile Screen","guard":1,"stop":0,"post":{"x":12.5,"y":10.9},"hidden":{"x":10.954,"y":8.996},"exposed":{"x":10.954,"y":9.648},"look":{"x":10.377309,"y":8.780051}},
+    {"structure":"Reception Screen","guard":0,"stop":0,"post":{"x":9,"y":17.75},"hidden":{"x":12,"y":19.725},"exposed":{"x":10.5,"y":19.725},"look":{"x":11.191528,"y":19.798709}},
+    {"structure":"South Lane Gas Rack","guard":1,"stop":1,"post":{"x":18,"y":10.9},"hidden":{"x":18.55,"y":13.415},"exposed":{"x":19.1,"y":13.415},"look":{"x":18.926032,"y":13.7535}}
+  ],
+  "04-04": [
+    {"structure":"Prep Centrifuge Bench","guard":1,"stop":1,"post":{"x":16.25,"y":16.25},"hidden":{"x":13,"y":13.99},"exposed":{"x":13.575,"y":13.99},"look":{"x":13.870056,"y":14.423564}},
+    {"structure":"Coolant Passage Monitor Station","guard":3,"stop":3,"post":{"x":12,"y":19.5},"hidden":{"x":9,"y":18.425},"exposed":{"x":9,"y":19.4},"look":{"x":9.053253,"y":18.937253}},
+    {"structure":"Cryo Bank West 1","guard":0,"stop":0,"post":{"x":4.45,"y":8.635},"hidden":{"x":5.75,"y":9.81959},"exposed":{"x":5.00003,"y":9.81959},"look":{"x":6.225321,"y":11.053313}}
+  ],
+  "04-05": [
+    {"structure":"Passage Console","guard":2,"stop":3,"post":{"x":9.5,"y":20.9},"hidden":{"x":7.65,"y":19.05},"exposed":{"x":7.65,"y":19.725},"look":{"x":7.159054,"y":19.023842}},
+    {"structure":"Passage Cryo East","guard":2,"stop":0,"post":{"x":16.2,"y":17.9},"hidden":{"x":14.8,"y":20.4},"exposed":{"x":16,"y":20.4},"look":{"x":15.327324,"y":20.770268}},
+    {"structure":"Prototype Test Rig","guard":3,"stop":2,"post":{"x":20.5,"y":3.5},"hidden":{"x":17.7,"y":4.8},"exposed":{"x":18.475,"y":4.8},"look":{"x":17.871133,"y":4.945358}}
+  ],
+  "05-01": [
+    {"structure":"Staff Exit Column","guard":2,"stop":0,"post":{"x":6.5,"y":10.6},"hidden":{"x":3.4625,"y":8.5275},"exposed":{"x":5.5375,"y":8.5275},"look":{"x":4.559532,"y":8.312079}},
+    {"structure":"Cashier Partition West","guard":1,"stop":0,"post":{"x":23,"y":10.75},"hidden":{"x":19.45,"y":9.425},"exposed":{"x":19.45,"y":10.325},"look":{"x":20.084699,"y":10.042171}},
+    {"structure":"Hall Column","guard":0,"stop":0,"post":{"x":19.5,"y":15.25},"hidden":{"x":17.25,"y":18.2},"exposed":{"x":18.55,"y":18.2},"look":{"x":18.110494,"y":17.908811}}
+  ],
+  "05-02": [
+    {"structure":"Pool Chip Island","guard":1,"stop":0,"post":{"x":11.25,"y":9.25},"hidden":{"x":12.7,"y":12.9889},"exposed":{"x":11.9608,"y":12.9889},"look":{"x":12.075931,"y":12.134066}},
+    {"structure":"Stairs Column","guard":2,"stop":0,"post":{"x":21.5,"y":16},"hidden":{"x":19.05,"y":18.95},"exposed":{"x":19.05,"y":18.275},"look":{"x":19.438148,"y":18.179166}},
+    {"structure":"Cubicle Partition West","guard":0,"stop":0,"post":{"x":15.5,"y":6.25},"hidden":{"x":11.95,"y":3.775},"exposed":{"x":11.95,"y":4.4125},"look":{"x":12.931874,"y":4.699282}}
+  ],
+  "05-03": [
+    {"structure":"Exit Column","guard":2,"stop":0,"post":{"x":21.4,"y":4.3},"hidden":{"x":21.05,"y":2.0},"exposed":{"x":21.85,"y":2},"look":{"x":21.46329,"y":1.300668}},
+    {"structure":"Hall Slot Bank","guard":0,"stop":0,"post":{"x":16.5,"y":14.75},"hidden":{"x":14.846,"y":17.4576},"exposed":{"x":15.692,"y":17.4576},"look":{"x":15.278935,"y":17.490256}},
+    {"structure":"Anteroom Column","guard":1,"stop":0,"post":{"x":3.8,"y":7.75},"hidden":{"x":5.7375,"y":10.4725},"exposed":{"x":5.7375,"y":9.5},"look":{"x":5.794691,"y":9.990805}}
+  ],
+  "05-04": [
+    {"structure":"Sorting Column","guard":0,"stop":1,"post":{"x":10.5,"y":4.25},"hidden":{"x":7.5125,"y":2.0775},"exposed":{"x":8.24375,"y":2.0775},"look":{"x":8.200877,"y":2.322817}},
+    {"structure":"Sorting Partition","guard":0,"stop":0,"post":{"x":17.5,"y":4.25},"hidden":{"x":16.75,"y":2.355},"exposed":{"x":18.05,"y":2.355},"look":{"x":17.358475,"y":1.25334}},
+    {"structure":"Counting Machine","guard":1,"stop":0,"post":{"x":16.5,"y":13.75},"hidden":{"x":17.2,"y":16.4325},"exposed":{"x":17.75,"y":15.8825},"look":{"x":17.648114,"y":16.521612}}
+  ],
+  "05-05": [
+    {"structure":"Corridor Wall West","guard":1,"stop":0,"post":{"x":14.25,"y":7.75},"hidden":{"x":16.25,"y":9.725},"exposed":{"x":14.95,"y":9.725},"look":{"x":15.859165,"y":10.281914}},
+    {"structure":"Hall Slot Bank","guard":0,"stop":1,"post":{"x":9.5,"y":15.5},"hidden":{"x":13.5,"y":13.3424},"exposed":{"x":11.258,"y":13.3424},"look":{"x":11.812049,"y":13.588344}},
+    {"structure":"Stair Wall South","guard":2,"stop":0,"post":{"x":5,"y":13.3},"hidden":{"x":2.45,"y":11.275},"exposed":{"x":2.45,"y":11.9125},"look":{"x":2.498416,"y":11.644078}}
+  ],
+  "06-01": [
+    {"structure":"Island Sculpture","guard":0,"stop":0,"post":{"x":11.75,"y":4.75},"hidden":{"x":14.7925,"y":7.68875},"exposed":{"x":14.7925,"y":7.11125},"look":{"x":14.017202,"y":6.714636}},
+    {"structure":"Curator Plinth","guard":3,"stop":1,"post":{"x":7.675,"y":8.635},"hidden":{"x":8.18125,"y":4.89125},"exposed":{"x":8.73125,"y":5.44125},"look":{"x":8.349889,"y":5.711898}}
+  ],
+  "06-02": [
+    {"structure":"South Ring Sculpture","guard":2,"stop":1,"post":{"x":4,"y":18},"hidden":{"x":7.30625,"y":15.13125},"exposed":{"x":7.30625,"y":15.721875},"look":{"x":6.371819,"y":16.163025}},
+    {"structure":"Studio Screen","guard":0,"stop":4,"post":{"x":12,"y":10},"hidden":{"x":13.66,"y":7.73},"exposed":{"x":12.82,"y":7.73},"look":{"x":13.409306,"y":7.351632}},
+    {"structure":"Dock Art Wall","guard":0,"stop":1,"post":{"x":13.62,"y":16.62},"hidden":{"x":15.82,"y":17.59},"exposed":{"x":14.14,"y":17.59},"look":{"x":15.821223,"y":18.658288}}
+  ],
+  "06-03": [
+    {"structure":"Stored Art Wall","guard":1,"stop":1,"post":{"x":15,"y":12.5},"hidden":{"x":15.8,"y":16.8},"exposed":{"x":16.35,"y":16.8},"look":{"x":15.724979,"y":15.411083}},
+    {"structure":"South Lane Art Wall","guard":0,"stop":0,"post":{"x":10.75,"y":7.5},"hidden":{"x":9.17,"y":11.235},"exposed":{"x":10.49,"y":11.235},"look":{"x":10.051914,"y":10.417649}},
+    {"structure":"Bay Sculpture","guard":0,"stop":1,"post":{"x":8.3,"y":1.98},"hidden":{"x":4.555,"y":3.265},"exposed":{"x":5.5,"y":3.265},"look":{"x":5.514446,"y":3.093862}}
+  ],
+  "06-04": [
+    {"structure":"West Art Wall","guard":0,"stop":0,"post":{"x":24.75,"y":12.1},"hidden":{"x":23.34,"y":14.57},"exposed":{"x":24.73,"y":14.57},"look":{"x":23.968896,"y":14.996528}},
+    {"structure":"Forecourt Art Wall","guard":1,"stop":0,"post":{"x":12.5,"y":12},"hidden":{"x":15.03,"y":15.295},"exposed":{"x":15.03,"y":13.705},"look":{"x":14.685859,"y":14.054756}},
+    {"structure":"Movable Wall South","guard":0,"stop":1,"post":{"x":6.25,"y":12.1},"hidden":{"x":7.33,"y":8.465},"exposed":{"x":6.01,"y":8.465},"look":{"x":6.583622,"y":9.118608}}
+  ],
+  "06-05": [
+    {"structure":"Main Installation","guard":0,"stop":0,"post":{"x":14.3,"y":5.2},"hidden":{"x":11.5,"y":3.7337},"exposed":{"x":13.2017,"y":3.7337},"look":{"x":12.015484,"y":3.255524}},
+    {"structure":"Hall Art Wall","guard":0,"stop":1,"post":{"x":13.056,"y":8.344},"hidden":{"x":9.27,"y":9.9},"exposed":{"x":9.27,"y":8.93},"look":{"x":10.166094,"y":9.14926}}
+  ],
+  "07-01": [
+    {"structure":"Long Display Case","guard":0,"stop":1,"post":{"x":8.5,"y":15},"hidden":{"x":6.66,"y":18.24},"exposed":{"x":7.32,"y":18.24},"look":{"x":7.241554,"y":17.723291}},
+    {"structure":"Collection Wall","guard":3,"stop":4,"post":{"x":7.25,"y":11},"hidden":{"x":2.13,"y":9.6},"exposed":{"x":2.13,"y":10.605},"look":{"x":4.294243,"y":10.486675}},
+    {"structure":"Side Wall","guard":2,"stop":1,"post":{"x":20,"y":11},"hidden":{"x":15.91,"y":8.665},"exposed":{"x":15.91,"y":9.985},"look":{"x":17.215122,"y":9.884449}}
+  ],
+  "07-02": [
+    {"structure":"Arcade Column North","guard":1,"stop":1,"post":{"x":15.5,"y":9.5},"hidden":{"x":19.67,"y":12.07},"exposed":{"x":19.67,"y":11.26},"look":{"x":18.166709,"y":10.874287}},
+    {"structure":"Freight Hall Crate Stack","guard":3,"stop":1,"post":{"x":17.5,"y":8.25},"hidden":{"x":15.59,"y":13.12},"exposed":{"x":15.59,"y":12.57},"look":{"x":16.345504,"y":11.01896}},
+    {"structure":"Rotunda Statue","guard":0,"stop":0,"post":{"x":14.25,"y":12.25},"hidden":{"x":12.13,"y":15.51},"exposed":{"x":12.76,"y":15.51},"look":{"x":12.804756,"y":14.87893}}
+  ],
+  "07-03": [
+    {"structure":"Reading Table West","guard":1,"stop":1,"post":{"x":11.5,"y":5},"hidden":{"x":13.4,"y":2.2799},"exposed":{"x":12.3732,"y":2.2799},"look":{"x":12.83231,"y":2.312073}},
+    {"structure":"Conservation Workbench","guard":0,"stop":0,"post":{"x":15.75,"y":9},"hidden":{"x":14.29,"y":11.46},"exposed":{"x":14.29,"y":10.83},"look":{"x":14.044911,"y":11.468333}},
+    {"structure":"Reading Table East","guard":1,"stop":0,"post":{"x":2,"y":5},"hidden":{"x":6.5764,"y":3.9849},"exposed":{"x":6.5764,"y":4.9198},"look":{"x":4.979173,"y":4.647118}}
+  ],
+  "07-04": [
+    {"structure":"Security Desk","guard":0,"stop":2,"post":{"x":7.25,"y":15.25},"hidden":{"x":9.5,"y":12.89},"exposed":{"x":8.54,"y":12.89},"look":{"x":9.019589,"y":12.82749}},
+    {"structure":"Passage Lockers","guard":1,"stop":0,"post":{"x":5.5,"y":19},"hidden":{"x":9.55,"y":17.175},"exposed":{"x":9.55,"y":18.25},"look":{"x":8.363123,"y":18.104161}},
+    {"structure":"Lobby Screen","guard":3,"stop":1,"post":{"x":3.5,"y":13.5},"hidden":{"x":2.76,"y":16.43},"exposed":{"x":2.21,"y":15.88},"look":{"x":2.40945,"y":16.294763}}
+  ],
+  "07-05": [
+    {"structure":"Exhibition Column West","guard":0,"stop":1,"post":{"x":18,"y":5.75},"hidden":{"x":14.81,"y":3.47},"exposed":{"x":14.81,"y":4.51},"look":{"x":15.361011,"y":4.323208}},
+    {"structure":"Exhibition Column East","guard":0,"stop":0,"post":{"x":8.5,"y":5.75},"hidden":{"x":10.77,"y":4.2},"exposed":{"x":10.77,"y":5.29},"look":{"x":11.263745,"y":4.583074}},
+    {"structure":"Side Exhibition Wall","guard":3,"stop":1,"post":{"x":9.5,"y":12.11},"hidden":{"x":8.1,"y":14},"exposed":{"x":9.35,"y":14},"look":{"x":8.447744,"y":14.919405}}
+  ],
+  "08-01": [
+    {"structure":"Lab Centrifuge Bench","guard":0,"stop":1,"post":{"x":12.4,"y":12.3},"hidden":{"x":14.327525,"y":9.853575},"exposed":{"x":13.60505,"y":9.853575},"look":{"x":13.999916,"y":9.762232}},
+    {"structure":"Reception Mobile Screen","guard":0,"stop":0,"post":{"x":17.1,"y":12.3},"hidden":{"x":18.0838,"y":17.1054},"exposed":{"x":18.6338,"y":17.1054},"look":{"x":17.858041,"y":15.202649}},
+    {"structure":"Hall Test Machine","guard":2,"stop":2,"post":{"x":4,"y":9.3},"hidden":{"x":5.876325,"y":12.008025},"exposed":{"x":5.25265,"y":12.008025},"look":{"x":5.489581,"y":11.904064}}
+  ],
+  "08-02": [
+    {"structure":"West Gallery wall / outer corner","guard":0,"stop":3,"post":{"x":20.25,"y":8.25},"hidden":{"x":22.6,"y":10.5},"exposed":{"x":22.6,"y":8.3},"look":{"x":23.021904,"y":9.39741},"wall":true},
+    {"structure":"West Gallery wall / inner corner","guard":0,"stop":0,"post":{"x":23.25,"y":8.25},"hidden":{"x":20.4,"y":10},"exposed":{"x":20.4,"y":8.4},"look":{"x":20.385439,"y":9.141229},"wall":true},
+    {"structure":"East Test Machine","guard":3,"stop":1,"post":{"x":7.5,"y":14},"hidden":{"x":4.95265,"y":12.563},"exposed":{"x":4.95265,"y":13.671025},"look":{"x":4.653262,"y":13.053383}}
+  ],
+  "08-03": [
+    {"structure":"Lane Mobile Screen","guard":1,"stop":0,"post":{"x":13.5,"y":10.9},"hidden":{"x":15.046,"y":8.996},"exposed":{"x":15.046,"y":9.648},"look":{"x":15.622691,"y":8.780051}},
+    {"structure":"Lane Screen East","guard":3,"stop":1,"post":{"x":7,"y":13},"hidden":{"x":7.25,"y":9.025},"exposed":{"x":5.95,"y":9.025},"look":{"x":6.707304,"y":10.014313}},
+    {"structure":"Reception Screen","guard":0,"stop":0,"post":{"x":17,"y":17.75},"hidden":{"x":14,"y":19.725},"exposed":{"x":15.5,"y":19.725},"look":{"x":14.808472,"y":19.798709}}
+  ],
+  "08-04": [
+    {"structure":"Prep Centrifuge Bench","guard":1,"stop":0,"post":{"x":13.75,"y":16.25},"hidden":{"x":11,"y":13.9927},"exposed":{"x":12.0222,"y":13.9927},"look":{"x":11.665064,"y":14.092909}},
+    {"structure":"Passage Security Desk","guard":3,"stop":3,"post":{"x":12,"y":19.5},"hidden":{"x":15,"y":18.425},"exposed":{"x":15,"y":19.4},"look":{"x":14.946747,"y":18.937253}},
+    {"structure":"Cryo Bank West 2","guard":0,"stop":0,"post":{"x":21,"y":10.6},"hidden":{"x":15.45003,"y":8.952295},"exposed":{"x":15.45003,"y":9.81959},"look":{"x":18.068527,"y":9.962455}}
+  ],
+  "08-05": [
+    {"structure":"Passage Console","guard":2,"stop":3,"post":{"x":18.5,"y":20.9},"hidden":{"x":20.35,"y":19.05},"exposed":{"x":20.35,"y":19.725},"look":{"x":20.840946,"y":19.023842}},
+    {"structure":"Passage Cryo East","guard":2,"stop":0,"post":{"x":11.8,"y":17.9},"hidden":{"x":13.2,"y":20.4},"exposed":{"x":12,"y":20.4},"look":{"x":12.672676,"y":20.770268}},
+    {"structure":"Passage Cryo East","guard":3,"stop":1,"post":{"x":9,"y":18},"hidden":{"x":14.175,"y":20.4},"exposed":{"x":13.3,"y":20.4},"look":{"x":11.672449,"y":19.363091}}
+  ],
+  "09-01": [
+    {"structure":"Hall Blast Screen","guard":0,"stop":1,"post":{"x":13,"y":17.9},"hidden":{"x":8.94,"y":19.73},"exposed":{"x":10.06,"y":19.73},"look":{"x":10.353165,"y":19.312183}},
+    {"structure":"North Black Cases","guard":3,"stop":0,"post":{"x":15.5,"y":2.2},"hidden":{"x":10.75,"y":4.65},"exposed":{"x":11.5,"y":4.65},"look":{"x":12.885995,"y":3.672065}},
+    {"structure":"Core Gold Bars","guard":5,"stop":2,"post":{"x":18.5,"y":15.25},"hidden":{"x":16.5,"y":12.75},"exposed":{"x":17.25,"y":12.75},"look":{"x":16.883139,"y":12.722994}}
+  ],
+  "09-02": [
+    {"structure":"Passage Blast Screen","guard":4,"stop":1,"post":{"x":14.5,"y":19.9},"hidden":{"x":15.12,"y":17.47},"exposed":{"x":15.67,"y":17.47},"look":{"x":15.526632,"y":17.08113}},
+    {"structure":"Hall Case Stack","guard":0,"stop":0,"post":{"x":1.9,"y":9.8},"hidden":{"x":4.9,"y":8.3},"exposed":{"x":4.9,"y":8.9},"look":{"x":4.688709,"y":8.694061}},
+    {"structure":"Hall Armoured Crate","guard":0,"stop":1,"post":{"x":1.9,"y":2.2},"hidden":{"x":4.85,"y":4.88},"exposed":{"x":4.85,"y":4.32},"look":{"x":4.232146,"y":4.087087}}
+  ],
+  "09-03": [
+    {"structure":"Loading Gold Pallet","guard":4,"stop":0,"post":{"x":16.5,"y":17.9},"hidden":{"x":18,"y":20.61},"exposed":{"x":17.3,"y":20.61},"look":{"x":17.657997,"y":20.667498}},
+    {"structure":"Loading Cash Table","guard":4,"stop":1,"post":{"x":22,"y":17.9},"hidden":{"x":22.28,"y":20.435},"exposed":{"x":22.83,"y":20.435},"look":{"x":22.6348,"y":20.832069}},
+    {"structure":"Hall Gold Bars","guard":0,"stop":0,"post":{"x":19.9,"y":12.6},"hidden":{"x":18.2,"y":15.02},"exposed":{"x":18.9,"y":15.02},"look":{"x":18.456143,"y":15.229692}}
+  ],
+  "09-04": [
+    {"structure":"Pump Armoured Crate","guard":4,"stop":0,"post":{"x":8,"y":16.1},"hidden":{"x":9.5,"y":18.47},"exposed":{"x":8.85,"y":18.47},"look":{"x":9.316538,"y":18.795687}},
+    {"structure":"North Gold Bars","guard":1,"stop":0,"post":{"x":17.5,"y":2.1},"hidden":{"x":17.6,"y":4.61},"exposed":{"x":18.15,"y":4.61},"look":{"x":17.938252,"y":5.067817}},
+    {"structure":"Gallery Case Stack","guard":0,"stop":0,"post":{"x":24.1,"y":12.6},"hidden":{"x":21.3,"y":9.48},"exposed":{"x":21.3,"y":10.26},"look":{"x":21.941618,"y":10.516401}}
+  ],
+  "09-05": [
+    {"structure":"Stair Armoured Crate","guard":3,"stop":0,"post":{"x":1.9,"y":6.5},"hidden":{"x":4.7,"y":10.02},"exposed":{"x":4.7,"y":9.24},"look":{"x":3.909748,"y":8.727311}},
+    {"structure":"Wing Case Stack","guard":4,"stop":0,"post":{"x":1.9,"y":17.8},"hidden":{"x":4.7,"y":19.86},"exposed":{"x":4.7,"y":19.08},"look":{"x":4.486088,"y":19.320576}},
+    {"structure":"Checkpoint Cash Table","guard":0,"stop":0,"post":{"x":9,"y":17.1},"hidden":{"x":12.4,"y":19.4625},"exposed":{"x":10.8,"y":19.4625},"look":{"x":11.167279,"y":19.174344}}
+  ]
+}

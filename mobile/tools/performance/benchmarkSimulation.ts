@@ -65,7 +65,7 @@ function simulation(legacy:boolean){
  return {run};
 }
 const before=simulation(true),after=simulation(false),rows=[];
-for(const id of ['01-02','05-03','08-03'])for(const phase of ['patrol','theft','alert'] as const){
+for(const id of ['01-02','05-03','08-03','09-05'])for(const phase of ['patrol','theft','alert'] as const){
  before.run(id,phase);after.run(id,phase);
  const times={before:[] as number[],after:[] as number[]};let a:any,b:any;
  for(let i=0;i<5;i++)for(const which of i%2?['after','before'] as const:['before','after'] as const){

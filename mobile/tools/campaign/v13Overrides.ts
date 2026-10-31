@@ -19,11 +19,14 @@
  *   npm run campaign:overrides -- 04-05     one mission
  */
 import {PHASE7,REPLACED,LANES,LATE,type LaneOp} from './v13Phase7';
-import {PINNED} from './v13Late';
+import {PINNED,HQ_PATROL} from './v13Late';
 import {EXTRA_CAMERA,ROTATE,MOVED,PATROL} from './v13Casino';
 import {DERIVED_FROM,baseMissionOf,type DerivedChapter} from './v13Sources';
+import {COVER_CHECKPOINTS} from './v13CoverCheckpoints';
+import {PATROL_POLISH} from './v13PatrolPolish';
+import {EXIT_CAMERA_WATCH} from './v13ExitWatch';
 
-export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late'] as const;
+export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late','8 cover checkpoints','9 patrol polish','10 exit watch'] as const;
 export type OverrideStage=typeof STAGES[number];
 export type OverrideCategory='authored in plan'|'wall cell'|'route anchor'|'patrol stop'|'structure added'|'structure replaced'|'structure moved'|'patrol replaced'|'camera added'|'camera pinned'|'art rotation'|'refit exception';
 export interface OverrideEntry {mission:string;stage:OverrideStage;category:OverrideCategory;file:string;table:string;detail:string;why?:string;
@@ -50,6 +53,9 @@ const laneEntries=(mission:string,ops:LaneOp[],why:string,stage:OverrideStage,ta
 /** Entries a mission has in its own right (not through the plan it is derived from). */
 function own(id:string):OverrideEntry[]{
  const out:OverrideEntry[]=[];
+ if(id==='01-01')out.push({mission:id,stage:'1 plan',category:'patrol replaced',file:'v13EntranceStealth.ts',table:'entranceStealth',
+  detail:'Desk → column → display case → partition: cover positions, route hubs and semantic inspection stops',
+  why:'Four actual occluded waiting positions with visible adjacent crossings; frozen Warehouse source unchanged'});
  for(const a of AUTHORED_IN_PLAN)if(a.mission===id)out.push({mission:id,stage:'1 plan',category:'authored in plan',file:a.file,table:'plan',detail:a.detail});
  if(LANES[id])out.push(...laneEntries(id,LANES[id].ops,LANES[id].why,'2 phase7 lanes','LANES'));
  for(const [name,r] of Object.entries(REPLACED[id]??{}))out.push({mission:id,stage:'3 phase7 replace',category:'structure replaced',file:'v13Phase7.ts',table:'REPLACED',detail:`~ ${name} becomes ${r.asset} at ${p(r)} ×${r.scale}`,why:r.why});
@@ -64,13 +70,21 @@ function own(id:string):OverrideEntry[]{
  if(id==='07-05')out.push({mission:id,stage:'5 derive',category:'refit exception',file:'v13Late.ts',table:'WAREHOUSE (mission===4)',detail:'desk slots become conveyors instead of workbenches',why:'both desks stand beside a waiting pocket, where the deeper workbench does not fit'});
  for(const [zone,at] of Object.entries(PINNED[id]??{}))out.push({mission:id,stage:'6 pin',category:'camera pinned',file:'v13Late.ts',table:'PINNED',detail:`generated camera of zone ${zone} held at ${p(at)}`,why:'secure() would re-seat it after the furniture change'});
  if(LATE[id])out.push(...laneEntries(id,LATE[id].ops,LATE[id].why,'7 late','LATE'));
+ const patrol=HQ_PATROL[id];
+ if(patrol)out.push({mission:id,stage:'7 late',category:'patrol stop',file:'v13Late.ts',table:'HQ_PATROL',detail:`${patrol.zone} first stop looks at ${p(patrol.look)}, waits ${patrol.wait}s`,why:patrol.watches});
+ if(COVER_CHECKPOINTS[id])out.push({mission:id,stage:'8 cover checkpoints',category:'patrol replaced',file:'v13CoverCheckpoints.json',table:'COVER_CHECKPOINTS',
+  detail:COVER_CHECKPOINTS[id].map(q=>`${q.structure}: guard${q.guard+1} at ${p(q.post)}`).join('; '),why:'Actual hidden waiting place / adjacent visible crossing, with semantic patrol inspection'});
+ if(PATROL_POLISH[id])out.push({mission:id,stage:'9 patrol polish',category:'patrol stop',file:'v13PatrolPolish.ts',table:'PATROL_POLISH',detail:PATROL_POLISH[id].map(e=>`guard${e.guard+1}: ${e.why}`).join('; ')});
+ if(EXIT_CAMERA_WATCH[id])out.push({mission:id,stage:'10 exit watch',category:'camera pinned',file:'v13ExitWatch.ts',table:'EXIT_CAMERA_WATCH',detail:EXIT_CAMERA_WATCH[id].why});
  return out;
 }
 /** Every override that reaches a mission: inherited ones first (they are applied first), then its own, in stage order. */
 export function missionOverrides(id:string):OverrideEntry[]{
  const base=baseMissionOf(id),from=DERIVED_FROM[Number(id.slice(0,2)) as DerivedChapter];
  // A chapter built on the frozen plans inherits what is in the plan file only; one built after Phase 7 inherits that layer too.
- const inherited=base?own(base).filter(e=>from.phase7==='inherits Phase 7'?STAGES.indexOf(e.stage)<=3:e.stage==='1 plan').map(e=>({...e,mission:id,inheritedFrom:base})):[];
+ // The entrance refinement is deliberately after the frozen Museum export;
+ // Warehouse reuses that frozen plan and must not advertise this patch.
+ const inherited=base?own(base).filter(e=>e.table!=='entranceStealth'&&(from.phase7==='inherits Phase 7'?STAGES.indexOf(e.stage)<=3:e.stage==='1 plan')).map(e=>({...e,mission:id,inheritedFrom:base})):[];
  return [...inherited,...own(id)].sort((a,b)=>STAGES.indexOf(a.stage)-STAGES.indexOf(b.stage));
 }
 /** Index of every mission that has at least one override. */
