@@ -69,3 +69,24 @@ overlay builder `tools/environment/campaignCoverBoard.ts` is offline only.
 `npm run campaign:bake`, `npm run campaign:snapshot` (read the DIFF list: it should name the missions you meant
 to change and no others), `npm run campaign:audit`, `npm test`, then refresh
 `docs/design/v13/PHASE8_SNAPSHOT_HASHES.json` from a `v13Snapshot.ts write`.
+
+### Patrol clearance and crossing follow-up
+
+After `authorCoverCheckpoints`, `polishPatrol` applies the named `PATROL_POLISH`
+repairs to05-02/06-01 only. It is immutable/idempotent and does not feed changes
+back into mirrored base chapters. The final override-index stage records each
+reason. `v13PatrolPolish.test.ts` checks scope, 5-minute Casino clearance at three
+frame rates, active inspection visits, and Mansion contact/timed-clear outcomes.
+`chapterOrderingAcceptance` now defaults to all9 chapters; an explicit chapter
+subset can be requested for focused diagnostics. A `REVIEW_REQUIRED` result must
+not be described as a human difficulty approval.
+
+### Vault exit-camera follow-up
+
+`v13ExitWatch.ts` runs after patrol polish and points09-05's existing lower-stair
+camera at its exit-lobby doorway. It changes no guard patrol/speed or geometry.
+`v13ExitWatchQA.ts` measures camera-only waiting/peek windows; the test also
+checks physical cover, closed-door LOS and complete timed heists. Review data:
+`docs/reports/performance/vault-escape.json`. The difficulty audit now reports
+per-escape-route exposure alongside the original exit-centre pressure and
+rejects missing escape samples. Neither measurement certifies human difficulty.

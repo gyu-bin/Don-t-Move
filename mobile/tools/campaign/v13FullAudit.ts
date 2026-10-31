@@ -27,11 +27,9 @@ import {buildV13Campaign} from './v13Build';
 import {loadCampaign,writeReport,walkPatrols,cameraView} from './v13QaLib';
 
 const GAP_LIMIT=8;
-/** Findings accepted as they are (Phase 8B decision, kept in the frozen baseline): reported, not counted as failures.
- *  05-05 (camera inside the exit planter) left this list in Phase 9: the planter was moved half a tile. */
-export const KNOWN:Record<string,{issue:string;why:string}[]>={
- '05-02':[{issue:'patrol: 05-02-g4 touches collision',why:'tangent to the cashier cage corner, 3.3 px real clearance, no overlap'}],
-};
+/** No accepted collision exceptions remain. The 05-02 cashier tangent was repaired
+ * by an explicit clear patrol leg; the body-clearance threshold stays unchanged. */
+export const KNOWN:Record<string,{issue:string;why:string}[]>={};
 const t=(v:number)=>(v/TILE).toFixed(2);
 export function auditMission(def:StageDefinition){
  const stage=compileStage(def),mov=stage.movementBlockers,solid=mov.slice(stage.wallRects.length*4),issues:string[]=[],notes:string[]=[];

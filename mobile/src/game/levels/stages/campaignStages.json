@@ -35457,8 +35457,8 @@
             "y": 17.25
           },
           {
-            "x": 8.75,
-            "y": 11.5
+            "x": 4.25,
+            "y": 16.5
           }
         ],
         "theftSearchSectors": [
@@ -35468,6 +35468,10 @@
               {
                 "x": 2.75,
                 "y": 17.25
+              },
+              {
+                "x": 4.25,
+                "y": 16.5
               },
               {
                 "x": 8.75,
@@ -35551,17 +35555,17 @@
             "turnDuration": 0.4
           },
           {
-            "x": 6.75,
-            "y": 13.25,
+            "x": 4.25,
+            "y": 16.5,
             "waitDuration": 0,
-            "lookDirection": -0.7853981633974483,
+            "lookDirection": -1.5707963267948966,
             "turnDuration": 0.4
           },
           {
             "x": 6.75,
             "y": 12.75,
             "waitDuration": 0,
-            "lookDirection": -1.5707963267948966,
+            "lookDirection": -0.982793723247329,
             "turnDuration": 0.4
           },
           {
@@ -35580,9 +35584,9 @@
           },
           {
             "x": 4.25,
-            "y": 15.75,
+            "y": 16.5,
             "waitDuration": 0,
-            "lookDirection": 2.2655346029916,
+            "lookDirection": -1.5707963267948966,
             "turnDuration": 0.4
           }
         ]
@@ -36709,6 +36713,10 @@
               "y": 17.25
             },
             {
+              "x": 4.25,
+              "y": 16.5
+            },
+            {
               "x": 8.75,
               "y": 11.5
             }
@@ -36720,6 +36728,10 @@
         {
           "x": 2.75,
           "y": 17.25
+        },
+        {
+          "x": 4.25,
+          "y": 16.5
         },
         {
           "x": 8.75,
@@ -42826,7 +42838,7 @@
           },
           {
             "x": 11.75,
-            "y": 12.25
+            "y": 2.5
           }
         ],
         "theftSearchSectors": [
@@ -42836,6 +42848,10 @@
               {
                 "x": 11.75,
                 "y": 4.75
+              },
+              {
+                "x": 11.75,
+                "y": 2.5
               },
               {
                 "x": 11.75,
@@ -42890,12 +42906,12 @@
         "id": "06-01-g3",
         "role": "corridor",
         "routeId": "06-01-g3",
-        "facing": 0,
+        "facing": -2.936197264400026,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.928000000000001,
         "visionHalfAngle": 0.5550147021341968,
-        "initialFacing": 0,
+        "initialFacing": -2.936197264400026,
         "theftRole": "zone",
         "theftPosts": [
           {
@@ -42977,8 +42993,22 @@
           },
           {
             "x": 11.75,
+            "y": 2.5,
+            "waitDuration": 2,
+            "lookDirection": 0,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 11.75,
             "y": 12.25,
             "waitDuration": 3,
+            "lookDirection": 0,
+            "turnDuration": 0.4
+          },
+          {
+            "x": 11.75,
+            "y": 2.5,
+            "waitDuration": 2,
             "lookDirection": 0,
             "turnDuration": 0.4
           }
@@ -43012,7 +43042,7 @@
             "x": 8,
             "y": 17.5,
             "waitDuration": 3,
-            "lookDirection": 0,
+            "lookDirection": -2.936197264400026,
             "turnDuration": 0.4
           },
           {
@@ -44069,6 +44099,10 @@
             {
               "x": 11.75,
               "y": 4.75
+            },
+            {
+              "x": 11.75,
+              "y": 2.5
             },
             {
               "x": 11.75,
@@ -78442,7 +78476,7 @@
             "x": 23.4,
             "y": 19.3
           },
-          "facing": 0
+          "facing": 0.8086497862079107
         },
         {
           "room": "lobby",
@@ -78648,7 +78682,7 @@
         "id": "09-05-cam2",
         "x": 23.4,
         "y": 19.3,
-        "centerFacing": 0,
+        "centerFacing": 0.8086497862079107,
         "sweepAngle": 0.55,
         "sweepSpeed": 0.35,
         "pauseAtEnds": 0.6,

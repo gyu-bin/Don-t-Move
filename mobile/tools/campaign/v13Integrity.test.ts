@@ -22,6 +22,8 @@ import {exposureRun} from './cameraExposure';
 import {EXTRA_CAMERA,MOVED,PATROL} from './v13Casino';
 import {AUTHORED_IN_PLAN,missionOverrideIndex,missionOverrides,STAGES} from './v13Overrides';
 import {COVER_CHECKPOINTS} from './v13CoverCheckpoints';
+import {PATROL_POLISH} from './v13PatrolPolish';
+import {EXIT_CAMERA_WATCH} from './v13ExitWatch';
 
 const live=current as unknown as StageDefinition[];
 
@@ -128,7 +130,7 @@ test('Campaign: chapter sources — nine chapters in bake order, and each derive
 
 test('Campaign: the override index reads every table, names real missions and keeps the stage order',()=>{
  const ids=live.map(d=>d.id),index=missionOverrideIndex(ids);
- for(const [table,keys] of Object.entries({PHASE7:Object.keys(PHASE7),REPLACED:Object.keys(REPLACED),LANES:Object.keys(LANES),LATE:Object.keys(LATE),PINNED:Object.keys(PINNED),MOVED:Object.keys(MOVED),PATROL:Object.keys(PATROL),HQ_PATROL:Object.keys(HQ_PATROL),COVER_CHECKPOINTS:Object.keys(COVER_CHECKPOINTS)}))for(const id of keys){
+ for(const [table,keys] of Object.entries({PHASE7:Object.keys(PHASE7),REPLACED:Object.keys(REPLACED),LANES:Object.keys(LANES),LATE:Object.keys(LATE),PINNED:Object.keys(PINNED),MOVED:Object.keys(MOVED),PATROL:Object.keys(PATROL),HQ_PATROL:Object.keys(HQ_PATROL),COVER_CHECKPOINTS:Object.keys(COVER_CHECKPOINTS),PATROL_POLISH:Object.keys(PATROL_POLISH),EXIT_CAMERA_WATCH:Object.keys(EXIT_CAMERA_WATCH)}))for(const id of keys){
   assert(ids.includes(id),`${table} names unknown mission ${id}`);assert(index[id]?.some(e=>e.table===table&&!e.inheritedFrom),`${id}: ${table} entry missing from the index`);
  }
  // The Phase 7 layer belongs to Chapter 1–4 plans, the late layer to Chapter 7–8: the stage each table runs at depends on it.

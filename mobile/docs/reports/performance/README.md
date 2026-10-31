@@ -558,3 +558,130 @@ SKIP_REPLAY=1 MAP_ONLY=1 TSX_TSCONFIG_PATH=tools/sprites/tsconfig.runtime.json n
 node --import tsx tools/environment/placementAudit.ts
 npm run test:museum-look
 ```
+
+## Next patrol pass — Casino clearance / Mansion crossings
+
+Only05-02 and06-01 StageDefinitions change, through the explicit
+`v13PatrolPolish.ts` layer after cover authoring. All other43 hashes remain
+identical to26c5024. Architecture, props, lighting, entry/objective/exit, doors,
+CCTV, guard counts, roles, speed, range and suspicion tuning are unchanged.
+The affected guards' patrol legs, facing, and derived theft/search anchors change.
+The override index names this final layer so future bakes retain the repair.
+
+- **05-02:** the objective guard passes east of the cashier cage at(4.25,16.5)
+  before turning toward the jewel. This removes the old tangent exception;
+  `KNOWN` is now empty, with the same collision threshold. Regression checks
+  simulate300s each at30/60/120Hz, check every guard step's full body clearance,
+  and require the guard to reach all waiting inspection points. Clearances are
+  not obtained by stopping the patrol, removing the collider or slowing guards.
+- **06-01:** guard1 adds a2s inspection at the north corridor(11.75,2.5), facing
+  the east approach. Guard3 looks west toward the service exit from its existing
+  loading post, then resumes its original walk. The original cover inspections
+  and usable waiting windows remain. Immediate safe-route Run now contacts
+  guard1 at5.7s (no whistle, no suspicion-triggered game over). Walking from0s,
+  or running after4s, still completes a continuous heist.
+- **09-05 is unchanged:** a lower-stair inspection increased sampled exit
+  coverage0→15%, but also opened a previously unavailable immediate sprint
+  clear. Trying longer upper inspections still admitted extra quick-route
+  clears. Those candidates were rejected, not baked. A higher coverage number
+  alone is not evidence of better level design.
+
+[`patrol-polish.json`](patrol-polish.json) compares the same32 fixed and8
+cone-aware full-heist inputs before/after, using actual simulation and including
+contact-capture attribution. Fixed clears: Casino6→7, Mansion12→12, Vault0→0.
+Observing clears: Casino6→2, Mansion0→0, Vault0→0. These are deliberately disclosed
+mixed proxy outcomes, **not human win rates or a universal difficulty gain**.
+Casino timing changes as the return leg changes; its existing full-heist witness
+still clears. In Mansion, immediate Run no longer clears, while the additional
+8s-departure Walk does; the change creates a crossing/timing choice rather than
+raising a global detection coefficient. Vault's extra risk/Sneak departure9s
+witness still clears and is excluded from the32/8 comparison counts.
+
+Mansion sampled safe-route exposure6.90→8.23%; exit pressure0.83→21.67%.
+The report now evaluates all9 chapters by default (formerly only1–3), rejecting
+missing late-chapter evidence. Explicit subset checks remain available to tests.
+`difficulty-current.json` still says `REVIEW_REQUIRED`: improving these two
+missions does not certify a monotonic human difficulty curve. Museum01-01 and
+all character/graphics/runtime AI code are untouched in this pass.
+
+Reproduce from `mobile/`:
+
+```sh
+git show 26c5024:mobile/src/game/levels/stages/campaignStages.json > /tmp/patrol-before.json
+node --import tsx tools/performance/patrolPolish.ts /tmp/patrol-before.json
+node --import tsx --test tools/campaign/v13PatrolPolish.test.ts tools/campaign/chapterDifficulty.test.ts
+npm run campaign:audit
+npm run campaign:snapshot
+```
+
+No physical Tilt, thermal measurement or new sprite approval is implied. The
+existing temporary Guard animation / Whistle/Search asset limitations remain.
+
+Validation for this pass: whole `npm test` PASS, including674 campaign tests;
+focused patrol/difficulty13/13 PASS; app/campaign/performance typechecks PASS;
+source and changed-tool lint0 errors/0 warnings; snapshot45/45 SAME after review
+of exactly two changed hashes; full campaign audit45/45 clean, **zero exceptions**.
+
+## Vault exit watch — subsequent pass
+
+The rejected guard-route experiment above remains rejected. This pass changes
+only09-05 camera2's authored centre direction, from east to the existing
+east-stair doorway at(25.5,21.5), about46.3°. All six guards, their routes/speeds,
+the other cameras, sensor ranges/gains, geometry, and the final exit are kept.
+`v13ExitWatch.ts` is the final explicit authoring layer, also recorded in the
+override index. The only additional StageDefinition diff after the Casino/Mansion
+pass is this camera direction and its matching topology metadata. No runtime
+simulation work, light, shader or drawing pass is added.
+
+[`vault-escape.json`](vault-escape.json) compares identical inputs against09-05
+at26c5024. Stationary camera-only samples over60s show:
+
+| Probe | Visible before → after | Longest unwatched after |
+|---|---:|---:|
+| East-stair doorway(25.5,21.5) | 13.14% →49.33% | 1.90s |
+| Exposed approach(25,22.5) | 0% →52.00% | 3.60s |
+| Behind lobby wall(24,22.5) | 0% →0% | 60s |
+| Final exit centre(26.8,24) | 0% →0% | 60s |
+
+These are **not guaranteed safe crossing times**: other guards may see a player.
+The cover/peek points fit the real player body and connect without collision.
+Removing blockers exposes the hidden point, proving actual wall occlusion;
+closing the solid stair door blocks the exposed point too. A hidden stationary
+player does not create a CCTV alert or player LKP. Existing three cover waiting
+windows, sampled with all guards/CCTV over180s, remain20.3/18.3/26.3s.
+
+Complete heist checks disclose unchanged proxy outcomes: fixed0/32 and
+cone-aware0/8 before/after. The two extra risk/Sneak/alternate-escape witnesses
+at8.5s and9s departure still clear in74.9s and75.4s; these are **bot simulation
+times, not human clear times**. This fixes a blind approach, not a demonstrated
+increase in human difficulty or a universal reduction in scripted clear rate.
+
+The difficulty audit now retains exit-centre pressure **and** samples every
+authored escape route with the same real patrol/CCTV/LOS. Route exposure is
+weighted by sample count, with each route also reported separately. Missing or
+zero-length escape routes are incomplete evidence. Vault total escape exposure
+is18.30%→19.03%; quick return33.28%→32.50%, service escape12.23%→13.58%.
+The unchanged0% exit-centre reading no longer hides watched approaches.
+These open-door patrol diagnostics do not model theft/lockdown; the separate
+continuous heists and door regressions cover those systems.
+
+Reproduce from `mobile/`:
+
+```sh
+git show 26c5024:mobile/src/game/levels/stages/campaignStages.json > /tmp/vault-before.json
+node --import tsx tools/performance/vaultEscape.ts /tmp/vault-before.json
+node --import tsx --test tools/campaign/v13ExitWatch.test.ts tools/campaign/chapterDifficulty.test.ts
+node --import tsx tools/campaign/chapterDifficultyAudit.ts src/game/levels/stages/campaignStages.json docs/reports/performance/difficulty-current.json
+npm run campaign:audit
+npm run campaign:snapshot
+```
+
+All-nine-chapter difficulty acceptance remains `REVIEW_REQUIRED`; device Tilt,
+thermal measurements and final character animation approval remain outstanding.
+
+Validation: whole `npm test` PASS including679 campaign tests; focused
+exit-watch/difficulty13/13 PASS; app/campaign/performance typechecks PASS;
+source and changed-tool lint0 errors/0 warnings; campaign audit45/45 clean,
+zero exceptions; snapshot45/45 SAME after review of the single09-05 update.
+Relative to26c5024, only05-02/06-01 from the prior pass and09-05 from this pass
+have changed StageDefinitions. No Simulator or physical-device run was performed.

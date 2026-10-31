@@ -23,8 +23,10 @@ import {PINNED,HQ_PATROL} from './v13Late';
 import {EXTRA_CAMERA,ROTATE,MOVED,PATROL} from './v13Casino';
 import {DERIVED_FROM,baseMissionOf,type DerivedChapter} from './v13Sources';
 import {COVER_CHECKPOINTS} from './v13CoverCheckpoints';
+import {PATROL_POLISH} from './v13PatrolPolish';
+import {EXIT_CAMERA_WATCH} from './v13ExitWatch';
 
-export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late','8 cover checkpoints'] as const;
+export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late','8 cover checkpoints','9 patrol polish','10 exit watch'] as const;
 export type OverrideStage=typeof STAGES[number];
 export type OverrideCategory='authored in plan'|'wall cell'|'route anchor'|'patrol stop'|'structure added'|'structure replaced'|'structure moved'|'patrol replaced'|'camera added'|'camera pinned'|'art rotation'|'refit exception';
 export interface OverrideEntry {mission:string;stage:OverrideStage;category:OverrideCategory;file:string;table:string;detail:string;why?:string;
@@ -72,6 +74,8 @@ function own(id:string):OverrideEntry[]{
  if(patrol)out.push({mission:id,stage:'7 late',category:'patrol stop',file:'v13Late.ts',table:'HQ_PATROL',detail:`${patrol.zone} first stop looks at ${p(patrol.look)}, waits ${patrol.wait}s`,why:patrol.watches});
  if(COVER_CHECKPOINTS[id])out.push({mission:id,stage:'8 cover checkpoints',category:'patrol replaced',file:'v13CoverCheckpoints.json',table:'COVER_CHECKPOINTS',
   detail:COVER_CHECKPOINTS[id].map(q=>`${q.structure}: guard${q.guard+1} at ${p(q.post)}`).join('; '),why:'Actual hidden waiting place / adjacent visible crossing, with semantic patrol inspection'});
+ if(PATROL_POLISH[id])out.push({mission:id,stage:'9 patrol polish',category:'patrol stop',file:'v13PatrolPolish.ts',table:'PATROL_POLISH',detail:PATROL_POLISH[id].map(e=>`guard${e.guard+1}: ${e.why}`).join('; ')});
+ if(EXIT_CAMERA_WATCH[id])out.push({mission:id,stage:'10 exit watch',category:'camera pinned',file:'v13ExitWatch.ts',table:'EXIT_CAMERA_WATCH',detail:EXIT_CAMERA_WATCH[id].why});
  return out;
 }
 /** Every override that reaches a mission: inherited ones first (they are applied first), then its own, in stage order. */
