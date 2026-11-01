@@ -19,15 +19,26 @@ export interface CharacterVisual {
   fallback: CharacterArt;
   shadow: SkPaint;
   paint: SkPaint;
+  /** Bilinear sampling of the sprite frames (see CHARACTER_LINEAR_SAMPLING). */
+  linear: boolean;
 }
+
+/**
+ * Visual Polish Pass 4: character sheets (1.92 px/world) are magnified ~1.67× on an iPhone 17. Native
+ * `drawImageRect` samples nearest, which steps outlines unevenly; bilinear sampling removes the steps without
+ * changing the sheets. Frames cannot bleed: the native call clamps to the source rect (kStrict) and every cell has
+ * a transparent 1-px border (tools/locomotion/validate.ts). Set to false to restore nearest sampling.
+ */
+export const CHARACTER_LINEAR_SAMPLING = true;
 
 export function createCharacterVisual(
   sprites: CharacterSpriteSet | null,
   fallback: CharacterArt,
+  linear = CHARACTER_LINEAR_SAMPLING,
 ): CharacterVisual {
   const paint = fill('#ffffff');
   paint.setAntiAlias(true);
-  return { sprites, fallback, shadow: fill('#000000', 0.5), paint };
+  return { sprites, fallback, shadow: fill('#000000', 0.5), paint, linear };
 }
 
 export function drawCharacterVisual(
@@ -56,7 +67,7 @@ export function drawCharacterVisual(
       // Production atlases bake bob/lean; the runtime lift is only for the legacy sheets.
       const lift = set.bakedMotion ? 0 : locomotionBodyLift(phase, animation, actualSpeed);
       if (lift > 0) { canvas.save(); canvas.translate(0, -lift); }
-      drawSpriteFrame(canvas, pickFrame(clip, phase, t, dist, integratedPhase), x, y, set.scale, clip.mirror, v.paint);
+      drawSpriteFrame(canvas, pickFrame(clip, phase, t, dist, integratedPhase), x, y, set.scale, clip.mirror, v.paint, v.linear);
       if (lift > 0) canvas.restore();
       return;
     }

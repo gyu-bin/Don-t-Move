@@ -1,0 +1,88 @@
+{
+  "path": "assets/environment/casino/polished/casino_security_station.png",
+  "resolution": {
+    "width": 512,
+    "height": 512
+  },
+  "objectBounds": {
+    "x": 53,
+    "y": 58,
+    "w": 406,
+    "h": 437
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 1,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_security_station.png",
+    "resolution": {
+      "width": 1209,
+      "height": 1301
+    },
+    "bounds": {
+      "x": 91,
+      "y": 30,
+      "w": 1032,
+      "h": 1215
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 155160,
+    "transparentFraction": 0.3983192443847656,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 53,
+      "y": 75,
+      "w": 406,
+      "h": 420
+    }
+  },
+  "polishedFrom": {
+    "original": "assets/environment/casino/major/casino_security_station.png",
+    "originalMd5": "3df22350d68496ad03eceecddbb6cbac",
+    "candidate": "assets/environment/_candidates/full-environment-quality/v2/casino_security_station.png",
+    "candidateMd5": "5f3d7aea885bbcea588250a0ca124cec",
+    "date": "2026-10-25"
+  },
+  "artGeneration": {
+    "method": "BUILT_IN_IMAGEGEN_REFERENCE_EDIT",
+    "date": "2026-10-25",
+    "revision": 2,
+    "references": [
+      "assets/environment/casino/major/casino_security_station.png",
+      "assets/environment/_candidates/full-environment-quality/casino_security_station.png"
+    ],
+    "nativeGeneratedSource": "Local image-generation output; not stored in repository",
+    "preservedGeneratedSource": "assets/environment/_candidates/full-environment-quality/v2/casino_security_station.generated1254.png",
+    "generatedSourceSha256": "b9910ccac4c91b664e625e126652362af8e227e020072a2c0bc15fad1a5cd308",
+    "exportProvenance": "assets/environment/_candidates/full-environment-quality/v2/provenance.json",
+    "exportMethod": "Uniform downscale of alpha>16 visible bounds; center x256 and ground row495; no shear, tone or gamma pixel processing",
+    "fixedObjectBounds": {
+      "x": 53,
+      "y": 58,
+      "w": 406,
+      "h": 437
+    },
+    "visibleAlphaBounds": {
+      "x": 53,
+      "y": 75,
+      "w": 406,
+      "h": 420
+    },
+    "groundRow": 495,
+    "heightDifferenceExplanation": "Zero-yaw source aspect fits the existing width uniformly; visible top is17px lower while fixed crop,pivot,width,ground and collision remain unchanged.",
+    "luminancePercentChange": -9.177214857798809,
+    "warningDisposition": "946 soft dark lower-half pixels are all alpha1-16 and none below ground495; actual game render shows no added cast shadow.",
+    "approval": "ADOPT after same-state05-03game-camera visual review; original bytes preserved",
+    "originalSha256": "6ebb88548b1139a21da61157a9ddc380541e47341d1971d84c2f9e0cdf840443",
+    "productionSha256": "79e7c56ef3078d521d3755221267380c7d9ae09075856deec7853efcc49a0bb1"
+  }
+}

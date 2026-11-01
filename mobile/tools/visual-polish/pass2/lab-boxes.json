@@ -1,0 +1,52 @@
+{
+  "note": "Visual Polish Pass 2, Chapter 4 Lab. Coordinates are canvas pixels of the current runtime PNGs (read on a 32 px grid, 2026-10-23). Source paintings: the user's Lab sheets (2026-10-05), levelled by tools/environment/labTune.cjs. Output stays inside each piece's catalog objectBounds, so no catalog or PROP_KIT change is needed.",
+  "outDir": "assets/environment/_candidates/visual-polish-pass2/lab",
+  "pieces": [
+    {
+      "id": "lab_sample_fridge_front",
+      "left": 94,
+      "corner": 350,
+      "frontTop": 92,
+      "bottom": 496,
+      "farLeftX": 175,
+      "farRightX": 412,
+      "topY": 17,
+      "widthScale": 1.14,
+      "heightScale": 1,
+      "topScale": 1
+    },
+    {
+      "id": "lab_server_rack_front",
+      "left": 38,
+      "corner": 390,
+      "frontTop": 104,
+      "bottom": 494,
+      "farLeftX": 119,
+      "farRightX": 476,
+      "topY": 18,
+      "widthScale": 1.14,
+      "heightScale": 1,
+      "topScale": 1
+    },
+    {
+      "id": "lab_fume_hood",
+      "left": 62,
+      "corner": 378,
+      "frontTop": 118,
+      "bottom": 495,
+      "farLeftX": 124,
+      "farRightX": 471,
+      "topY": 16,
+      "widthScale": 1.14,
+      "heightScale": 1,
+      "topScale": 1,
+      "note": "farLeftX between the lid bevel (106) and the lid inner panel (~140): the painting gives the two edges different vanishing, one trapezoid cannot level both"
+    },
+    {
+      "id": "lab_gas_rack",
+      "mode": "scale",
+      "heightScale": 0.92,
+      "why": "ART_AUDIT M4: in 04-04 the rack's base is at y=66 world and the piece is 102 world tall, so its top (−36) crosses the map's top edge (wall cap ends at −34). 0.92 → 94 world, top at −28, inside the wall cap. The rack's yaw is not corrected here: an open frame of cylinders cannot be re-projected face by face; it needs a repaint."
+    }
+  ]
+}

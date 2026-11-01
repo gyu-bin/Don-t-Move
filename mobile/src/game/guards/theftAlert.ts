@@ -1,7 +1,7 @@
 import { hasPlayerAlert } from './guardPriority';
 import { Awareness, GuardAction } from '../core/types';
 import { turnToward, wrapAngle, damp } from '../core/math';
-import { gaitFromSpeed, strideCycleLength } from '../core/locomotion';
+import { advanceGuardLocomotion } from './guardMotion';
 import { observeGuard } from './guardBrain';
 import type { GuardEvents, GuardState, PlayerView } from './guardBrain';
 import { pointVisible } from './guardVision';
@@ -165,8 +165,7 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
           g.searchIndex++;g.searchWait=c.roles?(ev.lockdownActive?T.lockdownSearchWait:T.theftSearchWait):1;g.searchBase=g.facing;g.path=[];
         }
       }else g.speed=0;
-      g.gait+=(gaitFromSpeed(g.speed)-g.gait)*damp(14,dt);
-      g.phase=(g.phase+g.speed*dt/strideCycleLength(g.gait))%1;g.dist+=g.speed*dt;
+      advanceGuardLocomotion(g,dt);
       observeGuard(g,p,vision);
     }
     const seen=guards.find(g=>g.canSee);

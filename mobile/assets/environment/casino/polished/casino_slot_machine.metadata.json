@@ -1,0 +1,55 @@
+{
+  "path": "assets/environment/casino/polished/casino_slot_machine.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 104,
+    "y": 14,
+    "w": 176,
+    "h": 357
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 1,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/casino/_source/casino_slot_machine.png",
+    "resolution": {
+      "width": 1024,
+      "height": 1536
+    },
+    "bounds": {
+      "x": 162,
+      "y": 21,
+      "w": 714,
+      "h": 1466
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 46883,
+    "transparentFraction": 0.6773952907986112,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 104,
+      "y": 14,
+      "w": 176,
+      "h": 357
+    }
+  },
+  "polishedFrom": {
+    "original": "assets/environment/casino/soft/casino_slot_machine.png",
+    "originalMd5": "5ea7cd8c5e41f23d4c2cf36865bd8295",
+    "candidate": "assets/environment/_candidates/visual-polish-pass2/casino/casino_slot_machine.png",
+    "candidateMd5": "71c0a9994ec0d4c1affebf61d2c5f545",
+    "date": "2026-10-23"
+  }
+}

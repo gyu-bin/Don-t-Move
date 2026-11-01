@@ -7,6 +7,8 @@ import { GUARD_TUNING as T } from './guardTuning';
 // Worklet closures capture values at module initialization: dependencies must precede callers.
 /** Heading change a pursuing guard must turn in place for (a reversal), rad. */
 const PURSUIT_TURN_IN_PLACE = Math.PI / 2;
+/** Largest recovery step onto the planner's start node for a body stuck on its clearance boundary (world units, ½ tile). */
+const STALL_STEP = 20;
 
 /** Invalid transient inputs must not propagate NaN coordinates into the renderer. */
 function prepareTravel(g: GuardState, speed: number, dt: number): boolean {
@@ -92,6 +94,15 @@ export function travel(g: GuardState, n: Navigation, speed: number, dt: number, 
   const x = g.x + dx / distance * move;
   const y = g.y + dy / distance * move;
   if (!clearSegment(g.x, g.y, x, y, n.blockers, n.radius)) {
+    // A body resting on its clearance boundary (a corner touched at the end of a move) can fail this check for every
+    // step it tries, and the re-plan returns the same path: a guard frozen for good, and a Global Alert (which ends
+    // only when every guard is back on patrol) that never ends. The planner snapped the path start onto a free grid
+    // node: step onto it (at most half a tile) when the leg from there to the current waypoint is clear.
+    const sx = g.path[0], sy = g.path[1], off = Math.hypot(sx - g.x, sy - g.y);
+    if (g.path.length >= 2 && off > 0.01 && off <= STALL_STEP && clearSegment(sx, sy, tx, ty, n.blockers, n.radius)) {
+      g.x = sx; g.y = sy; g.speed = 0;
+      return false;
+    }
     g.speed = 0;
     g.path = [];
     return false;

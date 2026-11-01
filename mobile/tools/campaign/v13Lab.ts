@@ -494,4 +494,8 @@ const M0405:V13Mission={
 
 /** The plans as first shipped, without the Phase 7 cover: Chapter 8 is built from these. */
 export const V13_LAB_FROZEN:V13Mission[]=[M0401,M0402,M0403,M0404,M0405];
-export const V13_LAB:V13Mission[]=V13_LAB_FROZEN.map(phase7);
+// Adjust only Cryo Research's objective patrol. The frozen plans also seed
+// Chapter 8, so leave them intact for save-compatible campaign generation.
+export const V13_LAB:V13Mission[]=V13_LAB_FROZEN.map(phase7).map(m=>
+ m.id==='04-04'?{...m,guards:m.guards.map((guard,index)=>index===3?{...guard,startDelay:12}:guard)}:m,
+);

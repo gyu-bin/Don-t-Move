@@ -1,0 +1,73 @@
+{
+  "path": "assets/environment/lab/polished/lab_gas_rack.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 72,
+    "y": 13,
+    "w": 240,
+    "h": 360
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/lab/_source/lab_gas_rack.png",
+    "resolution": {
+      "width": 132,
+      "height": 199
+    },
+    "bounds": {
+      "x": 0,
+      "y": 1,
+      "w": 132,
+      "h": 198
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 71185,
+    "transparentFraction": 0.5156589084201388,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 72,
+      "y": 13,
+      "w": 240,
+      "h": 360
+    }
+  },
+  "polishedFrom": {
+    "original": "assets/environment/lab/soft/lab_gas_rack.png",
+    "originalMd5": "05dbaa92154be89047eefd54259512ee",
+    "candidate": "assets/environment/_candidates/visual-polish-pass2/lab/lab_gas_rack.png",
+    "candidateMd5": "e5751d1a6d0ee6388b8ff9560705e267",
+    "date": "2026-10-23"
+  },
+  "polishHistory": [
+    {
+      "date": "2026-10-24",
+      "step": "Environment Pass 3: midtone value lift 96\u2192108 (toneMidtones.cjs 1.28 30 185 0.25)",
+      "previous": "assets/environment/lab/_pretune/lab_gas_rack.polished-v1.png",
+      "previousMd5": "e5751d1a6d0ee6388b8ff9560705e267",
+      "source": "assets/environment/_candidates/environment-pass2/equipment/lab_gas_rack.png",
+      "md5": "81f347f8b29e439c8abef5b613a1895a"
+    },
+    {
+      "date": "2026-10-24",
+      "step": "Visual Art Final: yaw fix by depth-layer re-alignment (tools/visual-polish/final-art/gasRackRebuild.cjs)",
+      "previous": "assets/environment/lab/_pretune/lab_gas_rack.polished-v2.png",
+      "previousMd5": "81f347f8b29e439c8abef5b613a1895a",
+      "source": "assets/environment/_candidates/visual-art-final/lab/lab_gas_rack.png",
+      "md5": "e2ff48d4ff779526cd0227f43db99812"
+    }
+  ]
+}

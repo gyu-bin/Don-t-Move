@@ -1975,7 +1975,7 @@
           {
             "x": 7.1,
             "y": 9.8,
-            "waitDuration": 4,
+            "waitDuration": 2,
             "lookDirection": 2.612483325882535,
             "turnDuration": 0.4
           },
@@ -3358,7 +3358,7 @@
           {
             "x": 7.556,
             "y": 13.164,
-            "waitDuration": 3,
+            "waitDuration": 5,
             "lookDirection": 1.9662594721206748,
             "turnDuration": 0.4
           },
@@ -10475,7 +10475,7 @@
         "kind": "statue",
         "visualAssetId": "gallery_sculpture_large",
         "x": 19,
-        "y": 9.59,
+        "y": 7.99,
         "scale": 2.4,
         "collisionScale": 2.4
       },
@@ -11860,7 +11860,7 @@
           "kind": "statue",
           "visualAssetId": "gallery_sculpture_large",
           "x": 19,
-          "y": 9.59,
+          "y": 7.99,
           "scale": 2.4,
           "collisionScale": 2.4
         },
@@ -12416,7 +12416,7 @@
           {
             "x": 2.25,
             "y": 12.1,
-            "waitDuration": 3,
+            "waitDuration": 4.5,
             "lookDirection": 1.3073929662737374,
             "turnDuration": 0.4
           },
@@ -19148,7 +19148,7 @@
           {
             "x": 14.5,
             "y": 4.25,
-            "waitDuration": 3,
+            "waitDuration": 2,
             "lookDirection": -0.703455820155883,
             "turnDuration": 0.4
           }
@@ -21025,7 +21025,7 @@
           {
             "x": 22.75,
             "y": 4.4,
-            "waitDuration": 2,
+            "waitDuration": 4,
             "lookDirection": -1.7088023504524161,
             "turnDuration": 0.4
           },
@@ -26545,7 +26545,7 @@
           {
             "x": 12,
             "y": 13.9,
-            "waitDuration": 2,
+            "waitDuration": 3,
             "lookDirection": -1.5707963267948966,
             "turnDuration": 0.4
           },
@@ -29995,7 +29995,7 @@
         "routeId": "04-04-g4",
         "facing": 1.5707963267948966,
         "pace": 0.8,
-        "startDelay": 18,
+        "startDelay": 12,
         "visionRange": 4.1,
         "visionHalfAngle": 0.5235987755982988,
         "initialFacing": 1.5707963267948966,
@@ -35439,25 +35439,25 @@
         ]
       },
       {
-        "x": 2.75,
+        "x": 2.8,
         "y": 17.25,
         "id": "05-02-g4",
         "role": "objective",
         "routeId": "05-02-g4",
-        "facing": 1.6921483273656603,
+        "facing": 1.7161063374305987,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 4.644,
         "visionHalfAngle": 0.5445427266222308,
-        "initialFacing": 1.6921483273656603,
+        "initialFacing": 1.7161063374305987,
         "theftRole": "objective",
         "theftPosts": [
           {
-            "x": 2.75,
+            "x": 2.8,
             "y": 17.25
           },
           {
-            "x": 4.25,
+            "x": 3.6,
             "y": 16.5
           }
         ],
@@ -35466,11 +35466,11 @@
             "id": "05-02-g4: Records Room",
             "anchors": [
               {
-                "x": 2.75,
+                "x": 2.8,
                 "y": 17.25
               },
               {
-                "x": 4.25,
+                "x": 3.6,
                 "y": 16.5
               },
               {
@@ -35548,24 +35548,24 @@
         "mode": "loop",
         "points": [
           {
-            "x": 2.75,
+            "x": 2.8,
             "y": 17.25,
             "waitDuration": 2,
-            "lookDirection": 1.6921483273656603,
+            "lookDirection": 1.7161063374305987,
             "turnDuration": 0.4
           },
           {
-            "x": 4.25,
+            "x": 3.6,
             "y": 16.5,
             "waitDuration": 0,
             "lookDirection": -1.5707963267948966,
             "turnDuration": 0.4
           },
           {
-            "x": 6.75,
-            "y": 12.75,
+            "x": 7.25,
+            "y": 12.25,
             "waitDuration": 0,
-            "lookDirection": -0.982793723247329,
+            "lookDirection": -0.8612020007585875,
             "turnDuration": 0.4
           },
           {
@@ -35583,7 +35583,7 @@
             "turnDuration": 0.4
           },
           {
-            "x": 4.25,
+            "x": 3.6,
             "y": 16.5,
             "waitDuration": 0,
             "lookDirection": -1.5707963267948966,
@@ -36709,11 +36709,11 @@
           "room": "records",
           "points": [
             {
-              "x": 2.75,
+              "x": 2.8,
               "y": 17.25
             },
             {
-              "x": 4.25,
+              "x": 3.6,
               "y": 16.5
             },
             {
@@ -36726,11 +36726,11 @@
       ],
       "objectiveStops": [
         {
-          "x": 2.75,
+          "x": 2.8,
           "y": 17.25
         },
         {
-          "x": 4.25,
+          "x": 3.6,
           "y": 16.5
         },
         {
@@ -51259,7 +51259,7 @@
     "mission": 1,
     "title": "Loading Aisles",
     "theme": "warehouse",
-    "structurePlan": "V13 Warehouse | L-shape | Collection Room → North Foyer → Side Wall Gallery → Collection Wall Gallery → West Gallery → Central Court → Entrance Hall → Entrance Lobby",
+    "structurePlan": "V13 Warehouse | Loop | Collection Room → North Foyer → Side Wall Gallery → Collection Wall Gallery → Central Court → West Gallery → Entrance Hall → Entrance Lobby",
     "layout": [
       "######################",
       "#....#..#.....#......#",
@@ -51267,14 +51267,14 @@
       "#....#...............#",
       "#....................#",
       "#.......#.....#......#",
-      "###...###########...##",
-      "#.......#..##........#",
+      "###...###...#####...##",
+      "#.......#...#........#",
       "#.......#............#",
       "#.......#............#",
       "#....................#",
       "#....................#",
       "#....................#",
-      "###...#####...########",
+      "###...#####...###...##",
       "#....................#",
       "#....................#",
       "#....................#",
@@ -51342,7 +51342,7 @@
       {
         "kind": "warehousePlankStack",
         "visualAssetId": "warehouse_plank_stack",
-        "x": 18,
+        "x": 17.5,
         "y": 9.985,
         "scale": 2.2,
         "collisionScale": 2.2
@@ -51401,15 +51401,15 @@
         "intensity": 0.3
       },
       {
-        "x": 18,
+        "x": 12,
         "y": 7,
         "radius": 4.199999999999999,
         "kind": "warm",
         "intensity": 0.3
       },
       {
-        "x": 12,
-        "y": 8,
+        "x": 18,
+        "y": 7,
         "radius": 4.199999999999999,
         "kind": "warm",
         "intensity": 0.3
@@ -51491,26 +51491,26 @@
         ]
       },
       {
-        "x": 14.5,
-        "y": 4,
+        "x": 16.5,
+        "y": 4.5,
         "id": "07-01-g2",
         "role": "corridor",
         "routeId": "07-01-g2",
-        "facing": 0,
+        "facing": -2.896613990462929,
         "pace": 0.8,
         "startDelay": 0,
         "visionRange": 5.427999999999999,
         "visionHalfAngle": 0.5654866776461628,
-        "initialFacing": 0,
+        "initialFacing": -2.896613990462929,
         "theftRole": "zone",
         "theftPosts": [
           {
-            "x": 14.5,
-            "y": 4
+            "x": 16.5,
+            "y": 4.5
           },
           {
-            "x": 20,
-            "y": 4
+            "x": 20.5,
+            "y": 2.5
           }
         ],
         "theftSearchSectors": [
@@ -51518,12 +51518,12 @@
             "id": "07-01-g2: Side Wall Gallery",
             "anchors": [
               {
-                "x": 14.5,
-                "y": 4
+                "x": 16.5,
+                "y": 4.5
               },
               {
-                "x": 20,
-                "y": 4
+                "x": 20.5,
+                "y": 2.5
               }
             ]
           }
@@ -51577,7 +51577,7 @@
         "facing": -1.6951513213416582,
         "pace": 0.8,
         "startDelay": 0,
-        "visionRange": 5.427999999999999,
+        "visionRange": 4.72236,
         "visionHalfAngle": 0.5654866776461628,
         "initialFacing": -1.6951513213416582,
         "theftRole": "objective",
@@ -51660,17 +51660,17 @@
         "mode": "loop",
         "points": [
           {
-            "x": 14.5,
-            "y": 4,
-            "waitDuration": 3,
-            "lookDirection": 0,
+            "x": 16.5,
+            "y": 4.5,
+            "waitDuration": 2,
+            "lookDirection": -2.896613990462929,
             "turnDuration": 0.4
           },
           {
-            "x": 20,
-            "y": 4,
-            "waitDuration": 3,
-            "lookDirection": 3.141592653589793,
+            "x": 20.5,
+            "y": 2.5,
+            "waitDuration": 2,
+            "lookDirection": 2.677945044588987,
             "turnDuration": 0.4
           }
         ]
@@ -51690,7 +51690,7 @@
             "x": 20,
             "y": 11,
             "waitDuration": 3,
-            "lookDirection": -2.760591150773652,
+            "lookDirection": -2.855541211872475,
             "turnDuration": 0.4
           }
         ]
@@ -51731,7 +51731,7 @@
             "x": 7.25,
             "y": 11,
             "waitDuration": 7,
-            "lookDirection": -2.969638189914949,
+            "lookDirection": -2.2004415094410525,
             "turnDuration": 0.4
           },
           {
@@ -51877,68 +51877,72 @@
             "y": 16.5
           },
           {
-            "x": 17.75,
-            "y": 14.75
-          },
-          {
-            "x": 13.75,
-            "y": 14.75
-          },
-          {
-            "x": 12.5,
-            "y": 16.5
-          },
-          {
-            "x": 12.5,
-            "y": 18.25
-          },
-          {
-            "x": 12.5,
+            "x": 18.5,
             "y": 13.5
           },
           {
-            "x": 12,
+            "x": 18,
             "y": 13.5
           },
           {
-            "x": 12,
+            "x": 18,
             "y": 11.5
           },
           {
-            "x": 8.5,
+            "x": 20,
             "y": 11.5
           },
           {
-            "x": 4.5,
-            "y": 11.5
-          },
-          {
-            "x": 2.25,
-            "y": 10.75
-          },
-          {
-            "x": 1.75,
-            "y": 9.75
-          },
-          {
-            "x": 2.25,
-            "y": 8.25
-          },
-          {
-            "x": 3.75,
+            "x": 20,
             "y": 7.75
           },
           {
-            "x": 4.5,
+            "x": 18.75,
+            "y": 7.75
+          },
+          {
+            "x": 18.75,
             "y": 6.5
           },
           {
-            "x": 4.5,
-            "y": 5.25
+            "x": 18.75,
+            "y": 4
+          },
+          {
+            "x": 17.5,
+            "y": 4
+          },
+          {
+            "x": 14.5,
+            "y": 4
+          },
+          {
+            "x": 14.5,
+            "y": 3.5
+          },
+          {
+            "x": 11,
+            "y": 3.5
+          },
+          {
+            "x": 8.5,
+            "y": 3.5
+          },
+          {
+            "x": 6.25,
+            "y": 4.75
+          },
+          {
+            "x": 4.25,
+            "y": 4.75
+          },
+          {
+            "x": 3,
+            "y": 3.5
           },
           {
             "x": 1.75,
-            "y": 2.25
+            "y": 2.75
           },
           {
             "x": 2,
@@ -52033,16 +52037,12 @@
             "y": 11.5
           },
           {
-            "x": 15.75,
+            "x": 19.75,
             "y": 10.75
           },
           {
-            "x": 15.75,
+            "x": 19.75,
             "y": 8.75
-          },
-          {
-            "x": 17.75,
-            "y": 7.75
           },
           {
             "x": 18,
@@ -52076,7 +52076,7 @@
         "name": "Central Court",
         "x": 12,
         "y": 11.5,
-        "radius": 3,
+        "radius": 3.5,
         "guardId": "07-01-g1"
       },
       {
@@ -52090,7 +52090,7 @@
         "name": "West Gallery",
         "x": 18,
         "y": 11.5,
-        "radius": 3.5,
+        "radius": 4,
         "guardId": "07-01-g3"
       },
       {
@@ -52178,6 +52178,20 @@
           "h": 7
         },
         {
+          "id": "court",
+          "name": "Central Court",
+          "role": "transition",
+          "purpose": "Risk crossing around the statue: shortest line to the collection",
+          "x": 9,
+          "y": 6,
+          "w": 6,
+          "h": 7,
+          "hub": {
+            "x": 12,
+            "y": 11.5
+          }
+        },
+        {
           "id": "westGallery",
           "name": "West Gallery",
           "role": "escape",
@@ -52189,21 +52203,7 @@
           "x": 15,
           "y": 6,
           "w": 6,
-          "h": 7
-        },
-        {
-          "id": "court",
-          "name": "Central Court",
-          "role": "transition",
-          "purpose": "Risk crossing around the statue: shortest line to the collection",
-          "x": 9,
-          "y": 7,
-          "w": 6,
-          "h": 6,
-          "hub": {
-            "x": 12,
-            "y": 11.5
-          }
+          "h": 8
         },
         {
           "id": "hall",
@@ -52281,32 +52281,6 @@
             {
               "x": 4.5,
               "y": 5.25
-            }
-          ]
-        },
-        {
-          "from": "hall",
-          "to": "court",
-          "role": "risk",
-          "via": [
-            {
-              "x": 12.5,
-              "y": 13.5
-            },
-            {
-              "x": 12,
-              "y": 13.5
-            }
-          ]
-        },
-        {
-          "from": "court",
-          "to": "wallGallery",
-          "role": "risk",
-          "via": [
-            {
-              "x": 8.5,
-              "y": 11.5
             }
           ]
         },
@@ -52395,6 +52369,106 @@
               "y": 3.5
             }
           ]
+        },
+        {
+          "from": "lobby",
+          "to": "westGallery",
+          "role": "risk",
+          "via": [
+            {
+              "x": 18.5,
+              "y": 13.5
+            },
+            {
+              "x": 18,
+              "y": 13.5
+            }
+          ]
+        },
+        {
+          "from": "sideGallery",
+          "to": "foyer",
+          "role": "risk",
+          "via": [
+            {
+              "x": 14.5,
+              "y": 4
+            },
+            {
+              "x": 14.5,
+              "y": 3.5
+            }
+          ]
+        },
+        {
+          "from": "foyer",
+          "to": "collection",
+          "role": "risk",
+          "via": [
+            {
+              "x": 8.5,
+              "y": 3.5
+            },
+            {
+              "x": 3,
+              "y": 3.5
+            }
+          ]
+        },
+        {
+          "from": "court",
+          "to": "foyer",
+          "role": "risk",
+          "door": {
+            "at": {
+              "x": 10.5,
+              "y": 6.5
+            },
+            "orientation": "horizontal",
+            "lockdown": true,
+            "style": "warehouseIndustrial"
+          },
+          "via": [
+            {
+              "x": 10.5,
+              "y": 11.5
+            },
+            {
+              "x": 10.5,
+              "y": 6.5
+            },
+            {
+              "x": 10.5,
+              "y": 3.5
+            }
+          ]
+        },
+        {
+          "from": "westGallery",
+          "to": "sideGallery",
+          "role": "risk",
+          "via": [
+            {
+              "x": 20,
+              "y": 11.5
+            },
+            {
+              "x": 20,
+              "y": 7.75
+            },
+            {
+              "x": 18.75,
+              "y": 7.75
+            },
+            {
+              "x": 18.75,
+              "y": 6.5
+            },
+            {
+              "x": 18.75,
+              "y": 4
+            }
+          ]
         }
       ],
       "entryRoom": "lobby",
@@ -52422,9 +52496,9 @@
       ],
       "risk": [
         "lobby",
-        "hall",
-        "court",
-        "wallGallery",
+        "westGallery",
+        "sideGallery",
+        "foyer",
         "collection"
       ],
       "quickEscape": [
@@ -52499,7 +52573,7 @@
         {
           "kind": "warehousePlankStack",
           "visualAssetId": "warehouse_plank_stack",
-          "x": 18,
+          "x": 17.5,
           "y": 9.985,
           "scale": 2.2,
           "collisionScale": 2.2
@@ -52577,9 +52651,9 @@
           "h": 1
         },
         {
-          "x": 15,
+          "x": 12,
           "y": 6,
-          "w": 2,
+          "w": 5,
           "h": 1
         },
         {
@@ -52595,9 +52669,9 @@
           "h": 1
         },
         {
-          "x": 11,
+          "x": 12,
           "y": 7,
-          "w": 2,
+          "w": 1,
           "h": 1
         },
         {
@@ -52623,6 +52697,18 @@
           "y": 13,
           "w": 5,
           "h": 1
+        },
+        {
+          "x": 15,
+          "y": 13,
+          "w": 2,
+          "h": 1
+        },
+        {
+          "x": 20,
+          "y": 13,
+          "w": 1,
+          "h": 1
         }
       ],
       "patrols": [
@@ -52644,12 +52730,12 @@
           "room": "sideGallery",
           "points": [
             {
-              "x": 14.5,
-              "y": 4
+              "x": 16.5,
+              "y": 4.5
             },
             {
-              "x": 20,
-              "y": 4
+              "x": 20.5,
+              "y": 2.5
             }
           ],
           "role": "corridor"
@@ -52797,6 +52883,20 @@
         "h": 7
       },
       {
+        "id": "court",
+        "name": "Central Court",
+        "role": "transition",
+        "purpose": "Risk crossing around the statue: shortest line to the collection",
+        "x": 9,
+        "y": 6,
+        "w": 6,
+        "h": 7,
+        "hub": {
+          "x": 12,
+          "y": 11.5
+        }
+      },
+      {
         "id": "westGallery",
         "name": "West Gallery",
         "role": "escape",
@@ -52808,21 +52908,7 @@
         "x": 15,
         "y": 6,
         "w": 6,
-        "h": 7
-      },
-      {
-        "id": "court",
-        "name": "Central Court",
-        "role": "transition",
-        "purpose": "Risk crossing around the statue: shortest line to the collection",
-        "x": 9,
-        "y": 7,
-        "w": 6,
-        "h": 6,
-        "hub": {
-          "x": 12,
-          "y": 11.5
-        }
+        "h": 8
       },
       {
         "id": "hall",
@@ -52871,7 +52957,7 @@
         "style": "warehouseIndustrial"
       },
       {
-        "id": "07-01-door-5",
+        "id": "07-01-door-3",
         "x": 8.5,
         "y": 3.5,
         "width": 3,
@@ -52883,10 +52969,25 @@
         "initialState": "OPEN",
         "lockdownBehavior": "close",
         "style": "warehouseIndustrial"
+      },
+      {
+        "id": "07-01-door-12",
+        "x": 10.5,
+        "y": 6.5,
+        "width": 3,
+        "type": "solid",
+        "orientation": "horizontal",
+        "thickness": 0.2,
+        "closeDuration": 0.65,
+        "occupancyMargin": 0.05,
+        "initialState": "OPEN",
+        "lockdownBehavior": "close",
+        "style": "warehouseIndustrial"
       }
     ],
     "lockdownDoors": [
-      "07-01-door-5"
+      "07-01-door-3",
+      "07-01-door-12"
     ],
     "patrolPlan": {
       "zones": [],
@@ -52904,7 +53005,7 @@
         "pauseAtEnds": 0.6,
         "range": 5.4,
         "visionAngle": 0.65,
-        "suspicionRate": 0.5599999999999999
+        "suspicionRate": 0.5
       },
       {
         "id": "07-01-cam2",
@@ -73076,7 +73177,7 @@
           {
             "x": 19.9,
             "y": 12.6,
-            "waitDuration": 3,
+            "waitDuration": 1,
             "lookDirection": 2.0729170685584766,
             "turnDuration": 0.4
           },

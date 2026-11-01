@@ -1,0 +1,35 @@
+{
+  "note": "Environment Pass 2, lab_gas_rack yaw attempt, starting from the production file lab/polished/lab_gas_rack.png (height already 0.92×). The open frame cannot be split into faces; instead the right side face (back-right post and the two slanted side rails, canvas x > 290) is dropped, the base plate's slanted bottom edge is levelled through the front quad, and the top rail is extended over the front-left post with a copied rail segment. Coordinates read on a 16 px grid of the polished file (2026-10-23).",
+  "outDir": "assets/environment/_candidates/environment-pass2/gasrack",
+  "pieces": [
+    {
+      "id": "lab_gas_rack",
+      "front": {
+        "tl": [
+          74,
+          47
+        ],
+        "tr": [
+          284,
+          47
+        ],
+        "br": [
+          284,
+          356
+        ],
+        "bl": [
+          74,
+          365
+        ]
+      },
+      "farLeftX": 74,
+      "farRightX": 284,
+      "topY": 47,
+      "widthScale": 1.0,
+      "heightScale": 1,
+      "topScale": 1,
+      "stickers": [],
+      "attempt2": "cut at the front-right post (284) so no slice of the back rails remains; no rail extension"
+    }
+  ]
+}

@@ -78,9 +78,12 @@ export interface AtlasManifest {
 
 export interface AssetManifest {
   characters: { player: CharacterManifest | null; guard: CharacterManifest | null };
-  environment: { museum: AtlasManifest | null; production?:EnvironmentAssetSpec[] };
+  environment: { museum: AtlasManifest | null; production?:EnvironmentAssetSpec[]; labFloor?: LabFloorTiles | null };
   ui: { indicators: AtlasManifest | null };
 }
+
+/** Lab floor tile set: frame name (as drawn by venueArt.ts) → image key. */
+export type LabFloorTiles = Readonly<Record<'a' | 'b' | 'c' | 'd' | 'inlay' | 'restricted_a' | 'restricted_b', ImageKey>>;
 
 /** All bitmap sources. Metro needs static `require` calls, so they live here. */
 export const IMAGE_SOURCES = {
@@ -97,6 +100,14 @@ export const IMAGE_SOURCES = {
   guardRun: require('../../assets/characters/guard_run.png'),
   guardWhistle: require('../../assets/characters/guard_whistle.png'),
   guardSearch: require('../../assets/characters/guard_search.png'),
+  // Environment Pass 3: Lab floor tiles (128 px = one 40-unit cell). Loaded only while LAB_FLOOR_TILES is in the manifest.
+  labFloorA: require('../../assets/environment/lab/floor/lab_floor_tile_a.png'),
+  labFloorB: require('../../assets/environment/lab/floor/lab_floor_tile_b.png'),
+  labFloorC: require('../../assets/environment/lab/floor/lab_floor_tile_c.png'),
+  labFloorD: require('../../assets/environment/lab/floor/lab_floor_tile_d.png'),
+  labFloorInlay: require('../../assets/environment/lab/floor/lab_floor_tile_inlay.png'),
+  labFloorRestrictedA: require('../../assets/environment/lab/floor/lab_floor_tile_restricted_a.png'),
+  labFloorRestrictedB: require('../../assets/environment/lab/floor/lab_floor_tile_restricted_b.png'),
 } as const;
 export type ImageKey = keyof typeof IMAGE_SOURCES;
 
@@ -204,9 +215,15 @@ export const LOCOMOTION_VISUAL_REVIEW = [
  * release gate does not block play. Production visual approval is still pending
  * (see LOCOMOTION_VISUAL_REVIEW); the procedural rig remains a DEV fallback.
  */
+/** Environment Pass 3 (2026-10-24): Lab floor tile set B. Set `labFloor` to null below to restore the code-drawn floor. */
+const LAB_FLOOR_TILES: LabFloorTiles = {
+  a: 'labFloorA', b: 'labFloorB', c: 'labFloorC', d: 'labFloorD',
+  inlay: 'labFloorInlay', restricted_a: 'labFloorRestrictedA', restricted_b: 'labFloorRestrictedB',
+};
+
 export const ASSET_MANIFEST: AssetManifest = {
   characters: { player: LOCOMOTION_CHARACTERS.player, guard: LOCOMOTION_CHARACTERS.guard },
-  environment: { museum: MUSEUM_ATLAS, production:ENVIRONMENT_ASSETS },
+  environment: { museum: MUSEUM_ATLAS, production:ENVIRONMENT_ASSETS, labFloor: LAB_FLOOR_TILES },
   ui: { indicators: null },
 };
 

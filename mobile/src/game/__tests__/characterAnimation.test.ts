@@ -6,8 +6,26 @@ import { Anim } from '../../rendering/sprites/spriteTypes';
 import { createGuardPlayback, guardAnimation, stepGuardPlayback,guardStrideContract } from '../../rendering/characters/guardAnimation';
 import { characterReleaseStatus, runtimeCharacterIssues } from '../../assets/characterReadiness';
 import type { AssetManifest } from '../../assets/manifest';
+import {campaignStages} from '../levels/campaignStages';
+import {compileStage} from '../world/compileStage';
+import {createGuardState} from '../guards/guardBrain';
+import {createPlaygroundState} from '../playground/playgroundState';
 
 const pose={x:100,y:100,speed:0,awareness:Awareness.Patrol as number,action:GuardAction.None as number,whistleT:0};
+test('campaign guard playback initialization is independent of guard phase',()=>{
+ const strides=[[36,37,38,39],[52,53,54,55]];
+ for(const def of campaignStages){
+  const stage=compileStage(def);
+  for(const contract of [undefined,strides]){
+   const state=createPlaygroundState(stage,contract);
+   stage.guards.forEach((guard,i)=>{
+    const baseline=createGuardPlayback(createGuardState(guard),contract);
+    assert.deepEqual(state.guardPlayback[i],baseline,`${def.id} guard ${i}`);
+    assert.equal(state.guards[i].phase,(i*.37)%1);
+   });
+  }
+ }
+});
 test('Guard animation reads AI state without changing facing or behavior',()=>{
   for(const [awareness,speed,expected] of [
     [Awareness.Patrol,0,Anim.Idle],[Awareness.Patrol,50,Anim.Walk],

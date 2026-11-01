@@ -1,0 +1,55 @@
+{
+  "path": "assets/environment/gallery/polished/gallery_modern_bench.png",
+  "resolution": {
+    "width": 384,
+    "height": 384
+  },
+  "objectBounds": {
+    "x": 12,
+    "y": 244,
+    "w": 360,
+    "h": 128
+  },
+  "pivot": {
+    "x": 0.5,
+    "y": 0.97,
+    "units": "normalized"
+  },
+  "source": {
+    "path": "assets/environment/_source/gallery_modern_bench.png",
+    "resolution": {
+      "width": 1536,
+      "height": 1024
+    },
+    "bounds": {
+      "x": 22,
+      "y": 255,
+      "w": 1493,
+      "h": 530
+    }
+  },
+  "diagnostics": {
+    "opaquePixels": 33061,
+    "transparentFraction": 0.7744954427083334,
+    "edgePixels": 0,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "bounds": {
+      "x": 16,
+      "y": 244,
+      "w": 352,
+      "h": 126
+    }
+  },
+  "polishedFrom": {
+    "original": "assets/environment/gallery/soft/gallery_modern_bench.png",
+    "originalMd5": "d488dd279f7a78575f176397edcf1623",
+    "candidate": "Reports/Chapter02QualityPass/candidates/gallery_modern_bench.png",
+    "candidateMd5": "f09222cb6ef6f4e37b2e9287b0838d82",
+    "date": "2026-10-28"
+  }
+}

@@ -11,6 +11,9 @@
  *                    camera, table rotation, moved pieces and replaced patrols; Ch6 secure())
  *   Chapter 7, 8     the base plan at stage 1 only (frozen) → 5 derive (mirror, re-furnish, secure())
  *                    → 6 camera pins → 7 late lane ops
+ *   Chapter 6–8      → 8 Gameplay v3 rework (v13Rework.ts: wall cells, route edges, moved pieces and patrols)
+ *   All chapters     → 9 cover checkpoints → 10 patrol polish → 11 exit watch
+ *   Compilation      → 12 mission-specific visual placement / security timing
  *
  * Chapter-wide rules (the Casino SWAP table, the Mansion / Warehouse / HQ refits and picture tables, secure()) are
  * not per-mission overrides and are not listed here.
@@ -20,15 +23,17 @@
  */
 import {PHASE7,REPLACED,LANES,LATE,type LaneOp} from './v13Phase7';
 import {PINNED,HQ_PATROL} from './v13Late';
+import {REWORK} from './v13Rework';
 import {EXTRA_CAMERA,ROTATE,MOVED,PATROL} from './v13Casino';
 import {DERIVED_FROM,baseMissionOf,type DerivedChapter} from './v13Sources';
 import {COVER_CHECKPOINTS} from './v13CoverCheckpoints';
 import {PATROL_POLISH} from './v13PatrolPolish';
 import {EXIT_CAMERA_WATCH} from './v13ExitWatch';
+import {COMPOSE_PATROL_TIMINGS} from './v13ComposeTuning';
 
-export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late','8 cover checkpoints','9 patrol polish','10 exit watch'] as const;
+export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late','8 rework','9 cover checkpoints','10 patrol polish','11 exit watch','12 compose'] as const;
 export type OverrideStage=typeof STAGES[number];
-export type OverrideCategory='authored in plan'|'wall cell'|'route anchor'|'patrol stop'|'structure added'|'structure replaced'|'structure moved'|'patrol replaced'|'camera added'|'camera pinned'|'art rotation'|'refit exception';
+export type OverrideCategory='authored in plan'|'wall cell'|'route edge'|'route anchor'|'patrol stop'|'structure added'|'structure replaced'|'structure moved'|'patrol replaced'|'camera added'|'camera pinned'|'art rotation'|'refit exception';
 export interface OverrideEntry {mission:string;stage:OverrideStage;category:OverrideCategory;file:string;table:string;detail:string;why?:string;
  /** Set when the entry belongs to the base plan this mission is derived from. Coordinates are the base plan's: the derived mission is mirrored. */
  inheritedFrom?:string;}
@@ -70,12 +75,26 @@ function own(id:string):OverrideEntry[]{
  if(id==='07-05')out.push({mission:id,stage:'5 derive',category:'refit exception',file:'v13Late.ts',table:'WAREHOUSE (mission===4)',detail:'desk slots become conveyors instead of workbenches',why:'both desks stand beside a waiting pocket, where the deeper workbench does not fit'});
  for(const [zone,at] of Object.entries(PINNED[id]??{}))out.push({mission:id,stage:'6 pin',category:'camera pinned',file:'v13Late.ts',table:'PINNED',detail:`generated camera of zone ${zone} held at ${p(at)}`,why:'secure() would re-seat it after the furniture change'});
  if(LATE[id])out.push(...laneEntries(id,LATE[id].ops,LATE[id].why,'7 late','LATE'));
+ const rw=REWORK[id];
+ if(rw){const base={mission:id,stage:'8 rework' as const,file:'v13Rework.ts',table:'REWORK',why:rw.why};
+  for(const [x,y,ch] of rw.cells??[])out.push({...base,category:'wall cell',detail:ch==='#'?`floor cell (${x},${y}) becomes wall`:`wall cell (${x},${y}) becomes floor of zone '${ch}'`});
+  for(const [f,t,r] of rw.dropEdges??[])out.push({...base,category:'route edge',detail:`- ${r} edge ${f} → ${t}`});
+  for(const e of rw.addEdges??[])out.push({...base,category:'route edge',detail:`+ ${e.role} edge ${e.from} → ${e.to}${e.door?` with a ${e.door.lockdown?'lockdown ':''}door at ${p(e.door.at)}`:''}`});
+  for(const [name,q] of Object.entries(rw.structures??{}))out.push({...base,category:q===null?'structure replaced':'structure moved',detail:q===null?`- ${name}`:`${name} → ${JSON.stringify(q)}`});
+  for(const s of rw.add??[])out.push({...base,category:'structure added',detail:`+ ${s.name} (${s.asset}) at ${p(s)} ×${s.scale}`});
+  for(const [i,g] of Object.entries(rw.guards??{}))out.push({...base,category:'patrol replaced',detail:`guard ${i} walks ${(g.stops??[]).map(q=>p(q)).join(' ↔ ')}`});
+  for(const [i,c] of Object.entries(rw.cameras??{}))out.push({...base,category:'camera pinned',detail:`camera ${i} ${c.at?`at ${p(c.at)}`:''} ${c.facing!==undefined?`facing ${c.facing}`:''}`.trim()});
+ }
  const patrol=HQ_PATROL[id];
  if(patrol)out.push({mission:id,stage:'7 late',category:'patrol stop',file:'v13Late.ts',table:'HQ_PATROL',detail:`${patrol.zone} first stop looks at ${p(patrol.look)}, waits ${patrol.wait}s`,why:patrol.watches});
- if(COVER_CHECKPOINTS[id])out.push({mission:id,stage:'8 cover checkpoints',category:'patrol replaced',file:'v13CoverCheckpoints.json',table:'COVER_CHECKPOINTS',
+ if(COVER_CHECKPOINTS[id])out.push({mission:id,stage:'9 cover checkpoints',category:'patrol replaced',file:'v13CoverCheckpoints.json',table:'COVER_CHECKPOINTS',
   detail:COVER_CHECKPOINTS[id].map(q=>`${q.structure}: guard${q.guard+1} at ${p(q.post)}`).join('; '),why:'Actual hidden waiting place / adjacent visible crossing, with semantic patrol inspection'});
- if(PATROL_POLISH[id])out.push({mission:id,stage:'9 patrol polish',category:'patrol stop',file:'v13PatrolPolish.ts',table:'PATROL_POLISH',detail:PATROL_POLISH[id].map(e=>`guard${e.guard+1}: ${e.why}`).join('; ')});
- if(EXIT_CAMERA_WATCH[id])out.push({mission:id,stage:'10 exit watch',category:'camera pinned',file:'v13ExitWatch.ts',table:'EXIT_CAMERA_WATCH',detail:EXIT_CAMERA_WATCH[id].why});
+ if(PATROL_POLISH[id])out.push({mission:id,stage:'10 patrol polish',category:'patrol stop',file:'v13PatrolPolish.ts',table:'PATROL_POLISH',detail:PATROL_POLISH[id].map(e=>`guard${e.guard+1}: ${e.why}`).join('; ')});
+ if(EXIT_CAMERA_WATCH[id])out.push({mission:id,stage:'11 exit watch',category:'camera pinned',file:'v13ExitWatch.ts',table:'EXIT_CAMERA_WATCH',detail:EXIT_CAMERA_WATCH[id].why});
+ const timing=COMPOSE_PATROL_TIMINGS[id];
+ if(timing)out.push({mission:id,stage:'12 compose',category:'patrol stop',file:'v13ComposeTuning.ts',table:'COMPOSE_PATROL_TIMINGS',detail:`${timing.label} at (${timing.x},${timing.y}): wait ${timing.before} → ${timing.after} seconds`,why:timing.why});
+ if(id==='02-03')out.push({mission:id,stage:'12 compose',category:'structure moved',file:'v13Builder.ts',table:'composeV13',detail:'Middle Lane Sculpture (19,8.75) → (19,7.15)',why:'Separate the sculpture from the lower glass panel without altering the derived Mansion mission'});
+
  return out;
 }
 /** Every override that reaches a mission: inherited ones first (they are applied first), then its own, in stage order. */

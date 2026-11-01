@@ -53,6 +53,10 @@ export const MOVED:Record<string,Record<string,{x:number;y:number;why:string}>>=
 /** A Casino guard whose patrol is not the mirror of the Bank one (Casino coordinates). Only the stops and the note
  *  change: the guard, his role, his zone and his place in the guard list stay, and no guard is added. */
 export const PATROL:Record<string,Partial<Record<V13Mission['guards'][number]['role'],{stops:V13Mission['guards'][number]['stops'];watches:string;why:string}>>>={
+ '05-02':{objective:{
+  stops:[{x:2.8,y:17.25,look:{x:2.5,y:19.3},wait:2},{x:8.75,y:11.5,look:{x:12.5,y:11.5},wait:5}],
+  watches:'The jewel; between inspections walks up to the Staff Pool',
+  why:'Patrol fix: move the jewel inspection post 2 px east. The return diagonal grazed the cashier cage expanded AABB for two frames (the round body still cleared its corner). Both inspection subjects, waits and the corridor crossing remain unchanged.'}},
  '05-05':{objective:{
   stops:[{x:8.75,y:4,look:{x:9.5,y:2.2},wait:2},{x:19.5,y:4.5,look:{x:22,y:4.25},wait:3}],
   watches:'The count room jewel; between inspections walks the length of the count room to its east end and looks into the chip room',

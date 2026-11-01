@@ -6,7 +6,7 @@ type Edit={guard:number;why:string}&(
 /** Reviewed local patrol repairs, after cover assignments and chapter derivation.
  * No new guards, speed/perception changes or architecture changes. */
 export const PATROL_POLISH:Record<string,Edit[]>={
- '05-02':[{guard:3,after:0,stop:{x:4.25,y:16.5,look:{x:4.25,y:15.5},wait:0},
+ '05-02':[{guard:3,after:0,stop:{x:3.6,y:16.5,look:{x:3.6,y:15.5},wait:0},
   why:'Pass the east side of the cashier cage before turning toward the jewel; leave body clearance on the return leg.'}],
  '06-01':[
   {guard:0,after:0,stop:{x:11.75,y:2.5,look:{x:18.5,y:2.5},wait:2},

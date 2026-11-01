@@ -21,6 +21,7 @@ function load(file) {
 const travelModule = load(path.join(root, 'game/guards/guardTravel.ts'));
 const systemModule = load(path.join(root, 'game/guards/guardSystem.ts'));
 const visionModule = load(path.join(root, 'game/guards/guardVision.ts'));
+const motionModule = load(path.join(root, 'game/guards/guardMotion.ts'));
 function onUI(fn, cache = new Map()) {
   if (cache.has(fn)) return cache.get(fn);
   assert(fn.__initData, 'worklet must have serialized code');
@@ -40,6 +41,21 @@ function guard() {
 function nav(blockers = []) {
   return { blockers, radius: 1, cols: 0, rows: 0, cell: 20, walkable: [], neighbors: [], components: [] };
 }
+
+test('serialized guard locomotion advances actual displacement with initialized dependencies', () => {
+  const advance=onUI(motionModule.advanceGuardLocomotion);
+  const g={speed:72,gait:2,phase:0.2,dist:11};
+  advance(g,0.5);
+  assert.equal(g.gait,2);
+  assert(Math.abs(g.phase-0.1)<1e-12);
+  assert.equal(g.dist,47);
+  const stopped={speed:0,gait:2,phase:0.3,dist:12};
+  advance(stopped,1/60);
+  assert(stopped.gait<2);
+  assert.equal(stopped.phase,0.3);
+  assert.equal(stopped.dist,12);
+  assert.equal(systemModule.stepGuards.__closure.moveAlertGuard.__closure.advanceGuardLocomotion,motionModule.advanceGuardLocomotion);
+});
 
 test('serialized vision reuses exact geometry and invalidates a closed door without stale captures', () => {
   const build=onUI(visionModule.buildVisionFan);

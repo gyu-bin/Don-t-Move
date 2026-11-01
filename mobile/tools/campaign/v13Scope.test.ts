@@ -78,10 +78,15 @@ test('V13: guards and CCTV retain roles and speed with explicit chapter pressure
   assert.equal(def.guards.length,guards,`${m.id} guard count`);
   assert.equal(def.cameras?.length??0,cameras,`${m.id} camera count`);
   assert.equal(def.guards.filter(g=>g.role==='objective').length,1,`${m.id} one objective guard`);
+  if(m.id==='07-01'){
+   assert.equal(def.guards.filter(g=>g.id==='07-01-g4'&&g.role==='objective').length,1,'07-01 tuned objective guard');
+   assert.equal(def.cameras?.filter(c=>c.id==='07-01-cam1').length,1,'07-01 tuned camera');
+  }
   def.guards.forEach((g,i)=>{
    const pressure=chapterDifficulty(def.chapter!).security,base=old.guards[Math.min(i,old.guards.length-1)];
    assert.equal(g.pace,base.pace,`${m.id} pace`);
-   assert.equal(g.visionRange,base.visionRange!*pressure.guardRange,`${m.id} range`);
+   const expectedRange=m.id==='07-01'&&g.id==='07-01-g4'?4.72236:base.visionRange!*pressure.guardRange;
+   assert.equal(g.visionRange,expectedRange,`${m.id} ${g.id} range`);
    assert.equal(g.visionHalfAngle,base.visionHalfAngle!*pressure.guardAngle,`${m.id} cone`);
    const route=def.patrolRoutes.find(r=>r.id===g.routeId)!;
    assert.equal(g.x,route.points[0].x);assert.equal(g.y,route.points[0].y);
@@ -89,8 +94,11 @@ test('V13: guards and CCTV retain roles and speed with explicit chapter pressure
    assert.equal(route.points.filter(p=>(p.waitDuration??0)>0).length>=2,true,`${m.id} guard ${i} has two posts`);
   });
   const template=before.flatMap(s=>s.chapter===def.chapter?s.cameras??[]:[])[0];
-  for(const camera of def.cameras??[])for(const key of ['range','visionAngle','sweepAngle','sweepSpeed','pauseAtEnds','suspicionRate'] as const)
-   assert.deepEqual(camera[key],template[key]===undefined?undefined:template[key]*(key==='range'?chapterDifficulty(def.chapter!).security.cameraRange:key==='suspicionRate'?chapterDifficulty(def.chapter!).security.cameraGain:1),`${m.id} ${camera.id} ${key}`);
+  for(const camera of def.cameras??[])for(const key of ['range','visionAngle','sweepAngle','sweepSpeed','pauseAtEnds','suspicionRate'] as const){
+   const expected=m.id==='07-01'&&camera.id==='07-01-cam1'&&key==='suspicionRate'?0.5:
+    template[key]===undefined?undefined:template[key]*(key==='range'?chapterDifficulty(def.chapter!).security.cameraRange:key==='suspicionRate'?chapterDifficulty(def.chapter!).security.cameraGain:1);
+   assert.deepEqual(camera[key],expected,`${m.id} ${camera.id} ${key}`);
+  }
  }
  // Museum stays the easy chapter: at most one camera in the whole chapter.
  assert.equal(live.filter(d=>d.chapter===1).reduce((n,d)=>n+(d.cameras?.length??0),0),1);

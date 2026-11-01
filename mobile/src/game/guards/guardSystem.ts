@@ -1,5 +1,5 @@
 import { damp, turnToward } from '../core/math';
-import { gaitFromSpeed, strideCycleLength } from '../core/locomotion';
+import { advanceGuardLocomotion } from './guardMotion';
 import { Awareness, GuardAction } from '../core/types';
 import { clearSegment } from '../world/navigation';
 import { pursue, travel } from './guardTravel';
@@ -155,9 +155,7 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
   } else {
     g.speed = 0; // Wait for the last returning colleague before normal patrol resumes.
   }
-  g.gait += (gaitFromSpeed(g.speed) - g.gait) * damp(14, dt);
-  g.phase = (g.phase + g.speed * dt / strideCycleLength(g.gait)) % 1;
-  g.dist += g.speed * dt;
+  advanceGuardLocomotion(g, dt);
   g.actionT += ((g.action === GuardAction.None ? 0 : 1) - g.actionT) * damp(12, dt);
 }
 

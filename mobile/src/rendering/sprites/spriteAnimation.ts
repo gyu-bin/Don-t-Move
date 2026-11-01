@@ -68,6 +68,7 @@ export function drawSpriteFrame(
   scale: number,
   mirror: boolean,
   paint: SkPaint,
+  linear = false,
 ): void {
   'worklet';
   if (!f || !Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(scale)) return;
@@ -87,9 +88,10 @@ export function drawSpriteFrame(
     canvas.translate(x, 0);
     canvas.scale(-1, 1);
     canvas.translate(-x, 0);
-    canvas.drawImageRect(f.image, src, dst, paint);
-    canvas.restore();
-  } else {
-    canvas.drawImageRect(f.image, src, dst, paint);
   }
+  // Linear: FilterMode.Linear (1), MipmapMode.None (0) — numeric so the worklet captures no enum objects.
+  // drawImageRectOptions clamps sampling to `src` (kStrict), so neighbouring atlas frames never bleed in.
+  if (linear) canvas.drawImageRectOptions(f.image, src, dst, 1, 0, paint);
+  else canvas.drawImageRect(f.image, src, dst, paint);
+  if (mirror) canvas.restore();
 }

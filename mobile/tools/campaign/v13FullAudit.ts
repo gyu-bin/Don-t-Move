@@ -30,6 +30,7 @@ const GAP_LIMIT=8;
 /** No accepted collision exceptions remain. The 05-02 cashier tangent was repaired
  * by an explicit clear patrol leg; the body-clearance threshold stays unchanged. */
 export const KNOWN:Record<string,{issue:string;why:string}[]>={};
+
 const t=(v:number)=>(v/TILE).toFixed(2);
 export function auditMission(def:StageDefinition){
  const stage=compileStage(def),mov=stage.movementBlockers,solid=mov.slice(stage.wallRects.length*4),issues:string[]=[],notes:string[]=[];

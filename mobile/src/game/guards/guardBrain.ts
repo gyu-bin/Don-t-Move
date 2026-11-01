@@ -1,5 +1,6 @@
 import { clamp, damp, turnToward, wrapAngle } from '../core/math';
-import { gaitFromSpeed, gaitLerp, strideCycleLength } from '../core/locomotion';
+import { gaitLerp } from '../core/locomotion';
+import { advanceGuardLocomotion } from './guardMotion';
 import { Awareness, GuardAction } from '../core/types';
 import type { CompiledGuard } from '../world/compileStage';
 import { findPath } from '../world/navigation';
@@ -571,7 +572,5 @@ export function stepGuard(
   // Animation blend for actions + gait from real speed.
   const actionOn = g.action !== GuardAction.None ? 1 : 0;
   g.actionT += (actionOn - g.actionT) * damp(12, dt);
-  g.gait += (gaitFromSpeed(g.speed) - g.gait) * damp(14, dt);
-  g.phase = (g.phase + (g.speed * dt) / strideCycleLength(g.gait)) % 1;
-  g.dist += g.speed * dt;
+  advanceGuardLocomotion(g, dt);
 }

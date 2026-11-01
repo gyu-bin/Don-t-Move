@@ -1,0 +1,16 @@
+{
+  "note": "Visual Polish Pass 2, casino_slot_machine (ART_AUDIT M2). The painting has a ~30° yaw with converging front edges, so the front is given as a 4-corner quad. The top is extended straight up (no shear) only as far as the crown; the beacon and the lever, which sit on the dropped top/side faces, are pasted back unwarped. Coordinates: canvas px of assets/environment/casino/soft/casino_slot_machine.png read on a 16 px grid (2026-10-23).",
+  "outDir": "assets/environment/_candidates/visual-polish-pass2/casino",
+  "pieces": [
+    {
+      "id": "casino_slot_machine",
+      "front": {"tl": [120, 48], "tr": [246, 38], "br": [236, 370], "bl": [107, 366]},
+      "farLeftX": 120, "farRightX": 246, "topY": 36,
+      "widthScale": 1.2, "heightScale": 1, "topScale": 1,
+      "stickers": [
+        {"src": {"x": 252, "y": 118, "w": 30, "h": 86}, "dx": -8, "dy": 0, "what": "lever ball, arm and pivot"},
+        {"anchor": "top", "src": {"x": 176, "y": 12, "w": 28, "h": 36}, "dx": 0, "dy": 14, "what": "beacon light, centred on the crown"}
+      ]
+    }
+  ]
+}

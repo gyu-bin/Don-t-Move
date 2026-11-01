@@ -18,15 +18,6 @@ import { track } from '../../game/analytics/track';
 
 const SENSOR_MISSING = tiltSensorMissing();
 
-export function MenuButton({label,detail,onPress,primary=false,disabled=false,compact=false}:{label:string;detail?:string;onPress:()=>void;primary?:boolean;disabled?:boolean;compact?:boolean}) {
- const playUI=useUIAudio();
- return <Pressable accessibilityRole="button" accessibilityLabel={detail ? `${label}, ${detail}` : label}
-  accessibilityState={{disabled}} disabled={disabled} onPress={()=>{playUI('ui_select');onPress();}}
-  style={({pressed})=>[menuStyles.button,compact&&menuStyles.compact,primary&&menuStyles.primary,pressed&&menuStyles.pressed,disabled&&{opacity:0.45}]}>
-  <Text style={menuStyles.buttonText}>{label}</Text>
-  {detail&&<Text style={menuStyles.detail}>{detail}</Text>}
- </Pressable>;
-}
 function LobbyItem({index,top,height,left,width,children}:{index:number;top:number;height:number;left:number;width:number;children:import('react').ReactNode}) {
  const reveal=useLobbyReveal();
  const style=useAnimatedStyle(()=>{const r=buttonReveal(reveal?reveal.value:1e6,index);return {opacity:r.opacity,transform:[{translateY:r.translateY}]};});
@@ -84,6 +75,20 @@ export function MenuHeading({title,onBack,height}:{title:string;onBack:()=>void;
   <Text accessibilityRole="header" style={menuStyles.title}>{title}</Text>
  </View>;
 }
+
+function SettingOptions<T extends string>({options,selected,label,onSelect,radioGroup=false}:{options:readonly T[];selected:T;label:(option:T)=>string;onSelect:(option:T)=>void;radioGroup?:boolean}) {
+ return <View accessibilityRole={radioGroup?'radiogroup':undefined} style={menuStyles.languages}>{options.map(option=><Pressable key={option}
+  accessibilityRole="radio" accessibilityState={{checked:selected===option}}
+  onPress={()=>onSelect(option)} style={[menuStyles.language,selected===option&&menuStyles.selected]}>
+  <Text style={[menuStyles.label,selected===option&&{color:'#03111B'}]}>{label(option)}</Text>
+ </Pressable>)}</View>;
+}
+
+function SettingSwitch({label,value,onChange}:{label:string;value:boolean;onChange:(value:boolean)=>void}) {
+ return <View style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{label}</Text>
+  <Switch accessibilityLabel={label} value={value} onValueChange={onChange} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>;
+}
+
 export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>void}) {
  const {t,progress,preferences}=useMenu();
  const playUI=useUIAudio();
@@ -99,26 +104,17 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
   <ScrollView contentContainerStyle={menuStyles.settingsBody}>
    <View style={menuStyles.setting}>
     <Text style={menuStyles.label}>{t('language')}</Text>
-    <View style={menuStyles.languages}>{(['ko','en'] as const).map(language=><Pressable key={language}
-     accessibilityRole="radio" accessibilityState={{checked:progress.language===language}}
-     onPress={()=>preferences({language})} style={[menuStyles.language,progress.language===language&&menuStyles.selected]}>
-     <Text style={[menuStyles.label,progress.language===language&&{color:'#03111B'}]}>{language==='ko'?'한국어':'English'}</Text>
-    </Pressable>)}</View>
+    <SettingOptions options={['ko','en'] as const} selected={progress.language} label={language=>language==='ko'?'한국어':'English'} onSelect={language=>preferences({language})}/>
    </View>
    <View style={menuStyles.setting}>
     <Text style={menuStyles.label}>{t('controlMode')}</Text>
-    <View accessibilityRole="radiogroup" style={menuStyles.languages}>{(['tilt','touch'] as const).map(mode=><Pressable key={mode}
-     accessibilityRole="radio" accessibilityState={{checked:control===mode}}
-     onPress={()=>{playUI('ui_select');if(mode!==control)track('control_mode_change',{from:control,to:mode});preferences({controlMode:mode});}} style={[menuStyles.language,control===mode&&menuStyles.selected]}>
-     <Text style={[menuStyles.label,control===mode&&{color:'#03111B'}]}>{t(mode==='tilt'?'controlTilt':'controlTouch')}</Text>
-    </Pressable>)}</View>
+    <SettingOptions radioGroup options={['tilt','touch'] as const} selected={control} label={mode=>t(mode==='tilt'?'controlTilt':'controlTouch')}
+     onSelect={mode=>{playUI('ui_select');if(mode!==control)track('control_mode_change',{from:control,to:mode});preferences({controlMode:mode});}}/>
     {control==='tilt'&&SENSOR_MISSING&&<Text style={[menuStyles.detail,{marginTop:-8}]}>{t('controlFallback')}</Text>}
    </View>
    <View style={menuStyles.setting}><RemoveAdsCard/></View>
-   <View style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('sfx')}</Text>
-    <Switch accessibilityLabel={t('sfx')} value={progress.soundEnabled} onValueChange={soundEnabled=>preferences({soundEnabled})} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>
-   <View style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('music')}</Text>
-    <Switch accessibilityLabel={t('music')} value={progress.musicEnabled} onValueChange={musicEnabled=>preferences({musicEnabled})} trackColor={{false:'#293B48',true:'#35BFE8'}}/></View>
+   <SettingSwitch label={t('sfx')} value={progress.soundEnabled} onChange={soundEnabled=>preferences({soundEnabled})}/>
+   <SettingSwitch label={t('music')} value={progress.musicEnabled} onChange={musicEnabled=>preferences({musicEnabled})}/>
    <Pressable accessibilityRole="button" onPress={()=>{playUI('ui_select');onIntro();}} style={[menuStyles.setting,menuStyles.row]}><Text style={menuStyles.label}>{t('intro')}</Text><Text style={menuStyles.backText}>›</Text></Pressable>
    <Text accessibilityLabel="Music credits" style={menuStyles.credit}>{MUSIC_CREDIT}</Text>
    {__DEV__&&QA_UNLOCK_ALL&&<Text style={menuStyles.qaNote}>{t('qaUnlockAll')}</Text>}
@@ -127,16 +123,10 @@ export function SettingsScreen({onBack,onIntro}:{onBack:()=>void;onIntro:()=>voi
 }
 export const menuStyles=StyleSheet.create({
  screen:{flex:1,backgroundColor:'#030D15'},
- button:{minHeight:47,justifyContent:'center',alignItems:'center',borderWidth:1,borderColor:'#60727B',borderRadius:17,backgroundColor:'#020C14ED',padding:12},
- compact:{minHeight:44,paddingVertical:9,backgroundColor:'#020C14CE',borderRadius:14},
- primary:{borderColor:'#3ED5FA',borderWidth:1.5},pressed:{backgroundColor:'#12313E'},
- buttonText:{color:'#F7F5EC',fontSize:13,fontWeight:'600',letterSpacing:1.5,textAlign:'center'},
  detail:{color:'#BFD8E1',fontSize:9,letterSpacing:1.5,marginTop:4},
- footer:{textAlign:'center',fontSize:8,letterSpacing:3,color:'#A0B4BF',marginTop:10},
  heading:{height:82,justifyContent:'center',alignItems:'center'},title:{color:'#F7F5EC',fontSize:18,letterSpacing:3,fontWeight:'600'},
  back:{position:'absolute',left:16,padding:12,minWidth:44,minHeight:44},backText:{color:'#D7E6EB',fontSize:30,lineHeight:30},
  settingsBody:{paddingHorizontal:28,paddingTop:25,paddingBottom:48},setting:{paddingVertical:26,borderBottomWidth:StyleSheet.hairlineWidth,borderColor:'#24404E',gap:20},
  label:{color:'#EFF5F6',fontSize:15},credit:{color:'#7F95A1',fontSize:10,lineHeight:15,marginTop:28},qaNote:{color:'#FFD23F',fontSize:11,letterSpacing:1,marginTop:14},row:{flexDirection:'row',alignItems:'center',justifyContent:'space-between'},
- price:{color:'#3EC5FF',fontSize:14,fontWeight:'700'},owned:{color:'#8FDB9A',fontSize:13,fontWeight:'700'},
  languages:{flexDirection:'row',borderWidth:1,borderColor:'#526975',borderRadius:5,overflow:'hidden'},language:{flex:1,alignItems:'center',padding:13},selected:{backgroundColor:'#38C9ED'},
 });

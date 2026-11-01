@@ -1,11 +1,24 @@
-import {Skia} from '@shopify/react-native-skia';
+import {FilterMode,MipmapMode,Skia} from '@shopify/react-native-skia';
 import type {SkCanvas} from '@shopify/react-native-skia';
 import type {CompiledProp,CompiledStage} from '../../game/world/compileStage';
 import {Cell,TILE} from '../../game/world/compileStage';
 import {MATERIALS} from '../../game/levels/chapterArt';
+import type {SpriteAtlas,SpriteFrame} from '../sprites/spriteTypes';
 import {fill,stroke} from '../paints';
 import {drawEntranceStone,isMuseumEntrance} from './museumEntranceLook';
 import {drawVenueMaterial} from './venueMaterials';
+import {drawFinishedVenueFloor} from './venueFloorFinish';
+
+/** Environment Pass 3: the Lab floor tile set from the asset manifest (`labFloor`), or null for the code floor. */
+function labFloorTiles(atlas:SpriteAtlas|null|undefined){
+ const f=(n:string)=>atlas?.[`labFloor_${n}`];
+ const plain=['a','b','c','d'].map(f),inlay=f('inlay'),restricted=[f('restricted_a'),f('restricted_b')];
+ if(!inlay||plain.some(t=>!t)||restricted.some(t=>!t))return null;
+ // No AA: neighbouring tiles must butt without a hairline at fractional zoom (as the Gallery substrate).
+ const paint=fill('#ffffff');paint.setAntiAlias(false);
+ return {plain:plain as SpriteFrame[],inlay,restricted:restricted as SpriteFrame[],paint};
+}
+const cellHash=(x:number,y:number)=>((x*73856093)^(y*19349663))>>>0;
 
 // Static, theme-specific architectural drawing. Baked once, never on the UI frame.
 const rect=(c:SkCanvas,x:number,y:number,w:number,h:number,color:string)=>c.drawRect(Skia.XYWHRect(x,y,w,h),fill(color));
@@ -18,9 +31,41 @@ function box(c:SkCanvas,w:number,h:number,top:string,front:string,trim:string){
 }
 function bolts(c:SkCanvas,w:number,h:number){for(const x of [-w/2+4,w/2-4])for(const y of [-h+4,-4])c.drawCircle(x,y,1.2,fill('#a1acb6'));}
 
-export function drawVenueFloor(c:SkCanvas,s:CompiledStage){
+export function drawVenueFloor(c:SkCanvas,s:CompiledStage,atlas?:SpriteAtlas|null){
  if(isMuseumEntrance(s.def.id)){drawEntranceStone(c,s);return;}
- drawVenueMaterial(c,s);
+ // Retain the upstream procedural fallback when the texture atlas is unavailable.
+ if(!atlas){drawVenueMaterial(c,s);return;}
+ const theme=s.def.theme,m=MATERIALS[theme],variant=(s.def.mission??1)-1;
+ const labTiles=theme==='lab'?labFloorTiles(atlas):null;
+ const restrictedRooms=labTiles?(s.def.functionalZones??[]).filter(z=>z.role==='restricted'||z.role==='objective'):[];
+ if(!drawFinishedVenueFloor(c,s))for(let y=0;y<s.rows;y++)for(let x=0;x<s.cols;x++){
+  if(s.grid[y*s.cols+x]!==Cell.Floor)continue;
+  if(labTiles){
+   // One tile per cell; the seam and the cyan accent are painted into the tiles at the code's positions.
+   // Linear + mipmaps: the tile is 1:1 on iPhone 17, minified on small phones, magnified on iPad.
+   const restricted=restrictedRooms.some(z=>x>=z.x&&x<z.x+z.w&&y>=z.y&&y<z.y+z.h);
+   const t=(x+y+variant)%4===0?labTiles.inlay:restricted?labTiles.restricted[cellHash(x,y)%2]:labTiles.plain[cellHash(x,y)%4];
+   c.drawImageRectOptions(t.image,Skia.XYWHRect(t.sx,t.sy,t.sw,t.sh),Skia.XYWHRect(x*TILE,y*TILE,TILE,TILE),FilterMode.Linear,MipmapMode.Linear,labTiles.paint);
+   continue;
+  }
+  c.save();c.translate(x*TILE,y*TILE);
+  rect(c,0,0,TILE,TILE,m.floor);
+  if(theme==='blacksite'){
+   rect(c,2,2,36,36,(x+y+variant)%3===0?m.inlay:m.floor);
+   line(c,1,1,39,1,m.trim+'55');line(c,1,1,1,39,m.trim+'33');line(c,39,1,39,39,m.seam,2);line(c,1,39,39,39,m.seam,2);
+  }else if(theme==='lab'){
+   line(c,0,0,40,0,m.seam,2);line(c,0,0,0,40,m.seam,2);
+   if((x+y+variant)%4===0){rect(c,3,3,34,2,'#92c8d055');rect(c,3,5,2,30,'#92c8d022');}
+  }else{
+   // Future themes without a finished floor keep the original generic fallback.
+   const dark=(Math.floor(x/(variant%2+1))+Math.floor(y/(variant%2+1)))%2===0;
+   if(dark)rect(c,0,0,40,40,m.inlay+'55');line(c,0,0,40,0,m.seam);line(c,0,0,0,40,m.seam);
+  }
+  c.restore();
+ }
+ // A room medallion, not a debug/pathfinding line across the playfield.
+ const {x,y}=s.objective;c.drawCircle(x,y,42,stroke(m.trim+'77',1.5));c.drawCircle(x,y,37,stroke(m.trim+'33',1));
+ if(s.def.landmark){const p=s.def.landmark; c.drawOval(Skia.XYWHRect(p.x*TILE-29,p.y*TILE-12,58,27),stroke(m.trim+'99',1));}
 }
 
 export function drawVenueProp(c:SkCanvas,p:CompiledProp,s:CompiledStage):boolean{

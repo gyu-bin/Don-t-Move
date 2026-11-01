@@ -148,8 +148,8 @@
       "id": "museum_statue_large",
       "chapter": "museum",
       "category": "MAJOR",
-      "path": "assets/environment/museum/major/museum_statue_large.png",
-      "image": "assets/environment/museum/major/museum_statue_large.png",
+      "path": "assets/environment/museum/polished/museum_statue_large.png",
+      "image": "assets/environment/museum/polished/museum_statue_large.png",
       "resolution": {
         "width": 512,
         "height": 512
@@ -721,8 +721,8 @@
       "id": "gallery_modern_bench",
       "chapter": "gallery",
       "category": "SOFT",
-      "path": "assets/environment/gallery/soft/gallery_modern_bench.png",
-      "image": "assets/environment/gallery/soft/gallery_modern_bench.png",
+      "path": "assets/environment/gallery/polished/gallery_modern_bench.png",
+      "image": "assets/environment/gallery/polished/gallery_modern_bench.png",
       "resolution": {
         "width": 384,
         "height": 384
@@ -3157,8 +3157,8 @@
       "id": "casino_security_station",
       "chapter": "casino",
       "category": "MAJOR",
-      "path": "assets/environment/casino/major/casino_security_station.png",
-      "image": "assets/environment/casino/major/casino_security_station.png",
+      "path": "assets/environment/casino/polished/casino_security_station.png",
+      "image": "assets/environment/casino/polished/casino_security_station.png",
       "resolution": {
         "width": 512,
         "height": 512
@@ -3199,8 +3199,8 @@
       "id": "casino_slot_machine",
       "chapter": "casino",
       "category": "SOFT",
-      "path": "assets/environment/casino/soft/casino_slot_machine.png",
-      "image": "assets/environment/casino/soft/casino_slot_machine.png",
+      "path": "assets/environment/casino/polished/casino_slot_machine.png",
+      "image": "assets/environment/casino/polished/casino_slot_machine.png",
       "resolution": {
         "width": 384,
         "height": 384
@@ -4683,8 +4683,8 @@
       "id": "lab_server_rack_front",
       "chapter": "lab",
       "category": "MAJOR",
-      "path": "assets/environment/lab/major/lab_server_rack_front.png",
-      "image": "assets/environment/lab/major/lab_server_rack_front.png",
+      "path": "assets/environment/lab/polished/lab_server_rack_front.png",
+      "image": "assets/environment/lab/polished/lab_server_rack_front.png",
       "resolution": {
         "width": 512,
         "height": 512
@@ -4725,8 +4725,8 @@
       "id": "lab_sample_fridge_front",
       "chapter": "lab",
       "category": "MAJOR",
-      "path": "assets/environment/lab/major/lab_sample_fridge_front.png",
-      "image": "assets/environment/lab/major/lab_sample_fridge_front.png",
+      "path": "assets/environment/lab/polished/lab_sample_fridge_front.png",
+      "image": "assets/environment/lab/polished/lab_sample_fridge_front.png",
       "resolution": {
         "width": 512,
         "height": 512
@@ -4851,8 +4851,8 @@
       "id": "lab_fume_hood",
       "chapter": "lab",
       "category": "MAJOR",
-      "path": "assets/environment/lab/major/lab_fume_hood.png",
-      "image": "assets/environment/lab/major/lab_fume_hood.png",
+      "path": "assets/environment/lab/polished/lab_fume_hood.png",
+      "image": "assets/environment/lab/polished/lab_fume_hood.png",
       "resolution": {
         "width": 512,
         "height": 512
@@ -6825,8 +6825,8 @@
       "id": "lab_gas_rack",
       "chapter": "lab",
       "category": "SOFT",
-      "path": "assets/environment/lab/soft/lab_gas_rack.png",
-      "image": "assets/environment/lab/soft/lab_gas_rack.png",
+      "path": "assets/environment/lab/polished/lab_gas_rack.png",
+      "image": "assets/environment/lab/polished/lab_gas_rack.png",
       "resolution": {
         "width": 384,
         "height": 384

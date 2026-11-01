@@ -2,13 +2,12 @@ import { LiveVisualQA, type InspectionView } from './debug/LiveVisualQA';
 import { stepDoors } from '../game/doors/doorSystem';
 import type { DoorRuntime } from '../game/doors/doorTypes';
 import {resolveInitialMissionIndex} from './branding/missionLaunch';
+import { useMissionBackHandler } from './missionBack';
 import {QA_UNLOCK_ALL} from '../game/progress/qaUnlock';
-import {createDoorArt} from '../rendering/environment/doorArt';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Canvas, Picture, Skia, TileMode, matchFont } from '@shopify/react-native-skia';
-import type { SkFont, SkPaint } from '@shopify/react-native-skia';
+import { Canvas, Picture, Skia } from '@shopify/react-native-skia';
 import Animated, {cancelAnimation,useAnimatedStyle,withTiming,useAnimatedReaction, useDerivedValue, useFrameCallback, useSharedValue } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import * as Haptics from 'expo-haptics';
@@ -25,16 +24,9 @@ import { BODY } from '../game/guards/guardTuning';
 import { ASSET_MANIFEST, PLAYTEST_MANIFEST } from '../assets/manifest';
 import { characterReleaseStatus } from '../assets/characterReadiness';
 import { preloadGameAssets, useGameAssets } from '../assets/useGameAssets';
-import { createCharacterVisual } from '../rendering/characters/characterVisual';
-import { createDebugArt } from '../rendering/debug/guardDebug';
-import { createIconArt } from '../rendering/effects/alertIcons';
-import { createLightFx } from '../rendering/effects/lightFx';
-import { createConeArt } from '../rendering/effects/visionCone';
-import {createCctvArt} from '../rendering/effects/cctvArt';
-import { GUARD_PALETTE, PLAYER_PALETTE } from '../rendering/fallback/characterPalettes';
-import { createCharacterArt } from '../rendering/fallback/proceduralCharacter';
 import { renderPlaygroundFrame } from '../rendering/renderFrame';
 import type { RenderResources } from '../rendering/renderFrame';
+import {createStageRenderResources} from './stageRenderResources';
 import { StageHeader } from './hud/StageHeader';
 import { alertHudVisible } from './hud/alertHud';
 import { useTiltControl } from '../game/input/useTiltControl';
@@ -57,7 +49,6 @@ import { prepareMission, prepareMissionInSteps } from './preparedMission';
 import { createMissionSwap, SWAP_TIMING } from './missionSwap';
 import type { SwapPhase } from './missionSwap';
 import { MISSION_COVER_OPACITY, MISSION_FINISH_HOLD_MS } from './missionTransition';
-import { VALUABLES } from '../game/levels/stagePresentation';
 import { BrandingScreen } from './branding/BrandingScreen';
 import * as SplashScreen from 'expo-splash-screen';
 import { markStartup } from './branding/startupMetrics';
@@ -65,6 +56,9 @@ import { useMenu } from './menu/MenuContext';
 import { FIRST_RUN_CONTROL_MODE, topInset } from './device';
 import { SettingsScreen } from './menu/MenuScreens';
 import { feedbackKey,valuableKey } from './menu/strings';
+import { catchCause, CATCH_CAUSE_KEY } from '../game/mission/catchCause';
+import type { CatchCause } from '../game/mission/catchCause';
+import { createAlarmHapticState, endAlarmEpisode, shouldVibrateForAlarm } from '../game/mission/alarmHaptic';
 import { CharacterMotionDebug } from './CharacterMotionDebug';
 import { NativeQAObserver,useNativeQACadence } from './debug/NativeQAObserver';
 import { TiltProfileDebug, TiltProfileSelector } from './debug/TiltProfileDebug';
@@ -77,28 +71,6 @@ const VIEW_TILES_WIDE = 9.4;
 const READY_FRAMES = 3;
 // Runtime gate only. Production visual approval (visualReviewPending) never blocks play.
 const releaseAssetIssues = characterReleaseStatus(ASSET_MANIFEST).issues;
-
-function debugFont(): SkFont | null {
-  try {
-    return matchFont({ fontFamily: 'Menlo', fontSize: 8.5 });
-  } catch {
-    return null;
-  }
-}
-
-function makeVignette(w: number, h: number): SkPaint {
-  const p = Skia.Paint();
-  p.setShader(
-    Skia.Shader.MakeRadialGradient(
-      { x: w / 2, y: h * 0.48 },
-      Math.max(w, h) * 0.72,
-      [Skia.Color('rgba(0,0,0,0)'), Skia.Color('rgba(0,0,0,0.18)'), Skia.Color('rgba(0,0,0,0.72)')],
-      [0.45, 0.7, 1],
-      TileMode.Clamp,
-    ),
-  );
-  return p;
-}
 
 export function VisualPlaygroundScreen({ initialMissionIndex, initialProgress, onProgressChange }: { initialMissionIndex?: number; initialProgress?: StageProgress; onProgressChange?: (next:StageProgress)=>void } = {}) {
   const [localProgress, setProgress] = useState<StageProgress>(initialProgress ?? DEFAULT_PROGRESS);
@@ -275,32 +247,9 @@ function StageGame({
   const viewW = width / zoom;
   const viewH = height / zoom;
 
-  const resources = useMemo<RenderResources | null>(() => {
-    if (!assets || !assets.guard) return null;
-    const authoredLabCase = definition.chapter === 4 && definition.visualRevision === 'v12-4c'
-      && definition.props.some(p => p.kind === 'objectiveCase' && p.visualAssetId === 'lab_sample_case');
-    return {
-      stage: prepared!.art,
-      doors: stage.doors?.length?createDoorArt():undefined,
-      player: createCharacterVisual(assets.player, createCharacterArt(PLAYER_PALETTE, false)),
-      guard: createCharacterVisual(assets.guard, createCharacterArt(GUARD_PALETTE, true)),
-      cone: createConeArt(),
-      cctv: createCctvArt(assets.museum?.cctv ?? null),
-      icons: createIconArt(assets.indicators),
-      fx: createLightFx(),
-      diamond: authoredLabCase ? null : assets.museum?.[VALUABLES[definition.objective?.kind ?? 'diamond'].sprite] ?? null,
-      objectiveGlowHeight: authoredLabCase ? 20 : undefined,
-      diamondPos: stage.objective,
-      exit: Skia.XYWHRect(stage.exit.x, stage.exit.y, stage.exit.w, stage.exit.h),
-      exitPosition: definition.exitPosition ? {x:definition.exitPosition.x*TILE,y:definition.exitPosition.y*TILE} : undefined,
-      guidanceInsets: {top:insets.top+100,bottom:insets.bottom+20,left:insets.left,right:insets.right},
-      showObjective: true,
-      debug: createDebugArt(debugFont()),
-      vignette: makeVignette(width, height),
-      screen: Skia.XYWHRect(0, 0, width, height),
-      zoom,
-    };
-  }, [assets, stage, prepared, definition, width, height, zoom,insets]);
+  const resources = useMemo<RenderResources | null>(() => createStageRenderResources(
+    {assets,stage,prepared,definition,width,height,zoom,insets},
+  ), [assets, stage, prepared, definition, width, height, zoom,insets]);
   // "Ready" is reported from the UI thread, after this mission's own frame callback has run for a few frames with
   // its resources in place. Mounting a mission makes the UI thread take in the whole scene (state, navigation,
   // art) in one go; a report from the JS side arrives before that is over, and the reveal would then stutter.
@@ -329,6 +278,7 @@ function StageGame({
   const selectTouchMode = (mode: number) => { playerMode.set(mode); setTouchMode(mode); };
   const touch = useSharedValue({ x: 0, y: 0, seq: 0 });
   const [caught, setCaught] = useState(false);
+  const [caughtCause, setCaughtCause] = useState<CatchCause | null>(null);
   const [completed, setCompleted] = useState(false);
   const [paused, setPaused] = useState(false);
   const leaveMission=(reason:'home'|'chapters')=>{
@@ -388,6 +338,7 @@ function StageGame({
     setCaught(value);
     if (value) {
       const snapshot = state.get();
+      setCaughtCause(catchCause(snapshot));
       const catchSource = snapshot.events.caughtBy
         ? 'guard'
         : (snapshot.events.cameraAlertRevision ?? 0) > 0 ? 'cctv' : 'other';
@@ -422,11 +373,29 @@ function StageGame({
   useAnimatedReaction(() => state.value.events.theftRevision, (value,previous)=>{
     if(value>0 && value!==previous && !state.value.events.globalAlert && !state.value.events.spottedEpisode) scheduleOnRN(alertBanner,'THEFT ALERT');
   });
+  // Being spotted is felt as well as seen: one warning vibration with the banner (capture and pickup already vibrate).
+  const alarmHaptic=useRef(createAlarmHapticState());
+  const alarm=(message:string)=>{
+    alertBanner(message);
+    const s=state.get();
+    if(shouldVibrateForAlarm(alarmHaptic.current,s.events.caught,s.mission.complete))
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning).catch(() => {});
+  };
+  // A new alarm episode may vibrate again once the previous one has fully calmed down. Tracked on the RN side from the
+  // phase the screen already receives (PLAYER_SPOTTED / SEARCH / RETURN all mean "the spotted episode is still on"),
+  // not from a UI-thread reaction: a callback scheduled from the worklet was itself workletized and threw
+  // "Locally defined function passed to scheduleOnRN" whenever an alert ended (found in v4 simulator QA).
+  const alarmPhase=useRef<GamePhase>('STEALTH');
+  useEffect(()=>{
+    const calm=(p:GamePhase)=>p==='STEALTH'||p==='THEFT_ALERT', was=alarmPhase.current;
+    alarmPhase.current=phaseInfo.phase;
+    if(!calm(was)&&calm(phaseInfo.phase))endAlarmEpisode(alarmHaptic.current);
+  },[phaseInfo.phase]);
   useAnimatedReaction(() => state.value.events.spottedWhistleRevision, (value,previous)=>{
-    if(value>0 && value!==previous)scheduleOnRN(alertBanner,'PLAYER SPOTTED');
+    if(value>0 && value!==previous)scheduleOnRN(alarm,'PLAYER SPOTTED');
   });
   useAnimatedReaction(() => state.value.events.cameraAlertRevision ?? 0, (value,previous)=>{
-    if(value>0 && value!==previous)scheduleOnRN(alertBanner,'CAMERA ALERT');
+    if(value>0 && value!==previous)scheduleOnRN(alarm,'CAMERA ALERT');
   });
   const treasureAcquired = () => {
     setSecured(true);
@@ -512,6 +481,12 @@ function StageGame({
     setPaused(false);
     setPauseFeedback('');
   };
+  // Android Back / back-swipe: pause or resume, never leave the running mission (missionBack.ts).
+  useMissionBackHandler({ paused, settings, busy: caught || completed || transitioning || replayIntro }, action => {
+    if (action === 'pause') stopAndPause();
+    else if (action === 'resume') resume();
+    else if (action === 'closeSettings') setSettings(false);
+  });
   const recenter = () => {
     if (!tiltEnabled) {
       setPauseFeedback('TOUCH CONTROL ACTIVE');
@@ -531,7 +506,7 @@ function StageGame({
     state.set(fresh);
     accumulated.set(0);
     clearReported.current = false;
-    setCaught(false);
+    setCaught(false);setCaughtCause(null);alarmHaptic.current=createAlarmHapticState();
     setCompleted(false);setResultVisible(false);setAudioSession(v=>v+1);
     setPhaseInfo({phase:'STEALTH',theft:0,spotted:0,remaining:0,lockdown:false});
     setBanner('');
@@ -664,7 +639,7 @@ function StageGame({
       {!inspection && <>
       <StageHeader number={definition.number} code={definition.id} title={missionName(missionIndex(definition.id),progress.language)} top={insets.top} onPause={stopAndPause} onRecenter={recenter} />
 
-      <View pointerEvents="none" style={[styles.secured, { top: insets.top + 55 }]}><Text style={styles.securedText}>{secured ? `◇ ${t(definition.objective?.kind==='diamond'?'diamond':'secured')}` : `${t('target')} · ${t(valuableKey[definition.objective?.kind ?? 'diamond'])}`}</Text></View>
+      <View pointerEvents="none" style={[styles.secured, { top: insets.top + 55 }]}><Text style={styles.securedText}>{secured ? `◇ ${t('escape')}` : `${t('target')} · ${t(valuableKey[definition.objective?.kind ?? 'diamond'])}`}</Text></View>
 
       {alertHudVisible(phaseInfo.phase,phaseInfo.remaining,phaseInfo.lockdown,completed||caught) && <View pointerEvents="none" style={[styles.phaseHud,{top:insets.top+77}]}>
         <Text style={styles.phaseText}>{t(phaseInfo.phase==='THEFT_ALERT'?'theft':phaseInfo.phase==='PLAYER_SPOTTED'?'spotted':phaseInfo.phase==='SEARCH'?'searching':'returning')}</Text>
@@ -702,6 +677,7 @@ function StageGame({
       {caught && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
         {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
         <Text style={[styles.modalTitle, styles.caught]}>{t('caught')}</Text>
+        {caughtCause && <Text style={styles.catchCause}>{t(CATCH_CAUSE_KEY[caughtCause])}</Text>}
         {__DEV__&&<Pressable accessibilityRole="button" onPress={()=>setMotionDebug(true)} style={styles.button}><Text style={styles.buttonText}>CAPTURE DIAGNOSTICS</Text></Pressable>}
         <Pressable onPress={()=>{playUI('ui_select');retry();}} style={styles.primaryButton}><Text style={styles.primaryText}>{t('retry')}</Text></Pressable>
         <Pressable onPress={chapterSelect} style={styles.button}><Text style={styles.buttonText}>{t('chapters')}</Text></Pressable>
@@ -740,18 +716,12 @@ const styles = StyleSheet.create({
   phaseHud:{position:'absolute',alignSelf:'center',alignItems:'center',gap:3,paddingHorizontal:10,paddingVertical:5,borderRadius:6,backgroundColor:'#0D151DDF'},
   phaseText:{color:'#F18E78',fontSize:10,fontWeight:'800',letterSpacing:1.4},
   lockdownText:{color:'#EFC48D',fontSize:11,fontWeight:'800',fontVariant:['tabular-nums']},
-  nextMissionName:{color:'#87C8D7',fontSize:11,fontWeight:'600'},
   touchControls: { position: 'absolute', alignSelf: 'center', alignItems: 'center', gap: 6, padding: 8, borderRadius: 10, backgroundColor: '#081824EE' },
   touchMode: { paddingHorizontal: 10, paddingVertical: 13, borderWidth: 1, borderColor: '#354758', borderRadius: 7 },
-  secured: { position: 'absolute', alignSelf: 'center' },
-  securedText: { color: '#9beeff', fontSize: 10, fontWeight: '800', letterSpacing: 1.5 },
-  stageGrid: { width: 230, flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center' },
-  stageCell: { width: 65, padding: 12, alignItems: 'center', backgroundColor: '#263342', borderRadius: 6 },
-  locked: { opacity: 0.3 },
+  secured: { position: 'absolute', alignSelf: 'center', paddingHorizontal: 8, borderRadius: 6, backgroundColor: 'rgba(4,18,29,0.76)' },
+  securedText: { color: '#b8f1ff', fontSize: 10, fontWeight: '800', letterSpacing: 1, textShadowColor: 'rgba(0,0,0,0.8)', textShadowRadius: 4 },
   root: { flex: 1, backgroundColor: '#05070b' },
   titleScreen: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 18, backgroundColor: '#05070b' },
-  logo: { color: '#f5f6f8', fontSize: 37, fontWeight: '900', letterSpacing: 7 },
-  tagline: { color: '#7f8a9b', fontSize: 11, fontWeight: '700', letterSpacing: 3, marginBottom: 30 },
   primaryButton: { minWidth: 170, alignItems: 'center', paddingHorizontal: 24, paddingVertical: 13, borderRadius: 16, borderWidth:1, borderColor:'#3ED5FA', backgroundColor: '#03131B' },
   primaryText: { color: '#54DDF7', fontSize: 13, fontWeight: '900', letterSpacing: 2 },
   button: { minWidth: 170, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 11, borderRadius: 16, backgroundColor: '#04121DDD', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.18)' },
@@ -763,7 +733,7 @@ const styles = StyleSheet.create({
   modalTitle: { color: '#f1f2f4', fontSize: 20, fontWeight: '900', letterSpacing: 3, textAlign: 'center' },
   modalBody: { color: '#aab2bf', fontSize: 11, fontWeight: '600', textAlign: 'center' },
   caught: { color: '#ff655c', fontSize: 31 },
-  complete: { color: '#83eabb', fontSize: 23 },
+  catchCause: { color: '#d8dbe0', fontSize: 13, fontWeight: '600', textAlign: 'center', lineHeight: 18, marginHorizontal: 28, marginTop: -4 },
   banner: { position: 'absolute', alignSelf: 'center', paddingHorizontal: 18, paddingVertical: 9, borderRadius: 8, backgroundColor: 'rgba(5,20,28,0.9)', borderWidth: 1, borderColor: 'rgba(90,225,255,0.55)' },
   bannerText: { color: '#9beeff', fontSize: 12, fontWeight: '900', letterSpacing: 1.8 },
 });

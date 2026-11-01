@@ -137,8 +137,8 @@
   ],
   "07-01": [
     {"structure":"Long Display Case","guard":0,"stop":1,"post":{"x":8.5,"y":15},"hidden":{"x":6.66,"y":18.24},"exposed":{"x":7.32,"y":18.24},"look":{"x":7.241554,"y":17.723291}},
-    {"structure":"Collection Wall","guard":3,"stop":4,"post":{"x":7.25,"y":11},"hidden":{"x":2.13,"y":9.6},"exposed":{"x":2.13,"y":10.605},"look":{"x":4.294243,"y":10.486675}},
-    {"structure":"Side Wall","guard":2,"stop":1,"post":{"x":20,"y":11},"hidden":{"x":15.91,"y":8.665},"exposed":{"x":15.91,"y":9.985},"look":{"x":17.215122,"y":9.884449}}
+    {"structure":"Collection Wall","guard":3,"stop":4,"post":{"x":7.25,"y":11},"hidden":{"x":4.1,"y":8.1},"exposed":{"x":5.3,"y":6.9},"look":{"x":4.7,"y":7.5}},
+    {"structure":"Side Wall","guard":2,"stop":1,"post":{"x":20,"y":11},"hidden":{"x":14.9,"y":9.2},"exposed":{"x":14.9,"y":9.8},"look":{"x":14.9,"y":9.5}}
   ],
   "07-02": [
     {"structure":"Arcade Column North","guard":1,"stop":1,"post":{"x":15.5,"y":9.5},"hidden":{"x":19.67,"y":12.07},"exposed":{"x":19.67,"y":11.26},"look":{"x":18.166709,"y":10.874287}},

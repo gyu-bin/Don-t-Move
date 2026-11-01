@@ -107,7 +107,18 @@ export function referencedImages(m: AssetManifest): ImageKey[] {
   if (m.environment.museum) keys.add(m.environment.museum.image);
   if (m.ui.indicators) keys.add(m.ui.indicators.image);
   for(const asset of m.environment.production ?? []) keys.add(asset.id);
+  for(const key of Object.values(m.environment.labFloor ?? {})) keys.add(key);
   return [...keys];
+}
+
+/** Lab floor tiles as whole-image frames `labFloor_<name>`; all or nothing, so a partial set falls back to the code floor. */
+function buildLabFloorFrames(m: AssetManifest, images: Images): SpriteAtlas {
+  const tiles = m.environment.labFloor;
+  if (!tiles || Object.values(tiles).some(key => !images[key])) return {};
+  return Object.fromEntries(Object.entries(tiles).map(([name, key]) => {
+    const image = images[key]!;
+    return [`labFloor_${name}`, frame(image, {x: 0, y: 0, w: image.width(), h: image.height(), anchor: [0, 0]})];
+  }));
 }
 
 /** Individual PNG frames use reviewed object bounds and a ground-contact pivot. */
@@ -130,7 +141,7 @@ export function buildGameAssets(m: AssetManifest, images: Images): GameAssets {
   return {
     player: m.characters.player ? buildCharacterSet(m.characters.player, images) : null,
     guard: m.characters.guard ? buildCharacterSet(m.characters.guard, images) : null,
-    museum: m.environment.museum || m.environment.production?.length ? {...(m.environment.museum ? buildAtlas(m.environment.museum,images) : {}),...buildEnvironmentFrames(m.environment.production??[],images)} : null,
+    museum: m.environment.museum || m.environment.production?.length ? {...(m.environment.museum ? buildAtlas(m.environment.museum,images) : {}),...buildEnvironmentFrames(m.environment.production??[],images),...buildLabFloorFrames(m,images)} : null,
     indicators: m.ui.indicators ? buildAtlas(m.ui.indicators, images) : null,
   };
 }

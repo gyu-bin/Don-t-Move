@@ -399,4 +399,8 @@ const M0105:V13Mission={
 };
 /** The plans as first shipped, without the Phase 7 cover: Chapter 7 is built from these. */
 export const V13_MUSEUM_FROZEN:V13Mission[]=[M0101,M0102,M0103,M0104,M0105];
-export const V13_MUSEUM:V13Mission[]=V13_MUSEUM_FROZEN.map(m=>phase7(entranceStealth(m)));
+// Keep the original Museum plans frozen for Chapter 7; apply the entrance refinement
+// and the Chapter 1 patrol timing changes only to the live Museum plans.
+export const V13_MUSEUM:V13Mission[]=V13_MUSEUM_FROZEN.map(m=>phase7(entranceStealth(m))).map(m=>
+ m.id==='01-02'?{...m,guards:m.guards.map((g,i)=>i===1?{...g,stops:g.stops.map((s,j)=>j===1?{...s,wait:2}:s)}:g)}:
+ m.id==='01-03'?{...m,guards:m.guards.map((g,i)=>i===0?{...g,stops:g.stops.map((s,j)=>j===1?{...s,wait:5}:s)}:g)}:m);

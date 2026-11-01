@@ -1,5 +1,5 @@
-import { BlendMode, Skia, TileMode } from '@shopify/react-native-skia';
-import type { SkCanvas, SkPaint, SkPicture } from '@shopify/react-native-skia';
+import { BlendMode, Skia } from '@shopify/react-native-skia';
+import type { SkCanvas, SkPicture } from '@shopify/react-native-skia';
 
 import { Cell, TILE, WALL_HEIGHT } from '../../game/world/compileStage';
 import type { CompiledProp, CompiledStage } from '../../game/world/compileStage';
@@ -22,6 +22,11 @@ import { northBoundaryColumns } from './northBoundary';
 import {ENTRANCE_LOOK,isMuseumEntrance} from './museumEntranceLook';
 import {VENUE_FINISH} from './venueMaterials';
 import {propRenderWidth} from './propRenderWidth';
+import { fitWallArt } from './wallArtFit';
+import type { WallArtPlacement } from './wallArtFit';
+import {hasVenueFinish} from './venueFloorFinish';
+import {linear,radial} from './stagePaints';
+import {drawFloorShading} from './stageFloorShading';
 
 /**
  * Bakes everything static in a stage into SkPictures once at load:
@@ -62,46 +67,6 @@ function record(bounds: Bounds, draw: (c: SkCanvas) => void): SkPicture {
   return rec.finishRecordingAsPicture();
 }
 
-function gradient(shader: ReturnType<typeof Skia.Shader.MakeLinearGradient>, mode?: BlendMode): SkPaint {
-  const p = Skia.Paint();
-  p.setAntiAlias(true);
-  p.setShader(shader);
-  if (mode !== undefined) p.setBlendMode(mode);
-  return p;
-}
-
-function linear(x0: number, y0: number, x1: number, y1: number, colors: string[]): SkPaint {
-  return gradient(
-    Skia.Shader.MakeLinearGradient(
-      { x: x0, y: y0 },
-      { x: x1, y: y1 },
-      colors.map((c) => Skia.Color(c)),
-      null,
-      TileMode.Clamp,
-    ),
-  );
-}
-
-function radial(
-  cx: number,
-  cy: number,
-  r: number,
-  colors: string[],
-  pos: number[],
-  mode: BlendMode,
-): SkPaint {
-  return gradient(
-    Skia.Shader.MakeRadialGradient(
-      { x: cx, y: cy },
-      r,
-      colors.map((c) => Skia.Color(c)),
-      pos,
-      TileMode.Clamp,
-    ),
-    mode,
-  );
-}
-
 /** Draws an atlas frame at world width `width`, anchor at (x, y). */
 function drawFrame(c: SkCanvas, f: SpriteFrame, x: number, y: number, width: number, flip: boolean, alpha = 1) {
   const s = width / f.sw;
@@ -123,7 +88,7 @@ function drawFrame(c: SkCanvas, f: SpriteFrame, x: number, y: number, width: num
 // ------------------------------------------------------------------ floor
 
 function drawFloor(c: SkCanvas, stage: CompiledStage, atlas: SpriteAtlas | null): void {
-  if(stage.def.chapter){drawVenueFloor(c,stage);return;}
+  if(stage.def.chapter){drawVenueFloor(c,stage,atlas);return;}
   const tile = atlas?.floor;
   if (tile) {
     for (let r = 0; r < stage.rows; r++) {
@@ -142,51 +107,13 @@ function drawFloor(c: SkCanvas, stage: CompiledStage, atlas: SpriteAtlas | null)
   }
 }
 
-/** Ambient occlusion, contact shadows and the exit pad — independent of the art source. */
-function drawFloorShading(c: SkCanvas, stage: CompiledStage): void {
-  const { cols, rows, grid } = stage;
-  const at = (cc: number, rr: number) =>
-    cc < 0 || rr < 0 || cc >= cols || rr >= rows ? Cell.Void : grid[rr * cols + cc];
-
-  for (let r = 0; r < rows; r++) {
-    for (let cc = 0; cc < cols; cc++) {
-      if (at(cc, r) !== Cell.Floor) continue;
-      const x = cc * TILE;
-      const y = r * TILE;
-      if (at(cc, r - 1) === Cell.Wall) {
-        fillRect(c, x, y, TILE, 18, linear(0, y, 0, y + 18, ['rgba(0,0,0,0.6)', 'rgba(0,0,0,0)']));
-      }
-      if (at(cc - 1, r) === Cell.Wall) {
-        fillRect(c, x, y, 12, TILE, linear(x, 0, x + 12, 0, ['rgba(0,0,0,0.45)', 'rgba(0,0,0,0)']));
-      }
-      if (at(cc + 1, r) === Cell.Wall) {
-        const x1 = x + TILE;
-        fillRect(c, x1 - 12, y, 12, TILE, linear(x1, 0, x1 - 12, 0, ['rgba(0,0,0,0.45)', 'rgba(0,0,0,0)']));
-      }
-    }
-  }
-
-  // No shadow is drawn under structures (2026-10-06): the dark patch read as a stain on the floor and made the
-  // painted pieces look as if they hovered. Characters keep theirs.
-
-  if (!stage.def.exit) return;
-  const ex = stage.exit;
-  fillRect(c, ex.x + 2, ex.y, ex.w - 4, ex.h, fill('#111820', 0.9));
-  fillRect(
-    c,
-    ex.x + 2,
-    ex.y,
-    ex.w - 4,
-    ex.h,
-    linear(0, ex.y, 0, ex.y + ex.h, ['rgba(140,155,175,0.04)', 'rgba(140,155,175,0.2)']),
-  );
-  for (let i = 1; i < 4; i++) {
-    const yy = ex.y + (ex.h * i) / 4;
-    c.drawLine(ex.x + 4, yy, ex.x + ex.w - 4, yy, stroke('#52606f', 1, 0.5));
-  }
-}
-
 // ------------------------------------------------------------------ walls / props
+
+/** Continuous caps and exposed end faces; the special north rim keeps its existing row treatment. */
+const detailedWall = (stage: CompiledStage, r: number) => (stage.def.theme === 'lab'||hasVenueFinish(stage.def.theme)) && r >= 0;
+/** A wall cell; outside the grid counts as wall so the map border never shows run ends. */
+const wallAt = (stage: CompiledStage, x: number, r: number) =>
+  x < 0 || r < 0 || x >= stage.cols || r >= stage.rows || stage.grid[r * stage.cols + x] === Cell.Wall;
 
 function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: SpriteAtlas | null): boolean {
   const north = r === -1 ? northBoundaryColumns(stage.def) : [];
@@ -205,9 +132,25 @@ function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: Sprite
           c.drawLine(xx,yy+WALL_HEIGHT-1,xx+TILE,yy+WALL_HEIGHT-1,stroke('#545c57',1,.7));
           if(x%3===0)c.drawLine(xx+1,yy+5,xx+1,yy+WALL_HEIGHT-8,stroke('#8b9487',.7,.35));
         }
+        if(detailedWall(stage,r)){
+          // Environment Pass 3 (Lab): where a wall run ends, a darker 3-unit end strip gives the face its thickness;
+          // a 2-unit baseboard closes the foot of the face against the floor.
+          if(!wallAt(stage,x-1,r))fillRect(c,xx,yy,3,WALL_HEIGHT,fill('#000000',0.28));
+          if(!wallAt(stage,x+1,r))fillRect(c,xx+TILE-3,yy,3,WALL_HEIGHT,fill('#000000',0.28));
+          fillRect(c,xx,yy+WALL_HEIGHT-2,TILE,2,fill(m.seam,0.9));
+        }
       }
       fillRect(c,xx,r*TILE-WALL_HEIGHT,TILE,TILE,fill(entrance?ENTRANCE_LOOK.wallTop:VENUE_FINISH[stage.def.theme].cap));
-      c.drawLine(xx,r*TILE-WALL_HEIGHT,xx+TILE,r*TILE-WALL_HEIGHT,stroke(m.trim,1,0.5));
+      // Lab: inside a vertical run the per-cell top line repeated the floor grid on the cap, so N–S walls read as
+      // floor lanes; it is kept only where a run starts. Other themes unchanged.
+      if(!detailedWall(stage,r)||!wallAt(stage,x,r-1))c.drawLine(xx,r*TILE-WALL_HEIGHT,xx+TILE,r*TILE-WALL_HEIGHT,stroke(m.trim,1,0.5));
+      if(detailedWall(stage,r)){
+        // Cap stays the dark seam colour (a lighter tint brought the cap too close to the floor); a trim edge where the
+        // cap meets open floor at the side outlines the wall top.
+        const top=r*TILE-WALL_HEIGHT;
+        if(!wallAt(stage,x-1,r))c.drawLine(xx+0.5,top,xx+0.5,top+TILE,stroke(m.trim,1,0.5));
+        if(!wallAt(stage,x+1,r))c.drawLine(xx+TILE-0.5,top,xx+TILE-0.5,top+TILE,stroke(m.trim,1,0.5));
+      }
     }
     return any;
   }
@@ -240,7 +183,7 @@ function drawWallRow(c: SkCanvas, stage: CompiledStage, r: number, atlas: Sprite
   return any;
 }
 
-function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:CompiledStage): void {
+function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:CompiledStage,wallArt?:Map<CompiledProp,WallArtPlacement>): void {
   // The existing Portrait Hall painting was occluded behind a movable wall.
   // Remount its visual on that hall's blank central panel below; never duplicate it.
   if(!stage.def.topologyPlan&&stage.def.id==='02-02'&&p.kind==='painting')return;
@@ -248,7 +191,10 @@ function drawProp(c: SkCanvas, p: CompiledProp, atlas: SpriteAtlas | null,stage:
   if(production){
     // Glass panes are translucent in the PNG itself (frame opaque): see tools/environment/labTune.cjs.
     const spec=PROP_KIT[p.kind],definition=stage.def.props[stage.props.indexOf(p)];
-    drawFrame(c,production,p.x,p.y-spec.mountHeight,propRenderWidth(definition,production),p.flip);
+    // Wall decorations are fitted independently of collider-aware sprite sizing.
+    const fit=wallArt?.get(p);
+    if(fit)drawFrame(c,production,fit.x,fit.y,fit.width,p.flip);
+    else drawFrame(c,production,p.x,p.y-spec.mountHeight,propRenderWidth(definition,production),p.flip);
     // Wall-face exhibit attachment: reuse the approved frame inside the panel,
     // never as a floating independent prop or a new movement/LOS blocker.
     if(stage.def.theme==='gallery'&&productionId==='gallery_movable_art_wall'){
@@ -321,12 +267,13 @@ export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): 
     });
     if (any) layers.push({ sortY: (r + 1) * TILE, picture: pic });
   }
+  const wallArt = fitWallArt(stage, atlas, environmentAssetForProp);
   for (const p of stage.props) {
     const spec = PROP_KIT[p.kind];
     if(spec.floorDetail)continue;
     layers.push({
       sortY: spec.wallMounted ? p.y + 0.5 : p.sortY,
-      picture: record(pad, (c) => drawProp(c, p, atlas,stage)),
+      picture: record(pad, (c) => drawProp(c, p, atlas,stage,wallArt)),
     });
   }
   for (const cluster of stage.def.dressing ?? []) for (const item of cluster.items) {

@@ -9,6 +9,7 @@ import type {V13Mission,V13Structure} from './v13Types';
 import {derivedBases} from './v13Sources';
 import {mirrorX,refit,secure,type Refit} from './v13Reuse';
 import {phase7Late} from './v13Phase7';
+import {rework} from './v13Rework';
 import {PROP_KIT} from '../../src/game/world/propKit';
 
 const as=(s:V13Structure,kind:V13Structure['kind'],asset:V13Structure['asset']|undefined,factor=1):V13Structure[]=>[{...s,kind,asset,scale:+(s.scale*factor).toFixed(3)}];
@@ -67,8 +68,10 @@ const hqArt=(mission:number):Refit=>HQ_ART.has(mission)?s=>HQ(s).map(q=>HQ_PICTU
  *  08-04 kept its storage camera when the cryo units became server racks. */
 export const PINNED:Record<string,Record<string,{x:number;y:number}>>={'08-04':{storage:{x:5.5,y:7.4}}};
 const pin=(m:V13Mission):V13Mission=>PINNED[m.id]?{...m,cameras:m.cameras.map(c=>PINNED[m.id][c.zone]?{...c,at:PINNED[m.id][c.zone]}:c)}:m;
+/** Each derived mission as it was before its Gameplay v3 rework (v13Rework.ts): the analysis tools measure reworks against it. */
+export const BEFORE_REWORK=new Map<string,V13Mission>();
 const chapter=(n:number,titles:string[],bases:V13Mission[],family:string,swap:(mission:number)=>Refit,doors:{normal:string;secure:string},guards:number,cameras:number)=>
- bases.map((b,i)=>phase7Late(pin(secure(refit(b,`0${n}-0${i+1}`,titles[i],family,swap(i),doors),guards,cameras))));
+ bases.map((b,i)=>phase7Late(pin(secure(refit(b,`0${n}-0${i+1}`,titles[i],family,swap(i),doors),guards,cameras)))).map(m=>{BEFORE_REWORK.set(m.id,m);return rework(m);});
 export const V13_MANSION=chapter(6,['Reception Wing','Library Passage','Private Courtyard','East Family Wing','Secret Vault'],derivedBases(6).map(mirrorX),'Mansion',mansionArt,{normal:'mansionWood',secure:'mansionLibrary'},4,2);
 export const V13_WAREHOUSE=chapter(7,['Loading Aisles','Restricted Freight','Machinery Cross','Container Spine','Secure Container'],derivedBases(7).map(mirrorX),'Warehouse',WAREHOUSE,{normal:'warehouseIndustrial',secure:'warehouseIndustrial'},4,2);
 /** Inspection of the upper connector, with a readable four-second stop before walking away.

@@ -111,6 +111,7 @@ const DEMO_PATH = [
 
 export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[][]): PlaygroundState {
   const sp = stage.playerSpawn;
+  const guards = stage.guards.map((g, i) => createGuardState(g, (i * 0.37) % 1));
   return {
     ...(stage.doors?.length ? {
       doors:stage.doors.map(createDoor),lockdownDoorIds:(stage.def.lockdownDoors??[]).slice(),doorGeometryRevision:-1,
@@ -144,8 +145,8 @@ export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[
       tx: sp.x,
       ty: sp.y,
     },
-    guards: stage.guards.map((g, i) => createGuardState(g, (i * 0.37) % 1)),
-    guardPlayback: stage.guards.map((g) => createGuardPlayback(createGuardState(g),guardStrides)),
+    guards,
+    guardPlayback: guards.map((g) => createGuardPlayback(g,guardStrides)),
     events: createGuardEvents(),
     cam: { x: sp.x, y: sp.y },
     playerMode: -1,

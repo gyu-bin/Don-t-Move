@@ -3,7 +3,8 @@
   "src/game/input/tiltProfiles.ts": "f97353ae6c8bcde9203e82db84138c0068fe584269bc84665fc880c093555f95",
   "src/game/input/tiltMovement.ts": "63e90c3a92984ed6d00fc8c0bf8a689c8d8f09d3f0a1dc6262d8ceea829a7446",
   "src/game/guards/guardTuning.ts": "ddf459bbc7ce589eead6f3dbaf941563e11f77a3d8033401bfc5d5f351914677",
-  "src/game/guards/guardSystem.ts": "58acc0f96ae392bf7bdf9c0086d6c97f04ec76c669f18dac872b73480a8e90e9",
+  "src/game/guards/guardSystem.ts": "b15f4faefca60e78acc50c0ebc9240d3cf826a9169bb658ec78bf38f76472379",
   "src/game/security/cctv.ts": "a9977b5e04efa6d6d25d32678e876543dd529d7198d2e039d8c6e40fc697ed55",
-  "src/game/progress/campaignProgress.ts": "2b9c855245edde329c687cff98e49a2294b2df7235f3a20fd560fb7534dbb487"
+  "src/game/progress/campaignProgress.ts": "2b9c855245edde329c687cff98e49a2294b2df7235f3a20fd560fb7534dbb487",
+  "src/game/guards/guardMotion.ts": "43a3a36d00939a10e5ede778dae96ebcc7f27447d923cd3da7a2b09ecebb5684"
 }
