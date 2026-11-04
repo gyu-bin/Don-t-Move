@@ -1,5 +1,6 @@
-/** Museum extension: five authored exhibit circuits, with a distinct service-side escape after lockdown. */
+/** Museum extension: three independent layouts, followed by the two retained final exhibit circuits. */
 import type {V13Mission,V13Structure} from './v13Types';
+import {V13_MUSEUM_DISTINCT} from './v13MuseumDistinct';
 
 /** Security constants are copied from these reviewed Museum archetypes, never strengthened here. */
 export const MUSEUM_EXPANSION_ARCHETYPES:Record<string,string>={
@@ -9,9 +10,9 @@ export const MUSEUM_EXPANSION_NAMES_KO=['서쪽 전시동','조각 안뜰','보�
 
 type Spec={id:string;title:string;widths:[number,number,number];heights:[number,number,number];
   topDoor:number;westDoor:number;entryDoor:number;eastDoor:number;serviceDoor:number;guards:2|3;camera:boolean;
-  riskWestDoor?:number;riskEntryDoor?:number;publicName:string;restrictedName:string;serviceName:string;identity:string;feature:'cases'|'sculpture'|'conservation'|'camera'|'crown'};
+  riskWestDoor?:number;riskEntryDoor?:number;publicName:string;restrictedName:string;serviceName:string;identity:string;feature:'camera'|'crown'};
 
-/* The plans share an architectural vocabulary (public wing / secure chamber / service wing), but every
+/* Only 01-09 and 01-10 retain the exhibit-circuit vocabulary. Every
  * footprint, opening offset, exhibit island and patrol rhythm below is authored. The drawing helper only
  * fills the named rectangles and three-tile thresholds; it never invents routes, guards or decoration. */
 function exhibitCircuit(s:Spec):V13Mission{
@@ -41,7 +42,7 @@ function exhibitCircuit(s:Spec):V13Mission{
  const pc=centre(x0,y1,lw,mh),rc=centre(x0,y0,lw,th),sc=centre(x1,y1,mw,mh),tc=centre(x2,y1,rw,mh);
  const structures:V13Structure[]=[
   art('Arrival Information Desk','counter','museum_security_desk',x0+lw/2,y2+bh/2,1.6,['hiding','divider']),
-  art('Public Exhibit Island',s.feature==='sculpture'?'statue':'displayCase',s.feature==='sculpture'?'museum_statue_large':'museum_display_case_large',pc.x,pc.y,1.6,['hiding','losBreak','divider']),
+  art('Public Exhibit Island','displayCase','museum_display_case_large',pc.x,pc.y,1.6,['hiding','losBreak','divider']),
   art('Restricted Exhibit Screen','partition','museum_partition',rc.x,rc.y,1.6,['hiding','losBreak','divider']),
   art('Service Workstation','counter','museum_security_desk',sc.x+1,sc.y+.4,1.35,['hiding','divider']),
   art('East Wing Collection Case','displayCase','museum_display_case_large',tc.x-.7,tc.y,1.5,['hiding','losBreak']),
@@ -50,9 +51,6 @@ function exhibitCircuit(s:Spec):V13Mission{
   art('West Wing Painting','painting','museum_painting',2,y1+.3,1,['decor']),
   art('Restricted Painting','painting','museum_painting',2,1.3,1,['decor']),
  ];
- if(s.feature==='sculpture')structures.push(art('East Exit Waiting Statue','statue','museum_statue_large',23.8,6,1.1,['hiding','losBreak']),art('Marble Study Waiting Statue','statue','museum_statue_large',2.6,5.8,1,['hiding','losBreak']));
- if(s.feature==='conservation')structures.push(art('Conservation Approach Screen','partition','museum_partition',7,11.6,1.2,['hiding','losBreak']));
- if(s.feature==='conservation')structures.push(art('Conservation Cabinet','shelf','museum_display_case_large',x1+mw-2,y1+mh-1.7,1.2,['divider','hiding']));
  if(s.feature==='crown')structures.push(art('Crown Collection Portrait','painting','museum_painting',lw-1.5,1.3,1.2,['decor']));
  const westCross={x:s.westDoor+1.5,y:th+1},entryCross={x:s.entryDoor+1.5,y:y2-1};
  const riskWest={x:(s.riskWestDoor??s.westDoor)+1.5,y:th+1},riskEntry={x:(s.riskEntryDoor??s.entryDoor)+1.5,y:y2-1};
@@ -67,10 +65,7 @@ function exhibitCircuit(s:Spec):V13Mission{
  if(s.guards===3)guards.push({role:'escape',zone:'eastService',watches:'The service junction from separate inspection posts; the corridor wall separates it from the prize',
   stops:[stop(x2+1.4,y1+1.5,x2+rw-1,y1+1.5,2.5),stop(x2+rw-1.3,y1+mh-1.2,x2+1,y1+mh-1.2,2)]});
  guards.push({role:'objective',zone:'objective',watches:'The prize from the east side of the vault pier, then the secure west threshold',
-  stops:[stop(objective.x,4,objective.x,objective.y,2),s.feature==='sculpture'?stop(x1+1.3,3.1,x1-1,3.1,3):stop(x1+mw-1.3,th-1,x1+1,th-1,3),
-   // The cover-check inspection turns stop 0 toward the pier's exposed shoulder.
-   // Return to the same clear post with a separate prize-facing inspection, so the empty stand is discovered naturally.
-   ...(s.feature==='sculpture'?[stop(objective.x,4,objective.x,objective.y,2)]:[])],startDelay:3});
+  stops:[stop(objective.x,4,objective.x,objective.y,2),stop(x1+mw-1.3,th-1,x1+1,th-1,3)],startDelay:3});
  return {
   id:s.id,title:s.title,family:'Museum',topology:s.identity,map:cells.map(row=>row.join('')),
   zones:{
@@ -101,9 +96,7 @@ function exhibitCircuit(s:Spec):V13Mission{
 }
 
 export const V13_MUSEUM_EXPANSION:V13Mission[]=[
- exhibitCircuit({id:'01-06',title:'West Exhibits',widths:[7,7,7],heights:[7,7,5],topDoor:2,westDoor:2,entryDoor:4,eastDoor:20,serviceDoor:12,guards:2,camera:false,publicName:'West Exhibit Walk',restrictedName:'Silver Collection Gallery',serviceName:'Packing Room',identity:'Offset west ascent with a low packing-room escape',feature:'cases'}),
- exhibitCircuit({id:'01-07',title:'Sculpture Court',widths:[8,6,8],heights:[8,6,6],topDoor:4,westDoor:5,riskWestDoor:1,entryDoor:2,eastDoor:20,serviceDoor:12,guards:2,camera:false,publicName:'Sculpture Court',restrictedName:'Marble Study',serviceName:'Sculpture Workshop',identity:'Wide sculpture court feeding a tight collection chamber',feature:'sculpture'}),
- exhibitCircuit({id:'01-08',title:'Conservation Loop',widths:[9,8,6],heights:[6,8,5],topDoor:2,westDoor:2,riskWestDoor:6,entryDoor:2,eastDoor:23,serviceDoor:11,guards:3,camera:false,publicName:'Conservation Display',restrictedName:'Conservation Archive',serviceName:'Restoration Workshop',identity:'Tall conservation wing with a watched east service return',feature:'conservation'}),
+ ...V13_MUSEUM_DISTINCT,
  exhibitCircuit({id:'01-09',title:'Camera Crossing',widths:[8,8,6],heights:[7,6,6],topDoor:3,westDoor:5,riskWestDoor:1,entryDoor:2,eastDoor:22,serviceDoor:10,guards:2,camera:true,publicName:'Observation Gallery',restrictedName:'Camera Crossing',serviceName:'Monitoring Backroom',identity:'CCTV observation across an offset north crossing',feature:'camera'}),
  exhibitCircuit({id:'01-10',title:'Crown Collection',widths:[7,9,8],heights:[8,7,5],topDoor:3,westDoor:2,entryDoor:5,riskEntryDoor:1,eastDoor:24,serviceDoor:13,guards:3,camera:true,publicName:'Ceremonial Gallery',restrictedName:'Crown Antechamber',serviceName:'Collection Handling Room',identity:'Broad final collection loop with three separate guard responsibilities',feature:'crown'}),
 ];

@@ -69,7 +69,7 @@ test('new Museum detour hints name real service rooms in the authored layouts', 
     id:string;topologyPlan?:{rooms:{name:string}[]};
   }[];
   const serviceRooms = {
-    '01-06': 'Packing Room', '01-07': 'Sculpture Workshop', '01-08': 'Restoration Workshop',
+    '01-06': 'Packing Workroom', '01-07': 'Sculpture Workshop', '01-08': 'Restoration Workshop',
     '01-09': 'Monitoring Backroom', '01-10': 'Collection Handling Room',
   };
   for (const [missionId, room] of Object.entries(serviceRooms)) {

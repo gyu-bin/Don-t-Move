@@ -1,4 +1,5 @@
 import type { MissionRecord } from './campaignProgress';
+import { isCurrentMissionBenchmark } from './missionRevision';
 
 export type ChapterOneBadge = 'firstEscape' | 'cleanEscape' | 'personalBest';
 export interface ChapterOneMasteryRecord { cleanEscape?: true; personalBest?: true }
@@ -41,7 +42,7 @@ export function recordChapterOneMastery(
   const result = previous?.cleared && !previous.legacy ? normalizeChapterOneMastery(previous.mastery) ?? {} : {};
   if (Number.isFinite(seconds) && seconds > 0) {
     if (extraDetections === 0) result.cleanEscape = true;
-    if (previous?.cleared && !previous.legacy && typeof previous.bestTime === 'number' &&
+    if (previous?.cleared && isCurrentMissionBenchmark(id,previous) && typeof previous.bestTime === 'number' &&
       Number.isFinite(previous.bestTime) && previous.bestTime > 0 && seconds < previous.bestTime) result.personalBest = true;
   }
   return Object.keys(result).length ? result : undefined;

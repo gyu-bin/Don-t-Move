@@ -147,7 +147,7 @@ test('version6 Museum clears retain their badges and Museum ordinal while upgrad
   '01-07':{cleared:true,bestTime:42,alerts:0,mastery:{cleanEscape:true}},
  }};
  const result=normalizeCampaign(source);
- assert.deepEqual(result,{...source,version:7});
+ assert.deepEqual(result,{...source,version:7,records:{'01-07':{cleared:true,mastery:{cleanEscape:true},benchmarkRevision:2,previousBenchmark:{revision:1,bestTime:42,alerts:0}}}});
  assert.deepEqual(normalizeCampaign(result),result);
  assert.equal(result.highestUnlocked,7);
 });

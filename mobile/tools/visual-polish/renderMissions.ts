@@ -3,6 +3,7 @@
  * Run from mobile/:
  *   TSX_TSCONFIG_PATH=tools/sprites/tsconfig.runtime.json node --import tsx tools/visual-polish/renderMissions.ts <outDir> <mission>...
  *   SCALE=3 (default) renders 3 px per world unit, close to an iPhone's 3.2 (402 pt × 3 / 9.4 tiles / 40).
+ * STAGES=<candidate.json> previews an authored candidate without replacing the live campaign.
  * Uses the runtime campaign and the PNGs currently on disk: render once before a swap and once after, same SCALE.
  * Guards stand at their spawn; no darkness animation, HUD or touch panel.
  */
@@ -71,7 +72,9 @@ async function main() {
   const {ASSET_MANIFEST} = require('../../src/assets/manifest');
   const {buildGameAssets} = require('../../src/assets/buildSprites');
   const {decodeEnvironmentImages} = require('../../src/assets/environmentKit');
-  const {campaignStages} = require('../../src/game/levels/campaignStages');
+  const campaignStages = process.env.STAGES
+    ? JSON.parse(fs.readFileSync(process.env.STAGES, 'utf8'))
+    : require('../../src/game/levels/campaignStages').campaignStages;
   const {VALUABLES} = require('../../src/game/levels/stagePresentation');
   const {compileStage} = require('../../src/game/world/compileStage');
   const {createPlaygroundState} = require('../../src/game/playground/playgroundState');

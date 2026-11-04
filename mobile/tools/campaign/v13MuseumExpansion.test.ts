@@ -24,8 +24,8 @@ const archetypes=[...source,...V13_MUSEUM_EXPANSION.map(m=>({
  ...structuredClone(source.find(d=>d.id===MUSEUM_EXPANSION_ARCHETYPES[m.id])!),
  id:m.id,chapter:1,mission:Number(m.id.slice(3)),
 }))];
-const defs=V13_MUSEUM_EXPANSION.map(m=>composeV13(m,archetypes));
-const witnesses=[{closed:8,clean:0},{closed:10,clean:10},{closed:20,clean:4},{closed:5,clean:5},{closed:9,clean:0}];
+const defs=V13_MUSEUM_EXPANSION.map(m=>composeV13(watchExit(polishPatrol(authorCoverCheckpoints(m))),archetypes));
+const witnesses=[{closed:8,clean:8,approach:0},{closed:10,clean:10,approach:0},{closed:5,clean:6,approach:1},{closed:5,clean:5,approach:0},{closed:9,clean:0,approach:0}];
 
 test('Museum expansion adds five authored IDs and does not clone or mirror an existing Museum map',()=>{
  assert.deepEqual(defs.map(d=>d.id),['01-06','01-07','01-08','01-09','01-10']);
@@ -50,19 +50,15 @@ test('Museum expansion passes physical topology, body-clear lanes and readable p
  }
 });
 
-test('Museum expansion differentiates risk thresholds, sculpture cover and final security responsibilities',()=>{
- const floor=(i:number,x:number,y:number)=>V13_MUSEUM_EXPANSION[i].map[y][x]!=='#';
- // Sculpture Court: two three-tile doorways separated by a solid jamb, not a painted choice label.
- assert(floor(1,2,9)&&floor(1,6,9));assert(!floor(1,4,9));
- assert(V13_MUSEUM_EXPANSION[1].structures.some(s=>s.name==='Public Exhibit Island'&&s.kind==='statue'));
- // Final heist: a short left entrance and longer desk-side entrance are physically separate.
- assert(floor(4,2,18)&&floor(4,6,18));assert(!floor(4,4,18));
+test('Museum finale retains its separate entrances and three guard / one camera responsibilities',()=>{
+ const floor=(x:number,y:number)=>V13_MUSEUM_EXPANSION[4].map[y][x]!=='#';
+ assert(floor(2,18)&&floor(6,18));assert(!floor(4,18));
  assert.equal(defs[4].guards.length,3);assert.equal(defs[4].cameras?.length,1);
 });
 
 for(const [i,d] of defs.entries()){
  test(`${d.id}: a real-AI approach and long service escape can complete`,()=>{
-  const run=exposureRun(d,0,1,2,witnesses[i].closed);
+  const run=exposureRun(d,witnesses[i].approach,1,2,witnesses[i].closed);
   assert(run.clear,`${d.id}: ${JSON.stringify(run)}`);
  });
  test(`${d.id}: the clean-escape badge has a reachable real-AI witness`,()=>{
@@ -96,7 +92,7 @@ test('Actual cover-wrapped Museum expansion patrols naturally discover every emp
  }
 });
 
-for(const id of ['01-07','01-08'])test(`${id}: reviewed waiting-cover additions remove all release-audit findings`,()=>{
+for(const id of ['01-07','01-08'])test(`${id}: revised architecture passes all release-audit checks`,()=>{
  const mission=V13_MUSEUM_EXPANSION.find(m=>m.id===id)!;
  const def=composeV13(watchExit(polishPatrol(authorCoverCheckpoints(mission))),archetypes);
  assert.deepEqual(auditMission(def).issues,[]);

@@ -34,7 +34,7 @@ export const V13_SECURITY_SOURCE:StageDefinition[]=[...(raw as StageDefinition[]
 /** The campaign, chapter by chapter, in bake order. `plans` is where the missions are authored; a derived chapter's
  *  base plans (and whether it inherits the Phase 7 layer) are set in v13Sources.ts. */
 export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string;derivedFrom?:number}[]=[
- {chapter:1,missions:[...V13_MUSEUM,...V13_MUSEUM_EXPANSION],plans:'v13Museum.ts + v13MuseumExpansion.ts'},
+ {chapter:1,missions:[...V13_MUSEUM,...V13_MUSEUM_EXPANSION],plans:'v13Museum.ts + v13MuseumExpansion.ts + v13MuseumDistinct.ts'},
  {chapter:2,missions:[...V13_GALLERY,...V13_GALLERY_EXPANSION],plans:'v13Gallery.ts + v13GalleryExpansion.ts'},
  {chapter:3,missions:V13_BANK,plans:'v13Bank.ts'},
  {chapter:4,missions:V13_LAB,plans:'v13Lab.ts'},

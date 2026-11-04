@@ -5,28 +5,20 @@ import {CHAPTER_MISSION_COUNTS,MISSION_COUNT,missionId,missionIndex,missionName}
 import {freshCampaign,completeMission,canPlayMission,normalizeCampaign} from '../../src/game/progress/campaignProgress';
 import {canonical,sha256} from './v13QaLib';
 import baseline from '../../docs/design/chapter2-expansion/EXISTING_MISSION_HASHES.json';
-import reviewedCover from '../../docs/design/chapter2-expansion/REVIEWED_MUSEUM_COVER_PATCHES.json';
+import reviewedRebuilds from '../../docs/design/museum-diversity/REVIEWED_REBUILT_STAGE_HASHES.json';
 import {chapterRoute} from '../../src/ui/menu/missionRoute';
 import {resultActions} from '../../src/ui/resultNavigation';
 import {MISSION_BRIEFS} from '../../src/game/levels/missionBriefs';
 
-test('Gallery adds only five missions; original stages stay exact except the two explicitly reviewed Museum cover repairs',()=>{
+test('Gallery and original missions remain exact except the three explicitly reviewed Museum architecture replacements',()=>{
  assert.equal(Object.keys(baseline).length,50);assert.equal(campaignStages.length,55);
  for(const [id,hash] of Object.entries(baseline)){
   const stage=campaignStages.find(s=>s.id===id);assert.ok(stage,`${id} preserved`);
-  const review=reviewedCover[id as keyof typeof reviewedCover];
+  const review=reviewedRebuilds[id as keyof typeof reviewedRebuilds];
   if(review){
-   assert.equal(review.beforeHash,hash,`${id}: repair must start from the actual previous baseline`);
-   assert.equal(sha256(canonical(stage)),review.afterHash,`${id}: only the reviewed repair is permitted`);
-   const restored=structuredClone(stage) as unknown as Record<string,unknown>;
-   for(const patch of review.patches){
-    let parent=restored;
-    for(const key of patch.path.slice(0,-1))parent=parent[key] as Record<string,unknown>;
-    const key=patch.path.at(-1)!;
-    assert.deepEqual(canonical(parent[key]),canonical(patch.after),`${id}: exact reviewed delta ${patch.path.join('.')}`);
-    parent[key]=structuredClone(patch.before);
-   }
-   assert.equal(sha256(canonical(restored)),hash,`${id}: no changes outside the explicit cover patch`);
+   assert.equal(review.firstExpansionHash,hash,`${id}: recorded first-expansion baseline`);
+   assert.equal(review.revision,2);
+   assert.equal(sha256(canonical(stage)),review.afterHash,`${id}: only the reviewed architecture replacement is permitted`);
   }else assert.equal(sha256(canonical(stage)),hash,`${id}: existing definition changed`);
  }
  assert.deepEqual(campaignStages.filter(s=>!(s.id in baseline)).map(s=>s.id),['02-06','02-07','02-08','02-09','02-10']);

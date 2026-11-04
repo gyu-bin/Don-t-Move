@@ -1,7 +1,9 @@
 import {MISSION_COUNT,missionId,missionIndex} from '../levels/campaignCatalog';
 import {isChapterOneMission,normalizeChapterOneMastery,recordChapterOneMastery} from './chapterOneMastery';
 import type {ChapterOneMasteryRecord} from './chapterOneMastery';
-export interface MissionRecord {cleared:boolean;bestTime?:number;alerts?:number;legacy?:boolean;mastery?:ChapterOneMasteryRecord;}
+import {isCurrentMissionBenchmark,missionBenchmarkRevision,normalizeMissionBenchmark} from './missionRevision';
+import type {PreviousMissionBenchmark} from './missionRevision';
+export interface MissionRecord {cleared:boolean;bestTime?:number;alerts?:number;legacy?:boolean;mastery?:ChapterOneMasteryRecord;benchmarkRevision?:number;previousBenchmark?:PreviousMissionBenchmark;}
 /** Original save survives compression, including removed IDs and non-comparable benchmarks. */
 export interface LegacyCampaignArchive {sourceVersion:number;original:Record<string,unknown>;expandedV4HighestUnlocked:number;}
 export interface CampaignProgress {version:7;lastMission:string;highestUnlocked:number;records:Record<string,MissionRecord>;legacyArchive?:LegacyCampaignArchive;}
@@ -28,7 +30,7 @@ export function migratedMissionId(id:string):string {
  const chapter=Number(id.slice(0,2))-1,mission=Number(id.slice(3))-1;
  return chapter<3?EARLY_DESTINATIONS[chapter][mission]:id;
 }
-function recordFrom(value:unknown,allowMastery=false):MissionRecord|null {
+function recordFrom(value:unknown,allowMastery=false,id?:string):MissionRecord|null {
  if(value===null||typeof value!=='object'||Array.isArray(value))return null;
  const row=object(value),record:MissionRecord={cleared:row.cleared===true};
  if(typeof row.bestTime==='number'&&Number.isFinite(row.bestTime)&&row.bestTime>0)record.bestTime=row.bestTime;
@@ -36,7 +38,7 @@ function recordFrom(value:unknown,allowMastery=false):MissionRecord|null {
  if(row.legacy===true)record.legacy=true;
  const mastery=allowMastery&&record.cleared&&!record.legacy?normalizeChapterOneMastery(row.mastery):undefined;
  if(mastery)record.mastery=mastery;
- return record;
+ return id?normalizeMissionBenchmark(id,record,row):record;
 }
 function earnedIndex(records:Record<string,MissionRecord>){
  return Math.max(0,...Object.keys(records).filter(id=>records[id].cleared).map(id=>Math.min(MISSION_COUNT-1,missionIndex(id)+1)));
@@ -44,7 +46,7 @@ function earnedIndex(records:Record<string,MissionRecord>){
 function normalizeCurrent(row:Record<string,unknown>):CampaignProgress {
  const records:Record<string,MissionRecord>={};
  for(const [id,value] of Object.entries(object(row.records))){
-  const record=recordFrom(value,isChapterOneMission(id));if(missionIndex(id)>=0&&record)records[id]=record;
+  const record=recordFrom(value,isChapterOneMission(id),id);if(missionIndex(id)>=0&&record)records[id]=record;
  }
  const highestUnlocked=Math.max(clamp(row.highestUnlocked),earnedIndex(records));
  const lastIndex=typeof row.lastMission==='string'?missionIndex(row.lastMission):-1;
@@ -71,7 +73,7 @@ function normalizeV5(row:Record<string,unknown>):CampaignProgress {
  const records:Record<string,MissionRecord>={};
  for(const [id,value] of Object.entries(object(row.records))){
   if(v5MissionIndex(id)<0)continue; // New Museum/Gallery slots never existed in a v5 save.
-  const record=recordFrom(value,isChapterOneMission(id));if(record)records[id]=record;
+  const record=recordFrom(value,isChapterOneMission(id),id);if(record)records[id]=record;
  }
  const highestUnlocked=Math.max(v5UnlockInCurrent(clamp(row.highestUnlocked,44)),earnedV5Index(records));
  const lastIndex=typeof row.lastMission==='string'&&v5MissionIndex(row.lastMission)>=0?missionIndex(row.lastMission):-1;
@@ -95,7 +97,7 @@ function normalizeV6(row:Record<string,unknown>):CampaignProgress {
  const records:Record<string,MissionRecord>={};
  for(const [id,value] of Object.entries(object(row.records))){
   if(v6MissionIndex(id)<0)continue;
-  const record=recordFrom(value,isChapterOneMission(id));if(record)records[id]=record;
+  const record=recordFrom(value,isChapterOneMission(id),id);if(record)records[id]=record;
  }
  const earned=Math.max(0,...Object.keys(records).filter(id=>records[id].cleared).map(id=>Math.min(49,v6MissionIndex(id)+1)));
  const highestUnlocked=missionIndex(v6MissionId(Math.max(clamp(row.highestUnlocked,49),earned)));
@@ -156,11 +158,14 @@ export function canPlayMission(progress:CampaignProgress,index:number,testBuild:
 }
 export function completeMission(progress:CampaignProgress,index:number,seconds:number,alerts:number,extraDetections?:number):CampaignProgress {
  if(index<0||index>=MISSION_COUNT||!Number.isInteger(index))return progress;
- const id=missionId(index),previous=progress.records[id];
+ const id=missionId(index),saved=progress.records[id],previous=saved?normalizeMissionBenchmark(id,saved):undefined;
  const next=Math.min(MISSION_COUNT-1,index+1);
  const record:MissionRecord={cleared:true};
- if(Number.isFinite(seconds)&&seconds>0)record.bestTime=Math.min(previous?.legacy?Infinity:previous?.bestTime??Infinity,seconds);
- if(Number.isInteger(alerts)&&alerts>=0)record.alerts=Math.min(previous?.legacy?Infinity:previous?.alerts??Infinity,alerts);
+ const revision=missionBenchmarkRevision(id);if(revision!==undefined)record.benchmarkRevision=revision;
+ if(previous?.previousBenchmark)record.previousBenchmark=previous.previousBenchmark;
+ const comparable=isCurrentMissionBenchmark(id,previous);
+ if(Number.isFinite(seconds)&&seconds>0)record.bestTime=Math.min(comparable?previous?.bestTime??Infinity:Infinity,seconds);
+ if(Number.isInteger(alerts)&&alerts>=0)record.alerts=Math.min(comparable?previous?.alerts??Infinity:Infinity,alerts);
  const mastery=recordChapterOneMastery(id,previous,seconds,extraDetections);
  if(mastery)record.mastery=mastery;
  return {...progress,lastMission:missionId(next),highestUnlocked:Math.max(progress.highestUnlocked,next),records:{...progress.records,[id]:record}};

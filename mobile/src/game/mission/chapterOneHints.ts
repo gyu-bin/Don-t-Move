@@ -93,38 +93,38 @@ const MISSIONS: Readonly<Record<string, { approach: Copy; escape: Copy; camera?:
   },
   '01-06': {
     approach: {
-      en: 'Use the display island in West Exhibit Walk to split the crossing. Watch the guard before moving north into Silver Collection Gallery.',
-      ko: '서쪽 전시 산책로의 전시대를 이용해 이동을 나눠 보세요. 은빛 수집 갤러리로 올라가기 전에 경비를 확인하세요.',
-      ja: '西展示通路の展示台を使い、移動を区切りましょう。北の銀のコレクション展示室へ進む前に警備員を確認しましょう。',
+      en: 'From Staggered Exhibit Hall, choose the north portrait rooms or time the east crossing. Check the collection guard again at the next doorway.',
+      ko: '엇갈린 전시 홀에서 북쪽 초상화 방으로 돌아가거나, 경비가 지나간 뒤 동쪽 통로를 건너 보세요. 수집실 문에서는 경비를 다시 확인하세요.',
+      ja: 'ずれた展示ホールから北の肖像画室を回るか、警備員が通り過ぎてから東の通路を渡りましょう。収蔵室の扉で再び警備員を確認しましょう。',
     },
     escape: {
-      en: 'If the direct exit door closes, leave the collection chamber through the Packing Room below. Cross the east service wing, then turn north toward the exit.',
-      ko: '출구로 가는 직통 문이 닫히면 아래쪽 포장실로 돌아가 보세요. 동쪽 직원 구역을 지나 북쪽 출구로 향할 수 있습니다.',
-      ja: '出口への直通扉が閉じたら、下側の梱包室へ回りましょう。東の職員用区画を通り、北の出口へ進めます。',
+      en: 'If the collection shortcut closes, leave east through the handling room and descend into Packing Workroom. Follow the south return west to West Dispatch Exit.',
+      ko: '수집실 지름길이 닫히면 동쪽 운송실로 나와 포장 작업실로 내려가세요. 남쪽 귀환 전시실을 따라 서쪽의 반출 출구로 돌아갈 수 있습니다.',
+      ja: '収蔵室の近道が閉じたら、東の運搬室から梱包作業室へ下りましょう。南の帰路を西へ進むと、西搬出口へ回れます。',
     },
   },
   '01-07': {
     approach: {
-      en: 'Use the statue in Sculpture Court to pause between crossings. Check the next doorway before entering Marble Study.',
-      ko: '조각 안뜰의 조각상 뒤에서 이동을 나눠 보세요. 대리석 연구실에 들어가기 전 다음 문 쪽을 확인하세요.',
-      ja: '彫刻の中庭の像を使い、移動の合間に待ちましょう。大理石研究室へ入る前に次の出入口を確認しましょう。',
+      en: 'The central Marble Pavilion has two approaches. Watch the north-arc patrol before choosing the long east arcade or the short west courtyard bridge.',
+      ko: '중앙 대리석 전시관에는 두 방향으로 접근할 수 있습니다. 북쪽 경비를 살핀 뒤 긴 동쪽 회랑과 짧은 서쪽 안뜰 다리 중 하나를 고르세요.',
+      ja: '中央の大理石展示館には二方向から近づけます。北側の巡回を見て、長い東の回廊か短い西の中庭橋を選びましょう。',
     },
     escape: {
-      en: 'If the direct exit door closes, return through the Sculpture Workshop below the collection. Use the east service wing to reach the exit from the south.',
-      ko: '출구로 가는 직통 문이 닫히면 수집실 아래의 조각 작업실로 돌아가 보세요. 동쪽 직원 구역을 통해 출구에 남쪽에서 접근할 수 있습니다.',
-      ja: '出口への直通扉が閉じたら、収蔵室の下側の彫刻工房へ回りましょう。東の職員用区画から出口に南側から近づけます。',
+      en: 'If the east pavilion bridge closes, leave by the west bridge and descend into Sculpture Workshop. Follow the south exhibition walk toward the lower-right exit.',
+      ko: '전시관 동쪽 다리가 닫히면 서쪽 다리로 나와 조각 작업실로 내려가세요. 남쪽 전시 회랑을 따라 오른쪽 아래 출구로 향할 수 있습니다.',
+      ja: '展示館の東橋が閉じたら、西橋から彫刻工房へ下りましょう。南の展示回廊を進み、右下の出口を目指せます。',
     },
   },
   '01-08': {
     approach: {
-      en: 'Move between the exhibits in Conservation Display, then check the Conservation Archive doorway. The third guard also watches the east service return.',
-      ko: '보존 전시실의 전시물 사이로 이동한 뒤 보존 기록실 입구를 확인하세요. 동쪽 직원 귀환로에는 세 번째 경비도 있습니다.',
-      ja: '保存展示室の展示物の間を進み、保存資料室の出入口を確認しましょう。東の職員用帰路には3人目の警備員もいます。',
+      en: 'From the east arrival, compare the upper observation rooms with the direct T-junction branch. Stop behind the study screen and read the archive guard before entering.',
+      ko: '동쪽 입구에서 위쪽 관찰실 경로와 T자 교차로의 직통 경로를 비교해 보세요. 연구실 가림벽 뒤에서 보존 기록실 경비를 확인한 뒤 들어가세요.',
+      ja: '東の入口から、上の観察室経由とT字路の直通経路を比べましょう。研究室の遮蔽物で止まり、保存資料室の警備員を確認してから入りましょう。',
     },
     escape: {
-      en: 'If the direct exit door closes, go down into Restoration Workshop. Check the east-wing guard before crossing the service route and heading north to the exit.',
-      ko: '출구로 가는 직통 문이 닫히면 아래의 복원 작업실로 내려가 보세요. 동쪽 경비를 확인한 뒤 직원 통로를 지나 북쪽 출구로 향하세요.',
-      ja: '出口への直通扉が閉じたら、下の修復工房へ進みましょう。東棟の警備員を確認し、職員用通路から北の出口へ向かいましょう。',
+      en: 'If the west archive shortcut closes, return to the T junction and turn into Restoration Workshop. Pass the lower crate room to reach the lower-left exit.',
+      ko: '기록실 서쪽 지름길이 닫히면 T자 교차로로 돌아와 복원 작업실로 꺾으세요. 아래쪽 상자 운송실을 지나 왼쪽 아래 출구로 갈 수 있습니다.',
+      ja: '資料室の西の近道が閉じたら、T字路へ戻って修復工房へ曲がりましょう。下の木箱運搬室を通ると、左下の出口へ進めます。',
     },
   },
   '01-09': {

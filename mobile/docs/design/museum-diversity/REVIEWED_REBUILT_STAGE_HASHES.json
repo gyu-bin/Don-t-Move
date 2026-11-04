@@ -1,0 +1,23 @@
+{
+  "01-06": {
+    "revision": 2,
+    "beforeHash": "d5fc8cdae11c574c406246fbf1c9bf38b7c849fcc7cc2555f964472c8ad833bc",
+    "firstExpansionHash": "d5fc8cdae11c574c406246fbf1c9bf38b7c849fcc7cc2555f964472c8ad833bc",
+    "afterHash": "ba9f8723415098384bbd2605bba74d4ba44bddc8bcc0e89133fd5dd3d3b8d5b3",
+    "reason": "Replace the shared exhibit circuit with independently authored enfilade, central pavilion ring, and branching restoration layouts."
+  },
+  "01-07": {
+    "revision": 2,
+    "beforeHash": "fad4d63e0da9e6a1bf55ff1eefad4992ca50a6c961a6cc8a72eb8c1a476c5bef",
+    "firstExpansionHash": "7fef92e634eddd4e5ea70136dabbeecd68283ef6865b05f68eaf58ba69608718",
+    "afterHash": "7ed4c1f2730d54760d7f7789444efc9d81c31cba0680350debb8db9bdfe611e5",
+    "reason": "Replace the shared exhibit circuit with independently authored enfilade, central pavilion ring, and branching restoration layouts."
+  },
+  "01-08": {
+    "revision": 2,
+    "beforeHash": "ceaba8cfe0cdb2a1855e7ecaaf54c9f870798c5a4ddaf592d7d2524ee60c2c76",
+    "firstExpansionHash": "ff1fbba9d018bc274a60a71c851be9cf84036c8f00278f7e8419658d2973edb0",
+    "afterHash": "085e91d5cafad3780c158322df6b60ba3bd05a076b265b922c75f942634649f2",
+    "reason": "Replace the shared exhibit circuit with independently authored enfilade, central pavilion ring, and branching restoration layouts."
+  }
+}
