@@ -26,12 +26,32 @@ for(const id of campaignStages.filter(d=>(d.chapter??0)<=3&&(d.cameras?.length??
   const a=createSecurityCamera(spec),ae=createGuardEvents();for(let f=0;f<720;f++)stepSecurityCameras([a],{...outside,gait:1},stage.visionBlockers,ae,1/60,(f+1)/60);assert.equal(a.suspicion,0);assert.equal(ae.globalAlert,false);
   const visible=candidates.find(p=>{const c=createSecurityCamera(spec),e=createGuardEvents();for(let f=0;f<18;f++){stepSecurityCameras([c],{...p,gait:1},stage.visionBlockers,e,1/60,(f+1)/60);if(!c.canSee)return false;}return c.suspicion>0&&c.suspicion<1;});assert(visible,`${spec.id} reachable partial exposure`);
   const c=createSecurityCamera(spec),e=createGuardEvents();let t=0;const tick=(p:Point)=>{t+=1/60;stepSecurityCameras([c],{...p,gait:1},stage.visionBlockers,e,1/60,t);};for(let f=0;f<18;f++)tick(visible);const partial=c.suspicion;assert(partial>0&&partial<1);assert.equal(e.globalAlert,false);
-  for(let f=0;f<720&&!c.alerted;f++)tick(visible);assert(c.alerted,`${spec.id} sustained sweep exposure alerts`);assert.equal(c.suspicion,1);assert.equal(e.cameraAlertRevision,1);assert(e.globalAlert);const detectedAt=t,known=[e.globalX,e.globalY];
-  const blockedPoint=candidates.find(p=>Math.hypot(p.x-c.x,p.y-c.y)<c.visionRange&&Math.abs(wrapAngle(Math.atan2(p.y-c.y,p.x-c.x)-c.centerFacing))<c.sweepAngle+c.visionHalfAngle&&!clearSegment(c.x,c.y,p.x,p.y,stage.visionBlockers));const hidden=blockedPoint??outside;
-  for(let f=0;blockedPoint&&f<720&&Math.abs(wrapAngle(Math.atan2(hidden.y-c.y,hidden.x-c.x)-c.facing))>=c.visionHalfAngle;f++)tick(visible);if(blockedPoint)assert(Math.abs(wrapAngle(Math.atan2(hidden.y-c.y,hidden.x-c.x)-c.facing))<c.visionHalfAngle,'LOS-break point lies within current cone');
+  for(let f=0;f<720&&!c.alerted;f++)tick(visible);assert(c.alerted,`${spec.id} sustained sweep exposure alerts`);assert.equal(c.suspicion,1);assert.equal(e.cameraAlertRevision,1);assert(e.globalAlert);const detectedAt=t;
+  // Locate the LOS probe in the *current* cone. Waiting for a preselected
+  // occluded bearing while staring at the old visible point can itself lose
+  // sight and consume memory before the hidden-input probe even starts.
+  const occluded=candidates.filter(p=>Math.hypot(p.x-c.x,p.y-c.y)<c.visionRange&&Math.abs(wrapAngle(Math.atan2(p.y-c.y,p.x-c.x)-c.centerFacing))<c.sweepAngle+c.visionHalfAngle&&!clearSegment(c.x,c.y,p.x,p.y,stage.visionBlockers));
+  const coneMargin=2*c.sweepSpeed/60+.001;
+  const inCurrentCone=(p:Point)=>Math.abs(wrapAngle(Math.atan2(p.y-c.y,p.x-c.x)-c.facing))<c.visionHalfAngle-coneMargin;
+  let blockedPoint=occluded.find(inCurrentCone);
+  for(let f=0;occluded.length&&!blockedPoint&&f<720;f++){
+   const observed=candidates.find(p=>Math.hypot(p.x-c.x,p.y-c.y)<c.visionRange&&inCurrentCone(p)&&clearSegment(c.x,c.y,p.x,p.y,stage.visionBlockers));
+   assert(observed,`${spec.id}: reachable visible input while waiting for an occluded bearing`);
+   tick(observed);assert(c.canSee,`${spec.id}: waiting input remains in actual sight`);assert.equal(c.suspicion,1);assert.equal(c.unseenTime,0);
+   blockedPoint=occluded.find(inCurrentCone);
+  }
+  if(occluded.length)assert(blockedPoint,`${spec.id}: reachable LOS-break point inside the current cone`);
+  const hidden=blockedPoint??outside,known=[e.globalX,e.globalY],lastSeenAt=t,lastKnownRevision=e.globalRevision;
+  assert(c.canSee);assert.equal(c.unseenTime,0);assert.equal(c.suspicion,1);assert.equal(e.cameraAlertRevision,1);assert.equal(e.globalT,lastSeenAt);
+  if(blockedPoint)assert(inCurrentCone(hidden),'LOS-break point lies within current cone');
   tick(hidden);assert.equal(c.canSee,false);assert.equal(c.suspicion,1);assert.deepEqual([e.globalX,e.globalY],known);
-  for(let f=0;f<Math.ceil((GUARD_TUNING.memorySeconds+.1)*60);f++){tick(hidden);assert.equal(c.canSee,false);assert.deepEqual([e.globalX,e.globalY],known);}assert(c.suspicion<1);for(let f=0;f<600;f++)tick(hidden);assert.equal(c.suspicion,0);assert.equal(c.alerted,false);assert.equal(e.cameraAlertRevision,1);
-  sensorEvidence.push({id,camera:spec.id,outside,partial:{point:visible,seconds:.3,suspicion:partial},full:{detectedAt,lastKnown:known},losBreak:{point:hidden,cause:blockedPoint?'ACTUAL_RUNTIME_LOS_BLOCKER':'OUTSIDE_CONE_OR_RANGE',geometryBlockedCase:blockedPoint?'PASS':'N/A: no reachable occluded point in authored swept coverage; no synthetic cover added',memoryRetained:true,finalSuspicion:c.suspicion}});
+  for(let f=0;f<Math.ceil((GUARD_TUNING.memorySeconds+.1)*60);f++){
+   tick(hidden);assert.equal(c.canSee,false);assert.deepEqual([e.globalX,e.globalY],known);assert.equal(e.globalRevision,lastKnownRevision);assert.equal(e.globalT,lastSeenAt);
+   if(c.unseenTime<GUARD_TUNING.memorySeconds)assert.equal(c.suspicion,1,`${spec.id}: full memory starts at actual last sight`);
+  }
+  assert(t-lastSeenAt>=GUARD_TUNING.memorySeconds);assert(c.suspicion<1);
+  for(let f=0;f<600;f++)tick(hidden);assert.equal(c.suspicion,0);assert.equal(c.alerted,false);assert.equal(e.cameraAlertRevision,1);
+  sensorEvidence.push({id,camera:spec.id,outside,partial:{point:visible,seconds:.3,suspicion:partial},full:{detectedAt,lastSeenAt,lastKnown:known},losBreak:{point:hidden,cause:blockedPoint?'ACTUAL_RUNTIME_LOS_BLOCKER':'OUTSIDE_CONE_OR_RANGE',geometryBlockedCase:blockedPoint?'PASS':'N/A: no reachable occluded point in authored swept coverage; no synthetic cover added',memoryRetained:true,finalSuspicion:c.suspicion}});
  }
  assert.equal(JSON.stringify(campaignStages.find(d=>d.id===id)),original,'source data unchanged');
  mkdirSync('Reports/MuseumV92',{recursive:true});writeFileSync('Reports/MuseumV92/runtime-camera-sensor-qa.json',JSON.stringify({method:'Real runtime camera configs and geometry. Isolated point perception probes at reachable positions, not player survival claims.',tuning:CAMERA_TUNING,sensorEvidence},null,2)+'\n');

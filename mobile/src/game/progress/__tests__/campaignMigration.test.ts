@@ -178,7 +178,7 @@ test('version6 Gallery clear retains earned Bank access without fabricating adde
  const snapshot=JSON.stringify(source),result=normalizeCampaign(source);
  assert.equal(result.highestUnlocked,missionIndex('03-01'));
  assert.equal(result.lastMission,'02-05');
- assert.deepEqual(result.records['01-10'],source.records['01-10']);
+ assert.deepEqual(result.records['01-10'],{cleared:true,mastery:source.records['01-10'].mastery,benchmarkRevision:2,previousBenchmark:{revision:1,bestTime:42,alerts:0}});
  assert.deepEqual(result.records['02-05'],source.records['02-05']);
  assert.deepEqual(result.legacyArchive,archive);
  for(let mission=6;mission<=10;mission++){

@@ -34,7 +34,7 @@ test('Fresh progression covers all ten Museum missions before unlocking the Gall
  assert.deepEqual(Object.keys(save.records),Array.from({length:10},(_,i)=>missionId(i)));
 });
 
-for(const [id,delay] of [['01-06',8],['01-07',10],['01-08',6],['01-09',5],['01-10',0]] as const){
+for(const [id,delay] of [['01-06',8],['01-07',10],['01-08',6],['01-09',1.5],['01-10',2]] as const){
  test(`${id}: the baked mission with final cover inspections offers a clean badge run`,()=>{
   const stage=campaignStages.find(s=>s.id===id)!;
   let evidence:number|undefined;

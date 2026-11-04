@@ -4,16 +4,16 @@ import {completeMission,freshCampaign,normalizeCampaign} from './campaignProgres
 import type {MissionRecord} from './campaignProgress';
 import {chapterOneMastery,newChapterOneBadges,recordChapterOneMastery} from './chapterOneMastery';
 import {isCurrentMissionBenchmark,missionBenchmarkRevision,normalizeMissionBenchmark} from './missionRevision';
-import {missionIndex} from '../levels/campaignCatalog';
+import {MISSION_COUNT,missionId,missionIndex} from '../levels/campaignCatalog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DEFAULT_PROGRESS,loadProgress,saveProgress} from './stageProgress';
 
-const revised=['01-06','01-07','01-08'];
+const revised=['01-06','01-07','01-08','01-09','01-10'];
 const roundTrip=(value:unknown)=>normalizeCampaign(JSON.parse(JSON.stringify(value)));
 
-test('only the three rebuilt Museum maps gain benchmark revision metadata',()=>{
+test('only the five rebuilt Museum maps gain benchmark revision metadata',()=>{
  for(const id of revised)assert.equal(missionBenchmarkRevision(id),2);
- for(const id of ['01-01','01-05','01-09','01-10','02-06','03-01','bad','__proto__','constructor','toString']){
+ for(const id of ['01-01','01-05','02-06','03-01','bad','__proto__','constructor','toString']){
   const record={cleared:true,bestTime:30,alerts:0};
   assert.equal(missionBenchmarkRevision(id),undefined);
   assert.equal(normalizeMissionBenchmark(id,record),record);
@@ -29,6 +29,17 @@ for(const id of revised)test(`${id}: existing progress and earned badges survive
  assert.deepEqual(chapterOneMastery(id,record).earned,['firstEscape','cleanEscape','personalBest']);
  assert.deepEqual(roundTrip(result),result);
  assert.deepEqual(input.records[id],old,'normalization does not mutate the previous save');
+});
+
+test('already-revised 06–08 records retain their current benchmark when 09–10 gain revisions',()=>{
+ for(const id of ['01-06','01-07','01-08']){
+  const old:MissionRecord={cleared:true,benchmarkRevision:2,bestTime:31,alerts:0,mastery:{cleanEscape:true,personalBest:true},previousBenchmark:{revision:1,bestTime:40,alerts:1}};
+  const source={...freshCampaign(),highestUnlocked:54,lastMission:id,records:{[id]:old}};
+  assert.deepEqual(roundTrip(source),source);
+  const next=completeMission(source,missionIndex(id),30,1,1).records[id];
+  assert.equal(next.bestTime,30);assert.equal(next.benchmarkRevision,2);
+  assert.deepEqual(next.previousBenchmark,old.previousBenchmark);assert.deepEqual(next.mastery,old.mastery);
+ }
 });
 
 test('first clear on revised geometry establishes a benchmark without granting an unearned personal best',()=>{
@@ -81,7 +92,9 @@ test('existing recovery archive is retained and malformed archive fields are str
 });
 
 test('unaffected missions retain their exact save record shapes and old comparison behavior',()=>{
- for(const id of ['01-01','01-05','01-09','01-10','02-06','09-05']){
+ const unaffected=Array.from({length:MISSION_COUNT},(_,i)=>missionId(i)).filter(id=>!revised.includes(id));
+ assert.equal(unaffected.length,50);
+ for(const id of unaffected){
   const old:MissionRecord={cleared:true,bestTime:90,alerts:0,...(id.startsWith('01-')?{mastery:{cleanEscape:true as const}}:{})};
   const source={...freshCampaign(),highestUnlocked:54,records:{[id]:old}};
   assert.deepEqual(roundTrip(source).records[id],old);
@@ -110,24 +123,24 @@ test('new revised clears tag their own benchmark and invalid times do not fabric
  assert.deepEqual(invalid,{cleared:true,benchmarkRevision:2});
 });
 
-test('actual storage pipeline preserves revised-map achievements and archive across upgrade, clear and restart',async()=>{
+for(const id of revised)test(`${id}: actual storage pipeline preserves achievements and archive across upgrade, clear and restart`,async()=>{
  const saved=new Map<string,string>(),get=AsyncStorage.getItem,set=AsyncStorage.setItem;
  AsyncStorage.getItem=async key=>saved.get(key)??null;
  AsyncStorage.setItem=async(key,value)=>{saved.set(key,value);};
  try{
-  const campaign={...freshCampaign(),highestUnlocked:30,lastMission:'01-06',records:{'01-06':{cleared:true,bestTime:90,alerts:0,mastery:{cleanEscape:true as const,personalBest:true as const}}}};
+  const campaign={...freshCampaign(),highestUnlocked:30,lastMission:id,records:{[id]:{cleared:true,bestTime:90,alerts:0,mastery:{cleanEscape:true as const,personalBest:true as const}}}};
   await saveProgress({...DEFAULT_PROGRESS,hasStarted:true,language:'ko',soundEnabled:false,campaign});
-  const first=await loadProgress(true),record=first.campaign!.records['01-06'];
-  assert.equal(first.campaign!.highestUnlocked,30);assert.equal(first.campaign!.lastMission,'01-06');
+  const first=await loadProgress(true),record=first.campaign!.records[id];
+  assert.equal(first.campaign!.highestUnlocked,30);assert.equal(first.campaign!.lastMission,id);
   assert.equal(first.language,'ko');assert.equal(first.soundEnabled,false);
   assert.equal(record.bestTime,undefined);assert.deepEqual(record.previousBenchmark,{revision:1,bestTime:90,alerts:0});
-  assert.deepEqual(chapterOneMastery('01-06',record).earned,['firstEscape','cleanEscape','personalBest']);
-  const cleared=completeMission(first.campaign!,5,50,2,1);
+  assert.deepEqual(chapterOneMastery(id,record).earned,['firstEscape','cleanEscape','personalBest']);
+  const cleared=completeMission(first.campaign!,missionIndex(id),50,2,1);
   await saveProgress({...first,campaign:cleared});
   const restarted=await loadProgress(true);
   assert.deepEqual(restarted.campaign,cleared);
-  assert.equal(restarted.campaign!.records['01-06'].bestTime,50);
-  assert.deepEqual(restarted.campaign!.records['01-06'].previousBenchmark,record.previousBenchmark);
-  assert.deepEqual(newChapterOneBadges('01-06',record,restarted.campaign!.records['01-06']),[]);
+  assert.equal(restarted.campaign!.records[id].bestTime,50);
+  assert.deepEqual(restarted.campaign!.records[id].previousBenchmark,record.previousBenchmark);
+  assert.deepEqual(newChapterOneBadges(id,record,restarted.campaign!.records[id]),[]);
  }finally{AsyncStorage.getItem=get;AsyncStorage.setItem=set;}
 });

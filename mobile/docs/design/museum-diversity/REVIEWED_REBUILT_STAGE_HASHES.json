@@ -19,5 +19,19 @@
     "firstExpansionHash": "ff1fbba9d018bc274a60a71c851be9cf84036c8f00278f7e8419658d2973edb0",
     "afterHash": "085e91d5cafad3780c158322df6b60ba3bd05a076b265b922c75f942634649f2",
     "reason": "Replace the shared exhibit circuit with independently authored enfilade, central pavilion ring, and branching restoration layouts."
+  },
+  "01-09": {
+    "revision": 2,
+    "beforeHash": "2c7205de4a4273280dd5a801def227547c6e205e69cf6af10f70d6190ff773a9",
+    "firstExpansionHash": "2c7205de4a4273280dd5a801def227547c6e205e69cf6af10f70d6190ff773a9",
+    "afterHash": "f5e3de55dad4643d48c8eb76af41b19e0953b8a7ee6f068b93be46294bb46e11",
+    "reason": "Replace the remaining shared exhibit circuit with an independent camera observation network and deep royal suite with crossbar extraction."
+  },
+  "01-10": {
+    "revision": 2,
+    "beforeHash": "f5e2ec1340dd6ecdaa44f3254b173e563704651dbcee846bb332a6ad459d7a96",
+    "firstExpansionHash": "f5e2ec1340dd6ecdaa44f3254b173e563704651dbcee846bb332a6ad459d7a96",
+    "afterHash": "eace7bff516ab8c53d7c055d000c5ae02e9ad6944f2d95949b68a52d1f7a4c4d",
+    "reason": "Replace the remaining shared exhibit circuit with an independent camera observation network and deep royal suite with crossbar extraction."
   }
 }

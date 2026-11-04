@@ -287,7 +287,7 @@ test('Historical Museum V2 chapter has ten distinct authored missions with real 
   assert.equal(progress.lastMission,missionId(i+1));
  }
  const restored=normalizeCampaign(JSON.parse(JSON.stringify(progress)));
- for(let i=0;i<10;i++)assert.deepEqual(restored.records[missionId(i)],{cleared:true,bestTime:30+i,alerts:i%2,...(i>=5&&i<=7?{benchmarkRevision:2}:{})});
+ for(let i=0;i<10;i++)assert.deepEqual(restored.records[missionId(i)],{cleared:true,bestTime:30+i,alerts:i%2,...(i>=5&&i<=9?{benchmarkRevision:2}:{})});
 });
 
 test('Museum v1 expansion precedes V12 compression exactly once',()=>{

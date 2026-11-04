@@ -25,7 +25,7 @@ const archetypes=[...source,...V13_MUSEUM_EXPANSION.map(m=>({
  id:m.id,chapter:1,mission:Number(m.id.slice(3)),
 }))];
 const defs=V13_MUSEUM_EXPANSION.map(m=>composeV13(watchExit(polishPatrol(authorCoverCheckpoints(m))),archetypes));
-const witnesses=[{closed:8,clean:8,approach:0},{closed:10,clean:10,approach:0},{closed:5,clean:6,approach:1},{closed:5,clean:5,approach:0},{closed:9,clean:0,approach:0}];
+const witnesses=[{closed:8,clean:8,approach:0},{closed:10,clean:10,approach:0},{closed:5,clean:6,approach:1},{closed:1.5,clean:1.5,approach:0},{closed:2.5,clean:2,approach:0}];
 
 test('Museum expansion adds five authored IDs and does not clone or mirror an existing Museum map',()=>{
  assert.deepEqual(defs.map(d=>d.id),['01-06','01-07','01-08','01-09','01-10']);
@@ -50,10 +50,14 @@ test('Museum expansion passes physical topology, body-clear lanes and readable p
  }
 });
 
-test('Museum finale retains its separate entrances and three guard / one camera responsibilities',()=>{
- const floor=(x:number,y:number)=>V13_MUSEUM_EXPANSION[4].map[y][x]!=='#';
- assert(floor(2,18)&&floor(6,18));assert(!floor(4,18));
- assert.equal(defs[4].guards.length,3);assert.equal(defs[4].cameras?.length,1);
+test('Museum finale puts a deep south prize beyond two different wings and exits halfway up the east side',()=>{
+ const m=V13_MUSEUM_EXPANSION[4],d=defs[4];
+ assert(d.objective!.y>d.exitPosition!.y&&d.exitPosition!.y>d.playerSpawn.y);
+ assert.deepEqual(m.placement,['top-centre','bottom-centre','right-centre']);
+ assert(m.approach.includes('t')&&!m.risk.includes('t'),'east handling approach');
+ assert(m.risk.includes('w')&&!m.approach.includes('w'),'west portrait approach');
+ assert(m.alternateEscape.includes('h')&&!m.quickEscape.includes('h'),'independent upper return');
+ assert.equal(d.guards.length,3);assert.equal(d.cameras?.length,1);
 });
 
 for(const [i,d] of defs.entries()){
@@ -70,7 +74,7 @@ for(const [i,d] of defs.entries()){
 }
 
 test('Museum camera crossing has a real detection consequence on a different departure',()=>{
- const run=exposureRun(defs[3],1,0,1,9);
+ const run=exposureRun(defs[3],1,0,2,0);
  assert(run.cameraAlertAt!==null,'CCTV must actually see and detect a live route');
  assert.equal(run.spottedBy,'01-09-cam1');
  assert(run.caught);

@@ -1,7 +1,7 @@
 import type {MissionRecord} from './campaignProgress';
 
 /** Geometry revisions invalidate comparable times, not earned progress or badges. */
-const REVISED_BENCHMARKS:Readonly<Record<string,number>>={'01-06':2,'01-07':2,'01-08':2};
+const REVISED_BENCHMARKS:Readonly<Record<string,number>>={'01-06':2,'01-07':2,'01-08':2,'01-09':2,'01-10':2};
 export interface PreviousMissionBenchmark {revision:number;bestTime?:number;alerts?:number;}
 export const missionBenchmarkRevision=(id:string):number|undefined=>Object.hasOwn(REVISED_BENCHMARKS,id)?REVISED_BENCHMARKS[id]:undefined;
 

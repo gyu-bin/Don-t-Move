@@ -10,7 +10,7 @@ import {chapterRoute} from '../../src/ui/menu/missionRoute';
 import {resultActions} from '../../src/ui/resultNavigation';
 import {MISSION_BRIEFS} from '../../src/game/levels/missionBriefs';
 
-test('Gallery and original missions remain exact except the three explicitly reviewed Museum architecture replacements',()=>{
+test('Gallery and original missions remain exact except the five explicitly reviewed Museum architecture replacements',()=>{
  assert.equal(Object.keys(baseline).length,50);assert.equal(campaignStages.length,55);
  for(const [id,hash] of Object.entries(baseline)){
   const stage=campaignStages.find(s=>s.id===id);assert.ok(stage,`${id} preserved`);

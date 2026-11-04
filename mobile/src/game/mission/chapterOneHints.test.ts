@@ -70,11 +70,40 @@ test('new Museum detour hints name real service rooms in the authored layouts', 
   }[];
   const serviceRooms = {
     '01-06': 'Packing Workroom', '01-07': 'Sculpture Workshop', '01-08': 'Restoration Workshop',
-    '01-09': 'Monitoring Backroom', '01-10': 'Collection Handling Room',
+    '01-09': 'West Crossing Hall', '01-10': 'Portrait Antechamber',
   };
   for (const [missionId, room] of Object.entries(serviceRooms)) {
     const stage = stages.find(stage => stage.id === missionId);
     assert(stage?.topologyPlan?.rooms.some(candidate => candidate.name === room), `${missionId}: real service room`);
     assert(hint({ missionId, secured: true })?.body.includes(room), `${missionId}: hint names its own detour`);
+  }
+});
+
+test('finale hints describe distinct camera crossings and post-lockdown directions', () => {
+  const crossingCamera = hint({ missionId: '01-09', cause: 'cameraChase' })!.body;
+  const crownCamera = hint({ missionId: '01-10', cause: 'cameraChase' })!.body;
+  assert.match(crossingCamera, /East Camera Gallery/);
+  assert.match(crownCamera, /west-facing camera in Royal Promenade/);
+  assert.doesNotMatch(crownCamera, /West Security Gallery/);
+  const crossingEscape = hint({ missionId: '01-09', secured: true })!.body;
+  const crownEscape = hint({ missionId: '01-10', secured: true })!.body;
+  assert.match(crossingEscape, /return north to Crossing Spine, then west through West Crossing Hall/);
+  assert.match(crossingEscape, /Southwest Dispatch Exit/);
+  assert.match(crownEscape, /leave west through Portrait Antechamber/);
+  assert.match(crownEscape, /Upper Collection Return east to Royal Dispatch Exit/);
+});
+
+test('finale camera advice names the room actually containing the baked camera', () => {
+  const stages = JSON.parse(readFileSync(new URL('../levels/stages/campaignStages.json', import.meta.url), 'utf8')) as {
+    id:string;cameras?:{x:number;y:number}[];topologyPlan?:{rooms:{name:string;x:number;y:number;w:number;h:number}[]};
+  }[];
+  for (const [missionId, roomName] of [['01-09', 'East Camera Gallery'], ['01-10', 'Royal Promenade']]) {
+    const stage = stages.find(stage => stage.id === missionId)!;
+    const room = stage.topologyPlan!.rooms.find(room => room.name === roomName)!;
+    assert.equal(stage.cameras?.length, 1, missionId);
+    const camera = stage.cameras![0];
+    assert(camera.x >= room.x && camera.x < room.x + room.w && camera.y >= room.y && camera.y < room.y + room.h,
+      `${missionId}: camera advice must match the actual camera room`);
+    assert(hint({ missionId, cause: 'cameraChase' })!.body.includes(roomName), missionId);
   }
 });

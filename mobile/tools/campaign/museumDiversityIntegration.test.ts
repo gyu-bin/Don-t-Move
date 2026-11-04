@@ -7,6 +7,7 @@ import {canonical,sha256} from './v13QaLib';
 import {placement} from './v13QA';
 import {routeRooms} from './v124bTopologyQA';
 import unaffected from '../../docs/design/museum-diversity/UNAFFECTED_STAGE_HASHES.json';
+import reviewed from '../../docs/design/museum-diversity/REVIEWED_REBUILT_STAGE_HASHES.json';
 
 const revised=['01-06','01-07','01-08'];
 const plans=V13_MUSEUM_EXPANSION.filter(m=>revised.includes(m.id));
@@ -28,9 +29,13 @@ function roleGraph(m:V13Mission):string{
  return [...labels.values()].sort().join('/');
 }
 
-test('Museum variety pass changes exactly 06–08; the other 52 reviewed missions remain identical',()=>{
+test('Museum variety baseline is preserved except the two explicitly reviewed final missions',()=>{
  assert.equal(campaignStages.length,55);assert.equal(Object.keys(unaffected).length,52);
- for(const [id,hash] of Object.entries(unaffected))assert.equal(sha256(canonical(campaignStages.find(s=>s.id===id))),hash,id);
+ for(const [id,hash] of Object.entries(unaffected)){
+  const replacement=['01-09','01-10'].includes(id)?reviewed[id as keyof typeof reviewed]:undefined;
+  if(replacement)assert.equal(replacement.beforeHash,hash,`${id}: preserve reviewed pre-rebuild baseline`);
+  assert.equal(sha256(canonical(campaignStages.find(s=>s.id===id))),replacement?.afterHash??hash,id);
+ }
  assert.deepEqual(plans.map(m=>m.id),revised);
  for(const [i,id] of revised.entries()){
   const def=campaignStages.find(d=>d.id===id)!;

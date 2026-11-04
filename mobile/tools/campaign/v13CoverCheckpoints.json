@@ -18,12 +18,12 @@
     {"structure":"Side Exhibition Wall","guard":2,"stop":1,"post":{"x":15.5,"y":12.11},"hidden":{"x":16.9,"y":14},"exposed":{"x":15.65,"y":14},"look":{"x":16.552256,"y":14.919405}}
   ],
   "01-09": [
-    {"structure":"Public Exhibit Island","guard":0,"stop":1,"post":{"x":7,"y":14.8},"hidden":{"x":5.6,"y":12},"exposed":{"x":6.1,"y":12},"look":{"x":7,"y":11}},
-    {"structure":"Museum wall corner (15,4)","guard":1,"stop":1,"post":{"x":17.7,"y":6},"hidden":{"x":14.7,"y":5.8},"exposed":{"x":14.7,"y":6.3},"look":{"x":12,"y":6},"wall":true}
+    {"structure":"Museum wall corner (6,14)","guard":0,"stop":0,"post":{"x":4.7,"y":14.7},"hidden":{"x":6.9,"y":13.7},"exposed":{"x":7.09134,"y":13.23806},"look":{"x":8,"y":14.5},"wall":true},
+    {"structure":"Museum wall corner (25,18)","guard":1,"stop":1,"post":{"x":27.2,"y":20.5},"hidden":{"x":28.8,"y":19.7},"exposed":{"x":28.3,"y":19.7},"look":{"x":29,"y":18.5},"wall":true}
   ],
   "01-10": [
-    {"structure":"Public Exhibit Island","guard":0,"stop":1,"post":{"x":6,"y":16.8},"hidden":{"x":5.2,"y":13.5},"exposed":{"x":5.7,"y":13.5},"look":{"x":6,"y":12}},
-    {"structure":"Museum wall corner (15,3)","guard":2,"stop":1,"post":{"x":17.7,"y":7},"hidden":{"x":14.7,"y":5.7},"exposed":{"x":14.7,"y":6.2},"look":{"x":11,"y":7},"wall":true}
+    {"structure":"Museum wall corner (31,8)","guard":0,"stop":0,"post":{"x":32.5,"y":5.3},"hidden":{"x":30.7,"y":7.6},"exposed":{"x":30.23806,"y":7.79134},"look":{"x":31.5,"y":8.5},"wall":true},
+    {"structure":"West Security South Statue","guard":1,"stop":0,"post":{"x":8.7,"y":15.7},"hidden":{"x":6.305,"y":15.115},"exposed":{"x":6.11366,"y":14.65306},"look":{"x":7.5,"y":15.8}}
   ],
   "02-01": [
     {"structure":"Island Sculpture","guard":0,"stop":0,"post":{"x":13.5,"y":5.2},"hidden":{"x":11.96,"y":7.785},"exposed":{"x":11.96,"y":7.015},"look":{"x":11.755798,"y":7.640852}},
