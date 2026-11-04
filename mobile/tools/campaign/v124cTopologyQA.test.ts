@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import rawSource from '../../docs/design/v12/phase4c/SOURCE_STAGES.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {V124B_EARLY_PLANS} from './v124bEarlyPlans';
+import {V13_GALLERY_EXPANSION,GALLERY_EXPANSION_ARCHETYPES} from './v13GalleryExpansion';
+import {V13_MUSEUM_EXPANSION,MUSEUM_EXPANSION_ARCHETYPES} from './v13MuseumExpansion';
+import {MISSION_COUNT} from '../../src/game/levels/campaignCatalog';
 import current from '../../src/game/levels/stages/campaignStages.json';
 import type {V124bPlan} from './v124bTypes';
 import {composeV124bPlan,physicalRoute} from './v124bBuilder';
@@ -13,9 +16,11 @@ import {createPlaygroundState} from '../../src/game/playground/playgroundState';
 import {stepGuards} from '../../src/game/guards/guardSystem';
 import {pointVisible} from '../../src/game/guards/guardVision';
 import {stepSecurityCameras} from '../../src/game/security/cctv';
-const source=rawSource as StageDefinition[];
+// Retain the historical security source for original plans; new floors use approved chapter archetypes.
+const original=rawSource as StageDefinition[];
+const source=[...original,...V13_MUSEUM_EXPANSION.map((m,i)=>({...structuredClone(original.find(d=>d.id===MUSEUM_EXPANSION_ARCHETYPES[m.id])!),id:m.id,number:original.length+i+1,chapter:1,mission:Number(m.id.slice(3))})),...V13_GALLERY_EXPANSION.map((m,i)=>({...structuredClone(original.find(d=>d.id===GALLERY_EXPANSION_ARCHETYPES[m.id])!),id:m.id,number:original.length+V13_MUSEUM_EXPANSION.length+i+1,chapter:2,mission:Number(m.id.slice(3))}))];
 const plans=current.map(d=>d.topologyPlan as V124bPlan);
-test('45 individually authored mission plans, stable campaign ids',()=>{assert.equal(plans.length,45);assert.equal(new Set(plans.map(p=>p.id)).size,45);assert.deepEqual(plans.map(p=>p.id).sort(),source.map(p=>p.id).sort());});
+test('Phase4C composer covers all current plans with reviewed chapter security archetypes',()=>{assert.equal(plans.length,MISSION_COUNT);assert.equal(new Set(plans.map(p=>p.id)).size,MISSION_COUNT);assert.deepEqual(plans.map(p=>p.id).sort(),source.map(p=>p.id).sort());});
 for(const p of plans)test(`${p.id}: physical topology, open infiltration and CLOSED independent escape`,()=>{
  const def=composeV124bPlan(p,source as StageDefinition[]),report=auditV124bTopology(def);assert.deepEqual(report.errors,[],JSON.stringify(report));
  const old=source.find(s=>s.id===p.id)!;assert.equal(def.guards.length,p.guardCount??({4:3,5:4,6:4,7:5,8:5,9:6} as Record<number,number>)[old.chapter!]??old.guards.length);assert.equal(def.cameras?.length,p.cameras?.length??old.cameras?.length??0);

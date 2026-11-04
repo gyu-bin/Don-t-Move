@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { CHAPTER_COUNT, MISSION_COUNT, chapterMissionIndices, missionId } from '../../levels/campaignCatalog';
+import { CHAPTER_COUNT, MISSION_COUNT, chapterMissionIndices, missionId, missionIndex } from '../../levels/campaignCatalog';
 import { resolveInitialMissionIndex } from '../../../ui/branding/missionLaunch';
 import { chapterRoute } from '../../../ui/menu/missionRoute';
 import { canPlayMission, freshCampaign, normalizeCampaign, type CampaignProgress } from '../campaignProgress';
@@ -11,7 +11,7 @@ import { qaUnlockAllEnabled, QA_UNLOCK_ALL } from '../qaUnlock';
 const all = Array.from({ length: MISSION_COUNT }, (_, i) => i);
 /** A save that has cleared the first `n` missions, as the game writes it. */
 const clearedFirst = (n: number): CampaignProgress => normalizeCampaign({
-  version: 5, lastMission: missionId(Math.min(n, MISSION_COUNT - 1)), highestUnlocked: Math.min(n, MISSION_COUNT - 1),
+  version: 7, lastMission: missionId(Math.min(n, MISSION_COUNT - 1)), highestUnlocked: Math.min(n, MISSION_COUNT - 1),
   records: Object.fromEntries(all.slice(0, n).map((i) => [missionId(i), { cleared: true, bestTime: 30 }])),
 });
 
@@ -36,22 +36,23 @@ test('flag OFF: progression is exactly the normal one', () => {
   // Chapter cards: a chapter is open when one of its missions is.
   const openChapters = (p: CampaignProgress, qa: boolean) => Array.from({ length: CHAPTER_COUNT }, (_, c) => c).filter((c) => chapterMissionIndices(c).some((m) => canPlayMission(p, m, qa)));
   assert.deepEqual(openChapters(fresh, false), [0]);
-  assert.deepEqual(openChapters(five, false), [0, 1]);
+  assert.deepEqual(openChapters(five, false), [0]);
+  assert.deepEqual(openChapters(clearedFirst(10), false), [0, 1]);
   // Mission cards of a locked chapter cannot be started.
   assert(chapterRoute(fresh, 5, false).missions.every((m) => m.state === 'locked' && !m.playable && !m.devUnlocked));
 });
 
-test('flag ON: 45 of 45 missions can be selected and started, in all nine chapters', () => {
+test('flag ON: 55 of 55 missions can be selected and started, in all nine chapters', () => {
   for (const save of [freshCampaign(), clearedFirst(5), clearedFirst(MISSION_COUNT)]) {
     assert.deepEqual(all.filter((i) => canPlayMission(save, i, true)), all);
     for (let chapter = 0; chapter < CHAPTER_COUNT; chapter++) {
       const route = chapterRoute(save, chapter, true);
-      assert.equal(route.missions.length, 5);
+      assert.equal(route.missions.length, chapter < 2 ? 10 : 5);
       assert(route.missions.every((m) => m.playable), `chapter ${chapter + 1}`);
     }
   }
   assert.equal(canPlayMission(freshCampaign(), -1, true), false);
-  assert.equal(canPlayMission(freshCampaign(), MISSION_COUNT, true), false, 'there is no 46th mission');
+  assert.equal(canPlayMission(freshCampaign(), MISSION_COUNT, true), false, 'there is no 56th mission');
 });
 
 test('flag ON: 07-01, 08-01 and 09-05 start from a save that has them locked', () => {
@@ -73,11 +74,12 @@ test('the override forges nothing: the save and what it shows as cleared stay as
   assert(late.every((m) => m.state === 'locked' && m.devUnlocked && m.record === undefined));
   assert.equal(chapterRoute(save, 8, true).cleared, 0);
   assert.equal(chapterRoute(save, 0, true).cleared, 5, 'real clears are still shown as clears');
-  assert(chapterRoute(save, 0, true).missions.every((m) => !m.devUnlocked));
+  assert(chapterRoute(save, 0, true).missions.slice(0,6).every((m) => !m.devUnlocked));
+  assert(chapterRoute(save, 0, true).missions.slice(6).every((m) => m.devUnlocked));
   // What the game would write back after only looking at the list is the same progress.
   assert.deepEqual(normalizeCampaign(JSON.parse(before)), save);
 });
 
 function missionIdx(id: string): number {
-  return (Number(id.slice(0, 2)) - 1) * 5 + Number(id.slice(3)) - 1;
+  return missionIndex(id);
 }

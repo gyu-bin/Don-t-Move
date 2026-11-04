@@ -47,7 +47,7 @@ function fixture(){
 }
 const hidden={x:-1000,y:-1000,gait:0};
 test('Current Museum/Gallery patrols physically visit every authored anchor for 120 seconds',()=>{
-  const missions=campaignStages.filter(d=>(d.chapter??0)<=2);assert.equal(missions.length,10);
+  const missions=campaignStages.filter(d=>(d.chapter??0)<=2);assert.equal(missions.length,20);
   for(const def of missions){
     const stage=compileStage(def),nav=buildNavigation(stage,BODY.guardRadius);
     const guards=stage.guards.map(g=>createGuardState(g)),ev=createGuardEvents();

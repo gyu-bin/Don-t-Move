@@ -22,6 +22,7 @@
  *   npm run campaign:overrides -- 04-05     one mission
  */
 import {PHASE7,REPLACED,LANES,LATE,type LaneOp} from './v13Phase7';
+import {MISSION_COUNT,missionId} from '../../src/game/levels/campaignCatalog';
 import {PINNED,HQ_PATROL} from './v13Late';
 import {REWORK} from './v13Rework';
 import {EXTRA_CAMERA,ROTATE,MOVED,PATROL} from './v13Casino';
@@ -111,7 +112,7 @@ export function missionOverrideIndex(ids:string[]):Record<string,OverrideEntry[]
  return Object.fromEntries(ids.map(id=>[id,missionOverrides(id)] as const).filter(([,list])=>list.length));
 }
 if(process.argv[1]?.endsWith('v13Overrides.ts')){
- const only=process.argv.slice(2),all=Array.from({length:45},(_,i)=>`0${Math.floor(i/5)+1}-0${i%5+1}`);
+ const only=process.argv.slice(2),all=Array.from({length:MISSION_COUNT},(_,i)=>missionId(i));
  const index=missionOverrideIndex(only.length?only:all);
  for(const [id,list] of Object.entries(index)){
   const base=baseMissionOf(id),from=DERIVED_FROM[Number(id.slice(0,2)) as DerivedChapter];
@@ -119,5 +120,5 @@ if(process.argv[1]?.endsWith('v13Overrides.ts')){
   for(const e of list)console.log(`  [${e.stage}] ${e.category.padEnd(18)} ${e.detail}\n      ${e.file} · ${e.table}${e.inheritedFrom?` · inherited from ${e.inheritedFrom}`:''}${e.why?`\n      why: ${e.why}`:''}`);
  }
  for(const id of only)if(!index[id])console.log(`\n${id}${baseMissionOf(id)?`  ← ${baseMissionOf(id)}`:''}\n  no per-mission override: the plan${baseMissionOf(id)?' it is derived from':''} and the chapter rules only`);
- if(!only.length)console.log(`\n${Object.keys(index).length} of 45 missions carry a per-mission override.`);
+ if(!only.length)console.log(`\n${Object.keys(index).length} of ${MISSION_COUNT} missions carry a per-mission override.`);
 }

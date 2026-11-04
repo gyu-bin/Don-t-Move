@@ -16,11 +16,11 @@ function afterClear(id: string, save = freshCampaign(), qa = false) {
     nextPlayable: canPlayMission(campaign, index+1, qa) });
   return { index, campaign, ...actions, label: translate('ko', RESULT_LABEL[actions.primary]), labelEn: translate('en', RESULT_LABEL[actions.primary]) };
 }
-const upTo = (id: string) => normalizeCampaign({ version: 5, lastMission: id, highestUnlocked: missionIndex(id),
+const upTo = (id: string) => normalizeCampaign({ version: 7, lastMission: id, highestUnlocked: missionIndex(id),
   records: Object.fromEntries(Array.from({ length: missionIndex(id) }, (_, i) => [missionId(i), { cleared: true, bestTime: 30 }])) });
 
 test('Inside a chapter the main button is "다음 스테이지" and the next mission is the one after it', () => {
-  for (const id of ['01-01', '01-02', '03-04', '07-02', '08-04', '09-04']) {
+  for (const id of ['01-01', '01-02', '01-05', '01-09', '02-05', '02-09', '03-04', '07-02', '08-04', '09-04']) {
     const r = afterClear(id, upTo(id));
     assert.equal(r.primary, 'nextStage', id); assert.equal(r.label, '다음 스테이지'); assert.equal(r.labelEn, 'NEXT STAGE');
     assert.deepEqual(r.secondary, ['chapters', 'retry', 'home']);
@@ -30,7 +30,7 @@ test('Inside a chapter the main button is "다음 스테이지" and the next mis
 
 test('On a chapter\'s last mission the main button is "다음 챕터" and starts the first mission of the next chapter', () => {
   for (let chapter = 1; chapter <= 8; chapter++) {
-    const id = `${String(chapter).padStart(2, '0')}-05`;
+    const id = `${String(chapter).padStart(2, '0')}-${String(CHAPTER_MISSION_COUNTS[chapter-1]).padStart(2, '0')}`;
     const r = afterClear(id, upTo(id));
     assert.equal(r.primary, 'nextChapter', id); assert.equal(r.label, '다음 챕터'); assert.equal(r.labelEn, 'NEXT CHAPTER');
     assert.equal(missionId(r.index+1), `${String(chapter+1).padStart(2, '0')}-01`);

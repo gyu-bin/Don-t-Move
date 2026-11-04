@@ -241,7 +241,7 @@ const LIGHT_RGB: Record<string, [number, number, number, number]> = {
 };
 
 export function buildStageArt(stage: CompiledStage, atlas: SpriteAtlas | null): StageArt {
-  const pad = { x: -TILE * 3, y: -TILE * 3, w: stage.width + TILE * 6, h: stage.height + TILE * 6 };
+  const pad = { x: -TILE * 4, y: -TILE * 4, w: stage.width + TILE * 8, h: stage.height + TILE * 8 };
 
   const floor = record(pad, (c) => {
     c.drawColor(Skia.Color(VOID_COLOR));

@@ -119,6 +119,8 @@ export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[
     boundary: stage.def.chapter===1 ? createPlayableBoundary(stage) : undefined,
     securityCameras:(stage.cameras??[]).map(createSecurityCamera),
     theft: { empty:false,x:stage.objective.x,y:stage.objective.y,missionId:stage.def.id,
+      legacySecurityCore:stage.def.id==='01-08'&&stage.def.number===8,
+      legacyMasterpiece:(stage.def.id==='02-05'&&stage.def.number===10)||(stage.def.id==='02-10'&&stage.def.number===20),
       ...(stage.def.objective?.highSecurity ? {alarmDelay:HIGH_SECURITY_ALARM_SECONDS,alarmAge:0} : {}),
       posts:stage.guards.map(g=>g.theftPosts ?? g.route.map(p=>({x:p.x,y:p.y}))),
       sectors:stage.guards.map(g=>g.theftSearchSectors??[]),

@@ -15,10 +15,10 @@ import {buildV124dCampaign} from './v124dBuild';
 // invariants are checked on the Phase 4D build itself; `current` is the tuned live campaign.
 const before=source as StageDefinition[],after=JSON.parse(JSON.stringify(buildV124dCampaign())) as StageDefinition[],live=current as unknown as StageDefinition[];
 
-test('Phase4D: bake is reproducible and the live campaign keeps its mission order',()=>{
+test('Phase4D: bake is reproducible and the live campaign keeps the original missions in relative order',()=>{
  assert.deepEqual(JSON.parse(JSON.stringify(buildV124dCampaign())),after);
  assert.deepEqual(after.map(d=>d.id),before.map(d=>d.id));
- assert.deepEqual(live.map(d=>d.id),before.map(d=>d.id));
+ assert.deepEqual(live.filter(d=>before.some(b=>b.id===d.id)).map(d=>d.id),before.map(d=>d.id));
 });
 
 test('Phase4D: all20 Chapter6–9 definitions remain byte-equivalent serialized data',()=>{

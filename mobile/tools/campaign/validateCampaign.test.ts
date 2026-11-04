@@ -116,7 +116,7 @@ test('Historical01-02 NORMAL suspicion uses the shared runtime model and meets d
  assert(run>=.5&&run<=.8,`very close run ${run.toFixed(2)}s`);
 });
 
-test('45 baked StageDefinitions equal reviewed authoring data; no duplicate layouts even after rotation',()=>{
+test('55 baked StageDefinitions equal reviewed authoring data; no duplicate layouts even after rotation',()=>{
  assert.equal(campaignStages.length,MISSION_COUNT);assert.deepEqual(campaignStages,JSON.parse(JSON.stringify(buildCampaign())));
  const shapes=new Set<string>();
  for(const def of campaignStages){
@@ -125,8 +125,8 @@ test('45 baked StageDefinitions equal reviewed authoring data; no duplicate layo
   const key=signatures.sort()[0];assert(!shapes.has(key),def.id);shapes.add(key);
  }
 });
-test('V12 all fifteen authored safe pockets fit their stated body-and-pose margin',()=>{
- const core=campaignStages.filter(d=>(d.chapter??0)<=3);assert.equal(core.length,15);
+test('All first-three-chapter authored safe pockets fit their stated body-and-pose margin',()=>{
+ const core=campaignStages.filter(d=>(d.chapter??0)<=3);assert.equal(core.length,25);
  for(const def of core){const stage=compileStage(def);assert(def.safeZones?.length,def.id+' missing cover pockets');
   for(const zone of def.safeZones!)assert(clearSegment(zone.x*TILE,zone.y*TILE,zone.x*TILE,zone.y*TILE,stage.movementBlockers,BODY.playerRadius+zone.radius*TILE),`${def.id}: safe pocket radius extends into collision at ${zone.x},${zone.y}`);
  }
@@ -293,36 +293,36 @@ test('Historical Museum V2 chapter has ten distinct authored missions with real 
 test('Museum v1 expansion precedes V12 compression exactly once',()=>{
  const before={version:1,lastMission:'02-03',highestUnlocked:7,records:{'01-05':{cleared:true,bestTime:30,alerts:0},'02-02':{cleared:true,bestTime:70,alerts:1}}};
  const after=normalizeCampaign(before);
- assert.equal(after.version,5);assert.equal(after.highestUnlocked,7);assert.equal(after.lastMission,'02-01');
+ assert.equal(after.version,7);assert.equal(after.highestUnlocked,12);assert.equal(after.lastMission,'02-01');
  assert.deepEqual(after.records,{'01-05':{cleared:true,legacy:true},'02-02':{cleared:true,legacy:true}});
  assert.deepEqual(after.legacyArchive?.original,before);assert.deepEqual(normalizeCampaign(after),after);
  assert.equal(normalizeCampaign({version:1,highestUnlocked:4,records:{}}).highestUnlocked,4);
- assert.equal(normalizeCampaign({version:1,highestUnlocked:44,records:{}}).highestUnlocked,44);
- assert.equal(missionId(4),'01-05');assert.equal(missionId(5),'02-01');assert.equal(missionIndex('09-05'),44);
+ assert.equal(normalizeCampaign({version:1,highestUnlocked:44,records:{}}).highestUnlocked,54);
+ assert.equal(missionId(4),'01-05');assert.equal(missionId(5),'01-06');assert.equal(missionIndex('09-05'),54);
  for(let index=0;index<MISSION_COUNT;index++)assert.equal(missionIndex(missionId(index)),index);
- for(const id of ['01-00','01-06','02-06','03-06','00-01','10-01','01-1'])assert.equal(missionIndex(id),-1);
+ for(const id of ['01-00','01-11','02-11','03-06','00-01','10-01','01-1'])assert.equal(missionIndex(id),-1);
  for(let index=0;index<5;index++)assert(canPlayMission(freshCampaign(),index,true));
  assert(!canPlayMission(freshCampaign(),4,false),'QA unlock does not remove release progression');
- const next=completeMission(freshCampaign(),4,100,1);assert.equal(next.lastMission,'02-01');
+ const next=completeMission(freshCampaign(),4,100,1);assert.equal(next.lastMission,'01-06');
 });
 
 test('Gallery v2 expansion precedes V12 compression and archives benchmark records',()=>{
  const before={version:2,lastMission:'03-01',highestUnlocked:15,records:{'02-05':{cleared:true,bestTime:40,alerts:0},'03-01':{cleared:true,bestTime:55,alerts:1}}};
- const after=normalizeCampaign(before);assert.equal(after.version,5);assert.equal(after.highestUnlocked,11);
+ const after=normalizeCampaign(before);assert.equal(after.version,7);assert.equal(after.highestUnlocked,21);
  assert.deepEqual(after.records,{'02-02':{cleared:true,legacy:true},'03-01':{cleared:true,legacy:true}});
  assert.deepEqual(after.legacyArchive?.original,before);assert.equal(after.lastMission,'03-01');assert.deepEqual(normalizeCampaign(after),after);
- assert.equal(normalizeCampaign({version:2,highestUnlocked:14,records:{}}).highestUnlocked,7);assert.equal(normalizeCampaign({version:2,highestUnlocked:49,records:{}}).highestUnlocked,44);
- assert.equal(missionId(9),'02-05');assert.equal(missionId(10),'03-01');
- const next=completeMission(freshCampaign(),9,50,0);assert.equal(next.lastMission,'03-01');
+ assert.equal(normalizeCampaign({version:2,highestUnlocked:14,records:{}}).highestUnlocked,12);assert.equal(normalizeCampaign({version:2,highestUnlocked:49,records:{}}).highestUnlocked,54);
+ assert.equal(missionId(14),'02-05');assert.equal(missionId(15),'02-06');
+ const next=completeMission(freshCampaign(),19,50,0);assert.equal(next.lastMission,'03-01');
 });
 
 test('Bank v3 expansion retains Lab unlock and archives old Bank bests',()=>{
  const before={version:3,lastMission:'04-01',highestUnlocked:25,records:{'02-10':{cleared:true,bestTime:40,alerts:0},'03-05':{cleared:true,bestTime:55,alerts:1}}};
- const after=normalizeCampaign(before);assert.equal(after.version,5);assert.equal(after.highestUnlocked,15);assert.equal(after.lastMission,'04-01');
+ const after=normalizeCampaign(before);assert.equal(after.version,7);assert.equal(after.highestUnlocked,25);assert.equal(after.lastMission,'04-01');
  assert.deepEqual(after.records['02-05'],{cleared:true,legacy:true});assert.deepEqual(after.records['03-03'],{cleared:true,legacy:true});
  assert.deepEqual(after.legacyArchive?.original,before);assert.deepEqual(normalizeCampaign(after),after);
- assert.equal(normalizeCampaign({version:3,highestUnlocked:24,records:{}}).highestUnlocked,12);
- assert.equal(normalizeCampaign({version:3,highestUnlocked:54,records:{}}).highestUnlocked,44);
- assert.equal(missionId(14),'03-05');assert.equal(missionId(15),'04-01');
+ assert.equal(normalizeCampaign({version:3,highestUnlocked:24,records:{}}).highestUnlocked,22);
+ assert.equal(normalizeCampaign({version:3,highestUnlocked:54,records:{}}).highestUnlocked,54);
+ assert.equal(missionId(24),'03-05');assert.equal(missionId(25),'04-01');
  const next=completeMission(after,missionIndex('03-03'),80,2);assert.equal(next.records['03-03'].bestTime,80);assert(!next.records['03-03'].legacy);
 });

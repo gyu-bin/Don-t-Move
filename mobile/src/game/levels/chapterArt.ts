@@ -1,7 +1,7 @@
 import type {PropKind,StageTheme} from './StageDefinition';
 export const CHAPTER_AREAS=[
- ['Entrance Hall','Main Gallery','Archive & Conservation','Security Wing','Grand Heist'],
- ['Portrait Hall','Sculpture Studio','Glass Gallery','Grand Atrium','Masterpiece'],
+ ['Entrance Hall','Main Gallery','Archive & Conservation','Security Wing','Grand Heist','West Exhibits','Sculpture Court','Conservation Loop','Camera Crossing','Crown Collection'],
+ ['Portrait Hall','Sculpture Studio','Glass Gallery','Grand Atrium','Masterpiece','West Portraits','Sculpture Arcade','Curator Archive','Rotating Exhibition','The Last Masterpiece'],
  ['Lobby / Teller','Staff Offices','Cash Processing','Security Corridor','Main Vault'],
  ['Observation Lobby','Research Wing','Specimen Lab','Containment Sector','Prototype Chamber'],
  ['Hotel Reception','Gaming Floor','Service Lounge','VIP Salon','Royal Jewel Room'],
@@ -11,8 +11,8 @@ export const CHAPTER_AREAS=[
  ['Core Ring','Split Perimeter','Vault Spine','Outer Shell','Final Vault'],
 ];
 export const CHAPTER_AREAS_KO=[
- ['입구 홀','메인 갤러리','수장고와 보존실','보안 구역','그랜드 하이스트'],
- ['초상화 홀','조각 스튜디오','유리 갤러리','그랜드 아트리움','마스터피스'],
+ ['입구 홀','메인 갤러리','수장고와 보존실','보안 구역','그랜드 하이스트','서쪽 전시동','조각 안뜰','보존실 순환로','카메라 교차로','왕관 수집실'],
+ ['초상화 홀','조각 스튜디오','유리 갤러리','그랜드 아트리움','마스터피스','서쪽 초상화전','조각 회랑','큐레이터 보관실','회전 전시실','마지막 걸작'],
  ['로비와 창구','직원 사무실','현금 처리실','보안 복도','중앙 금고'],
  ['관찰 로비','연구 구역','표본 연구실','격리 구역','시제품 실험실'],
  ['호텔 접견실','게임 플로어','서비스 라운지','VIP 살롱','왕실 보석실'],

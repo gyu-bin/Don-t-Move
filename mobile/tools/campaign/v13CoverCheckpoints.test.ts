@@ -16,7 +16,7 @@ import witnesses from './v13CoverWitnesses.json';
 import {exposureRun} from './cameraExposure';
 import {heistRun} from './v12Phase5Bot';
 
-test('All remaining 44 missions have individual cover inspections, without replacing 01-01',()=>{
+test('All remaining 54 missions have individual cover inspections, without replacing 01-01',()=>{
  assert.deepEqual(Object.keys(COVER_CHECKPOINTS).sort(),stages.slice(1).map(d=>d.id).sort());
  for(const [id,points] of Object.entries(COVER_CHECKPOINTS)){
   assert(points.length>=2,id);

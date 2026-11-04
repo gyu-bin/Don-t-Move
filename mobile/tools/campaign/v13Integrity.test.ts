@@ -107,8 +107,8 @@ test('Cryo Research changes only its objective patrol start, preserving the froz
 
 });
 
-test('Campaign: 9 chapters × 5 missions = 45, counted in one place',()=>{
- assert.equal(CHAPTER_COUNT,9);assert.deepEqual([...CHAPTER_MISSION_COUNTS],[5,5,5,5,5,5,5,5,5]);assert.equal(MISSION_COUNT,45);
+test('Campaign: 9 chapters, 10 Museum and 10 Gallery missions and 55 total, counted in one place',()=>{
+ assert.equal(CHAPTER_COUNT,9);assert.deepEqual([...CHAPTER_MISSION_COUNTS],[10,10,5,5,5,5,5,5,5]);assert.equal(MISSION_COUNT,55);
  assert.equal(CHAPTERS.length,CHAPTER_COUNT);assert.equal(live.length,MISSION_COUNT);
  assert.equal(new Set(live.map(d=>d.id)).size,live.length,'duplicate mission id');
  live.forEach((d,i)=>{
@@ -151,7 +151,7 @@ test('Campaign: entry, prize and exit are apart; patrol points, cameras and rout
 
 test('Campaign: chapter sources — nine chapters in bake order, and each derived chapter branches off where v13Sources says',()=>{
  assert.deepEqual(CHAPTER_SOURCE.map(c=>c.chapter),[1,2,3,4,5,6,7,8,9]);
- for(const c of CHAPTER_SOURCE)assert.deepEqual(c.missions.map(m=>m.id),[1,2,3,4,5].map(n=>`0${c.chapter}-0${n}`),`chapter ${c.chapter}`);
+ for(const c of CHAPTER_SOURCE)assert.deepEqual(c.missions.map(m=>m.id),Array.from({length:CHAPTER_MISSION_COUNTS[c.chapter-1]},(_,i)=>`0${c.chapter}-${String(i+1).padStart(2,'0')}`),`chapter ${c.chapter}`);
  assert.deepEqual(V13_MISSIONS.map(m=>m.id),live.map(d=>d.id));
  const mirror=(map:string[])=>map.map(row=>[...row].reverse().join(''));
  for(const chapter of [5,6,7,8] as DerivedChapter[]){

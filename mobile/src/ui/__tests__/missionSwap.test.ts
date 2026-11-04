@@ -75,8 +75,21 @@ function host(start: number, faults: Fault[] = []) {
 }
 const HEALTHY = ['next_stage_pressed', 'mission_transition_begin', 'mission_old_unmounted', 'mission_new_ready', 'mission_transition_complete'];
 
-test('all 44 consecutive transitions 01-01 → … → 09-05: one mission at a time, right mission, progress kept', async () => {
-  assert.equal(campaignStages.length, 45); assert.equal(MISSION_COUNT, 45);
+test('Expanded chapters continue after the old finales and advance only after mission 10',async()=>{
+ for(const [from,to,primary] of [['01-05','01-06','nextStage'],['01-09','01-10','nextStage'],['01-10','02-01','nextChapter'],['02-05','02-06','nextStage'],['02-09','02-10','nextStage'],['02-10','03-01','nextChapter']] as const){
+  const index=missionIndex(from),next=index+1;
+  assert.equal(missionId(next),to);
+  const campaign=completeMission(freshCampaign(),index,40,1);
+  const actions=resultActions({index,missionCount:MISSION_COUNT,chapterFinal:Number(from.slice(3))===CHAPTER_MISSION_COUNTS[Number(from.slice(0,2))-1],
+   nextPlayable:canPlayMission(campaign,next,false)});
+  assert.equal(actions.primary,primary,from);
+  const h=host(index);assert.equal(h.swap.start(index,next),true);await h.settle();
+  assert.equal(h.mounted(),next);assert.equal(h.swap.phase(),'idle');assert.equal(h.everTwo(),false);
+ }
+});
+
+test('all campaign transitions 01-01 → … → 09-05: one mission at a time, right mission, progress kept', async () => {
+  assert.equal(campaignStages.length, MISSION_COUNT); assert.equal(MISSION_COUNT, 55);
   let campaign: CampaignProgress = freshCampaign();
   const h = host(0);
   for (let index = 0; index < MISSION_COUNT - 1; index++) {
@@ -102,7 +115,7 @@ test('all 44 consecutive transitions 01-01 → … → 09-05: one mission at a t
     assert.equal(h.timers.size, 0, 'no watchdog left armed');
   }
   assert.equal(h.mounted(), missionIndex('09-05')); assert.equal(campaign.lastMission, '09-05');
-  assert.equal(Object.values(campaign.records).filter((record) => record.cleared).length, 44);
+  assert.equal(Object.values(campaign.records).filter((record) => record.cleared).length, MISSION_COUNT - 1);
   assert.deepEqual(h.phases.slice(0, 7), ['ad', 'fadeOut', 'empty', 'mounting', 'fadeIn', 'idle', 'ad']);
 });
 

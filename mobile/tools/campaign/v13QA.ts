@@ -94,8 +94,8 @@ export async function v13Report(m:V13Mission,source:StageDefinition[]=raw as Sta
 }
 if(process.argv[1]?.endsWith('v13QA.ts')){
  (async()=>{
-  const {V13_MISSIONS}=await import('./v13Build');const ids=process.argv.slice(2),out=[];
-  for(const m of V13_MISSIONS.filter(m=>!ids.length||ids.includes(m.id))){const r=await v13Report(m);out.push(r);console.log(JSON.stringify(r));}
+  const {V13_MISSIONS,V13_SECURITY_SOURCE}=await import('./v13Build');const ids=process.argv.slice(2),out=[];
+  for(const m of V13_MISSIONS.filter(m=>!ids.length||ids.includes(m.id))){const r=await v13Report(m,V13_SECURITY_SOURCE);out.push(r);console.log(JSON.stringify(r));}
   if(!ids.length){fs.mkdirSync('Reports/V13Phase1',{recursive:true});fs.writeFileSync('Reports/V13Phase1/mission-qa.json',JSON.stringify(out,null,2));}
  })();
 }

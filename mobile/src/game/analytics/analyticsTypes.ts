@@ -6,6 +6,8 @@ export type AnalyticsEventName =
   | 'mission_retry'
   | 'mission_quit'
   | 'chapter_complete'
+  | 'chapter1_hint_shown'
+  | 'chapter1_goal_shown'
   | 'control_mode_change'
   | 'interstitial_due'
   | 'interstitial_ready'

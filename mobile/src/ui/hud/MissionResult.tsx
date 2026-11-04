@@ -2,9 +2,13 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { RESULT_LABEL } from '../resultNavigation';
 import type { ResultAction } from '../resultNavigation';
 import { useMenu } from '../menu/MenuContext';
+import type { MissionRecord } from '../../game/progress/campaignProgress';
+import type { ChapterOneBadge } from '../../game/progress/chapterOneMastery';
+import { ChapterOneMasteryPanel } from './ChapterOneMasteryPanel';
+import { MissionDialog } from './MissionDialog';
 
 /** Mission-clear screen: the record, then where to go. One main button; the rest are secondary. */
-export function MissionResult({ title, name, seconds, alerts, best, nextName, primary, secondary, onAction }: {
+export function MissionResult({ title, name, seconds, alerts, best, nextName, primary, secondary, onAction, missionId, record, newlyEarned }: {
   title: string;
   name: string;
   seconds: number;
@@ -15,16 +19,20 @@ export function MissionResult({ title, name, seconds, alerts, best, nextName, pr
   primary: ResultAction;
   secondary: ResultAction[];
   onAction: (action: ResultAction) => void;
+  missionId?: string;
+  record?: MissionRecord;
+  newlyEarned?: ChapterOneBadge[];
 }) {
   const { t } = useMenu();
   const wide = secondary.filter(action => action === 'chapters');
   const pair = secondary.filter(action => action !== 'chapters');
-  return <View accessibilityViewIsModal style={styles.modal}>
+  return <MissionDialog>
     <Text style={styles.title}>{title}</Text>
     <Text style={styles.body}>{name}</Text>
     <Text style={styles.body}>{t('time')} {seconds.toFixed(1)}s</Text>
     <Text style={styles.body}>{t('alerts')} {alerts}</Text>
     <Text style={styles.body}>{t('best')} {best.toFixed(1)}s</Text>
+    {missionId && <ChapterOneMasteryPanel missionId={missionId} record={record} newlyEarned={newlyEarned}/>}
     {!!nextName && <Text style={styles.nextName}>{nextName}</Text>}
     <Pressable accessibilityRole="button" onPress={() => onAction(primary)} style={({ pressed }) => [styles.primary, pressed && styles.pressed]}>
       <Text style={styles.primaryText}>{t(RESULT_LABEL[primary])}</Text>
@@ -35,12 +43,10 @@ export function MissionResult({ title, name, seconds, alerts, best, nextName, pr
     <View style={styles.pair}>{pair.map(action => <Pressable key={action} accessibilityRole="button" onPress={() => onAction(action)} style={({ pressed }) => [styles.button, styles.half, pressed && styles.pressed]}>
       <Text style={styles.buttonText}>{t(RESULT_LABEL[action])}</Text>
     </Pressable>)}</View>
-  </View>;
+  </MissionDialog>;
 }
 
 const styles = StyleSheet.create({
-  modal: { position: 'absolute', top: '27%', alignSelf: 'center', minWidth: 250, alignItems: 'center', gap: 12, padding: 26, borderRadius: 16,
-    backgroundColor: 'rgba(8,11,17,0.96)', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.15)', zIndex: 100, elevation: 100 },
   title: { color: '#83eabb', fontSize: 23, fontWeight: '900', letterSpacing: 3, textAlign: 'center' },
   body: { color: '#aab2bf', fontSize: 11, fontWeight: '600', textAlign: 'center' },
   nextName: { color: '#87C8D7', fontSize: 11, fontWeight: '600' },

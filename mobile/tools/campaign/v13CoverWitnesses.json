@@ -3,7 +3,12 @@
   "01-03": {"approach":0,"escape":0,"mode":2,"delay":2},
   "01-04": {"approach":0,"escape":0,"mode":2,"delay":0},
   "01-05": {"approach":0,"escape":0,"mode":2,"delay":0},
-  "02-01": {"approach":0,"escape":0,"mode":2,"delay":0},
+  "01-06": {"approach":0,"escape":1,"mode":2,"delay":8},
+ "01-07": {"approach":0,"escape":1,"mode":2,"delay":10},
+ "01-08": {"approach":0,"escape":1,"mode":2,"delay":5},
+ "01-09": {"approach":0,"escape":1,"mode":2,"delay":5},
+ "01-10": {"approach":0,"escape":1,"mode":2,"delay":9},
+ "02-01": {"approach":0,"escape":0,"mode":2,"delay":0},
   "02-02": {"approach":0,"escape":0,"mode":2,"delay":0},
   "02-03": {"approach":0,"escape":0,"mode":2,"delay":0},
   "02-04": {"approach":0,"escape":0,"mode":2,"delay":8},
@@ -42,5 +47,10 @@
   "09-02": {"approach":0,"escape":0,"mode":3,"delay":0},
   "09-03": {"approach":1,"escape":0,"mode":3,"delay":7},
   "09-04": {"approach":0,"escape":0,"mode":3,"delay":0},
-  "09-05": {"approach":1,"escape":1,"mode":1,"delay":9}
+  "09-05": {"approach":1,"escape":1,"mode":1,"delay":9},
+  "02-06": {"approach":0,"escape":1,"mode":2,"delay":4},
+  "02-07": {"approach":0,"escape":1,"mode":2,"delay":9},
+  "02-08": {"approach":0,"escape":1,"mode":2,"delay":12},
+  "02-09": {"approach":0,"escape":1,"mode":2,"delay":9},
+  "02-10": {"approach":0,"escape":1,"mode":2,"delay":5}
 }

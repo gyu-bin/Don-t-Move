@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {readFileSync} from 'node:fs';
 import {MISSION_BRIEFS} from '../../game/levels/missionBriefs';
-import {CHAPTERS,CHAPTER_MISSION_COUNTS,chapterMissionIndices,missionId} from '../../game/levels/campaignCatalog';
+import {CHAPTERS,CHAPTER_MISSION_COUNTS,chapterMissionIndices,chapterStart,missionId} from '../../game/levels/campaignCatalog';
 import {completeMission,freshCampaign} from '../../game/progress/campaignProgress';
 import type {CampaignProgress} from '../../game/progress/campaignProgress';
 import {artCrop,chapterRoute,initialRouteScroll,missionFocus,missionSelectLayout,MISSION_FOCUS,CHAPTER_HERO} from '../menu/missionRoute';
@@ -29,11 +29,11 @@ test('Route states: none cleared, partial, current and locked follow release pro
  assert.equal(fresh.cleared,0);assert.equal(fresh.ratio,0);assert.equal(fresh.current,0);
  assert(fresh.missions.slice(1).every(m=>!m.playable),'release build: locked missions cannot start');
  // Chapter 02 with two missions cleared → 02-03 is the current mission.
- const p=clearUpTo(7);
+ const p=clearUpTo(chapterStart(1)+2);
  assert.deepEqual(states(p,1),['cleared','cleared','current',...Array(CHAPTER_MISSION_COUNTS[1]-3).fill('locked')]);
  const route=chapterRoute(p,1,false);
  assert.equal(route.cleared,2);assert.equal(route.total,CHAPTER_MISSION_COUNTS[1]);assert.equal(route.ratio,2/CHAPTER_MISSION_COUNTS[1]);
- assert.equal(route.missions[0].record?.bestTime,65.25);
+ assert.equal(route.missions[0].record?.bestTime,60+chapterStart(1)+0.25);
  assert.equal(route.missions[2].playable,true);assert.equal(route.missions[3].playable,false);
  // Chapter not reached yet: everything locked, no current.
  assert.deepEqual(states(p,2),Array(CHAPTER_MISSION_COUNTS[2]).fill('locked'));
@@ -41,7 +41,7 @@ test('Route states: none cleared, partial, current and locked follow release pro
 });
 
 test('All cleared: full progress, no current, every mission replayable',()=>{
- const p=clearUpTo(10);
+ const p=clearUpTo(chapterStart(2));
  const route=chapterRoute(p,1,false);
  assert.deepEqual(route.missions.map(m=>m.state),Array(CHAPTER_MISSION_COUNTS[1]).fill('cleared'));
  assert.equal(route.ratio,1);assert.equal(route.current,null);
@@ -50,7 +50,7 @@ test('All cleared: full progress, no current, every mission replayable',()=>{
 });
 
 test('Current mission prefers the Continue mission when it is open in this chapter',()=>{
- const p={...clearUpTo(5),highestUnlocked:8,lastMission:'02-03'};
+ const p={...clearUpTo(chapterStart(1)),highestUnlocked:chapterStart(1)+3,lastMission:'02-03'};
  assert.deepEqual(states(p,1),['available','available','current','available',...Array(CHAPTER_MISSION_COUNTS[1]-4).fill('locked')]);
 });
 
@@ -115,14 +115,36 @@ test('Mission Select: card tap starts the mission directly; no PLAY text, detail
  for(const i of chapterMissionIndices(1))assert(missionId(i).startsWith('02-'));
 });
 
-test('V12 five-mission chapters show every row without a ghost06–10 item',()=>{
+test('unexpanded chapters show their five rows without ghost06–10 items',()=>{
  const insets={top:62,bottom:34};
- for(let chapter=0;chapter<3;chapter++){
+ for(let chapter=2;chapter<9;chapter++){
   const L=missionSelectLayout(402,874,insets,CHAPTER_MISSION_COUNTS[chapter]);
   assert.equal(L.fits,true);
-  const route=chapterRoute(clearUpTo(chapter*5+4),chapter,false);
-  assert.equal(route.missions.length,5);assert.equal(route.current,chapter*5+4);
+  const route=chapterRoute(clearUpTo(chapterStart(chapter)+4),chapter,false);
+  assert.equal(route.missions.length,5);assert.equal(route.current,chapterStart(chapter)+4);
   assert(route.missions.every(m=>Number(m.id.slice(3))<=5));
   assert.equal(initialRouteScroll(L,route,874,insets),0);
  }
+});
+
+for(const chapter of [0,1])test(`expanded chapter ${chapter+1} exposes all ten missions and scrolls to the current late mission on small screens`,()=>{
+ const start=chapterStart(chapter),count=CHAPTER_MISSION_COUNTS[chapter];
+ const progress=clearUpTo(start+count-1);
+ const route=chapterRoute(progress,chapter,false);
+ assert.equal(route.total,10);
+ assert.equal(route.missions.length,10);
+ assert.deepEqual(route.missions.map(m=>m.id),chapterMissionIndices(chapter).map(missionId));
+ assert.equal(route.missions.at(-1)?.id,missionId(start+count-1));
+ assert.equal(route.missions.at(-1)?.state,'current');
+ assert.equal(route.missions.at(-1)?.playable,true);
+ for(const [width,height,insets] of [[360,640,{top:24,bottom:24}],[402,874,{top:62,bottom:34}]] as const){
+  const layout=missionSelectLayout(width,height,insets,route.total);
+  assert.equal(layout.fits,false,'ten readable cards require scrolling');
+  assert(layout.cardH>=60,'scrolling keeps readable card sizes');
+  assert(initialRouteScroll(layout,route,height,insets)>0,'late current mission is brought into view');
+ }
+ const completed=chapterRoute(clearUpTo(start+count),chapter,false);
+ assert.equal(completed.cleared,10);assert.equal(completed.ratio,1);
+ assert(completed.missions.every(m=>m.playable&&m.state==='cleared'));
+ assert.equal(chapterRoute(clearUpTo(start+count),chapter+1,false).missions[0].state,'current');
 });

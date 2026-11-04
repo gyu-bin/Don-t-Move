@@ -22,6 +22,10 @@ export interface TheftContext {
   alarmDelay?: number;
   alarmAge?: number;
   missionId?: string;
+  /** Explicit runtime identity; old context fixtures may still use the historical mission ID fallback. */
+  legacySecurityCore?: boolean;
+  /** The original Masterpiece keeps its shorter search; reused expansion IDs do not inherit it. */
+  legacyMasterpiece?: boolean;
   empty: boolean;
   x: number;
   y: number;
@@ -72,6 +76,7 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
   ev:GuardEvents,c:TheftContext,dt:number,t:number):string {
   'worklet';
   if(!c.empty)return '';
+  const securityCore=c.legacySecurityCore ?? (c.missionId==='01-08');
   // High-security alarm: pickup → short silent tension → Theft Alert and global
   // search. It shares no player position; only an actual sighting starts a chase.
   if(c.alarmDelay!==undefined && !ev.theftAlert){
@@ -134,7 +139,7 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
       const assigned=theftSearchPosts(c,i,g.route);
       // Security Core keeps its four responsibilities even after lockdown;
       // its own-zone guard must not become a second exit interceptor.
-      const expandLockdownPosts=ev.lockdownActive && c.missionId!=='01-08' && !c.sectors?.[i]?.length;
+      const expandLockdownPosts=ev.lockdownActive && !securityCore && !c.sectors?.[i]?.length;
       let posts=expandLockdownPosts && c.roles?.[i]!=='exit' ? assigned.concat(g.route) : assigned;
       // One additional zone guard checks the authored exit approach after lockdown.
       // Other guards keep their own expanded routes; no player coordinate is involved.
@@ -147,7 +152,7 @@ export function stepTheft(guards:GuardState[],p:PlayerView,vision:number[],n:Nav
       // Observe before moving: an actual sighting alone promotes to global pursuit.
       if(g.canSee)continue;
       g.stateT+=dt;g.suspicion=0;g.hasLkp=false;
-      const reacting=c.missionId==='01-08' && ev.theftActivatedAt>=0 &&
+      const reacting=securityCore && ev.theftActivatedAt>=0 &&
         t-ev.theftActivatedAt<SECURITY_CORE_REACTION_SECONDS;
       if(reacting){
         // Retain the authored assignment while colleagues process the whistle.

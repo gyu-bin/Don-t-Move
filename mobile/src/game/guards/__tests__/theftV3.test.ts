@@ -12,6 +12,7 @@ import { Awareness,GuardAction } from '../../core/types';
 import { playableStages } from '../../levels/stages/tiltTestMaps';
 import type { StageDefinition } from '../../levels/StageDefinition';
 import { createPlaygroundState,stepPlayground } from '../../playground/playgroundState';
+import legacyMuseum from '../../../../tools/campaign/fixtures/v3MuseumGalleryFinal.json';
 
 function fixture(wall=false){
  const def:StageDefinition={id:'theft',number:1,title:'test',theme:'museum',props:[],lights:[],
@@ -264,6 +265,45 @@ test('Grand Heist does not inherit Security Core reaction timing',()=>{
  const x=g.x;
  stepTheft(f.guards,{x:-1000,y:-2000,gait:0},f.stage.visionBlockers,f.nav,f.ev,f.c,1/60,f.ev.theftActivatedAt+1/60);
  assert(g.x>x);assert(g.speed>0);
+});
+
+test('reused 01-08 ID distinguishes the modern Conservation Loop from historical Security Core',async()=>{
+ const {campaignStages}=await import('../../levels/campaignStages');
+ const modern=campaignStages.find(d=>d.id==='01-08')!;
+ const historical=(legacyMuseum as unknown as StageDefinition[]).find(d=>d.id==='01-08')!;
+ assert.equal(modern.number,48);assert.equal(modern.title,'Conservation Loop');
+ assert.equal(historical.number,8);assert.equal(historical.title,'Security Core');
+ assert.equal(createPlaygroundState(compileStage(modern)).theft.legacySecurityCore,false);
+ assert.equal(createPlaygroundState(compileStage(historical)).theft.legacySecurityCore,true);
+});
+
+test('explicit modern 01-08 moves immediately while the historical identity retains its reaction hold',()=>{
+ for(const legacySecurityCore of [false,true]){
+  const f=fixture();f.c.missionId='01-08';f.c.legacySecurityCore=legacySecurityCore;
+  f.c.roles=['objective','corridor'];
+  f.c.posts=[[{x:360,y:200}],[{x:360,y:320}]];
+  for(let i=0;i<120&&!f.ev.theftAlert;i++)f.tick();
+  assert(f.ev.theftAlert);
+  const g=f.guards[0],initial={x:g.x,y:g.y};
+  stepTheft(f.guards,{x:-1000,y:-2000,gait:0},f.stage.visionBlockers,f.nav,f.ev,f.c,1/60,f.ev.theftActivatedAt+1/60);
+  if(legacySecurityCore){assert.deepEqual({x:g.x,y:g.y},initial);assert.equal(g.speed,0);}
+  else {assert(g.x>initial.x);assert(g.speed>0);}
+  assert.equal(f.ev.globalRevision,0,'neither identity exposes the hidden player');
+ }
+});
+
+test('modern 01-08 uses normal lockdown interception while legacy Security Core retains its own-zone posts',()=>{
+ for(const legacySecurityCore of [false,true]){
+  const f=fixture();f.c.missionId='01-08';f.c.legacySecurityCore=legacySecurityCore;
+  f.c.roles=['zone','exit'];
+  f.c.posts=[[{x:360,y:200},{x:360,y:240}],[{x:120,y:400},{x:160,y:400}]];
+  f.ev.theftAlert=true;f.ev.theftActivatedAt=0;f.ev.lockdownActive=true;
+  stepTheft(f.guards,{x:-1000,y:-2000,gait:0},f.stage.visionBlockers,f.nav,f.ev,f.c,1/60,30);
+  const target=legacySecurityCore?f.c.posts[0][0]:f.c.posts[1][1];
+  assert.equal(f.guards[0].targetX,target.x);assert.equal(f.guards[0].targetY,target.y);
+  assert.equal(f.guards[1].targetX,f.c.posts[1][0].x);
+  assert.equal(f.guards[1].targetY,f.c.posts[1][0].y);
+ }
 });
 
 

@@ -1,0 +1,1324 @@
+{
+  "01-07": {
+    "reason": "Add physical cover to remove measured uncovered-route gaps; retain existing walls, security and guard timings. Route elbows regenerate around the new cover.",
+    "beforeHash": "7fef92e634eddd4e5ea70136dabbeecd68283ef6865b05f68eaf58ba69608718",
+    "afterHash": "fad4d63e0da9e6a1bf55ff1eefad4992ca50a6c961a6cc8a72eb8c1a476c5bef",
+    "patches": [
+      {
+        "path": [
+          "escapeRoutes"
+        ],
+        "before": [
+          {
+            "name": "escape: quick return closes at lockdown",
+            "points": [
+              {
+                "x": 15.2,
+                "y": 2.4
+              },
+              {
+                "x": 16,
+                "y": 5.5
+              },
+              {
+                "x": 18,
+                "y": 5.5
+              },
+              {
+                "x": 25,
+                "y": 5.5
+              },
+              {
+                "x": 25.5,
+                "y": 2.3
+              }
+            ]
+          },
+          {
+            "name": "escape: independent service route after lockdown",
+            "points": [
+              {
+                "x": 15.2,
+                "y": 2.4
+              },
+              {
+                "x": 16,
+                "y": 7.8
+              },
+              {
+                "x": 15.2,
+                "y": 7.8
+              },
+              {
+                "x": 13.5,
+                "y": 7.8
+              },
+              {
+                "x": 13.5,
+                "y": 9
+              },
+              {
+                "x": 13.5,
+                "y": 14
+              },
+              {
+                "x": 13.25,
+                "y": 13.75
+              },
+              {
+                "x": 13.75,
+                "y": 13.25
+              },
+              {
+                "x": 17.25,
+                "y": 13.25
+              },
+              {
+                "x": 18,
+                "y": 14
+              },
+              {
+                "x": 18,
+                "y": 13.5
+              },
+              {
+                "x": 20.75,
+                "y": 12.75
+              },
+              {
+                "x": 24.25,
+                "y": 12.75
+              },
+              {
+                "x": 25,
+                "y": 13.5
+              },
+              {
+                "x": 25,
+                "y": 14
+              },
+              {
+                "x": 25,
+                "y": 11.8
+              },
+              {
+                "x": 21.5,
+                "y": 11.8
+              },
+              {
+                "x": 21.5,
+                "y": 9
+              },
+              {
+                "x": 21.5,
+                "y": 7.2
+              },
+              {
+                "x": 25,
+                "y": 7.2
+              },
+              {
+                "x": 25.5,
+                "y": 2.3
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "name": "escape: quick return closes at lockdown",
+            "points": [
+              {
+                "x": 15.2,
+                "y": 2.4
+              },
+              {
+                "x": 16,
+                "y": 5.5
+              },
+              {
+                "x": 18,
+                "y": 5.5
+              },
+              {
+                "x": 23.75,
+                "y": 7.25
+              },
+              {
+                "x": 25.25,
+                "y": 6.75
+              },
+              {
+                "x": 25,
+                "y": 5.5
+              },
+              {
+                "x": 25.5,
+                "y": 2.3
+              }
+            ]
+          },
+          {
+            "name": "escape: independent service route after lockdown",
+            "points": [
+              {
+                "x": 15.2,
+                "y": 2.4
+              },
+              {
+                "x": 16,
+                "y": 7.8
+              },
+              {
+                "x": 15.2,
+                "y": 7.8
+              },
+              {
+                "x": 13.5,
+                "y": 7.8
+              },
+              {
+                "x": 13.5,
+                "y": 9
+              },
+              {
+                "x": 13.5,
+                "y": 14
+              },
+              {
+                "x": 13.25,
+                "y": 13.75
+              },
+              {
+                "x": 13.75,
+                "y": 13.25
+              },
+              {
+                "x": 17.25,
+                "y": 13.25
+              },
+              {
+                "x": 18,
+                "y": 14
+              },
+              {
+                "x": 18,
+                "y": 13.5
+              },
+              {
+                "x": 20.75,
+                "y": 12.75
+              },
+              {
+                "x": 24.25,
+                "y": 12.75
+              },
+              {
+                "x": 25,
+                "y": 13.5
+              },
+              {
+                "x": 25,
+                "y": 14
+              },
+              {
+                "x": 25,
+                "y": 11.8
+              },
+              {
+                "x": 21.5,
+                "y": 11.8
+              },
+              {
+                "x": 21.5,
+                "y": 9
+              },
+              {
+                "x": 21.5,
+                "y": 7.2
+              },
+              {
+                "x": 25,
+                "y": 7.2
+              },
+              {
+                "x": 25.5,
+                "y": 2.3
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": [
+          "props"
+        ],
+        "before": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5,
+            "y": 22.44
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "statue",
+            "scale": 1.6,
+            "visualAssetId": "museum_statue_large",
+            "x": 5,
+            "y": 14.56
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5,
+            "y": 5.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 15,
+            "y": 14.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 22.3,
+            "y": 14.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 23,
+            "y": 4.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 12.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 11.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          },
+          {
+            "kind": "objectiveCase",
+            "visualAssetId": "museum_diamond_case",
+            "x": 15.2,
+            "y": 2.4
+          }
+        ],
+        "after": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5,
+            "y": 22.44
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "statue",
+            "scale": 1.6,
+            "visualAssetId": "museum_statue_large",
+            "x": 5,
+            "y": 14.56
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5,
+            "y": 5.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 15,
+            "y": 14.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 22.3,
+            "y": 14.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 23,
+            "y": 4.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 12.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 11.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          },
+          {
+            "collisionScale": 1.1,
+            "kind": "statue",
+            "scale": 1.1,
+            "visualAssetId": "museum_statue_large",
+            "x": 23.8,
+            "y": 6.385
+          },
+          {
+            "collisionScale": 1,
+            "kind": "statue",
+            "scale": 1,
+            "visualAssetId": "museum_statue_large",
+            "x": 2.6,
+            "y": 6.15
+          },
+          {
+            "kind": "objectiveCase",
+            "visualAssetId": "museum_diamond_case",
+            "x": 15.2,
+            "y": 2.4
+          }
+        ]
+      },
+      {
+        "path": [
+          "topologyPlan",
+          "structures"
+        ],
+        "before": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5,
+            "y": 22.44
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "statue",
+            "scale": 1.6,
+            "visualAssetId": "museum_statue_large",
+            "x": 5,
+            "y": 14.56
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5,
+            "y": 5.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 15,
+            "y": 14.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 22.3,
+            "y": 14.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 23,
+            "y": 4.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 12.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 11.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          }
+        ],
+        "after": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5,
+            "y": 22.44
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "statue",
+            "scale": 1.6,
+            "visualAssetId": "museum_statue_large",
+            "x": 5,
+            "y": 14.56
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5,
+            "y": 5.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 15,
+            "y": 14.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 22.3,
+            "y": 14.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 23,
+            "y": 4.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 12.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 11.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          },
+          {
+            "collisionScale": 1.1,
+            "kind": "statue",
+            "scale": 1.1,
+            "visualAssetId": "museum_statue_large",
+            "x": 23.8,
+            "y": 6.385
+          },
+          {
+            "collisionScale": 1,
+            "kind": "statue",
+            "scale": 1,
+            "visualAssetId": "museum_statue_large",
+            "x": 2.6,
+            "y": 6.15
+          }
+        ]
+      }
+    ]
+  },
+  "01-08": {
+    "reason": "Add physical cover to remove measured uncovered-route gaps; retain existing walls, security and guard timings. Route elbows regenerate around the new cover.",
+    "beforeHash": "ff1fbba9d018bc274a60a71c851be9cf84036c8f00278f7e8419658d2973edb0",
+    "afterHash": "ceaba8cfe0cdb2a1855e7ecaaf54c9f870798c5a4ddaf592d7d2524ee60c2c76",
+    "patches": [
+      {
+        "path": [
+          "props"
+        ],
+        "before": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5.5,
+            "y": 21.94
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "displayCase",
+            "scale": 1.6,
+            "visualAssetId": "museum_display_case_large",
+            "x": 5.5,
+            "y": 13.72
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5.5,
+            "y": 4.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 17,
+            "y": 13.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 24.3,
+            "y": 13.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 25,
+            "y": 3.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 13.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 9.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "shelf",
+            "scale": 1.2,
+            "visualAssetId": "museum_display_case_large",
+            "x": 18,
+            "y": 15.72
+          },
+          {
+            "kind": "objectiveCase",
+            "visualAssetId": "museum_diamond_case",
+            "x": 18.2,
+            "y": 2.4
+          }
+        ],
+        "after": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5.5,
+            "y": 21.94
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "displayCase",
+            "scale": 1.6,
+            "visualAssetId": "museum_display_case_large",
+            "x": 5.5,
+            "y": 13.72
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5.5,
+            "y": 4.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 17,
+            "y": 13.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 24.3,
+            "y": 13.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 25,
+            "y": 3.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 13.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 9.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "partition",
+            "scale": 1.2,
+            "visualAssetId": "museum_partition",
+            "x": 7,
+            "y": 11.81
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "shelf",
+            "scale": 1.2,
+            "visualAssetId": "museum_display_case_large",
+            "x": 18,
+            "y": 15.72
+          },
+          {
+            "kind": "objectiveCase",
+            "visualAssetId": "museum_diamond_case",
+            "x": 18.2,
+            "y": 2.4
+          }
+        ]
+      },
+      {
+        "path": [
+          "testRoutes"
+        ],
+        "before": [
+          {
+            "name": "safe: public → restricted → secure objective",
+            "points": [
+              {
+                "x": 2.3,
+                "y": 22.5
+              },
+              {
+                "x": 3.75,
+                "y": 20.25
+              },
+              {
+                "x": 8,
+                "y": 20.3
+              },
+              {
+                "x": 8,
+                "y": 20
+              },
+              {
+                "x": 3.5,
+                "y": 20
+              },
+              {
+                "x": 3.5,
+                "y": 18
+              },
+              {
+                "x": 3.5,
+                "y": 16
+              },
+              {
+                "x": 8.75,
+                "y": 16
+              },
+              {
+                "x": 8.75,
+                "y": 13
+              },
+              {
+                "x": 8,
+                "y": 13
+              },
+              {
+                "x": 8,
+                "y": 10
+              },
+              {
+                "x": 3.5,
+                "y": 10
+              },
+              {
+                "x": 3.5,
+                "y": 7
+              },
+              {
+                "x": 3.5,
+                "y": 5
+              },
+              {
+                "x": 8.75,
+                "y": 5
+              },
+              {
+                "x": 8.75,
+                "y": 3.5
+              },
+              {
+                "x": 11,
+                "y": 3.5
+              },
+              {
+                "x": 16.25,
+                "y": 2.25
+              },
+              {
+                "x": 17.75,
+                "y": 2.25
+              },
+              {
+                "x": 19,
+                "y": 3.5
+              },
+              {
+                "x": 18.2,
+                "y": 2.4
+              }
+            ]
+          },
+          {
+            "name": "risk: exposed alternate approach",
+            "points": [
+              {
+                "x": 2.3,
+                "y": 22.5
+              },
+              {
+                "x": 3.5,
+                "y": 20.3
+              },
+              {
+                "x": 3.5,
+                "y": 18
+              },
+              {
+                "x": 3.5,
+                "y": 16.2
+              },
+              {
+                "x": 8.75,
+                "y": 16.2
+              },
+              {
+                "x": 8.75,
+                "y": 13
+              },
+              {
+                "x": 7.25,
+                "y": 11.75
+              },
+              {
+                "x": 3.75,
+                "y": 11.75
+              },
+              {
+                "x": 2.1,
+                "y": 13
+              },
+              {
+                "x": 2.1,
+                "y": 9.8
+              },
+              {
+                "x": 7.5,
+                "y": 9.8
+              },
+              {
+                "x": 7.5,
+                "y": 7
+              },
+              {
+                "x": 7.5,
+                "y": 5.2
+              },
+              {
+                "x": 8.75,
+                "y": 5.2
+              },
+              {
+                "x": 8.75,
+                "y": 5
+              },
+              {
+                "x": 8.75,
+                "y": 3.5
+              },
+              {
+                "x": 11,
+                "y": 3.5
+              },
+              {
+                "x": 16.25,
+                "y": 2.25
+              },
+              {
+                "x": 17.75,
+                "y": 2.25
+              },
+              {
+                "x": 19,
+                "y": 3.5
+              },
+              {
+                "x": 18.2,
+                "y": 2.4
+              }
+            ]
+          }
+        ],
+        "after": [
+          {
+            "name": "safe: public → restricted → secure objective",
+            "points": [
+              {
+                "x": 2.3,
+                "y": 22.5
+              },
+              {
+                "x": 3.75,
+                "y": 20.25
+              },
+              {
+                "x": 8,
+                "y": 20.3
+              },
+              {
+                "x": 8,
+                "y": 20
+              },
+              {
+                "x": 3.5,
+                "y": 20
+              },
+              {
+                "x": 3.5,
+                "y": 18
+              },
+              {
+                "x": 3.5,
+                "y": 16
+              },
+              {
+                "x": 8.75,
+                "y": 16
+              },
+              {
+                "x": 8.75,
+                "y": 13
+              },
+              {
+                "x": 8,
+                "y": 13
+              },
+              {
+                "x": 8.75,
+                "y": 11.75
+              },
+              {
+                "x": 8,
+                "y": 10
+              },
+              {
+                "x": 3.5,
+                "y": 10
+              },
+              {
+                "x": 3.5,
+                "y": 7
+              },
+              {
+                "x": 3.5,
+                "y": 5
+              },
+              {
+                "x": 8.75,
+                "y": 5
+              },
+              {
+                "x": 8.75,
+                "y": 3.5
+              },
+              {
+                "x": 11,
+                "y": 3.5
+              },
+              {
+                "x": 16.25,
+                "y": 2.25
+              },
+              {
+                "x": 17.75,
+                "y": 2.25
+              },
+              {
+                "x": 19,
+                "y": 3.5
+              },
+              {
+                "x": 18.2,
+                "y": 2.4
+              }
+            ]
+          },
+          {
+            "name": "risk: exposed alternate approach",
+            "points": [
+              {
+                "x": 2.3,
+                "y": 22.5
+              },
+              {
+                "x": 3.5,
+                "y": 20.3
+              },
+              {
+                "x": 3.5,
+                "y": 18
+              },
+              {
+                "x": 3.5,
+                "y": 16.2
+              },
+              {
+                "x": 8.75,
+                "y": 16.2
+              },
+              {
+                "x": 8.75,
+                "y": 13
+              },
+              {
+                "x": 7.25,
+                "y": 14.25
+              },
+              {
+                "x": 3.75,
+                "y": 14.25
+              },
+              {
+                "x": 2.1,
+                "y": 13
+              },
+              {
+                "x": 2.1,
+                "y": 9.8
+              },
+              {
+                "x": 7.5,
+                "y": 9.8
+              },
+              {
+                "x": 7.5,
+                "y": 7
+              },
+              {
+                "x": 7.5,
+                "y": 5.2
+              },
+              {
+                "x": 8.75,
+                "y": 5.2
+              },
+              {
+                "x": 8.75,
+                "y": 5
+              },
+              {
+                "x": 8.75,
+                "y": 3.5
+              },
+              {
+                "x": 11,
+                "y": 3.5
+              },
+              {
+                "x": 16.25,
+                "y": 2.25
+              },
+              {
+                "x": 17.75,
+                "y": 2.25
+              },
+              {
+                "x": 19,
+                "y": 3.5
+              },
+              {
+                "x": 18.2,
+                "y": 2.4
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "path": [
+          "topologyPlan",
+          "structures"
+        ],
+        "before": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5.5,
+            "y": 21.94
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "displayCase",
+            "scale": 1.6,
+            "visualAssetId": "museum_display_case_large",
+            "x": 5.5,
+            "y": 13.72
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5.5,
+            "y": 4.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 17,
+            "y": 13.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 24.3,
+            "y": 13.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 25,
+            "y": 3.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 13.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 9.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "shelf",
+            "scale": 1.2,
+            "visualAssetId": "museum_display_case_large",
+            "x": 18,
+            "y": 15.72
+          }
+        ],
+        "after": [
+          {
+            "collisionScale": 1.6,
+            "kind": "counter",
+            "scale": 1.6,
+            "visualAssetId": "museum_security_desk",
+            "x": 5.5,
+            "y": 21.94
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "displayCase",
+            "scale": 1.6,
+            "visualAssetId": "museum_display_case_large",
+            "x": 5.5,
+            "y": 13.72
+          },
+          {
+            "collisionScale": 1.6,
+            "kind": "partition",
+            "scale": 1.6,
+            "visualAssetId": "museum_partition",
+            "x": 5.5,
+            "y": 4.28
+          },
+          {
+            "collisionScale": 1.35,
+            "kind": "counter",
+            "scale": 1.35,
+            "visualAssetId": "museum_security_desk",
+            "x": 17,
+            "y": 13.771
+          },
+          {
+            "collisionScale": 1.5,
+            "kind": "displayCase",
+            "scale": 1.5,
+            "visualAssetId": "museum_display_case_large",
+            "x": 24.3,
+            "y": 13.675
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "pillar",
+            "scale": 1.2,
+            "visualAssetId": "museum_column",
+            "x": 25,
+            "y": 3.48
+          },
+          {
+            "kind": "painting",
+            "scale": 1.2,
+            "visualAssetId": "museum_painting",
+            "x": 13.9,
+            "y": 1.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 9.3
+          },
+          {
+            "kind": "painting",
+            "scale": 1,
+            "visualAssetId": "museum_painting",
+            "x": 2,
+            "y": 1.3
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "partition",
+            "scale": 1.2,
+            "visualAssetId": "museum_partition",
+            "x": 7,
+            "y": 11.81
+          },
+          {
+            "collisionScale": 1.2,
+            "kind": "shelf",
+            "scale": 1.2,
+            "visualAssetId": "museum_display_case_large",
+            "x": 18,
+            "y": 15.72
+          }
+        ]
+      }
+    ]
+  }
+}

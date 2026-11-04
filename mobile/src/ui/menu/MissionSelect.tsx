@@ -7,6 +7,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useUIAudio} from '../../game/audio/useGameAudio';
 import {CHAPTERS,missionName} from '../../game/levels/campaignCatalog';
 import {migrateCampaign} from '../../game/progress/campaignProgress';
+import {chapterOneMastery} from '../../game/progress/chapterOneMastery';
+import {chapterOneCopy} from '../hud/chapterOneCopy';
 import {useMenu} from './MenuContext';
 import {topInset} from '../device';
 import {MenuHeading} from './MenuScreens';
@@ -48,9 +50,9 @@ export function MissionSelect({chapter,art,onBack,onSelect}:{chapter:number;art:
      <Text maxFontSizeMultiplier={1.2} accessibilityRole="header" style={[styles.chapterName,L.compact&&styles.chapterNameCompact]}>{chapterName}</Text>
      <Text maxFontSizeMultiplier={1.2} numberOfLines={2} style={[styles.chapterIntro,L.compact&&styles.chapterIntroCompact]}>{t(chapterIntroKey(chapter))}</Text>
     </View>
-    <Hero art={art} chapter={chapter} route={route} L={L} t={t}/>
+    <Hero art={art} chapter={chapter} route={route} L={L} t={t} language={language}/>
     <View style={{height:L.heroGap}}/>
-    {route.missions.map((m,i)=><RouteRow key={m.id} m={m} L={L} t={t} name={missionName(m.index,language)} art={art} chapter={chapter}
+    {route.missions.map((m,i)=><RouteRow key={m.id} m={m} L={L} t={t} name={missionName(m.index,language)} language={language} art={art} chapter={chapter}
      first={i===0} last={i===route.missions.length-1} prevCleared={i>0&&route.missions[i-1].state==='cleared'} onPress={()=>start(m)}/>)}
     {L.tagline&&<Text allowFontScaling={false} style={[styles.tagline,{height:L.taglineH}]}>{t('heist')}</Text>}
    </Animated.View>
@@ -58,7 +60,7 @@ export function MissionSelect({chapter,art,onBack,onSelect}:{chapter:number;art:
  </View>;
 }
 
-function Hero({art,chapter,route,L,t}:{art:ImageSourcePropType;chapter:number;route:ChapterRoute;L:Layout;t:T}) {
+function Hero({art,chapter,route,L,t,language}:{art:ImageSourcePropType;chapter:number;route:ChapterRoute;L:Layout;t:T;language:string}) {
  const [fx,fy]=CHAPTER_HERO[chapter]??[VENUE_ART.w/2,VENUE_ART.h/2];
  const crop=artCrop(L.contentW,L.heroH,fx,fy,HERO_ZOOM);
  const trackW=L.contentW-28;
@@ -66,7 +68,10 @@ function Hero({art,chapter,route,L,t}:{art:ImageSourcePropType;chapter:number;ro
  useEffect(()=>{fill.set(withTiming(route.ratio,{duration:560,easing:Easing.out(Easing.cubic)}));},[route.ratio,fill]);
  const bar=useAnimatedStyle(()=>({width:Math.max(0,fill.value)*trackW}));
  const pct=Math.round(route.ratio*100);
- return <View accessible accessibilityLabel={`${route.cleared} / ${route.total} ${t('clearedCount')}, ${pct}%`} style={[styles.hero,{height:L.heroH}]}>
+ const badgeCount=route.missions.reduce((sum,m)=>sum+chapterOneMastery(m.id,m.record).earned.length,0);
+ const badgeTotal=route.total*3;
+ const badgeLabel=chapter===0?`${chapterOneCopy(language).badges} ${badgeCount}/${badgeTotal}`:'';
+ return <View accessible accessibilityLabel={`${route.cleared} / ${route.total} ${t('clearedCount')}, ${pct}%${badgeLabel?`, ${badgeLabel}`:''}`} style={[styles.hero,{height:L.heroH}]}>
   <Image source={art} fadeDuration={0} style={{position:'absolute',width:crop.width,height:crop.height,left:crop.left,top:crop.top}}/>
   <View pointerEvents="none" style={[StyleSheet.absoluteFill,styles.heroShade]}/>
   <View style={styles.progress}>
@@ -75,19 +80,22 @@ function Hero({art,chapter,route,L,t}:{art:ImageSourcePropType;chapter:number;ro
     <Text maxFontSizeMultiplier={1.2} style={styles.progressPct}>{pct}%</Text>
    </View>
    <View style={[styles.track,{width:trackW}]}><Animated.View style={[styles.fill,bar]}/></View>
+   {chapter===0&&<Text style={styles.badgeCount}>{chapterOneCopy(language).badges} · {badgeCount}/{badgeTotal}</Text>}
   </View>
  </View>;
 }
 
-function RouteRow({m,L,t,name,art,chapter,first,last,prevCleared,onPress}:{m:RouteMission;L:Layout;t:T;name:string;art:ImageSourcePropType;chapter:number;
+function RouteRow({m,L,t,name,art,chapter,first,last,prevCleared,onPress,language}:{m:RouteMission;L:Layout;t:T;name:string;art:ImageSourcePropType;chapter:number;language:string;
  first:boolean;last:boolean;prevCleared:boolean;onPress:()=>void}) {
  // Opened only by the QA override: drawn as an open mission with a QA tag. The save still has it locked.
  const current=m.state==='current',locked=m.state==='locked'&&!m.playable,cleared=m.state==='cleared',qaOpen=m.devUnlocked;
  const cardH=current?L.currentH:L.cardH,rowH=cardH+L.gap;
  const best=cleared&&m.record?.bestTime!==undefined?formatTime(m.record.bestTime):undefined;
+ const badges=chapter===0?chapterOneMastery(m.id,m.record).earned.length:undefined;
  const status=current?t('currentMission'):cleared?t('clearedCount'):locked?t('locked'):qaOpen?t('devUnlocked'):'';
  const label=[m.id,name,status,`${t('guards')} ${m.guards}`,`${t('goals')} ${m.objectives}`,
-  best?`${t('best')} ${best}${m.record?.legacy?' ('+t('legacy')+')':''}`:''].filter(Boolean).join(', ');
+  best?`${t('best')} ${best}${m.record?.legacy?' ('+t('legacy')+')':''}`:'',
+  badges!==undefined?`${chapterOneCopy(language).badgeShort} ${badges}/3`:''].filter(Boolean).join(', ');
  return <View style={{flexDirection:'row',height:rowH}}>
   <View style={{width:L.nodeCol}}>
    {!first&&<View style={[styles.line,{top:0,height:rowH/2},prevCleared&&styles.lineDone]}/>}
@@ -108,7 +116,7 @@ function RouteRow({m,L,t,name,art,chapter,first,last,prevCleared,onPress}:{m:Rou
      <Text maxFontSizeMultiplier={1.2} style={[styles.metaText,locked&&styles.metaLocked]}>{t('guards')} {m.guards}</Text>
      <Text style={[styles.metaText,locked&&styles.metaLocked]}>·</Text>
      <DiamondIcon color={locked?C.dim:C.cyan}/>
-     <Text maxFontSizeMultiplier={1.2} style={[styles.metaText,locked&&styles.metaLocked]}>{t('goals')} {m.objectives}</Text>
+     <Text maxFontSizeMultiplier={1.2} style={[styles.metaText,locked&&styles.metaLocked]}>{badges!==undefined?`${chapterOneCopy(language).badgeShort} ${badges}/3`:`${t('goals')} ${m.objectives}`}</Text>
     </View>
    </View>
    <Thumb art={art} chapter={chapter} order={m.order} w={current?L.currentThumbW:L.thumbW} h={current?L.currentThumbH:L.thumbH} state={qaOpen?'available':m.state}/>
@@ -175,6 +183,7 @@ function PlayIcon() {
 }
 
 const styles=StyleSheet.create({
+ badgeCount:{color:C.ivory,fontSize:10,fontWeight:'700'},
  screen:{flex:1,backgroundColor:C.bg},
  chapterLabel:{color:C.cyan,fontSize:11,fontWeight:'700',letterSpacing:2.4},
  chapterName:{color:C.ivory,fontSize:25,lineHeight:31,fontWeight:'700',letterSpacing:1.2,marginTop:2},

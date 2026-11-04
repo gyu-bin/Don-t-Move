@@ -46,12 +46,46 @@ test('standard objectives still need a guard to see the empty case', () => {
  assert.equal(s.theft.alarmDelay,undefined);
 });
 
-test('renumbered Masterpiece retains its historical four-second Search, ordinary Gallery remains nine',()=>{
+test('manual historical contexts retain the Masterpiece four-second Search fallback',()=>{
  for(const [id,expected] of [['02-05',Awareness.Return],['02-10',Awareness.Return],['02-03',Awareness.Search]] as const){
   const {stage,nav,s}=setup('02-05');s.theft.missionId=id;
+  delete s.theft.legacyMasterpiece;
   const guard=s.guards[0];guard.awareness=Awareness.Search;guard.stateT=3.95;
   s.events.globalAlert=true;guard.knownRevision=s.events.globalRevision;
   stepGuards(s.guards,hidden,stage.visionBlockers,nav,.1,s.events,4,false,1,s.theft);
   assert.equal(guard.awareness,expected,id);
+ }
+});
+
+test('stable identity retains original and renumbered Masterpiece Search without applying it to reused IDs',()=>{
+ const base=(stages as unknown as StageDefinition[]).find(s=>s.id==='02-05')!;
+ for(const [id,number,legacy,expected] of [
+  ['02-05',10,true,Awareness.Return],
+  ['02-10',20,true,Awareness.Return],
+  ['02-10',55,false,Awareness.Search],
+  ['02-05',55,false,Awareness.Search],
+  ['02-03',8,false,Awareness.Search],
+ ] as const){
+  const stage=compileStage({...base,id,number}),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
+  assert.equal(s.theft.legacyMasterpiece,legacy,`${id} #${number}: explicit legacy identity`);
+  const guard=s.guards[0];guard.awareness=Awareness.Search;guard.stateT=3.95;
+  s.events.globalAlert=true;guard.knownRevision=s.events.globalRevision;
+  stepGuards(s.guards,hidden,stage.visionBlockers,nav,.1,s.events,4,false,1,s.theft);
+  assert.equal(guard.awareness,expected,`${id} #${number}: Search at four seconds`);
+ }
+});
+
+test('new Gallery finale uses the normal nine-second Search and an explicit false overrides the old ID',()=>{
+ const source=(stages as unknown as StageDefinition[]).find(s=>s.id==='02-10')
+  ?? {...(stages as unknown as StageDefinition[]).find(s=>s.id==='02-05')!,id:'02-10',number:55};
+ assert.equal(source.number,55);
+ for(const [elapsed,expected] of [[3.95,Awareness.Search],[8.95,Awareness.Return]] as const){
+  const stage=compileStage(source),nav=buildNavigation(stage,BODY.guardRadius),s=createPlaygroundState(stage);
+  assert.equal(s.theft.missionId,'02-10');assert.equal(s.theft.legacyMasterpiece,false);
+  assert(s.theft.roles?.length,'the authored finale uses semantic search responsibilities');
+  const guard=s.guards[0];guard.awareness=Awareness.Search;guard.stateT=elapsed;
+  s.events.globalAlert=true;guard.knownRevision=s.events.globalRevision;
+  stepGuards(s.guards,hidden,stage.visionBlockers,nav,.1,s.events,elapsed+.1,false,1,s.theft);
+  assert.equal(guard.awareness,expected,`Search at ${elapsed+.1} seconds`);
  }
 });

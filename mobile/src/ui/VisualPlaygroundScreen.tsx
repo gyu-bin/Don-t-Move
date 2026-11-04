@@ -5,7 +5,7 @@ import {resolveInitialMissionIndex} from './branding/missionLaunch';
 import { useMissionBackHandler } from './missionBack';
 import {QA_UNLOCK_ALL} from '../game/progress/qaUnlock';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Canvas, Picture, Skia } from '@shopify/react-native-skia';
 import Animated, {cancelAnimation,useAnimatedStyle,withTiming,useAnimatedReaction, useDerivedValue, useFrameCallback, useSharedValue } from 'react-native-reanimated';
@@ -58,6 +58,11 @@ import { SettingsScreen } from './menu/MenuScreens';
 import { feedbackKey,valuableKey } from './menu/strings';
 import { catchCause, CATCH_CAUSE_KEY } from '../game/mission/catchCause';
 import type { CatchCause } from '../game/mission/catchCause';
+import { chapterOneHint } from '../game/mission/chapterOneHints';
+import { chapterOneMastery, newChapterOneBadges, extraDetectionsForMastery, isChapterOneMission } from '../game/progress/chapterOneMastery';
+import type { ChapterOneBadge } from '../game/progress/chapterOneMastery';
+import { MissionDialog } from './hud/MissionDialog';
+import { FailureHint } from './hud/FailureHint';
 import { createAlarmHapticState, endAlarmEpisode, shouldVibrateForAlarm } from '../game/mission/alarmHaptic';
 import { CharacterMotionDebug } from './CharacterMotionDebug';
 import { NativeQAObserver,useNativeQACadence } from './debug/NativeQAObserver';
@@ -157,15 +162,15 @@ function GameRun({ initialMissionIndex, progress, onProgress }: { initialMission
    // Leaving for Home or the chapter list mid-transition: late fade/frame signals of that run are ignored.
    return ()=>{controller.cancel();missionSwap.current=null;cancelAnimation(cover);};
   },[cover,onFadeEnd]);
-  const stageCleared=(seconds:number,alerts:number)=>{
+  const stageCleared=(seconds:number,alerts:number,extraDetections:number|undefined)=>{
     const stage=playableStages[index];
     const controlMode=normalizeControlMode(progress.controlMode);
-    track('mission_clear',{missionId:stage?.id??missionId(index),chapter:stage?.chapter??0,seconds,alerts,controlMode});
+    track('mission_clear',{missionId:stage?.id??missionId(index),chapter:stage?.chapter??0,seconds,alerts,extraDetections,controlMode});
     if(stage && stage.mission===CHAPTER_MISSION_COUNTS[(stage.chapter??1)-1]) {
       track('chapter_complete',{chapter:stage.chapter??0,missionId:stage.id});
     }
     // The clear, the best time and the unlock are stored here, before any navigation is possible.
-    onProgress({...progress,campaign:completeMission(migrateCampaign(progress),index,seconds,alerts)});
+    onProgress({...progress,campaign:completeMission(migrateCampaign(progress),index,seconds,alerts,extraDetections)});
     monetization.recordMissionClear();
     // After the last mission there is no next one: the result screen leads to the chapter list.
     if(index>=playableStages.length-1)return;
@@ -217,7 +222,7 @@ function StageGame({
   definition: StageDefinition;
   tilt: TiltControl;
   soundEnabled: boolean;
-  onStageCleared: (seconds: number, alerts: number) => void;
+  onStageCleared: (seconds: number, alerts: number, extraDetections: number | undefined) => void;
   onNextStage: () => void;
   progress: StageProgress;
   transitioning?:boolean;
@@ -279,6 +284,8 @@ function StageGame({
   const touch = useSharedValue({ x: 0, y: 0, seq: 0 });
   const [caught, setCaught] = useState(false);
   const [caughtCause, setCaughtCause] = useState<CatchCause | null>(null);
+  const [failures, setFailures] = useState(0);
+  const [failureSecured, setFailureSecured] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [paused, setPaused] = useState(false);
   const leaveMission=(reason:'home'|'chapters')=>{
@@ -304,6 +311,7 @@ function StageGame({
   const [secured, setSecured] = useState(false);
   const [flash, setFlash] = useState<'cyan' | 'red' | null>(null);
   const [result, setResult] = useState({ seconds: 0, alerts: 0 });
+  const [newBadges, setNewBadges] = useState<ChapterOneBadge[]>([]);
   const [pickupRevision, setPickupRevision] = useState(0);
   const [tiltStatus, setTiltStatus] = useState(() => (tilt.enabled ? tilt.controller.value.status : 'PLAY'));
   const [audioSession,setAudioSession]=useState(0);
@@ -339,6 +347,8 @@ function StageGame({
     if (value) {
       const snapshot = state.get();
       setCaughtCause(catchCause(snapshot));
+      setFailures(count => count + 1);
+      setFailureSecured(snapshot.mission.treasureRevision > 0);
       const catchSource = snapshot.events.caughtBy
         ? 'guard'
         : (snapshot.events.cameraAlertRevision ?? 0) > 0 ? 'cctv' : 'other';
@@ -353,6 +363,15 @@ function StageGame({
       void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error).catch(() => {});
     }
   };
+
+  const failureHint = caught ? chapterOneHint({ missionId: definition.id, failures,
+    cause: caughtCause, secured: failureSecured, language: progress.language }) : null;
+  const failureHintId = failureHint?.id;
+  useEffect(() => {
+    if (failureHintId) track('chapter1_hint_shown', {
+      missionId: definition.id, hintId: failureHintId, failures, secured: failureSecured,
+    });
+  }, [definition.id, failureHintId, failures, failureSecured]);
 
   useAnimatedReaction(() => state.value.events.caught, (value, previous) => {
     if (value !== previous) scheduleOnRN(showCaught, value);
@@ -435,9 +454,22 @@ function StageGame({
     if (!completed || clearReported.current) return;
     clearReported.current = true;
     const snapshot = state.get();
+    const extraDetections = extraDetectionsForMastery(snapshot.events);
+    setFailures(0);
+    const before = migrateCampaign(progress);
+    const after = completeMission(before, missionIndex(definition.id), snapshot.t, snapshot.events.whistleCount, extraDetections);
+    setNewBadges(newChapterOneBadges(definition.id, before.records[definition.id], after.records[definition.id]));
     setResult({ seconds: snapshot.t, alerts: snapshot.events.whistleCount });
-    onStageCleared(snapshot.t, snapshot.events.whistleCount);
-  }, [completed, onStageCleared, state]);
+    onStageCleared(snapshot.t, snapshot.events.whistleCount, extraDetections);
+  }, [completed, onStageCleared, state, progress, definition.id]);
+
+  const masteryRecord = migrateCampaign(progress).records[definition.id];
+  const nextBadge = chapterOneMastery(definition.id, masteryRecord).nextGoal;
+  useEffect(() => {
+    if (!resultVisible || !isChapterOneMission(definition.id)) return;
+    track('chapter1_goal_shown', { missionId: definition.id, goal: nextBadge ?? 'complete',
+      newlyEarned: newBadges.join(',') });
+  }, [definition.id, resultVisible, nextBadge, newBadges]);
 
   const index = missionIndex(definition.id);
   const chapterFinal = definition.mission === CHAPTER_MISSION_COUNTS[(definition.chapter ?? 1)-1];
@@ -499,7 +531,7 @@ function StageGame({
     void Haptics.selectionAsync().catch(() => {});
   };
   const retry = () => {
-    track('mission_retry', missionProps());
+    track('mission_retry', { ...missionProps(), hintId: failureHintId, failures });
     track('mission_start', missionProps());
     const fresh = freshViewState();
     fresh.touchSeq = touch.value.seq;
@@ -508,6 +540,7 @@ function StageGame({
     clearReported.current = false;
     setCaught(false);setCaughtCause(null);alarmHaptic.current=createAlarmHapticState();
     setCompleted(false);setResultVisible(false);setAudioSession(v=>v+1);
+    setNewBadges([]);
     setPhaseInfo({phase:'STEALTH',theft:0,spotted:0,remaining:0,lockdown:false});
     setBanner('');
     setSecured(false);
@@ -624,7 +657,8 @@ function StageGame({
 
   return (
     <View style={styles.root}>
-      <Canvas style={StyleSheet.absoluteFill}><Picture picture={picture} /></Canvas>
+      {/* The floor paints the full viewport; Android can use a SurfaceView instead of a transparent TextureView. */}
+      <Canvas style={StyleSheet.absoluteFill} opaque={Platform.OS === 'android'} pointerEvents={Platform.OS === 'android' ? 'none' : undefined}><Picture picture={picture} /></Canvas>
       <View
         style={StyleSheet.absoluteFill}
         pointerEvents={paused || caught || completed || calibrationVisible ? 'none' : 'auto'}
@@ -674,25 +708,27 @@ function StageGame({
 
       {paused && settings && <View accessibilityViewIsModal style={[StyleSheet.absoluteFill,{zIndex:101,elevation:101}]}><SettingsScreen onBack={()=>setSettings(false)} onIntro={()=>setReplayIntro(true)}/></View>}
       {replayIntro && <View style={[StyleSheet.absoluteFill,{zIndex:102,elevation:102}]}><BrandingScreen soundEnabled={soundEnabled} musicEnabled={progress.musicEnabled} onStart={home} onFinished={menuHome}/></View>}
-      {caught && <View accessibilityViewIsModal style={[styles.modal, styles.modalFront]}>
+      {caught && <MissionDialog>
         {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
         <Text style={[styles.modalTitle, styles.caught]}>{t('caught')}</Text>
         {caughtCause && <Text style={styles.catchCause}>{t(CATCH_CAUSE_KEY[caughtCause])}</Text>}
+        <FailureHint hint={failureHint}/>
         {__DEV__&&<Pressable accessibilityRole="button" onPress={()=>setMotionDebug(true)} style={styles.button}><Text style={styles.buttonText}>CAPTURE DIAGNOSTICS</Text></Pressable>}
         <Pressable onPress={()=>{playUI('ui_select');retry();}} style={styles.primaryButton}><Text style={styles.primaryText}>{t('retry')}</Text></Pressable>
         <Pressable onPress={chapterSelect} style={styles.button}><Text style={styles.buttonText}>{t('chapters')}</Text></Pressable>
         <Pressable onPress={home} style={styles.button}><Text style={styles.buttonText}>{t('home')}</Text></Pressable>
-      </View>}
+      </MissionDialog>}
 
-      {completed&&!transitioning&&<Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill,{backgroundColor:'#000'},finishDimStyle]}/>}
+      {completed&&!transitioning&&<Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill,{backgroundColor:'#000'},finishDimStyle,Platform.OS === 'android' && styles.androidEffectsOverlay]}/>}
       {resultVisible && !transitioning && <>
         {__DEV__&&<NativeQAObserver state={state} zoom={zoom} width={width} height={height} paused={paused} transitioning={transitioning} cadence={qaCadence}/>}
         <MissionResult title={chapterFinal ? t('chapter') : t('mission')} name={missionName(index,progress.language)}
+          missionId={definition.id} record={masteryRecord} newlyEarned={newBadges}
           seconds={result.seconds} alerts={result.alerts} best={migrateCampaign(progress).records[definition.id]?.bestTime ?? result.seconds}
           nextName={actions.primary==='chapters'?undefined:missionName(index+1,progress.language)}
           primary={actions.primary} secondary={actions.secondary} onAction={onResultAction}/>
       </>}
-      {flash && <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: flash === 'cyan' ? 'rgba(70,225,255,0.24)' : 'rgba(255,40,40,0.30)' }]} />}
+      {flash && <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: flash === 'cyan' ? 'rgba(70,225,255,0.24)' : 'rgba(255,40,40,0.30)' }, Platform.OS === 'android' && styles.androidEffectsOverlay]} />}
       {stickEnabled && !paused && !caught && !completed && !inspection && <TouchStickHud stick={stick} hint={t('touchHint')} bottom={insets.bottom + 10}
         note={input.fallback ? t('controlFallback') : undefined} retryLabel={t('sensorRetry')} onRetry={input.fallback && tilt.canRetry ? tilt.restart : undefined}/>}
       {__DEV__ && input.kind === 'tap' && !tiltEnabled && !paused && !caught && !completed && !motionDebug && <View style={[styles.touchControls, { bottom: insets.bottom + 8 }]}>
@@ -721,6 +757,7 @@ const styles = StyleSheet.create({
   secured: { position: 'absolute', alignSelf: 'center', paddingHorizontal: 8, borderRadius: 6, backgroundColor: 'rgba(4,18,29,0.76)' },
   securedText: { color: '#b8f1ff', fontSize: 10, fontWeight: '800', letterSpacing: 1, textShadowColor: 'rgba(0,0,0,0.8)', textShadowRadius: 4 },
   root: { flex: 1, backgroundColor: '#05070b' },
+  androidEffectsOverlay: { zIndex: 3, elevation: 3 },
   titleScreen: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 18, backgroundColor: '#05070b' },
   primaryButton: { minWidth: 170, alignItems: 'center', paddingHorizontal: 24, paddingVertical: 13, borderRadius: 16, borderWidth:1, borderColor:'#3ED5FA', backgroundColor: '#03131B' },
   primaryText: { color: '#54DDF7', fontSize: 13, fontWeight: '900', letterSpacing: 2 },

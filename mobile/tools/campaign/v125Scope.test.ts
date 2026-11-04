@@ -15,7 +15,7 @@ const strip=(d:StageDefinition)=>{const {guards,patrolRoutes,cameras,...rest}=d;
 
 test('Phase5: bake is reproducible and matches the live campaign data',()=>{
  assert.deepEqual((JSON.parse(JSON.stringify(buildV125Campaign())) as StageDefinition[]).filter(d=>!rebuilt.has(d.id)),after);
- assert.equal(after.length,45-rebuilt.size);
+ assert.equal(after.length,base.filter(d=>!rebuilt.has(d.id)).length);
 });
 
 test('Phase5: geometry, structures, doors, entry/exit/objective, routes and art selection are exactly the Phase 4D map',()=>{

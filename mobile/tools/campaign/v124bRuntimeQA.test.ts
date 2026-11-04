@@ -8,6 +8,7 @@ import {buildNavigation,clearSegment,findPath} from '../../src/game/world/naviga
 import {createDoor,doorBlockers} from '../../src/game/doors/doorSystem';
 import {navigationWithDoors} from '../../src/game/doors/doorNavigation';
 import {BODY} from '../../src/game/guards/guardTuning';
+import {MISSION_COUNT} from '../../src/game/levels/campaignCatalog';
 import {bruteNavigation} from './verifyNavigationRegression';
 
 const current=JSON.parse(readFileSync('src/game/levels/stages/campaignStages.json','utf8')) as StageDefinition[];
@@ -16,9 +17,9 @@ const routeClear=(points:{x:number;y:number}[],blockers:number[],radius:number)=
  const a=points[i];return clearSegment(a.x*TILE,a.y*TILE,b.x*TILE,b.y*TILE,blockers,radius);
 });
 
-test('Phase4B actual baked campaign has45 unique individually authored floors',()=>{
- assert.equal(current.length,45);assert.equal(new Set(current.map(d=>d.id)).size,45);
- assert.equal(new Set(current.map(d=>JSON.stringify(d.layout))).size,45);
+test('Phase4B actual baked campaign has55 unique individually authored floors',()=>{
+ assert.equal(current.length,MISSION_COUNT);assert.equal(new Set(current.map(d=>d.id)).size,MISSION_COUNT);
+ assert.equal(new Set(current.map(d=>JSON.stringify(d.layout))).size,MISSION_COUNT);
  for(const d of current)assert(d.topologyPlan,`${d.id}: missing Phase4B topology`);
 });
 

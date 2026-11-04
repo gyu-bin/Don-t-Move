@@ -17,6 +17,26 @@
     {"structure":"Exhibition Column West","guard":0,"stop":1,"post":{"x":7,"y":5.75},"hidden":{"x":8.5,"y":2.93},"exposed":{"x":7.78,"y":2.93},"look":{"x":8.110952,"y":2.963284}},
     {"structure":"Side Exhibition Wall","guard":2,"stop":1,"post":{"x":15.5,"y":12.11},"hidden":{"x":16.9,"y":14},"exposed":{"x":15.65,"y":14},"look":{"x":16.552256,"y":14.919405}}
   ],
+  "01-06": [
+    {"structure":"Public Exhibit Island","guard":0,"stop":1,"post":{"x":6,"y":15.8},"hidden":{"x":5.2,"y":12.5},"exposed":{"x":5.7,"y":12.5},"look":{"x":6,"y":11}},
+    {"structure":"Museum wall corner (13,4)","guard":1,"stop":1,"post":{"x":15.7,"y":6},"hidden":{"x":12.7,"y":5.8},"exposed":{"x":12.7,"y":6.3},"look":{"x":11,"y":6},"wall":true}
+  ],
+  "01-07": [
+    {"structure":"Public Exhibit Island","guard":0,"stop":1,"post":{"x":7,"y":15.8},"hidden":{"x":5.3,"y":13.1},"exposed":{"x":5.8,"y":13.1},"look":{"x":5,"y":14}},
+    {"structure":"Museum wall corner (14,5)","guard":1,"stop":0,"post":{"x":15.2,"y":4},"hidden":{"x":14.8,"y":7.3},"exposed":{"x":15.3,"y":7.3},"look":{"x":14.5,"y":6},"wall":true}
+  ],
+  "01-08": [
+    {"structure":"East Wing Collection Case","guard":1,"stop":0,"post":{"x":23.4,"y":10.5},"hidden":{"x":25.5,"y":12.925},"exposed":{"x":25.69134,"y":12.46306},"look":{"x":24.299999999999997,"y":13}},
+    {"structure":"Museum wall corner (16,3)","guard":2,"stop":1,"post":{"x":18.7,"y":5},"hidden":{"x":15.7,"y":4.8},"exposed":{"x":15.7,"y":5.3},"look":{"x":13,"y":5},"wall":true}
+  ],
+  "01-09": [
+    {"structure":"Public Exhibit Island","guard":0,"stop":1,"post":{"x":7,"y":14.8},"hidden":{"x":5.6,"y":12},"exposed":{"x":6.1,"y":12},"look":{"x":7,"y":11}},
+    {"structure":"Museum wall corner (15,4)","guard":1,"stop":1,"post":{"x":17.7,"y":6},"hidden":{"x":14.7,"y":5.8},"exposed":{"x":14.7,"y":6.3},"look":{"x":12,"y":6},"wall":true}
+  ],
+  "01-10": [
+    {"structure":"Public Exhibit Island","guard":0,"stop":1,"post":{"x":6,"y":16.8},"hidden":{"x":5.2,"y":13.5},"exposed":{"x":5.7,"y":13.5},"look":{"x":6,"y":12}},
+    {"structure":"Museum wall corner (15,3)","guard":2,"stop":1,"post":{"x":17.7,"y":7},"hidden":{"x":14.7,"y":5.7},"exposed":{"x":14.7,"y":6.2},"look":{"x":11,"y":7},"wall":true}
+  ],
   "02-01": [
     {"structure":"Island Sculpture","guard":0,"stop":0,"post":{"x":13.5,"y":5.2},"hidden":{"x":11.96,"y":7.785},"exposed":{"x":11.96,"y":7.015},"look":{"x":11.755798,"y":7.640852}},
     {"structure":"Curator Plinth","guard":1,"stop":1,"post":{"x":19.325,"y":8.035},"hidden":{"x":18.65,"y":4.76},"exposed":{"x":18.1,"y":5.31},"look":{"x":18.401638,"y":5.180634}}
@@ -209,5 +229,25 @@
     {"structure":"Stair Armoured Crate","guard":3,"stop":0,"post":{"x":1.9,"y":6.5},"hidden":{"x":4.7,"y":10.02},"exposed":{"x":4.7,"y":9.24},"look":{"x":3.909748,"y":8.727311}},
     {"structure":"Wing Case Stack","guard":4,"stop":0,"post":{"x":1.9,"y":17.8},"hidden":{"x":4.7,"y":19.86},"exposed":{"x":4.7,"y":19.08},"look":{"x":4.486088,"y":19.320576}},
     {"structure":"Checkpoint Cash Table","guard":0,"stop":0,"post":{"x":9,"y":17.1},"hidden":{"x":12.4,"y":19.4625},"exposed":{"x":10.8,"y":19.4625},"look":{"x":11.167279,"y":19.174344}}
+  ],
+  "02-06": [
+    {"structure":"Gallery wall corner (19,6)","guard":1,"stop":1,"post":{"x":22.4,"y":6.7},"hidden":{"x":19.8,"y":5.7},"exposed":{"x":19.8,"y":5.2},"look":{"x":18,"y":6.7},"wall":true},
+    {"structure":"Portrait Approach Wall","guard":0,"stop":0,"post":{"x":2.1,"y":3},"hidden":{"x":3.64,"y":5.685},"exposed":{"x":3.44866,"y":6.14694},"look":{"x":4.5,"y":5}}
+  ],
+  "02-07": [
+    {"structure":"Gallery wall corner (21,5)","guard":1,"stop":1,"post":{"x":24.4,"y":5.7},"hidden":{"x":21.8,"y":4.7},"exposed":{"x":21.8,"y":4.2},"look":{"x":20,"y":5.7},"wall":true},
+    {"structure":"Portrait Approach Wall","guard":0,"stop":0,"post":{"x":2.1,"y":3},"hidden":{"x":4.34,"y":5.185},"exposed":{"x":4.14866,"y":5.64694},"look":{"x":5,"y":4.5}}
+  ],
+  "02-08": [
+    {"structure":"Portrait Approach Wall","guard":0,"stop":0,"post":{"x":2.1,"y":4},"hidden":{"x":3.74,"y":6.185},"exposed":{"x":3.74,"y":6.685},"look":{"x":4.5,"y":5.5}},
+    {"structure":"Handling Art Wall","guard":1,"stop":0,"post":{"x":12.8,"y":14.3},"hidden":{"x":15.28,"y":15.62},"exposed":{"x":15.47134,"y":16.08194},"look":{"x":15.5,"y":14.999999999999998}}
+  ],
+  "02-09": [
+    {"structure":"Gallery wall corner (21,7)","guard":1,"stop":2,"post":{"x":20.2,"y":6.8},"hidden":{"x":23.3,"y":7.2},"exposed":{"x":23.3,"y":6.7},"look":{"x":22,"y":6.8},"wall":true},
+    {"structure":"Portrait Approach Wall","guard":0,"stop":1,"post":{"x":8,"y":6.8},"hidden":{"x":6.4,"y":4.4},"exposed":{"x":6.9,"y":4.4},"look":{"x":5.5,"y":5}}
+  ],
+  "02-10": [
+    {"structure":"Gallery wall corner (22,7)","guard":2,"stop":1,"post":{"x":25.4,"y":7.7},"hidden":{"x":22.8,"y":6.7},"exposed":{"x":22.8,"y":6.2},"look":{"x":21,"y":7.7},"wall":true},
+    {"structure":"Portrait Approach Wall","guard":0,"stop":1,"post":{"x":7,"y":7.8},"hidden":{"x":6,"y":4.9},"exposed":{"x":6.19134,"y":4.43806},"look":{"x":5,"y":5.5}}
   ]
 }

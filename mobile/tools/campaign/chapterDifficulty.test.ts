@@ -29,9 +29,9 @@ test('Final Vault retains a continuous timed full-heist witness with stronger se
  assert(result.spottedBy,'stronger security makes this successful escape a spotted heist');
 });
 
-test('All 45 missions resolve the same single chapter profile regardless of mission index',()=>{
- assert.equal(CHAPTER_DIFFICULTY.length,9);assert.equal(campaignStages.length,45);
- assert.deepEqual(CHAPTER_MISSION_COUNTS,[5,5,5,5,5,5,5,5,5]);
+test('All 55 missions resolve the same single chapter profile regardless of mission index',()=>{
+ assert.equal(CHAPTER_DIFFICULTY.length,9);assert.equal(campaignStages.length,55);
+ assert.deepEqual(CHAPTER_MISSION_COUNTS,[10,10,5,5,5,5,5,5,5]);
  assert.deepEqual(CHAPTERS.map(c=>c.difficultyTier),['EASY','EASY_PLUS','MEDIUM','MEDIUM_PLUS','MEDIUM_HIGH','MEDIUM_HIGH_PLUS','HARD','VERY_HARD','FINAL']);
  for(const def of campaignStages){const config=chapterDifficulty(def.chapter!);assert.equal(config.difficultyTier,CHAPTERS[def.chapter!-1].difficultyTier);assert.equal(missionDifficultyModifier,1);assert(config.missionModifierBounds[0]>=.95&&config.missionModifierBounds[1]<=1.05);assert(!('difficultyRank' in def));}
  assert.throws(()=>chapterDifficulty(0));assert.throws(()=>chapterDifficulty(10));
@@ -94,7 +94,7 @@ test('Outlier audit identifies a high axis without converting it into automatic 
 test('Chapter ordering acceptance rejects reversed/missing evidence and accepts independently ordered axes',()=>{
  const check=(rows:DifficultyAudit[])=>chapterOrderingAcceptance(rows,[1,2,3]);
  const base=auditDifficulty(campaignStages.find(d=>d.id==='01-05')!);
- const fixture=(values:number[])=>values.flatMap((value,i)=>Array.from({length:5},(_,j)=>({...base,id:`0${i+1}-${String(j+1).padStart(2,'0')}`,chapter:i+1,guardCoverage:value,safeRouteExposure:value,objectivePressure:value,cctvCoverage:value,escapePressure:value,escapeRouteExposure:value})));
+ const fixture=(values:number[])=>values.flatMap((value,i)=>Array.from({length:CHAPTER_MISSION_COUNTS[i]},(_,j)=>({...base,id:`0${i+1}-${String(j+1).padStart(2,'0')}`,chapter:i+1,guardCoverage:value,safeRouteExposure:value,objectivePressure:value,cctvCoverage:value,escapePressure:value,escapeRouteExposure:value})));
  const negative=check(fixture([.3,.1,.2]));
  assert.equal(negative.accepted,false);assert.equal(negative.status,'REVIEW_REQUIRED');assert(negative.findings.every(f=>!f.accepted&&!f.comparisons[0].ordered&&f.comparisons[1].ordered));
  const ordered=check(fixture([.1,.2,.3]));
@@ -116,7 +116,7 @@ test('Chapter ordering acceptance rejects reversed/missing evidence and accepts 
 
 test('Default difficulty report covers all nine chapters and rejects missing late evidence',()=>{
  const base=auditDifficulty(campaignStages.find(d=>d.id==='01-05')!);
- const rows=Array.from({length:9},(_,i)=>Array.from({length:5},(_,j)=>({...base,id:`0${i+1}-0${j+1}`,chapter:i+1,guardCoverage:(i+1)/10,safeRouteExposure:(i+1)/10,objectivePressure:(i+1)/10,cctvCoverage:(i+1)/10,escapePressure:(i+1)/10,escapeRouteExposure:(i+1)/10}))).flat();
+ const rows=Array.from({length:9},(_,i)=>Array.from({length:CHAPTER_MISSION_COUNTS[i]},(_,j)=>({...base,id:`0${i+1}-${String(j+1).padStart(2,'0')}`,chapter:i+1,guardCoverage:(i+1)/10,safeRouteExposure:(i+1)/10,objectivePressure:(i+1)/10,cctvCoverage:(i+1)/10,escapePressure:(i+1)/10,escapeRouteExposure:(i+1)/10}))).flat();
  const result=chapterOrderingAcceptance(rows);
  assert.equal(result.evidence.length,9);assert(result.accepted);
  assert(result.findings.every(f=>f.comparisons.length===8));

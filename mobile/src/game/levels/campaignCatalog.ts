@@ -2,7 +2,7 @@ import {chapterDifficulty,type DifficultyTier} from './chapterDifficulty';
 import type {StageTheme,ValuableKind} from './StageDefinition';
 import {CHAPTER_AREAS,CHAPTER_AREAS_KO} from './chapterArt';
 export const CHAPTER_COUNT=9;
-export const CHAPTER_MISSION_COUNTS=[5,5,5,5,5,5,5,5,5] as const;
+export const CHAPTER_MISSION_COUNTS=[10,10,5,5,5,5,5,5,5] as const;
 export const MISSION_COUNT=CHAPTER_MISSION_COUNTS.reduce((sum,count)=>sum+count,0);
 export const chapterStart=(chapter:number)=>CHAPTER_MISSION_COUNTS.slice(0,chapter).reduce((sum,count)=>sum+count,0);
 export const chapterMissionIndices=(chapter:number)=>Array.from({length:CHAPTER_MISSION_COUNTS[chapter]??0},(_,i)=>chapterStart(chapter)+i);

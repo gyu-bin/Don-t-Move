@@ -166,6 +166,7 @@ export interface StageDefinition {
   structurePlan?:string;
   securityZones?:{name:string;x:number;y:number;radius:number;guardId?:string}[];
   id: string;
+  /** Stable legacy identity, not the catalog position. Use missionIndex(id) for campaign ordering. */
   number: number;
   title: string;
   theme: StageTheme;

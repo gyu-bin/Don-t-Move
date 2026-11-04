@@ -28,6 +28,6 @@ test('V5 geometry rejects foreign physical kinds even without explicit artwork',
 });
 
 test('All current V12 runtime maps satisfy actual compiled navigation, approved art family and radius18 route clearance',()=>{
- const current=campaignStages.filter(d=>(d.chapter??0)<=3);assert.equal(current.length,15);
+ const current=campaignStages.filter(d=>(d.chapter??0)<=3);assert.equal(current.length,25);
  for(const def of current)assert.deepEqual(auditV5Geometry(def).issues,[],def.id);
 });

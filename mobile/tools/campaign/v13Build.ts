@@ -5,7 +5,9 @@ import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {auditV124bCampaign,auditV124bTopology,pathLength} from './v124bTopologyQA';
 import {composeV13,v13Draft} from './v13Builder';
 import {V13_MUSEUM} from './v13Museum';
+import {V13_MUSEUM_EXPANSION,MUSEUM_EXPANSION_ARCHETYPES} from './v13MuseumExpansion';
 import {V13_GALLERY} from './v13Gallery';
+import {V13_GALLERY_EXPANSION,GALLERY_EXPANSION_ARCHETYPES} from './v13GalleryExpansion';
 import {V13_BANK} from './v13Bank';
 import {V13_LAB} from './v13Lab';
 import {V13_CASINO} from './v13Casino';
@@ -17,11 +19,23 @@ import type {V13Mission} from './v13Types';
 import {authorCoverCheckpoints} from './v13CoverCheckpoints';
 import {polishPatrol} from './v13PatrolPolish';
 import {watchExit} from './v13ExitWatch';
+/** New floor plans reuse approved chapter security constants, never an old floor plan. */
+export const V13_SECURITY_SOURCE:StageDefinition[]=[...(raw as StageDefinition[]),
+ ...V13_MUSEUM_EXPANSION.map((m,index)=>{
+  const template=(raw as StageDefinition[]).find(s=>s.id===MUSEUM_EXPANSION_ARCHETYPES[m.id]);
+  if(!template)throw Error(`${m.id}: missing approved Museum security archetype`);
+  return {...structuredClone(template),id:m.id,number:raw.length+index+1,chapter:1,mission:Number(m.id.slice(3))};
+ }),
+ ...V13_GALLERY_EXPANSION.map((m,index)=>{
+  const template=(raw as StageDefinition[]).find(s=>s.id===GALLERY_EXPANSION_ARCHETYPES[m.id]);
+  if(!template)throw Error(`${m.id}: missing approved Gallery security archetype`);
+  return {...structuredClone(template),id:m.id,number:raw.length+V13_MUSEUM_EXPANSION.length+index+1,chapter:2,mission:Number(m.id.slice(3))};
+ })];
 /** The campaign, chapter by chapter, in bake order. `plans` is where the missions are authored; a derived chapter's
  *  base plans (and whether it inherits the Phase 7 layer) are set in v13Sources.ts. */
 export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string;derivedFrom?:number}[]=[
- {chapter:1,missions:V13_MUSEUM,plans:'v13Museum.ts'},
- {chapter:2,missions:V13_GALLERY,plans:'v13Gallery.ts'},
+ {chapter:1,missions:[...V13_MUSEUM,...V13_MUSEUM_EXPANSION],plans:'v13Museum.ts + v13MuseumExpansion.ts'},
+ {chapter:2,missions:[...V13_GALLERY,...V13_GALLERY_EXPANSION],plans:'v13Gallery.ts + v13GalleryExpansion.ts'},
  {chapter:3,missions:V13_BANK,plans:'v13Bank.ts'},
  {chapter:4,missions:V13_LAB,plans:'v13Lab.ts'},
  {chapter:5,missions:V13_CASINO,plans:'v13Casino.ts',derivedFrom:DERIVED_FROM[5].chapter},
@@ -33,7 +47,7 @@ export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string;d
 export const V13_MISSIONS:V13Mission[]=CHAPTER_SOURCE.flatMap(c=>c.missions);
 /** Every mission is composed from its V13 plan; SOURCE_STAGES only supplies the approved guard and camera constants. */
 export function buildV13Campaign():StageDefinition[]{
- const source=raw as StageDefinition[];
+ const source=V13_SECURITY_SOURCE;
  return V13_MISSIONS.map(m=>JSON.parse(JSON.stringify(composeV13(m,source))) as StageDefinition);
 }
 if(process.argv[1]?.endsWith('v13Build.ts')){
@@ -41,7 +55,7 @@ if(process.argv[1]?.endsWith('v13Build.ts')){
  if(only){
   // Authoring loop: compose the named missions alone and print plan + topology audit.
   for(const id of only){const m=V13_MISSIONS.find(m=>m.id===id)!;
-   try{const def=composeV13(m,raw as StageDefinition[]),audit=auditV124bTopology(def);
+   try{const def=composeV13(m,V13_SECURITY_SOURCE),audit=auditV124bTopology(def);
     console.log(`\n${id} ${def.title}`);console.log(previewStage(def));
     console.log(JSON.stringify({errors:audit.errors,approach:audit.approachZones,escape:audit.escapeZones,open:+audit.openEscapeLength.toFixed(1),closed:+audit.closedEscapeLength.toFixed(1),entryExit:+audit.entryExitDistance.toFixed(1),firstBreak:def.topologyPlan!.firstBreak,
      safe:+pathLength(def.testRoutes![0].points).toFixed(1),risk:+pathLength(def.testRoutes![1].points).toFixed(1)}));
@@ -54,6 +68,6 @@ if(process.argv[1]?.endsWith('v13Build.ts')){
   fs.mkdirSync('Reports/V13Phase1',{recursive:true});fs.writeFileSync('Reports/V13Phase1/topology-audit.json',JSON.stringify(audit,null,2));
   if(audit.fail)throw Error(`${audit.fail} physical topology failures; not baked`);
   fs.writeFileSync(process.env.QA_CANDIDATE??'src/game/levels/stages/campaignStages.json',JSON.stringify(defs,null,2)+'\n');
-  console.log(`Baked ${audit.pass}/45 with V13 architecture on ${V13_MISSIONS.length} missions. Simulator and play gates remain separate.`);
+  console.log(`Baked ${audit.pass}/${defs.length} with V13 architecture. Simulator and play gates remain separate.`);
  }
 }

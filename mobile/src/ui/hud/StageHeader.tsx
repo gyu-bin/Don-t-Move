@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useMenu } from '../menu/MenuContext';
 
 /**
@@ -22,7 +22,7 @@ export function StageHeader({
 }) {
   const {t}=useMenu();
   return (
-    <View style={[styles.wrap, { top: top + 6 }]} pointerEvents="box-none">
+    <View style={[styles.wrap, Platform.OS === 'android' && styles.androidOverlay, { top: top + 6 }]} pointerEvents="box-none">
       <View>
         <Text style={styles.stage}>{t(code?'missionLabel':'stage')} {code??String(number).padStart(2, '0')}</Text>
         <Text style={styles.title}>{title}</Text>
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
+  androidOverlay: { zIndex: 2, elevation: 2 },
   stage: {
     color: '#f1f2f4',
     fontSize: 15,
