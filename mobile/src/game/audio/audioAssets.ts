@@ -13,6 +13,11 @@ export const AUDIO_SOURCES: Record<AudioEvent, AudioSource | null> = {
   whistle_spotted: require('../../../assets/audio/sfx/whistle-spotted.wav'),
   bgm_stealth: require('../../../assets/audio/bgm/stealth.mp3'),
   bgm_chase: require('../../../assets/audio/bgm/chase.mp3'),
+  footstep_stone: require('../../../assets/audio/sfx/footstep-stone.wav'),
+  footstep_wood: require('../../../assets/audio/sfx/footstep-wood.wav'),
+  footstep_concrete: require('../../../assets/audio/sfx/footstep-concrete.wav'),
+  footstep_metal: require('../../../assets/audio/sfx/footstep-metal.wav'),
+  footstep_carpet: require('../../../assets/audio/sfx/footstep-carpet.wav'),
 };
 export const AUDIO_ASSET_STATUS = {
   whistle: 'BUNDLED_CC0_AUDITION_PENDING',

@@ -4,6 +4,7 @@ import {campaignStages} from '../../src/game/levels/campaignStages';
 import {CHAPTER_MISSION_COUNTS,MISSION_COUNT,missionId,missionIndex} from '../../src/game/levels/campaignCatalog';
 import {freshCampaign,completeMission,canPlayMission,normalizeCampaign} from '../../src/game/progress/campaignProgress';
 import {canonical,sha256} from './v13QaLib';
+import {expectedStageHash} from './v13LateReviewed';
 import baseline from '../../docs/design/chapter1-expansion/EXISTING_MISSION_HASHES.json';
 import {exposureRun} from './cameraExposure';
 import {extraDetectionsForMastery} from '../../src/game/progress/chapterOneMastery';
@@ -13,7 +14,7 @@ test('Museum expansion adds five missions while preserving all 45 existing defin
  assert.equal(campaignStages.length,55);
  for(const [id,hash] of Object.entries(baseline)){
   const stage=campaignStages.find(s=>s.id===id);assert.ok(stage,`${id} preserved`);
-  assert.equal(sha256(canonical(stage)),hash,`${id} must not change during the extension`);
+  assert.equal(sha256(canonical(stage)),expectedStageHash(id,hash),`${id} must not change during the extension`);
  }
  const added=campaignStages.filter(s=>s.chapter===1&&!(s.id in baseline));
  assert.deepEqual(added.map(s=>s.id),['01-06','01-07','01-08','01-09','01-10']);

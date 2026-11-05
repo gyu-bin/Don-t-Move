@@ -11,7 +11,9 @@ import {compileStage,TILE} from '../../src/game/world/compileStage';
 import {clearSegment} from '../../src/game/world/navigation';
 import {BODY} from '../../src/game/guards/guardTuning';
 import {CHAPTER_SOURCE,V13_MISSIONS} from './v13Build';
-import {DERIVED_FROM,baseMissionOf,type DerivedChapter} from './v13Sources';
+import {DERIVED_FROM,baseMissionOf} from './v13Sources';
+import {LATE_LAYOUT_REVISION_IDS} from '../../src/game/progress/missionRevision';
+import {legacyLayoutPlan,legacyLayoutStage} from './v13LegacyLayoutFixture';
 import {V13_MUSEUM,V13_MUSEUM_FROZEN} from './v13Museum';
 import {V13_LAB,V13_LAB_FROZEN} from './v13Lab';
 import {V13_GALLERY} from './v13Gallery';
@@ -23,7 +25,7 @@ import {REWORK} from './v13Rework';
 import {EXTRA_CAMERA,MOVED,PATROL} from './v13Casino';
 import {AUTHORED_IN_PLAN,missionOverrideIndex,missionOverrides,STAGES} from './v13Overrides';
 import {COVER_CHECKPOINTS} from './v13CoverCheckpoints';
-import {PATROL_POLISH} from './v13PatrolPolish';
+import {PATROL_POLISH,polishPatrol} from './v13PatrolPolish';
 import {EXIT_CAMERA_WATCH} from './v13ExitWatch';
 import {applyComposePatrolTiming,COMPOSE_PATROL_TIMINGS} from './v13ComposeTuning';
 
@@ -31,7 +33,7 @@ const live=current as unknown as StageDefinition[];
 
 test('mission-local timing overrides reject changed source patrols and match the override index',()=>{
  for(const [id,tuning] of Object.entries(COMPOSE_PATROL_TIMINGS)){
-  const mission=structuredClone(live.find(s=>s.id===id)!);
+  const mission=id==='09-03'?legacyLayoutStage(id):structuredClone(live.find(s=>s.id===id)!);
   const stop=mission.patrolRoutes.find(r=>r.id===tuning.guardId)!.points[tuning.point];
   assert.equal(stop.waitDuration,tuning.after,`${id} baked timing`);
   stop.waitDuration=tuning.before;
@@ -39,12 +41,13 @@ test('mission-local timing overrides reject changed source patrols and match the
   assert.equal(stop.waitDuration,tuning.after,`${id} authored timing`);
   assert.throws(()=>applyComposePatrolTiming(mission),/expected .* reviewed timing/,`${id} rejects unexpected input`);
   const entry=missionOverrides(id).find(e=>e.table==='COMPOSE_PATROL_TIMINGS');
-  assert.ok(entry?.detail.includes(`wait ${tuning.before} → ${tuning.after} seconds`),`${id} index`);
+  if(id==='09-03')assert.equal(entry,undefined,'superseded coordinates stay out of the active index');
+  else assert.ok(entry?.detail.includes(`wait ${tuning.before} → ${tuning.after} seconds`),`${id} index`);
  }
 });
 
 test('08-05: longer glass-lab inspection exposes a blind sprint while preserving later safe departures',()=>{
- const mission=live.find(s=>s.id==='08-05')!,g=mission.guards.find(g=>g.id==='08-05-g1')!;
+ const mission=legacyLayoutStage('08-05'),g=mission.guards.find(g=>g.id==='08-05-g1')!;
  const route=mission.patrolRoutes!.find(r=>r.id===g.routeId)!;
  assert.equal(route.points[0].waitDuration,5);
  assert.equal(route.points[1].waitDuration,2,'retain the other inspection rhythm');
@@ -60,15 +63,15 @@ test('08-05: longer glass-lab inspection exposes a blind sprint while preserving
 });
 
 test('08-03: authored connector inspection preserves safe timing while closing one blind sprint departure',()=>{
- const mission=live.find(s=>s.id==='08-03')!,g=mission.guards.find(g=>g.id==='08-03-g2')!;
+ const mission=legacyLayoutStage('08-03'),g=mission.guards.find(g=>g.id==='08-03-g2')!;
  const route=mission.patrolRoutes!.find(r=>r.id===g.routeId)!;
  const stop=route.points[0],own=HQ_PATROL[mission.id];
  assert.equal(stop.waitDuration,own.wait);
  // The later, explicit cover pass supersedes the original doorway look.
- const inspection=COVER_CHECKPOINTS[mission.id].find(p=>p.guard===1&&p.stop===0)!;
- assert.equal(stop.lookDirection,Math.atan2(inspection.look.y-stop.y,inspection.look.x-stop.x));
+ const inspection=legacyLayoutPlan('08-03').guards[1].stops[0].look;
+ assert.equal(stop.lookDirection,Math.atan2(inspection.y-stop.y,inspection.x-stop.x));
  assert.equal(g.initialFacing,stop.lookDirection);
- assert(missionOverrides(mission.id).some(e=>e.table==='HQ_PATROL'));
+ assert(!missionOverrides(mission.id).some(e=>e.table==='HQ_PATROL'));
  for(const delay of [4,6]){
   assert(exposureRun(mission,0,0,3,delay).clear,`safe ${delay} must remain playable`);
  }
@@ -101,7 +104,7 @@ test('Cryo Research changes only its objective patrol start, preserving the froz
  assert.equal(lab.guards[3].role,'objective');
  assert.equal(lab.guards[3].startDelay,12);
  assert.deepEqual(lab.guards.map((guard,index)=>index===3?{...guard,startDelay:18}:guard),source.guards);
- const cryo=live.find(m=>m.id==='04-04')!,security=live.find(m=>m.id==='08-04')!;
+ const cryo=live.find(m=>m.id==='04-04')!,security=legacyLayoutStage('08-04');
  assert.equal(cryo.guards[3].role,'objective');assert.equal(cryo.guards[3].startDelay,12);
  assert.equal(security.guards[3].role,'objective');assert.equal(security.guards[3].startDelay,18);
 
@@ -149,68 +152,41 @@ test('Campaign: entry, prize and exit are apart; patrol points, cameras and rout
  }
 });
 
-test('Campaign: chapter sources — nine chapters in bake order, and each derived chapter branches off where v13Sources says',()=>{
+test('Campaign: nine chapter sources in catalog order with explicitly independent replacements',()=>{
  assert.deepEqual(CHAPTER_SOURCE.map(c=>c.chapter),[1,2,3,4,5,6,7,8,9]);
  for(const c of CHAPTER_SOURCE)assert.deepEqual(c.missions.map(m=>m.id),Array.from({length:CHAPTER_MISSION_COUNTS[c.chapter-1]},(_,i)=>`0${c.chapter}-${String(i+1).padStart(2,'0')}`),`chapter ${c.chapter}`);
  assert.deepEqual(V13_MISSIONS.map(m=>m.id),live.map(d=>d.id));
- const mirror=(map:string[])=>map.map(row=>[...row].reverse().join(''));
- for(const chapter of [5,6,7,8] as DerivedChapter[]){
-  const from=DERIVED_FROM[chapter],derived=CHAPTER_SOURCE[chapter-1];
-  assert.equal(derived.derivedFrom,from.chapter);assert.equal(new Set(from.order).size,5,`chapter ${chapter} base plans`);
-  for(const id of from.order)assert(id.startsWith(`0${from.chapter}-`)&&from.plans.some(m=>m.id===id),`chapter ${chapter}: base ${id}`);
-  derived.missions.forEach((m,i)=>assert.equal(baseMissionOf(m.id),from.order[i]));
-  // Mirrored floor plan of the base it names. Chapters with patches of their own may differ by those wall cells only;
-  // a Gameplay v3 rework (v13Rework.ts) may differ by exactly the cells it declares, each holding the declared value.
-  derived.missions.forEach((m,i)=>{
-   const W=m.map[0].length,declared=new Map((REWORK[m.id]?.cells??[]).map(([x,y,ch])=>[y*W+x,ch]));
-   for(const [k,ch] of declared)assert.equal(m.map.join('')[k],ch,`${m.id} rework cell ${k%W},${Math.floor(k/W)}`);
-   const base=mirror(from.plans.find(b=>b.id===from.order[i])!.map),cells=base.join('').length,changed=[...m.map.join('')].filter((ch,k)=>!declared.has(k)&&ch!==base.join('')[k]).length;
-   assert.equal(m.map.join('').length,cells,m.id);
-   if(from.phase7==='inherits Phase 7')assert.equal(changed,0,`${m.id} is not the mirror of ${from.order[i]}`);else assert(changed<=2,`${m.id} differs from frozen ${from.order[i]} by ${changed} cells`);
-  });
- }
- assert.equal(baseMissionOf('05-03'),'03-04');assert.equal(baseMissionOf('05-04'),'03-03');assert.equal(baseMissionOf('09-01'),undefined);assert.equal(baseMissionOf('01-01'),undefined);
- // Chapter 5 / 6 take the plans with the Phase 7 layer; Chapter 7 / 8 take the frozen plans, which that layer does not touch.
- assert.equal(DERIVED_FROM[5].plans,V13_BANK);assert.equal(DERIVED_FROM[6].plans,V13_GALLERY);
- assert.equal(DERIVED_FROM[7].plans,V13_MUSEUM_FROZEN);assert.equal(DERIVED_FROM[8].plans,V13_LAB_FROZEN);
- assert.notDeepEqual(V13_MUSEUM,V13_MUSEUM_FROZEN);assert.notDeepEqual(V13_LAB,V13_LAB_FROZEN);
+ assert.deepEqual(V13_MISSIONS.filter(m=>m.layoutRevision===2).map(m=>m.id),LATE_LAYOUT_REVISION_IDS);
+ for(const m of V13_MISSIONS.filter(m=>m.id!=='07-01'))assert.equal(baseMissionOf(m.id),undefined,m.id);
+ const warehouse=V13_MISSIONS.find(m=>m.id==='07-01')!;
+ assert.equal(baseMissionOf(warehouse.id),'01-01');
+ const previous=V13_MUSEUM_FROZEN[0].map.map(row=>[...row].reverse().join('')).join('');
+ const declared=new Map(REWORK[warehouse.id].cells!.map(([x,y,ch])=>[y*warehouse.map[0].length+x,ch]));
+ assert.equal(warehouse.map.join('').length,previous.length);
+ for(const [cell,ch] of [...warehouse.map.join('')].entries())assert.equal(ch,declared.get(cell)??previous[cell],`07-01 cell ${cell}`);
+ assert.equal(DERIVED_FROM[5].plans,V13_BANK);
+ assert.equal(DERIVED_FROM[6].plans,V13_GALLERY);
+ assert.equal(DERIVED_FROM[7].plans,V13_MUSEUM_FROZEN);
+ assert.equal(DERIVED_FROM[8].plans,V13_LAB_FROZEN);
 });
 
 test('Campaign: the override index reads every table, names real missions and keeps the stage order',()=>{
  const ids=live.map(d=>d.id),index=missionOverrideIndex(ids);
  for(const [table,keys] of Object.entries({PHASE7:Object.keys(PHASE7),REPLACED:Object.keys(REPLACED),LANES:Object.keys(LANES),LATE:Object.keys(LATE),REWORK:Object.keys(REWORK),PINNED:Object.keys(PINNED),MOVED:Object.keys(MOVED),PATROL:Object.keys(PATROL),HQ_PATROL:Object.keys(HQ_PATROL),COVER_CHECKPOINTS:Object.keys(COVER_CHECKPOINTS),PATROL_POLISH:Object.keys(PATROL_POLISH),EXIT_CAMERA_WATCH:Object.keys(EXIT_CAMERA_WATCH)}))for(const id of keys){
-  assert(ids.includes(id),`${table} names unknown mission ${id}`);assert(index[id]?.some(e=>e.table===table&&!e.inheritedFrom),`${id}: ${table} entry missing from the index`);
+  assert(ids.includes(id),`${table} names unknown mission ${id}`);const reachesCurrentLayout=table==='COVER_CHECKPOINTS'||!LATE_LAYOUT_REVISION_IDS.includes(id);
+  assert.equal(!!index[id]?.some(e=>e.table===table&&!e.inheritedFrom),reachesCurrentLayout,`${id}: ${table} index`);
  }
  // The Phase 7 layer belongs to Chapter 1–4 plans, the late layer to Chapter 7–8: the stage each table runs at depends on it.
  for(const id of [...Object.keys(PHASE7),...Object.keys(REPLACED),...Object.keys(LANES)])assert(Number(id.slice(0,2))<=4,`${id}: Phase 7 layer outside Chapter 1–4`);
  for(const id of [...Object.keys(LATE),...Object.keys(PINNED)])assert(['07','08'].includes(id.slice(0,2)),`${id}: late layer outside Chapter 7–8`);
- // A moved Casino piece exists in that mission, stands where the table says, and the table names Chapter 5 only.
- for(const [id,pieces] of Object.entries(MOVED)){assert(id.startsWith('05-'),`MOVED outside Chapter 5: ${id}`);for(const [name,to] of Object.entries(pieces)){const s=V13_MISSIONS.find(m=>m.id===id)!.structures.find(s=>s.name===name);assert(s&&s.x===to.x&&s.y===to.y,`${id}: ${name} is not at ${to.x},${to.y}`);}}
- // A replaced Casino patrol names Chapter 5 only, an existing guard of that role, and leaves the guard count alone.
- for(const [id,roles] of Object.entries(PATROL)){assert(id.startsWith('05-'),`PATROL outside Chapter 5: ${id}`);const m=V13_MISSIONS.find(q=>q.id===id)!,bank=V13_BANK.find(q=>q.id===baseMissionOf(id))!;
-  assert.equal(m.guards.length,bank.guards.length,`${id}: guard count`);assert.deepEqual(m.guards.map(g=>g.role),bank.guards.map(g=>g.role),`${id}: guard roles and order`);
-  for(const [role,own] of Object.entries(roles)){
-   const matches=m.guards.filter(q=>q.role===role);assert.equal(matches.length,1,`${id}: one ${role} guard`);
-   const guard=matches[0],index=m.guards.indexOf(guard);
-   const inserts=(PATROL_POLISH[id]??[]).filter(e=>e.guard===index&&'after' in e);
-   const originalStops=guard.stops.filter(s=>!inserts.some(e=>'stop' in e&&s.x===e.stop.x&&s.y===e.stop.y));
-   assert.equal(guard.stops.length,own.stops.length+inserts.length,`${id}: preserve all Casino stops and declared added waypoints`);
-   assert.equal(originalStops.length,own.stops.length,`${id}: all original inspection stops remain`);
-   own.stops.forEach((stop,i)=>{
-    if(!COVER_CHECKPOINTS[id].some(p=>p.guard===index&&p.stop===i))assert.deepEqual(originalStops[i],stop);
-    assert.equal(originalStops[i].wait,stop.wait,`${id}: retain inspection rhythm`);
-   });
-  }
- }
  for(const base of Object.keys(EXTRA_CAMERA))assert(base.startsWith('03-'),`EXTRA_CAMERA is keyed by the Bank plan, got ${base}`);
  for(const list of Object.values(index))assert.deepEqual(list.map(e=>STAGES.indexOf(e.stage)),[...list.map(e=>STAGES.indexOf(e.stage))].sort((a,b)=>a-b));
  // Edits listed as authored in a plan are really there.
- for(const a of AUTHORED_IN_PLAN){const s=V13_MISSIONS.find(m=>m.id===a.mission)!.structures.find(s=>s.name===a.structure);assert(s&&s.x===a.at[0]&&s.y===a.at[1],`${a.mission}: ${a.structure} is not at ${a.at}`);}
- // 04-05: everything that touches it, and what its twin 08-05 does and does not inherit.
+ for(const a of AUTHORED_IN_PLAN.filter(a=>!LATE_LAYOUT_REVISION_IDS.includes(a.mission))){const s=V13_MISSIONS.find(m=>m.id===a.mission)!.structures.find(s=>s.name===a.structure);assert(s&&s.x===a.at[0]&&s.y===a.at[1],`${a.mission}: ${a.structure} is not at ${a.at}`);}
  assert.deepEqual(missionOverrides('04-05').map(e=>`${e.stage}|${e.category}`),['1 plan|authored in plan','1 plan|authored in plan','2 phase7 lanes|wall cell','2 phase7 lanes|route anchor','4 phase7 cover|structure added','9 cover checkpoints|patrol replaced']);
- assert.deepEqual(missionOverrides('08-05').map(e=>`${e.stage}|${e.category}|${e.inheritedFrom??'own'}`),['1 plan|authored in plan|04-05','1 plan|authored in plan|04-05','7 late|wall cell|own','7 late|route anchor|own','7 late|structure added|own','7 late|patrol stop|own','9 cover checkpoints|patrol replaced|own']);
- // 05-03 is built on 03-04 after Phase 7, so it inherits that lane change and adds its own camera.
- assert.deepEqual(missionOverrides('05-03').map(e=>`${e.table}|${e.inheritedFrom??'own'}`),['LANES|03-04','EXTRA_CAMERA|own','COVER_CHECKPOINTS|own']);
+ for(const id of LATE_LAYOUT_REVISION_IDS){
+  assert.deepEqual(missionOverrides(id).map(e=>e.table),['DISTINCT_LAYOUT','COVER_CHECKPOINTS'],id);
+ }
 });
 
 test('Campaign: secure() and the reuse helpers are frozen (Chapter 6–8 guard and camera placement depends on them)',()=>{
@@ -227,7 +203,7 @@ test('05-02: former cashier-corner contact reproduces, corrected patrol stays cl
  const {createGuardState,createGuardEvents}=await import('../../src/game/guards/guardBrain');
  const {stepGuards}=await import('../../src/game/guards/guardSystem');
  const {buildNavigation}=await import('../../src/game/world/navigation');
- const plan=V13_MISSIONS.find(m=>m.id==='05-02')!,old=structuredClone(plan);
+ const plan=polishPatrol(legacyLayoutPlan('05-02')),old=structuredClone(plan);
  // Recreate the pre-repair two-stop patrol before introducing the old grazing post.
  old.guards.find(g=>g.role==='objective')!.stops.splice(1,1);
  old.guards.find(g=>g.role==='objective')!.stops[0].x=2.75;
@@ -251,7 +227,7 @@ test('05-02: former cashier-corner contact reproduces, corrected patrol stays cl
   }
   return {contacts,firstTime,firstCircleClearance,cycles,reached};
  };
- const before=run(composeV13(old,raw),120),after=run(live.find(d=>d.id==='05-02')!,600);
+ const before=run(composeV13(old,raw),120),after=run(legacyLayoutStage('05-02'),600);
  assert.equal(before.contacts,2);assert.equal(before.firstTime,26.25);
  assert(before.firstCircleClearance!>3,'Old finding is a square-envelope graze, not round-body overlap');
  const correctedOld=structuredClone(old);correctedOld.guards.find(g=>g.role==='objective')!.stops[0].x=2.8;
@@ -270,7 +246,7 @@ test('05-02: stationary entry and objective shoulder stay safe; standing on the 
  const {createGuardState,createGuardEvents}=await import('../../src/game/guards/guardBrain');
  const {stepGuards}=await import('../../src/game/guards/guardSystem');
  const {buildNavigation}=await import('../../src/game/world/navigation');
- const s=compileStage(live.find(d=>d.id==='05-02')!),nav=buildNavigation(s,BODY.guardRadius);
+ const s=compileStage(legacyLayoutStage('05-02')),nav=buildNavigation(s,BODY.guardRadius);
  for(const [name,p,shouldCatch] of [
   ['spawn',s.playerSpawn,false],['objective shoulder',{x:4.25*TILE,y:19.3*TILE},false],['watched prize',s.objective,true],
  ] as const){

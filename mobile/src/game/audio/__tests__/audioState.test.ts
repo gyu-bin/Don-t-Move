@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { fadeMix, reduceAudio, silenceMix, TRACK_BASE_GAIN, WHISTLE_GAIN, type GameAudioInput } from '../audioState';
+import { Gait } from '../../core/types';
+import { fadeMix, reduceAudio, silenceMix, TRACK_BASE_GAIN, WHISTLE_GAIN, type GameAudioInput, type PlayFootstep } from '../audioState';
 const base: GameAudioInput = { sessionKey: '01-01:0', phase: 'STEALTH', theftRevision: 0,
   spottedRevision: 0, sfxEnabled: true, bgmEnabled: true, paused: false, active: true };
 test('separate theft and spotted events emit once each', () => {
@@ -138,7 +139,7 @@ test('interrupted three-track blend preserves aggregate gain and converges', () 
   assert.deepEqual(fadeMix(mix, 'bgm_stealth', -1), mix);
 });
 
-test('native manager queues the first loading whistle, cancels suspended work, and releases voices', async () => {
+test('native manager queues critical sounds, discards stale footsteps, and releases reusable voices', async () => {
   // Execute the production class with only its native module/clock boundary replaced.
   const { readFileSync } = await import('node:fs');
   const { runInNewContext } = await import('node:vm');
@@ -153,11 +154,15 @@ test('native manager queues the first loading whistle, cancels suspended work, a
     addListener: (name: string, callback: (status: unknown) => void) => { remove(): void };
   }[] = [];
   let releaseSeek: (() => void) | undefined;
+  const clearReleaseSeek = () => { releaseSeek = undefined; };
+  const assertNoSeek = (message: string) => assert.equal(releaseSeek, undefined, message);
   let removedSubscriptions = 0;
   let timerCount = 0;
   let now = 0;
   let mixerTick: (()=>void) | undefined;
-  const registry = { bgm_stealth: 1, bgm_chase: 2, whistle_theft: 3, whistle_spotted: 4, bgm_lobby: 5, ui_select: 6, ui_back: 7, objective_pickup: 8 };
+  const registry = { bgm_stealth: 1, bgm_chase: 2, whistle_theft: 3, whistle_spotted: 4, bgm_lobby: 5, ui_select: 6,
+    ui_back: 7, objective_pickup: 8, footstep_stone: 9, footstep_wood: 10, footstep_concrete: 11,
+    footstep_metal: 12, footstep_carpet: 13 };
   const native = {
     createAudioPlayer: (_source: number, options: { downloadFirst: boolean }) => {
       assert.equal(options.downloadFirst, true);
@@ -182,7 +187,9 @@ test('native manager queues the first loading whistle, cancels suspended work, a
     readFileSync(new URL('../GameAudioManager.ts', import.meta.url), 'utf8'),
     { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } },
   ).outputText;
-  const exports: { GameAudioManager?: new () => { update(input: GameAudioInput): void; dispose(): void; playUI(event:'ui_select'|'ui_back'):void } } = {};
+  const exports: { GameAudioManager?: new () => {
+    update(input: GameAudioInput): void; dispose(): void; playUI(event:'ui_select'|'ui_back'): void; playFootstep: PlayFootstep;
+  } } = {};
   runInNewContext(output, {
     exports, __DEV__: false, Date: {now:()=>now}, console,
     setInterval: (callback:()=>void) => { mixerTick=callback;timerCount++; return timerCount; },
@@ -270,6 +277,72 @@ test('native manager queues the first loading whistle, cancels suspended work, a
   manager.update(base); manager.playUI('ui_back');
   manager.update({ ...base, active:false }); releaseSeek!(); await Promise.resolve();
   assert.equal(voices[6].playCount, 0, 'background cancels pending UI seek');
+
+  manager.update(base);
+  const stone = voices[8];
+  const metal = voices[11];
+  const cue: PlayFootstep = (surface, gait, sessionKey = base.sessionKey, emittedAt = now) =>
+    manager.playFootstep(surface, gait, sessionKey, emittedAt);
+  const requestStep = (surface: Parameters<PlayFootstep>[0], gait: number) =>
+    cue(surface, gait, base.sessionKey, now);
+  assert.equal(voices.length, 13);
+  clearReleaseSeek();
+  requestStep('stone', Gait.Walk);
+  assertNoSeek('an unloaded footstep is discarded immediately');
+  stone.isLoaded = true;
+  await Promise.resolve();
+  assert.equal(stone.playCount, 0, 'native load and session entry produce no initial footstep');
+  requestStep('stone', Gait.Idle);
+  cue('stone', Gait.Walk, 'previous-mission', now);
+  cue('stone', Gait.Walk, base.sessionKey, now + 1);
+  assertNoSeek('idle, stale mission and future cues are rejected');
+  requestStep('stone', Gait.Walk); releaseSeek!(); await Promise.resolve();
+  assert.equal(stone.playCount, 1);
+  assert.equal(stone.volume, 0.30);
+  now += 180;
+  stone.isLoaded = false; // ExoPlayer STATE_ENDED after a completed one-shot.
+  requestStep('stone', Gait.Sneak); releaseSeek!(); await Promise.resolve();
+  assert.equal(stone.playCount, 2, 'an ended native voice remains reusable');
+  assert.equal(stone.volume, 0.13);
+  metal.isLoaded = true;
+  clearReleaseSeek();
+  requestStep('metal', Gait.Run);
+  assertNoSeek('callbacks delivered in a burst cannot overlap');
+  now += 180;
+  requestStep('metal', Gait.Run); releaseSeek!(); await Promise.resolve();
+  assert.equal(metal.playCount, 1);
+  assert.equal(metal.volume, 0.49);
+  assert.equal(stone.playing, false, 'the next footstep replaces the current voice');
+  for (const suspension of [{ paused: true }, { active: false }, { sfxSuspended: true }, { sfxEnabled: false },
+    { phase: 'INTRO' as const }, { phase: 'LOBBY' as const }]) {
+    now += 180;
+    requestStep('metal', Gait.Run);
+    manager.update({ ...base, ...suspension });
+    assert.equal(metal.playing, false);
+    releaseSeek!(); await Promise.resolve();
+    assert.equal(metal.playCount, 1, 'seeks in flight cannot finish after suspension');
+    clearReleaseSeek();
+    requestStep('metal', Gait.Run);
+    assertNoSeek('suspended steps do not schedule seeks');
+    const suspendedAt = now;
+    now += 30;
+    manager.update(base);
+    cue('metal', Gait.Run, base.sessionKey, suspendedAt);
+    assertNoSeek('late cues from before resume are discarded');
+  }
+  now += 200;
+  cue('metal', Gait.Run, base.sessionKey, now - 151);
+  assertNoSeek('a delayed cue is stale even within the current session');
+  requestStep('metal', Gait.Run);
+  now += 151;
+  releaseSeek!(); await Promise.resolve();
+  assert.equal(metal.playCount, 1, 'a seek that completes too late cannot play');
+  now += 200;
+  requestStep('metal', Gait.Run);
+  manager.update({ ...base, sessionKey: 'footstep-retry' });
+  releaseSeek!(); await Promise.resolve();
+  assert.equal(metal.playCount, 1, 'retry invalidates the old seek');
+
   // Real pickup path uses its own voice; whistle replacement must not duplicate it.
   manager.update(base);
   manager.update({ ...base, objectiveRevision: 1 });
@@ -287,9 +360,12 @@ test('native manager queues the first loading whistle, cancels suspended work, a
   manager.update({ ...base, sessionKey: 'pickup-retry' });
   releaseSeek!(); await Promise.resolve();
   assert.equal(voices[7].playCount, 1, 'retry cancels pending pickup');
+  cue('metal', Gait.Run, 'pickup-retry', now);
+  const pendingStepSeek = releaseSeek;
   manager.update({ ...base, sessionKey: 'pickup-retry', objectiveRevision: 1 });
-  manager.dispose(); releaseSeek!(); await Promise.resolve();
+  manager.dispose(); releaseSeek!(); pendingStepSeek!(); await Promise.resolve();
   assert.equal(voices[7].playCount, 1, 'dispose cancels pending pickup');
+  assert.equal(metal.playCount, 1, 'dispose cancels pending footstep');
   assert.equal(removedSubscriptions, 8);
   assert.equal(timerCount, 0);
   assert.ok(voices.every(voice => voice.removed && !voice.playing));

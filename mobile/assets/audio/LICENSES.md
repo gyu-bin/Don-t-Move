@@ -1,5 +1,17 @@
 # DON'T MOVE — bundled audio provenance
 
+## Player footsteps
+
+Five original procedural one-shots created for DON'T MOVE. Each was synthesized from seeded noise and damped sine resonances, with separate heel and toe envelopes. No third-party samples, recordings or downloads were used. The 24 kHz, mono, signed 16-bit PCM WAV set totals 36,700 bytes.
+
+| Runtime file | Sound design | Duration | Sample peak | SHA-256 |
+|---|---|---:|---:|---|
+| `sfx/footstep-stone.wav` | Dry tile tap | 146 ms | −6.0 dBFS | `83d48bf4cd336dbf77046117c6ba01d9af4a283c028f981020210a5f3a33df1d` |
+| `sfx/footstep-wood.wav` | Hollow board knock | 156 ms | −5.7 dBFS | `5290be142cdeb8bd6c296213c54e92700615e11bc27eefd30bce75d85dd6312b` |
+| `sfx/footstep-concrete.wav` | Rough heel impact | 151 ms | −6.4 dBFS | `30918ebd8a33a1673838d18dc618723b0aa3ba49955163f7636e2b2dd175d75c` |
+| `sfx/footstep-metal.wav` | Short metallic ring | 169 ms | −6.0 dBFS | `5a3ec43cc6b5e56056fed2715ee4e256d183f9e1ec2c31064fc33e8ba9c8798b` |
+| `sfx/footstep-carpet.wav` | Muffled thud and cloth brush | 138 ms | −11.1 dBFS | `e935d24c44c0e4218fa3aa0792c3772620b2ab52db5d88d4212d447260c66b97` |
+
 ## Current BGM — CC0 gameplay replacement (2026-10-07)
 
 Official author pages and their CC0 links verified on 2026-10-07 before downloading. License: https://creativecommons.org/publicdomain/zero/1.0/ . Both gameplay tracks permit commercial use; attribution is not required. Voluntary in-app credits retain provenance. Lobby is unchanged and its license remains unconfirmed: this is a mixed-rights set, not an all-CC0 set.

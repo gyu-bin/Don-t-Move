@@ -1,0 +1,436 @@
+{
+  "05-02": [
+    {
+      "structure": "Pool Chip Island",
+      "guard": 1,
+      "stop": 0,
+      "post": {
+        "x": 11.25,
+        "y": 9.25
+      },
+      "hidden": {
+        "x": 12.7,
+        "y": 12.9889
+      },
+      "exposed": {
+        "x": 11.9608,
+        "y": 12.9889
+      },
+      "look": {
+        "x": 12.075931,
+        "y": 12.134066
+      }
+    },
+    {
+      "structure": "Stairs Column",
+      "guard": 2,
+      "stop": 0,
+      "post": {
+        "x": 21.5,
+        "y": 16
+      },
+      "hidden": {
+        "x": 19.05,
+        "y": 18.95
+      },
+      "exposed": {
+        "x": 19.05,
+        "y": 18.275
+      },
+      "look": {
+        "x": 19.438148,
+        "y": 18.179166
+      }
+    },
+    {
+      "structure": "Cubicle Partition West",
+      "guard": 0,
+      "stop": 0,
+      "post": {
+        "x": 15.5,
+        "y": 6.25
+      },
+      "hidden": {
+        "x": 11.95,
+        "y": 3.775
+      },
+      "exposed": {
+        "x": 11.95,
+        "y": 4.4125
+      },
+      "look": {
+        "x": 12.931874,
+        "y": 4.699282
+      }
+    }
+  ],
+  "06-01": [
+    {
+      "structure": "Island Sculpture",
+      "guard": 0,
+      "stop": 0,
+      "post": {
+        "x": 11.75,
+        "y": 4.75
+      },
+      "hidden": {
+        "x": 14.7925,
+        "y": 7.68875
+      },
+      "exposed": {
+        "x": 14.7925,
+        "y": 7.11125
+      },
+      "look": {
+        "x": 14.017202,
+        "y": 6.714636
+      }
+    },
+    {
+      "structure": "Curator Plinth",
+      "guard": 3,
+      "stop": 1,
+      "post": {
+        "x": 7.675,
+        "y": 8.635
+      },
+      "hidden": {
+        "x": 8.18125,
+        "y": 4.89125
+      },
+      "exposed": {
+        "x": 8.73125,
+        "y": 5.44125
+      },
+      "look": {
+        "x": 8.349889,
+        "y": 5.711898
+      }
+    }
+  ],
+  "08-03": [
+    {
+      "structure": "Lane Mobile Screen",
+      "guard": 1,
+      "stop": 0,
+      "post": {
+        "x": 13.5,
+        "y": 10.9
+      },
+      "hidden": {
+        "x": 15.046,
+        "y": 8.996
+      },
+      "exposed": {
+        "x": 15.046,
+        "y": 9.648
+      },
+      "look": {
+        "x": 15.622691,
+        "y": 8.780051
+      }
+    },
+    {
+      "structure": "Lane Screen East",
+      "guard": 3,
+      "stop": 1,
+      "post": {
+        "x": 7,
+        "y": 13
+      },
+      "hidden": {
+        "x": 7.25,
+        "y": 9.025
+      },
+      "exposed": {
+        "x": 5.95,
+        "y": 9.025
+      },
+      "look": {
+        "x": 6.707304,
+        "y": 10.014313
+      }
+    },
+    {
+      "structure": "Reception Screen",
+      "guard": 0,
+      "stop": 0,
+      "post": {
+        "x": 17,
+        "y": 17.75
+      },
+      "hidden": {
+        "x": 14,
+        "y": 19.725
+      },
+      "exposed": {
+        "x": 15.5,
+        "y": 19.725
+      },
+      "look": {
+        "x": 14.808472,
+        "y": 19.798709
+      }
+    }
+  ],
+  "08-04": [
+    {
+      "structure": "Prep Centrifuge Bench",
+      "guard": 1,
+      "stop": 0,
+      "post": {
+        "x": 13.75,
+        "y": 16.25
+      },
+      "hidden": {
+        "x": 11,
+        "y": 13.9927
+      },
+      "exposed": {
+        "x": 12.0222,
+        "y": 13.9927
+      },
+      "look": {
+        "x": 11.665064,
+        "y": 14.092909
+      }
+    },
+    {
+      "structure": "Passage Security Desk",
+      "guard": 3,
+      "stop": 3,
+      "post": {
+        "x": 12,
+        "y": 19.5
+      },
+      "hidden": {
+        "x": 15,
+        "y": 18.425
+      },
+      "exposed": {
+        "x": 15,
+        "y": 19.4
+      },
+      "look": {
+        "x": 14.946747,
+        "y": 18.937253
+      }
+    },
+    {
+      "structure": "Cryo Bank West 2",
+      "guard": 0,
+      "stop": 0,
+      "post": {
+        "x": 21,
+        "y": 10.6
+      },
+      "hidden": {
+        "x": 15.45003,
+        "y": 8.952295
+      },
+      "exposed": {
+        "x": 15.45003,
+        "y": 9.81959
+      },
+      "look": {
+        "x": 18.068527,
+        "y": 9.962455
+      }
+    }
+  ],
+  "08-05": [
+    {
+      "structure": "Passage Console",
+      "guard": 2,
+      "stop": 3,
+      "post": {
+        "x": 18.5,
+        "y": 20.9
+      },
+      "hidden": {
+        "x": 20.35,
+        "y": 19.05
+      },
+      "exposed": {
+        "x": 20.35,
+        "y": 19.725
+      },
+      "look": {
+        "x": 20.840946,
+        "y": 19.023842
+      }
+    },
+    {
+      "structure": "Passage Cryo East",
+      "guard": 2,
+      "stop": 0,
+      "post": {
+        "x": 11.8,
+        "y": 17.9
+      },
+      "hidden": {
+        "x": 13.2,
+        "y": 20.4
+      },
+      "exposed": {
+        "x": 12,
+        "y": 20.4
+      },
+      "look": {
+        "x": 12.672676,
+        "y": 20.770268
+      }
+    },
+    {
+      "structure": "Passage Cryo East",
+      "guard": 3,
+      "stop": 1,
+      "post": {
+        "x": 9,
+        "y": 18
+      },
+      "hidden": {
+        "x": 14.175,
+        "y": 20.4
+      },
+      "exposed": {
+        "x": 13.3,
+        "y": 20.4
+      },
+      "look": {
+        "x": 11.672449,
+        "y": 19.363091
+      }
+    }
+  ],
+  "09-03": [
+    {
+      "structure": "Loading Gold Pallet",
+      "guard": 4,
+      "stop": 0,
+      "post": {
+        "x": 16.5,
+        "y": 17.9
+      },
+      "hidden": {
+        "x": 18,
+        "y": 20.61
+      },
+      "exposed": {
+        "x": 17.3,
+        "y": 20.61
+      },
+      "look": {
+        "x": 17.657997,
+        "y": 20.667498
+      }
+    },
+    {
+      "structure": "Loading Cash Table",
+      "guard": 4,
+      "stop": 1,
+      "post": {
+        "x": 22,
+        "y": 17.9
+      },
+      "hidden": {
+        "x": 22.28,
+        "y": 20.435
+      },
+      "exposed": {
+        "x": 22.83,
+        "y": 20.435
+      },
+      "look": {
+        "x": 22.6348,
+        "y": 20.832069
+      }
+    },
+    {
+      "structure": "Hall Gold Bars",
+      "guard": 0,
+      "stop": 0,
+      "post": {
+        "x": 19.9,
+        "y": 12.6
+      },
+      "hidden": {
+        "x": 18.2,
+        "y": 15.02
+      },
+      "exposed": {
+        "x": 18.9,
+        "y": 15.02
+      },
+      "look": {
+        "x": 18.456143,
+        "y": 15.229692
+      }
+    }
+  ],
+  "09-05": [
+    {
+      "structure": "Stair Armoured Crate",
+      "guard": 3,
+      "stop": 0,
+      "post": {
+        "x": 1.9,
+        "y": 6.5
+      },
+      "hidden": {
+        "x": 4.7,
+        "y": 10.02
+      },
+      "exposed": {
+        "x": 4.7,
+        "y": 9.24
+      },
+      "look": {
+        "x": 3.909748,
+        "y": 8.727311
+      }
+    },
+    {
+      "structure": "Wing Case Stack",
+      "guard": 4,
+      "stop": 0,
+      "post": {
+        "x": 1.9,
+        "y": 17.8
+      },
+      "hidden": {
+        "x": 4.7,
+        "y": 19.86
+      },
+      "exposed": {
+        "x": 4.7,
+        "y": 19.08
+      },
+      "look": {
+        "x": 4.486088,
+        "y": 19.320576
+      }
+    },
+    {
+      "structure": "Checkpoint Cash Table",
+      "guard": 0,
+      "stop": 0,
+      "post": {
+        "x": 9,
+        "y": 17.1
+      },
+      "hidden": {
+        "x": 12.4,
+        "y": 19.4625
+      },
+      "exposed": {
+        "x": 10.8,
+        "y": 19.4625
+      },
+      "look": {
+        "x": 11.167279,
+        "y": 19.174344
+      }
+    }
+  ]
+}

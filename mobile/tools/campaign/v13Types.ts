@@ -38,6 +38,8 @@ export interface V13Zone {id:string;name:string;role:RoomRole;purpose:string;
  hub?:Point;}
 export interface V13Mission {
  id:string;title:string;family:string;
+ /** Geometry revision; legacy coordinate-specific patches apply only to their original layouts. */
+ layoutRevision?:number;
  /** Route shape the architecture is built around (L, branching, S, U, loop, …). */
  topology:string;
  map:string[];zones:Record<string,V13Zone>;

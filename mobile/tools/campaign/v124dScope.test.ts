@@ -65,7 +65,7 @@ test('Phase4D: Casino physical fixtures select shipped Casino art with matching 
 });
 
 test('Phase4D: protected logic matches its reviewed baseline; the escape timer is the shortened 10 seconds',()=>{
- // CCTV baseline includes the vision optimization; guard motion worklet extraction has a separate protected hash.
+ // Runtime hashes include the reviewed CCTV, guard motion, and Evolution 3.0 hearing/recovery changes.
  // Shortened from 28 s after the V13 playtest: at 28 s the lockdown door never closed on a thief who kept moving.
  assert.equal(ESCAPE_TIMER_SECONDS,10);
  for(const [file,hash] of Object.entries(protectedHashes))

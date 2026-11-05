@@ -9,14 +9,10 @@ import raw from '../../docs/design/v12/phase4d/SOURCE_STAGES.json';
 import campaign from '../../src/game/levels/stages/campaignStages.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {composeV13} from './v13Builder';
-import {V13_MISSIONS} from './v13Build';
-import {BEFORE_REWORK,HQ_PATROL} from './v13Late';
+import {BEFORE_REWORK,HQ_PATROL,V13_LATE} from './v13Late';
 import {REWORK} from './v13Rework';
 import {physicalRoute} from './v124bBuilder';
 import {blindRun} from '../gameplay-improvement/accessibility';
-import {authorCoverCheckpoints} from './v13CoverCheckpoints';
-import {polishPatrol} from './v13PatrolPolish';
-import {watchExit} from './v13ExitWatch';
 
 const runtime=(id:string)=>(campaign as unknown as StageDefinition[]).find(d=>d.id===id)!;
 const before=JSON.parse(JSON.stringify(composeV13(BEFORE_REWORK.get('07-01')!,raw as StageDefinition[]))) as StageDefinition;
@@ -27,12 +23,11 @@ const BREACH=[{x:19.8,y:16.5},{x:17.75,y:14.75},{x:13.75,y:14.75},{x:12.5,y:16.5
 
 test('v3 rework is confined to 07-01: every other derived mission is exactly its pre-rework plan', () => {
   assert.deepEqual(Object.keys(REWORK),['07-01']);
-  // Compare at the same pipeline stage: the later cover, patrol and exit passes
-  // are intentionally applied to all missions after the local rework.
+  // Compare the former mirrored plans before later inspection passes.
   for (const [id,plan] of BEFORE_REWORK) if (id!=='07-01') {
     const patch=HQ_PATROL[id];
     const afterHQ=patch?{...plan,guards:plan.guards.map(g=>g.zone!==patch.zone?g:{...g,watches:patch.watches,stops:g.stops.map((s,i)=>i?s:{...s,look:{...patch.look},wait:patch.wait})})}:plan;
-    assert.deepEqual(V13_MISSIONS.find(m=>m.id===id),watchExit(polishPatrol(authorCoverCheckpoints(afterHQ))),id);
+    assert.deepEqual(V13_LATE.find(m=>m.id===id),afterHQ,id);
   }
 });
 

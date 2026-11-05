@@ -4,6 +4,7 @@ import {campaignStages} from '../../src/game/levels/campaignStages';
 import {V13_MUSEUM_EXPANSION} from './v13MuseumExpansion';
 import type {V13Mission} from './v13Types';
 import {canonical,sha256} from './v13QaLib';
+import {expectedStageHash} from './v13LateReviewed';
 import {placement} from './v13QA';
 import {routeRooms} from './v124bTopologyQA';
 import unaffected from '../../docs/design/museum-diversity/UNAFFECTED_STAGE_HASHES.json';
@@ -34,7 +35,7 @@ test('Museum variety baseline is preserved except the two explicitly reviewed fi
  for(const [id,hash] of Object.entries(unaffected)){
   const replacement=['01-09','01-10'].includes(id)?reviewed[id as keyof typeof reviewed]:undefined;
   if(replacement)assert.equal(replacement.beforeHash,hash,`${id}: preserve reviewed pre-rebuild baseline`);
-  assert.equal(sha256(canonical(campaignStages.find(s=>s.id===id))),replacement?.afterHash??hash,id);
+  assert.equal(sha256(canonical(campaignStages.find(s=>s.id===id))),replacement?.afterHash??expectedStageHash(id,hash),id);
  }
  assert.deepEqual(plans.map(m=>m.id),revised);
  for(const [i,id] of revised.entries()){

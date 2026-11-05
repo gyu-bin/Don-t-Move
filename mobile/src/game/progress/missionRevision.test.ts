@@ -3,7 +3,7 @@ import {test} from 'node:test';
 import {completeMission,freshCampaign,normalizeCampaign} from './campaignProgress';
 import type {MissionRecord} from './campaignProgress';
 import {chapterOneMastery,newChapterOneBadges,recordChapterOneMastery} from './chapterOneMastery';
-import {isCurrentMissionBenchmark,missionBenchmarkRevision,normalizeMissionBenchmark} from './missionRevision';
+import {isCurrentMissionBenchmark,LATE_LAYOUT_REVISION_IDS,missionBenchmarkRevision,normalizeMissionBenchmark} from './missionRevision';
 import {MISSION_COUNT,missionId,missionIndex} from '../levels/campaignCatalog';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DEFAULT_PROGRESS,loadProgress,saveProgress} from './stageProgress';
@@ -11,8 +11,9 @@ import {DEFAULT_PROGRESS,loadProgress,saveProgress} from './stageProgress';
 const revised=['01-06','01-07','01-08','01-09','01-10'];
 const roundTrip=(value:unknown)=>normalizeCampaign(JSON.parse(JSON.stringify(value)));
 
-test('only the five rebuilt Museum maps gain benchmark revision metadata',()=>{
+test('rebuilt Museum and later maps use revision 2',()=>{
  for(const id of revised)assert.equal(missionBenchmarkRevision(id),2);
+ for(const id of LATE_LAYOUT_REVISION_IDS)assert.equal(missionBenchmarkRevision(id),2);
  for(const id of ['01-01','01-05','02-06','03-01','bad','__proto__','constructor','toString']){
   const record={cleared:true,bestTime:30,alerts:0};
   assert.equal(missionBenchmarkRevision(id),undefined);
@@ -39,6 +40,20 @@ test('already-revised 06–08 records retain their current benchmark when 09–1
   const next=completeMission(source,missionIndex(id),30,1,1).records[id];
   assert.equal(next.bestTime,30);assert.equal(next.benchmarkRevision,2);
   assert.deepEqual(next.previousBenchmark,old.previousBenchmark);assert.deepEqual(next.mastery,old.mastery);
+ }
+});
+
+test('later layout revisions retain every clear and chapter unlock while keeping previous times comparable only on the old layout',()=>{
+ const records=Object.fromEntries(LATE_LAYOUT_REVISION_IDS.map(id=>[id,{cleared:true,bestTime:48,alerts:1}]));
+ const current=roundTrip({...freshCampaign(),highestUnlocked:54,lastMission:'09-05',records});
+ assert.equal(current.highestUnlocked,54);
+ assert.equal(current.lastMission,'09-05');
+ assert.deepEqual(roundTrip(current),current);
+ for(const id of LATE_LAYOUT_REVISION_IDS){
+  const archive={revision:1,bestTime:48,alerts:1};
+  assert.deepEqual(current.records[id],{cleared:true,benchmarkRevision:2,previousBenchmark:archive});
+  const clear=completeMission(current,missionIndex(id),60,2,0);
+  assert.deepEqual(clear.records[id],{cleared:true,benchmarkRevision:2,bestTime:60,alerts:2,previousBenchmark:archive});
  }
 });
 
@@ -92,8 +107,8 @@ test('existing recovery archive is retained and malformed archive fields are str
 });
 
 test('unaffected missions retain their exact save record shapes and old comparison behavior',()=>{
- const unaffected=Array.from({length:MISSION_COUNT},(_,i)=>missionId(i)).filter(id=>!revised.includes(id));
- assert.equal(unaffected.length,50);
+ const unaffected=Array.from({length:MISSION_COUNT},(_,i)=>missionId(i)).filter(id=>!revised.includes(id)&&!LATE_LAYOUT_REVISION_IDS.includes(id));
+ assert.equal(unaffected.length,29);
  for(const id of unaffected){
   const old:MissionRecord={cleared:true,bestTime:90,alerts:0,...(id.startsWith('01-')?{mastery:{cleanEscape:true as const}}:{})};
   const source={...freshCampaign(),highestUnlocked:54,records:{[id]:old}};

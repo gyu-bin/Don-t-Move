@@ -25,6 +25,10 @@ import type { GuardPlayback } from '../../rendering/characters/guardAnimation';
 import type { TheftContext } from '../guards/theftAlert';
 import { createPlayableBoundary, enforcePlayableStage, isPlayableBody } from '../world/museumBoundary';
 import type { PlayableBoundary } from '../world/museumBoundary';
+import { TILE } from '../world/compileStage';
+import { getMissionAcoustics } from '../audio/campaignAcoustics';
+import { footstepAt, plantedFootstep } from '../stealth/footsteps';
+import type { FootstepArea, FootstepEvent, FootstepSurface } from '../stealth/footsteps';
 
 /**
  * Visual Playground simulation (UI thread, mutated in place, no React state).
@@ -94,6 +98,12 @@ export interface PlaygroundState {
   /** Development input replay only; never overrides guard behavior. */
   replayLeg: number;
   mission: MissionState;
+  footsteps?: {
+    floor: FootstepSurface;
+    carpets: FootstepArea[];
+    hearingSensitivity: number;
+    last?: FootstepEvent;
+  };
 }
 
 export const PLAYER_RADIUS = BODY.playerRadius;
@@ -109,9 +119,13 @@ const DEMO_PATH = [
   { x: 6.5, y: 10.3, gait: Gait.Walk, pause: 0 },
 ];
 
-export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[][]): PlaygroundState {
+export function createPlaygroundState(stage: CompiledStage, guardStrides?: number[][],
+  { hearingEnabled = true }: { hearingEnabled?: boolean } = {}): PlaygroundState {
   const sp = stage.playerSpawn;
   const guards = stage.guards.map((g, i) => createGuardState(g, (i * 0.37) % 1));
+  // Historical fixtures can reuse mission IDs. Only the current authored geometry has tuned acoustics.
+  const acoustics = stage.def.structurePlan?.startsWith('V13 ') && stage.def.objective && stage.def.exit
+    ? getMissionAcoustics(stage.def.id, stage.def.theme) : undefined;
   return {
     ...(stage.doors?.length ? {
       doors:stage.doors.map(createDoor),lockdownDoorIds:(stage.def.lockdownDoors??[]).slice(),doorGeometryRevision:-1,
@@ -126,6 +140,11 @@ export function createPlaygroundState(stage: CompiledStage,guardStrides?:number[
       sectors:stage.guards.map(g=>g.theftSearchSectors??[]),
       ...(stage.def.chapter===1 || stage.def.id==='02-10' || stage.guards.some(g=>g.theftSearchSectors?.length||g.theftPosts?.length) ? {roles:stage.guards.map(g=>g.theftRole ?? 'zone')} : {}) },
     t: 0,
+    footsteps: acoustics ? {
+      floor: acoustics.surface,
+      carpets: (stage.def.carpets ?? []).map(c => ({ x: c.x * TILE, y: c.y * TILE, w: c.w * TILE, h: c.h * TILE })),
+      hearingSensitivity: hearingEnabled ? acoustics.hearingSensitivity : 0,
+    } : undefined,
     player: {
       lastValidX: sp.x,
       lastValidY: sp.y,
@@ -316,8 +335,16 @@ export function stepPlayground(
   }
   const effectiveVision=s.effectiveVisionBlockers??visionBlockers;
   const effectiveNav=s.effectiveNavigation??navigation;
+  const footsteps = s.footsteps;
+  let step: FootstepEvent | undefined;
+  if (footsteps && s.playerMode !== -1 && !s.mission.complete && p.visualGait > 0 &&
+    plantedFootstep(oldSprite, p.spritePhase, Math.hypot(p.x - bx, p.y - by), dt)) {
+    step = footstepAt(p.x, p.y, s.t, p.visualGait, footsteps.floor, footsteps.carpets);
+    footsteps.last = step;
+  }
   if (!s.mission.complete) stepSecurityCameras(s.securityCameras,p,effectiveVision,s.events,dt,s.t);
-  if (!s.mission.complete) stepGuards(s.guards, p, effectiveVision, effectiveNav, dt, s.events, s.t, s.patrol,1,s.theft);
+  if (!s.mission.complete) stepGuards(s.guards, p, effectiveVision, effectiveNav, dt, s.events, s.t, s.patrol, 1, s.theft,
+    step, footsteps?.hearingSensitivity);
   for (let i=0;i<s.guards.length;i++) stepGuardPlayback(s.guardPlayback[i],s.guards[i],dt);
 
   // Follow camera, clamped so nothing outside the map shows.

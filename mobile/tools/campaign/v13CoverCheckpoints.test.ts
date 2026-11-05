@@ -14,7 +14,7 @@ import {v13Prop} from './v13Builder';
 import {coverWindows} from './v13CoverWindows';
 import witnesses from './v13CoverWitnesses.json';
 import {exposureRun} from './cameraExposure';
-import {heistRun} from './v12Phase5Bot';
+import {LATE_LAYOUT_REVISION_IDS} from '../../src/game/progress/missionRevision';
 
 test('All remaining 54 missions have individual cover inspections, without replacing 01-01',()=>{
  assert.deepEqual(Object.keys(COVER_CHECKPOINTS).sort(),stages.slice(1).map(d=>d.id).sort());
@@ -56,6 +56,10 @@ for(const def of (stages as StageDefinition[]).slice(1))test(`${def.id}: genuine
  assert.deepEqual([...visited].sort(),points.map((_,i)=>i).sort(),`${def.id}: live patrol must reach and inspect every cover`);
  for(const p of coverWindows(def))assert(p.longestUnwatchedSeconds>=1,`${p.structure}: usable waiting window against ALL guards and sweeping CCTV`);
  const w=witnesses[def.id as keyof typeof witnesses];
- const result='patience' in w?heistRun(def,w.approach,w.delay,w.patience):exposureRun(def,w.approach,w.escape,w.mode,w.delay);
- assert(result.clear&&!result.caught,`${def.id}: continuous spawn → objective → escape with real guards/CCTV/theft/capture`);
+ const offsets=LATE_LAYOUT_REVISION_IDS.includes(def.id)?[-.25,0,.25]:[0];
+ for(const offset of offsets.filter(offset=>w.delay+offset>=0)){
+  const delay=w.delay+offset;
+  const result=exposureRun(def,w.approach,w.escape,w.mode,delay);
+  assert(result.clear&&!result.caught,`${def.id}: continuous spawn → objective → escape with real guards/CCTV/theft/capture at ${delay}s`);
+ }
 });

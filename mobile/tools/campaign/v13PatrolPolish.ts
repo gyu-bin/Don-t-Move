@@ -17,6 +17,7 @@ export const PATROL_POLISH:Record<string,Edit[]>={
 };
 
 export function polishPatrol(m:V13Mission):V13Mission {
+ if(m.layoutRevision!==undefined)return m;
  const edits=PATROL_POLISH[m.id];if(!edits)return m;
  const guards=m.guards.map(g=>({...g,stops:g.stops.map(s=>({...s,look:{...s.look}}))}));
  for(const e of edits){

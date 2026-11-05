@@ -20,12 +20,12 @@ test('only the licensed gameplay registry may load bundled audio', () => {
   visit(root);
   const registry = readFileSync(new URL('game/audio/audioAssets.ts', root), 'utf8');
   const required = [...registry.matchAll(/require\(['"]([^'"]+)['"]\)/g)].map(match=>match[1]);
-  assert.equal(required.length, 8, 'Exactly three music and five effect sources are registered');
   const files = ['sfx/objective-pickup.wav', 'bgm/lobby.mp3', 'sfx/ui-select.wav', 'sfx/ui-back.wav', 'sfx/whistle-theft.wav', 'sfx/whistle-spotted.wav',
-    'bgm/stealth.mp3', 'bgm/chase.mp3'];
+    'bgm/stealth.mp3', 'bgm/chase.mp3', 'sfx/footstep-stone.wav', 'sfx/footstep-wood.wav',
+    'sfx/footstep-concrete.wav', 'sfx/footstep-metal.wav', 'sfx/footstep-carpet.wav'];
+  assert.deepEqual(required.sort(), files.map(file => `../../../assets/audio/${file}`).sort(), 'exact registered licensed audio set');
   const licenses = readFileSync(new URL('../assets/audio/LICENSES.md', root), 'utf8');
   for (const file of files) {
-    assert(required.includes(`../../../assets/audio/${file}`), file);
     const bytes = readFileSync(new URL(`../assets/audio/${file}`, root));
     assert(bytes.length > 1000, `${file} is a real media file`);
     if (file.endsWith('.wav')) assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');

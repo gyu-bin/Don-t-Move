@@ -4,6 +4,7 @@ import {campaignStages} from '../../src/game/levels/campaignStages';
 import {CHAPTER_MISSION_COUNTS,MISSION_COUNT,missionId,missionIndex,missionName} from '../../src/game/levels/campaignCatalog';
 import {freshCampaign,completeMission,canPlayMission,normalizeCampaign} from '../../src/game/progress/campaignProgress';
 import {canonical,sha256} from './v13QaLib';
+import {expectedStageHash} from './v13LateReviewed';
 import baseline from '../../docs/design/chapter2-expansion/EXISTING_MISSION_HASHES.json';
 import reviewedRebuilds from '../../docs/design/museum-diversity/REVIEWED_REBUILT_STAGE_HASHES.json';
 import {chapterRoute} from '../../src/ui/menu/missionRoute';
@@ -19,7 +20,7 @@ test('Gallery and original missions remain exact except the five explicitly revi
    assert.equal(review.firstExpansionHash,hash,`${id}: recorded first-expansion baseline`);
    assert.equal(review.revision,2);
    assert.equal(sha256(canonical(stage)),review.afterHash,`${id}: only the reviewed architecture replacement is permitted`);
-  }else assert.equal(sha256(canonical(stage)),hash,`${id}: existing definition changed`);
+  }else assert.equal(sha256(canonical(stage)),expectedStageHash(id,hash),`${id}: existing definition changed`);
  }
  assert.deepEqual(campaignStages.filter(s=>!(s.id in baseline)).map(s=>s.id),['02-06','02-07','02-08','02-09','02-10']);
  assert.equal(new Set(campaignStages.map(s=>s.number)).size,55);

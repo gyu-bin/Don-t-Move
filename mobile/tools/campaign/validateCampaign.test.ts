@@ -241,6 +241,8 @@ test('Historical V3 portals use all four edges and connect opposite sides within
 test('Chapter/Mission migration preserves legacy records, new bests are not compared with different old layouts',()=>{
  const p=migrateCampaign({currentStage:8,highestUnlocked:9,clearedStages:[0,8,9],bestTimes:{0:20,8:55,9:90},bestAlerts:{0:0,8:1,9:2}});
  assert.equal(p.lastMission,'08-05');assert.equal(p.records['09-01'].bestTime,90);assert.equal(p.records['08-05'].legacy,true);
+ assert.deepEqual(p.records['08-05'].previousBenchmark,{revision:1,bestTime:55,alerts:1});
+ assert.equal(p.records['08-05'].bestTime,undefined);
  const next=completeMission(p,missionIndex('09-01'),100,4);assert.equal(next.records['09-01'].bestTime,100);assert(!next.records['09-01'].legacy);
  assert.deepEqual(normalizeCampaign(JSON.parse(JSON.stringify(next))),next);
  for(let i=0;i<MISSION_COUNT;i++)assert(canPlayMission(freshCampaign(),i,true));

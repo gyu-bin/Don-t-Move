@@ -11,8 +11,8 @@ export interface CoverCheckpoint {
  * Props are not scattered or generated, glass never becomes opaque, and no
  * checkpoint/hidden player coordinates are loaded by runtime AI. */
 export const COVER_CHECKPOINTS=authored as Record<string,CoverCheckpoint[]>;
-export function authorCoverCheckpoints(m:V13Mission):V13Mission {
- const checkpoints=COVER_CHECKPOINTS[m.id];if(!checkpoints)return m;
+export function authorCoverCheckpoints(m:V13Mission,checkpoints=COVER_CHECKPOINTS[m.id]):V13Mission {
+ if(!checkpoints)return m;
  const names=new Set(checkpoints.filter(p=>!p.wall).map(p=>p.structure));
  return {...m,
   structures:m.structures.map(s=>names.has(s.name)?{...s,roles:[...new Set([...s.roles,'observation' as const])]}:s),

@@ -1,6 +1,5 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import stages from '../../src/game/levels/stages/campaignStages.json';
 import raw from '../../docs/design/v12/phase4d/SOURCE_STAGES.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
 import {compileStage,TILE} from '../../src/game/world/compileStage';
@@ -10,16 +9,15 @@ import {createSecurityCamera} from '../../src/game/security/cctv';
 import {buildVisionFan,pointVisible} from '../../src/game/guards/guardVision';
 import {createDoor,doorBlockers} from '../../src/game/doors/doorSystem';
 import {V13_MISSIONS} from './v13Build';
-import {V13_VAULT_CH9} from './v13Vault';
-import {authorCoverCheckpoints} from './v13CoverCheckpoints';
+import {legacyLayoutPlan,legacyLayoutStage} from './v13LegacyLayoutFixture';
 import {composeV13} from './v13Builder';
 import {watchExit} from './v13ExitWatch';
 import {exitCameraWindows,VAULT_EXIT_PROBES} from './v13ExitWatchQA';
 import {auditDifficulty} from './chapterDifficultyAudit';
 import {exposureRun} from './cameraExposure';
 
-const live=(stages as StageDefinition[]).find(d=>d.id==='09-05')!;
-const original=authorCoverCheckpoints(V13_VAULT_CH9.find(d=>d.id===live.id)!);
+const live=legacyLayoutStage('09-05');
+const original=legacyLayoutPlan('09-05');
 const before=JSON.parse(JSON.stringify(composeV13(original,raw as StageDefinition[]))) as StageDefinition;
 
 test('Vault exit watch changes only the authored camera direction, immutably and repeatably',()=>{

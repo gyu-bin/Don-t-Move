@@ -1,10 +1,15 @@
 import { createAudioPlayer, setAudioModeAsync, type AudioPlayer } from 'expo-audio';
+import type { FootstepSurface } from '../stealth/footsteps';
 import { AUDIO_SOURCES } from './audioAssets';
 import { audioTransitionLog } from './audioDiagnostics';
-import { fadeMix, OBJECTIVE_PICKUP_GAIN, UI_GAIN, WHISTLE_GAIN, MUSIC_EVENTS, reduceAudio, silenceMix, type AudioState, type GameAudioInput,
-  type AudioEvent, type UiSoundEvent, type MusicEvent, type WhistleEvent } from './audioState';
+import { fadeMix, FOOTSTEP_GAIN, OBJECTIVE_PICKUP_GAIN, UI_GAIN, WHISTLE_GAIN, MUSIC_EVENTS, reduceAudio, silenceMix,
+  type AudioState, type GameAudioInput, type AudioEvent, type UiSoundEvent, type MusicEvent,
+  type WhistleEvent } from './audioState';
 
-/** Native backend for the prototype's named audio events. Max 3 music + 5 SFX voices.
+const MAX_FOOTSTEP_AGE_MS = 150;
+const MIN_FOOTSTEP_INTERVAL_MS = 105;
+
+/** Native backend for named audio events. Max 3 music + 10 preloaded SFX players.
  * Bundled assets preload before playback; each whistle has one replace-oldest voice.
  * Final mastering/tempo/spatial metadata remain part of asset acceptance.
  */
@@ -26,26 +31,42 @@ export class GameAudioManager {
   private pickupGeneration = 0;
   private pendingPickup: { generation: number; requestedAt: number } | null = null;
   private pendingWhistles = new Map<WhistleEvent, { generation: number; requestedAt: number }>();
+  private footstepSessionKey: string | null = null;
+  private footstepArmedAt = 0;
+  private footstepGeneration = 0;
+  private lastFootstepAt = -Infinity;
+  private footstepVoice: AudioPlayer | null = null;
+  private readyFootsteps = new Set<AudioPlayer>();
 
   constructor() {
     // Missing assets allocate neither native players nor the mixer timer.
     for (const key of Object.keys(AUDIO_SOURCES) as AudioEvent[]) {
       const source = AUDIO_SOURCES[key];
       if (source == null) continue;
-      const player = createAudioPlayer(source, { updateInterval: 100, downloadFirst: true });
+      const isFootstep = key.startsWith('footstep_');
+      const player = createAudioPlayer(source, isFootstep
+        ? { updateInterval: 500, downloadFirst: true, keepAudioSessionActive: true }
+        : { updateInterval: 100, downloadFirst: true });
       player.loop = key.startsWith('bgm_');
       player.volume = 0;
       this.players.set(key, player);
+      // Footsteps use cached readiness and have no queued load callbacks.
+      if (isFootstep && !__DEV__) continue;
       let loaded = false;
       let advancing = false;
+      let finishedFootstep = false;
       let lastError: string | null = null;
       this.subscriptions.push(player.addListener('playbackStatusUpdate', status => {
         if (this.disposed) return;
         if (status.isLoaded && !loaded && __DEV__) console.info(
           `[AUDIO] NATIVE_LOADED ${key} duration=${status.duration.toFixed(3)}`);
-        loaded = status.isLoaded;
+        loaded = status.isLoaded || (isFootstep && loaded);
+        if (isFootstep && status.didJustFinish && !finishedFootstep && __DEV__) {
+          finishedFootstep = true;
+          console.info(`[AUDIO] NATIVE_FINISHED ${key} duration=${status.duration.toFixed(3)}`);
+        }
         const running = status.playing && status.currentTime > 0;
-        if (running && !advancing && __DEV__) console.info(
+        if (!isFootstep && running && !advancing && __DEV__) console.info(
           `[AUDIO] NATIVE_ADVANCING ${key} time=${status.currentTime.toFixed(3)} volume=${player.volume.toFixed(3)}`);
         advancing = running;
         if (status.error && status.error !== lastError && __DEV__)
@@ -82,6 +103,8 @@ export class GameAudioManager {
       for (const name of ['ui_select', 'ui_back'] as const) this.players.get(name)?.pause();
     }
     this.sfxAllowed = input.active && !input.paused && !input.sfxSuspended && input.sfxEnabled;
+    this.setFootstepSession(this.sfxAllowed && input.phase !== 'LOBBY' && input.phase !== 'INTRO'
+      ? input.sessionKey : null);
     if (!this.sfxAllowed) {
       this.cancelPickup();
       this.generation++;
@@ -117,6 +140,42 @@ export class GameAudioManager {
       player.volume = UI_GAIN; player.play();
       if (__DEV__) console.info(`[AUDIO] UI_PLAY ${name}`);
     }).catch(error => { if (__DEV__) console.warn(`[AUDIO] ${name} SEEK_FAILED`, error); });
+  }
+
+  playFootstep(surface: FootstepSurface, gait: number, sessionKey: string, emittedAt: number): void {
+    const now = Date.now();
+    const gain = FOOTSTEP_GAIN[gait];
+    if (this.disposed || sessionKey !== this.footstepSessionKey || !gain
+      || !Number.isFinite(emittedAt) || emittedAt < this.footstepArmedAt || emittedAt > now
+      || now - emittedAt > MAX_FOOTSTEP_AGE_MS || emittedAt <= this.lastFootstepAt
+      || now - this.lastFootstepAt < MIN_FOOTSTEP_INTERVAL_MS) return;
+    const event = `footstep_${surface}` as const;
+    const player = this.players.get(event);
+    if (!player) return;
+    // Android's isLoaded getter is false again after a one-shot reaches STATE_ENDED.
+    if (!this.readyFootsteps.has(player)) {
+      if (!player.isLoaded) return;
+      this.readyFootsteps.add(player);
+    }
+    this.lastFootstepAt = now;
+    const generation = ++this.footstepGeneration;
+    this.footstepVoice?.pause();
+    this.footstepVoice = player;
+    void player.seekTo(0, 0, 0).then(() => {
+      if (generation !== this.footstepGeneration || Date.now() - emittedAt > MAX_FOOTSTEP_AGE_MS) return;
+      player.volume = gain;
+      player.play();
+    }).catch(error => { if (__DEV__) console.warn(`[AUDIO] ${event} SEEK_FAILED`, error); });
+  }
+
+  private setFootstepSession(sessionKey: string | null): void {
+    if (this.footstepSessionKey === sessionKey) return;
+    this.footstepGeneration++;
+    this.footstepVoice?.pause();
+    this.footstepVoice = null;
+    this.footstepSessionKey = sessionKey;
+    this.footstepArmedAt = Date.now();
+    this.lastFootstepAt = -Infinity;
   }
 
   private cancelPickup(): void {
@@ -184,6 +243,7 @@ export class GameAudioManager {
 
   private clearTimer(): void { if (this.timer) clearInterval(this.timer); this.timer = null; }
   private stopAll(): void {
+    this.setFootstepSession(null);
     this.cancelPickup();
     this.generation++;
     this.pendingWhistles.clear();
@@ -199,5 +259,6 @@ export class GameAudioManager {
     this.subscriptions = [];
     for (const player of this.players.values()) player.remove();
     this.players.clear();
+    this.readyFootsteps.clear();
   }
 }

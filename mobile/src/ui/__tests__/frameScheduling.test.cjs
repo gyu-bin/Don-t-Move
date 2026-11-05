@@ -16,15 +16,17 @@ assert(callback,'production callback exists');
 function harness(){
  const s={t:0,player:{},cam:{x:0,y:0},touchSeq:0,events:{caught:false},mission:{complete:false}};
  let updates=0,steps=0,tiltTicks=0;
- const context={Date,Math,__DEV__:false,tiltEnabled:false,transitioning:false,
+ const audio=[];
+ const context={Date,Math,__DEV__:false,tiltEnabled:false,transitioning:false,sceneActive:{value:true},
   inspectionActive:{value:false},awaitingReady:false,resources:{},pausedValue:{value:false},adCovering:false,
   state:{value:s,modify(fn){updates++;fn(s);}},stickEnabled:false,accumulated:{value:0},touch:{value:{seq:0}},
   previousTiltEnabled:{value:false},zoom:1,playerMode:{value:2},syncInputMode(){},
-  stepPlayground(state,dt){steps++;state.t+=dt;},
+  stepPlayground(state,dt){steps++;state.t+=dt;},soundEnabled:true,audioSessionKey:'qa:0',
+  scheduleOnRN(fn,...args){fn(...args);},playFootstep(...args){audio.push(args);},
   controller:{value:{x:0,y:0,status:'PLAY'},modify(fn){tiltTicks++;fn({});}},active:{value:true},sample:{value:null},tuning:{value:{}},stepTilt(){},
   inputReset:{value:0},TILE:40,viewW:400,viewH:800,bounds:{},movementBlockers:[],visionBlockers:[],navigation:{}};
  const tick=vm.runInNewContext(`(${callback})`,context);
- return {context,s,tick,counts:()=>({updates,steps,tiltTicks})};
+ return {context,s,tick,audio,counts:()=>({updates,steps,tiltTicks})};
 }
 test('90/120Hz callbacks keep the same 60Hz simulation budget without recording empty frames',()=>{
  for(const hz of [30,60,90,120]){
@@ -39,15 +41,36 @@ test('90/120Hz callbacks keep the same 60Hz simulation budget without recording 
  }
 });
 test('caught/complete result scenes and paused/covered scenes do not keep modifying game state',()=>{
- for(const kind of ['caught','complete','paused','covered']){
+ for(const kind of ['caught','complete','paused','covered','background']){
   const h=harness();
   if(kind==='caught')h.s.events.caught=true;
   if(kind==='complete')h.s.mission.complete=true;
   if(kind==='paused')h.context.pausedValue.value=true;
   if(kind==='covered')h.context.adCovering=true;
+  if(kind==='background')h.context.sceneActive.value=false;
   for(let i=0;i<120;i++)h.tick({timeSincePreviousFrame:1000/60});
   assert.equal(h.counts().updates,0,kind);assert.equal(h.counts().steps,0,kind);
  }
+});
+test('only a new audible planted step crosses to the audio bridge once',()=>{
+ const h=harness();
+ const step=h.context.stepPlayground;
+ let emit=true;
+ h.context.stepPlayground=(state,dt)=>{
+  step(state,dt);
+  if(emit){state.footsteps={last:{t:state.t,surface:'wood',gait:2}};emit=false;}
+ };
+ h.tick({timeSincePreviousFrame:1000/30});
+ h.tick({timeSincePreviousFrame:1000/60});
+ assert.equal(h.audio.length,1);
+ assert.deepEqual(h.audio[0].slice(0,3),['wood',2,'qa:0']);
+ h.context.soundEnabled=false;
+ emit=true;
+ h.tick({timeSincePreviousFrame:1000/60});
+ assert.equal(h.audio.length,1);
+ h.context.soundEnabled=true;
+ h.tick({timeSincePreviousFrame:1000/60});
+ assert.equal(h.audio.length,1);
 });
 test('Tilt input processing remains at callback cadence even when no simulation step is due',()=>{
  const h=harness();h.context.tiltEnabled=true;

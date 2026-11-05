@@ -27,6 +27,9 @@ export interface IconArt {
   dotOutline: SkPaint;
   searchGlyph: SkPaint;
   searchDot: SkPaint;
+  hearingGlyph: SkPaint;
+  hearingDot: SkPaint;
+  hearingWaves: SkPath;
   alertFill: SkPaint;
   alertGlow: SkPaint;
   whistleLine: SkPaint;
@@ -46,6 +49,11 @@ export function createIconArt(atlas: SpriteAtlas | null): IconArt {
   q.moveTo(-3.3, -2.8);
   q.cubicTo(-3.3, -6.8, 3.5, -6.9, 3.5, -2.7);
   q.cubicTo(3.5, 0.2, 0, 0.3, 0, 2.6);
+  const waves = Skia.PathBuilder.Make();
+  waves.moveTo(-2.8, -0.4);
+  waves.quadTo(0, -3.2, 2.8, -0.4);
+  waves.moveTo(-5.1, -2.5);
+  waves.quadTo(0, -7.3, 5.1, -2.5);
 
   const glow = Skia.Paint();
   glow.setShader(
@@ -76,6 +84,9 @@ export function createIconArt(atlas: SpriteAtlas | null): IconArt {
     dotOutline: fill('#07080b'),
     searchGlyph: stroke('#d6dde8', 2.2),
     searchDot: fill('#d6dde8'),
+    hearingGlyph: stroke('#b7e5df', 1.6),
+    hearingDot: fill('#b7e5df'),
+    hearingWaves: waves.build(),
     alertFill: fill('#ff3b30'),
     alertGlow: glow,
     whistleLine: stroke('#f4f1e8', 1.6, 0.9),
@@ -87,6 +98,16 @@ export function createIconArt(atlas: SpriteAtlas | null): IconArt {
     },
     spritePaint: fill('#ffffff'),
   };
+}
+
+export function drawHearing(canvas: SkCanvas, art: IconArt, x: number, y: number): void {
+  'worklet';
+  canvas.save();
+  canvas.translate(x, y);
+  canvas.drawCircle(0, -0.5, 7.5, art.disc);
+  canvas.drawPath(art.hearingWaves, art.hearingGlyph);
+  canvas.drawCircle(0, 2.1, 1.25, art.hearingDot);
+  canvas.restore();
 }
 
 /** level 0..1. Draw with (x, y) = point above the guard's head. */

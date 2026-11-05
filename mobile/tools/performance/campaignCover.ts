@@ -15,7 +15,7 @@ type Row={id:string;compare:Compared[]};
 function summarize(rows:Row[]){
  const measured=rows.map(row=>{
   const def=(stages as StageDefinition[]).find(d=>d.id===row.id)!,w=witnesses[row.id as keyof typeof witnesses];
-  const witness='patience' in w?heistRun(def,w.approach,w.delay,w.patience):exposureRun(def,w.approach,w.escape,w.mode,w.delay);
+  const witness=exposureRun(def,w.approach,w.escape,w.mode,w.delay);
   return {id:row.id,checkpoints:COVER_CHECKPOINTS[row.id].length,windows:coverWindows(def),
    compare:row.compare.map(r=>({name:r.name,fixedClears:r.fixedClears,fixedRuns:r.runs.length,observerClears:r.observerClears,observerRuns:r.observers.length})),
    witness:{...w,clear:witness.clear,caught:witness.caught,time:witness.time}};

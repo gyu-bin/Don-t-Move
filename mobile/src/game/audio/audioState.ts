@@ -1,9 +1,14 @@
+import { Gait } from '../core/types';
+import type { FootstepSurface } from '../stealth/footsteps';
+
 /** Named event boundary: gameplay supplies facts; this reducer owns sound decisions. */
 export type AudioPhase = 'INTRO' | 'LOBBY' | 'STEALTH' | 'THEFT_ALERT' | 'PLAYER_SPOTTED' | 'SEARCH' | 'RETURN';
 export type MusicEvent = 'bgm_lobby' | 'bgm_stealth' | 'bgm_chase';
 export type WhistleEvent = 'whistle_theft' | 'whistle_spotted';
 export type UiSoundEvent = 'ui_select' | 'ui_back';
-export type AudioEvent = MusicEvent | WhistleEvent | UiSoundEvent | 'objective_pickup';
+export type FootstepEvent = `footstep_${FootstepSurface}`;
+export type AudioEvent = MusicEvent | WhistleEvent | UiSoundEvent | FootstepEvent | 'objective_pickup';
+export type PlayFootstep = (surface: FootstepSurface, gait: number, sessionKey: string, emittedAt: number) => void;
 export interface GameAudioInput {
   objectiveRevision?: number;
   masterBgmVolume?: number;
@@ -56,6 +61,11 @@ export const TRACK_BASE_GAIN: MusicMix = { bgm_lobby: 0.50, bgm_stealth: 0.61, b
 export const WHISTLE_GAIN = 0.8;
 export const UI_GAIN = 0.45;
 export const OBJECTIVE_PICKUP_GAIN = 0.60;
+export const FOOTSTEP_GAIN: Readonly<Partial<Record<number, number>>> = {
+  [Gait.Sneak]: 0.13,
+  [Gait.Walk]: 0.30,
+  [Gait.Run]: 0.49,
+};
 /** Fade normalized track weights; apply one master factor only at native output. */
 export function fadeMix(current: MusicMix, target: MusicEvent | null, dt: number): MusicMix {
   const duration = 0.9;

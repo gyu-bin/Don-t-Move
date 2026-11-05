@@ -1,4 +1,4 @@
-/** V13 bake: every chapter is composed from architecture-first plans (Chapter 5–8 reuse mirrored plans, Chapter 9 has its own in v13Vault.ts). */
+/** V13 bake: compile the authored plans into the production campaign. */
 import fs from 'node:fs';
 import raw from '../../docs/design/v12/phase4d/SOURCE_STAGES.json';
 import type {StageDefinition} from '../../src/game/levels/StageDefinition';
@@ -10,11 +10,15 @@ import {V13_GALLERY} from './v13Gallery';
 import {V13_GALLERY_EXPANSION,GALLERY_EXPANSION_ARCHETYPES} from './v13GalleryExpansion';
 import {V13_BANK} from './v13Bank';
 import {V13_LAB} from './v13Lab';
-import {V13_CASINO} from './v13Casino';
-import {V13_MANSION,V13_WAREHOUSE,V13_HQ} from './v13Late';
+import {V13_CASINO_DISTINCT} from './v13CasinoDistinct';
+import {V13_MANSION_DISTINCT} from './v13MansionDistinct';
+import {V13_WAREHOUSE} from './v13Late';
+import {V13_WAREHOUSE_DISTINCT} from './v13WarehouseDistinct';
+import {V13_HQ_DISTINCT} from './v13HqDistinct';
 import {V13_VAULT_CH9} from './v13Vault';
+import {V13_VAULT_DISTINCT} from './v13VaultDistinct';
 import {previewStage} from './v13Preview';
-import {DERIVED_FROM} from './v13Sources';
+import {LATE_LAYOUT_REVISION_IDS} from '../../src/game/progress/missionRevision';
 import type {V13Mission} from './v13Types';
 import {authorCoverCheckpoints} from './v13CoverCheckpoints';
 import {polishPatrol} from './v13PatrolPolish';
@@ -31,19 +35,25 @@ export const V13_SECURITY_SOURCE:StageDefinition[]=[...(raw as StageDefinition[]
   if(!template)throw Error(`${m.id}: missing approved Gallery security archetype`);
   return {...structuredClone(template),id:m.id,number:raw.length+V13_MUSEUM_EXPANSION.length+index+1,chapter:2,mission:Number(m.id.slice(3))};
  })];
-/** The campaign, chapter by chapter, in bake order. `plans` is where the missions are authored; a derived chapter's
- *  base plans (and whether it inherits the Phase 7 layer) are set in v13Sources.ts. */
-export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string;derivedFrom?:number}[]=[
+const vaultReplacements=new Map(V13_VAULT_DISTINCT.map(m=>[m.id,m]));
+const warehouseOpening=V13_WAREHOUSE.find(m=>m.id==='07-01');
+if(!warehouseOpening)throw Error('Missing reviewed Warehouse opening');
+
+/** The campaign, chapter by chapter, in bake order. */
+export const CHAPTER_SOURCE:{chapter:number;missions:V13Mission[];plans:string}[]=[
  {chapter:1,missions:[...V13_MUSEUM,...V13_MUSEUM_EXPANSION],plans:'v13Museum.ts + v13MuseumExpansion.ts + v13MuseumDistinct.ts + v13MuseumFinale.ts'},
  {chapter:2,missions:[...V13_GALLERY,...V13_GALLERY_EXPANSION],plans:'v13Gallery.ts + v13GalleryExpansion.ts'},
  {chapter:3,missions:V13_BANK,plans:'v13Bank.ts'},
  {chapter:4,missions:V13_LAB,plans:'v13Lab.ts'},
- {chapter:5,missions:V13_CASINO,plans:'v13Casino.ts',derivedFrom:DERIVED_FROM[5].chapter},
- {chapter:6,missions:V13_MANSION,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[6].chapter},
- {chapter:7,missions:V13_WAREHOUSE,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[7].chapter},
- {chapter:8,missions:V13_HQ,plans:'v13Late.ts',derivedFrom:DERIVED_FROM[8].chapter},
- {chapter:9,missions:V13_VAULT_CH9,plans:'v13Vault.ts'},
-].map(c=>({...c,missions:c.missions.map(m=>watchExit(polishPatrol(authorCoverCheckpoints(m))))}));
+ {chapter:5,missions:V13_CASINO_DISTINCT,plans:'v13CasinoDistinct.ts'},
+ {chapter:6,missions:V13_MANSION_DISTINCT,plans:'v13MansionDistinct.ts'},
+ {chapter:7,missions:[warehouseOpening,...V13_WAREHOUSE_DISTINCT],plans:'v13Late.ts + v13WarehouseDistinct.ts'},
+ {chapter:8,missions:V13_HQ_DISTINCT,plans:'v13HqDistinct.ts'},
+ {chapter:9,missions:V13_VAULT_CH9.map(m=>vaultReplacements.get(m.id)??m),plans:'v13Vault.ts + v13VaultDistinct.ts'},
+].map(c=>({...c,missions:c.missions.map(m=>{
+ const plan=LATE_LAYOUT_REVISION_IDS.includes(m.id)?{...m,layoutRevision:2}:m;
+ return watchExit(polishPatrol(authorCoverCheckpoints(plan)));
+})}));
 export const V13_MISSIONS:V13Mission[]=CHAPTER_SOURCE.flatMap(c=>c.missions);
 /** Every mission is composed from its V13 plan; SOURCE_STAGES only supplies the approved guard and camera constants. */
 export function buildV13Campaign():StageDefinition[]{

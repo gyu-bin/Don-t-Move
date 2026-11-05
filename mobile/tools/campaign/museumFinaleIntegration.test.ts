@@ -5,6 +5,7 @@ import {V13_MUSEUM} from './v13Museum';
 import {V13_MUSEUM_EXPANSION} from './v13MuseumExpansion';
 import type {V13Mission} from './v13Types';
 import {canonical,sha256} from './v13QaLib';
+import {expectedStageHash} from './v13LateReviewed';
 import {routeRooms} from './v124bTopologyQA';
 import unaffected from '../../docs/design/museum-finale/UNAFFECTED_STAGE_HASHES.json';
 
@@ -26,7 +27,7 @@ function architecture(m:V13Mission):string{
 
 test('Finale rebuild changes only 09–10 and retains all other 53 stages exactly',()=>{
  assert.equal(campaignStages.length,55);assert.equal(Object.keys(unaffected).length,53);
- for(const[id,hash]of Object.entries(unaffected))assert.equal(sha256(canonical(campaignStages.find(s=>s.id===id))),hash,id);
+ for(const[id,hash]of Object.entries(unaffected))assert.equal(sha256(canonical(campaignStages.find(s=>s.id===id))),expectedStageHash(id,hash),id);
 });
 
 test('Every Chapter 1 mission has a distinct actual room-role graph across all 45 pairs',()=>{

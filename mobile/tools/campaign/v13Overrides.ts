@@ -31,6 +31,7 @@ import {COVER_CHECKPOINTS} from './v13CoverCheckpoints';
 import {PATROL_POLISH} from './v13PatrolPolish';
 import {EXIT_CAMERA_WATCH} from './v13ExitWatch';
 import {COMPOSE_PATROL_TIMINGS} from './v13ComposeTuning';
+import {LATE_LAYOUT_REVISION_IDS} from '../../src/game/progress/missionRevision';
 
 export const STAGES=['1 plan','2 phase7 lanes','3 phase7 replace','4 phase7 cover','5 derive','6 pin','7 late','8 rework','9 cover checkpoints','10 patrol polish','11 exit watch','12 compose'] as const;
 export type OverrideStage=typeof STAGES[number];
@@ -49,6 +50,12 @@ export const AUTHORED_IN_PLAN:{mission:string;file:string;structure:string;at:[n
  {mission:'09-05',file:'v13Vault.ts',structure:'Vault Blast Screen',at:[11.5,5.1],detail:'Phase 7C: Vault Blast Screen moved 0.4 north, to (11.5,5.1); written as y 4.1 in the plan (was 4.5)'},
 ];
 const p=(q:[number,number]|{x:number;y:number})=>Array.isArray(q)?`(${q[0]},${q[1]})`:`(${q.x},${q.y})`;
+function coverEntry(id:string):OverrideEntry|undefined {
+ const checkpoints=COVER_CHECKPOINTS[id];
+ if(!checkpoints)return;
+ return {mission:id,stage:'9 cover checkpoints',category:'patrol replaced',file:'v13CoverCheckpoints.json',table:'COVER_CHECKPOINTS',
+  detail:checkpoints.map(q=>`${q.structure}: guard${q.guard+1} at ${p(q.post)}`).join('; '),why:'Actual hidden waiting place / adjacent visible crossing, with semantic patrol inspection'};
+}
 const laneEntries=(mission:string,ops:LaneOp[],why:string,stage:OverrideStage,table:string):OverrideEntry[]=>ops.flatMap((o):OverrideEntry[]=>{
  const base={mission,stage,file:'v13Phase7.ts',table,why};
  if(o.op==='wall')return [{...base,category:'wall cell',detail:`floor cell (${o.x},${o.y}) becomes wall`}];
@@ -88,8 +95,7 @@ function own(id:string):OverrideEntry[]{
  }
  const patrol=HQ_PATROL[id];
  if(patrol)out.push({mission:id,stage:'7 late',category:'patrol stop',file:'v13Late.ts',table:'HQ_PATROL',detail:`${patrol.zone} first stop looks at ${p(patrol.look)}, waits ${patrol.wait}s`,why:patrol.watches});
- if(COVER_CHECKPOINTS[id])out.push({mission:id,stage:'9 cover checkpoints',category:'patrol replaced',file:'v13CoverCheckpoints.json',table:'COVER_CHECKPOINTS',
-  detail:COVER_CHECKPOINTS[id].map(q=>`${q.structure}: guard${q.guard+1} at ${p(q.post)}`).join('; '),why:'Actual hidden waiting place / adjacent visible crossing, with semantic patrol inspection'});
+ const cover=coverEntry(id);if(cover)out.push(cover);
  if(PATROL_POLISH[id])out.push({mission:id,stage:'10 patrol polish',category:'patrol stop',file:'v13PatrolPolish.ts',table:'PATROL_POLISH',detail:PATROL_POLISH[id].map(e=>`guard${e.guard+1}: ${e.why}`).join('; ')});
  if(EXIT_CAMERA_WATCH[id])out.push({mission:id,stage:'11 exit watch',category:'camera pinned',file:'v13ExitWatch.ts',table:'EXIT_CAMERA_WATCH',detail:EXIT_CAMERA_WATCH[id].why});
  const timing=COMPOSE_PATROL_TIMINGS[id];
@@ -100,6 +106,11 @@ function own(id:string):OverrideEntry[]{
 }
 /** Every override that reaches a mission: inherited ones first (they are applied first), then its own, in stage order. */
 export function missionOverrides(id:string):OverrideEntry[]{
+ if(LATE_LAYOUT_REVISION_IDS.includes(id)){
+  const file=({'05':'Casino','06':'Mansion','07':'Warehouse','08':'Hq','09':'Vault'} as Record<string,string>)[id.slice(0,2)];
+  const entry:OverrideEntry={mission:id,stage:'1 plan',category:'authored in plan',file:`v13${file}Distinct.ts`,table:'DISTINCT_LAYOUT',detail:'Independent floor plan, routes, cover and security posts'};
+  const cover=coverEntry(id);return cover?[entry,cover]:[entry];
+ }
  const base=baseMissionOf(id),from=DERIVED_FROM[Number(id.slice(0,2)) as DerivedChapter];
  // A chapter built on the frozen plans inherits what is in the plan file only; one built after Phase 7 inherits that layer too.
  // The entrance refinement is deliberately after the frozen Museum export;

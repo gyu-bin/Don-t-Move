@@ -10,6 +10,8 @@ import { castRay } from '../world/visibility';
 import { GUARD_TUNING as T } from './guardTuning';
 import { buildVisionFan, createFanBuffers, pointVisible } from './guardVision';
 import type { VisionFan } from './guardVision';
+import { cancelHearing, HearingPhase, stepHearingResponse } from './guardHearing';
+import type { HearingState } from './guardHearing';
 
 /**
  * Guard perception + reaction.
@@ -25,6 +27,7 @@ import type { VisionFan } from './guardVision';
  * that same fan → update suspicion/state. The renderer then draws that fan.
  */
 export interface GuardState extends VisionFan {
+  hearing?: HearingState;
   semanticPatrol: boolean;
   patrolProgress: number;
   patrolProgressAt: number;
@@ -514,7 +517,8 @@ export function stepGuard(
   } else if (g.suspicion >= T.stopThreshold && g.hasLkp) {
     stand(g, dt);
     faceToward(g, angleToLkp(g), T.turnRateNotice, dt);
-  } else {
+  } else if (!(g.hearing && g.hearing.phase !== HearingPhase.None && patrolEnabled && navigation &&
+    stepHearingResponse(g, navigation, t, dt))) {
     const glancing = g.suspicion >= T.glanceThreshold && g.hasLkp;
     if (patrolEnabled && navigation && g.semanticPatrol) semanticPatrolMove(g,navigation,dt,t,glancing?T.glanceSpeedScale:1);
     else if (patrolEnabled && navigation && g.roaming) roamingMove(g,navigation,dt,t,glancing?T.glanceSpeedScale:1);
@@ -537,6 +541,7 @@ export function stepGuard(
 
   // 4. Suspicion + memory. LKP only updates while actually seen.
   if (g.canSee) {
+    if (g.hearing && g.hearing.phase !== HearingPhase.None) cancelHearing(g, t, true);
     if(g.localArrived && Math.hypot(p.x-g.lkpX,p.y-g.lkpY)>T.arrivalDistance){g.localArrived=false;g.localLookT=0;}
     g.suspicion = Math.min(1, g.suspicion + suspicionGain(g, p.gait, difficulty) * dt);
     g.unseenT = 0;

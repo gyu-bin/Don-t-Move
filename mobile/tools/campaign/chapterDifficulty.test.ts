@@ -10,6 +10,7 @@ import {auditDifficulty,summarizeDifficulty,chapterOrderingAcceptance,type Diffi
 import {compileStage} from '../../src/game/world/compileStage';
 import {createGuardState,observeGuard} from '../../src/game/guards/guardBrain';
 import {exposureRun} from './cameraExposure';
+import {legacyLayoutStage} from './v13LegacyLayoutFixture';
 
 test('Late chapter pressure strictly increases and reaches actual guard perception',()=>{
  for(const config of CHAPTER_DIFFICULTY.slice(0,4))assert.deepEqual(config.security,{guardRange:1,guardAngle:1,cameraRange:1,cameraGain:1});
@@ -23,7 +24,7 @@ test('Late chapter pressure strictly increases and reaches actual guard percepti
 });
 
 test('Final Vault retains a continuous timed full-heist witness with stronger security',()=>{
- const s=campaignStages.find(d=>d.id==='09-03')!;
+ const s=legacyLayoutStage('09-03');
  const result=exposureRun(s,1,0,3,7);
  assert(result.clear&&!result.caught,'risk crossing + objective + actual exit must remain possible');
  assert(result.spottedBy,'stronger security makes this successful escape a spotted heist');

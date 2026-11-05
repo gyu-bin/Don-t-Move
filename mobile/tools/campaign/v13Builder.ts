@@ -130,7 +130,7 @@ export function composeV13(m:V13Mission,source:StageDefinition[]):StageDefinitio
  for(let y=0;y<rows;y++)for(let x=0;x<Math.max(def.layout[y]?.length??0,m.map[y]?.length??0);x++)
   if((def.layout[y]?.[x]==='.')!==isFloor(m.map[y]?.[x]))throw Error(`${m.id}: compiled floor differs from the drawn plan at ${x},${y} (an edge corridor cut through a wall, or a zone box covers undrawn floor)`);
  authorSecurity(def,m);
- applyComposePatrolTiming(def);
+ if(m.layoutRevision===undefined)applyComposePatrolTiming(def);
  // Always start from SOURCE_STAGES above, so repeated bakes never compound pressure.
  const pressure=chapterDifficulty(old.chapter!).security;
  for(const g of def.guards){

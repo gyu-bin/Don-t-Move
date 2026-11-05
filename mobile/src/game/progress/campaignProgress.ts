@@ -130,7 +130,7 @@ export function normalizeCampaign(input:unknown):CampaignProgress {
   if(Number(id.slice(0,2))<=3){
    // Merged/rebuilt maps inherit entitlement only; old performance remains in archive.
    if(record.cleared)records[destination]={cleared:true,legacy:true};
-  }else records[destination]=record;
+  }else records[destination]=normalizeMissionBenchmark(destination,record);
  }
  let mappedUnlocked=0;
  for(let index=0;index<=unlocked;index++)mappedUnlocked=Math.max(mappedUnlocked,missionIndex(migratedMissionId(oldMissionId(index))));

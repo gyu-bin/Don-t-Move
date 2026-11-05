@@ -11,7 +11,7 @@ import {stepGuards} from '../../src/game/guards/guardSystem';
 import {V13_CASINO} from './v13Casino';
 import {V13_MANSION} from './v13Late';
 import {V13_MISSIONS} from './v13Build';
-import {authorCoverCheckpoints} from './v13CoverCheckpoints';
+import {legacyLayoutPlan,legacyLayoutStage} from './v13LegacyLayoutFixture';
 import {polishPatrol,PATROL_POLISH} from './v13PatrolPolish';
 import {composeV13} from './v13Builder';
 import {exposureRun} from './cameraExposure';
@@ -20,11 +20,12 @@ import {KNOWN} from './v13FullAudit';
 test('Patrol polish is local, immutable and repeatable; geometry, perception and speed are preserved',()=>{
  assert.deepEqual(Object.keys(PATROL_POLISH),['05-02','06-01']);
  for(const original of [...V13_CASINO,...V13_MANSION]){
-  const base=authorCoverCheckpoints(original),copy=structuredClone(base),after=polishPatrol(base);
+  const id=original.id;
+  const base=id==='05-02'||id==='06-01'?legacyLayoutPlan(id):original,copy=structuredClone(base),after=polishPatrol(base);
   assert.deepEqual(base,copy);
   assert.deepEqual(polishPatrol(after),after);
   if(!PATROL_POLISH[base.id]){assert.equal(after,base);continue;}
-  const before=JSON.parse(JSON.stringify(composeV13(base,raw as StageDefinition[]))) as StageDefinition,live=(stages as StageDefinition[]).find(s=>s.id===base.id)!;
+  const before=JSON.parse(JSON.stringify(composeV13(base,raw as StageDefinition[]))) as StageDefinition,live=legacyLayoutStage(base.id as '05-02'|'06-01');
   for(const key of Object.keys(before) as (keyof StageDefinition)[])if(!['guards','patrolRoutes','topologyPlan'].includes(key))assert.deepEqual(live[key],before[key],`${base.id}/${key}`);
   for(const key of Object.keys(before.topologyPlan!))if(!['patrols','objectiveStops'].includes(key))assert.deepEqual((live.topologyPlan as unknown as Record<string,unknown>)[key],(before.topologyPlan as unknown as Record<string,unknown>)[key],key);
   assert.equal(live.guards.length,before.guards.length);
@@ -48,7 +49,7 @@ for(const fps of [30,60,120])test(`Casino repaired patrol keeps full body cleara
 });
 
 test('Mansion north inspection interrupts blind sprint but preserves walking and timed running heists',()=>{
- const def=(stages as StageDefinition[]).find(s=>s.id==='06-01')!;
+ const def=legacyLayoutStage('06-01');
  let caughtBy='';
  const careless=exposureRun(def,0,0,3,0,s=>{caughtBy=s.events.caughtBy;});
  assert(careless.caught&&!careless.clear&&caughtBy==='06-01-g1','actual contact on the north crossing');

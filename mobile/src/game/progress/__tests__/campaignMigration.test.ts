@@ -41,12 +41,16 @@ test('completed Bank preserves Lab entitlement without carrying rebuilt benchmar
  assert.deepEqual((result.legacyArchive!.original.records as Record<string,unknown>)['03-10'],{cleared:true,bestTime:45,alerts:2});
  assert(canPlayMission(result,missionIndex('04-01'),false));
 });
-test('all six later chapters retain IDs, reached unlocks and comparable unchanged-map times',()=>{
+test('all six later chapters retain IDs and unlocks while rebuilt maps archive old times',()=>{
  for(let chapter=4;chapter<=9;chapter++){
   const id=`0${chapter}-01`,ordinal=30+(chapter-4)*5;
   const result=normalizeCampaign(save(ordinal,id,{[id]:{cleared:true,bestTime:61,alerts:1}}));
   assert.equal(result.lastMission,id);assert.equal(result.highestUnlocked,missionIndex(id)+1);
-  assert.deepEqual(result.records[id],{cleared:true,bestTime:61,alerts:1});
+  const expected=[5,6,8].includes(chapter)
+   ?{cleared:true,benchmarkRevision:2,previousBenchmark:{revision:1,bestTime:61,alerts:1}}
+   :{cleared:true,bestTime:61,alerts:1};
+  assert.deepEqual(result.records[id],expected);
+  assert.deepEqual(normalizeCampaign(result),result);
  }
  const end=normalizeCampaign(save(59,'09-05'));
  assert.equal(end.highestUnlocked,54);assert.equal(end.lastMission,'09-05');
@@ -215,7 +219,7 @@ test('fresh version7 Gallery progression requires all ten missions before Bank',
 });
 
 test('current version7 saves retain new Gallery clears and later chapter ordinals unchanged',()=>{
- for(const id of ['02-06','02-10','03-01','09-05']){
+ for(const id of ['02-06','02-10','03-01','09-04']){
   const index=missionIndex(id);
   const source={version:7,lastMission:id,highestUnlocked:Math.min(MISSION_COUNT-1,index+1),records:{[id]:{cleared:true,bestTime:42,alerts:0}}};
   assert.deepEqual(normalizeCampaign(source),source);
@@ -238,7 +242,8 @@ test('fresh and malformed data are safe without unintended chapter unlock',()=>{
 test('pre-campaign ten-stage progress keeps stage8+9 destinations after compression',()=>{
  const result=migrateCampaign({currentStage:8,highestUnlocked:9,clearedStages:[0,8,9],bestTimes:{0:40,8:30,9:90},bestAlerts:{0:0,8:1,9:2}});
  assert.equal(result.lastMission,'08-05');assert.equal(result.highestUnlocked,missionIndex('09-02'));
- assert.equal(result.records['08-05'].bestTime,30);assert(result.records['08-05'].legacy);
+ assert.deepEqual(result.records['08-05'],{cleared:true,legacy:true,benchmarkRevision:2,previousBenchmark:{revision:1,bestTime:30,alerts:1}});
+ assert.deepEqual(normalizeCampaign(result),result);
  assert.equal(result.records['01-01'].bestTime,undefined);
 });
 

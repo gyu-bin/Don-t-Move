@@ -12,6 +12,8 @@ import { stepTheft } from './theftAlert';
 import { updateGuardPhase } from './guardPhase';
 import type { TheftContext } from './theftAlert';
 import { directChaseSpeed } from './guardChaseSpeed';
+import { cancelHearing, offerFootstep } from './guardHearing';
+import type { FootstepEvent } from '../stealth/footsteps';
 
 // Worklet closures capture values at declaration time. Initialize these before
 // moveAlertGuard captures the contact radius for the UI runtime.
@@ -101,7 +103,23 @@ function react(g: GuardState, ev: GuardEvents, theft?: TheftContext, index = 0):
 }
 
 
-function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, index: number, theft?: TheftContext, ev?: GuardEvents): void {
+/** A visual witness checks one reachable side of the real last-seen area before leaving for posts. */
+function startLocalSearch(g: GuardState, n: Navigation): void {
+  'worklet';
+  for (let i = 0; i < 3; i++) {
+    const angle = g.searchBase + (i === 0 ? 0 : i === 1 ? Math.PI / 3 : -Math.PI / 3);
+    const x = g.searchX + Math.cos(angle) * T.searchRadius;
+    const y = g.searchY + Math.sin(angle) * T.searchRadius;
+    if (clearSegment(g.searchX, g.searchY, x, y, n.blockers, n.radius)) {
+      g.searchIndex = -1;
+      g.targetX = x; g.targetY = y;
+      return;
+    }
+  }
+}
+
+function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, index: number, theft?: TheftContext, ev?: GuardEvents,
+  localSearch = false): void {
   'worklet';
   g.stateT += dt;
   g.alertAge += dt;
@@ -109,7 +127,11 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
     // Direct Chase and LKP/support travel use separate controllers: only waypoint
     // travel has arrival; a chase runs through to body contact (see pursue()).
     if (g.awareness === Awareness.Chase) pursue(g, n, directChaseSpeed(theft?.missionId), dt, t, CONTACT_DISTANCE);
-    else if (travel(g, n, T.investigateSpeed, dt, t)) enter(g, Awareness.Search);
+    else if (travel(g, n, T.investigateSpeed, dt, t)) {
+      enter(g, Awareness.Search);
+      if (localSearch && g.hasLkp && Math.hypot(g.x - g.targetX, g.y - g.targetY) <= T.arrivalDistance &&
+          (g.semanticPatrol || theft?.roles?.[index])) startLocalSearch(g, n);
+    }
   } else if (g.awareness === Awareness.Search) {
     // Runtime identity distinguishes the original/renumbered Masterpiece from
     // the new Gallery 02-10. Manual historical contexts retain their ID fallback.
@@ -123,7 +145,7 @@ function moveAlertGuard(g: GuardState, n: Navigation, dt: number, t: number, ind
       g.facing = turnToward(g.facing, g.searchBase + Math.sin(g.stateT * 3) * 1.2, T.turnRatePatrol, dt);
       g.baseFacing = g.facing;
     } else {
-      if (g.path.length === 0) {
+      if (g.searchIndex >= 0 && g.path.length === 0) {
         const posts=theft?.roles?.[index] ? theft.posts[index] : g.semanticPatrol ? g.route : undefined;
         if(posts?.length){
           const post=posts[g.searchIndex%posts.length];
@@ -169,7 +191,8 @@ export function bodiesTouch(g: { x: number; y: number }, p: { x: number; y: numb
 
 /** Group barrier: perceive all → publish → decide/move all → perceive/publish → reconcile. */
 export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[], n: Navigation,
-  dt: number, ev: GuardEvents, t: number, patrol: boolean, difficulty = 1, theft?: TheftContext): void {
+  dt: number, ev: GuardEvents, t: number, patrol: boolean, difficulty = 1, theft?: TheftContext,
+  footstep?: FootstepEvent, hearingSensitivity = 0): void {
   'worklet';
   if (ev.caught) return;
   // Contact already present at the beginning of this step cannot be escaped by
@@ -183,11 +206,20 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
   updateGuardPhase(ev,guards,t,theft?.missionId);
   const wasGlobal = ev.globalAlert;
   const confirming = theft ? stepTheft(guards,p,vision,n,ev,theft,dt,t) : '';
+  const securityOwnsMovement = ev.globalAlert || ev.theftAlert || !!confirming;
+  if (securityOwnsMovement || ev.phase === 'PLAYER_SPOTTED') {
+    for (let i = 0; i < guards.length; i++) if (guards[i].hearing) cancelHearing(guards[i], t, !securityOwnsMovement);
+  } else if (patrol && footstep && hearingSensitivity > 0) {
+    offerFootstep(guards, footstep, n, t, hearingSensitivity, vision);
+  }
   if (!wasGlobal && !ev.globalAlert && (!ev.theftAlert || hasPlayerAlert(guards,ev))) {
     for (let i = 0; i < guards.length; i++) if(guards[i].id!==confirming) stepGuard(guards[i], p, vision, dt, ev, t, patrol, difficulty, n);
   }
   if (ev.globalAlert) {
-    for (let i = 0; i < guards.length; i++) observeGuard(guards[i], p, vision);
+    for (let i = 0; i < guards.length; i++) {
+      if (!wasGlobal && guards[i].hearing) cancelHearing(guards[i], t);
+      observeGuard(guards[i], p, vision);
+    }
     // A whistle completed while its source lost sight: share only its last seen location.
     if (!wasGlobal) for (let i = 0; i < guards.length; i++) {
       if (guards[i].id === ev.whistleGuard) { ev.globalX = guards[i].lkpX; ev.globalY = guards[i].lkpY; }
@@ -195,7 +227,7 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
     shareSight(guards, p, ev, t);
     for (let i = 0; i < guards.length; i++) react(guards[i], ev, theft, i);
     if (wasGlobal) {
-      for (let i = 0; i < guards.length; i++) moveAlertGuard(guards[i], n, dt, t, i, theft, ev);
+      for (let i = 0; i < guards.length; i++) moveAlertGuard(guards[i], n, dt, t, i, theft, ev, hearingSensitivity > 0);
     }
     for (let i = 0; i < guards.length; i++) observeGuard(guards[i], p, vision);
     shareSight(guards, p, ev, t);

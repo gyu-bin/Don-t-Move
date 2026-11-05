@@ -5,7 +5,7 @@ import {resolveInitialMissionIndex} from './branding/missionLaunch';
 import { useMissionBackHandler } from './missionBack';
 import {QA_UNLOCK_ALL} from '../game/progress/qaUnlock';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { AppState, Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Canvas, Picture, Skia } from '@shopify/react-native-skia';
 import Animated, {cancelAnimation,useAnimatedStyle,withTiming,useAnimatedReaction, useDerivedValue, useFrameCallback, useSharedValue } from 'react-native-reanimated';
@@ -43,7 +43,7 @@ import { resultActions } from './resultNavigation';
 import type { ResultAction } from './resultNavigation';
 import { DEFAULT_PROGRESS, loadProgress, saveProgress } from '../game/progress/stageProgress';
 import type { StageProgress } from '../game/progress/stageProgress';
-import { useGameAudio, useUIAudio } from '../game/audio/useGameAudio';
+import { useFootstepAudio, useGameAudio, useUIAudio } from '../game/audio/useGameAudio';
 import type { GuardEvents } from '../game/guards/guardBrain';
 import { prepareMission, prepareMissionInSteps } from './preparedMission';
 import { createMissionSwap, SWAP_TIMING } from './missionSwap';
@@ -331,8 +331,19 @@ function StageGame({
     dev: __DEV__, devStick: process.env.EXPO_PUBLIC_DM_QA_VIRTUAL_TILT === '1' });
   const stickEnabled = !tiltEnabled && input.kind === 'stick';
   const stick = useSharedValue<StickState>(STICK_IDLE);
+  const sceneActive = useSharedValue(AppState.currentState === 'active');
+  useEffect(() => {
+    const lifecycle = AppState.addEventListener('change', status => {
+      sceneActive.set(status === 'active');
+      if (status !== 'active') stick.set(STICK_IDLE);
+    });
+    sceneActive.set(AppState.currentState === 'active');
+    return () => lifecycle.remove();
+  }, [sceneActive, stick]);
 
-  useGameAudio({sessionKey:`${definition.id}:${audioSession}`,phase:replayIntro?'INTRO':phaseInfo.phase,
+  const audioSessionKey = `${definition.id}:${audioSession}`;
+  const playFootstep = useFootstepAudio();
+  useGameAudio({sessionKey:audioSessionKey,phase:replayIntro?'INTRO':phaseInfo.phase,
     objectiveRevision:pickupRevision,theftRevision:phaseInfo.theft,spottedRevision:phaseInfo.spotted,
     sfxEnabled:soundEnabled,bgmEnabled:progress.musicEnabled,paused:monetization.adPresenting,
     sfxSuspended:paused||caught||completed||transitioning||replayIntro||monetization.adPresenting,active:true},!transitioning);
@@ -551,6 +562,7 @@ function StageGame({
   };
 
   useFrameCallback((frame) => {
+    if (!sceneActive.value) return;
     const dt = Math.min(0.05, (frame.timeSincePreviousFrame ?? 16) / 1000);
     // Reanimated executes this callback on the UI frame, not during React render.
     // eslint-disable-next-line react-hooks/purity -- UI-thread frame callback, not component render; sensor timestamps use wall time.
@@ -605,8 +617,13 @@ function StageGame({
         s.player.ty = tch.y / zoom + s.cam.y;
         s.player.hasTarget = true;
       }
+      const previousFootstep = s.footsteps?.last?.t;
       for (let i = 0; i < steps; i++) {
         stepPlayground(s, 1 / 60, TILE, viewW, viewH, bounds, movementBlockers, visionBlockers, navigation, tiltInput);
+      }
+      const footstep = s.footsteps?.last;
+      if (footstep && footstep.t !== previousFootstep && soundEnabled && !s.events.caught && !s.mission.complete) {
+        scheduleOnRN(playFootstep, footstep.surface, footstep.gait, audioSessionKey, now);
       }
       return s;
     });

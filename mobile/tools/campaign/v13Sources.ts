@@ -1,6 +1,6 @@
 /**
- * Which plans each derived chapter is built from. This table is the wiring, not a description of it: v13Casino.ts
- * and v13Late.ts take their base plans from here and from nowhere else.
+ * Provenance for the previous mirrored campaign. v13Casino.ts and v13Late.ts use this table to reconstruct it.
+ * The live build retains only the reworked 07-01 from these derived plans.
  *
  * Chapters 1–4 and 9 have floor plans of their own (v13Museum / v13Gallery / v13Bank / v13Lab / v13Vault).
  * The four derived chapters differ in WHEN they branch off, and that difference is deliberate:
@@ -32,7 +32,7 @@ export function derivedBases(chapter:DerivedChapter):V13Mission[]{
  const {plans,order}=DERIVED_FROM[chapter];
  return order.map(id=>{const base=plans.find(m=>m.id===id);if(!base)throw Error(`Chapter ${chapter}: base plan ${id} not found`);return base;});
 }
-/** The base plan a derived mission comes from ('05-03' → '03-04'), or undefined for a chapter with plans of its own. */
+/** The base plan still used in the live campaign. */
 export function baseMissionOf(id:string):string|undefined{
- return DERIVED_FROM[Number(id.slice(0,2)) as DerivedChapter]?.order[Number(id.slice(3))-1];
+ return id==='07-01'?DERIVED_FROM[7].order[0]:undefined;
 }

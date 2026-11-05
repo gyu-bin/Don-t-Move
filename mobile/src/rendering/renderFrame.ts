@@ -13,7 +13,7 @@ import { drawCharacterVisual } from './characters/characterVisual';
 import type { CharacterVisual } from './characters/characterVisual';
 import { drawGlobalAlertDebug, drawGuardDebug } from './debug/guardDebug';
 import type { DebugArt } from './debug/guardDebug';
-import { drawAlert, drawSearch, drawSuspicion, drawWhistleLines } from './effects/alertIcons';
+import { drawAlert, drawHearing, drawSearch, drawSuspicion, drawWhistleLines } from './effects/alertIcons';
 import type { IconArt } from './effects/alertIcons';
 import type { LightFx } from './effects/lightFx';
 import { buildConePath, drawConeEdge, drawConePass } from './effects/visionCone';
@@ -270,6 +270,7 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
     else if(indicator==='alert')drawAlert(c,r.icons,g.x,iy,
       g.awareness===Awareness.Investigate?s.events.theftAge:g.alertAge,s.t);
     else if(indicator==='search')drawSearch(c,r.icons,g.x,iy+4,s.t);
+    else if(indicator==='hearing')drawHearing(c,r.icons,g.x,iy+4);
     if (g.action === GuardAction.Whistle && g.actionT > 0.32)
       drawWhistleLines(c, r.icons, g.x + 10, g.y - 44, s.t);
   }
