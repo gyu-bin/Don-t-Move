@@ -1,4 +1,5 @@
 import { Awareness, Gait } from '../../src/game/core/types';
+import { wrapAngle } from '../../src/game/core/math';
 import { HearingPhase } from '../../src/game/guards/guardHearing';
 import { BODY } from '../../src/game/guards/guardTuning';
 import { campaignStages } from '../../src/game/levels/campaignStages';
@@ -38,17 +39,21 @@ export function replayRoute(def: StageDefinition, inputs: RouteInputs, hearingEn
   const bounds = { x: 0, y: 0, w: stage.width, h: stage.height };
   const points = [...entry, ...exit.slice(1)];
   const reacted = new Set<string>();
-  const started = new Set<string>();
+  const started = new Map<string, boolean>();
   const investigations = new Set<string>();
+  const walkAttentionSources = new Map<string, { x: number; y: number }>();
   const reactionModes = { sneak: 0, walk: 0, run: 0, idle: 0 };
   const phaseFrames = { chase: 0, search: 0, return: 0 };
   let leg = 1;
   let treasureAt: number | null = null;
+  let closeWalkNotices = 0;
+  let strongestPatrolAttention = 0;
   let hiddenAlertFrames = 0;
   let postStepUnseenLocationChanges = 0;
   let lastSeen: { x: number; y: number } | undefined;
   let firstInvestigation: { episode: string; guard: string; x: number; y: number; start: number;
-    listenerTravel: number; playerSeparation: number } | undefined;
+    listenerTravel: number; playerSeparation: number; fromFootstep: boolean; targetFrames: number;
+    targetDriftFrames: number } | undefined;
 
   for (let frame = 0; frame < 9000 && !state.events.caught && !state.mission.complete; frame++) {
     const issued = state.t >= inputs.delay;
@@ -60,7 +65,24 @@ export function replayRoute(def: StageDefinition, inputs: RouteInputs, hearingEn
     }
     stepPlayground(state, dt, TILE, 400, 800, bounds, stage.movementBlockers, stage.visionBlockers, navigation);
     if (state.mission.treasure && treasureAt === null) treasureAt = state.t;
+    const sound = state.footsteps?.last;
     for (const guard of state.guards) {
+      if (guard.closeFootstepHeardAt === state.t && sound?.t === state.t) {
+        if (sound.gait === Gait.Walk) {
+          closeWalkNotices++;
+          walkAttentionSources.set(guard.id, sound);
+        } else walkAttentionSources.delete(guard.id);
+      }
+      const attention = guard.soundAttention;
+      if (attention?.startedAt !== undefined && guard.awareness === Awareness.Patrol && guard.wait > 0 && guard.speed === 0) {
+        const walkSource = walkAttentionSources.get(guard.id);
+        if (attention.x === walkSource?.x && attention.y === walkSource.y) {
+          const direction = Math.atan2(attention.y - guard.y, attention.x - guard.x);
+          const before = Math.abs(wrapAngle(direction - guard.baseFacing));
+          const after = Math.abs(wrapAngle(direction - guard.facing));
+          strongestPatrolAttention = Math.max(strongestPatrolAttention, before - after);
+        }
+      }
       const hearing = guard.hearing;
       if (!hearing || hearing.phase === HearingPhase.None) continue;
       reacted.add(guard.id);
@@ -68,15 +90,20 @@ export function replayRoute(def: StageDefinition, inputs: RouteInputs, hearingEn
       if (hearing.phase === HearingPhase.Investigate) {
         investigations.add(episode);
         firstInvestigation ??= { episode, guard: guard.id, x: hearing.heardX, y: hearing.heardY, start: +state.t.toFixed(2),
-          listenerTravel: 0, playerSeparation: 0 };
+          listenerTravel: 0, playerSeparation: 0, fromFootstep: started.get(episode) ?? false, targetFrames: 0,
+          targetDriftFrames: 0 };
         if (firstInvestigation.episode === episode) {
+          // Look can transition before Investigate assigns the travel target.
+          if (firstInvestigation.targetFrames > 0 &&
+              (guard.targetX !== firstInvestigation.x || guard.targetY !== firstInvestigation.y)) firstInvestigation.targetDriftFrames++;
+          firstInvestigation.targetFrames++;
           firstInvestigation.listenerTravel = Math.max(firstInvestigation.listenerTravel, Math.hypot(guard.x - hearing.originX, guard.y - hearing.originY));
           firstInvestigation.playerSeparation = Math.max(firstInvestigation.playerSeparation, Math.hypot(state.player.x - hearing.heardX, state.player.y - hearing.heardY));
         }
       }
       if (started.has(episode)) continue;
-      started.add(episode);
-      const gait = state.footsteps?.last?.gait;
+      started.set(episode, sound?.t === hearing.startedAt && sound.x === hearing.heardX && sound.y === hearing.heardY);
+      const gait = sound?.gait;
       if (gait === Gait.Sneak) reactionModes.sneak++;
       else if (gait === Gait.Walk) reactionModes.walk++;
       else if (gait === Gait.Run) reactionModes.run++;
@@ -105,6 +132,8 @@ export function replayRoute(def: StageDefinition, inputs: RouteInputs, hearingEn
     cameraAlerts: state.events.cameraAlertRevision ?? 0,
     spottedEpisodes: state.events.spottedWhistleRevision,
     reactions: started.size,
+    closeWalkNotices,
+    strongestPatrolAttention,
     investigations: investigations.size,
     firstInvestigation,
     reactedGuards: reacted.size,

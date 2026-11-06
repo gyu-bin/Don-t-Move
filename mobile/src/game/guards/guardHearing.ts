@@ -27,8 +27,23 @@ export interface HearingState {
   sweepFacing: number;
 }
 
+export interface SoundAttention {
+  readonly x: number;
+  readonly y: number;
+  until: number;
+  startedAt?: number;
+  lookOffset?: number;
+}
+
 const AUDIBLE_STRENGTH = 0.14;
 const INVESTIGATE_STRENGTH = 0.32;
+const CLOSE_WALK_RANGE = 40;
+export const CLOSE_WALK_CUE_SECONDS = 0.7;
+const CLOSE_FOOTSTEP_REPEAT_SECONDS = 1.4;
+const CLOSE_RUN_RANGE = 56;
+const ATTENTION_MEMORY_SECONDS = 1.2;
+const ATTENTION_LOOK_SECONDS = 0.48;
+const ATTENTION_MIN_PAUSE = 0.42;
 const MAX_EVENT_AGE = 0.2;
 const WEAK_LOOK_SECONDS = 0.34;
 const WEAK_LOOK_ANGLE = 22 * Math.PI / 180;
@@ -37,6 +52,11 @@ const INVESTIGATE_SECONDS = 2.6;
 const SWEEP_SECONDS = 0.95;
 const RETURN_SECONDS = 3.2;
 const PATROL_RECOVERY_SECONDS = 2.4;
+
+export function behaviorOnlyHearing(missionId?: string): boolean {
+  'worklet';
+  return missionId === '01-01' || missionId === '01-03';
+}
 
 /** Visual evidence and existing guard assignments always own the guard first. */
 export function canRespondToSound(g: GuardState): boolean {
@@ -48,7 +68,7 @@ export function canRespondToSound(g: GuardState): boolean {
 /** One best unobstructed listener, with stable roster-order ties. Call only during stealth. */
 export function offerFootstep(
   guards: GuardState[], sound: FootfallSound, navigation: Navigation, t: number, sensitivity = 1,
-  opaqueBlockers?: number[],
+  opaqueBlockers?: number[], patrolPauseAttention = false,
 ): GuardState | undefined {
   'worklet';
   if (!Number.isFinite(t) || !Number.isFinite(sound.t) || sound.t > t || t - sound.t > MAX_EVENT_AGE ||
@@ -58,25 +78,44 @@ export function offerFootstep(
     !Number.isFinite(sensitivity) || sensitivity <= 0) return;
 
   let listener: GuardState | undefined;
+  let closeListener: GuardState | undefined;
   let loudest = AUDIBLE_STRENGTH;
+  const closeRange = sound.gait === Gait.Walk ? Math.min(CLOSE_WALK_RANGE, sound.range * 0.58)
+    : patrolPauseAttention && sound.gait === Gait.Run ? Math.min(CLOSE_RUN_RANGE, sound.range * 0.48) : 0;
+  let nearest = closeRange;
+  let investigationBusy = false;
   const rangeSquared = sound.range * sound.range;
   const strength = sound.strength * sensitivity;
   for (let i = 0; i < guards.length; i++) {
     const g = guards[i];
-    // A fresh sound cannot hand the same patrol gap off to a second guard.
-    if (g.hearing && (g.hearing.phase !== HearingPhase.None || t < g.hearing.readyAt)) return;
+    // A second listener can acknowledge a close step while the patrol recovers.
+    // Only one guard may break from patrol to respond at a time.
+    if (g.hearing && (g.hearing.phase !== HearingPhase.None || t < g.hearing.readyAt)) {
+      if (closeRange === 0) return;
+      investigationBusy = true;
+    }
     if (!canRespondToSound(g)) continue;
     const dx = sound.x - g.x;
     const dy = sound.y - g.y;
     const distanceSquared = dx * dx + dy * dy;
     if (!Number.isFinite(distanceSquared) || distanceSquared >= rangeSquared) continue;
-    const heardStrength = strength * (1 - Math.sqrt(distanceSquared) / sound.range);
-    if (heardStrength <= loudest || !clearSegment(g.x, g.y, sound.x, sound.y, navigation.blockers) ||
+    const distance = Math.sqrt(distanceSquared);
+    const heardStrength = strength * (1 - distance / sound.range);
+    const close = distance < nearest && (!g.hearing || g.hearing.phase === HearingPhase.None) &&
+      (!g.soundAttention || t >= g.soundAttention.until) &&
+      t - (g.closeFootstepHeardAt ?? -Infinity) >= CLOSE_FOOTSTEP_REPEAT_SECONDS;
+    if ((heardStrength <= loudest && !close) || !clearSegment(g.x, g.y, sound.x, sound.y, navigation.blockers) ||
       (opaqueBlockers && !clearSegment(g.x, g.y, sound.x, sound.y, opaqueBlockers))) continue;
-    listener = g;
-    loudest = heardStrength;
+    if (heardStrength > loudest) {
+      listener = g;
+      loudest = heardStrength;
+    }
+    if (close) {
+      nearest = distance;
+      closeListener = g;
+    }
   }
-  if (listener) {
+  if (listener && !investigationBusy) {
     const investigate = sound.gait >= Gait.Walk && loudest >= INVESTIGATE_STRENGTH;
     const sourceFacing = Math.atan2(sound.y - listener.y, sound.x - listener.x);
     const angleToSource = wrapAngle(sourceFacing - listener.facing);
@@ -89,8 +128,43 @@ export function offerFootstep(
       investigate,
       sweepFacing: listener.facing,
     };
+    if (listener.soundAttention) listener.soundAttention = undefined;
+    return listener;
   }
-  return listener;
+  if (closeListener) {
+    closeListener.closeFootstepHeardAt = t;
+    if (patrolPauseAttention) closeListener.soundAttention = { x: sound.x, y: sound.y, until: t + ATTENTION_MEMORY_SECONDS };
+  }
+  return closeListener;
+}
+
+/** A short look inside the existing wait. The patrol heading and timing stay intact. */
+export function patrolSoundLook(g: GuardState, n: Navigation, opaqueBlockers: number[], t: number): number {
+  'worklet';
+  const attention = g.soundAttention;
+  if (!attention) return 0;
+  if (t >= attention.until || !canRespondToSound(g)) {
+    g.soundAttention = undefined;
+    return 0;
+  }
+  if (g.wait <= 0 || g.speed > 0.01) {
+    if (attention.startedAt !== undefined) g.soundAttention = undefined;
+    return 0;
+  }
+  if (attention.startedAt === undefined) {
+    if (g.wait < ATTENTION_MIN_PAUSE) return 0;
+    if (!clearSegment(g.x, g.y, attention.x, attention.y, n.blockers) ||
+        !clearSegment(g.x, g.y, attention.x, attention.y, opaqueBlockers)) {
+      g.soundAttention = undefined;
+      return 0;
+    }
+    const heading = Math.atan2(attention.y - g.y, attention.x - g.x);
+    attention.lookOffset = clamp(wrapAngle(heading - g.baseFacing), -WEAK_LOOK_ANGLE, WEAK_LOOK_ANGLE);
+    attention.startedAt = t;
+    attention.until = t + Math.min(ATTENTION_LOOK_SECONDS, g.wait);
+  }
+  const progress = (t - attention.startedAt) / (attention.until - attention.startedAt);
+  return (attention.lookOffset ?? 0) * Math.sin(Math.PI * progress);
 }
 
 function resetTravel(g: GuardState): void {
@@ -102,6 +176,7 @@ function resetTravel(g: GuardState): void {
 
 export function cancelHearing(g: GuardState, t: number, resumePatrol = false): void {
   'worklet';
+  if (g.soundAttention) g.soundAttention = undefined;
   const h = g.hearing;
   if (!h || h.phase === HearingPhase.None) return;
   if (h.phase !== HearingPhase.Look) resetTravel(g);

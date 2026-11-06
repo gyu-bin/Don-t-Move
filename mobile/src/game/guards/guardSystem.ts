@@ -208,16 +208,16 @@ export function stepGuards(guards: GuardState[], p: PlayerView, vision: number[]
   const confirming = theft ? stepTheft(guards,p,vision,n,ev,theft,dt,t) : '';
   const securityOwnsMovement = ev.globalAlert || ev.theftAlert || !!confirming;
   if (securityOwnsMovement || ev.phase === 'PLAYER_SPOTTED') {
-    for (let i = 0; i < guards.length; i++) if (guards[i].hearing) cancelHearing(guards[i], t, !securityOwnsMovement);
+    for (let i = 0; i < guards.length; i++) if (guards[i].hearing || guards[i].soundAttention) cancelHearing(guards[i], t, !securityOwnsMovement);
   } else if (patrol && footstep && hearingSensitivity > 0) {
-    offerFootstep(guards, footstep, n, t, hearingSensitivity, vision);
+    offerFootstep(guards, footstep, n, t, hearingSensitivity, vision, theft?.missionId === '01-01');
   }
   if (!wasGlobal && !ev.globalAlert && (!ev.theftAlert || hasPlayerAlert(guards,ev))) {
     for (let i = 0; i < guards.length; i++) if(guards[i].id!==confirming) stepGuard(guards[i], p, vision, dt, ev, t, patrol, difficulty, n);
   }
   if (ev.globalAlert) {
     for (let i = 0; i < guards.length; i++) {
-      if (!wasGlobal && guards[i].hearing) cancelHearing(guards[i], t);
+      if (!wasGlobal && (guards[i].hearing || guards[i].soundAttention)) cancelHearing(guards[i], t);
       observeGuard(guards[i], p, vision);
     }
     // A whistle completed while its source lost sight: share only its last seen location.

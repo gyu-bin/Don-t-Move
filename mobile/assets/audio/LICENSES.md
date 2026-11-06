@@ -2,15 +2,15 @@
 
 ## Player footsteps
 
-Five original procedural one-shots created for DON'T MOVE. Each was synthesized from seeded noise and damped sine resonances, with separate heel and toe envelopes. No third-party samples, recordings or downloads were used. The 24 kHz, mono, signed 16-bit PCM WAV set totals 36,700 bytes.
+The five one-shots use actual walking recordings. Each creator page lists [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/). The source times refer to Freesound's official high-quality playback files. Each edit retains one shoe contact and its short tail. Processing is mono conversion, 65 Hz high-pass, 7.5 kHz low-pass, 3 ms fade-in, 24 ms fade-out and peak normalization. The 24 kHz, signed 16-bit PCM WAV set totals 51,532 bytes.
 
-| Runtime file | Sound design | Duration | Sample peak | SHA-256 |
-|---|---|---:|---:|---|
-| `sfx/footstep-stone.wav` | Dry tile tap | 146 ms | −6.0 dBFS | `83d48bf4cd336dbf77046117c6ba01d9af4a283c028f981020210a5f3a33df1d` |
-| `sfx/footstep-wood.wav` | Hollow board knock | 156 ms | −5.7 dBFS | `5290be142cdeb8bd6c296213c54e92700615e11bc27eefd30bce75d85dd6312b` |
-| `sfx/footstep-concrete.wav` | Rough heel impact | 151 ms | −6.4 dBFS | `30918ebd8a33a1673838d18dc618723b0aa3ba49955163f7636e2b2dd175d75c` |
-| `sfx/footstep-metal.wav` | Short metallic ring | 169 ms | −6.0 dBFS | `5a3ec43cc6b5e56056fed2715ee4e256d183f9e1ec2c31064fc33e8ba9c8798b` |
-| `sfx/footstep-carpet.wav` | Muffled thud and cloth brush | 138 ms | −11.1 dBFS | `e935d24c44c0e4218fa3aa0792c3772620b2ab52db5d88d4212d447260c66b97` |
+| Runtime file | Source | Source range (seconds) | Sample peak | SHA-256 |
+| --- | --- | ---: | ---: | --- |
+| `sfx/footstep-stone.wav` | [Footsteps on Tiles by RutgerMuller](https://freesound.org/people/RutgerMuller/sounds/50725/) | 2.096–2.303 | −6.0 dBFS | `61705ebbfe484405de066d7d7c9f2e9642620a2cd91ef44b78520a2c7addac69` |
+| `sfx/footstep-wood.wav` | [Walking Footsteps on Wood by sillygrizzlies](https://freesound.org/people/sillygrizzlies/sounds/635058/) | 19.244–19.460 | −6.0 dBFS | `7b2093a72a2786fd98c15cbfa99d0b6080fdb3ec2a2dc269b79a25bf60b368a9` |
+| `sfx/footstep-concrete.wav` | [walking indoors on concrete floor 1 by FOSSarts](https://freesound.org/people/FOSSarts/sounds/740419/) | 0.624–0.839 | −6.0 dBFS | `4eb8fcda0435f07136a774fe6aee7bee5501bf0b26a2a653c5b410824db0c55d` |
+| `sfx/footstep-metal.wav` | [Steps boots on metal surface by RFCaldas](https://freesound.org/people/RFCaldas/sounds/749711/) | 4.665–4.881 | −6.0 dBFS | `4389e4e5fc20123262a0aab85f88ab59d721834ee9d8fda0c925df07f572c0ae` |
+| `sfx/footstep-carpet.wav` | [Walking on a carpet with shoes by JaredPaulOW](https://freesound.org/people/JaredPaulOW/sounds/595079/) | 2.209–2.424 | −12.0 dBFS | `4e2d246e62d95882a115966af5d08c2f5b613c20265e057b8d5495d97086768d` |
 
 ## Current BGM — CC0 gameplay replacement (2026-10-07)
 

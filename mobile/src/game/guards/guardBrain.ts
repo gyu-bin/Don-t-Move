@@ -10,8 +10,8 @@ import { castRay } from '../world/visibility';
 import { GUARD_TUNING as T } from './guardTuning';
 import { buildVisionFan, createFanBuffers, pointVisible } from './guardVision';
 import type { VisionFan } from './guardVision';
-import { cancelHearing, HearingPhase, stepHearingResponse } from './guardHearing';
-import type { HearingState } from './guardHearing';
+import { cancelHearing, HearingPhase, patrolSoundLook, stepHearingResponse } from './guardHearing';
+import type { HearingState, SoundAttention } from './guardHearing';
 
 /**
  * Guard perception + reaction.
@@ -28,6 +28,8 @@ import type { HearingState } from './guardHearing';
  */
 export interface GuardState extends VisionFan {
   hearing?: HearingState;
+  closeFootstepHeardAt?: number;
+  soundAttention?: SoundAttention;
   semanticPatrol: boolean;
   patrolProgress: number;
   patrolProgressAt: number;
@@ -532,7 +534,8 @@ export function stepGuard(
     // its feet continue on another heading; all consumers retain one facing.
     if(g.semanticPatrol && g.speed>0)g.glance=0;
     else g.glance = turnToward(g.glance, glanceTarget, T.turnRateGlance, dt);
-    g.facing = wrapAngle(g.baseFacing + g.glance);
+    const soundLook = patrolEnabled && navigation && g.soundAttention ? patrolSoundLook(g, navigation, blockers, t) : 0;
+    g.facing = wrapAngle(g.baseFacing + g.glance + soundLook);
   }
 
   // 2. Rebuild the fan from the final pose, 3. perceive with that same fan.
@@ -541,7 +544,7 @@ export function stepGuard(
 
   // 4. Suspicion + memory. LKP only updates while actually seen.
   if (g.canSee) {
-    if (g.hearing && g.hearing.phase !== HearingPhase.None) cancelHearing(g, t, true);
+    if (g.soundAttention || (g.hearing && g.hearing.phase !== HearingPhase.None)) cancelHearing(g, t, true);
     if(g.localArrived && Math.hypot(p.x-g.lkpX,p.y-g.lkpY)>T.arrivalDistance){g.localArrived=false;g.localLookT=0;}
     g.suspicion = Math.min(1, g.suspicion + suspicionGain(g, p.gait, difficulty) * dt);
     g.unseenT = 0;

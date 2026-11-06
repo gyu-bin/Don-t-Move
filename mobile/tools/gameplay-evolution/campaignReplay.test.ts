@@ -43,6 +43,21 @@ test('all current campaign witnesses and recent timing windows still reach the o
   assert(totalReactions > 0, 'production hearing cannot silently regress to disabled');
 });
 
+test('Entrance Hall patrols turn toward nearby Walk footsteps during a stop, and known routes still clear', () => {
+  const stage = campaignStages.find(({ id }) => id === '01-01')!;
+  let strongestPatrolAttention = 0;
+  for (const { name, inputs } of preservedWitnesses(stage.id)) {
+    const baseline = replayRoute(stage, inputs, false);
+    const route = replayRoute(stage, inputs, true);
+    assert.equal(baseline.strongestPatrolAttention, 0, name);
+    assert.equal(route.result, 'clear', name);
+    assert.equal(route.time, baseline.time, name);
+    assert.equal(route.spottedEpisodes, baseline.spottedEpisodes, name);
+    if (name === 'safe/service') strongestPatrolAttention = route.strongestPatrolAttention;
+  }
+  assert.ok(strongestPatrolAttention > 0.08, `a stationary guard visibly turned toward the Walk source (${strongestPatrolAttention} rad)`);
+});
+
 
 test('Archive allows a one-leg Run lure on an alternate approach that also works with Walk', () => {
   const stage = campaignStages.find(({ id }) => id === '01-03')!;
@@ -59,7 +74,12 @@ test('Archive allows a one-leg Run lure on an alternate approach that also works
   assert.equal(lure.spottedEpisodes, 0);
   assert.equal(lure.investigations, 1);
   assert.equal(lure.reactionModes.run, 1);
-  assert.equal(lure.firstInvestigation?.guard, '01-03-g1');
-  assert((lure.firstInvestigation?.listenerTravel ?? 0) > TILE);
-  assert((lure.firstInvestigation?.playerSeparation ?? 0) > 3 * TILE);
+  const investigation = lure.firstInvestigation;
+  assert.ok(investigation);
+  assert.equal(investigation.guard, '01-03-g1');
+  assert.equal(investigation.fromFootstep, true);
+  assert.ok(investigation.targetFrames > 1);
+  assert.equal(investigation.targetDriftFrames, 0);
+  assert.ok(investigation.listenerTravel > TILE);
+  assert.ok(investigation.playerSeparation > 3 * TILE);
 });

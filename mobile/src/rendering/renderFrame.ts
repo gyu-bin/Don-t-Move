@@ -3,6 +3,7 @@ import type {DoorArtSet} from './environment/doorArt';
 import {drawCctvDevice} from './effects/cctvArt';
 import type {CctvArt} from './effects/cctvArt';
 import { guardIndicator } from './effects/guardIndicator';
+import { behaviorOnlyHearing } from '../game/guards/guardHearing';
 import { Skia } from '@shopify/react-native-skia';
 import { exitGuidance } from '../ui/hud/exitGuidance';
 import type { SkCanvas, SkPaint, SkPath, SkPicture, SkRect } from '@shopify/react-native-skia';
@@ -262,10 +263,11 @@ export function renderPlaygroundFrame(s: PlaygroundState, r: RenderResources, de
     c.drawLine(g.x-10,g.y,g.x+10,g.y,r.fx.sparkle);
     c.drawLine(g.x,g.y-10,g.x,g.y+10,r.fx.sparkle);
   }
+  const soundThroughBehavior = behaviorOnlyHearing(s.theft.missionId);
   for (let i = 0; i < ng; i++) {
     const g = guards[i];
     const iy = g.y - 66;
-    const indicator=guardIndicator(g,s.events,!!s.theft.roles);
+    const indicator=guardIndicator(g,s.events,!!s.theft.roles,s.t,soundThroughBehavior);
     if(indicator==='suspicion')drawSuspicion(c,r.icons,g.x,iy,g.suspicion,s.t);
     else if(indicator==='alert')drawAlert(c,r.icons,g.x,iy,
       g.awareness===Awareness.Investigate?s.events.theftAge:g.alertAge,s.t);

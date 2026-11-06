@@ -6,10 +6,11 @@ import { createDoor, doorBlockers, stepDoor } from '../../doors/doorSystem';
 import { Cell } from '../../world/compileStage';
 import type { CompiledStage } from '../../world/compileStage';
 import { buildNavigation, clearSegment } from '../../world/navigation';
-import { createGuardState } from '../guardBrain';
-import { HearingPhase, offerFootstep, stepHearingResponse } from '../guardHearing';
+import { createGuardEvents, createGuardState } from '../guardBrain';
+import { behaviorOnlyHearing, cancelHearing, CLOSE_WALK_CUE_SECONDS, HearingPhase, offerFootstep, patrolSoundLook, stepHearingResponse } from '../guardHearing';
 import type { FootfallSound } from '../guardHearing';
 import { BODY } from '../guardTuning';
+import { guardIndicator } from '../../../rendering/effects/guardIndicator';
 
 function navigation(movementBlockers: number[] = []) {
   const stage = {
@@ -74,6 +75,71 @@ test('strength, distance, surface acoustic settings and mission sensitivity gove
   assert.equal(offerFootstep([guard('near-sneak', 120)], sneak, nav, 0)?.hearing?.investigate, false);
   assert.equal(offerFootstep([guard('soft', 120)], { ...sneak, surface: 'carpet', range: 21, strength: 0.24 }, nav, 0), undefined);
   assert.equal(offerFootstep([guard('sensitivity', 120)], sneak, nav, 0, 0.7), undefined);
+});
+
+test('low-sensitivity patrol shows an unobstructed close Walk cue without a patrol interruption', () => {
+  const nav = navigation();
+  const near = guard('near', 101);
+  const far = guard('far', 91);
+  const blocked = guard('blocked', 129, 75);
+  const walk = footfall(0, { gait: Gait.Walk, range: 68, strength: 0.63 });
+  const wall = [123, 80, 136, 89];
+  const events = createGuardEvents();
+  assert.equal(offerFootstep([blocked, far, near], walk, nav, 0, 0.19, wall), near);
+  assert.equal(near.closeFootstepHeardAt, 0);
+  assert.equal(near.hearing, undefined);
+  assert.equal(near.hasLkp, false);
+  assert.equal(stepHearingResponse(near, nav, 0.1, 1 / 60), false);
+  assert.equal(guardIndicator(near, events, true, 0), 'hearing');
+  assert.equal(guardIndicator(near, events, true, CLOSE_WALK_CUE_SECONDS), 'none');
+  assert.equal(offerFootstep([near], { ...walk, t: 1 }, nav, 1, 0.19), undefined);
+  assert.equal(offerFootstep([near], { ...walk, t: 1.4 }, nav, 1.4, 0.19), near);
+  events.phase = 'PLAYER_SPOTTED';
+  assert.equal(guardIndicator(near, events, true, 1.4), 'none');
+});
+
+test('Entrance Hall close footsteps queue a bounded look that uses the existing patrol stop', () => {
+  const nav = navigation();
+  const g = guard('patrol', 108);
+  const walk = footfall(0, { y: 122, gait: Gait.Walk, range: 68, strength: 0.63 });
+  g.speed = 30;
+  g.wait = 0;
+  assert.equal(offerFootstep([g], walk, nav, 0, 0.19, [], true), g);
+  assert.deepEqual([g.soundAttention?.x, g.soundAttention?.y], [135, 122]);
+  assert.equal(patrolSoundLook(g, nav, [], 0.1), 0);
+  assert.equal(g.soundAttention?.startedAt, undefined);
+
+  g.speed = 0;
+  g.wait = 0.8;
+  assert.equal(patrolSoundLook(g, nav, [], 0.2), 0);
+  assert.ok(patrolSoundLook(g, nav, [], 0.44) > 0.3);
+  assert.deepEqual([g.x, g.y, g.wait, g.baseFacing, g.hasLkp], [108, 100, 0.8, 0, false]);
+  assert.equal(patrolSoundLook(g, nav, [], 0.7), 0);
+  assert.equal(g.soundAttention, undefined);
+
+  assert.equal(offerFootstep([g], { ...walk, t: 2 }, nav, 2, 0.19, [], true), g);
+  assert.equal(patrolSoundLook(g, nav, [120, 90, 123, 130], 2.1), 0);
+  assert.equal(g.soundAttention, undefined);
+  offerFootstep([g], { ...walk, t: 4 }, nav, 4, 0.19, [], true);
+  cancelHearing(g, 4.1);
+  assert.equal(g.soundAttention, undefined);
+});
+
+test('Entrance Hall Run carries farther than Walk and the two trial missions use body cues', () => {
+  const nav = navigation();
+  const g = guard('patrol', 85);
+  const walk = footfall(0, { gait: Gait.Walk, range: 68, strength: 0.63 });
+  assert.equal(offerFootstep([g], walk, nav, 0, 0.19, [], true), undefined);
+  assert.equal(offerFootstep([g], footfall(0), nav, 0, 0.19, [], true), g);
+  assert.equal(guardIndicator(g, createGuardEvents(), true, 0, behaviorOnlyHearing('01-01')), 'none');
+
+  const archive = guard('archive', 115);
+  const events = createGuardEvents();
+  assert.equal(offerFootstep([archive], footfall(0), nav, 0, 0.86), archive);
+  assert.equal(guardIndicator(archive, events, true, 0, behaviorOnlyHearing('01-02')), 'hearing');
+  assert.equal(guardIndicator(archive, events, true, 0, behaviorOnlyHearing('01-03')), 'none');
+  archive.awareness = Awareness.Alert;
+  assert.equal(guardIndicator(archive, events, true, 0, behaviorOnlyHearing('01-03')), 'alert');
 });
 
 test('a busy guard cannot receive a footfall and real sight cancels an accepted response', () => {
